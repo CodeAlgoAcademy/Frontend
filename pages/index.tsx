@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Navbar from '../components/Navbar/Navbar';
 
 const styles = {
-  container: 'relative bg-home h-[500px] bg-center md:bg-right bg-cover md:bg-contain bg-no-repeat',
+  container: 'relative bg-home h-[500px] bg-center w-screen md:right bg-cover bg-no-repeat',
   gradientContainer: 'absolute top-0 right-0 bottom-0 left-0 bg-gradient-to-tl md:bg-gradient-to-r from-orange-400',
   textContainer: 'py-20 md:py-32 relative px-2 md:px-20 text-white space-y-5'
 }
