@@ -8,7 +8,7 @@ const Layout = ({ children }: Props) => {
 	return (
 		<div>
 			<Head>
-				<title>CodeAlgo</title>
+				<title>CodeAlgo Academy</title>
 			</Head>
 			<main>{children}</main>
 		</div>
