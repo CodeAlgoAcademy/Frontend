@@ -7,38 +7,32 @@ import { RootState } from "../../store/store";
 import styles from "../../styles/styles";
 import { IInputFields } from "../../types/interfaces";
 
-const inputFields: IInputFields[] = [
-  {
-    type: "text",
-    name: "studentName",
-    placeholder: "Enter Student Name",
-  },
-  {
-    type: "email",
-    name: "studentEmail",
-    placeholder: "Enter Student Email",
-  },
-  {
-    type: "text",
-    name: "studentId",
-    placeholder: "Enter Student ID",
-  },
-];
-
 const AddStudents = () => {
   const dispatch = useDispatch();
-  const getInputValue = (name: string) => {
-    const value = useSelector((state: RootState) => {
-      if (name.includes("student")) {
-        return state.addClass.student[
-          name as keyof typeof state.addClass.student
-        ];
-      } else {
-        return state.addClass.class[name as keyof typeof state.addClass.class];
-      }
-    });
-    return value;
-  };
+  const { studentName, studentEmail, studentId } = useSelector(
+    (state: RootState) => state.addClass.student
+  );
+  const inputFields: IInputFields[] = [
+    {
+      type: "text",
+      name: "studentName",
+      placeholder: "Enter Student Name",
+      value: studentName,
+    },
+    {
+      type: "email",
+      name: "studentEmail",
+      placeholder: "Enter Student Email",
+      value: studentEmail,
+    },
+    {
+      type: "text",
+      name: "studentId",
+      placeholder: "Enter Student ID",
+      value: studentId,
+    },
+  ];
+
   return (
     <form className="py-8 flex-[0.9]">
       <header className="px-8 w-full mb-6">
@@ -48,13 +42,14 @@ const AddStudents = () => {
       </header>
       <section className="px-8 grid md:grid-cols-2 gap-[1rem] items-start">
         {inputFields.map((inputField: IInputFields, index: number) => {
-          const { name, type, placeholder } = inputField;
+          const { name, type, placeholder, value } = inputField;
           return (
             <input
+              key={index}
               type={type}
               name={name}
               placeholder={placeholder}
-              value={getInputValue(name)}
+              value={value}
               onChange={(e: ChangeEvent<HTMLInputElement>) => {
                 dispatch(
                   updateClassDetails({ key: name, value: e.target.value })
