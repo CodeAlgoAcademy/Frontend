@@ -5,19 +5,27 @@ import { IoIosAddCircleOutline } from 'react-icons/io'
 import {FiChevronDown, FiChevronUp} from 'react-icons/fi'
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
-import AddStudent from '../../components/AddStudent';
+import AddStudent from '../../components/modals/AddStudent';
 import StudentProgress from '../../components/StudentProgress'
+import PreviewModal from '../../components/modals/PreviewModal'
 
 
 
 export default function unit() {
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
   
 
+  // add student oprions modal
   const cancelPresence = () => {
     setShowModal(false)
 }
- 
+
+  // curriculm topic preview modal
+  const cancelPreview = () => {
+    setShowPreview(false)
+  }
+
 
 
 
@@ -101,6 +109,7 @@ export default function unit() {
     setUnitData(newArr)
   }
   
+  
 
   return (
     <div>
@@ -130,6 +139,7 @@ export default function unit() {
                       <div className='flex items-center gap-7'>
                         <FaGripLinesVertical className='text-[#A0A0A0] text-[1.1rem] font-thin' />
                         <p className='font-bold text-[20px]'>{data.topics}</p>
+                        {data.show && <p onClick={() => setShowPreview(true)} className=" text-[18px] text-[#A0A0A0] hover:underline cursor-pointer hover:text-black transition duration-200 ease-out">Preview</p>}
                       </div>
                       <div className='flex justify-around'>
                         <p className='text-[18px] font-semibold'>{data.date}</p>
@@ -191,7 +201,10 @@ export default function unit() {
                 
               }
             </div>
+                 {/* Add student modal component  */}
             <AddStudent showModal={showModal} cancelPresence={cancelPresence}/>
+                  {/* preview modal components */}
+             <PreviewModal showPreview={showPreview} cancelPreview={cancelPreview}/>
     </div>
   )
 }
