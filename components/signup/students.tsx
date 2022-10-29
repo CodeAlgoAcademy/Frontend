@@ -7,45 +7,44 @@ import { openGradesModal } from "../../store/modalSlice";
 import { FaChevronDown } from "react-icons/fa";
 import { updateUser } from "../../store/authSlice";
 import styles from "../../styles/styles";
-const inputFields: IInputFields[] = [
-  {
-    type: "text",
-    name: "firstname",
-    placeholder: "First Name*",
-  },
-  {
-    type: "text",
-    name: "lastname",
-    placeholder: "Last Name*",
-  },
-  {
-    type: "email",
-    name: "email",
-    placeholder: "Email*",
-  },
-  {
-    type: "password",
-    name: "password",
-    placeholder: "Password*",
-  },
-];
 
 const Students = () => {
   const dispatch = useDispatch();
-  const { grade } = useSelector((state: RootState) => state.user);
+  const { grade, firstname, lastname, email, password } = useSelector(
+    (state: RootState) => state.user
+  );
 
-  const getInputValue = (name: string) => {
-    const value = useSelector(
-      (state: RootState) => state.user[name as keyof IUser]
-    );
-    // value attribute only accepts string
-    return typeof value === "string" ? value : "";
-  };
+  const inputFields: IInputFields[] = [
+    {
+      type: "text",
+      name: "firstname",
+      placeholder: "Enter First Name*",
+      value: firstname,
+    },
+    {
+      type: "text",
+      name: "lastname",
+      placeholder: "Enter Last Name*",
+      value: lastname,
+    },
+    {
+      type: "email",
+      name: "email",
+      placeholder: "Enter Email*",
+      value: email,
+    },
+    {
+      type: "password",
+      name: "password",
+      placeholder: "Enter Password*",
+      value: password,
+    },
+  ];
 
   return (
     <div className="grid md:grid-cols-2 gap-[1rem] items-start">
       {inputFields.map((inputField: IInputFields, index: number) => {
-        const { type, placeholder, name } = inputField;
+        const { type, placeholder, name, value } = inputField;
         return (
           <input
             key={index}
@@ -53,7 +52,7 @@ const Students = () => {
             placeholder={placeholder}
             name={name}
             required
-            value={getInputValue(name)}
+            value={value}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               dispatch(updateUser({ key: name, value: e.target.value }));
             }}

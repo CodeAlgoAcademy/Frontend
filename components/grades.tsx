@@ -4,6 +4,7 @@ import { updateClassDetails } from "../store/addClassSlice";
 import { updateUser } from "../store/authSlice";
 import { closeGradesModal } from "../store/modalSlice";
 import { RootState } from "../store/store";
+import styles from "../styles/styles";
 
 type gradesType = {
   addStudents?: boolean;
@@ -37,7 +38,7 @@ const Grades: FC<gradesType> = ({ addStudents }) => {
     return <></>;
   }
   return (
-    <section className="fixed top-0 left-0 h-screen w-full bg-[rgba(0,0,0,0.6)] z-20 flex justify-center items-center">
+    <section className={`${styles.modalOverlay} bg-[rgba(0,0,0,.25)]`}>
       <div className="w-[90vw] max-w-[350px] mx-auto bg-white rounded-md py-6 px-4">
         <h2 className="text-lg text-center font-bold mb-2">
           Which grade are you in?
