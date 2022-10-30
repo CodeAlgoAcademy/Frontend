@@ -13,7 +13,6 @@ const Students = () => {
   const { grade, firstname, lastname, email, password } = useSelector(
     (state: RootState) => state.user
   );
-
   const inputFields: IInputFields[] = [
     {
       type: "text",

@@ -11,7 +11,6 @@ const Teachers = () => {
   const { firstname, lastname, email, password, schoolName } = useSelector(
     (state: RootState) => state.user
   );
-
   const inputFields: IInputFields[] = [
     {
       name: "firstname",
