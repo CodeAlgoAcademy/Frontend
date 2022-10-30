@@ -18,7 +18,7 @@ const Modal = () => {
     return <></>;
   }
   return (
-    <section className={styles.modalOverlay}>
+    <section className={`${styles.modalOverlay} bg-[rgba(0,0,0,.25)]`}>
       {/* modal itself */}
       <main className="w-[90vw] max-w-[900px] mx-auto bg-white rounded-md flex shadow-lg relative">
         <span

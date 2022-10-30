@@ -6,49 +6,51 @@ import styles from "../../styles/styles";
 import { countryList } from "./countries";
 import { updateUser } from "../../store/authSlice";
 
-const inputFields: IInputFields[] = [
-  {
-    name: "firstname",
-    type: "text",
-    placeholder: "Enter Firstname",
-  },
-  {
-    name: "lastname",
-    type: "text",
-    placeholder: "Enter Lastname",
-  },
-  {
-    name: "email",
-    type: "email",
-    placeholder: "Enter Email",
-  },
-  {
-    name: "password",
-    type: "password",
-    placeholder: "Enter Password",
-  },
-];
-
 const Parents = () => {
   const dispatch = useDispatch();
-  const getInputValue = (name: string) => {
-    const value = useSelector(
-      (state: RootState) => state.user[name as keyof IUser]
-    );
-    // value attribute only accepts string
-    return typeof value === "string" ? value : "";
-  };
+  const { firstname, lastname, email, password } = useSelector(
+    (state: RootState) => state.user
+  );
+
+  const inputFields: IInputFields[] = [
+    {
+      name: "firstname",
+      type: "text",
+      placeholder: "Enter Firstname",
+      value: firstname,
+    },
+    {
+      name: "lastname",
+      type: "text",
+      placeholder: "Enter Lastname",
+      value: lastname,
+    },
+    {
+      name: "email",
+      type: "email",
+      placeholder: "Enter Email",
+      value: email,
+    },
+    {
+      name: "password",
+      type: "password",
+      placeholder: "Enter Password",
+      value: password,
+    },
+  ];
+
   return (
     <div className="grid md:grid-cols-2 gap-[1rem] items-start">
       {inputFields.map((inputField: IInputFields, index: number) => {
-        const { type, name, placeholder } = inputField;
+        const { type, name, placeholder, value } = inputField;
+
         return (
           <input
             key={index}
             type={type}
             name={name}
             placeholder={placeholder}
-            value={getInputValue(name)}
+            value={value}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               dispatch(updateUser({ key: name, value: e.target.value }));
             }}
