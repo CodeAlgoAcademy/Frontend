@@ -9,6 +9,7 @@ import Classes from "../components/addClass/classes";
 import { GeneralNav } from "../components";
 const AddClass = () => {
   const dispatch = useDispatch();
+
   return (
     <main>
       <Head>

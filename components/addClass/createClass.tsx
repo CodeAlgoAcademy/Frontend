@@ -18,6 +18,7 @@ const CreateClass = () => {
   const { colorsModalOpen } = useSelector((state: RootState) => state.modal);
   const { className, subject, roomNumber, coTeachers, grade, color } =
     useSelector((state: RootState) => state.addClass.class);
+
   const inputFields: IInputFields[] = [
     {
       type: "text",
@@ -54,6 +55,7 @@ const CreateClass = () => {
       <section className="grid md:grid-cols-2 gap-[1rem] items-start">
         {inputFields.map((inputField: IInputFields, index: number) => {
           const { type, name, placeholder, value } = inputField;
+
           return (
             <input
               key={index}

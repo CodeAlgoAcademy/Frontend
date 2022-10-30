@@ -12,6 +12,7 @@ const AddStudents = () => {
   const { studentName, studentEmail, studentId } = useSelector(
     (state: RootState) => state.addClass.student
   );
+
   const inputFields: IInputFields[] = [
     {
       type: "text",

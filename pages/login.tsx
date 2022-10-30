@@ -12,6 +12,7 @@ import styles from "../styles/styles";
 const Login = () => {
   const dispatch = useDispatch();
   const { email, password } = useSelector((state: RootState) => state.user);
+
   const inputFields: IInputFields[] = [
     {
       type: "email",

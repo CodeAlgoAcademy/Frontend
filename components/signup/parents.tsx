@@ -43,6 +43,7 @@ const Parents = () => {
     <div className="grid md:grid-cols-2 gap-[1rem] items-start">
       {inputFields.map((inputField: IInputFields, index: number) => {
         const { type, name, placeholder, value } = inputField;
+
         return (
           <input
             key={index}
