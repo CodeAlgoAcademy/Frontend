@@ -6,8 +6,10 @@ import { FaPlus } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { openAddClassModal } from "../store/modalSlice";
 import Classes from "../components/addClass/classes";
+import { GeneralNav } from "../components";
 const AddClass = () => {
   const dispatch = useDispatch();
+
   return (
     <main>
       <Head>
@@ -16,6 +18,7 @@ const AddClass = () => {
 
       {/* navbar here */}
       <section className="w-full bg-gray-50 min-h-screen">
+        <GeneralNav />
         <div className="w-full px-[16px] py-[30px] max-w-[1250px] mx-auto">
           <div className="w-full flex flex-wrap justify-between items-center">
             <h1 className="text-[2rem] font-bold">Home</h1>
