@@ -70,4 +70,5 @@ export interface IInputFields {
   type: string;
   placeholder: string;
   name: string;
+  value: string | number;
 }

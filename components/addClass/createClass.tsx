@@ -13,44 +13,38 @@ import { IInputFields } from "../../types/interfaces";
 import { updateClassDetails } from "../../store/addClassSlice";
 import styles from "../../styles/styles";
 
-const inputFields: IInputFields[] = [
-  {
-    type: "text",
-    name: "className",
-    placeholder: "Enter Class Name*",
-  },
-  {
-    type: "text",
-    name: "subject",
-    placeholder: "Enter Subject*",
-  },
-  {
-    type: "number",
-    name: "roomNumber",
-    placeholder: "Enter Room Number*",
-  },
-  {
-    type: "text",
-    name: "coTeachers",
-    placeholder: "Add co-teachers*",
-  },
-];
-
 const CreateClass = () => {
   const dispatch = useDispatch();
   const { colorsModalOpen } = useSelector((state: RootState) => state.modal);
-  const getInputValue = (name: string) => {
-    const value = useSelector((state: RootState) => {
-      if (name.includes("student")) {
-        return state.addClass.student[
-          name as keyof typeof state.addClass.student
-        ];
-      } else {
-        return state.addClass.class[name as keyof typeof state.addClass.class];
-      }
-    });
-    return value;
-  };
+  const { className, subject, roomNumber, coTeachers, grade, color } =
+    useSelector((state: RootState) => state.addClass.class);
+
+  const inputFields: IInputFields[] = [
+    {
+      type: "text",
+      name: "className",
+      placeholder: "Enter Class Name*",
+      value: className,
+    },
+    {
+      type: "text",
+      name: "subject",
+      placeholder: "Enter Subject*",
+      value: subject,
+    },
+    {
+      type: "number",
+      name: "roomNumber",
+      placeholder: "Enter Room Number*",
+      value: roomNumber,
+    },
+    {
+      type: "text",
+      name: "coTeachers",
+      placeholder: "Add co-teachers*",
+      value: coTeachers,
+    },
+  ];
   return (
     <form className="p-8 flex-[0.9]">
       <header className="w-full mb-6">
@@ -60,14 +54,15 @@ const CreateClass = () => {
       </header>
       <section className="grid md:grid-cols-2 gap-[1rem] items-start">
         {inputFields.map((inputField: IInputFields, index: number) => {
-          const { type, name, placeholder } = inputField;
+          const { type, name, placeholder, value } = inputField;
+
           return (
             <input
               key={index}
               name={name}
               type={type}
               placeholder={placeholder}
-              value={getInputValue(name)}
+              value={value}
               onChange={(e: ChangeEvent<HTMLInputElement>) => {
                 dispatch(
                   updateClassDetails({ key: name, value: e.target.value })
@@ -84,7 +79,7 @@ const CreateClass = () => {
             dispatch(openGradesModal());
           }}
         >
-          <p>{getInputValue("grade")}</p>
+          <p>{grade}</p>
           <span>
             <FaChevronDown />
           </span>
@@ -96,11 +91,7 @@ const CreateClass = () => {
               dispatch(toggleColorModal());
             }}
           >
-            <span
-              className={`h-[38px] w-[38px] rounded-full ${getInputValue(
-                "color"
-              )}`}
-            ></span>
+            <span className={`h-[38px] w-[38px] rounded-full ${color}`}></span>
             <i className="pr-1">
               <FaChevronDown />
             </i>
