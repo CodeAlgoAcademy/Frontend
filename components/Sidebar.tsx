@@ -40,7 +40,7 @@ const Sidebar = () => {
 							<Link href={`${link.name}`}>
 								<div
 									className={
-										router.pathname == `/${link.name}`
+										router?.pathname == `/${link.name}`
 											? "flex items-center gap-5 pl-8 py-5 bg-[#E5E5E5] rounded-l-[28px] cursor-pointer"
 											: "flex items-center gap-5 pl-8 py-5 text-gray-600 hover:bg-[#f3f3f3] rounded-l-[28px] cursor-pointer"
 									}>

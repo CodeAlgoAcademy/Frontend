@@ -10,7 +10,7 @@ const Dashboard = () => {
 					<Sidebar />
 				</div>
 				<div className='bg-[#E5E5E5] flex-1 px-[6%] py-8'>
-					<h2 className='text-[28px] font-bold mb-6'>Today at a Glance</h2>
+					<h2 className='text-[28px] font-bold mb-6' data-testid='dashboard-heading'>Today at a Glance</h2>
 					<div className='flex gap-10 flex-wrap'>
 						<SummaryBox />
 						<div className='grid gap-6'>
