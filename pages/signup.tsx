@@ -104,7 +104,7 @@ const SignUp = () => {
               Welcome To CodeAcademy
             </h1>
             <p className="text-grey-800 md:text-lg text-[16px]">
-              Let's get started
+              {"Let's get started"}
             </p>
           </div>
 

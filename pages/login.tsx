@@ -5,32 +5,28 @@ import CleverBtn from "../components/cleverBtn";
 import GoogleBtn from "../components/googleBtn";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { IInputFields, IUser } from "../types/interfaces";
+import { IInputFields } from "../types/interfaces";
 import { updateUser } from "../store/authSlice";
 import styles from "../styles/styles";
-const inputFields: IInputFields[] = [
-  {
-    type: "email",
-    placeholder: "Enter Email*",
-    name: "email",
-  },
-  {
-    type: "password",
-    placeholder: "Enter Password*",
-    name: "password",
-  },
-];
 
 const Login = () => {
   const dispatch = useDispatch();
-  const getInputValue = (name: string) => {
-    const value = useSelector(
-      (state: RootState) => state.user[name as keyof IUser]
-    );
-    // value attribute only accepts string
-    return typeof value === "string" ? value : "";
-  };
+  const { email, password } = useSelector((state: RootState) => state.user);
 
+  const inputFields: IInputFields[] = [
+    {
+      type: "email",
+      placeholder: "Enter Email*",
+      name: "email",
+      value: email,
+    },
+    {
+      type: "password",
+      placeholder: "Enter Password*",
+      name: "password",
+      value: password,
+    },
+  ];
   return (
     <main>
       <Head>
@@ -69,14 +65,14 @@ const Login = () => {
           {/* inputs */}
           <div className="flex flex-col gap-y-3 mb-6 items-start">
             {inputFields.map((inputField: IInputFields, index: number) => {
-              const { type, placeholder, name } = inputField;
+              const { type, placeholder, name, value } = inputField;
               return (
                 <input
                   key={index}
                   type={type}
                   placeholder={placeholder}
                   name={name}
-                  value={getInputValue(name)}
+                  value={value}
                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
                     dispatch(updateUser({ key: name, value: e.target.value }));
                   }}
