@@ -1,8 +1,7 @@
 import Image from "next/image";
-import logo from '../images/logo.png';
 import {BiHomeAlt} from 'react-icons/bi';
 import {FaChevronDown, FaChevronUp} from 'react-icons/fa';
-import avatar from '../images/avatar.png'
+import avatar from '../public/images/avatar.png'
 import { useEffect, useRef, useState } from "react";
 
 
@@ -33,6 +32,7 @@ export default function Header() {
             </div>
             <FaChevronDown  className="text-[#838383]"/>
         </div>)}
+        
 
         {classTab && (<div onClick={toggleClassTab} className="border-[#BDBDBD] border rounded-[1.6rem] mt-[10rem] bg-white z-30">
           <div className="w-[14rem] flex justify-between items-center border-b-2  px-3.5 py-2.5">
