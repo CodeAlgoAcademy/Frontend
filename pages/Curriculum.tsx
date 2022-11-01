@@ -2,9 +2,9 @@ import {useState} from 'react'
 import Header from '../components/Header'
 import Sidebar from '../components/Sidebar';
 import {IoIosAddCircleOutline} from 'react-icons/io';
-import loopImg from '../images/loopImg.png'
-import connect from '../images/connect.png'
-import bracket from '../images/bracket.png'
+import loopImg from '../public/images/loopImg.png'
+import connect from '../public/images/connect.png'
+import bracket from '../public/images/bracket.png'
 
 import Image from 'next/image';
 import {HiDotsHorizontal} from 'react-icons/hi'

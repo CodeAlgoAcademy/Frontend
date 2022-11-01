@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
-import logo from '../images/logo.png';
+import logo from '../public/images/logo.png';
 import {RiDashboardLine} from 'react-icons/ri';
 import {HiOutlineClipboardList} from 'react-icons/hi';
 import {HiOutlineUsers} from 'react-icons/hi';
