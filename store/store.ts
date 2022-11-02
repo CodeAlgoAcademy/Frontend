@@ -1,5 +1,5 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import storage from 'redux-persist/lib/storage';
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import storage from "redux-persist/lib/storage";
 import {
   persistReducer,
   persistStore,
@@ -9,17 +9,23 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from 'redux-persist';
+} from "redux-persist";
 
-import userReducer from './Reducer';
+import userReducer from "./authSlice";
+import modalReducer from "./modalSlice";
+import addClassReducer from "./addClassSlice";
+import allClassesReducer from "./allClassesSlice";
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage,
 };
 
 const rootReducer = combineReducers({
   user: userReducer,
+  modal: modalReducer,
+  addClass: addClassReducer,
+  allClasses: allClassesReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
