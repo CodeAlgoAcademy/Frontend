@@ -33,3 +33,8 @@ a {
 	border-width: 0;
 	outline: none;
 }
+.shadow-right {
+	-webkit-box-shadow: 7px 0px 13px -1px rgba(148, 148, 148, 0.76);
+	-moz-box-shadow: 7px 0px 13px -1px rgba(148, 148, 148, 0.76);
+	box-shadow: 7px 0px 13px -1px rgba(148, 148, 148, 0.76);
+}
