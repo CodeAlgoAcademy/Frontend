@@ -45,7 +45,7 @@
 import Link from "next/link"
 import React from "react"
 import { TbLayoutDashboard, TbClipboardText } from "react-icons/tb"
-import { HiOutlineCalendar } from "react-icons/hi"
+import { HiOutlineCalendar, HiOutlineUsers } from "react-icons/hi"
 import { BiMessageRounded } from "react-icons/bi"
 import { FaUserGraduate } from "react-icons/fa"
 import { useRouter } from "next/router"
@@ -61,7 +61,7 @@ const links = [
 	},
 	{
 		name: "students",
-		icon: <FaUserGraduate />
+		icon: <HiOutlineUsers  />
 	},
 	{
 		name: "calendar",
@@ -85,8 +85,8 @@ const Sidebar = () => {
 								<div
 									className={
 										router.pathname == `/${link.name}`
-											? "flex items-center gap-5 pl-8 py-5 bg-[#E5E5E5] rounded-l-[28px] cursor-pointer"
-											: "flex items-center gap-5 pl-8 py-5 text-gray-600 hover:bg-[#f3f3f3] rounded-l-[28px] cursor-pointer"
+											? "flex items-center gap-5 pl-8 py-5 bg-[#EFEFEF] rounded-l-[28px] cursor-pointer"
+											: "flex items-center gap-5 pl-8 py-5 text-gray-600 hover:bg-[#EFEFEF] rounded-l-[28px] cursor-pointer"
 									}>
 									<span className='text-xl'>{link.icon}</span>
 									<span className='capitalize font-semibold text-md'>{link.name}</span>
