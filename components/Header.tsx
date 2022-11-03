@@ -1,7 +1,7 @@
 import Image from "next/image";
 import {BiHomeAlt} from 'react-icons/bi';
 import {FaChevronDown, FaChevronUp} from 'react-icons/fa';
-import avatar from '../public/images/avatar.png'
+import avatar from '../public/assets/avatar.png'
 import { useEffect, useRef, useState } from "react";
 
 
