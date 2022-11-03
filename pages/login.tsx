@@ -8,11 +8,12 @@ import { RootState } from "../store/store";
 import { IInputFields } from "../types/interfaces";
 import { updateUser } from "../store/authSlice";
 import styles from "../styles/styles";
+import { useRouter } from "next/router";
 
 const Login = () => {
   const dispatch = useDispatch();
   const { email, password } = useSelector((state: RootState) => state.user);
-
+  const router = useRouter();
   const inputFields: IInputFields[] = [
     {
       type: "email",
@@ -27,6 +28,13 @@ const Login = () => {
       value: password,
     },
   ];
+
+  const login = (event: ChangeEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+    // login logic
+    router.push("/dashboard");
+  };
+
   return (
     <main>
       <Head>
@@ -35,7 +43,7 @@ const Login = () => {
 
       <section className="w-full min-h-screen bg-gray-100 flex justify-center items-center">
         <form
-          action=""
+          onSubmit={login}
           className="bg-white w-[95vw] max-w-[600px] mx-auto rounded-md p-[40px] md:p-[50px] shadow-md"
         >
           {/* title */}

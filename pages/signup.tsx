@@ -8,6 +8,7 @@ import Students from "../components/signup/students";
 import Teachers from "../components/signup/teachers";
 import Parents from "../components/signup/parents";
 import { ITabs } from "../types/interfaces";
+import { useRouter } from "next/router";
 
 const tabs: ITabs[] = [
   {
@@ -26,6 +27,7 @@ const tabs: ITabs[] = [
 ];
 
 const SignUp = () => {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<string | undefined>("Student");
   const [currentTab, setCurrentTab] = useState<ITabs>({
     tabName: "",
@@ -47,6 +49,12 @@ const SignUp = () => {
     setActiveTab((prev) => tabName);
   };
 
+  const signup = (event: ChangeEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+    // signup logic
+    router.push("/dashboard");
+  };
+
   return (
     <main>
       <Head>
@@ -54,9 +62,7 @@ const SignUp = () => {
       </Head>
       <section className="w-full min-h-screen bg-gray-100 flex justify-center items-center py-6">
         <form
-          onSubmit={(event: ChangeEvent<HTMLFormElement>) => {
-            event.preventDefault();
-          }}
+          onSubmit={signup}
           action=""
           className="bg-white w-[95vw] max-w-[900px] mx-auto rounded-md p-[40px] md:p-[50px] shadow-md"
         >
