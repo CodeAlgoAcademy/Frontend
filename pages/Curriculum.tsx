@@ -39,10 +39,13 @@ export default function Curriculum() {
 
 
   return (
-    <div>
+    <div className="min-h-[100vh] flex flex-col">
         <Header />
-        <Sidebar />
-        <div className='ml-[20rem] px-[5.5rem] py-[2rem] '>
+        <div className='flex items-stretch mb-auto grow'>
+        <div className="sidebar bg-white w-[270px]">
+          <Sidebar />
+        </div>
+        <div className='px-[5.5rem] py-[2rem] flex-1 bg-[#EFEFEF]'>
             <div className='flex justify-between'>
                 <h1 className='font-bold text-3xl'>Curriculum</h1>
                 <div className='flex gap-2 items-center'>
@@ -51,17 +54,17 @@ export default function Curriculum() {
                 </div>
             </div>
             <div className='flex px-[30%] justify-center mt-[3rem] items-center border-b border-[#BDBDBD] select-none'>
-                <h1 className={active  === 'past' ? 'text-[1.2rem]  mr-8  border-b-[3px] hover:font-bold border-b-black hover:border-b-black transition duration-300 ease-out': 'text-[1.2rem]  mr-8  border-b-[3px] hover:font-bold  hover:border-b-black transition duration-300 ease-out'}
+                <h1 className={active  === 'past' ? 'text-[1.2rem]  mr-8  border-b-[3px] hover:font-bold border-b-black hover:border-b-black transition duration-300 ease-out box-border': 'text-[1.2rem]  mr-8 hover:font-bold  hover:border-b-black hover:border-b-[3px] box-border  transition duration-300 ease-out'}
                  onClick={handlePast}>
                     Past
                  </h1>
                 <div className='border-x-[1px] border-[#BDBDBD]  px-8 py-3 '>
-                    <h1 className={active === 'current' ? 'text-[1.2rem] border-b-[3px] font-bold border-b-black hover:font-bold hover:border-b-black transition duration-500 ease-out' : 'text-[1.2rem] border-b-[3px] hover:font-bold hover:border-b-black transition duration-500 ease-out'}
+                    <h1 className={active === 'current' ? 'text-[1.2rem] border-b-[3px] font-bold border-b-black hover:font-bold hover:border-b-black transition duration-500 ease-out box-border' : 'text-[1.2rem]  hover:font-bold hover:border-b-black  hover:border-b-[3px] box-border transition duration-500 ease-out'}
                         onClick={handleCurrent}>
                         Current
                     </h1>
                 </div>
-                <h1 className={active === 'upcoming' ? 'text-[1.2rem] ml-8 border-b-[3px] border-b-black  font-bold hover:font-bold hover:border-b-black transition duration-500 ease-out' : 'text-[1.2rem] ml-8 border-b-[3px] hover:font-bold hover:border-b-black transition duration-500 ease-out'}
+                <h1 className={active === 'upcoming' ? 'text-[1.2rem] ml-8 border-b-[3px] border-b-black  font-bold hover:font-bold hover:border-b-black transition duration-500 ease-out box-border' : 'text-[1.2rem] ml-8  hover:font-bold hover:border-b-black hover:border-b-[3px] box-border transition duration-500 ease-out'}
                  onClick={handleUpcoming}>
                     Upcoming
                 </h1>
@@ -73,7 +76,7 @@ export default function Curriculum() {
 
                 {/* current curriculum */}
                 {current && <div>
-                    <h1 className='text-[1.5rem] font-bold mt-10'>Current Unit</h1>
+                    <h1 className='text-[1.5rem] font-bold mt-10 w-full'>Current Unit</h1>
     
                     <div style={{boxShadow: '4px 4px 10px rgba(0, 0, 0, 0.1)'}} className='flex rounded-xl w-fit overflow-hidden mt-14'>
                         <Image src={loopImg} objectFit="cover" width={150} quality={100} />
@@ -165,6 +168,7 @@ export default function Curriculum() {
                  </div>
                  </div>}
                  
+            </div>
             </div>
         </div>
     </div>

@@ -6,11 +6,13 @@ import {
   GeneralNav,
   SummaryBox,
 } from "../components";
+import Header from "../components/Header";
 
 const Dashboard = () => {
   return (
     <div className="min-h-[100vh] flex flex-col">
-      <GeneralNav />
+      {/* <GeneralNav /> */}
+      <Header />
       <div className="flex items-stretch mb-auto grow">
         <div className="sidebar bg-white w-[270px]">
           <Sidebar />
