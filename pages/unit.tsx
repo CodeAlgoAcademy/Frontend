@@ -3,11 +3,11 @@ import { BsCircle, BsFillCircleFill } from 'react-icons/bs'
 import { FaGripLinesVertical } from 'react-icons/fa'
 import { IoIosAddCircleOutline } from 'react-icons/io'
 import {FiChevronDown, FiChevronUp} from 'react-icons/fi'
-import Header from '../../components/Header';
-import Sidebar from '../../components/Sidebar';
-import AddStudent from '../../components/modals/AddStudent';
-import StudentProgress from '../../components/StudentProgress'
-import PreviewModal from '../../components/modals/PreviewModal'
+import Header from '../components/Header';
+import Sidebar from '../components/Sidebar';
+import AddStudent from '../components/modals/AddStudent';
+import StudentProgress from '../components/StudentProgress'
+import PreviewModal from '../components/modals/PreviewModal'
 
 
 
@@ -114,8 +114,12 @@ export default function unit() {
   return (
     <div>
       <Header />
-      <Sidebar />
-      <div className='ml-[20rem] px-[5.5rem] py-[2rem]  '>
+      <div className='flex items-stretch mb-auto grow bg-[#E5E5E5] '>
+      <div className="sidebar bg-white w-[270px]">
+          <Sidebar />
+        </div>
+        
+      <div className=' px-[5.5rem] py-[2rem] w-full'>
             <div className='flex justify-between'>
                 <h1 className='font-bold text-3xl'>Curriculum</h1>
                 <div className='flex gap-2 items-center'>
@@ -205,6 +209,7 @@ export default function unit() {
             <AddStudent showModal={showModal} cancelPresence={cancelPresence}/>
                   {/* preview modal components */}
              <PreviewModal showPreview={showPreview} cancelPreview={cancelPreview}/>
+             </div>
     </div>
   )
 }

@@ -8,6 +8,8 @@ import bracket from '../public/assets/bracket.png'
 
 import Image from 'next/image';
 import {HiDotsHorizontal} from 'react-icons/hi'
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export default function Curriculum() {
     const [past, setPast] = useState<boolean>(false)
@@ -88,7 +90,7 @@ export default function Curriculum() {
                             </p>
                             <div className='flex items-center mt-[2.1rem] justify-between'>
                                 <p>4/10 - Present</p>
-                                <p className='px-5 py-[5px] font-semibold border-black rounded-full border-2 w-fit'>view unit</p>
+                                <Link href="unit"><p className='px-5 py-[5px] font-semibold border-black rounded-full border-2 w-fit cursor-pointer' >view unit</p></Link>
                             </div>
                         </div>
                     </div>

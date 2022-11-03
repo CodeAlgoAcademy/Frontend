@@ -58,7 +58,10 @@ export default function Header() {
         {classTab && (
         <div onClick={toggleClassTab} className="border-[#BDBDBD] border rounded-[1.6rem] mt-[10rem] bg-white z-30">
           {classOptions.map((option) => {
-          return (<div className="w-[14rem] flex justify-between items-center border-b-2  px-3.5 py-2.5" onClick={() => {setSelectedClass(option.name), setClassColor(option.color)}}>
+          return (<div  className="w-[14rem] flex justify-between items-center border-b-2  px-3.5 py-2.5" 
+                  onClick={() => {setSelectedClass(option.name), setClassColor(option.color)}}
+                  key={option.name}
+                  >
             <div className="flex items-center justify-between gap-3">
               <span className="h-8 w-8 rounded-full" style={{background: option.color}}></span>
               <h5 className="font-bold">{option.name}</h5>

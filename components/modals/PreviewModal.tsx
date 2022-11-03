@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import {GiCancel} from 'react-icons/gi';
 import {motion, AnimatePresence} from 'framer-motion';
-import preview1 from '../../public/images/preview1.png'
-import preview2 from '../../public/images/preview2.png'
+import preview1 from '../../public/assets/preview1.png'
+import preview2 from '../../public/assets/preview2.png'
 import Image from 'next/image';
 
 
