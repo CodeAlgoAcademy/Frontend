@@ -38,3 +38,26 @@ a {
 	-moz-box-shadow: 7px 0px 13px -1px rgba(148, 148, 148, 0.76);
 	box-shadow: 7px 0px 13px -1px rgba(148, 148, 148, 0.76);
 }
+[type="radio"] {
+	appearance: none;
+	-webkit-appearance: none;
+	border: 0.2rem solid #fff;
+	background-color: #e8e8e8;
+	border-radius: 50%;
+	height: 1.2rem;
+	width: 1.2rem;
+	margin-right: 0.5rem;
+	cursor: pointer;
+	box-shadow: 0 0 0 1px #999;
+}
+[type="radio"]:focus-visible {
+	outline-offset: 0;
+}
+[type="radio"]:hover {
+	border-width: 0;
+}
+[type="radio"]:checked {
+	box-shadow: 0 0 0 1px #412281;
+	background-color: #412281;
+	border-width: 0.2rem;
+}

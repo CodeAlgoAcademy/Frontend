@@ -4,7 +4,7 @@ import { PersistGate } from "redux-persist/integration/react"
 import { Layout } from "../components"
 
 import "../styles/globals.css"
-// import "../styles/GeneralNav.css"
+import "../styles/GeneralNav.css"
 import type { AppProps } from "next/app"
 
 function MyApp({ Component, pageProps }: AppProps) {
