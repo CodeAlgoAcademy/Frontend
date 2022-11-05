@@ -42,10 +42,7 @@ const Login = () => {
       </Head>
 
       <section className="w-full min-h-screen bg-gray-100 flex justify-center items-center">
-        <form
-          onSubmit={login}
-          className="bg-white w-[95vw] max-w-[600px] mx-auto rounded-md p-[40px] md:p-[50px] shadow-md"
-        >
+        <div className="bg-white w-[95vw] max-w-[600px] mx-auto rounded-md p-[40px] md:p-[50px] shadow-md">
           {/* title */}
           <div className="flex flex-col gap-y-1 mb-4">
             <h1 className="md:text-3xl text-center text-lg font-bold">
@@ -70,47 +67,51 @@ const Login = () => {
             OR
           </span>
 
-          {/* inputs */}
-          <div className="flex flex-col gap-y-3 mb-6 items-start">
-            {inputFields.map((inputField: IInputFields, index: number) => {
-              const { type, placeholder, name, value } = inputField;
-              return (
-                <input
-                  key={index}
-                  type={type}
-                  placeholder={placeholder}
-                  name={name}
-                  value={value}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                    dispatch(updateUser({ key: name, value: e.target.value }));
-                  }}
-                  minLength={name === "password" ? 8 : 0}
-                  required
-                  className={styles.input}
-                />
-              );
-            })}
-          </div>
+          <form className="w-full" onSubmit={login}>
+            {/* inputs */}
+            <div className="flex flex-col gap-y-3 mb-6 items-start">
+              {inputFields.map((inputField: IInputFields, index: number) => {
+                const { type, placeholder, name, value } = inputField;
+                return (
+                  <input
+                    key={index}
+                    type={type}
+                    placeholder={placeholder}
+                    name={name}
+                    value={value}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      dispatch(
+                        updateUser({ key: name, value: e.target.value })
+                      );
+                    }}
+                    minLength={name === "password" ? 8 : 0}
+                    required
+                    className={styles.input}
+                  />
+                );
+              })}
+            </div>
 
-          <span className="flex flex-row items-center gap-x-2 mt-4">
-            <input type="checkbox" id="terms" required />
-            <label htmlFor="terms">I accept the terms and conditions</label>
-          </span>
-          {/* login button */}
+            <span className="flex flex-row items-center gap-x-2 mt-4">
+              <input type="checkbox" id="terms" required />
+              <label htmlFor="terms">I accept the terms and conditions</label>
+            </span>
+            {/* login button */}
 
-          <div className="text-right">
-            <button
-              type="submit"
-              className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md"
-            >
-              Log In
-            </button>
-          </div>
+            <div className="text-right">
+              <button
+                type="submit"
+                className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md"
+              >
+                Log In
+              </button>
+            </div>
+          </form>
 
           <p className="text-right underline text-[16px] mt-2 cursor-pointer">
             Forgot Password
           </p>
-        </form>
+        </div>
       </section>
     </main>
   );
