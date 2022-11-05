@@ -32,7 +32,7 @@ const Login = () => {
   const login = (event: ChangeEvent<HTMLFormElement>): void => {
     event.preventDefault();
     // login logic
-    router.push("/dashboard");
+    router.push("/addClass");
   };
 
   return (

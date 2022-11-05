@@ -1,9 +1,13 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React, { FC } from "react";
 import clever from "../public/assets/imgs/clever.png";
 const CleverBtn: FC = () => {
+  const router = useRouter();
+
   const handleClick = (): void => {
     // handle backend logic
+    router.push("/addClass");
   };
 
   return (

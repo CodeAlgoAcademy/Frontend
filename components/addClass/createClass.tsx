@@ -6,6 +6,7 @@ import {
   openAddStudentsModal,
   toggleColorModal,
   openGradesModal,
+  closeAddClassModal,
 } from "../../store/modalSlice";
 import { colors } from "./colors";
 import { RootState } from "../../store/store";
@@ -132,6 +133,9 @@ const CreateClass = () => {
         <button
           type="submit"
           className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md"
+          onClick={() => {
+            dispatch(closeAddClassModal());
+          }}
         >
           Create
         </button>
