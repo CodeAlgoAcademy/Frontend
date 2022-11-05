@@ -52,7 +52,7 @@ const SignUp = () => {
   const signup = (event: ChangeEvent<HTMLFormElement>): void => {
     event.preventDefault();
     // signup logic
-    router.push("/dashboard");
+    router.push("/addClass");
   };
 
   return (
