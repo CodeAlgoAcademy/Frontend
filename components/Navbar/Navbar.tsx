@@ -5,48 +5,58 @@ import logo from "../../public/assets/imgs/CodeAlgo_Logo.png";
 import NavLinks from "./NavLinks";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCloseOutline } from "react-icons/io5";
+import Buttons from "./Buttons";
 
 const Navbar = () => {
-  const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false);
 
-  return (
-    <nav className="bg-white">
-      <div className="flex items-center font-medium justify-around">
-        <div className="md:w-auto w-full px-5 md:px-0 flex justify-between md:justify-around items-center">
-          <Image
-            src={logo}
-            alt="logo"
-            className="md:cursor-pointer h-9"
-            width={120}
-            height={80}
-          />
-          <div className="text-3xl md:hidden" onClick={() => setOpen(!open)}>
-            {open ? <IoCloseOutline /> : <GiHamburgerMenu />}
-          </div>
-        </div>
-        <ul className="md:flex hidden uppercase items-center gap-8 font-[Poppins]">
-          <li>
-            <Link href="/" className="py-7 px-3 inline-block">
-              Home
-            </Link>
-          </li>
-          <NavLinks />
-        </ul>
-
-        {/* Mobile nav */}
-        <ul
-          className={`z-50 md:hidden bg-white fixed w-full top-20 overflow-y-auto bottom-0 py-24 pl-4 duration-500 ${
-            open ? "left-0" : "left-[-100%]"
-          }`}
-        >
-          <li className="px-3 py-7 inline-block">
-            <Link href="/">Home</Link>
-          </li>
-          <NavLinks />
-        </ul>
-      </div>
-    </nav>
-  );
-};
+    return (
+        <nav className="bg-white">
+            <div className={styles.container}>
+                <div className={styles.mobilleHeader}>
+                    <Link href='/'>
+                        <Image 
+                            alt="" 
+                            src={logo} 
+                            className={styles.headerImage} 
+                            width={140}
+                            height={90}
+                        />
+                    </Link>
+                    <div className={styles.hamburgerContainer} onClick={() => setOpen(!open)}>
+                        {open ? 
+                            <IoCloseOutline /> : 
+                            <GiHamburgerMenu />
+                        }
+                    </div>
+                </div>
+                <ul className={styles.headerCenter}>
+                    <NavLinks />
+                </ul>
+                <div className={styles.headerRight}>
+                    <Buttons />
+                </div>
+                
+                {/* Mobile nav */}
+                <ul
+                    className={`${styles.mobileNav} ${open ? "left-0" : "left-[-100%]"}`}
+                >
+                    <NavLinks />
+                    <Buttons />
+                </ul>
+            </div>
+        </nav>
+    )
+}
 
 export default Navbar;
+
+const styles = {
+  container: "flex items-center font-medium justify-between px-10",
+  mobilleHeader: "md:w-auto w-full px-5 md:px-0 flex justify-between md:justify-around items-center",
+  headerImage: "md:cursor-pointer h-9",
+  hamburgerContainer: "text-3xl md:hidden",
+  headerCenter: "md:flex hidden capitalise items-center gap-8 font-normal",
+  headerRight: 'hidden md:block',
+  mobileNav: 'z-50 md:hidden bg-white fixed w-full top-20 overflow-y-auto bottom-0 py-24 px-4 duration-500'
+}
