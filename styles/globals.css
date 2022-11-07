@@ -44,8 +44,8 @@ a {
 	border: 0.2rem solid #fff;
 	background-color: #e8e8e8;
 	border-radius: 50%;
-	height: 1.2rem;
-	width: 1.2rem;
+	height: 1.35rem;
+	width: 1.35rem;
 	margin-right: 0.5rem;
 	cursor: pointer;
 	box-shadow: 0 0 0 1px #999;
@@ -57,7 +57,68 @@ a {
 	border-width: 0;
 }
 [type="radio"]:checked {
-	box-shadow: 0 0 0 1px #412281;
-	background-color: #412281;
-	border-width: 0.2rem;
+	box-shadow: 0 0 0 1px #f28e2c;
+	border-color: #f28e2c;
+	background-color: #fff;
+	border-width: 0.325rem;
+}
+.showModal {
+	top: 0;
+	animation: showModalAnimation 0.3s ease-in-out;
+	-moz-animation: showModalAnimation 0.3s ease-in-out; /* Firefox */
+	-webkit-animation: showModalAnimation 0.3s ease-in-out; /* Safari and Chrome */
+}
+.hideModal {
+	top: -100vh;
+	animation: hideModalAnimation 0.3s ease-in-out;
+	-moz-animation: hideModalAnimation 0.3s ease-in-out; /* Firefox */
+	-webkit-animation: hideModalAnimation 0.3s ease-in-out; /* Safari and Chrome */
+}
+@keyframes showModalAnimation {
+	from {
+		top: -100vh;
+	}
+	to {
+		top: 0;
+	}
+}
+@-moz-keyframes showModalAnimation {
+	from {
+		top: -100vh;
+	}
+	to {
+		top: 0;
+	}
+}
+@-webkit-keyframes showModalAnimation {
+	from {
+		top: -100vh;
+	}
+	to {
+		top: 0;
+	}
+}
+@keyframes hideModalAnimation {
+	from {
+		top: 0;
+	}
+	to {
+		top: -100vh;
+	}
+}
+@-moz-keyframes hideModalAnimation {
+	from {
+		top: 0;
+	}
+	to {
+		top: -100vh;
+	}
+}
+@-webkit-keyframes hideModalAnimation {
+	from {
+		top: 0;
+	}
+	to {
+		top: -100vh;
+	}
 }
