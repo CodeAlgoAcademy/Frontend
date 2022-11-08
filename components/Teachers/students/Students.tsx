@@ -3,7 +3,7 @@ import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io'
 import { IoChatbubblesOutline } from 'react-icons/io5'
 import { HiOutlineDotsHorizontal } from 'react-icons/hi'
 import StudentTable from './StudentTable'
-import { sample_student_data } from '../../../pages/teachers/students/data'
+import { sample_student_data } from './data'
 
 const Students = () => {
     const [headings, setHeadings] = useState<number[]>([])
