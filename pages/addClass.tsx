@@ -1,12 +1,10 @@
 import React, { FC, useState } from "react";
 import Head from "next/head";
 import Modal from "../components/addClass/modal";
-import SingleClass from "../components/addClass/singleClass";
 import { FaPlus } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { openAddClassModal } from "../store/modalSlice";
 import Classes from "../components/addClass/classes";
-import { GeneralNav } from "../components";
 const AddClass = () => {
   const dispatch = useDispatch();
 

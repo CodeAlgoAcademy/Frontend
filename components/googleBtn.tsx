@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import Image from "next/image";
-import google from "../public/assets/imgs/google.png";
+import google from "../public/assets/google.png";
 import { useRouter } from "next/router";
 const GoogleBtn: FC = () => {
   const router = useRouter();
