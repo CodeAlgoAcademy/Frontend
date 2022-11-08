@@ -107,6 +107,7 @@ export default function Curriculum() {
                   <Image
                     src={loopImg}
                     objectFit="cover"
+                    alt="loop image"
                     width={150}
                     quality={100}
                   />
@@ -194,7 +195,7 @@ export default function Curriculum() {
                       className="flex rounded-xl w-fit overflow-hidden mt-14"
                     >
                       <div className="w-[150px] bg-[#A6CCA8] flex justify-center items-center">
-                        <Image src={connect} />
+                        <Image src={connect} alt="connect" />
                       </div>
                       <div className="bg-white w-[20rem] h-[17rem] p-8 ">
                         <div>
@@ -216,7 +217,7 @@ export default function Curriculum() {
                       className="flex rounded-xl w-fit overflow-hidden mt-14"
                     >
                       <div className="w-[150px] bg-[#8FD3D8] flex justify-center items-center">
-                        <Image src={bracket} />
+                        <Image src={bracket} alt="bracket" />
                       </div>
                       <div className="bg-white w-[20rem] h-[17rem] p-8 ">
                         <div>
