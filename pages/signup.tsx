@@ -8,6 +8,7 @@ import Students from "../components/signup/students";
 import Teachers from "../components/signup/teachers";
 import Parents from "../components/signup/parents";
 import { ITabs } from "../types/interfaces";
+import { useRouter } from "next/router";
 
 const tabs: ITabs[] = [
   {
@@ -26,6 +27,7 @@ const tabs: ITabs[] = [
 ];
 
 const SignUp = () => {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<string | undefined>("Student");
   const [currentTab, setCurrentTab] = useState<ITabs>({
     tabName: "",
@@ -47,19 +49,19 @@ const SignUp = () => {
     setActiveTab((prev) => tabName);
   };
 
+  const signup = (event: ChangeEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+    // signup logic
+    router.push("/addClass");
+  };
+
   return (
     <main>
       <Head>
         <title>CodeAlgo Academy | Register</title>
       </Head>
       <section className="w-full min-h-screen bg-gray-100 flex justify-center items-center py-6">
-        <form
-          onSubmit={(event: ChangeEvent<HTMLFormElement>) => {
-            event.preventDefault();
-          }}
-          action=""
-          className="bg-white w-[95vw] max-w-[900px] mx-auto rounded-md p-[40px] md:p-[50px] shadow-md"
-        >
+        <div className="bg-white w-[95vw] max-w-[900px] mx-auto rounded-md p-[40px] md:p-[50px] shadow-md">
           {/* tabs */}
           <div className="w-full max-w-[600px] mx-auto mb-4 flex-row rounded-md overflow-hidden hidden md:flex">
             {tabs.map((tab: ITabs, index: number): React.ReactElement => {
@@ -119,20 +121,22 @@ const SignUp = () => {
             OR
           </span>
 
-          {/* display different components based on the active tab */}
-          {currentTab?.component}
-          <span className="flex flex-row items-center gap-x-2 mt-4">
-            <input type="checkbox" id="terms" required />
-            <label htmlFor="terms">I accept the terms and conditions</label>
-          </span>
-          <div className="text-right mt-4">
-            <button
-              type="submit"
-              className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md"
-            >
-              Sign Up
-            </button>
-          </div>
+          <form className="w-full" onSubmit={signup}>
+            {/* display different components based on the active tab */}
+            {currentTab?.component}
+            <span className="flex flex-row items-center gap-x-2 mt-4">
+              <input type="checkbox" id="terms" required />
+              <label htmlFor="terms">I accept the terms and conditions</label>
+            </span>
+            <div className="text-right mt-4">
+              <button
+                type="submit"
+                className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md"
+              >
+                Sign Up
+              </button>
+            </div>
+          </form>
 
           <div className="flex md:flex-row md:justify-between md:items-center items-end mt-4 flex-col-reverse justify-center">
             <p className="text-grey-800 text-left md:text-lg text-[15px]">
@@ -143,7 +147,7 @@ const SignUp = () => {
             </p>
             <p className="text-grey-800 underline">Forgot Password</p>
           </div>
-        </form>
+        </div>
       </section>
       {/* position fixed, for stundents only */}
       <Grades /> {/*Only when the grades button is clicked*/}
