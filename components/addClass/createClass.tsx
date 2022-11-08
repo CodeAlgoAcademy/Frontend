@@ -1,12 +1,18 @@
-import React, { ChangeEvent } from "react"
-import { FaChevronDown, FaPlus } from "react-icons/fa"
-import { useDispatch, useSelector } from "react-redux"
-import { closeColorModal, openAddStudentsModal, toggleColorModal, openGradesModal } from "../../store/modalSlice"
-import { colors } from "./colors"
-import { RootState } from "../../store/store"
-import { IInputFields } from "../../types/interfaces"
-import { updateClassDetails } from "../../store/addClassSlice"
-import styles from "../../styles/styles"
+import React, { ChangeEvent } from "react";
+import { FaChevronDown, FaPlus } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  closeColorModal,
+  openAddStudentsModal,
+  toggleColorModal,
+  openGradesModal,
+  closeAddClassModal,
+} from "../../store/modalSlice";
+import { colors } from "./colors";
+import { RootState } from "../../store/store";
+import { IInputFields } from "../../types/interfaces";
+import { updateClassDetails } from "../../store/addClassSlice";
+import styles from "../../styles/styles";
 
 const CreateClass = () => {
 	const dispatch = useDispatch()
