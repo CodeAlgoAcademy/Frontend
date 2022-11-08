@@ -44,7 +44,6 @@ export default function Header() {
           height={52}
         />
       </div>
-      '
       <BiHomeAlt className="text-[#616161] text-[2rem] ml-[25rem]" />
       {/* class dropdown */}
       <div className=" flex items-center gap-4">
@@ -99,7 +98,7 @@ export default function Header() {
       </div>
       {/* avatar info */}
       <div className="flex items-center border rounded-full px-1 py-1 h-fit justify-between w-[6.5rem] ml-auto mr-[4rem]">
-        <Image src={avatar} />
+        <Image src={avatar} alt="user" />
         <div className="pr-2">
           <FaChevronDown className=" text-[#838383]" />
         </div>

@@ -36,7 +36,7 @@ const GeneralNav = () => {
   return (
     <nav className="py-6 px-[5%] bg-white flex items-center justify-between">
       <div className="relative flex items-center gap-40">
-        <div className="absolute left-0 top-0">
+        <div className="max-w-[200px]">
           <Image
             src={Logo}
             alt="logo"
@@ -45,8 +45,7 @@ const GeneralNav = () => {
             height={52}
           />
         </div>
-        <div></div>
-        <div className="flex items-center gap-4">
+        <div className="flex-1 flex gap-4">
           <div className="text-[#616161] text-[24px] cursor-pointer">
             <Link href="/addClass">
               <BiHomeAlt />
