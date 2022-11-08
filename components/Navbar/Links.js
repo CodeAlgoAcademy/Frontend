@@ -5,7 +5,7 @@ export const links = [
         sublinks: [
             { name: "Parent's Page", link: "/parents" },
             { name: "FAQ", link: "/parents/faq" },
-            { name: "Login", link: "/parents/login" }
+            { name: "Login", link: "/login" }
         ]
     },
     {
@@ -14,7 +14,7 @@ export const links = [
         sublinks: [
             { name: "Teacher's Page", link: "/teachers" },
             { name: "Resources", link: "/teachers/resources" },
-            { name: "Login", link: "/teachers/login" }
+            { name: "Login", link: "/login" }
         ]
     },
     {
