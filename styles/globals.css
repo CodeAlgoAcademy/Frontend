@@ -64,15 +64,15 @@ a {
 }
 .showModal {
 	top: 0;
-	animation: showModalAnimation 0.3s ease-in-out;
-	-moz-animation: showModalAnimation 0.3s ease-in-out; /* Firefox */
-	-webkit-animation: showModalAnimation 0.3s ease-in-out; /* Safari and Chrome */
+	animation: showModalAnimation 0.3s ease-in;
+	-moz-animation: showModalAnimation 0.3s ease-in; /* Firefox */
+	-webkit-animation: showModalAnimation 0.3s ease-in; /* Safari and Chrome */
 }
 .hideModal {
 	top: -100vh;
-	animation: hideModalAnimation 0.3s ease-in-out;
-	-moz-animation: hideModalAnimation 0.3s ease-in-out; /* Firefox */
-	-webkit-animation: hideModalAnimation 0.3s ease-in-out; /* Safari and Chrome */
+	animation: hideModalAnimation 0.5s ease-in;
+	-moz-animation: hideModalAnimation 0.5s ease-in; /* Firefox */
+	-webkit-animation: hideModalAnimation 0.5s ease-in; /* Safari and Chrome */
 }
 @keyframes showModalAnimation {
 	from {
@@ -121,4 +121,33 @@ a {
 	to {
 		top: -100vh;
 	}
+}
+
+.assignment-input::-webkit-outer-spin-button,
+.assignment-input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+.assignment-input[type="number"] {
+	-moz-appearance: textfield;
+}
+.assignment-slider::-webkit-slider-thumb {
+	appearance: none;
+	-webkit-appearance: none;
+	height: 1.35rem;
+	width: 1.35rem;
+	cursor: pointer;
+	box-shadow: 0 0 0 1px #f28e2c;
+	border: 0.25rem solid #f28e2c;
+	background-color: #fff;
+	border-radius: 50%;
+}
+.assignment-slider::-moz-range-thumb {
+	height: 1.35rem;
+	width: 1.35rem;
+	cursor: pointer;
+	box-shadow: 0 0 0 1px #f28e2c;
+	border: 0.25rem solid #f28e2c;
+	background-color: #fff;
+	border-radius: 50%;
 }
