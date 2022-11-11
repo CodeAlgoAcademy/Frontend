@@ -11,12 +11,17 @@ import { HiDotsHorizontal } from "react-icons/hi";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { GeneralNav } from "../components";
+import { useDispatch } from "react-redux";
+import { openAddUnitModal } from "store/modalSlice";
+import AddUnit from "@/components/curriculum/addUnit";
 
 export default function Curriculum() {
   const [past, setPast] = useState<boolean>(false);
   const [current, setCurrent] = useState<boolean>(true);
   const [upcoming, setUpcoming] = useState<boolean>(false);
   const [active, setActive] = useState("current");
+
+  const dispatch = useDispatch();
 
   // curriculumn tab click functions
   const handlePast = () => {
@@ -44,13 +49,19 @@ export default function Curriculum() {
     <div className="min-h-[100vh] flex flex-col">
       <GeneralNav />
       <div className="flex items-stretch mb-auto grow">
+        <AddUnit />
         <div className="sidebar bg-white w-[270px]">
           <Sidebar />
         </div>
         <div className="px-[5.5rem] py-[2rem] flex-1 bg-[#EFEFEF]">
           <div className="flex justify-between">
             <h1 className="font-bold text-3xl">Curriculum</h1>
-            <div className="flex gap-2 items-center">
+            <div
+              className="flex gap-2 items-center cursor-pointer"
+              onClick={() => {
+                dispatch(openAddUnitModal());
+              }}
+            >
               <IoIosAddCircleOutline className="text-4xl " />
               <h1 className="text-[1.2rem]">Add Unit</h1>
             </div>
@@ -92,7 +103,7 @@ export default function Curriculum() {
 
           {/* curriculumn section */}
 
-          <div className="pl-[2rem]">
+          <div>
             {/* current curriculum */}
             {current && (
               <div>
@@ -122,7 +133,7 @@ export default function Curriculum() {
                     </p>
                     <div className="flex items-center mt-[2.1rem] justify-between">
                       <p>4/10 - Present</p>
-                      <Link href="unit">
+                      <Link href="/unit">
                         <p className="px-5 py-[5px] font-semibold border-black rounded-full border-2 w-fit cursor-pointer">
                           view unit
                         </p>
@@ -138,19 +149,19 @@ export default function Curriculum() {
             {past && (
               <div>
                 <h1 className="text-[1.5rem] font-bold mt-10">Past Units</h1>
-                <div className="flex items-center gap-12">
-                  <div>
+                <div className="flex lg:flex-row flex-col items-center gap-8">
+                  <div className="flex-[50%]">
                     <div
                       style={{ boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" }}
-                      className="flex rounded-xl w-fit overflow-hidden mt-14"
+                      className="flex rounded-xl overflow-hidden mt-14"
                     >
-                      <div className="w-[150px] bg-[#A0A0A0]"></div>
-                      <div className="bg-white w-[20rem] h-[17rem] p-8 ">
+                      <div className="lg:w-[150px] w-[120px] bg-[#A0A0A0]"></div>
+                      <div className="bg-white flex-1 w-full h-[17rem] p-8">
                         <div>
                           <HiDotsHorizontal className="ml-auto text-3xl border-[#BDBDBD] mt-[-1rem] text-[#C4C4C4]" />
                         </div>
-                        <h1 className="font-bold mt-3 mb-5">Algorithm</h1>
-                        <p>
+                        <h1 className="font-bold mb-3">Algorithm</h1>
+                        <p className="text-[15px]">
                           Compare multiple algorithms for the same task. Analyze
                           and refine multiple algorithms for the same task and
                           determine which algorithm is the most efficient.
@@ -159,18 +170,18 @@ export default function Curriculum() {
                     </div>
                   </div>
 
-                  <div className="ml-10">
+                  <div className="flex-[50%]">
                     <div
                       style={{ boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" }}
-                      className="flex rounded-xl w-fit overflow-hidden mt-14"
+                      className="flex rounded-xl overflow-hidden mt-14"
                     >
-                      <div className="w-[150px] bg-[#A0A0A0]"></div>
-                      <div className="bg-white w-[20rem] h-[17rem] p-8 ">
+                      <div className="lg:w-[150px] w-[120px] bg-[#A0A0A0]"></div>
+                      <div className="bg-white w-full flex-1 h-[17rem] p-8 ">
                         <div>
                           <HiDotsHorizontal className="ml-auto text-3xl border-[#BDBDBD] mt-[-1rem] text-[#C4C4C4]" />
                         </div>
-                        <h1 className="font-bold mt-3 mb-5">Variable</h1>
-                        <p>
+                        <h1 className="font-bold mb-3">Variable</h1>
+                        <p className="text-[15px]">
                           Utilize, create, and modify programs that use
                           variables, with grade level appropriate data.
                         </p>
@@ -188,21 +199,21 @@ export default function Curriculum() {
                 <h1 className="text-[1.5rem] font-bold mt-10">
                   Upcoming Units
                 </h1>
-                <div className="flex items-center gap-12">
-                  <div>
+                <div className="flex lg:flex-row flex-col items-center gap-8">
+                  <div className="flex-[50%]">
                     <div
                       style={{ boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" }}
                       className="flex rounded-xl w-fit overflow-hidden mt-14"
                     >
-                      <div className="w-[150px] bg-[#A6CCA8] flex justify-center items-center">
+                      <div className="lg:w-[150px] w-[120px] bg-[#A6CCA8] flex justify-center items-center">
                         <Image src={connect} alt="connect" />
                       </div>
-                      <div className="bg-white w-[20rem] h-[17rem] p-8 ">
+                      <div className="bg-white flex-1 w-full h-[17rem] p-8">
                         <div>
                           <HiDotsHorizontal className="ml-auto text-3xl border-[#BDBDBD] mt-[-1rem] text-[#C4C4C4]" />
                         </div>
-                        <h1 className="font-bold mt-3 mb-5">Algorithm</h1>
-                        <p>
+                        <h1 className="font-bold mb-3">Algorithm</h1>
+                        <p className="text-[15px]">
                           Compare multiple algorithms for the same task. Analyze
                           and refine multiple algorithms for the same task and
                           determine which algorithm is the most efficient.
@@ -211,20 +222,20 @@ export default function Curriculum() {
                     </div>
                   </div>
 
-                  <div className="ml-10">
+                  <div className="flex-[50%]">
                     <div
                       style={{ boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" }}
                       className="flex rounded-xl w-fit overflow-hidden mt-14"
                     >
-                      <div className="w-[150px] bg-[#8FD3D8] flex justify-center items-center">
+                      <div className="lg:w-[150px] w-[120px] bg-[#8FD3D8] flex justify-center items-center">
                         <Image src={bracket} alt="bracket" />
                       </div>
-                      <div className="bg-white w-[20rem] h-[17rem] p-8 ">
+                      <div className="bg-white flex-1 w-full h-[17rem] p-8">
                         <div>
                           <HiDotsHorizontal className="ml-auto text-3xl border-[#BDBDBD] mt-[-1rem] text-[#C4C4C4]" />
                         </div>
-                        <h1 className="font-bold mt-3 mb-5">Variable</h1>
-                        <p>
+                        <h1 className="font-bold mb-3">Variable</h1>
+                        <p className="text-[15px]">
                           Utilize, create, and modify programs that use
                           variables, with grade level appropriate data.
                         </p>
