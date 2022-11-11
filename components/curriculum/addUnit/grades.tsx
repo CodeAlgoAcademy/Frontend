@@ -13,13 +13,16 @@ const Grade: FC<Props> = ({ openedModal, updateOpenedModal }) => {
   return (
     <article className="flex flex-row gap-x-2 relative">
       {openedModal === "grade" && (
-        <div className={styles.preview}>
+        <div
+          className={`${styles.preview} -bottom-[10%] left-[30%] max-h-[300px]`}
+        >
           {grades.map((grade, index: number) => {
             return (
-              <div className={styles.inputContainer} key={index}>
+              <div className={`${styles.inputContainer}`} key={index}>
                 <input
                   type="checkbox"
                   id={grade}
+                  className="accent-mainPurple"
                   checked={chosenGrades.includes(grade)}
                   onChange={(event: ChangeEvent<HTMLInputElement>) => {
                     if (event.target.checked) {

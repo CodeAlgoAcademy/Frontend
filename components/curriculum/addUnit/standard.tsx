@@ -11,7 +11,7 @@ const Standard: FC<Props> = ({ openedModal, updateOpenedModal }) => {
   return (
     <article className="flex flex-row gap-x-2 relative">
       {openedModal === "standard" && (
-        <div className={styles.preview}>
+        <div className={`${styles.preview} top-[110%] left-0`}>
           {standards.map((availableStandard: string, index: number) => (
             <div className={styles.inputContainer} key={index}>
               <input
@@ -21,9 +21,16 @@ const Standard: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                 onChange={() => {
                   dispatch(updateStandard({ value: availableStandard }));
                 }}
-                checked={standard === availableStandard}
+                className="hidden"
               />
-              <label htmlFor={availableStandard}>{availableStandard}</label>
+              <label
+                htmlFor={availableStandard}
+                className={`hover:text-mainPurple ${
+                  standard === availableStandard && "text-mainPurple"
+                }`}
+              >
+                {availableStandard}
+              </label>
             </div>
           ))}
         </div>
