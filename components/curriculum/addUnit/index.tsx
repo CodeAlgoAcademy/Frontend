@@ -130,63 +130,58 @@ function AddUnit() {
     return <></>;
   }
   return (
-    <section className="w-full min-h-screen overflow-hidden overflow-y-scroll bg-[rgba(0,0,0,0.5)] fixed top-0 left-0 z-10 flex justify-center items-center">
-      {/* main modal */}
-      <div className="w-[90vw] max-w-[1100px] bg-gray-100 px-8 mx-auto rounded-md py-16 relative">
-        <i
-          className="absolute top-[15px] right-[15px] text-[28px] text-red-600 font-bold cursor-pointer"
-          onClick={() => {
-            dispatch(closeAddUnitModal());
-            dispatch(clearAddUnitsParams());
-            updateOpenedModal("");
-          }}
-        >
-          <FaTimes />
-        </i>
-        <div className="w-full flex flex-col gap-y-4">
-          <Standard
-            openedModal={openedModal}
-            updateOpenedModal={updateOpenedModal}
-          />
+    <section className="flex-1 w-full bg-gray-100 px-8 mx-auto rounded-md py-16 relative">
+      <i
+        className="absolute top-[15px] right-[15px] text-[28px] text-red-600 font-bold cursor-pointer"
+        onClick={() => {
+          dispatch(closeAddUnitModal());
+          dispatch(clearAddUnitsParams());
+          updateOpenedModal("");
+        }}
+      >
+        <FaTimes />
+      </i>
+      <div className="w-full flex flex-col gap-y-4">
+        <Standard
+          openedModal={openedModal}
+          updateOpenedModal={updateOpenedModal}
+        />
 
-          <Levels
-            openedModal={openedModal}
-            updateOpenedModal={updateOpenedModal}
-          />
+        <Levels
+          openedModal={openedModal}
+          updateOpenedModal={updateOpenedModal}
+        />
 
-          <Unit
-            openedModal={openedModal}
-            updateOpenedModal={updateOpenedModal}
-          />
+        <Unit openedModal={openedModal} updateOpenedModal={updateOpenedModal} />
 
-          <Grade
-            openedModal={openedModal}
-            updateOpenedModal={updateOpenedModal}
-          />
-        </div>
-        <button
-          className="w-[90%] max-w-[300px] bg-mainPurple mt-8 rounded-[4px] text-white font-bold py-3 mx-auto block hover:shadow-md cursor-pointer"
-          onClick={() => {
-            dispatch(closeAddUnitModal());
-            dispatch(clearAddUnitsParams());
-            updateOpenedModal("");
-          }}
-        >
-          Submit
-        </button>
+        <Grade
+          openedModal={openedModal}
+          updateOpenedModal={updateOpenedModal}
+        />
       </div>
+      <button
+        className="w-[90vw] max-w-[250px] bg-orange-500 mt-8 rounded-[30px] text-white font-bold py-3 mx-auto block hover:shadow-md cursor-pointer"
+        onClick={() => {
+          dispatch(closeAddUnitModal());
+          dispatch(clearAddUnitsParams());
+          updateOpenedModal("");
+        }}
+      >
+        Submit
+      </button>
     </section>
   );
 }
 
 export const styles = {
   preview:
-    "absolute bottom-[50%] left-0 w-[90vw] max-w-[240px] h-[200px] overflow-hidden overflow-y-scroll bg-white p-4 flex flex-col gap-2 rounded-md shadow-md text-[15px] font-normal",
+    "absolute w-[90vw] max-w-[220px] max-h-[200px] overflow-hidden overflow-y-scroll z-10 bg-white flex flex-col rounded-[15px] shadow-md text-[15px] font-normal",
   topic:
     "md:flex-[0.4] flex-[0.5] flex p-6 justify-between items-center bg-white rounded-md text-[17px] font-bold cursor-pointer",
   numbersSelectedContainer: "md:flex-[0.6] flex-[0.5] p-6 bg-white text-[17px]",
-  inputContainer: "flex items-center gap-2",
-  button: "py-[12px] text-center w-[100px] rounded-md hover:shadow-md",
+  inputContainer: "flex items-center gap-2 p-3 border-b-2 font-bold",
+  button:
+    "py-[12px] text-center md:w-[150px] w-[120px] rounded-md hover:shadow-md font-bold",
 };
 
 export default AddUnit;
