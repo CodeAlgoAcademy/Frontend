@@ -78,7 +78,7 @@ export default function Header() {
                   }}
                   key={option.name}
                 >
-                  <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center cursor-pointer justify-between gap-3">
                     <span
                       className="h-8 w-8 rounded-full"
                       style={{ background: option.color }}
