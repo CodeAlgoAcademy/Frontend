@@ -130,8 +130,8 @@ export default function Unit() {
 
           {unitData.map((data) => {
             return (
-              <div key={data.id} className="flex-column bg-white rounded-lg">
-                <div className="bg-white flex items-center mt-[.7rem] py-[0.3rem] pl-[10px] rounded-lg">
+              <div key={data.id} className="flex-column bg-white rounded-lg transition duration-200 ease-in-out">
+                <div className="bg-white flex items-center mt-[.7rem] py-[0.3rem] pl-[10px] rounded-lg transition duration-200 ease-out">
                   <div className="border-r-2 flex items-center border-[#E6E6E6] py-5 pr-[4rem]  justify-between w-full">
                     <div className="flex items-center gap-7">
                       <FaGripLinesVertical className="text-[#A0A0A0] text-[1.1rem] font-thin" />
@@ -167,8 +167,8 @@ export default function Unit() {
                   </div>
                 </div>
                 {data.show && (
-                  <div>
-                    <div className="flex  mx-12 py-6 border-[#E6E6E6] border-t-2">
+                  <div >
+                    <div className="flex  mx-12 py-6 border-[#E6E6E6] border-t-2 ">
                       {/* first division */}
                       <div className="flex-1 pr-[3rem] border-[#E6E6E6] border-r-2 py-[1rem]">
                         <div className="flex gap-[3rem]">
