@@ -14,10 +14,11 @@ const Levels: FC<Props> = ({ openedModal, updateOpenedModal }) => {
       {openedModal === "level" && (
         <div className={styles.preview}>
           {availableLevels.map((level: ILevels, index: number) => (
-            <div className={styles.inputContainer} key={index}>
+            <div className={`relative ${styles.inputContainer}`} key={index}>
               <input
                 type="checkbox"
                 id={level.level}
+                className="accent-mainPurple"
                 checked={levels.includes(level.level)}
                 onChange={(event: ChangeEvent<HTMLInputElement>) => {
                   if (event.target.checked) {
@@ -32,7 +33,18 @@ const Levels: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                   }
                 }}
               />
-              <label htmlFor={level.level}>{level.level}</label>
+              <label htmlFor={level.level} className="hoverElement">
+                {level.level}
+              </label>
+              <p
+                className={`hoverText ${
+                  index === availableLevels.length - 1
+                    ? "right-[0px] bottom-[30px]"
+                    : "right-[0px] -top-[10px]"
+                }`}
+              >
+                {level.hoverText}
+              </p>
             </div>
           ))}
         </div>

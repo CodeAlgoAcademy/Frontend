@@ -9,6 +9,7 @@ const initialState: IUnitsSlice = {
   addUnit: {
     standard: "",
     units: [],
+    // units: [...availableUnits]
     levels: [],
     grades: [],
     chosenGrades: [],
@@ -45,15 +46,15 @@ const unitsSlice = createSlice({
           grades = [...grades, ...level.grades];
 
           // find the units from availableUnits
-          const unitFromAvailableUnits = level.units.map((unit) =>
-            availableUnits.find((availableUnit) => availableUnit.unit === unit)
+          const unitFromAvailableUnits = level.unitsId.map((unitId) =>
+            availableUnits.find((availableUnit) => availableUnit.id === unitId)
           );
           units = [...units, ...unitFromAvailableUnits];
         }
       });
-      console.log(units);
       state.addUnit.grades = grades;
       state.addUnit.units = units;
+      state.addUnit.chosenGrades = [];
     },
     updateUnits: (
       state: IUnitsSlice,
@@ -64,15 +65,19 @@ const unitsSlice = createSlice({
         if (action.payload.id === unit.id) {
           if (action.payload.type === "current") {
             unit.isCurrent = true;
-            unit.date = "";
-          } else {
+            unit.startDate = "";
+          } else if (action.payload.type === "upcoming") {
             unit.isCurrent = false;
             // format: yyyy-mm-dd just like a normal date input element
-            unit.date = action.payload.value
-              ? (action.payload.value as string)
-              : `${date.getFullYear()}-${
-                  date.getMonth() + 1
-                }-${date.getDate()}`;
+            unit.startDate = `${date.getFullYear()}-${
+              date.getMonth() + 1
+            }-${date.getDate()}`;
+          } else if (action.payload.type === "start date") {
+            unit.isCurrent = false;
+            unit.startDate = `${action.payload.value}`;
+          } else if (action.payload.type === "end date") {
+            unit.isCurrent = false;
+            unit.endDate = `${action.payload.value}`;
           }
         }
         return unit;

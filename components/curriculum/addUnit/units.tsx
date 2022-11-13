@@ -13,8 +13,8 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
   return (
     <article className="flex flex-row gap-x-2 relative">
       {openedModal === "unit" && (
-        <div className="fixed top-0 left-0 z-30 w-full min-h-screen bg-[rgba(0,0,0,0.6)] flex justify-center items-center gap-y-4 h-[300px] overflow-hidden overflow-y-scroll">
-          <div className="bg-white w-[90vw] max-w-[1000px] max-h-[90vh] overflow-hidden overflow-y-scroll rounded-md flex md:flex-row flex-col-reverse">
+        <div className="fixed top-0 left-0 z-30 w-full min-h-screen bg-[rgba(0,0,0,0.6)] flex justify-center items-center gap-y-4 overflow-hidden overflow-y-scroll">
+          <div className="bg-white w-[90vw] max-w-[1000px] overflow-hidden rounded-md flex md:flex-row flex-col-reverse">
             <aside className="flex-[0.25] md:border-r-2 border-gray-300 md:py-8 py-6 px-4 flex flex-col justify-between gap-4">
               <h1 className="text-[22px] font-bold hidden md:block">
                 Add Unit(s)
@@ -28,10 +28,10 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                 Done
               </button>
             </aside>
-            <div className="flex-[0.75] flex flex-col gap-y-4 py-8">
+            <div className="flex-[0.75] flex flex-col gap-y-4 py-8 max-h-[90vh] overflow-hidden overflow-y-scroll">
               {levels.length === 0 && (
-                <div className="h-[200px] flex justify-center items-center text-center p-8 font-bold text-[22px]">
-                  <h1>Please, select one or more level(s)</h1>
+                <div className="px-4 text-center text-[22px] font-bold flex justify-center items-center h-full">
+                  Please Select one or more levels
                 </div>
               )}
               {levels.length > 0 &&
@@ -43,8 +43,15 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                       }`}
                       key={index}
                     >
-                      <p className="text-[22px] font-bold">{unit.unit}</p>
-                      <div className="flex flex-wrap w-full jutsify-between gap-4">
+                      <div className="relative">
+                        <p className="text-[22px] font-bold hoverElement cursor-pointer">
+                          {unit.unit}
+                        </p>
+                        <p className="hoverText -top-[20px] right-[30px]">
+                          {unit.hoverText}
+                        </p>
+                      </div>
+                      <div className="flex flex-wrap w-full jutsify-between items-end gap-4">
                         <button
                           className={`${styles.button} ${
                             unit.isCurrent
@@ -83,21 +90,48 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                         <div className="relative">
                           <input
                             type="date"
+                            placeholder="start date"
                             id="date"
-                            className={`text-[13px] font-normal flex justify-evenly items-center py-[12px] md:w-[150px] w-[120px] gap-2 border-2  rounded-md ${
+                            className={`text-[13px] font-normal flex justify-evenly items-center py-[12px] md:w-[150px] w-[120px] gap-2 border-2  rounded-md hoverElement ${
                               !unit.isCurrent ? "border-black" : ""
                             }`}
-                            value={unit.date}
+                            value={unit.startDate}
                             onChange={(event) => {
                               dispatch(
                                 updateUnits({
                                   id: unit.id as string,
-                                  type: "upcoming",
+                                  type: "start date",
                                   value: event.target.value,
                                 })
                               );
                             }}
                           />
+                          <div className="hoverText right-[0] -top-[40px]">
+                            Start Date
+                          </div>
+                        </div>
+                        <div className="relative">
+                          <input
+                            type="date"
+                            placeholder="end date"
+                            id="date"
+                            className={`text-[13px] font-normal flex justify-evenly items-center py-[12px] md:w-[150px] w-[120px] gap-2 border-2  rounded-md hoverElement ${
+                              !unit.isCurrent ? "border-black" : ""
+                            }`}
+                            value={unit.endDate}
+                            onChange={(event) => {
+                              dispatch(
+                                updateUnits({
+                                  id: unit.id as string,
+                                  type: "end date",
+                                  value: event.target.value,
+                                })
+                              );
+                            }}
+                          />
+                          <div className="hoverText right-[0] -top-[40px]">
+                            End Date
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -119,7 +153,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
         </i>
       </div>
       <div className={styles.numbersSelectedContainer}>
-        {units.filter((unit) => unit.isCurrent).length} units selected
+        {units.length} units selected
       </div>
     </article>
   );

@@ -44,7 +44,8 @@ export interface IUnitsSlice {
       id: number | string;
       unit: string;
       isCurrent: boolean;
-      date: string;
+      startDate: string;
+      endDate: string;
       hoverText: string;
     }>;
     levels: string[];
@@ -100,7 +101,7 @@ export interface CurrentClassState {
 
 export interface ILevels {
   level: string;
-  units: Array<string>;
+  unitsId: Array<string>;
   grades: Array<string>;
   hoverText: string;
 }
