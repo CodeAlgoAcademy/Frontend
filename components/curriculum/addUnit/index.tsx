@@ -23,25 +23,24 @@ export const standards: string[] = [
   "Missiouri Learning Standards",
   "Kansas Computer Science Standards",
   "New York State Computer Science and Digital Fluency Science",
-  "Missiouri Learning Standards",
 ];
 
 export const availableLevels: ILevels[] = [
   {
     level: "Green",
-    units: ["Algorithm", "Variables"],
+    unitsId: ["1", "2", "8"],
     grades: ["K", "1", "2", "3", "4"],
     hoverText: "I'm new to coding",
   },
   {
     level: "Yellow",
-    units: ["Conditionals", "Loops", "Modularity"],
+    unitsId: ["3", "4", "5", "8", "9"],
     grades: ["5", "6", "7", "8"],
     hoverText: "I know some coding",
   },
   {
     level: "Orange",
-    units: ["Program Development I", "Program Development II"],
+    unitsId: ["6", "7", "9", "10", "11", "12", "13", "14"],
     grades: ["8+"],
     hoverText: "I have been coding for a long time",
   },
@@ -49,58 +48,124 @@ export const availableLevels: ILevels[] = [
 
 export const availableUnits = [
   {
-    id: "7",
+    id: "1",
     unit: "Algorithm",
-    isCurrent: false,
-    date: "",
+    isCurrent: true,
+    startDate: "",
+    endDate: "",
     hoverText: "An Algorithm is a set of steps to perform a task",
   },
   {
-    id: "6",
+    id: "2",
     unit: "Variables",
-    isCurrent: false,
-    date: "",
+    isCurrent: true,
+    startDate: "",
+    endDate: "",
     hoverText:
       "Variables are used to stored to be referenced and manipulated in a computer program",
   },
   {
-    id: "5",
+    id: "3",
     unit: "Conditionals",
-    isCurrent: false,
-    date: "",
+    isCurrent: true,
+    startDate: "",
+    endDate: "",
     hoverText:
       "Conditionals are ways for computers to make decisions based on an action being true or false",
   },
   {
     id: "4",
     unit: "Loops",
-    isCurrent: false,
-    date: "",
+    isCurrent: true,
+    startDate: "",
+    endDate: "",
     hoverText:
       "Loop is a sequence of instructions that is continually repeated until a certain condition is reached. ",
   },
   {
-    id: "3",
+    id: "5",
     unit: "Modularity",
-    isCurrent: false,
-    date: "",
+    isCurrent: true,
+    startDate: "",
+    endDate: "",
     hoverText:
       "Modular programming is the process of subdividing a computer program into separate sub-programs",
   },
   {
-    id: "2",
+    id: "6",
     unit: "Program Development I",
-    isCurrent: false,
-    date: "",
+    isCurrent: true,
+    startDate: "",
+    endDate: "",
     hoverText:
       "Program development is the process of creating application programs",
   },
   {
-    id: "1",
+    id: "7",
     unit: "Program Development II",
-    isCurrent: false,
-    date: "",
+    isCurrent: true,
+    startDate: "",
+    endDate: "",
     hoverText: "Process of creating application advanced programs",
+  },
+  {
+    id: "8",
+    unit: "Basics",
+    isCurrent: true,
+    startDate: "",
+    endDate: "",
+    hoverText: "Introduction to programming",
+  },
+  {
+    id: "9",
+    unit: "Functions",
+    isCurrent: true,
+    startDate: "",
+    endDate: "",
+    hoverText: "Functions are block of codes in performing specific tasks",
+  },
+  {
+    id: "10",
+    unit: "Advance",
+    isCurrent: true,
+    startDate: "",
+    endDate: "",
+    hoverText: "Advanced topics in programming",
+  },
+  {
+    id: "11",
+    unit: "Time Complexity",
+    isCurrent: true,
+    startDate: "",
+    endDate: "",
+    hoverText: "Time complexity is used to rate how fast a code runs",
+  },
+  {
+    id: "12",
+    unit: "Data Structure",
+    isCurrent: true,
+    startDate: "",
+    endDate: "",
+    hoverText:
+      "There are various data types in programming, e.g: primtive and reference",
+  },
+  {
+    id: "13",
+    unit: "Advance Algorithm",
+    isCurrent: true,
+    startDate: "",
+    endDate: "",
+    hoverText:
+      "There varous types of algorithms, binary search, sorting algorithm and many more",
+  },
+  {
+    id: "14",
+    unit: "File I/O",
+    isCurrent: true,
+    startDate: "",
+    endDate: "",
+    hoverText:
+      "File I/O i.e file input/output refers to operations such as open, close, read and write",
   },
 ];
 
