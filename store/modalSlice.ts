@@ -6,6 +6,7 @@ const initialState: IModal = {
   gradesModalOpen: false,
   showAddStudents: false,
   colorsModalOpen: false,
+  addUnitModalOpen: false,
 };
 
 const modalSlice = createSlice({
@@ -36,6 +37,12 @@ const modalSlice = createSlice({
     closeColorModal: (state: IModal) => {
       state.colorsModalOpen = true;
     },
+    openAddUnitModal: (state: IModal) => {
+      state.addUnitModalOpen = true;
+    },
+    closeAddUnitModal: (state: IModal) => {
+      state.addUnitModalOpen = false;
+    },
   },
 });
 
@@ -48,6 +55,8 @@ export const {
   closeAddStudentsModal,
   toggleColorModal,
   closeColorModal,
+  openAddUnitModal,
+  closeAddUnitModal,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

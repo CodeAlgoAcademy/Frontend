@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import loop from "../public/assets/imgs/loop.png";
+import loop from "../public/assets/loop.png";
 const SummaryBox = () => {
   return (
     <div className="rounded-md shadow-lg p-6 max-w-[380px] bg-white flex flex-col justify-between">
