@@ -3,12 +3,12 @@ import { BsCircle, BsFillCircleFill } from "react-icons/bs";
 import { FaGripLinesVertical } from "react-icons/fa";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
-import Header from "../components/Header";
-import Sidebar from "../components/Sidebar";
-import AddStudent from "../components/modals/AddStudent";
-import StudentProgress from "../components/StudentProgress";
-import PreviewModal from "../components/modals/PreviewModal";
-import { GeneralNav } from "../components";
+import Header from "../../components/Header";
+import Sidebar from "../../components/Sidebar";
+import AddStudent from "../../components/modals/AddStudent";
+import StudentProgress from "../../components/StudentProgress";
+import PreviewModal from "../../components/modals/PreviewModal";
+import { GeneralNav } from "../../components";
 
 export default function Unit() {
   const [showModal, setShowModal] = useState(false);

@@ -110,7 +110,7 @@ const GeneralNav = () => {
           </div>
         </div>
       </div>
-      <div /*className="rounded-[30px] px-2 py-[6px]   border border-[#BDBDBD] absolute right-10 top-7" */ className={userDropDown ? `rounded-[20px] px-4 py-[6px] bg-white  border border-[#BDBDBD] absolute right-10 top-7  w-[16rem] h-[13rem] box-border duration-200 ease-in-out`: `rounded-[30px] px-2 py-[6px] h-[3rem] w-[7rem] border border-[#BDBDBD] absolute box-border right-10 top-7 bg-white  transition-[width]`}>
+      <div  className={userDropDown ? `rounded-[20px] px-4 py-[6px] bg-white  border border-[#BDBDBD] absolute right-10 top-7  w-[16rem] h-[13rem] box-border duration-200 ease-in-out`: `rounded-[30px] px-2 py-[6px] h-[3rem] w-[7rem] border border-[#BDBDBD] absolute box-border right-10 top-7 bg-white  transition-[width]`}>
         <div className="flex items-center justify-between">
             <div className="overflow-hidden rounded-full flex items-center">
               <Image
@@ -131,14 +131,18 @@ const GeneralNav = () => {
               {userDropDown ? <RiArrowDropUpLine /> :<RiArrowDropDownLine />}
             </div>
         </div>
-        {userDropDown && <div>
+        {userDropDown && <div className="relative z-10">
+          <Link href="/settings">
+          <div>
             <motion.div className="flex items-center border-t border-black mt-4 pt-4"
               initial={{opacity: 0, y: '5px'}}
               animate={{opacity: 1, y: 0, transition:{duration: '0.5'}}}
             >
               <span className="text-xl"><IoSettingsSharp /></span>
-              <motion.h5 className="text-sm ml-2 font-[700]">Settings</motion.h5>
+              <motion.h5 className="text-sm ml-2 font-[700] select-none">Settings</motion.h5>
             </motion.div>
+            </div>
+            </Link>
             <motion.div className="flex items-center mt-[5rem]"
               initial={{opacity: 0, y: '5px'}}
               animate={{opacity: 1, y: 0, transition:{delay: 0.3, duration: '0.5'}}}
