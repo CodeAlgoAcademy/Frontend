@@ -20,17 +20,29 @@ a {
 }
 
 ::-webkit-scrollbar {
-	width: 8px;
+  width: 8px;
 }
 ::-webkit-scrollbar-thumb {
-	background-color: rgb(216, 216, 216);
-	border-radius: 40px;
+  background-color: rgb(216, 216, 216);
+  border-radius: 40px;
 }
 ::-webkit-scrollbar-track {
-	background-color: transparent;
+  background-color: transparent;
 }
 .ContentEditable * {
-	list-style-type: disc;
-	border-width: 0;
-	outline: none;
+  list-style-type: disc;
+  border-width: 0;
+  outline: none;
+}
+
+.hoverElement:hover ~ .hoverText {
+  transition: 0.5s;
+  opacity: 1;
+  display: block;
+}
+
+.hoverText {
+  @apply absolute text-white bg-mainPurple text-[14px] z-40 min-w-[120px] text-center px-2 py-3 rounded-md after:absolute after:top-[100%] after:left-[50%] after:-translate-x-[50%] after:-translate-y-[50%] after:w-[10px] after:h-[10px] after:bg-mainPurple after:rotate-45;
+  opacity: 0;
+  display: none;
 }
