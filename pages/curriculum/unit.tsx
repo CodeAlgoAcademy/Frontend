@@ -111,11 +111,11 @@ export default function Unit() {
     <div>
       <GeneralNav />
       <div className="flex items-stretch mb-auto grow bg-[#E5E5E5] ">
-        <div className="sidebar bg-white w-[270px]">
+        <div className="sidebar bg-white min-w-[270px]">
           <Sidebar />
         </div>
 
-        <div className=" px-[5.5rem] py-[2rem] w-full">
+        <div className="px-[5.5rem] py-[2rem] w-full">
           <div className="flex justify-between">
             <h1 className="font-bold text-3xl">Curriculum</h1>
             <div className="flex gap-2 items-center">
