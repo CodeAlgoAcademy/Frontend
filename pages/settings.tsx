@@ -3,9 +3,12 @@ import { Box } from '@mui/system';
 import React, { useState } from 'react'
 import { GeneralNav, Sidebar } from '../components';
 
-export default function settings() {
-  const [value, setValue] = useState(0);
 
+
+
+export default function Snpettings() {
+  
+  const [value, setValue] = useState(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
