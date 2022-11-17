@@ -1,22 +1,20 @@
 import { useState } from "react";
-import Header from "../components/Header";
-import Sidebar from "../components/Sidebar";
 import { IoIosAddCircleOutline } from "react-icons/io";
-import loopImg from "../public/assets/loopImg.png";
-import connect from "../public/assets/connect.png";
-import bracket from "../public/assets/bracket.png";
-
+import loopImg from "../../public/assets/loopImg.png";
+import connect from "../../public/assets/connect.png";
+import bracket from "../../public/assets/bracket.png";
 import Image from "next/image";
 import { HiDotsHorizontal } from "react-icons/hi";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { GeneralNav } from "../components";
+import GeneralNav from "@/components/GeneralNav";
+import Sidebar from "@/components/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { openAddUnitModal } from "store/modalSlice";
 import AddUnit from "@/components/curriculum/addUnit";
 import { RootState } from "store/store";
 
-export default function Curriculum() {
+export default function Index() {
   const [past, setPast] = useState<boolean>(false);
   const [current, setCurrent] = useState<boolean>(true);
   const [upcoming, setUpcoming] = useState<boolean>(false);
@@ -136,7 +134,7 @@ export default function Curriculum() {
                       </p>
                       <div className="flex items-center mt-[2.1rem] justify-between">
                         <p>4/10 - Present</p>
-                        <Link href="/unit">
+                        <Link href="curriculum/unit">
                           <p className="px-5 py-[5px] font-semibold border-black rounded-full border-2 w-fit cursor-pointer">
                             view unit
                           </p>
