@@ -132,7 +132,7 @@ const GeneralNav = () => {
             </div>
         </div>
         {userDropDown && <div className="relative z-10">
-          <Link href="/settings">
+          <a href="/settings" target="_blank">
           <div>
             <motion.div className="flex items-center border-t border-black mt-4 pt-4"
               initial={{opacity: 0, y: '5px'}}
@@ -142,7 +142,7 @@ const GeneralNav = () => {
               <motion.h5 className="text-sm ml-2 font-[700] select-none">Settings</motion.h5>
             </motion.div>
             </div>
-            </Link>
+            </a>
             <motion.div className="flex items-center mt-[5rem]"
               initial={{opacity: 0, y: '5px'}}
               animate={{opacity: 1, y: 0, transition:{delay: 0.3, duration: '0.5'}}}
