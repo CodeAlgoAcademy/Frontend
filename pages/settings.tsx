@@ -6,7 +6,7 @@ import { GeneralNav, Sidebar } from '../components';
 
 
 
-export default function Snpettings() {
+export default function Settings() {
   
   const [value, setValue] = useState(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
