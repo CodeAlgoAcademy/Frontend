@@ -14,7 +14,7 @@ import { openAddUnitModal } from "store/modalSlice";
 import AddUnit from "@/components/curriculum/addUnit";
 import { RootState } from "store/store";
 
-export default function index() {
+export default function Index() {
   const [past, setPast] = useState<boolean>(false);
   const [current, setCurrent] = useState<boolean>(true);
   const [upcoming, setUpcoming] = useState<boolean>(false);
