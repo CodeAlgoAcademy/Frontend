@@ -15,7 +15,7 @@ const links = [
   {
     name: "curriculum",
     icon: <TbClipboardText />,
-    url: "/Curriculum",
+    url: "/curriculum",
   },
   {
     name: "students",

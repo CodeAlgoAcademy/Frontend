@@ -58,7 +58,7 @@ export default function Header() {
                 className="h-8  w-8 rounded-full"
                 style={{ background: classColor }}
               ></span>
-              <h5 className="font-bold">{selectedClass}</h5>
+              <h5 className="font-bold select-none">{selectedClass}</h5>
             </div>
             <FaChevronDown className="text-[#838383]" />
           </div>
@@ -72,21 +72,21 @@ export default function Header() {
             {classOptions.map((option) => {
               return (
                 <div
-                  className="w-[14rem] flex justify-between items-center border-b-2  px-3.5 py-2.5"
+                  className="w-[14rem] flex  justify-between items-center border-b-2 select-none px-3.5 py-2.5"
                   onClick={() => {
                     setSelectedClass(option.name), setClassColor(option.color);
                   }}
                   key={option.name}
                 >
-                  <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center cursor-pointer justify-between gap-3">
                     <span
                       className="h-8 w-8 rounded-full"
                       style={{ background: option.color }}
                     ></span>
-                    <h5 className="font-bold">{option.name}</h5>
+                    <h5 className="font-bold select-none">{option.name}</h5>
                   </div>
                   {option.name == "Class A" ? (
-                    <FaChevronUp className=" text-[#838383]" />
+                    <FaChevronUp className="text-[#838383]" />
                   ) : (
                     ""
                   )}
