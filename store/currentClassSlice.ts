@@ -10,9 +10,7 @@ const currentClassSlice = createSlice({
 	name: "currentClass",
 	initialState,
 	reducers: {
-		updateCurrentClass: (state: CurrentClassState, action: PayloadAction<CurrentClassState>) => {
-			state = action.payload
-		}
+		updateCurrentClass: (state: CurrentClassState, action: PayloadAction<CurrentClassState>) => action.payload
 	}
 })
 
