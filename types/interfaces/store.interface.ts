@@ -21,50 +21,51 @@ export interface IUser {
 }
 
 export interface IModal {
-	addClassModalOpen: boolean
-	gradesModalOpen: boolean
-	showAddStudents: boolean
-	colorsModalOpen: boolean
-	addUnitModalOpen: boolean
+  addClassModalOpen: boolean;
+  gradesModalOpen: boolean;
+  showAddStudents: boolean;
+  colorsModalOpen: boolean;
+  addUnitModalOpen: boolean;
 }
 
 export interface IAllClasses {
-	classes: IClass[]
+  classes: IClass[];
 }
 
 export interface IAddClass {
-	student: ISingleStudent
-	class: ISingleClass
+  student: ISingleStudent;
+  class: ISingleClass;
 }
 
 export interface IUnitsSlice {
-	addUnit: {
-		standard: string
-		units: Array<{
-			id: number | string
-			unit: string
-			isCurrent: boolean
-			startDate: string
-			endDate: string
-			hoverText: string
-		}>
-		levels: string[]
-		grades: string[]
-		chosenGrades: string[]
-	}
+  addUnit: {
+    standard: string;
+    units: Array<{
+      id: number | string;
+      unit: string;
+      isCurrent: boolean;
+      startDate: string;
+      endDate: string;
+      hoverText: string;
+      isChosen: boolean;
+    }>;
+    levels: string[];
+    grades: string[];
+    chosenGrades: string[];
+  };
 }
 
 // ============EXTRA INTERFACES AND TYPES
 
 export interface IClass {
-	students: ISingleStudent[]
-	classDetails: ISingleClass
-	teacher: ITeacher
+  students: ISingleStudent[];
+  classDetails: ISingleClass;
+  teacher: ITeacher;
 }
 
 export interface ITeacher {
-	teacherEmail: string
-	teacherName: string
+  teacherEmail: string;
+  teacherName: string;
 }
 
 export interface ISingleStudent {
@@ -121,4 +122,33 @@ export interface AssignmentDetails {
 	number: number
 	skills: AssignmentSkill[]
 	students: AssignmentStudent[]
+}
+
+export interface CurrentClassState {
+  className: string;
+  color: string;
+}
+
+export interface ILevels {
+  level: string;
+  unitsId: Array<string>;
+  grades: Array<string>;
+  hoverText: string;
+}
+
+export interface AssignmentSkill {
+  skillId: string;
+}
+
+export interface AssignmentStudent {
+  studentId: string;
+}
+
+export interface AssignmentDetails {
+  title: string;
+  schedule: string;
+  order: string;
+  number: number;
+  skills: AssignmentSkill[];
+  students: AssignmentStudent[];
 }
