@@ -50,7 +50,7 @@ const GeneralNav = () => {
           </div>
           <div className="relative h-[52px]">
             <div
-              className="rounded-[28px] w-[260px] border border-[#BDBDBD] divide-y overflow-hidden absolute left-0 top-0 bg-white z-30"
+              className="rounded-[28px] w-[260px] border border-[#BDBDBD] divide-y overflow-hidden absolute left-0 top-0 bg-white"
               style={classListStyle}
             >
               <div className="py-2 px-3 relative flex items-center justify-between hover:bg-gray-100 cursor-pointer">
