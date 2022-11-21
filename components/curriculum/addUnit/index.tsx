@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import React, { useState, useEffect, useCallback, MouseEvent } from "react";
-=======
-import React, { useState, useEffect, useCallback } from "react";
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
 import { FaTimes } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
@@ -27,10 +23,7 @@ export const standards: string[] = [
   "Missiouri Learning Standards",
   "Kansas Computer Science Standards",
   "New York State Computer Science and Digital Fluency Science",
-<<<<<<< HEAD
   "Advance",
-=======
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
 ];
 
 export const availableLevels: ILevels[] = [
@@ -57,7 +50,6 @@ export const availableLevels: ILevels[] = [
 export const availableUnits = [
   {
     id: "1",
-<<<<<<< HEAD
     unit: "Basics",
     isCurrent: true,
     startDate: "",
@@ -67,210 +59,117 @@ export const availableUnits = [
   },
   {
     id: "2",
-=======
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
     unit: "Algorithm",
     isCurrent: true,
     startDate: "",
     endDate: "",
-<<<<<<< HEAD
     isChosen: false,
     hoverText: "An Algorithm is a set of steps to perform a task",
   },
   {
     id: "3",
-=======
-    hoverText: "An Algorithm is a set of steps to perform a task",
-  },
-  {
-    id: "2",
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
     unit: "Variables",
     isCurrent: true,
     startDate: "",
     endDate: "",
-<<<<<<< HEAD
     isChosen: false,
-=======
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
     hoverText:
       "Variables are used to stored to be referenced and manipulated in a computer program",
   },
   {
-<<<<<<< HEAD
     id: "4",
-=======
-    id: "3",
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
     unit: "Conditionals",
     isCurrent: true,
     startDate: "",
     endDate: "",
-<<<<<<< HEAD
     isChosen: false,
-=======
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
     hoverText:
       "Conditionals are ways for computers to make decisions based on an action being true or false",
   },
   {
-<<<<<<< HEAD
     id: "5",
-=======
-    id: "4",
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
     unit: "Loops",
     isCurrent: true,
     startDate: "",
     endDate: "",
-<<<<<<< HEAD
     isChosen: false,
-=======
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
     hoverText:
       "Loop is a sequence of instructions that is continually repeated until a certain condition is reached. ",
   },
   {
-<<<<<<< HEAD
     id: "6",
-=======
-    id: "5",
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
     unit: "Modularity",
     isCurrent: true,
     startDate: "",
     endDate: "",
-<<<<<<< HEAD
     isChosen: false,
-=======
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
     hoverText:
       "Modular programming is the process of subdividing a computer program into separate sub-programs",
   },
   {
-<<<<<<< HEAD
     id: "7",
-=======
-    id: "6",
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
     unit: "Program Development I",
     isCurrent: true,
     startDate: "",
     endDate: "",
-<<<<<<< HEAD
     isChosen: false,
-=======
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
     hoverText:
       "Program development is the process of creating application programs",
   },
   {
-<<<<<<< HEAD
     id: "8",
-=======
-    id: "7",
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
     unit: "Program Development II",
     isCurrent: true,
     startDate: "",
     endDate: "",
-<<<<<<< HEAD
     isChosen: false,
     hoverText: "Process of creating application advanced programs",
   },
 
-=======
-    hoverText: "Process of creating application advanced programs",
-  },
-  {
-    id: "8",
-    unit: "Basics",
-    isCurrent: true,
-    startDate: "",
-    endDate: "",
-    hoverText: "Introduction to programming",
-  },
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
   {
     id: "9",
     unit: "Functions",
     isCurrent: true,
     startDate: "",
     endDate: "",
-<<<<<<< HEAD
     isChosen: false,
-=======
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
     hoverText: "Functions are block of codes in performing specific tasks",
   },
   {
     id: "10",
-<<<<<<< HEAD
-=======
-    unit: "Advance",
-    isCurrent: true,
-    startDate: "",
-    endDate: "",
-    hoverText: "Advanced topics in programming",
-  },
-  {
-    id: "11",
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
     unit: "Time Complexity",
     isCurrent: true,
     startDate: "",
     endDate: "",
-<<<<<<< HEAD
     isChosen: false,
     hoverText: "Time complexity is used to rate how fast a code runs",
   },
   {
     id: "11",
-=======
-    hoverText: "Time complexity is used to rate how fast a code runs",
-  },
-  {
-    id: "12",
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
     unit: "Data Structure",
     isCurrent: true,
     startDate: "",
     endDate: "",
-<<<<<<< HEAD
     isChosen: false,
-=======
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
     hoverText:
       "There are various data types in programming, e.g: primtive and reference",
   },
   {
-<<<<<<< HEAD
     id: "12",
-=======
-    id: "13",
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
     unit: "Advance Algorithm",
     isCurrent: true,
     startDate: "",
     endDate: "",
-<<<<<<< HEAD
     isChosen: false,
-=======
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
     hoverText:
       "There varous types of algorithms, binary search, sorting algorithm and many more",
   },
   {
-<<<<<<< HEAD
     id: "13",
-=======
-    id: "14",
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
     unit: "File I/O",
     isCurrent: true,
     startDate: "",
     endDate: "",
-<<<<<<< HEAD
     isChosen: false,
     hoverText:
       "File I/O i.e file input/output refers to operations such as open, close, read and write",
@@ -284,11 +183,6 @@ export const availableUnits = [
     isChosen: false,
     hoverText: "Program Development are techniques used to create programs",
   },
-=======
-    hoverText:
-      "File I/O i.e file input/output refers to operations such as open, close, read and write",
-  },
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
 ];
 
 function AddUnit() {
@@ -317,7 +211,6 @@ function AddUnit() {
     return <></>;
   }
   return (
-<<<<<<< HEAD
     <section
       className="flex-1 min-h-screen w-full bg-gray-100 px-8 mx-auto rounded-md py-16 relative close-dropdown"
       onClick={(event: any) => {
@@ -326,9 +219,6 @@ function AddUnit() {
         }
       }}
     >
-=======
-    <section className="flex-1 w-full bg-gray-100 px-8 mx-auto rounded-md py-16 relative">
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
       <i
         className="absolute top-[15px] right-[15px] text-[28px] text-red-600 font-bold cursor-pointer"
         onClick={() => {
@@ -373,20 +263,12 @@ function AddUnit() {
 
 export const styles = {
   preview:
-<<<<<<< HEAD
     "absolute w-[100%] max-h-[200px] overflow-hidden overflow-y-scroll z-40 bg-white flex flex-col rounded-b-md top-[100%] left-0 shadow-md outline outline-2 outline-mainPurple text-[15px] font-normal dropdown",
   topic:
     "md:flex-[0.4] flex-[0.5] flex p-6 justify-between items-center bg-white rounded-md text-[17px] font-bold cursor-pointer relative outline outline-2",
   numbersSelectedContainer:
     "close-dropdown md:flex-[0.6] flex-[0.5] p-6 bg-white text-[17px]",
   inputContainer: "flex items-center gap-2 p-3 border-b-2 font-bold dropdown",
-=======
-    "absolute w-[90vw] max-w-[220px] max-h-[200px] overflow-hidden overflow-y-scroll z-10 bg-white flex flex-col rounded-[15px] shadow-md text-[15px] font-normal",
-  topic:
-    "md:flex-[0.4] flex-[0.5] flex p-6 justify-between items-center bg-white rounded-md text-[17px] font-bold cursor-pointer",
-  numbersSelectedContainer: "md:flex-[0.6] flex-[0.5] p-6 bg-white text-[17px]",
-  inputContainer: "flex items-center gap-2 p-3 border-b-2 font-bold",
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
   button:
     "py-[12px] text-center md:w-[150px] w-[120px] rounded-md hover:shadow-md font-bold",
 };
