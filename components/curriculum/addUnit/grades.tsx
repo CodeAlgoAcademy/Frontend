@@ -1,7 +1,7 @@
 import React, { FC, ChangeEvent } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "store/store";
-import { Props, styles } from ".";
+import { Props, styles } from "./index";
 import { FaPlus } from "react-icons/fa";
 import { updateGrades } from "store/unitsSlice";
 
@@ -28,7 +28,6 @@ const Grade: FC<Props> = ({ openedModal, updateOpenedModal }) => {
         <i>
           <FaPlus />
         </i>
-<<<<<<< HEAD
         {openedModal === "grade" && (
           <div className={`${styles.preview}`}>
             {grades.length === 0 && (
@@ -66,8 +65,6 @@ const Grade: FC<Props> = ({ openedModal, updateOpenedModal }) => {
               })}
           </div>
         )}
-=======
->>>>>>> f76a84430869081f76ccfb10bf48a14aeed97a7f
       </div>
       <div className={styles.numbersSelectedContainer}>
         {chosenGrades.length} grades selected

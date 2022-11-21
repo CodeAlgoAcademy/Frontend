@@ -50,11 +50,20 @@ const unitsSlice = createSlice({
           const unitFromAvailableUnits = level.unitsId.map((unitId) =>
             availableUnits.find((availableUnit) => availableUnit.id === unitId)
           );
+          console.log(unitFromAvailableUnits);
           units = [...units, ...unitFromAvailableUnits];
         }
       });
       state.addUnit.grades = grades;
-      state.addUnit.units = units;
+      state.addUnit.units = units.reduce((acc: any, currentUnit: any) => {
+        if (!acc.find((accUnit: any) => accUnit.id === currentUnit.id)) {
+          const unit: any = availableUnits.find(
+            (availableUnit) => availableUnit.id == currentUnit.id
+          );
+          acc.push(unit);
+        }
+        return acc;
+      }, []);
       state.addUnit.chosenGrades = [];
     },
     updateUnits: (
