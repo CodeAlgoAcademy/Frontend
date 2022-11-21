@@ -6,6 +6,7 @@ import {
   openAddStudentsModal,
   toggleColorModal,
   openGradesModal,
+  closeAddClassModal,
 } from "../../store/modalSlice";
 import { colors } from "./colors";
 import { RootState } from "../../store/store";
@@ -91,7 +92,9 @@ const CreateClass = () => {
               dispatch(toggleColorModal());
             }}
           >
-            <span className={`h-[38px] w-[38px] rounded-full ${color}`}></span>
+            <span
+              className={`h-[38px] w-[38px] rounded-full bg-[${color}]`}
+            ></span>
             <i className="pr-1">
               <FaChevronDown />
             </i>
@@ -103,7 +106,7 @@ const CreateClass = () => {
                 return (
                   <span
                     key={index}
-                    className={`h-[38px] w-[38px] mx-auto rounded-full ${color}`}
+                    className={`h-[38px] w-[38px] mx-auto rounded-full bg-[${color}]`}
                     onClick={() => {
                       dispatch(
                         updateClassDetails({ key: "color", value: color })

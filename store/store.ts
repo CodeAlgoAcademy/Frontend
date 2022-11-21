@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import storage from "redux-persist/lib/storage";
+import storage from "./reduxStorage";
 import {
   persistReducer,
   persistStore,
@@ -15,6 +15,8 @@ import userReducer from "./authSlice";
 import modalReducer from "./modalSlice";
 import addClassReducer from "./addClassSlice";
 import allClassesReducer from "./allClassesSlice";
+import currentClassReducer from "./currentClassSlice";
+import unitsSlice from "./unitsSlice";
 
 const persistConfig = {
   key: "root",
@@ -26,6 +28,8 @@ const rootReducer = combineReducers({
   modal: modalReducer,
   addClass: addClassReducer,
   allClasses: allClassesReducer,
+  currentClass: currentClassReducer,
+  unit: unitsSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
