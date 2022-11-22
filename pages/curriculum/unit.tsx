@@ -9,6 +9,7 @@ import AddStudent from "../../components/modals/AddStudent";
 import StudentProgress from "../../components/StudentProgress";
 import PreviewModal from "../../components/modals/PreviewModal";
 import { GeneralNav } from "../../components";
+import Link from "next/link";
 
 export default function Unit() {
   const [showModal, setShowModal] = useState(false);
@@ -118,10 +119,12 @@ export default function Unit() {
         <div className="px-[5.5rem] py-[2rem] w-full">
           <div className="flex justify-between">
             <h1 className="font-bold text-3xl">Curriculum</h1>
-            <div className="flex gap-2 items-center">
-              <IoIosAddCircleOutline className="text-4xl " />
-              <h1 className="text-[1.2rem]">Add Assignment</h1>
-            </div>
+            <Link href="/curriculum/assignments">
+              <div className="flex gap-2 items-center cursor-pointer">
+                <IoIosAddCircleOutline className="text-4xl " />
+                <h1 className="text-[1.2rem]">Add Assignment</h1>
+              </div>
+            </Link>
           </div>
           <div className="border-[#BDBDBD] pl-[1.5rem] mb-[3rem] pb-3 mt-7 border-b-[1.3px]">
             <h2 className="text-[1.6rem] font-bold">Unit Control</h2>
@@ -130,7 +133,10 @@ export default function Unit() {
 
           {unitData.map((data) => {
             return (
-              <div key={data.id} className="flex-column bg-white rounded-lg transition duration-200 ease-in-out">
+              <div
+                key={data.id}
+                className="flex-column bg-white rounded-lg transition duration-200 ease-in-out"
+              >
                 <div className="bg-white flex items-center mt-[.7rem] py-[0.3rem] pl-[10px] rounded-lg transition duration-200 ease-out">
                   <div className="border-r-2 flex items-center border-[#E6E6E6] py-5 pr-[4rem]  justify-between w-full">
                     <div className="flex items-center gap-7">
@@ -167,7 +173,7 @@ export default function Unit() {
                   </div>
                 </div>
                 {data.show && (
-                  <div >
+                  <div>
                     <div className="flex  mx-12 py-6 border-[#E6E6E6] border-t-2 ">
                       {/* first division */}
                       <div className="flex-1 pr-[3rem] border-[#E6E6E6] border-r-2 py-[1rem]">

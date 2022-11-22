@@ -267,10 +267,12 @@ export const styles = {
   topic:
     "md:flex-[0.4] flex-[0.5] flex p-6 justify-between items-center bg-white rounded-md text-[17px] font-bold cursor-pointer relative outline outline-2",
   numbersSelectedContainer:
-    "close-dropdown md:flex-[0.6] flex-[0.5] p-6 bg-white text-[17px]",
+    "close-dropdown md:flex-[0.6] flex-[0.5] px-6 py-4 bg-white text-[17px] w-full max-w-[520px] rounded-md overflow-hidden overflow-x-scroll short-scroll-thumb flex flex-row gap-x-3 items-center",
   inputContainer: "flex items-center gap-2 p-3 border-b-2 font-bold dropdown",
   button:
     "py-[12px] text-center md:w-[150px] w-[120px] rounded-md hover:shadow-md font-bold",
+  selectedItems:
+    "py-2 px-3 rounded-md bg-mainPurple text-white font-bold text-[16px] min-w-fit max-w-fit",
 };
 
 export default AddUnit;
