@@ -74,16 +74,38 @@ const unitsSlice = createSlice({
         const date = new Date();
         if (action.payload.id === unit.id) {
           if (action.payload.type === "current") {
-            unit.isChosen = true;
+            if (unit.isCurrent && unit.isChosen) {
+              unit.isChosen = false;
+            } else if (
+              (unit.isCurrent && !unit.isChosen) ||
+              (!unit.isCurrent && !unit.isChosen)
+            ) {
+              unit.isChosen = true;
+            }
             unit.isCurrent = true;
             unit.startDate = "";
           } else if (action.payload.type === "upcoming") {
-            unit.isChosen = true;
+            if (unit.isCurrent && unit.isChosen) {
+              unit.isChosen = true;
+              unit.startDate = `${date.getFullYear()}-${
+                date.getMonth() + 1
+              }-${date.getDate()}`;
+            } else if (unit.isCurrent && !unit.isChosen) {
+              unit.isChosen = true;
+              unit.startDate = `${date.getFullYear()}-${
+                date.getMonth() + 1
+              }-${date.getDate()}`;
+            } else if (!unit.isCurrent && unit.isChosen) {
+              unit.isChosen = false;
+              unit.startDate = "";
+            } else if (!unit.isCurrent && !unit.isChosen) {
+              unit.isChosen = true;
+              // format: yyyy-mm-dd just like a normal date input element
+              unit.startDate = `${date.getFullYear()}-${
+                date.getMonth() + 1
+              }-${date.getDate()}`;
+            }
             unit.isCurrent = false;
-            // format: yyyy-mm-dd just like a normal date input element
-            unit.startDate = `${date.getFullYear()}-${
-              date.getMonth() + 1
-            }-${date.getDate()}`;
           } else if (action.payload.type === "start date") {
             unit.isChosen = true;
             unit.isCurrent = false;
