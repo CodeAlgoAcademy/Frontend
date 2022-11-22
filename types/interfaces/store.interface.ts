@@ -1,23 +1,23 @@
 // =============SLICES INTERFACES AND TYPES=============
 export interface IUser {
-  id: number;
-  firstname: string;
-  lastname: string;
-  email: string;
-  password: string;
-  role: {
-    id: number;
-    role_name: string;
-    description: string;
-  };
-  isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
-  access_token: string;
-  country: string;
-  grade: string;
-  schoolCountry: string;
-  schoolName: string;
+	id: number
+	firstname: string
+	lastname: string
+	email: string
+	password: string
+	role: {
+		id: number
+		role_name: string
+		description: string
+	}
+	isActive: boolean
+	createdAt: string
+	updatedAt: string
+	access_token: string
+	country: string
+	grade: string
+	schoolCountry: string
+	schoolName: string
 }
 
 export interface IModal {
@@ -47,6 +47,7 @@ export interface IUnitsSlice {
       startDate: string;
       endDate: string;
       hoverText: string;
+      isChosen: boolean;
     }>;
     levels: string[];
     grades: string[];
@@ -68,30 +69,59 @@ export interface ITeacher {
 }
 
 export interface ISingleStudent {
-  studentName: string;
-  studentId: string;
-  studentEmail: string;
+	studentName: string
+	studentId: string
+	studentEmail: string
 }
 
 export interface ISingleClass {
-  className: string;
-  roomNumber: number | string;
-  subject: string;
-  coTeachers: string;
-  grade: string;
-  color: string;
+	className: string
+	roomNumber: number | string
+	subject: string
+	coTeachers: string
+	grade: string
+	color: string
 }
 
 export interface ITabs {
-  tabName: string | undefined;
-  component: React.ReactElement | undefined;
+	tabName: string | undefined
+	component: React.ReactElement | undefined
 }
 
 export interface IInputFields {
-  type: string;
-  placeholder: string;
-  name: string;
-  value: string | number;
+	type: string
+	placeholder: string
+	name: string
+	value: string | number
+}
+
+export interface CurrentClassState {
+	className: string
+	color: string
+}
+
+export interface ILevels {
+	level: string
+	unitsId: Array<string>
+	grades: Array<string>
+	hoverText: string
+}
+
+export interface AssignmentSkill {
+	skillId: string
+}
+
+export interface AssignmentStudent {
+	studentId: string
+}
+
+export interface AssignmentDetails {
+	title: string
+	schedule: string
+	order: string
+	number: number
+	skills: AssignmentSkill[]
+	students: AssignmentStudent[]
 }
 
 export interface CurrentClassState {
@@ -104,4 +134,21 @@ export interface ILevels {
   unitsId: Array<string>;
   grades: Array<string>;
   hoverText: string;
+}
+
+export interface AssignmentSkill {
+  skillId: string;
+}
+
+export interface AssignmentStudent {
+  studentId: string;
+}
+
+export interface AssignmentDetails {
+  title: string;
+  schedule: string;
+  order: string;
+  number: number;
+  skills: AssignmentSkill[];
+  students: AssignmentStudent[];
 }
