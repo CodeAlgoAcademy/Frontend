@@ -122,3 +122,12 @@ export interface AssignmentDetails {
 	skills: AssignmentSkill[]
 	students: AssignmentStudent[]
 }
+
+export interface ISchedule {
+	Id: string
+	Subject: string
+	Location: string
+	StartTime: string
+	EndTime: string
+	CategoryColor: string
+}
