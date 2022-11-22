@@ -1,48 +1,48 @@
-import { useState } from "react";
-import { IoIosAddCircleOutline } from "react-icons/io";
-import loopImg from "../../public/assets/loopImg.png";
-import connect from "../../public/assets/connect.png";
-import bracket from "../../public/assets/bracket.png";
-import Image from "next/image";
-import { HiDotsHorizontal } from "react-icons/hi";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import GeneralNav from "@/components/GeneralNav";
-import Sidebar from "@/components/Sidebar";
-import { useDispatch, useSelector } from "react-redux";
-import { openAddUnitModal } from "store/modalSlice";
-import AddUnit from "@/components/curriculum/addUnit";
-import { RootState } from "store/store";
+import { useState } from "react"
+import { IoIosAddCircleOutline } from "react-icons/io"
+import loopImg from "../../public/assets/loopImg.png"
+import connect from "../../public/assets/connect.png"
+import bracket from "../../public/assets/bracket.png"
+import Image from "next/image"
+import { HiDotsHorizontal } from "react-icons/hi"
+import Link from "next/link"
+import { useRouter } from "next/router"
+import GeneralNav from "@/components/GeneralNav"
+import Sidebar from "@/components/Sidebar"
+import { useDispatch, useSelector } from "react-redux"
+import { openAddUnitModal } from "store/modalSlice"
+import AddUnit from "@/components/curriculum/addUnit"
+import { RootState } from "store/store"
 
-export default function Index() {
-  const [past, setPast] = useState<boolean>(false);
-  const [current, setCurrent] = useState<boolean>(true);
-  const [upcoming, setUpcoming] = useState<boolean>(false);
-  const [active, setActive] = useState("current");
-  const { addUnitModalOpen } = useSelector((state: RootState) => state.modal);
-  const dispatch = useDispatch();
+export default function Index () {
+  const [past, setPast] = useState<boolean>(false)
+  const [current, setCurrent] = useState<boolean>(true)
+  const [upcoming, setUpcoming] = useState<boolean>(false)
+  const [active, setActive] = useState("current")
+  const { addUnitModalOpen } = useSelector((state: RootState) => state.modal)
+  const dispatch = useDispatch()
 
   // curriculumn tab click functions
   const handlePast = () => {
-    setCurrent(false);
-    setUpcoming(false);
-    setPast(true);
-    setActive("past");
-  };
+    setCurrent(false)
+    setUpcoming(false)
+    setPast(true)
+    setActive("past")
+  }
 
   const handleCurrent = () => {
-    setPast(false);
-    setUpcoming(false);
-    setCurrent(true);
-    setActive("current");
-  };
+    setPast(false)
+    setUpcoming(false)
+    setCurrent(true)
+    setActive("current")
+  }
 
   const handleUpcoming = () => {
-    setPast(false);
-    setCurrent(false);
-    setUpcoming(true);
-    setActive("upcoming");
-  };
+    setPast(false)
+    setCurrent(false)
+    setUpcoming(true)
+    setActive("upcoming")
+  }
 
   return (
     <div className="min-h-[100vh] flex flex-col">
@@ -51,7 +51,7 @@ export default function Index() {
         <div className="sidebar bg-white w-[270px]">
           <Sidebar />
         </div>
-        {addUnitModalOpen ? (
+        { addUnitModalOpen ? (
           <AddUnit />
         ) : (
           <div className="px-[5.5rem] py-[2rem] flex-1 bg-[#EFEFEF]">
@@ -59,9 +59,9 @@ export default function Index() {
               <h1 className="font-bold text-3xl">Curriculum</h1>
               <div
                 className="flex gap-2 items-center cursor-pointer"
-                onClick={() => {
-                  dispatch(openAddUnitModal());
-                }}
+                onClick={ () => {
+                  dispatch(openAddUnitModal())
+                } }
               >
                 <IoIosAddCircleOutline className="text-4xl " />
                 <h1 className="text-[1.2rem]">Add Unit</h1>
@@ -74,7 +74,7 @@ export default function Index() {
                     ? "text-[1.2rem]  mr-8  border-b-[3px] hover:font-bold border-b-black hover:border-b-black transition duration-300 ease-out box-border"
                     : "text-[1.2rem]  mr-8 hover:font-bold  hover:border-b-black hover:border-b-[3px] box-border  transition duration-300 ease-out"
                 }
-                onClick={handlePast}
+                onClick={ handlePast }
               >
                 Past
               </h1>
@@ -85,7 +85,7 @@ export default function Index() {
                       ? "text-[1.2rem] border-b-[3px] font-bold border-b-black hover:font-bold hover:border-b-black transition duration-500 ease-out box-border"
                       : "text-[1.2rem]  hover:font-bold hover:border-b-black  hover:border-b-[3px] box-border transition duration-500 ease-out"
                   }
-                  onClick={handleCurrent}
+                  onClick={ handleCurrent }
                 >
                   Current
                 </h1>
@@ -96,32 +96,32 @@ export default function Index() {
                     ? "text-[1.2rem] ml-8 border-b-[3px] border-b-black  font-bold hover:font-bold hover:border-b-black transition duration-500 ease-out box-border"
                     : "text-[1.2rem] ml-8  hover:font-bold hover:border-b-black hover:border-b-[3px] box-border transition duration-500 ease-out"
                 }
-                onClick={handleUpcoming}
+                onClick={ handleUpcoming }
               >
                 Upcoming
               </h1>
             </div>
 
-            {/* curriculumn section */}
+            {/* curriculumn section */ }
 
             <div>
-              {/* current curriculum */}
-              {current && (
+              {/* current curriculum */ }
+              { current && (
                 <div>
                   <h1 className="text-[1.5rem] font-bold mt-10 w-full">
                     Current Unit
                   </h1>
 
                   <div
-                    style={{ boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" }}
+                    style={ { boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" } }
                     className="flex rounded-xl w-fit overflow-hidden mt-14"
                   >
                     <Image
-                      src={loopImg}
+                      src={ loopImg }
                       objectFit="cover"
                       alt="loop image"
-                      width={150}
-                      quality={100}
+                      width={ 150 }
+                      quality={ 100 }
                     />
                     <div className="bg-white w-[20rem] h-[17rem] p-8 ">
                       <div>
@@ -143,17 +143,17 @@ export default function Index() {
                     </div>
                   </div>
                 </div>
-              )}
+              ) }
 
-              {/* Past */}
+              {/* Past */ }
 
-              {past && (
+              { past && (
                 <div>
                   <h1 className="text-[1.5rem] font-bold mt-10">Past Units</h1>
                   <div className="flex lg:flex-row flex-col items-center gap-8">
                     <div className="flex-[50%]">
                       <div
-                        style={{ boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" }}
+                        style={ { boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" } }
                         className="flex rounded-xl overflow-hidden mt-14"
                       >
                         <div className="lg:w-[150px] w-[120px] bg-[#A0A0A0]"></div>
@@ -174,7 +174,7 @@ export default function Index() {
 
                     <div className="flex-[50%]">
                       <div
-                        style={{ boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" }}
+                        style={ { boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" } }
                         className="flex rounded-xl overflow-hidden mt-14"
                       >
                         <div className="lg:w-[150px] w-[120px] bg-[#A0A0A0]"></div>
@@ -192,11 +192,11 @@ export default function Index() {
                     </div>
                   </div>
                 </div>
-              )}
+              ) }
 
-              {/* upcoming */}
+              {/* upcoming */ }
 
-              {upcoming && (
+              { upcoming && (
                 <div>
                   <h1 className="text-[1.5rem] font-bold mt-10">
                     Upcoming Units
@@ -204,11 +204,11 @@ export default function Index() {
                   <div className="flex lg:flex-row flex-col items-center gap-8">
                     <div className="flex-[50%]">
                       <div
-                        style={{ boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" }}
+                        style={ { boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" } }
                         className="flex rounded-xl w-fit overflow-hidden mt-14"
                       >
                         <div className="lg:w-[150px] w-[120px] bg-[#A6CCA8] flex justify-center items-center">
-                          <Image src={connect} alt="connect" />
+                          <Image src={ connect } alt="connect" />
                         </div>
                         <div className="bg-white flex-1 w-full h-[17rem] p-8">
                           <div>
@@ -227,11 +227,11 @@ export default function Index() {
 
                     <div className="flex-[50%]">
                       <div
-                        style={{ boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" }}
+                        style={ { boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" } }
                         className="flex rounded-xl w-fit overflow-hidden mt-14"
                       >
                         <div className="lg:w-[150px] w-[120px] bg-[#8FD3D8] flex justify-center items-center">
-                          <Image src={bracket} alt="bracket" />
+                          <Image src={ bracket } alt="bracket" />
                         </div>
                         <div className="bg-white flex-1 w-full h-[17rem] p-8">
                           <div>
@@ -247,11 +247,11 @@ export default function Index() {
                     </div>
                   </div>
                 </div>
-              )}
+              ) }
             </div>
           </div>
-        )}
+        ) }
       </div>
     </div>
-  );
+  )
 }

@@ -18,7 +18,10 @@ const Modal = () => {
     return <></>;
   }
   return (
-    <section className={`${styles.modalOverlay} bg-[rgba(0,0,0,.25)]`}>
+    <section
+      className={`${styles.modalOverlay} bg-[rgba(0,0,0,.25)]`}
+      data-testid="addClassModal"
+    >
       {/* modal itself */}
       <main className="w-[90vw] max-w-[900px] mx-auto bg-white rounded-md flex shadow-lg relative">
         <span
@@ -26,6 +29,7 @@ const Modal = () => {
             dispatch(closeAddClassModal());
           }}
           className="text-[30px] font-thin absolute z-10 top-[30px] right-[30px]"
+          data-testid="closeIcon"
         >
           <FaTimes />
         </span>
