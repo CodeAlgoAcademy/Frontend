@@ -55,7 +55,11 @@ const Standard: FC<Props> = ({ openedModal, updateOpenedModal }) => {
       </div>
       <div className={styles.numbersSelectedContainer}>
         <p>
-          {standard === "" ? "0 standards selected" : "1 standard selected"}
+          {standard === "" ? (
+            "0 standards selected"
+          ) : (
+            <span className={styles.selectedItems}>{standard}</span>
+          )}
         </p>
       </div>
     </article>

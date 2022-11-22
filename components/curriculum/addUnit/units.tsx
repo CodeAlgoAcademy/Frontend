@@ -71,9 +71,9 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                         </button>
                         <button
                           className={`${styles.button} ${
-                            unit.isCurrent || unit.isChosen
-                              ? "bg-orange-400 text-white"
-                              : "bg-orange-600 text-white"
+                            !unit.isCurrent && unit.isChosen
+                              ? "bg-orange-600 text-white"
+                              : "bg-orange-400 text-white"
                           }`}
                           onClick={() => {
                             dispatch(
@@ -155,7 +155,17 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
         </i>
       </div>
       <div className={styles.numbersSelectedContainer}>
-        {units.filter((unit) => unit.isChosen).length} units selected
+        {units.filter((unit) => unit.isChosen).length === 0
+          ? `0 units selected`
+          : units
+              .filter((unit) => unit.isChosen)
+              .map((unit, index: number) => {
+                return (
+                  <span key={index} className={styles.selectedItems}>
+                    {unit.unit}
+                  </span>
+                );
+              })}
       </div>
     </article>
   );
