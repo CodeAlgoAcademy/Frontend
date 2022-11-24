@@ -10,53 +10,56 @@ const Standard: FC<Props> = ({ openedModal, updateOpenedModal }) => {
   const { standard } = useSelector((state: RootState) => state.unit.addUnit);
   return (
     <article className="flex flex-row gap-x-2 relative">
-      {openedModal === "standard" && (
-        <div
-          className={`${styles.preview} ${
-            openedModal === "standard" &&
-            "border-r-2 border-l-2 border-b-2 border-mainPurple "
-          } max-w-[40.9%] top-[98%] rounded-none left-0`}
-        >
-          {standards.map((availableStandard: string, index: number) => (
-            <div className={styles.inputContainer} key={index}>
-              <input
-                type="radio"
-                name="standard"
-                id={availableStandard}
-                onChange={() => {
-                  dispatch(updateStandard({ value: availableStandard }));
-                }}
-                className="hidden"
-              />
-              <label
-                htmlFor={availableStandard}
-                className={`hover:text-mainPurple ${
-                  standard === availableStandard && "text-mainPurple"
-                }`}
-              >
-                {availableStandard}
-              </label>
-            </div>
-          ))}
-        </div>
-      )}
       <div
-        className={`${styles.topic}  ${
-          openedModal === "standard" &&
-          "rounded-b-none border-2 border-mainPurple z-30"
+        className={`${styles.topic} ${
+          openedModal === "standard"
+            ? " outline-mainPurple"
+            : "outline-transparent"
         }`}
-        onClick={() => {
-          updateOpenedModal("standard");
+        onClick={(event: any) => {
+          if (!event.target.classList.contains("dropdown")) {
+            updateOpenedModal("standard");
+          }
         }}
       >
         <h1>Standard</h1>
         <i>
           <FaChevronDown />
         </i>
+        {openedModal === "standard" && (
+          <div className={`${styles.preview}`}>
+            {standards.map((availableStandard: string, index: number) => (
+              <div className={styles.inputContainer} key={index}>
+                <input
+                  type="radio"
+                  name="standard"
+                  id={availableStandard}
+                  onChange={() => {
+                    dispatch(updateStandard({ value: availableStandard }));
+                    updateOpenedModal("");
+                  }}
+                  className="hidden dropdown"
+                />
+                <label
+                  htmlFor={availableStandard}
+                  className={`hover:text-mainPurple dropdown ${
+                    standard === availableStandard && "text-mainPurple"
+                  }`}
+                >
+                  {availableStandard}
+                </label>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       <div className={styles.numbersSelectedContainer}>
         <p>
-          {standard === "" ? "0 standards selected" : "1 standard selected"}
+          {standard === "" ? (
+            "0 standards selected"
+          ) : (
+            <span className={styles.selectedItems}>{standard}</span>
+          )}
         </p>
       </div>
     </article>

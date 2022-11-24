@@ -47,6 +47,7 @@ export interface IUnitsSlice {
 			startDate: string
 			endDate: string
 			hoverText: string
+			isChosen: boolean
 		}>
 		levels: string[]
 		grades: string[]
@@ -92,6 +93,35 @@ export interface IInputFields {
 	placeholder: string
 	name: string
 	value: string | number
+}
+
+export interface CurrentClassState {
+	className: string
+	color: string
+}
+
+export interface ILevels {
+	level: string
+	unitsId: Array<string>
+	grades: Array<string>
+	hoverText: string
+}
+
+export interface AssignmentSkill {
+	skillId: string
+}
+
+export interface AssignmentStudent {
+	studentId: string
+}
+
+export interface AssignmentDetails {
+	title: string
+	schedule: string
+	order: string
+	number: number
+	skills: AssignmentSkill[]
+	students: AssignmentStudent[]
 }
 
 export interface CurrentClassState {
