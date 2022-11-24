@@ -6,7 +6,6 @@ import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import AddStudent from "../../components/modals/AddStudent";
-import StudentProgress from "../../components/StudentProgress";
 import PreviewModal from "../../components/modals/PreviewModal";
 import { GeneralNav } from "../../components";
 
@@ -217,7 +216,7 @@ export default function Unit() {
                     </div>
 
                     {/* Student progress section */}
-                    <StudentProgress progressData={progressData} />
+                    
                   </div>
                 )}
               </div>
