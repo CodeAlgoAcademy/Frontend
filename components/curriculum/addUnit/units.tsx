@@ -13,7 +13,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
   return (
     <article className="flex flex-row gap-x-2 relative">
       {openedModal === "unit" && (
-        <div className="fixed top-0 left-0 z-30 w-full min-h-screen bg-[rgba(0,0,0,0.6)] flex justify-center items-center gap-y-4 overflow-hidden overflow-y-scroll">
+        <div className="fixed top-0 left-0 z-30 w-full min-h-screen bg-[rgba(0,0,0,0.6)] flex justify-center items-center gap-y-4 overflow-hidden overflow-y-scroll close-dropdown">
           <div className="bg-white w-[90vw] max-w-[1000px] overflow-hidden rounded-md flex md:flex-row flex-col-reverse">
             <aside className="flex-[0.25] md:border-r-2 border-gray-300 md:py-8 py-6 px-4 flex flex-col justify-between gap-4">
               <h1 className="text-[22px] font-bold hidden md:block">
@@ -54,7 +54,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                       <div className="flex flex-wrap w-full jutsify-between items-end gap-4">
                         <button
                           className={`${styles.button} ${
-                            unit.isCurrent
+                            unit.isCurrent && unit.isChosen
                               ? "bg-green-600 text-white"
                               : "bg-green-400 text-white"
                           }`}
@@ -71,9 +71,9 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                         </button>
                         <button
                           className={`${styles.button} ${
-                            unit.isCurrent
-                              ? "bg-orange-400 text-white"
-                              : "bg-orange-600 text-white"
+                            !unit.isCurrent && unit.isChosen
+                              ? "bg-orange-600 text-white"
+                              : "bg-orange-400 text-white"
                           }`}
                           onClick={() => {
                             dispatch(
@@ -142,7 +142,9 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
         </div>
       )}
       <div
-        className={styles.topic}
+        className={`${styles.topic} ${
+          openedModal === "unit" ? " outline-mainPurple" : "outline-transparent"
+        }`}
         onClick={() => {
           updateOpenedModal("unit");
         }}
@@ -153,7 +155,17 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
         </i>
       </div>
       <div className={styles.numbersSelectedContainer}>
-        {units.length} units selected
+        {units.filter((unit) => unit.isChosen).length === 0
+          ? `0 units selected`
+          : units
+              .filter((unit) => unit.isChosen)
+              .map((unit, index: number) => {
+                return (
+                  <span key={index} className={styles.selectedItems}>
+                    {unit.unit}
+                  </span>
+                );
+              })}
       </div>
     </article>
   );

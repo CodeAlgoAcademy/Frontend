@@ -25,6 +25,7 @@ const unitsSlice = createSlice({
       action: PayloadAction<{ value: string }>
     ) => {
       state.addUnit.standard = action.payload.value;
+      state.addUnit.levels = [];
     },
     updateLevels: (
       state: IUnitsSlice,
@@ -49,11 +50,20 @@ const unitsSlice = createSlice({
           const unitFromAvailableUnits = level.unitsId.map((unitId) =>
             availableUnits.find((availableUnit) => availableUnit.id === unitId)
           );
+          console.log(unitFromAvailableUnits);
           units = [...units, ...unitFromAvailableUnits];
         }
       });
       state.addUnit.grades = grades;
-      state.addUnit.units = units;
+      state.addUnit.units = units.reduce((acc: any, currentUnit: any) => {
+        if (!acc.find((accUnit: any) => accUnit.id === currentUnit.id)) {
+          const unit: any = availableUnits.find(
+            (availableUnit) => availableUnit.id == currentUnit.id
+          );
+          acc.push(unit);
+        }
+        return acc;
+      }, []);
       state.addUnit.chosenGrades = [];
     },
     updateUnits: (
@@ -64,18 +74,44 @@ const unitsSlice = createSlice({
         const date = new Date();
         if (action.payload.id === unit.id) {
           if (action.payload.type === "current") {
+            if (unit.isCurrent && unit.isChosen) {
+              unit.isChosen = false;
+            } else if (
+              (unit.isCurrent && !unit.isChosen) ||
+              (!unit.isCurrent && !unit.isChosen)
+            ) {
+              unit.isChosen = true;
+            }
             unit.isCurrent = true;
             unit.startDate = "";
           } else if (action.payload.type === "upcoming") {
+            if (unit.isCurrent && unit.isChosen) {
+              unit.isChosen = true;
+              unit.startDate = `${date.getFullYear()}-${
+                date.getMonth() + 1
+              }-${date.getDate()}`;
+            } else if (unit.isCurrent && !unit.isChosen) {
+              unit.isChosen = true;
+              unit.startDate = `${date.getFullYear()}-${
+                date.getMonth() + 1
+              }-${date.getDate()}`;
+            } else if (!unit.isCurrent && unit.isChosen) {
+              unit.isChosen = false;
+              unit.startDate = "";
+            } else if (!unit.isCurrent && !unit.isChosen) {
+              unit.isChosen = true;
+              // format: yyyy-mm-dd just like a normal date input element
+              unit.startDate = `${date.getFullYear()}-${
+                date.getMonth() + 1
+              }-${date.getDate()}`;
+            }
             unit.isCurrent = false;
-            // format: yyyy-mm-dd just like a normal date input element
-            unit.startDate = `${date.getFullYear()}-${
-              date.getMonth() + 1
-            }-${date.getDate()}`;
           } else if (action.payload.type === "start date") {
+            unit.isChosen = true;
             unit.isCurrent = false;
             unit.startDate = `${action.payload.value}`;
           } else if (action.payload.type === "end date") {
+            unit.isChosen = true;
             unit.isCurrent = false;
             unit.endDate = `${action.payload.value}`;
           }

@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React from "react";
 import Head from "next/head";
 import Modal from "../components/addClass/modal";
 import { FaPlus } from "react-icons/fa";
@@ -21,6 +21,7 @@ const AddClass = () => {
             <h1 className="text-[2rem] font-bold">Home</h1>
             <div
               className="flex flex-row gap-x-2 items-center cursor-pointer"
+              data-testid="open-modal"
               onClick={() => {
                 dispatch(openAddClassModal());
               }}
