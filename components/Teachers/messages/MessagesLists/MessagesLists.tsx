@@ -4,7 +4,7 @@ import { data } from './sampleData'
 
 const MessagesLists = () => {
   return (
-    <div className='overflow-x-auto h-48'>
+    <div className='overflow-x-auto md:h-48'>
       {data.map(({ id, message, name, online, read, received, seen, sent }) => (
         <div key={id}>
           <MessageList 

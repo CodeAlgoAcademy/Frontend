@@ -21,11 +21,24 @@ const MessageList = ({ message, name, online, read, received, seen, sent }: Mess
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 variant={online ? 'dot': 'standard'}
             >
-                <Avatar alt={name} src='' sx={{ width: 32, height: 32 }} />
+                <div className='hidden md:block'>
+                    <Avatar 
+                        alt={name} 
+                        src='' 
+                        style={{ width: 30, height: 30 }}
+                    />
+                </div>
+                <div className='md:hidden'>
+                    <Avatar 
+                        alt={name} 
+                        src='' 
+                        style={{ width: 50, height: 50 }}
+                    />
+                </div>
             </StyledBadge>
-            <div className={`text-xs ml-2 ${(!read && received) && 'font-bold'}` }>
+            <div className={`text-[20px] md:text-xs ml-2 ${(!read && received) && 'font-bold'}` }>
                 <p>{name}</p>
-                <p className='text-[9px] w-36 truncate'>{message}</p>
+                <p className='text-[15px] md:text-[9px] w-60 md:w-36 truncate'>{message}</p>
             </div>
             <div className='ml-auto'>
                 {!received && (
@@ -42,5 +55,5 @@ const MessageList = ({ message, name, online, read, received, seen, sent }: Mess
 export default MessageList
 
 const styles= {
-    container: 'px-3 py-2 flex items-center cursor-pointer hover:bg-slate-100'
+    container: 'px-5 md:px-3 py-3 flex items-center cursor-pointer hover:bg-gray-300 md:hover:bg-slate-100'
 }
