@@ -1,12 +1,10 @@
-import React, { FC, useState } from "react";
+import React from "react";
 import Head from "next/head";
 import Modal from "../components/addClass/modal";
-import SingleClass from "../components/addClass/singleClass";
 import { FaPlus } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { openAddClassModal } from "../store/modalSlice";
 import Classes from "../components/addClass/classes";
-import { GeneralNav } from "../components";
 const AddClass = () => {
   const dispatch = useDispatch();
 
@@ -18,12 +16,12 @@ const AddClass = () => {
 
       {/* navbar here */}
       <section className="w-full bg-gray-50 min-h-screen">
-        <GeneralNav />
         <div className="w-full px-[16px] py-[30px] max-w-[1250px] mx-auto">
           <div className="w-full flex flex-wrap justify-between items-center">
             <h1 className="text-[2rem] font-bold">Home</h1>
             <div
               className="flex flex-row gap-x-2 items-center cursor-pointer"
+              data-testid="open-modal"
               onClick={() => {
                 dispatch(openAddClassModal());
               }}

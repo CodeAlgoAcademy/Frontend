@@ -7,6 +7,8 @@ import modalReducer from "./modalSlice"
 import addClassReducer from "./addClassSlice"
 import allClassesReducer from "./allClassesSlice"
 import currentClassReducer from "./currentClassSlice"
+import unitsSlice from "./unitsSlice"
+import calendarReducer from "./calendarSlice"
 
 const persistConfig = {
 	key: "root",
@@ -18,7 +20,9 @@ const rootReducer = combineReducers({
 	modal: modalReducer,
 	addClass: addClassReducer,
 	allClasses: allClassesReducer,
-	currentClass: currentClassReducer
+	currentClass: currentClassReducer,
+	unit: unitsSlice,
+	calendar: calendarReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
