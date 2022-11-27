@@ -159,5 +159,4 @@ export interface ISchedule {
 	Location: string
 	StartTime: string
 	EndTime: string
-	CategoryColor: string
 }
