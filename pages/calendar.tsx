@@ -1,5 +1,5 @@
 import React, { useState, PropsWithChildren } from "react"
-import { ScheduleComponent, ViewsDirective, ViewDirective, Day, Week, WorkWeek, Month, Agenda, Inject, Resize, EventRenderedArgs } from "@syncfusion/ej2-react-schedule"
+import { ScheduleComponent, ViewsDirective, ViewDirective, Day, Week, WorkWeek, Month, Agenda, Inject, Resize, DataBindingEventArgs } from "@syncfusion/ej2-react-schedule"
 import { DatePickerComponent, ChangeEventArgs } from "@syncfusion/ej2-react-calendars"
 import { Sidebar, GeneralNav } from "../components"
 import { useSelector } from "react-redux"
@@ -13,6 +13,13 @@ const Calendar = () => {
    function change (args: ChangeEventArgs): void {
       scheduleObj.selectedDate = args.value
       scheduleObj.dataBind()
+   }
+   function ondataBinding (args: DataBindingEventArgs) {
+      const data = args.result
+      console.log(scheduleObj.eventSettings.dataSource)
+      console.log(data)
+      // send data to backend
+      // send prompt if successful
    }
 
    return (
@@ -28,10 +35,12 @@ const Calendar = () => {
             <div className="bg-[#E5E5E5] flex-1 px-[2%] py-8">
                <div className='mt-6 p-4 bg-white rounded-xl max-w-[1200px] mx-auto'>
                   <ScheduleComponent
-                     height='650px'
+                     height='620px'
                      selectedDate={ new Date() }
                      ref={ schedule => scheduleObj = schedule }
-                     eventSettings={ { dataSource: scheduleData } }>
+                     eventSettings={ { dataSource: scheduleData } }
+                     dataBinding={ ondataBinding.bind(this) }
+                  >
                      <ViewsDirective>
                         <ViewDirective option='Day' />
                         <ViewDirective option='Week' />
