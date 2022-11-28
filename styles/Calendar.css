@@ -13,6 +13,11 @@
 .e-appointment-border {
 	background-color: #f28e2c;
 }
+.e-schedule .e-vertical-view .e-content-wrap .e-appointment,
+.e-schedule .e-timeline-view .e-content-wrap .e-appointment {
+	border-radius: 8px;
+}
+
 .e-schedule .e-agenda-view .e-appointment,
 .e-schedule .e-month-agenda-view .e-appointment-indicator {
 	border-color: #f28e2c;
