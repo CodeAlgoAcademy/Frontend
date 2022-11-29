@@ -12,6 +12,7 @@ import { GeneralNav } from "../../components";
 export default function Unit() {
   const [showModal, setShowModal] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
+  const [active, setActive] = useState<number[]>([])
 
   // add student oprions modal
   const cancelPresence = () => {
@@ -39,7 +40,6 @@ export default function Unit() {
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, cum, rem voluptate cumque odio ex consequuntur velit quae voluptas debitis, numquam fugit consequatur ea corrupti iusto. Placeat autem voluptates voluptate consequuntur excepturi esse ullam ducimus mollitia accusantium, dolor dolorem in.",
       date: "April 16 - April 19",
       status: "Published",
-      show: false,
       id: 2,
     },
     {
@@ -48,7 +48,6 @@ export default function Unit() {
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, cum, rem voluptate cumque odio ex consequuntur velit quae voluptas debitis, numquam fugit consequatur ea corrupti iusto. Placeat autem voluptates voluptate consequuntur excepturi esse ullam ducimus mollitia accusantium, dolor dolorem in.",
       date: "",
       status: "Unpublished",
-      show: false,
       id: 3,
     },
     {
@@ -57,7 +56,6 @@ export default function Unit() {
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, cum, rem voluptate cumque odio ex consequuntur velit quae voluptas debitis, numquam fugit consequatur ea corrupti iusto. Placeat autem voluptates voluptate consequuntur excepturi esse ullam ducimus mollitia accusantium, dolor dolorem in.",
       date: "",
       status: "Unpublished",
-      show: false,
       id: 4,
     },
     {
@@ -66,44 +64,24 @@ export default function Unit() {
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, cum, rem voluptate cumque odio ex consequuntur velit quae voluptas debitis, numquam fugit consequatur ea corrupti iusto. Placeat autem voluptates voluptate consequuntur excepturi esse ullam ducimus mollitia accusantium, dolor dolorem in.",
       date: "",
       status: "Unpublished",
-      show: false,
       id: 5,
     },
   ]);
 
-  const progressData = [
-    {
-      name: "Student A",
-      progress: "0%",
-      bar: 0,
-      Quiz: "",
-      Status: "",
-    },
-    {
-      name: "Student A",
-      progress: "0%",
-      bar: 0,
-      Quiz: "",
-      Status: "",
-    },
-    {
-      name: "Student B",
-      progress: "0%",
-      bar: 0,
-      Quiz: "",
-      Status: "",
-    },
-  ];
+
+
+  
+ 
 
   const handleClick = (id: number) => {
-    const elementIndex = unitData.findIndex((element) => element.id === id);
-    console.log(elementIndex);
-    let newArr = [...unitData];
-    newArr[elementIndex] = {
-      ...newArr[elementIndex],
-      show: !newArr[elementIndex].show,
-    };
-    setUnitData(newArr);
+    const index = active.indexOf(id)
+    if(index !== -1) {
+      setActive((active) => [...active.slice(0, index), ...active.slice(index + 1)])
+      console.log(index)
+      console.log(active)
+  } else {
+      setActive((active) => [...active, id])
+  }
   };
 
   return (
@@ -162,10 +140,10 @@ export default function Unit() {
                     className="py-5 px-7 text-2xl"
                     onClick={() => handleClick(data.id)}
                   >
-                    {data.show ? <FiChevronUp /> : <FiChevronDown />}
+                    {active.includes(data.id) ? <FiChevronUp /> : <FiChevronDown />}
                   </div>
                 </div>
-                {data.show && (
+                {active.includes(data.id) && (
                   <div >
                     <div className="flex  mx-12 py-6 border-[#E6E6E6] border-t-2 ">
                       {/* first division */}

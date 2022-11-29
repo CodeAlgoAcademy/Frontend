@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { openAddUnitModal } from "store/modalSlice"
 import AddUnit from "@/components/curriculum/addUnit"
 import { RootState } from "store/store"
+import axios from "axios";
 
 export default function Index () {
   const [past, setPast] = useState<boolean>(false)
@@ -21,6 +22,8 @@ export default function Index () {
   const [active, setActive] = useState("current")
   const { addUnitModalOpen } = useSelector((state: RootState) => state.modal)
   const dispatch = useDispatch()
+
+  
 
   // curriculumn tab click functions
   const handlePast = () => {
@@ -36,13 +39,15 @@ export default function Index () {
     setCurrent(true)
     setActive("current")
   }
-
   const handleUpcoming = () => {
     setPast(false)
     setCurrent(false)
     setUpcoming(true)
     setActive("upcoming")
   }
+
+
+ 
 
   return (
     <div className="min-h-[100vh] flex flex-col">
