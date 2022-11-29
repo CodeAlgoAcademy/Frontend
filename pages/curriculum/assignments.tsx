@@ -8,16 +8,13 @@ import { IoPersonAddOutline } from "react-icons/io5"
 import { TbMedal } from "react-icons/tb"
 import { RiArrowDropDownLine } from "react-icons/ri"
 import { HiMagnifyingGlass } from "react-icons/hi2"
-
+import { StudentModal } from "../../components/curriculum/assignment"
 import { RootState } from "../../store/store"
 import { useSelector, useDispatch } from "react-redux"
-import { updateCurrentClass } from "../../store/currentClassSlice"
+import { updateSkills, searchSkills } from "../../store/skillsSlice"
 
-import { IClass, CurrentClassState, AssignmentDetails, AssignmentSkill, AssignmentStudent } from "../../types/interfaces"
+import { SkillDetails, AssignmentDetails, AssignmentSkill, AssignmentStudent, DynamicChechbox } from "../../types/interfaces"
 
-interface DynamicChechbox {
-   [key: string]: boolean
-}
 
 const Assignments = () => {
    const modalDefaults = {
@@ -43,9 +40,9 @@ const Assignments = () => {
       students: []
    })
 
-   const testSkills = [
-      { categoryId: '1', categoryTitle: "1.OA.1", skills: [{ skillId: '1', name: "" }, { skillId: '2', name: "" }, { skillId: '3', name: "" }, { skillId: '4', name: "" }, { skillId: '5', name: "" }, { skillId: '6', name: "" }, { skillId: '7', name: "" }] }, { categoryId: '2', categoryTitle: "1.OA.2", skills: [{ skillId: '8', name: "" }, { skillId: '9', name: "" }, { skillId: '10', name: "" }, { skillId: '11', name: "" }] }, { categoryId: '3', categoryTitle: "1.OA.3", skills: [{ skillId: '12', name: "" }, { skillId: '13', name: "" }, { skillId: '14', name: "" }] }, { categoryId: '4', categoryTitle: "1.OA.4", skills: [{ skillId: '15', name: "" }, { skillId: '16', name: "" }, { skillId: '17', name: "" }, { skillId: '18', name: "" }, { skillId: '19', name: "" }] }, { categoryId: '5', categoryTitle: "1.OA.5", skills: [{ skillId: '20', name: "" }] }, { categoryId: '7', categoryTitle: "1.OA.7", skills: [{ skillId: '21', name: "" }] }, { categoryId: '8', categoryTitle: "1.OA.8", skills: [{ skillId: '22', name: "" }, { skillId: '23', name: "" }, { skillId: '24', name: "" }] }
-   ]
+   const assingmentSkills = useSelector(
+      (state: RootState): SkillDetails[] => state.skills
+   )
 
    const testStudents = [
       { studentId: '1' }, { studentId: '2' }, { studentId: '3' }, { studentId: '4' }, { studentId: '5' }, { studentId: '6' }, { studentId: '7' }, { studentId: '8' }, { studentId: '9' }, { studentId: '10' }, { studentId: '11' }, { studentId: '12' }, { studentId: '13' }, { studentId: '14' }, { studentId: '15' }, { studentId: '16' }, { studentId: '17' }, { studentId: '18' }, { studentId: '19' }, { studentId: '20' }, { studentId: '21' }, { studentId: '22' }, { studentId: '23' }, { studentId: '24' }, { studentId: '25' }, { studentId: '26' }, { studentId: '27' }, { studentId: '28' }, { studentId: '29' }, { studentId: '30' }
@@ -142,12 +139,12 @@ const Assignments = () => {
       setModalItemsDisplay((prev) => prev = ({ ...modalDefaults, [modalName]: true }))
    }
    useEffect(() => {
-      testSkills.forEach((skillCategory) => {
-         const skills = skillCategory.skills
-         skills.forEach((skill) => {
+      assingmentSkills.forEach((skillCategory) => {
+         const testStudents = skillCategory.tests
+         testStudents.forEach((test) => {
             setSkillCheckbox((prev) => ({
                ...prev,
-               [skill.skillId]: false
+               [test.testId]: false
             }))
          })
       })
@@ -390,25 +387,23 @@ const Assignments = () => {
                                     <span className="absolute left-4 top-3 text-2xl text-gray-400"><HiMagnifyingGlass /> </span>
                                  </div>
                                  <div className="mt-12 h-[500px] pr-4 scroll-smooth overflow-y-auto grid grid-cols-1 gap-6 small-scroll-thumb">
-                                    { testSkills.map(({ categoryId, categoryTitle, skills }) => (<div key={ categoryTitle } className="rounded-xl bg-white drop-shadow-md border max-w-[550px]">
+                                    { assingmentSkills.map(({ categoryId, categoryTitle, tests }) => (<div key={ categoryId } className="rounded-xl bg-white drop-shadow-md border max-w-[550px]">
                                        <div className="border-b h-14 px-4 flex justify-between gap-8 items-center relative">
                                           <div className="flex items-center gap-4">
                                              <div className="text-[#F28E2C] text-3xl"><TbMedal /></div>
                                              <div className="flex items-center gap-2">
-                                                <h3 className="font-bold text-lg">{ categoryTitle }</h3>
-                                                <p className="opacity-60 text-sm font-semibold truncate ... w-[300px]">
-                                                   Use addition and subtraction with 20 to solve world hunger
-                                                </p>
+                                                <h3 className="font-bold text-lg">{ categoryId }</h3>
+                                                <p className="opacity-60 text-sm font-semibold truncate ... w-[300px]">{ categoryTitle }</p>
                                              </div>
                                           </div>
-                                          <span className="bg-[#F28E2C]/70 text-xs font-bold opacity-70 rounded-2xl py-1 px-4 absolute right-4 top-4 truncate ...">{ skills.length } { skills.length > 1 ? "skills" : "skill" }</span>
+                                          <span className="bg-[#F28E2C]/70 text-xs font-bold opacity-70 rounded-2xl py-1 px-4 absolute right-4 top-4 truncate ...">{ tests.length } { tests.length > 1 ? "skills" : "skill" }</span>
                                        </div>
                                        <div className="divide-y">
-                                          { skills.map(({ name, skillId }) => (
+                                          { tests.map(({ testTitle, testId }) => (
 
-                                             <div key={ skillId } className="flex px-6 h-12 gap-4 items-center">
+                                             <div key={ testId } className="flex px-6 h-12 gap-4 items-center">
                                                 <label className="checkbox-container">
-                                                   <input type="checkbox" name={ skillId } checked={ skillCheckbox[skillId] } onChange={ handleSkillCheckboxChange } />
+                                                   <input type="checkbox" name={ testId } checked={ skillCheckbox[testId] } onChange={ handleSkillCheckboxChange } />
                                                    <span className="checkmark small-checkmark"></span>
                                                 </label>
                                                 <p className="opacity-60 text-sm font-semibold truncate ... w-full">
@@ -424,40 +419,7 @@ const Assignments = () => {
                         </div>
                      }
                      { modalItemsDisplay?.studentResponse &&
-                        <div className="py-12 h-[500px] min-w-[800px]">
-                           <h3 className="text-2xl font-semibold pl-12">Student(s)</h3>
-                           <div className="flex items-center justify-between px-12 py-4 border-b">
-                              <div className="flex items-center gap-4">
-                                 <label className="checkbox-container bottom-1">
-                                    <input type="checkbox" name="allStudents" checked={ allStudentCheckbox.isChecked } onChange={ handleAllStudentChechbox } />
-                                    <span className="checkmark big-checkmark"></span>
-                                 </label>
-                                 <p className="font-semibold">
-                                    { allStudentCheckbox.isChecked ? "Unselect all Students" : "Select all Students" }
-                                 </p>
-                              </div>
-                              <div className="rounded-md px-3 gap-6 flex items-center border py-1">
-                                 <span className="opacity-70 font-semibold">Class</span>
-                                 <span className="opacity-60 text-3xl cursor-pointer">
-                                    <RiArrowDropDownLine />
-                                 </span>
-                              </div>
-                           </div>
-                           <div className="p-12 h-[250px] grid grid-cols-4 scroll-smooth overflow-y-auto gap-x-6 gap-y-8 small-scroll-thumb">
-                              { testStudents.map(({ studentId }) => (<div key={ studentId } className="flex items-center gap-4">
-                                 <label className="checkbox-container bottom-1">
-                                    <input type="checkbox" name={ studentId } checked={ studentCheckbox[studentId] } onChange={ handleStudentCheckboxChange } />
-                                    <span className="checkmark small-checkmark"></span>
-                                 </label>
-                                 <p className="font-semibold">Students { studentId }</p>
-                              </div>)) }
-                           </div>
-                           <div className="px-12 py-4 flex flex-row-reverse">
-                              <span onClick={ hideModal } className="">
-                                 <Button color="#F28E2C" text="Confirm" />
-                              </span>
-                           </div>
-                        </div>
+                        <StudentModal students={ testStudents } hideModal={ hideModal } handleStudentCheckboxChange={ handleStudentCheckboxChange } handleAllStudentChechbox={ handleAllStudentChechbox } allStudentCheckbox={ allStudentCheckbox } studentCheckbox={ studentCheckbox } />
                      }
                   </div>
                }
