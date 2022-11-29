@@ -13,7 +13,16 @@ const initialState: AssignmentDetails = {
 const newAssignmentSlice = createSlice({
 	name: "newAssignment",
 	initialState,
-	reducers: {}
+	reducers: {
+		setSkill: () => {},
+		addSkill: () => {},
+		removeSkill: () => {},
+		setStudents: () => {},
+		addStudent: () => {},
+		removeStudent: () => {},
+		handleInputChange: () => {},
+		setQuestionNumbers: () => {}
+	}
 })
 
 export default newAssignmentSlice.reducer
