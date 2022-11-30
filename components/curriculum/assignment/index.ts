@@ -1,2 +1,2 @@
-export { default as SkillsModal } from "./SkillsModal"
+export { default as SkillModal } from "./SkillModal"
 export { default as StudentModal } from "./StudentModal"

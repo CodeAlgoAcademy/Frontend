@@ -6,12 +6,11 @@ import { BsPlusCircle } from "react-icons/bs"
 import { FaTimes } from "react-icons/fa"
 import { IoPersonAddOutline } from "react-icons/io5"
 import { TbMedal } from "react-icons/tb"
-import { RiArrowDropDownLine } from "react-icons/ri"
-import { HiMagnifyingGlass } from "react-icons/hi2"
-import { StudentModal } from "../../components/curriculum/assignment"
+import { StudentModal, SkillModal } from "../../components/curriculum/assignment"
+
 import { RootState } from "../../store/store"
 import { useSelector, useDispatch } from "react-redux"
-import { updateSkills, searchSkills } from "../../store/skillsSlice"
+import { saveAssignment } from "../../store/newAssignmentSlice"
 
 import { SkillDetails, AssignmentDetails, AssignmentSkill, AssignmentStudent, DynamicChechbox } from "../../types/interfaces"
 
@@ -296,7 +295,7 @@ const Assignments = () => {
             </div>
          </div>
          {
-            <div className={ `w-full h-full ${modalWrapperDisplay ? "showModal" : "hideModal"} backdrop-blur-sm bg-gray-100/50 fixed left-0 z-50 flex justify-center items-center` }>
+            <div className={ `w-full h-full ${modalWrapperDisplay ? "showModal" : "hideModal"} backdrop-blur-sm bg-gray-100/50 fixed left-0 flex justify-center items-center` }>
                {
                   modalWrapperDisplay &&
                   <div className="relative max-w-[850px] bg-white rounded-xl">
@@ -348,75 +347,7 @@ const Assignments = () => {
                         </div>
                      }
                      { modalItemsDisplay?.skillsResponse &&
-                        <div className="py-8 min-h-[650px] w-full">
-                           <div className="flex gap-8 pl-12  h-full items-stretch mb-auto grow">
-                              <div className="w-[180px] flex flex-col justify-between">
-                                 <div>
-                                    <h3 className="text-2xl font-semibold">Select Skill</h3>
-                                    <div className="mt-12 flex flex-col gap-4">
-                                       <div className="px-4 py-2 flex items-center justify-between w-full rounded-lg h-[46px] bg-gray-100 drop-shadow-md">
-                                          <p className="opacity-60 text-sm font-semibold">
-                                             Computer
-                                          </p>
-                                       </div>
-                                       <div className="px-4 py-2 flex items-center justify-between w-full rounded-lg h-[46px] bg-gray-100 drop-shadow-md">
-                                          <p className="opacity-60 text-sm font-semibold truncate ...">
-                                             Common Core
-                                          </p>
-                                          <span className="opacity-60 text-3xl cursor-pointer">
-                                             <RiArrowDropDownLine />
-                                          </span>
-                                       </div>
-                                       <div className="px-4 py-2 flex items-center justify-between w-full rounded-lg h-[46px] bg-gray-100 drop-shadow-md">
-                                          <p className="opacity-60 text-sm font-semibold truncate ...">
-                                             Grade 1
-                                          </p>
-                                          <span className="opacity-60 text-3xl cursor-pointer">
-                                             <RiArrowDropDownLine />
-                                          </span>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <span onClick={ hideModal } className="">
-                                    <Button color="#F28E2C" text="Done" />
-                                 </span>
-                              </div>
-                              <div>
-                                 <div className="relative max-w-[450px] bg-gray-100 rounded-lg px-16 py-[10px]">
-                                    <input type="text" className="bg-transparent outline-none border-none placeholder:font-semibold" name="asd" id="sd" placeholder="Search skill" />
-                                    <span className="absolute left-4 top-3 text-2xl text-gray-400"><HiMagnifyingGlass /> </span>
-                                 </div>
-                                 <div className="mt-12 h-[500px] pr-4 scroll-smooth overflow-y-auto grid grid-cols-1 gap-6 small-scroll-thumb">
-                                    { assingmentSkills.map(({ categoryId, categoryTitle, tests }) => (<div key={ categoryId } className="rounded-xl bg-white drop-shadow-md border max-w-[550px]">
-                                       <div className="border-b h-14 px-4 flex justify-between gap-8 items-center relative">
-                                          <div className="flex items-center gap-4">
-                                             <div className="text-[#F28E2C] text-3xl"><TbMedal /></div>
-                                             <div className="flex items-center gap-2">
-                                                <h3 className="font-bold text-lg">{ categoryId }</h3>
-                                                <p className="opacity-60 text-sm font-semibold truncate ... w-[300px]">{ categoryTitle }</p>
-                                             </div>
-                                          </div>
-                                          <span className="bg-[#F28E2C]/70 text-xs font-bold opacity-70 rounded-2xl py-1 px-4 absolute right-4 top-4 truncate ...">{ tests.length } { tests.length > 1 ? "skills" : "skill" }</span>
-                                       </div>
-                                       <div className="divide-y">
-                                          { tests.map(({ testTitle, testId }) => (
-
-                                             <div key={ testId } className="flex px-6 h-12 gap-4 items-center">
-                                                <label className="checkbox-container">
-                                                   <input type="checkbox" name={ testId } checked={ skillCheckbox[testId] } onChange={ handleSkillCheckboxChange } />
-                                                   <span className="checkmark small-checkmark"></span>
-                                                </label>
-                                                <p className="opacity-60 text-sm font-semibold truncate ... w-full">
-                                                   Use addition and subtraction with 20 to solve world hunger to solve world hunger
-                                                </p>
-                                             </div>))
-                                          }
-                                       </div>
-                                    </div>)) }
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
+                        <SkillModal skills={ assingmentSkills } hideModal={ hideModal } handleSkillCheckboxChange={ handleSkillCheckboxChange } skillCheckbox={ skillCheckbox } />
                      }
                      { modalItemsDisplay?.studentResponse &&
                         <StudentModal students={ testStudents } hideModal={ hideModal } handleStudentCheckboxChange={ handleStudentCheckboxChange } handleAllStudentChechbox={ handleAllStudentChechbox } allStudentCheckbox={ allStudentCheckbox } studentCheckbox={ studentCheckbox } />
