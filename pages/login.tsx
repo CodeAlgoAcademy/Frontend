@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import CleverBtn from "../components/cleverBtn";
@@ -6,13 +6,16 @@ import GoogleBtn from "../components/googleBtn";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { IInputFields } from "../types/interfaces";
-import { updateUser } from "../store/authSlice";
+import { loginUser } from "../services/authService";
+import { clearFields, updateUser } from "store/authSlice";
 import styles from "../styles/styles";
 import { useRouter } from "next/router";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { email, password } = useSelector((state: RootState) => state.user);
+  const { email, password } = useSelector(
+    (state: RootState) => state.user.auth
+  );
   const router = useRouter();
   const inputFields: IInputFields[] = [
     {
@@ -29,11 +32,17 @@ const Login = () => {
     },
   ];
 
-  const login = (event: ChangeEvent<HTMLFormElement>): void => {
+  const login = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // login logic
-    router.push("/addClass");
+    const data = await dispatch(loginUser());
+    if (!data?.error?.message) {
+      router.push("/addClass");
+    }
   };
+
+  useEffect(() => {
+    dispatch(clearFields());
+  }, []);
 
   return (
     <main>
@@ -48,7 +57,7 @@ const Login = () => {
             <h1 className="md:text-3xl text-center text-lg font-bold">
               Welcome to CodeAlgo Academy
             </h1>
-            <p className="text-grey-800 md:text-lg text-[16px]">
+            <p className="text-grey-800 md:text-lg text-[16px] text-center">
               New here?
               <Link href="/signup">
                 <a className="underline text-mainPurple">Create an account</a>

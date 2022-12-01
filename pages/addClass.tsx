@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Head from "next/head";
 import Modal from "../components/addClass/modal";
 import { FaPlus } from "react-icons/fa";
-import { useDispatch } from "react-redux";
-import { openAddClassModal } from "../store/modalSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { closeAddClassModal, openAddClassModal } from "../store/modalSlice";
 import Classes from "../components/addClass/classes";
+import { getAllClasses } from "services/classesService";
+import { RootState } from "store/store";
+
 const AddClass = () => {
   const dispatch = useDispatch();
+  const { allClasses } = useSelector((state: RootState) => state);
+
+  const getClasses = async () => {
+    const data = await dispatch(getAllClasses());
+    if (!data?.error?.message) {
+    }
+  };
+
+  useEffect(() => {
+    getClasses();
+    dispatch(closeAddClassModal());
+  }, []);
 
   return (
     <main>
