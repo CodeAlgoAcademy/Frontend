@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "store/store";
 import { Props, styles } from ".";
 import { FaPlus } from "react-icons/fa";
+import { FaInfo } from "react-icons/fa";
 import { updateUnits } from "store/unitsSlice";
 
 const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
@@ -32,6 +33,17 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
               {levels.length === 0 && (
                 <div className="px-4 text-center text-[22px] font-bold flex justify-center items-center h-full">
                   Please Select one or more levels
+                </div>
+              )}
+              {levels.length > 0 && (
+                <div className="pb-4 text-center flex justify-center items-center gap-x-4">
+                  <i className="text-sm font-light flex justify-center items-center bg-mainPurple w-[22px] h-[22px] text-white rounded-full cursor-pointer">
+                    <FaInfo />
+                  </i>
+                  <span>
+                    Kindly ensure start date and end date are chosen for all
+                    selected units
+                  </span>
                 </div>
               )}
               {units.map((unit, index: number) => {
