@@ -151,7 +151,7 @@ const unitsSlice = createSlice({
           unitObject.start_date = unit.startDate;
           unitObject.end_date = unit.endDate;
           unitObject.description = unit.hoverText;
-          unitObject.teacher = "adejare@gmail.com";
+          unitObject.teacher = "alisjjex@gmail.com";
           // check the levels that have that unit and get their grades
           const levelsWithUnit = availableLevels.filter((level) =>
             level.unitsId.includes(`${unit.id}`)
@@ -166,7 +166,7 @@ const unitsSlice = createSlice({
             state.addUnit.chosenGrades.includes(grade)
           );
 
-          unitObject.grades = grades.map((grade) => `grade ${grade}`);
+          unitObject.grades = grades.map((grade) => parseInt(grade));
 
           // check how many levels it exists and make requests for each level
           const levels = availableLevels.filter((level) =>

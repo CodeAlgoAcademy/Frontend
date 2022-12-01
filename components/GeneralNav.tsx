@@ -1,37 +1,47 @@
-import React, { useState } from "react";
-import Image from "next/image";
+import React, { useState } from "react"
+import Image from "next/image"
 import Link from "next/link";
-import { BiBell, BiHomeAlt } from "react-icons/bi";
-import { RiArrowDropDownLine } from "react-icons/ri";
-import { RootState } from "../store/store";
-import { useSelector, useDispatch } from "react-redux";
-import { updateCurrentClass } from "../store/currentClassSlice";
-import { IClass, CurrentClassState } from "../types/interfaces";
+import { BiBell, BiHomeAlt, BiLogOut } from "react-icons/bi"
+import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri"
+import { RootState } from "../store/store"
+import { useSelector, useDispatch } from "react-redux"
+import { updateCurrentClass } from "../store/currentClassSlice"
+import { IClass, CurrentClassState } from "../types/interfaces"
+import { motion } from 'framer-motion'
+import { IoSettingsSharp } from "react-icons/io5"
 
 const GeneralNav = () => {
-  const dispatch = useDispatch();
+  const [userDropDown, setUserDropDown] = useState<boolean>(false)
+  const dispatch = useDispatch()
   const classes = useSelector(
     (state: RootState): IClass[] => state.allClasses.classes
-  );
+  )
   const currentClass = useSelector(
     (state: RootState): CurrentClassState => state.currentClass
-  );
+  )
   const classDetails = classes.map((item) => {
     const { className, color } = item;
     return { className, color };
   });
   const otherClassDetails = classDetails.filter(
     (item) => item.className !== currentClass.className
-  );
-  const [classListView, setClassListView] = useState(false);
+  )
+
+  const [classListView, setClassListView] = useState(false)
+
   const dropdownStyle = {
     transform: classListView ? "rotate(180deg)" : "",
     transition: "transform 150ms ease",
-  };
+  }
+
   const classListStyle = {
     maxHeight: classListView ? "" : "56px",
     transition: "max-height 200ms ease",
-  };
+  }
+  const toggleUserDropDown = () => {
+    setUserDropDown(!userDropDown)
+  }
+
   return (
     <div className="py-6 px-[5%] bg-white flex items-center justify-between">
       <div className="relative flex items-center gap-40">
@@ -55,73 +65,95 @@ const GeneralNav = () => {
           </Link>
           <div className="relative h-[52px]">
             <div
-              className="rounded-[28px] w-[260px] border border-[#BDBDBD] divide-y overflow-hidden absolute left-0 top-0 bg-white"
-              style={classListStyle}
-            >
-              <div className="py-2 px-3 relative flex items-center justify-between hover:bg-gray-100 cursor-pointer">
-                <div className="flex items-center gap-3">
-                  <span
-                    style={{ backgroundColor: currentClass?.color }}
-                    className='rounded-full content-[" "] w-[24px] h-[24px]'
-                  ></span>
-                  <span className="font-bold text-[18px]">
-                    {currentClass.className}
-                  </span>
+              className='rounded-[28px] z-10 w-[260px] border border-[#BDBDBD] divide-y overflow-hidden absolute left-0 top-0 bg-white'
+              style={ classListStyle }>
+              <div className='py-2 px-3 relative flex items-center justify-between hover:bg-gray-100 cursor-pointer'>
+                <div className='flex items-center gap-3'>
+                  <span style={ { backgroundColor: currentClass?.color } } className='rounded-full content-[" "] w-[24px] h-[24px]'></span>
+                  <span className='font-bold text-[18px]'>{ currentClass.className }</span>
                 </div>
                 <div
                   className="hover:b rounded-lg p-1"
-                  onClick={() => setClassListView((prev) => !prev)}
-                >
+                  onClick={ () => setClassListView((prev) => !prev) }>
                   <div
                     className="text-[32px] text-[#838383]"
-                    style={dropdownStyle}
-                  >
+                    style={ dropdownStyle }>
                     <RiArrowDropDownLine />
                   </div>
                 </div>
               </div>
-              {otherClassDetails?.map((navClass) => (
+              { otherClassDetails?.map((navClass) => (
                 <div
                   className="py-2 px-3 relative flex items-center justify-between hover:bg-gray-100 cursor-pointer"
-                  key={navClass.className}
-                  onClick={() => {
+                  key={ navClass.className }
+                  onClick={ () => {
                     dispatch(
                       updateCurrentClass({
                         className: navClass.className,
                         color: navClass.color,
                       })
-                    );
-                  }}
+                    )
+                  } }
                 >
                   <div className="flex items-center gap-3">
                     <span
-                      style={{ backgroundColor: navClass?.color }}
+                      style={ { backgroundColor: navClass?.color } }
                       className='rounded-full content-[" "] w-[24px] h-[24px]'
                     ></span>
                     <span className="font-bold text-[18px]">
-                      {navClass.className}
+                      { navClass.className }
                     </span>
                   </div>
                 </div>
-              ))}
+              )) }
             </div>
           </div>
         </div>
       </div>
       <div className="flex items-center gap-8">
-        <div className="rounded-[30px] px-2 py-[6px] w-[120px] flex items-center justify-between border border-[#BDBDBD]">
-          <div className="overflow-hidden rounded-full flex items-center">
-            <Image
-              src="/assets/avatar.png"
-              alt="avatar"
-              className="md:cursor-pointer h-9"
-              width={35}
-              height={35}
-            />
+
+        <div className={ userDropDown ? `rounded-[20px] px-4 py-[6px] bg-white  border border-[#BDBDBD] absolute right-[8rem] top-7  w-[16rem] h-[13rem] box-border duration-200 ease-in-out` : `rounded-[30px] px-2 py-[6px] h-[3rem] w-[7rem] border border-[#BDBDBD] absolute box-border right-[8rem] top-7 bg-white  transition-[width]` }>
+          <div className="flex items-center justify-between">
+            <div className="overflow-hidden rounded-full flex items-center">
+              <Image
+                src="/assets/avatar.png"
+                alt="avatar"
+                className="md:cursor-pointer h-9"
+                width={ 35 }
+                height={ 35 }
+              />
+            </div>
+            { userDropDown && <div>
+              <motion.h5 className="text-sm ml-2 font-[700] whitespace-nowrap"
+                initial={ { display: 'none', opacity: 0 } }
+                animate={ { display: 'block', opacity: 1, transition: { duration: '1', delay: 0.3 } } }
+              >Stephen Williams</motion.h5>
+            </div> }
+            <div className="text-[32px] pl-6 text-[#838383] " onClick={ toggleUserDropDown }>
+              { userDropDown ? <RiArrowDropUpLine /> : <RiArrowDropDownLine /> }
+            </div>
           </div>
-          <div className="text-[32px] text-[#838383]">
-            <RiArrowDropDownLine />
-          </div>
+          { userDropDown && <div className="relative z-10">
+            <a href="/settings" target="_blank">
+              <div>
+                <motion.div className="flex items-center border-t border-black mt-4 pt-4"
+                  initial={ { opacity: 0, y: '5px' } }
+                  animate={ { opacity: 1, y: 0, transition: { duration: '0.5' } } }
+                >
+                  <span className="text-xl"><IoSettingsSharp /></span>
+                  <motion.h5 className="text-sm ml-2 font-[700] select-none">Settings</motion.h5>
+                </motion.div>
+              </div>
+            </a>
+            <motion.div className="flex items-center mt-[5rem]"
+              initial={ { opacity: 0, y: '5px' } }
+              animate={ { opacity: 1, y: 0, transition: { delay: 0.3, duration: '0.5' } } }
+            >
+              <span><BiLogOut /></span>
+
+              <h5 className="text-sm ml-2 font-[500]">Logout</h5>
+            </motion.div>
+          </div> }
         </div>
         <div className="text-[24px] text-[#616161] relative bell-shake cursor-pointer">
           <span className='rounded-full content-[" "] w-[10px] h-[10px] bg-red-600 absolute top-0 right-0'></span>
@@ -129,7 +161,7 @@ const GeneralNav = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default GeneralNav;
+export default GeneralNav

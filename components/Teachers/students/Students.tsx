@@ -10,11 +10,17 @@ const Students = () => {
 
     const handleStudents = (id: number) => {
         const index = headings.indexOf(id)
+        
         if(index !== -1) {
             setHeadings((headings) => [...headings.slice(0, index), ...headings.slice(index + 1)])
+            console.log(index)
+            console.log(headings)
         } else {
             setHeadings((headings) => [...headings, id])
+            console.log(index)
+            console.log(headings)
         }
+        // console.log(index)
     }
 
     return (

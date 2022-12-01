@@ -51,12 +51,13 @@ export const signUpUser: any = createAsyncThunk(
       schoolName,
       country,
       schoolCountry,
-      grade,
+      grade: is_student ? grade : "",
       is_parent,
       is_student,
       is_teacher,
     };
 
+    console.log(options);
     try {
       const { data } = await http.post("/auth/registration/", { ...options });
       dispatch(clearFields());
