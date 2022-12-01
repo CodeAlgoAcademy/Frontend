@@ -151,7 +151,7 @@ const unitsSlice = createSlice({
           unitObject.start_date = unit.startDate;
           unitObject.end_date = unit.endDate;
           unitObject.description = unit.hoverText;
-
+          unitObject.teacher = "adejare@gmail.com";
           // check the levels that have that unit and get their grades
           const levelsWithUnit = availableLevels.filter((level) =>
             level.unitsId.includes(`${unit.id}`)
@@ -175,7 +175,7 @@ const unitsSlice = createSlice({
 
           levels.forEach((level) => {
             const tempObject = { ...unitObject };
-            tempObject.level = level.title;
+            tempObject.level = level.title.toLowerCase();
             units.push(tempObject);
           });
         });
