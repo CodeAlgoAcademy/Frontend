@@ -1,4 +1,5 @@
 import React, { useState, useEffect, ReactElement, ChangeEvent } from "react";
+import { useDispatch } from "react-redux";
 import Head from "next/head";
 import Link from "next/link";
 import CleverBtn from "../components/cleverBtn";
@@ -9,6 +10,8 @@ import Teachers from "../components/signup/teachers";
 import Parents from "../components/signup/parents";
 import { ITabs } from "../types/interfaces";
 import { useRouter } from "next/router";
+import { updateUser, clearFields } from "store/authSlice";
+import { signUpUser } from "services/authService";
 
 const tabs: ITabs[] = [
   {
@@ -27,6 +30,7 @@ const tabs: ITabs[] = [
 ];
 
 const SignUp = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<string | undefined>("Student");
   const [currentTab, setCurrentTab] = useState<ITabs>({
@@ -47,13 +51,24 @@ const SignUp = () => {
 
   const updateTab = (tabName: string | undefined): void => {
     setActiveTab((prev) => tabName);
+    dispatch(updateUser({ key: "accountType", value: tabName as string }));
   };
 
-  const signup = (event: ChangeEvent<HTMLFormElement>): void => {
+  useEffect(() => {
+    dispatch(updateUser({ key: "accountType", value: "Student" }));
+  }, []);
+
+  const signup = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // signup logic
-    router.push("/addClass");
+    const data = await dispatch(signUpUser());
+    if (!data?.error?.message) {
+      router.push("/addClass");
+    }
   };
+
+  useEffect(() => {
+    dispatch(clearFields());
+  }, []);
 
   return (
     <main>
@@ -105,7 +120,7 @@ const SignUp = () => {
             <h1 className="md:text-3xl text-lg text-center font-bold">
               Welcome To CodeAcademy
             </h1>
-            <p className="text-grey-800 md:text-lg text-[16px]">
+            <p className="text-grey-800 md:text-lg text-[16px] text-center">
               {"Let's get started"}
             </p>
           </div>

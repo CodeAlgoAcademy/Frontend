@@ -4,16 +4,24 @@ import {
 } from "@/components/curriculum/addUnit";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IUnitsSlice } from "types/interfaces";
+import { addUnits } from "services/curriculumService";
 
 const initialState: IUnitsSlice = {
   addUnit: {
     standard: "",
     units: [],
-    // units: [...availableUnits]
+    rearrangedUnits: [],
     levels: [],
     grades: [],
     chosenGrades: [],
   },
+};
+
+const getDate = () => {
+  const date = new Date();
+  return `${date.getFullYear()}-${date.getMonth() + 1}-${
+    date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
+  }`;
 };
 
 const unitsSlice = createSlice({
@@ -43,7 +51,7 @@ const unitsSlice = createSlice({
       let grades: string[] = [];
       let units: any = [];
       availableLevels.map((level) => {
-        if (state.addUnit.levels.includes(level.level)) {
+        if (state.addUnit.levels.includes(level.title)) {
           grades = [...grades, ...level.grades];
 
           // find the units from availableUnits
@@ -83,27 +91,21 @@ const unitsSlice = createSlice({
               unit.isChosen = true;
             }
             unit.isCurrent = true;
-            unit.startDate = "";
+            unit.startDate = getDate();
           } else if (action.payload.type === "upcoming") {
             if (unit.isCurrent && unit.isChosen) {
               unit.isChosen = true;
-              unit.startDate = `${date.getFullYear()}-${
-                date.getMonth() + 1
-              }-${date.getDate()}`;
+              unit.startDate = getDate();
             } else if (unit.isCurrent && !unit.isChosen) {
               unit.isChosen = true;
-              unit.startDate = `${date.getFullYear()}-${
-                date.getMonth() + 1
-              }-${date.getDate()}`;
+              unit.startDate = getDate();
             } else if (!unit.isCurrent && unit.isChosen) {
               unit.isChosen = false;
               unit.startDate = "";
             } else if (!unit.isCurrent && !unit.isChosen) {
               unit.isChosen = true;
               // format: yyyy-mm-dd just like a normal date input element
-              unit.startDate = `${date.getFullYear()}-${
-                date.getMonth() + 1
-              }-${date.getDate()}`;
+              unit.startDate = getDate();
             }
             unit.isCurrent = false;
           } else if (action.payload.type === "start date") {
@@ -112,7 +114,6 @@ const unitsSlice = createSlice({
             unit.startDate = `${action.payload.value}`;
           } else if (action.payload.type === "end date") {
             unit.isChosen = true;
-            unit.isCurrent = false;
             unit.endDate = `${action.payload.value}`;
           }
         }
@@ -137,6 +138,60 @@ const unitsSlice = createSlice({
     clearAddUnitsParams: (state: IUnitsSlice) => {
       state.addUnit = initialState.addUnit;
     },
+    rearrangeUnits: (state: IUnitsSlice) => {
+      let units: any = [];
+      state.addUnit.units
+        .filter((unit) => unit.isChosen)
+        .forEach((unit) => {
+          const unitObject: any = {};
+          unitObject.title = unit.title;
+          unitObject.standard = state.addUnit.standard;
+          unitObject.is_current = unit.isCurrent;
+          unitObject.is_finished = false;
+          unitObject.start_date = unit.startDate;
+          unitObject.end_date = unit.endDate;
+          unitObject.description = unit.hoverText;
+
+          // check the levels that have that unit and get their grades
+          const levelsWithUnit = availableLevels.filter((level) =>
+            level.unitsId.includes(`${unit.id}`)
+          );
+          const levelsGrade: string[] = [];
+          levelsWithUnit.forEach((level) => {
+            level.grades.forEach((grade) => {
+              levelsGrade.push(grade);
+            });
+          });
+          let grades: string[] = levelsGrade.filter((grade) =>
+            state.addUnit.chosenGrades.includes(grade)
+          );
+
+          unitObject.grades = grades.map((grade) => `grade ${grade}`);
+
+          // check how many levels it exists and make requests for each level
+          const levels = availableLevels.filter((level) =>
+            level.unitsId.includes(`${unit.id}`)
+          );
+
+          levels.forEach((level) => {
+            const tempObject = { ...unitObject };
+            tempObject.level = level.title;
+            units.push(tempObject);
+          });
+        });
+      state.addUnit.rearrangedUnits = units;
+    },
+  },
+  extraReducers: {
+    [addUnits.pending]: (state: IUnitsSlice) => {
+      console.log("pending");
+    },
+    [addUnits.fulfilled]: (state: IUnitsSlice, action: PayloadAction) => {
+      console.log(action.payload);
+    },
+    [addUnits.rejected]: (state: IUnitsSlice, action: PayloadAction) => {
+      console.log(action.payload);
+    },
   },
 });
 
@@ -147,5 +202,6 @@ export const {
   updateUnits,
   updateGrades,
   clearAddUnitsParams,
+  rearrangeUnits,
 } = unitsSlice.actions;
 export default unitsSlice.reducer;
