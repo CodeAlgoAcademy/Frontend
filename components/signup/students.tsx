@@ -11,7 +11,7 @@ import styles from "../../styles/styles";
 const Students = () => {
   const dispatch = useDispatch();
   const { grade, firstname, lastname, email, password } = useSelector(
-    (state: RootState) => state.user
+    (state: RootState) => state.user.auth
   );
   const inputFields: IInputFields[] = [
     {

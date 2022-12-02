@@ -9,7 +9,7 @@ import { updateUser } from "../../store/authSlice";
 const Parents = () => {
   const dispatch = useDispatch();
   const { firstname, lastname, email, password } = useSelector(
-    (state: RootState) => state.user
+    (state: RootState) => state.user.auth
   );
 
   const inputFields: IInputFields[] = [
