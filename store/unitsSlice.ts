@@ -166,11 +166,13 @@ const unitsSlice = createSlice({
             state.addUnit.chosenGrades.includes(grade)
           );
 
-          unitObject.grades = grades.map((grade) => parseInt(grade));
+          unitObject.grades = grades.map((grade) => grade);
 
           // check how many levels it exists and make requests for each level
-          const levels = availableLevels.filter((level) =>
-            level.unitsId.includes(`${unit.id}`)
+          const levels = availableLevels.filter(
+            (level) =>
+              level.unitsId.includes(`${unit.id}`) &&
+              state.addUnit.levels.includes(level.title)
           );
 
           levels.forEach((level) => {
