@@ -14,16 +14,21 @@ import { updateSkills, searchSkills } from "../../../store/skillsSlice"
 const SkillModal = ({ skills, hideModal, handleSkillCheckboxChange, skillCheckbox }: { skills: SkillDetails[]; hideModal: MouseEventHandler; handleSkillCheckboxChange: ChangeEventHandler; skillCheckbox: DynamicChechbox }) => {
   const [grade, setGrade] = useState("Grade 1")
   const [skillType, setSkillType] = useState("CTSA")
+  const [searchParams, setSearchParams] = useState("")
   const [pickerDisplay, setPickerDisplay] = useState({
     grade: false,
     skill: false
   })
+  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchParams((prev) => e.target.value)
+    dispatch(searchSkills({ params: e.target.value, grade, skillType }))
+  }
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(updateSkills({ grade, skillType }))
   }, [dispatch, grade, skillType])
   return (
-    <div className="py-8 min-h-[650px] w-full">
+    <div className="py-8 min-h-[650px] w-fit">
       <div className="flex gap-8 pl-12  h-full items-stretch mb-auto grow">
         <div className="w-[180px] flex flex-col justify-between">
           <div>
@@ -91,13 +96,13 @@ const SkillModal = ({ skills, hideModal, handleSkillCheckboxChange, skillCheckbo
           </span>
         </div>
         <div>
-          <div className="relative max-w-[450px] bg-gray-100 rounded-lg px-16 py-[10px]">
-            <input type="text" className="bg-transparent outline-none border-none placeholder:font-semibold" name="asd" id="sd" placeholder="Search skill" />
+          <div className="relative max-w-[80%] bg-gray-100 rounded-lg px-16 py-[10px]">
+            <input type="text" className="bg-transparent outline-none border-none placeholder:font-semibold" name="search" value={ searchParams } onChange={ handleSearchInput } placeholder="Search skill" />
             <span className="absolute left-4 top-3 text-2xl text-gray-400"><HiMagnifyingGlass /> </span>
           </div>
           <div className="mt-12 h-[500px] pr-4 scroll-smooth overflow-y-auto grid grid-cols-1 gap-6 small-scroll-thumb">
-            { skills.map(({ categoryId, categoryTitle, tests }) => (<div key={ categoryId } className="rounded-xl bg-white drop-shadow-md border max-w-[550px]">
-              <div className="border-b h-14 px-4 flex justify-between gap-8 items-center relative">
+            { skills.map(({ categoryId, categoryTitle, tests }) => (<div key={ categoryId } className="rounded-xl bg-white drop-shadow-md border h-fit max-w-[550px]">
+              <div className="border-b h-14 pl-4 pr-[84px] flex justify-between gap-8 items-center relative">
                 <div className="flex items-center gap-4">
                   <div className="text-[#F28E2C] text-3xl"><TbMedal /></div>
                   <div className="flex items-center gap-2">
@@ -105,7 +110,7 @@ const SkillModal = ({ skills, hideModal, handleSkillCheckboxChange, skillCheckbo
                     <p className="opacity-60 text-sm font-semibold truncate ... w-[300px] cursor-default" title={ categoryTitle }>{ categoryTitle }</p>
                   </div>
                 </div>
-                <span className="bg-[#F28E2C]/70 text-xs font-bold opacity-70 rounded-2xl py-1 px-4 absolute right-4 top-4 truncate ...">{ tests.length } { tests.length > 1 ? "skills" : "skill" }</span>
+                <span className="bg-[#F28E2C]/70 text-xs font-bold opacity-70 rounded-2xl py-1 px-4 absolute right-5 top-4 truncate ...">{ tests.length } { tests.length > 1 ? "skills" : "skill" }</span>
               </div>
               <div className="divide-y">
                 { tests.map(({ testTitle, testId }) => (
@@ -116,7 +121,7 @@ const SkillModal = ({ skills, hideModal, handleSkillCheckboxChange, skillCheckbo
                       <span className="checkmark small-checkmark"></span>
                     </label>
                     <p className="opacity-60 text-sm font-semibold truncate ... w-full">
-                      Use addition and subtraction with 20 to solve world hunger to solve world hunger
+                      { testTitle }
                     </p>
                   </div>))
                 }
