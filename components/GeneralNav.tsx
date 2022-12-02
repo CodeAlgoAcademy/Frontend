@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import Image from "next/image"
+import Link from "next/link";
 import { BiBell, BiHomeAlt, BiLogOut } from "react-icons/bi"
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri"
 import { RootState } from "../store/store"
@@ -19,9 +20,9 @@ const GeneralNav = () => {
     (state: RootState): CurrentClassState => state.currentClass
   )
   const classDetails = classes.map((item) => {
-    const { className, color } = item.classDetails
-    return { className, color }
-  })
+    const { className, color } = item;
+    return { className, color };
+  });
   const otherClassDetails = classDetails.filter(
     (item) => item.className !== currentClass.className
   )
@@ -45,19 +46,23 @@ const GeneralNav = () => {
     <div className="py-6 px-[5%] bg-white flex items-center justify-between">
       <div className="relative flex items-center gap-40">
         <div className="absolute left-0 top-0">
-          <Image
-            src="/assets/CodeAlgo_Logo.png"
-            alt="logo"
-            className="md:cursor-pointer h-9"
-            width={ 100 }
-            height={ 52 }
-          />
+          <Link href="/addClass">
+            <Image
+              src="/assets/CodeAlgo_Logo.png"
+              alt="logo"
+              className="md:cursor-pointer h-9"
+              width={100}
+              height={52}
+            />
+          </Link>
         </div>
         <div></div>
         <div className="flex items-center gap-4">
-          <div className="text-[#616161] text-[24px]">
-            <BiHomeAlt />
-          </div>
+          <Link href="/addClass">
+            <div className="text-[#616161] text-[24px]">
+              <BiHomeAlt />
+            </div>
+          </Link>
           <div className="relative h-[52px]">
             <div
               className='rounded-[28px] z-10 w-[260px] border border-[#BDBDBD] divide-y overflow-hidden absolute left-0 top-0 bg-white'

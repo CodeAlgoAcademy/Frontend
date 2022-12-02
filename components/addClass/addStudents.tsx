@@ -1,6 +1,7 @@
 import React, { ChangeEvent } from "react";
 import { FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
+import { addStudents } from "services/classesService";
 import { updateClassDetails } from "../../store/addClassSlice";
 import { closeAddStudentsModal } from "../../store/modalSlice";
 import { RootState } from "../../store/store";
@@ -9,33 +10,40 @@ import { IInputFields } from "../../types/interfaces";
 
 const AddStudents = () => {
   const dispatch = useDispatch();
-  const { studentName, studentEmail, studentId } = useSelector(
+  const { firstName, lastName, email } = useSelector(
     (state: RootState) => state.addClass.student
   );
 
   const inputFields: IInputFields[] = [
     {
       type: "text",
-      name: "studentName",
-      placeholder: "Enter Student Name",
-      value: studentName,
-    },
-    {
-      type: "email",
-      name: "studentEmail",
-      placeholder: "Enter Student Email",
-      value: studentEmail,
+      name: "firstName",
+      placeholder: "Enter Student First Name",
+      value: firstName,
     },
     {
       type: "text",
-      name: "studentId",
-      placeholder: "Enter Student ID",
-      value: studentId,
+      name: "lastName",
+      placeholder: "Enter Student Last Name",
+      value: lastName,
+    },
+    {
+      type: "email",
+      name: "email",
+      placeholder: "Enter Student Email",
+      value: email,
     },
   ];
 
+  const handleSubmit = async (event: ChangeEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = await dispatch(addStudents());
+    console.log(data);
+    dispatch(closeAddStudentsModal());
+  };
+
   return (
-    <form className="py-8 flex-[0.9]">
+    <form className="py-8 flex-[0.9]" onSubmit={handleSubmit}>
       <header className="px-8 w-full mb-6">
         <h1 className="md:text-[30px] text-[20px] font-bold">
           Add new student(s)
@@ -53,7 +61,11 @@ const AddStudents = () => {
               value={value}
               onChange={(e: ChangeEvent<HTMLInputElement>) => {
                 dispatch(
-                  updateClassDetails({ key: name, value: e.target.value })
+                  updateClassDetails({
+                    typeofState: "student",
+                    key: name,
+                    value: e.target.value,
+                  })
                 );
               }}
               className={styles.input}
@@ -75,12 +87,7 @@ const AddStudents = () => {
             <h3 className="text-[16px] font-bold">Bulk Import</h3>
           </label>
         </div>
-        <button
-          onClick={() => {
-            dispatch(closeAddStudentsModal());
-          }}
-          className="py-3 px-4 min-w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md"
-        >
+        <button className="py-3 px-4 min-w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md">
           Add Student(s)
         </button>
       </section>

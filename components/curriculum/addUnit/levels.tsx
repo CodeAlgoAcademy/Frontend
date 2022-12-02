@@ -32,7 +32,7 @@ const Levels: FC<Props> = ({ openedModal, updateOpenedModal }) => {
           <div className={styles.preview}>
             {standard === "Advance" &&
               availableLevels
-                .filter((level: ILevels) => level.level === "Orange")
+                .filter((level: ILevels) => level.title === "Orange")
                 .map((level: ILevels, index: number) => {
                   return <LevelsInputContainer level={level} key={index} />;
                 })}
@@ -65,24 +65,24 @@ const LevelsInputContainer = ({ level }: { level: ILevels }) => {
     <div className={`relative ${styles.inputContainer}`}>
       <input
         type="checkbox"
-        id={level.level}
+        id={level.title}
         className="accent-mainPurple dropdown"
-        checked={levels.includes(level.level)}
+        checked={levels.includes(level.title)}
         onChange={(event: ChangeEvent<HTMLInputElement>) => {
           if (event.target.checked) {
-            dispatch(updateLevels({ value: level.level, type: "add" }));
+            dispatch(updateLevels({ value: level.title, type: "add" }));
           } else {
             dispatch(
               updateLevels({
-                value: level.level,
+                value: level.title,
                 type: "remove",
               })
             );
           }
         }}
       />
-      <label htmlFor={level.level} className="hoverElement dropdown">
-        {level.level}
+      <label htmlFor={level.title} className="hoverElement dropdown">
+        {level.title}
       </label>
       <p className={`hoverText right-[0px] -top-[10px]`}>{level.hoverText}</p>
     </div>
