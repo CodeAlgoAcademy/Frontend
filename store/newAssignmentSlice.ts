@@ -1,3 +1,4 @@
+import React from "react"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { AssignmentDetails } from "../types/interfaces"
 
@@ -14,16 +15,9 @@ const newAssignmentSlice = createSlice({
 	name: "newAssignment",
 	initialState,
 	reducers: {
-		setSkill: () => {},
-		addSkill: () => {},
-		removeSkill: () => {},
-		setStudents: () => {},
-		addStudent: () => {},
-		removeStudent: () => {},
-		handleInputChange: () => {},
-		setQuestionNumbers: () => {}
+		saveAssignment: (state: AssignmentDetails, action: PayloadAction<string>) => {}
 	}
 })
 
 export default newAssignmentSlice.reducer
-export const {} = newAssignmentSlice.actions
+export const { saveAssignment } = newAssignmentSlice.actions

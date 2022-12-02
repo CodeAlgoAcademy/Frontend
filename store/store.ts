@@ -9,6 +9,7 @@ import allClassesReducer from "./allClassesSlice"
 import currentClassReducer from "./currentClassSlice"
 import skillsReducer from "./skillsSlice"
 import unitsSlice from "./unitsSlice"
+import newAssignmentReducer from "./newAssignmentSlice"
 
 const persistConfig = {
 	key: "root",
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
 	allClasses: allClassesReducer,
 	currentClass: currentClassReducer,
 	skills: skillsReducer,
-	unit: unitsSlice
+	unit: unitsSlice,
+	assignment: newAssignmentReducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
