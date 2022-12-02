@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BsCircle, BsFillCircleFill } from "react-icons/bs";
-import { FaGripLinesVertical } from "react-icons/fa";
+import { FaChevronLeft, FaGripLinesVertical } from "react-icons/fa";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import Header from "../../components/Header";
@@ -117,14 +117,23 @@ export default function Unit() {
         </div>
 
         <div className="px-[5.5rem] py-[2rem] w-full">
-          <div className="flex justify-between">
-            <h1 className="font-bold text-3xl">Curriculum</h1>
-            <Link href="/curriculum/assignments">
-              <div className="flex gap-2 items-center cursor-pointer">
-                <IoIosAddCircleOutline className="text-4xl " />
-                <h1 className="text-[1.2rem]">Add Assignment</h1>
+          <div className="flex justify-start items-center gap-6">
+            <Link href="/curriculum">
+              <div className="text-[1.4rem] cursor-pointer">
+                <i>
+                  <FaChevronLeft />
+                </i>
               </div>
             </Link>
+            <div className="flex justify-between flex-1 gap-2">
+              <h1 className="font-bold text-3xl">Curriculum</h1>
+              <Link href="/curriculum/assignments">
+                <div className="flex gap-2 items-center cursor-pointer">
+                  <IoIosAddCircleOutline className="text-4xl " />
+                  <h1 className="text-[1.2rem]">Add Assignment</h1>
+                </div>
+              </Link>
+            </div>
           </div>
           <div className="border-[#BDBDBD] pl-[1.5rem] mb-[3rem] pb-3 mt-7 border-b-[1.3px]">
             <h2 className="text-[1.6rem] font-bold">Unit Control</h2>
