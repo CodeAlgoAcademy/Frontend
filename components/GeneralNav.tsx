@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import Image from "next/image"
-import Link from "next/link";
+import Link from "next/link"
 import { BiBell, BiHomeAlt, BiLogOut } from "react-icons/bi"
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri"
 import { RootState } from "../store/store"
@@ -20,9 +20,9 @@ const GeneralNav = () => {
     (state: RootState): CurrentClassState => state.currentClass
   )
   const classDetails = classes.map((item) => {
-    const { className, color } = item;
-    return { className, color };
-  });
+    const { className, color } = item
+    return { className, color }
+  })
   const otherClassDetails = classDetails.filter(
     (item) => item.className !== currentClass.className
   )
@@ -51,8 +51,8 @@ const GeneralNav = () => {
               src="/assets/CodeAlgo_Logo.png"
               alt="logo"
               className="md:cursor-pointer h-9"
-              width={100}
-              height={52}
+              width={ 100 }
+              height={ 52 }
             />
           </Link>
         </div>
@@ -112,7 +112,7 @@ const GeneralNav = () => {
       </div>
       <div className="flex items-center gap-8">
 
-        <div className={ userDropDown ? `rounded-[20px] px-4 py-[6px] bg-white  border border-[#BDBDBD] absolute right-[8rem] top-7  w-[16rem] h-[13rem] box-border duration-200 ease-in-out` : `rounded-[30px] px-2 py-[6px] h-[3rem] w-[7rem] border border-[#BDBDBD] absolute box-border right-[8rem] top-7 bg-white  transition-[width]` }>
+        <div className={ userDropDown ? `rounded-[20px] px-4 py-[6px] bg-white z-40 border border-[#BDBDBD] absolute right-[8rem] top-7 w-[16rem] h-[13rem] box-border duration-200 ease-in-out` : `rounded-[30px] px-2 py-[6px] h-[3rem] w-[7rem] border border-[#BDBDBD] absolute box-border right-[8rem] top-7 bg-white  transition-[width]` }>
           <div className="flex items-center justify-between">
             <div className="overflow-hidden rounded-full flex items-center">
               <Image
