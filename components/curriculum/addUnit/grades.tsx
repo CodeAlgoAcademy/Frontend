@@ -67,7 +67,15 @@ const Grade: FC<Props> = ({ openedModal, updateOpenedModal }) => {
         )}
       </div>
       <div className={styles.numbersSelectedContainer}>
-        {chosenGrades.length} grades selected
+        {chosenGrades.length === 0
+          ? `0 grades selected`
+          : chosenGrades.map((grade, index: number) => {
+              return (
+                <span key={index} className={styles.selectedItems}>
+                  {grade}
+                </span>
+              );
+            })}
       </div>
     </article>
   );

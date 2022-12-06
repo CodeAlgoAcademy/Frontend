@@ -11,8 +11,9 @@ import {
 import { colors } from "./colors";
 import { RootState } from "../../store/store";
 import { IInputFields } from "../../types/interfaces";
-import { updateClassDetails } from "../../store/addClassSlice";
+import { updateClassDetails, clearFields } from "../../store/addClassSlice";
 import styles from "../../styles/styles";
+import { addClass, getAllClasses } from "services/classesService";
 
 const CreateClass = () => {
   const dispatch = useDispatch();
@@ -46,8 +47,19 @@ const CreateClass = () => {
       value: coTeachers,
     },
   ];
+
+  const handleSubmit = async (event: ChangeEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = await dispatch(addClass());
+    if (!data?.error?.message) {
+      dispatch(clearFields());
+      dispatch(closeAddClassModal());
+      dispatch(getAllClasses());
+    }
+  };
+
   return (
-    <form className="p-8 flex-[0.9]">
+    <form className="p-8 flex-[0.9]" onSubmit={handleSubmit}>
       <header className="w-full mb-6">
         <h1 className="md:text-[30px] text-[20px] font-bold">
           Create New Class
@@ -93,7 +105,8 @@ const CreateClass = () => {
             }}
           >
             <span
-              className={`h-[38px] w-[38px] rounded-full bg-[${color}]`}
+              className={`h-[38px] w-[38px] rounded-full`}
+              style={{ backgroundColor: color }}
             ></span>
             <i className="pr-1">
               <FaChevronDown />
@@ -101,12 +114,13 @@ const CreateClass = () => {
           </div>
           {/* colors selector */}
           {colorsModalOpen && (
-            <div className="p-2 rounded-md w-full absolute bottom-[100%] left-[50%] -translate-x-[50%] min-h-[120px] bg-white shadow-md z-[10] flex flex-row gap-4 flex-wrap">
+            <div className="color-modal p-2 rounded-md w-full absolute bottom-[100%] left-[50%] -translate-x-[50%] min-h-[120px] bg-white shadow-md z-[10] flex flex-row gap-4 flex-wrap">
               {colors.map((color: string, index: number) => {
                 return (
                   <span
                     key={index}
-                    className={`h-[38px] w-[38px] mx-auto rounded-full bg-[${color}]`}
+                    className={`h-[38px] w-[38px] mx-auto rounded-full`}
+                    style={{ backgroundColor: color }}
                     onClick={() => {
                       dispatch(
                         updateClassDetails({ key: "color", value: color })

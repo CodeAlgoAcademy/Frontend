@@ -9,7 +9,7 @@ import { countryList } from "./countries";
 const Teachers = () => {
   const dispatch = useDispatch();
   const { firstname, lastname, email, password, schoolName } = useSelector(
-    (state: RootState) => state.user
+    (state: RootState) => state.user.auth
   );
   const inputFields: IInputFields[] = [
     {
@@ -68,6 +68,7 @@ const Teachers = () => {
         onChange={(event: ChangeEvent<HTMLSelectElement>) => {
           const value = event.target.options[event.target.selectedIndex].value;
           dispatch(updateUser({ key: "schoolCountry", value }));
+          dispatch(updateUser({ key: "country", value }));
         }}
       >
         <option value="Select School Country">Select School Country</option>
