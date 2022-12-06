@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BsCircle, BsFillCircleFill } from "react-icons/bs";
-import { FaGripLinesVertical } from "react-icons/fa";
+import { FaChevronLeft, FaGripLinesVertical } from 'react-icons/fa'
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
-import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import AddStudent from "../../components/modals/AddStudent";
 import PreviewModal from "../../components/modals/PreviewModal";
 import { GeneralNav } from "../../components";
+import Link from "next/link";
 
 export default function Unit() {
   const [showModal, setShowModal] = useState(false);
@@ -31,7 +31,6 @@ export default function Unit() {
         "In this lesson students will learn the basics of loops and how to apply loops into their programs.",
       date: "April 10 - April 17",
       status: "Published",
-      show: false,
       id: 1,
     },
     {
@@ -93,11 +92,22 @@ export default function Unit() {
         </div>
 
         <div className="px-[5.5rem] py-[2rem] w-full">
-          <div className="flex justify-between">
-            <h1 className="font-bold text-3xl">Curriculum</h1>
-            <div className="flex gap-2 items-center">
-              <IoIosAddCircleOutline className="text-4xl " />
-              <h1 className="text-[1.2rem]">Add Assignment</h1>
+          <div className="flex justify-start items-center gap-6">
+            <Link href="/curriculum">
+              <div className="text-[1.4rem] cursor-pointer">
+                <i>
+                  <FaChevronLeft />
+                </i>
+              </div>
+            </Link>
+            <div className="flex justify-between flex-1 gap-2">
+              <h1 className="font-bold text-3xl">Curriculum</h1>
+              <Link href="/curriculum/assignments">
+                <div className="flex gap-2 items-center cursor-pointer">
+                  <IoIosAddCircleOutline className="text-4xl " />
+                  <h1 className="text-[1.2rem]">Add Assignment</h1>
+                </div>
+              </Link>
             </div>
           </div>
           <div className="border-[#BDBDBD] pl-[1.5rem] mb-[3rem] pb-3 mt-7 border-b-[1.3px]">
@@ -107,7 +117,10 @@ export default function Unit() {
 
           {unitData.map((data) => {
             return (
-              <div key={data.id} className="flex-column bg-white rounded-lg transition duration-200 ease-in-out">
+              <div
+                key={data.id}
+                className="flex-column bg-white rounded-lg transition duration-200 ease-in-out"
+              >
                 <div className="bg-white flex items-center mt-[.7rem] py-[0.3rem] pl-[10px] rounded-lg transition duration-200 ease-out">
                   <div className="border-r-2 flex items-center sm:gap-5 lg:gap-0 sm:pr-[1rem] sm:py-2 md:pr-[1.5rem] border-[#E6E6E6] py-5 pr-[4rem]  justify-between w-full">
                     <div className="flex items-center sm:gap-3 lg:gap-7">

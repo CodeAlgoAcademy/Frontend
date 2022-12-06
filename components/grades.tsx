@@ -27,7 +27,7 @@ const Grades: FC<gradesType> = ({ addStudents }) => {
   const { gradesModalOpen } = useSelector((state: RootState) => state.modal);
   const { grade } = useSelector((state: RootState) => {
     if (addStudents) {
-      return state.user;
+      return state.user.auth;
     } else {
       return state.addClass.class;
     }

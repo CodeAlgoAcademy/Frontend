@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { IoIosAddCircleOutline } from "react-icons/io"
 import loopImg from "../../public/assets/loopImg.png"
 import connect from "../../public/assets/connect.png"
@@ -13,7 +13,10 @@ import { useDispatch, useSelector } from "react-redux"
 import { openAddUnitModal } from "store/modalSlice"
 import AddUnit from "@/components/curriculum/addUnit"
 import { RootState } from "store/store"
-import axios from "axios";
+import {SlLoop} from 'react-icons/sl'
+import { getAllCurriculums } from "services/curriculumService"
+import { IAllCurriculum, Icurriculum } from "types/interfaces"
+
 
 export default function Index () {
   const [past, setPast] = useState<boolean>(false)
@@ -21,11 +24,31 @@ export default function Index () {
   const [upcoming, setUpcoming] = useState<boolean>(false)
   const [active, setActive] = useState("current")
   const { addUnitModalOpen } = useSelector((state: RootState) => state.modal)
+  
+  
+ 
   const dispatch = useDispatch()
 
   
+  
+  const getCurriculums = async () => {
+    const data = await dispatch(getAllCurriculums())
+    console.log(data)
+    if(!data?.error?.message) {
+
+    }
+  }
+
+  useEffect(() => {
+    getCurriculums();
+  }, [])
+
+  const {curriculum} = useSelector((state: RootState) => state.allCurriculum);
+  console.log(curriculum)
+  
 
   // curriculumn tab click functions
+
   const handlePast = () => {
     setCurrent(false)
     setUpcoming(false)
@@ -112,42 +135,44 @@ export default function Index () {
             <div>
               {/* current curriculum */ }
               { current && (
-                <div>
-                  <h1 className="text-[1.5rem] font-bold mt-10 w-full">
-                    Current Unit
-                  </h1>
-
-                  <div
-                    style={ { boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" } }
-                    className="flex rounded-xl w-fit overflow-hidden mt-14"
-                  >
-                    <Image
-                      src={ loopImg }
-                      objectFit="cover"
-                      alt="loop image"
-                      width={ 150 }
-                      quality={ 100 }
-                    />
-                    <div className="bg-white w-[20rem] h-[17rem] p-8 ">
-                      <div>
-                        <HiDotsHorizontal className="ml-auto text-3xl border-[#BDBDBD] mt-[-1rem] text-[#C4C4C4]" />
+                <>
+                    <h1 className="text-[1.5rem] font-bold mt-10 w-full">
+                         Current Unit
+                    </h1>
+                    <div className="grid lg:grid-cols-2 md:grid-cols-1 box-border gap-[2rem]">
+                        {curriculum?.map((curriculum: Icurriculum) => {
+                          return (
+                             
+                                  <div
+                                    style={ { boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" } }
+                                    className="flex rounded-xl w-[100%] bg-white h-fit mt-14 overflow-hidden"
+                                  >
+                                    <div className="p-8 flex items-center justify-center  bg-[#979696]">
+                                      <span className="text-[5rem]"><SlLoop /></span>
+                                    </div>
+                                    <div className="bg-white w-[20rem] h-[17rem] p-8 ">
+                                      <div>
+                                        <HiDotsHorizontal className="ml-auto text-3xl border-[#BDBDBD] mt-[-1rem] text-[#C4C4C4]" />
+                                      </div>
+                                      <h1 className="font-bold mt-5 mb-5">{curriculum.title}</h1>
+                                      <p>
+                                        Loops contain a set of instructions that are continually
+                                        repeated until a specific set of conditions are met.
+                                      </p>
+                                      <div className="flex items-center mt-[2.1rem] justify-between">
+                                        <p>4/10 - Present</p>
+                                        <Link href="curriculum/unit">
+                                          <p className="px-5 py-[5px] font-semibold border-black rounded-full border-2 w-fit cursor-pointer">
+                                            view unit
+                                          </p>
+                                        </Link>
+                                      </div>
+                                    </div>
+                            </div>
+                          )
+                        })}
                       </div>
-                      <h1 className="font-bold mt-5 mb-5">Control</h1>
-                      <p>
-                        Loops contain a set of instructions that are continually
-                        repeated until a specific set of conditions are met.
-                      </p>
-                      <div className="flex items-center mt-[2.1rem] justify-between">
-                        <p>4/10 - Present</p>
-                        <Link href="curriculum/unit">
-                          <p className="px-5 py-[5px] font-semibold border-black rounded-full border-2 w-fit cursor-pointer">
-                            view unit
-                          </p>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                    </>
               ) }
 
               {/* Past */ }
