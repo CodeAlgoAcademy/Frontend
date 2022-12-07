@@ -115,7 +115,8 @@ export interface Icurriculum {
   id: number;
   standard: string;
   level: string;
-  
+  is_current: boolean;
+  is_finished: boolean;
 }
 
 export interface ITeacher {
