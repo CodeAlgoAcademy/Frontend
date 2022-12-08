@@ -51,6 +51,7 @@ const SignUp = () => {
 
   const updateTab = (tabName: string | undefined): void => {
     setActiveTab((prev) => tabName);
+    console.log(tabName);
     dispatch(updateUser({ key: "accountType", value: tabName as string }));
   };
 

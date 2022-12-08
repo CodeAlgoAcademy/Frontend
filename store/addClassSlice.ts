@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IAddClass } from "../types/interfaces";
 import { colors } from "../components/addClass/colors";
 import { addClass } from "services/classesService";
+import { Action } from "@syncfusion/ej2-react-grids";
 
 const initialState: IAddClass = {
   student: {
@@ -44,16 +45,25 @@ const addClassSlice = createSlice({
       state.class = initialState.class;
     },
   },
-  extraReducers: {
-    [addClass.pending]: (state: IAddClass, action: PayloadAction) => {
-      console.log("pending");
-    },
-    [addClass.fulfilled]: (state: IAddClass, action: PayloadAction) => {
-      console.log(action.payload);
-    },
-    [addClass.rejected]: (state: IAddClass, action: PayloadAction) => {
-      console.log(action.payload);
-    },
+  extraReducers: (builder) => {
+    builder.addCase(
+      addClass.pending,
+      (state: IAddClass, action: PayloadAction) => {
+        console.log("pending");
+      }
+    ),
+      builder.addCase(
+        addClass.fulfilled,
+        (state: IAddClass, action: PayloadAction) => {
+          console.log(action.payload);
+        }
+      ),
+      builder.addCase(
+        addClass.rejected,
+        (state: IAddClass, action: PayloadAction) => {
+          console.log(action.payload);
+        }
+      );
   },
 });
 

@@ -41,12 +41,23 @@ export interface IUnitsSlice {
     standard: string;
     units: Array<{
       id: number | string;
-      unit: string;
+      title: string;
       isCurrent: boolean;
       startDate: string;
       endDate: string;
       hoverText: string;
       isChosen: boolean;
+    }>;
+    rearrangedUnits: Array<{
+      description: string;
+      end_date: string;
+      grades: string[];
+      is_current: boolean;
+      is_finished: boolean;
+      level: string;
+      standard: string;
+      start_date: string;
+      title: string;
     }>;
     levels: string[];
     grades: string[];
@@ -72,9 +83,22 @@ export interface IUserData {
 }
 
 export interface IClass {
-  students: ISingleStudent[];
-  classDetails: ISingleClass;
-  teacher: ITeacher;
+  teacher: {
+    email: string;
+    firstname: string;
+    lastname: string;
+    country: string;
+    schoolName: string;
+    id: string | number;
+  };
+  className: string;
+  roomNumber: number | string;
+  subject: string;
+  coTeachers: string;
+  grade: string;
+  color: string;
+  totalStudent: number | string;
+  id: number | string;
 }
 
 export interface ITeacher {
@@ -144,7 +168,7 @@ export interface CurrentClassState {
 }
 
 export interface ILevels {
-  level: string;
+  title: string;
   unitsId: Array<string>;
   grades: Array<string>;
   hoverText: string;

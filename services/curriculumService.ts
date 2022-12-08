@@ -8,16 +8,17 @@ export const addUnits: any = createAsyncThunk(
   async (name, thunkApi) => {
     const state: any = thunkApi.getState();
     const { rearrangedUnits } = state.unit.addUnit;
-    console.log(rearrangedUnits, "units");
+    console.log(JSON.stringify(rearrangedUnits));
     try {
       const { data } = await http.post(
         "/academics/curriculums/units/",
-        rearrangedUnits,
+        JSON.stringify(rearrangedUnits),
         {
           headers: { Authorization: "Bearer " + getAccessToken() },
         }
       );
       console.log(data);
+      return data;
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.response.data);
     }
