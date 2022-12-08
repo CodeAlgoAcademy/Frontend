@@ -55,7 +55,7 @@ const unitsSlice = createSlice({
           grades = [...grades, ...level.grades];
 
           // find the units from availableUnits
-          const unitFromAvailableUnits = level.unitsId.map((unitId) =>
+          const unitFromAvailableUnits = level.unitsId.map((unitId: string) =>
             availableUnits.find((availableUnit) => availableUnit.id === unitId)
           );
           console.log(unitFromAvailableUnits);
@@ -151,14 +151,14 @@ const unitsSlice = createSlice({
           unitObject.start_date = unit.startDate;
           unitObject.end_date = unit.endDate;
           unitObject.description = unit.hoverText;
-
+          unitObject.teacher = "alisjjex@gmail.com";
           // check the levels that have that unit and get their grades
           const levelsWithUnit = availableLevels.filter((level) =>
             level.unitsId.includes(`${unit.id}`)
           );
           const levelsGrade: string[] = [];
           levelsWithUnit.forEach((level) => {
-            level.grades.forEach((grade) => {
+            level.grades.forEach((grade: string) => {
               levelsGrade.push(grade);
             });
           });
@@ -166,16 +166,18 @@ const unitsSlice = createSlice({
             state.addUnit.chosenGrades.includes(grade)
           );
 
-          unitObject.grades = grades.map((grade) => `grade ${grade}`);
+          unitObject.grades = grades.map((grade) => grade);
 
           // check how many levels it exists and make requests for each level
-          const levels = availableLevels.filter((level) =>
-            level.unitsId.includes(`${unit.id}`)
+          const levels = availableLevels.filter(
+            (level) =>
+              level.unitsId.includes(`${unit.id}`) &&
+              state.addUnit.levels.includes(level.title)
           );
 
           levels.forEach((level) => {
             const tempObject = { ...unitObject };
-            tempObject.level = level.title;
+            tempObject.level = level.title.toLowerCase();
             units.push(tempObject);
           });
         });

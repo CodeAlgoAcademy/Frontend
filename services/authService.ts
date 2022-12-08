@@ -51,12 +51,13 @@ export const signUpUser: any = createAsyncThunk(
       schoolName,
       country,
       schoolCountry,
-      grade,
+      grade: is_student ? grade : "",
       is_parent,
       is_student,
       is_teacher,
     };
 
+    console.log(options);
     try {
       const { data } = await http.post("/auth/registration/", { ...options });
       dispatch(clearFields());
@@ -67,6 +68,24 @@ export const signUpUser: any = createAsyncThunk(
       };
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const loginWithGoogle: any = createAsyncThunk(
+  "authSlice/loginWithGoogle",
+  async (access_token: string, thunkApi) => {
+    try {
+      const { data } = await http.post("/auth/google/", {
+        access_token,
+      });
+      return {
+        access_token: data.access_token,
+        refresh_token: data.refresh_token,
+        ...data.user,
+      };
+    } catch (err) {
+      console.log(err);
     }
   }
 );
