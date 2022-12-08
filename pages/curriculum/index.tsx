@@ -152,6 +152,7 @@ export default function Index () {
                           return (
                              
                                   <div
+                                    key={curriculum.id}
                                     style={ { boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" } }
                                     className="flex rounded-xl justify-between w-[70%] bg-white h-[23rem] mt-14 overflow-hidden"
                                   >
@@ -191,7 +192,7 @@ export default function Index () {
                     <div className="grid lg:grid-cols-2 md:grid-cols-1 box-border gap-[2rem]">
                           {pastCurriculum.map((curriculum: Icurriculum) => {
                             return (
-                                      <div className="flex-[50%]">
+                                      <div className="flex-[50%]" key={curriculum.id}>
                                         <div
                                           style={ { boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" } }
                                           className="flex rounded-xl overflow-hidden mt-14"
