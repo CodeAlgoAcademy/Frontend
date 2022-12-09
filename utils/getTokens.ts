@@ -22,7 +22,6 @@ export const refreshToken = async () => {
         refresh_token: getRefreshToken(),
       })
     );
-    console.log(access);
   } catch (error) {
     console.log(error);
   }
