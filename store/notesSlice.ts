@@ -27,25 +27,15 @@ const notesSlice = createSlice({
 		}
 	},
 	extraReducers: (builder) => {
-		builder.addCase(getNotes.pending, (state: INotes, action: PayloadAction) => {
-			console.log("pending")
+		builder.addCase(getNotes.fulfilled, (state: INotes, action: PayloadAction<{ text: string }>) => {
+			state.html = action.payload.text
 		}),
-			builder.addCase(getNotes.fulfilled, (state: INotes, action: PayloadAction<{ text: string }>) => {
-				console.log(action.payload)
-				state.html = action.payload.text
-			}),
 			builder.addCase(getNotes.rejected, (state: INotes, action: PayloadAction) => {
 				console.error("Notes failed to fetch data")
 			})
-		builder.addCase(updateNotes.pending, (state: INotes, action: PayloadAction) => {
-			console.log("pending")
-		}),
-			builder.addCase(updateNotes.fulfilled, (state: INotes, action: PayloadAction<{ text: string }>) => {
-				console.log(action.payload)
-			}),
-			builder.addCase(updateNotes.rejected, (state: INotes, action: PayloadAction) => {
-				console.log(action.payload)
-			})
+		builder.addCase(updateNotes.rejected, (state: INotes, action: PayloadAction) => {
+			console.error("Failed to post notes updates")
+		})
 	}
 })
 
