@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { BiBell, BiHomeAlt, BiLogOut } from "react-icons/bi"
@@ -37,16 +37,19 @@ const GeneralNav = () => {
   const classListStyle = {
     maxHeight: classListView ? "" : "56px",
     transition: "max-height 200ms ease",
-  }
+    overflowY: classListView ? "auto" : "hidden",
+    height: classListView ? "191.9px" : "",
+  } as React.CSSProperties
+
   const toggleUserDropDown = () => {
     setUserDropDown(!userDropDown)
   }
-
+  const classBox = useRef<HTMLDivElement>(null)
   return (
     <div className="py-6 px-[5%] bg-white flex items-center justify-between">
       <div className="relative flex items-center gap-40">
         <div className="absolute left-0 top-0">
-          <Link href="/addClass">
+          <Link href={ `/addClass` }>
             <Image
               src="/assets/CodeAlgo_Logo.png"
               alt="logo"
@@ -58,54 +61,65 @@ const GeneralNav = () => {
         </div>
         <div></div>
         <div className="flex items-center gap-4">
-          <Link href="/addClass">
+          <Link href={ `/addClass` }>
             <div className="text-[#616161] text-[24px]">
               <BiHomeAlt />
             </div>
           </Link>
           <div className="relative h-[52px]">
-            <div
-              className='rounded-[28px] z-10 w-[260px] border border-[#BDBDBD] divide-y overflow-hidden absolute left-0 top-0 bg-white'
-              style={ classListStyle }>
-              <div className='py-2 px-3 relative flex items-center justify-between hover:bg-gray-100 cursor-pointer'>
-                <div className='flex items-center gap-3'>
-                  <span style={ { backgroundColor: currentClass?.color } } className='rounded-full content-[" "] w-[24px] h-[24px]'></span>
-                  <span className='font-bold text-[18px]'>{ currentClass.className }</span>
-                </div>
-                <div
-                  className="hover:b rounded-lg p-1"
-                  onClick={ () => setClassListView((prev) => !prev) }>
+            <div className="overflow-hidden rounded-[28px] absolute left-0 top-0">
+              <div
+                className='rounded-[28px] z-10 w-[260px] border border-[#BDBDBD] divide-y overflow-hidden bg-white small-scroll-thumb'
+                style={ classListStyle }
+                ref={ classBox }>
+                <div className='py-2 px-3 relative flex items-center justify-between hover:bg-gray-100 cursor-pointer'>
+                  <div className='flex items-center gap-3'>
+                    <span style={ { backgroundColor: currentClass?.color } } className='rounded-full content-[" "] w-[24px] h-[24px]'></span>
+                    <span className='font-bold text-[18px]'>{ currentClass.className }</span>
+                  </div>
                   <div
-                    className="text-[32px] text-[#838383]"
-                    style={ dropdownStyle }>
-                    <RiArrowDropDownLine />
+                    className="hover:b rounded-lg p-1"
+                    onClick={ () => setClassListView((prev) => !prev) }>
+                    <div
+                      className="text-[32px] text-[#838383]"
+                      style={ dropdownStyle }>
+                      <RiArrowDropDownLine />
+                    </div>
                   </div>
                 </div>
+                { otherClassDetails?.map((navClass) => (
+                  <div
+                    className="py-2 px-3 relative flex items-center justify-between hover:bg-gray-100 cursor-pointer"
+                    key={ navClass.className }
+                    onClick={ () => {
+                      dispatch(
+                        updateCurrentClass({
+                          className: navClass.className,
+                          color: navClass.color,
+                        })
+                      )
+                      const node = classBox.current
+                      if (node) {
+                        node.scroll({
+                          top: 0,
+                          behavior: 'smooth'
+                        })
+                      }
+                      setClassListView((prev) => false)
+                    } }
+                  >
+                    <div className="flex items-center gap-3">
+                      <span
+                        style={ { backgroundColor: navClass?.color } }
+                        className='rounded-full content-[" "] w-[24px] h-[24px]'
+                      ></span>
+                      <span className="font-bold text-[18px]">
+                        { navClass.className }
+                      </span>
+                    </div>
+                  </div>
+                )) }
               </div>
-              { otherClassDetails?.map((navClass) => (
-                <div
-                  className="py-2 px-3 relative flex items-center justify-between hover:bg-gray-100 cursor-pointer"
-                  key={ navClass.className }
-                  onClick={ () => {
-                    dispatch(
-                      updateCurrentClass({
-                        className: navClass.className,
-                        color: navClass.color,
-                      })
-                    )
-                  } }
-                >
-                  <div className="flex items-center gap-3">
-                    <span
-                      style={ { backgroundColor: navClass?.color } }
-                      className='rounded-full content-[" "] w-[24px] h-[24px]'
-                    ></span>
-                    <span className="font-bold text-[18px]">
-                      { navClass.className }
-                    </span>
-                  </div>
-                </div>
-              )) }
             </div>
           </div>
         </div>

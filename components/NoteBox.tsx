@@ -6,7 +6,6 @@ import { INotes } from "../types/interfaces"
 import { handleChange, sanitizeNotes, resetNotes } from "../store/notesSlice"
 import { getNotes, updateNotes } from "services/notesService"
 
-
 const NoteBox = () => {
   const contentEditableRef = React.createRef<HTMLElement>()
   const dispatch = useDispatch()
@@ -18,8 +17,9 @@ const NoteBox = () => {
   }
   const fetchNotes = async () => {
     const data = await dispatch(getNotes())
-    if (!data?.error?.message) {
-    }
+  }
+  const postNotes = async () => {
+    const data = await dispatch(updateNotes())
   }
   useEffect(() => {
     contentEditableState.html == "" && dispatch(resetNotes())
@@ -53,7 +53,10 @@ const NoteBox = () => {
             html={ contentEditableState?.html }
             disabled={ false }
             onChange={ handleNotes }
-            onBlur={ () => { dispatch(sanitizeNotes()) } }
+            onBlur={ () => {
+              dispatch(sanitizeNotes())
+              postNotes()
+            } }
             tagName="span"
           />
         </ul>
