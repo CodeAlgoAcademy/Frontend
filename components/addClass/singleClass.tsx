@@ -11,7 +11,7 @@ const SingleClass: FC<IClass> = ({
 }) => {
   return (
     <Link href="/dashboard">
-      <article className="col-span-1 bg-white h-[200px] shadow-lg rounded-md overflow-hidden w-full flex cursor-pointer">
+      <article className="col-span-1 bg-white h-[200px] shadow-md hover:shadow-lg rounded-md overflow-hidden w-full flex cursor-pointer">
         <aside
           className={`flex-[0.15] h-full`}
           style={{ backgroundColor: color }}

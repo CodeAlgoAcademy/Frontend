@@ -46,9 +46,9 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                   </span>
                 </div>
               )}
-              {units.map((unit, index: number) => {
+              {units.map((unit:any, index: number) => {
                 const elementWithCurrentProperty: any = units.find(
-                  (unit) => unit.isCurrent && unit.isChosen
+                  (unit: any) => unit.isCurrent && unit.isChosen
                 );
                 return (
                   <div
@@ -195,11 +195,11 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
         )}
       </div>
       <div className={styles.numbersSelectedContainer}>
-        {units.filter((unit) => unit.isChosen).length === 0
+        {units.filter((unit: any) => unit.isChosen).length === 0
           ? `0 units selected`
           : units
-              .filter((unit) => unit.isChosen)
-              .map((unit, index: number) => {
+              .filter((unit: any) => unit.isChosen)
+              .map((unit: any, index: number) => {
                 return (
                   <span key={index} className={styles.selectedItems}>
                     {unit.title}

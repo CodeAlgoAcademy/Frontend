@@ -36,7 +36,7 @@ const Grade: FC<Props> = ({ openedModal, updateOpenedModal }) => {
               </h1>
             )}
             {grades.length > 0 &&
-              grades.map((grade, index: number) => {
+              grades.map((grade: string, index: number) => {
                 return (
                   <div className={`${styles.inputContainer}`} key={index}>
                     <input
@@ -69,7 +69,7 @@ const Grade: FC<Props> = ({ openedModal, updateOpenedModal }) => {
       <div className={styles.numbersSelectedContainer}>
         {chosenGrades.length === 0
           ? `0 grades selected`
-          : chosenGrades.map((grade, index: number) => {
+          : chosenGrades.map((grade: string, index: number) => {
               return (
                 <span key={index} className={styles.selectedItems}>
                   {grade}
