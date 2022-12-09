@@ -20,20 +20,20 @@ export interface IUser {
 }
 
 export interface IModal {
-	addClassModalOpen: boolean
-	gradesModalOpen: boolean
-	showAddStudents: boolean
-	colorsModalOpen: boolean
-	addUnitModalOpen: boolean
+  addClassModalOpen: boolean;
+  gradesModalOpen: boolean;
+  showAddStudents: boolean;
+  colorsModalOpen: boolean;
+  addUnitModalOpen: boolean;
 }
 
 export interface IAllClasses {
-	classes: IClass[]
+  classes: IClass[];
 }
 
 export interface IAddClass {
-	student: ISingleStudent
-	class: ISingleClass
+  student: ISingleStudent;
+  class: ISingleClass;
 }
 
 export interface IUnitsSlice {
@@ -102,8 +102,8 @@ export interface IClass {
 }
 
 export interface ITeacher {
-	teacherEmail: string
-	teacherName: string
+  teacherEmail: string;
+  teacherName: string;
 }
 
 export interface ISingleStudent {
@@ -134,8 +134,8 @@ export interface IInputFields {
 }
 
 export interface CurrentClassState {
-	className: string
-	color: string
+  className: string;
+  color: string;
 }
 
 export interface ILevels {
@@ -175,28 +175,28 @@ export interface ILevels {
 }
 
 export interface AssignmentSkill {
-	skillId: string
+  skillId: string;
 }
 
 export interface AssignmentStudent {
-	studentId: string
+  studentId: string;
 }
 
 export interface AssignmentDetails {
-	title: string
-	schedule: string
-	order: string
-	number: number
-	skills: AssignmentSkill[]
-	students: AssignmentStudent[]
+  title: string;
+  schedule: string;
+  order: string;
+  number: number;
+  skills: AssignmentSkill[];
+  students: AssignmentStudent[];
 }
 
 export interface ISchedule {
-	Id: string
-	Subject: string
-	Location: string
-	StartTime: string
-	EndTime: string
+  Id: string;
+  Subject: string;
+  Location: string;
+  StartTime: string;
+  EndTime: string;
 }
 
 export interface INotes {

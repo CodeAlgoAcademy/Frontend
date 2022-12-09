@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { IUser, IUserData } from "../types/interfaces";
 import { RootState } from "./store";
-import { loginUser, signUpUser } from "services/authService";
+import { loginUser, signUpUser, loginWithGoogle } from "services/authService";
 
 const initialState: IUser = {
   id: 0,
@@ -118,6 +118,31 @@ export const userSlice = createSlice({
       ),
       builder.addCase(
         signUpUser.rejected,
+        (state: IUser, action: PayloadAction) => {
+          console.log(action.payload);
+        }
+      );
+    builder.addCase(loginWithGoogle.pending, () => {
+      console.log("pending");
+    }),
+      builder.addCase(
+        loginWithGoogle.fulfilled,
+        (state: IUser, action: PayloadAction<IUser>) => {
+          localStorage.setItem(
+            "token",
+            JSON.stringify({
+              access_token: action.payload.access_token,
+              refresh_token: action.payload.refresh_token,
+            })
+          );
+          return {
+            ...state,
+            ...action.payload,
+          };
+        }
+      ),
+      builder.addCase(
+        loginWithGoogle.rejected,
         (state: IUser, action: PayloadAction) => {
           console.log(action.payload);
         }
