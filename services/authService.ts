@@ -71,3 +71,21 @@ export const signUpUser: any = createAsyncThunk(
     }
   }
 );
+
+export const loginWithGoogle: any = createAsyncThunk(
+  "authSlice/loginWithGoogle",
+  async (access_token: string, thunkApi) => {
+    try {
+      const { data } = await http.post("/auth/google/", {
+        access_token,
+      });
+      return {
+        access_token: data.access_token,
+        refresh_token: data.refresh_token,
+        ...data.user,
+      };
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);

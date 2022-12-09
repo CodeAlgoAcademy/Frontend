@@ -19,12 +19,12 @@ const GeneralNav = () => {
   const currentClass = useSelector(
     (state: RootState): CurrentClassState => state.currentClass
   )
-  const classDetails = classes.map((item) => {
+  const classDetails = classes.map((item: CurrentClassState) => {
     const { className, color } = item
     return { className, color }
   })
   const otherClassDetails = classDetails.filter(
-    (item) => item.className !== currentClass.className
+    (item: CurrentClassState) => item.className !== currentClass.className
   )
 
   const [classListView, setClassListView] = useState(false)
@@ -49,15 +49,13 @@ const GeneralNav = () => {
     <div className="py-6 px-[5%] bg-white flex items-center justify-between">
       <div className="relative flex items-center gap-40">
         <div className="absolute left-0 top-0">
-          <Link href={ `/addClass` }>
-            <Image
-              src="/assets/CodeAlgo_Logo.png"
-              alt="logo"
-              className="md:cursor-pointer h-9"
-              width={ 100 }
-              height={ 52 }
-            />
-          </Link>
+          <Image
+            src="/assets/CodeAlgo_Logo.png"
+            alt="logo"
+            className="md:cursor-pointer h-9"
+            width={ 100 }
+            height={ 52 }
+          />
         </div>
         <div></div>
         <div className="flex items-center gap-4">
@@ -87,7 +85,7 @@ const GeneralNav = () => {
                     </div>
                   </div>
                 </div>
-                { otherClassDetails?.map((navClass) => (
+                { otherClassDetails?.map((navClass: CurrentClassState) => (
                   <div
                     className="py-2 px-3 relative flex items-center justify-between hover:bg-gray-100 cursor-pointer"
                     key={ navClass.className }
@@ -137,37 +135,67 @@ const GeneralNav = () => {
                 height={ 35 }
               />
             </div>
-            { userDropDown && <div>
-              <motion.h5 className="text-sm ml-2 font-[700] whitespace-nowrap"
-                initial={ { display: 'none', opacity: 0 } }
-                animate={ { display: 'block', opacity: 1, transition: { duration: '1', delay: 0.3 } } }
-              >Stephen Williams</motion.h5>
-            </div> }
-            <div className="text-[32px] pl-6 text-[#838383] " onClick={ toggleUserDropDown }>
+            { userDropDown && (
+              <div>
+                <motion.h5
+                  className="text-sm ml-2 font-[700] whitespace-nowrap"
+                  initial={ { display: "none", opacity: 0 } }
+                  animate={ {
+                    display: "block",
+                    opacity: 1,
+                    transition: { duration: "1", delay: 0.3 },
+                  } }
+                >
+                  Stephen Williams
+                </motion.h5>
+              </div>
+            ) }
+            <div
+              className="text-[32px] pl-6 text-[#838383] "
+              onClick={ toggleUserDropDown }
+            >
               { userDropDown ? <RiArrowDropUpLine /> : <RiArrowDropDownLine /> }
             </div>
           </div>
-          { userDropDown && <div className="relative z-10">
-            <a href="/settings" target="_blank">
-              <div>
-                <motion.div className="flex items-center border-t border-black mt-4 pt-4"
-                  initial={ { opacity: 0, y: '5px' } }
-                  animate={ { opacity: 1, y: 0, transition: { duration: '0.5' } } }
-                >
-                  <span className="text-xl"><IoSettingsSharp /></span>
-                  <motion.h5 className="text-sm ml-2 font-[700] select-none">Settings</motion.h5>
-                </motion.div>
-              </div>
-            </a>
-            <motion.div className="flex items-center mt-[5rem]"
-              initial={ { opacity: 0, y: '5px' } }
-              animate={ { opacity: 1, y: 0, transition: { delay: 0.3, duration: '0.5' } } }
-            >
-              <span><BiLogOut /></span>
+          { userDropDown && (
+            <div className="relative z-10">
+              <a href="/settings" target="_blank">
+                <div>
+                  <motion.div
+                    className="flex items-center border-t border-black mt-4 pt-4"
+                    initial={ { opacity: 0, y: "5px" } }
+                    animate={ {
+                      opacity: 1,
+                      y: 0,
+                      transition: { duration: "0.5" },
+                    } }
+                  >
+                    <span className="text-xl">
+                      <IoSettingsSharp />
+                    </span>
+                    <motion.h5 className="text-sm ml-2 font-[700] select-none">
+                      Settings
+                    </motion.h5>
+                  </motion.div>
+                </div>
+              </a>
+              <motion.div
+                className="flex items-center mt-[5rem]"
+                initial={ { opacity: 0, y: "5px" } }
+                animate={ {
+                  opacity: 1,
+                  y: 0,
+                  transition: { delay: 0.3, duration: "0.5" },
+                } }
+              >
+                <span>
+                  <BiLogOut />
+                </span>
 
-              <h5 className="text-sm ml-2 font-[500]">Logout</h5>
-            </motion.div>
-          </div> }
+                <h5 className="text-sm ml-2 font-[500]">Logout</h5>
+              </motion.div>
+            </div>
+          ) }
         </div>
         <div className="text-[24px] text-[#616161] relative bell-shake cursor-pointer">
           <span className='rounded-full content-[" "] w-[10px] h-[10px] bg-red-600 absolute top-0 right-0'></span>
