@@ -126,7 +126,7 @@ export default function Unit() {
                     <div className="flex items-center sm:gap-3 lg:gap-7">
                       <FaGripLinesVertical className="text-[#A0A0A0] text-[1.1rem] font-thin" />
                       <p className="font-bold sm:text-[15px] lg:text-[20px]">{data.topics}</p>
-                      {data.show && (
+                      {active.includes(data.id) && (
                         <p
                           onClick={() => setShowPreview(true)}
                           className=" sm:text-[10px] lg:text-[18px] text-[#A0A0A0] hover:underline cursor-pointer hover:text-black transition duration-200 ease-out"

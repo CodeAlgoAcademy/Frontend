@@ -55,7 +55,7 @@ const unitsSlice = createSlice({
           grades = [...grades, ...level.grades];
 
           // find the units from availableUnits
-          const unitFromAvailableUnits = level.unitsId.map((unitId) =>
+          const unitFromAvailableUnits = level.unitsId.map((unitId: string) =>
             availableUnits.find((availableUnit) => availableUnit.id === unitId)
           );
           console.log(unitFromAvailableUnits);
@@ -158,7 +158,7 @@ const unitsSlice = createSlice({
           );
           const levelsGrade: string[] = [];
           levelsWithUnit.forEach((level) => {
-            level.grades.forEach((grade) => {
+            level.grades.forEach((grade: string) => {
               levelsGrade.push(grade);
             });
           });

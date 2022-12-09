@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import sanitizeHtml from "sanitize-html";
+import  sanitizeHtml from "sanitize-html";
 import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
 
 const NoteBox = () => {
