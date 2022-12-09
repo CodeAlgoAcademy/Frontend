@@ -1,12 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IAddClass } from "../types/interfaces";
 import { colors } from "../components/addClass/colors";
+import { addClass } from "services/classesService";
+import { Action } from "@syncfusion/ej2-react-grids";
 
 const initialState: IAddClass = {
   student: {
-    studentName: "",
-    studentEmail: "",
-    studentId: "",
+    firstName: "",
+    lastName: "",
+    email: "",
   },
   class: {
     className: "",
@@ -27,9 +29,10 @@ const addClassSlice = createSlice({
       action: PayloadAction<{
         key: string;
         value: string;
+        typeofState?: string;
       }>
     ) => {
-      if (action.payload.key.includes("student")) {
+      if (action.payload.typeofState === "student") {
         state.student[action.payload.key as keyof typeof state.student] =
           action.payload.value;
       } else {
@@ -37,8 +40,32 @@ const addClassSlice = createSlice({
           action.payload.value;
       }
     },
+    clearFields: (state: IAddClass) => {
+      state.student = initialState.student;
+      state.class = initialState.class;
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(
+      addClass.pending,
+      (state: IAddClass, action: PayloadAction) => {
+        console.log("pending");
+      }
+    ),
+      builder.addCase(
+        addClass.fulfilled,
+        (state: IAddClass, action: PayloadAction) => {
+          console.log(action.payload);
+        }
+      ),
+      builder.addCase(
+        addClass.rejected,
+        (state: IAddClass, action: PayloadAction) => {
+          console.log(action.payload);
+        }
+      );
   },
 });
 
 export default addClassSlice.reducer;
-export const { updateClassDetails } = addClassSlice.actions;
+export const { updateClassDetails, clearFields } = addClassSlice.actions;
