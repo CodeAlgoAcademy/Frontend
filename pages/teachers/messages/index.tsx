@@ -6,8 +6,10 @@ const index = () => {
     return (
         <>
             <GeneralNav />
-            <div>
-                <Sidebar />
+            <div className="flex items-stretch mb-auto">
+                <div className="sidebar bg-white w-[270px]">
+                    <Sidebar />
+                </div>
                 <Messages />
             </div>
         </>
