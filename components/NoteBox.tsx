@@ -1,29 +1,32 @@
-import React, { useState, useEffect } from "react";
-import  sanitizeHtml from "sanitize-html";
-import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
+import React, { useEffect } from "react"
+import ContentEditable, { ContentEditableEvent } from "react-contenteditable"
+import { RootState } from "../store/store"
+import { useSelector, useDispatch } from "react-redux"
+import { INotes } from "../types/interfaces"
+import { handleChange, sanitizeNotes, resetNotes } from "../store/notesSlice"
+import { getNotes, updateNotes } from "services/notesService"
 
 const NoteBox = () => {
-  const contentEditableRef = React.createRef<HTMLElement>();
-  const [contentEditableState, setContentEditableState] = useState({
-    html: "<ul><li>Hello</li><li>World</li></ul>",
-  });
-  const sanitizeConf = {
-    allowedTags: ["b", "i", "em", "strong", "span", "li", "ul"],
-    allowedAttributes: { a: ["href"] },
-  };
-  const sanitize = () => {
-    contentEditableState.html &&
-      setContentEditableState({
-        html: sanitizeHtml(contentEditableState.html, sanitizeConf),
-      });
-  };
-  const handleChange = (evt: ContentEditableEvent) => {
-    setContentEditableState({ html: evt.target.value });
-  };
+  const contentEditableRef = React.createRef<HTMLElement>()
+  const dispatch = useDispatch()
+  const contentEditableState = useSelector(
+    (state: RootState): INotes => state.notes
+  )
+  const handleNotes = (evt: ContentEditableEvent) => {
+    dispatch(handleChange(evt.target.value))
+  }
+  const fetchNotes = async () => {
+    const data = await dispatch(getNotes())
+  }
+  const postNotes = async () => {
+    const data = await dispatch(updateNotes())
+  }
   useEffect(() => {
-    contentEditableState.html == "" &&
-      setContentEditableState({ html: "<ul><li> </li></ul>" });
-  }, [setContentEditableState, contentEditableState.html]);
+    contentEditableState.html == "" && dispatch(resetNotes())
+  }, [contentEditableState.html, dispatch])
+  useEffect(() => {
+    fetchNotes()
+  }, [])
   return (
     <div className="rounded-md shadow-lg p-6 max-w-[380px] bg-white max-h-[212px] overflow-y-auto">
       <div className="min-h-[114px]">
@@ -46,17 +49,20 @@ const NoteBox = () => {
         </div>
         <ul className="list-disc pl-6 ContentEditable">
           <ContentEditable
-            innerRef={contentEditableRef}
-            html={contentEditableState?.html}
-            disabled={false}
-            onChange={handleChange}
-            onBlur={sanitize}
+            innerRef={ contentEditableRef }
+            html={ contentEditableState?.html }
+            disabled={ false }
+            onChange={ handleNotes }
+            onBlur={ () => {
+              dispatch(sanitizeNotes())
+              postNotes()
+            } }
             tagName="span"
           />
         </ul>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default NoteBox;
+export default NoteBox

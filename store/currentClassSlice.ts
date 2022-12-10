@@ -2,8 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CurrentClassState } from "../types/interfaces";
 
 const initialState: CurrentClassState = {
-  className: "Class C",
-  color: "#92C7F7",
+  className: "",
+  color: "",
 };
 
 const currentClassSlice = createSlice({
