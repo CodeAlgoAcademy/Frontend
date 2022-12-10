@@ -36,7 +36,9 @@ const Layout = ({ children }: Props) => {
     }
   }, []);
   return (
-    <GoogleOAuthProvider clientId="1015154836917-ria2t0r69q3jgc9td4cqb76h7lmnkann.apps.googleusercontent.com">
+    <GoogleOAuthProvider
+      clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string}
+    >
       <div>
         <Head>
           <title>CodeAlgo Academy</title>
