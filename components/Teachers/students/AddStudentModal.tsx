@@ -73,7 +73,7 @@ export default AddStudentModal
 
 const styles = {
     bgBlack: 'bg-black bg-opacity-60 w-[100vw] h-[100vh] z-0 top-0 left-0 grid place-items-center absolute',
-    centered: 'grid place-items-center fixed',
+    centered: ' place-items-center fixed',
     modal: 'border-l-[40px] border-l-yellow-500 relative w-4/5 bg-[#f4f4f4] z-10 rounded-xl shadow-lg',
     modalHeader: 'h-14 bg-[#f4f4f4] overflow-hidden rounded-tl-2xl rounded-tr-2xl',
     heading: 'm-0 p-3 text-[#2c3e50] font-medium text-2xl text-center',

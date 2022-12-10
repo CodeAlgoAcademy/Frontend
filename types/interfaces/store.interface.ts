@@ -31,6 +31,10 @@ export interface IAllClasses {
   classes: IClass[];
 }
 
+export interface IAllCurriculum {
+  allCurriculum: Icurriculum[]
+}
+
 export interface IAddClass {
   student: ISingleStudent;
   class: ISingleClass;
@@ -99,6 +103,20 @@ export interface IClass {
   color: string;
   totalStudent: number | string;
   id: number | string;
+}
+
+export interface Icurriculum {
+  title: string;
+  description: string;
+  end_date: string | null;
+  start_date: string | null;
+  teacher: null | string;
+  grades: string[];
+  id: number;
+  standard: string;
+  level: string;
+  is_current: boolean;
+  is_finished: boolean;
 }
 
 export interface ITeacher {
