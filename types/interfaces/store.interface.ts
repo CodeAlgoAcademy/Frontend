@@ -216,3 +216,7 @@ export interface ISchedule {
   StartTime: string;
   EndTime: string;
 }
+
+export interface INotes {
+  html: string
+}
