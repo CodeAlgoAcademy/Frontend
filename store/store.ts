@@ -9,6 +9,7 @@ import allClassesReducer from "./allClassesSlice"
 import currentClassReducer from "./currentClassSlice"
 import unitsSlice from "./unitsSlice"
 import calendarReducer from "./calendarSlice"
+import allCurriculumReducer from './allCurriculumSlice'
 import notesReducer from "./notesSlice"
 
 const persistConfig = {
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
 	currentClass: currentClassReducer,
 	unit: unitsSlice,
 	calendar: calendarReducer,
+	allCurriculum: allCurriculumReducer,
 	notes: notesReducer
 })
 

@@ -24,3 +24,20 @@ export const addUnits: any = createAsyncThunk(
     }
   }
 );
+
+
+export const getAllCurriculums:any = createAsyncThunk('curriculumSlice/fetchCurriculum', 
+async (name, thunkApi) => {
+  try {
+    const {data} = await http.get(
+      "/academics/curriculums/units/",
+      {
+        headers: { Authorization: "Bearer " + getAccessToken() },
+      }
+    );
+      return data
+  } catch (error:any) {
+    return thunkApi.rejectWithValue(error.response.data);
+  }
+}
+)

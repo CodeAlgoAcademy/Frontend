@@ -4649,10 +4649,22 @@ html-escaper@^2.0.0:
   resolved "https://registry.npmjs.org/html-escaper/-/html-escaper-2.0.2.tgz"
   integrity sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==
 
+<<<<<<< HEAD
+"html-sanitize@^1.1.5":
+  "integrity" "sha512-P1iL76bMmcu4gVZlVAw5g3cBztP9Bye+69h35UmT7pN6QKaTT087ql7FuGS4PvViWiuqY6ofByDwAiBpUMMe6Q=="
+  "resolved" "https://registry.npmjs.org/html-sanitize/-/html-sanitize-1.1.5.tgz"
+  "version" "1.1.5"
+
+"htmlparser2@^6.0.0":
+  "integrity" "sha512-gyyPk6rgonLFEDGoeRgQNaEUvdJ4ktTmmUh/h2t7s+M8oPpIPxgNACWa+6ESR57kXstwqPiCut0V8NRpcwgU7A=="
+  "resolved" "https://registry.npmjs.org/htmlparser2/-/htmlparser2-6.1.0.tgz"
+  "version" "6.1.0"
+=======
 htmlparser2@^6.0.0:
   version "6.1.0"
   resolved "https://registry.npmjs.org/htmlparser2/-/htmlparser2-6.1.0.tgz"
   integrity sha512-gyyPk6rgonLFEDGoeRgQNaEUvdJ4ktTmmUh/h2t7s+M8oPpIPxgNACWa+6ESR57kXstwqPiCut0V8NRpcwgU7A==
+>>>>>>> 641ed93de3b13363193b0d306a9676686ce308a8
   dependencies:
     domelementtype "^2.0.1"
     domhandler "^4.0.0"
@@ -6938,6 +6950,17 @@ react-contenteditable@^3.3.6:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
+<<<<<<< HEAD
+"react-icons@^4.7.1":
+  "integrity" "sha512-yHd3oKGMgm7zxo3EA7H2n7vxSoiGmHk5t6Ou4bXsfcgWyhfDKMpyKfhHR6Bjnn63c+YXBLBPUql9H4wPJM6sXw=="
+  "resolved" "https://registry.npmjs.org/react-icons/-/react-icons-4.7.1.tgz"
+  "version" "4.7.1"
+
+"react-is@^16.13.1", "react-is@^18.0.0", "react-is@^18.2.0":
+  "integrity" "sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w=="
+  "resolved" "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz"
+  "version" "18.2.0"
+=======
 react-icons@^4.6.0:
   version "4.7.1"
   resolved "https://registry.npmjs.org/react-icons/-/react-icons-4.7.1.tgz"
@@ -6947,6 +6970,7 @@ react-is@^16.13.1:
   version "16.13.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
+>>>>>>> 641ed93de3b13363193b0d306a9676686ce308a8
 
 react-is@^16.7.0:
   version "16.13.1"
@@ -6958,6 +6982,12 @@ react-is@^17.0.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
+<<<<<<< HEAD
+"react-redux@^7.2.1 || ^8.0.2", "react-redux@^8.0.4":
+  "integrity" "sha512-Q2f6fCKxPFpkXt1qNRZdEDLlScsDWyrgSj0mliK59qU6W5gvBiKkdMEG2lJzhd1rCctf0hb6EtePPLZ2e0m1uw=="
+  "resolved" "https://registry.npmjs.org/react-redux/-/react-redux-8.0.5.tgz"
+  "version" "8.0.5"
+=======
 react-is@^18.0.0, react-is@^18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz"
@@ -6967,6 +6997,7 @@ react-is@^18.0.0, react-is@^18.2.0:
   version "8.0.5"
   resolved "https://registry.npmjs.org/react-redux/-/react-redux-8.0.5.tgz"
   integrity sha512-Q2f6fCKxPFpkXt1qNRZdEDLlScsDWyrgSj0mliK59qU6W5gvBiKkdMEG2lJzhd1rCctf0hb6EtePPLZ2e0m1uw==
+>>>>>>> 641ed93de3b13363193b0d306a9676686ce308a8
   dependencies:
     "@babel/runtime" "^7.12.1"
     "@types/hoist-non-react-statics" "^3.3.1"

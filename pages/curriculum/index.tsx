@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { IoIosAddCircleOutline } from "react-icons/io"
 import loopImg from "../../public/assets/loopImg.png"
 import connect from "../../public/assets/connect.png"
@@ -13,6 +13,10 @@ import { useDispatch, useSelector } from "react-redux"
 import { openAddUnitModal } from "store/modalSlice"
 import AddUnit from "@/components/curriculum/addUnit"
 import { RootState } from "store/store"
+import {SlLoop} from 'react-icons/sl'
+import { getAllCurriculums } from "services/curriculumService"
+import { IAllCurriculum, Icurriculum } from "types/interfaces"
+
 
 export default function Index () {
   const [past, setPast] = useState<boolean>(false)
@@ -20,9 +24,31 @@ export default function Index () {
   const [upcoming, setUpcoming] = useState<boolean>(false)
   const [active, setActive] = useState("current")
   const { addUnitModalOpen } = useSelector((state: RootState) => state.modal)
+  
+  
+ 
   const dispatch = useDispatch()
 
+  
+  
+  const getCurriculums = async () => {
+    const data = await dispatch(getAllCurriculums())
+    console.log(data)
+    if(!data?.error?.message) {
+
+    }
+  }
+
+  useEffect(() => {
+    getCurriculums();
+  }, [])
+
+  const {curriculum} = useSelector((state: RootState) => state.allCurriculum);
+  console.log(curriculum)
+  
+
   // curriculumn tab click functions
+
   const handlePast = () => {
     setCurrent(false)
     setUpcoming(false)
@@ -36,13 +62,23 @@ export default function Index () {
     setCurrent(true)
     setActive("current")
   }
-
   const handleUpcoming = () => {
     setPast(false)
     setCurrent(false)
     setUpcoming(true)
     setActive("upcoming")
   }
+
+  const currentCurriculum = curriculum?.filter((curriculum:Icurriculum) => {
+    return (curriculum.is_current === true )
+  })
+
+  const pastCurriculum = curriculum?.filter((curriculum:Icurriculum) => {
+    return (curriculum.is_current === false )
+  })
+
+
+ 
 
   return (
     <div className="min-h-[100vh] flex flex-col">
@@ -107,42 +143,45 @@ export default function Index () {
             <div>
               {/* current curriculum */ }
               { current && (
-                <div>
-                  <h1 className="text-[1.5rem] font-bold mt-10 w-full">
-                    Current Unit
-                  </h1>
-
-                  <div
-                    style={ { boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" } }
-                    className="flex rounded-xl w-fit overflow-hidden mt-14"
-                  >
-                    <Image
-                      src={ loopImg }
-                      objectFit="cover"
-                      alt="loop image"
-                      width={ 150 }
-                      quality={ 100 }
-                    />
-                    <div className="bg-white w-[20rem] h-[17rem] p-8 ">
-                      <div>
-                        <HiDotsHorizontal className="ml-auto text-3xl border-[#BDBDBD] mt-[-1rem] text-[#C4C4C4]" />
+                <>
+                    <h1 className="text-[1.5rem] font-bold mt-10 w-full">
+                         Current Unit
+                    </h1>
+                    <div className="grid lg:grid-cols-2 md:grid-cols-1  box-border lg:gap-[2rem] md:gap-[1rem]">
+                        {currentCurriculum?.map((curriculum: Icurriculum) => {
+                          return (
+                             
+                                  <div
+                                    key={curriculum.id}
+                                    style={ { boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" } }
+                                    className="flex rounded-xl justify-between w-[70%] bg-white h-[23rem] mt-14 overflow-hidden"
+                                  >
+                                    <div className="p-8 flex items-center justify-center" style={{background: curriculum.level}}>
+                                      <span className="text-[5rem] text-white"><SlLoop /></span>
+                                    </div>
+                                    <div className="bg-white w-[20rem] h-[17rem] p-8 ">
+                                      <div>
+                                        <HiDotsHorizontal className="ml-auto text-3xl border-[#BDBDBD] mt-[-1rem] text-[#C4C4C4]" />
+                                      </div>
+                                      <h1 className="font-bold mt-5 mb-5">{curriculum.title}</h1>
+                                      <p>
+                                        Loops contain a set of instructions that are continually
+                                        repeated until a specific set of conditions are met.
+                                      </p>
+                                      <div className="flex items-center sm:flex-col md:flex-row mt-[2.1rem] justify-between">
+                                        <p>{curriculum.start_date}</p>
+                                        <Link href="curriculum/unit">
+                                          <p className="px-5 py-[5px] whitespace-nowrap font-semibold border-black rounded-full border-2 w-fit cursor-pointer">
+                                            view unit
+                                          </p>
+                                        </Link>
+                                      </div>
+                                    </div>
+                            </div>
+                          )
+                        })}
                       </div>
-                      <h1 className="font-bold mt-5 mb-5">Control</h1>
-                      <p>
-                        Loops contain a set of instructions that are continually
-                        repeated until a specific set of conditions are met.
-                      </p>
-                      <div className="flex items-center mt-[2.1rem] justify-between">
-                        <p>4/10 - Present</p>
-                        <Link href="curriculum/unit">
-                          <p className="px-5 py-[5px] font-semibold border-black rounded-full border-2 w-fit cursor-pointer">
-                            view unit
-                          </p>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                    </>
               ) }
 
               {/* Past */ }
@@ -150,47 +189,32 @@ export default function Index () {
               { past && (
                 <div>
                   <h1 className="text-[1.5rem] font-bold mt-10">Past Units</h1>
-                  <div className="flex lg:flex-row flex-col items-center gap-8">
-                    <div className="flex-[50%]">
-                      <div
-                        style={ { boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" } }
-                        className="flex rounded-xl overflow-hidden mt-14"
-                      >
-                        <div className="lg:w-[150px] w-[120px] bg-[#A0A0A0]"></div>
-                        <div className="bg-white flex-1 w-full h-[17rem] p-8">
-                          <div>
-                            <HiDotsHorizontal className="ml-auto text-3xl border-[#BDBDBD] mt-[-1rem] text-[#C4C4C4]" />
-                          </div>
-                          <h1 className="font-bold mb-3">Algorithm</h1>
-                          <p className="text-[15px]">
-                            Compare multiple algorithms for the same task.
-                            Analyze and refine multiple algorithms for the same
-                            task and determine which algorithm is the most
-                            efficient.
-                          </p>
-                        </div>
-                      </div>
+                    <div className="grid lg:grid-cols-2 md:grid-cols-1 box-border gap-[2rem]">
+                          {pastCurriculum.map((curriculum: Icurriculum) => {
+                            return (
+                                      <div className="flex-[50%]" key={curriculum.id}>
+                                        <div
+                                          style={ { boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" } }
+                                          className="flex rounded-xl overflow-hidden mt-14"
+                                        >
+                                          <div className="lg:w-[150px] w-[120px] bg-[#A0A0A0]" style={{background: curriculum.level}}></div>
+                                          <div className="bg-white flex-1 w-full h-[17rem] p-8">
+                                            <div>
+                                              <HiDotsHorizontal className="ml-auto text-3xl border-[#BDBDBD] mt-[-1rem] text-[#C4C4C4]" />
+                                            </div>
+                                            <h1 className="font-bold mb-3">{curriculum.title}</h1>
+                                            <p className="text-[15px]">
+                                              Compare multiple algorithms for the same task.
+                                              Analyze and refine multiple algorithms for the same
+                                              task and determine which algorithm is the most
+                                              efficient.
+                                            </p>
+                                          </div>
+                                        </div>
+                                      </div>
+                            )
+                          })}
                     </div>
-
-                    <div className="flex-[50%]">
-                      <div
-                        style={ { boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" } }
-                        className="flex rounded-xl overflow-hidden mt-14"
-                      >
-                        <div className="lg:w-[150px] w-[120px] bg-[#A0A0A0]"></div>
-                        <div className="bg-white w-full flex-1 h-[17rem] p-8 ">
-                          <div>
-                            <HiDotsHorizontal className="ml-auto text-3xl border-[#BDBDBD] mt-[-1rem] text-[#C4C4C4]" />
-                          </div>
-                          <h1 className="font-bold mb-3">Variable</h1>
-                          <p className="text-[15px]">
-                            Utilize, create, and modify programs that use
-                            variables, with grade level appropriate data.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               ) }
 
