@@ -16,7 +16,7 @@ const Messages = () => {
                         <ul className={styles.informationBox}>
                             <li className={styles.boxList}>
                                 <p>All Messages</p>
-                                <p className='text-center'>22</p>
+                                <p className='text-center text-slate-400'>22</p>
                             </li>
                             <li className={styles.boxList}>
                                 <p>Important Messages</p>
@@ -54,7 +54,7 @@ const Messages = () => {
 
 
             {/* Mobile View */}
-            <div className='md:hidden bg-[#a5a091] h-screen'>
+            {/* <div className='md:hidden bg-[#a5a091] h-screen'>
                 <div className="bg-[#8D887C] py-5 pl-5 pr-4 flex items-center justify-between">
                     <p className='text-[20px]'>Messages</p>
                     <div className='flex space-x-1'>
@@ -76,7 +76,7 @@ const Messages = () => {
                         <FiPlus size={45} color='white' className='bg-yellow-400 rounded-full' />
                     </IconButton>
                 </div>
-            </div>
+            </div> */}
         </>
     )
 }
@@ -84,7 +84,7 @@ const Messages = () => {
 export default Messages
 
 const styles = {
-    container: 'bg-gray-200 hidden md:block px-5 md:px-20 py-5 h-screen sm:ml-[20rem]',
+    container: 'bg-gray-200 block px-5 md:px-20 py-5 h-screen',
     containerBody: 'flex justify-start p-5 space-x-32',
     informationBox: 'bg-white p-5 text-xs font-light w-60 rounded-lg shadow-lg',
     boxList: 'flex justify-between p-2 items-center',

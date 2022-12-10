@@ -1,10 +1,43 @@
-import { FiPlus } from 'react-icons/fi'
-import { IconButton, TextField } from '@mui/material'
-import React, { useRef } from 'react'
+import { TextField } from '@mui/material'
+import React, { useState } from 'react'
 import { RiCloseLine } from 'react-icons/ri'
+import { useDispatch } from 'react-redux'
+import { addStudent } from 'store/studentSlice'
+import { Student } from 'types/interfaces'
+
+interface State {
+    firstName: string,
+    lastName: string,
+    email: string
+}
 
 const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
-    const filePickerRef = useRef<HTMLInputElement>(null)
+    const dispatch = useDispatch()
+    const [formData, setFormData] = useState<State>({
+        firstName: '',
+        lastName: '',
+        email: ''
+    })
+    const { email, firstName, lastName } = formData;
+
+    const onChange = (e: any) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value,
+        }));
+    }
+
+    const onSubmit = (e: any) => {
+        e.preventDefault()
+
+        const data: Student = {
+            firstName,
+            lastName,
+            email
+        }
+
+        dispatch(addStudent(data))
+    }
 
     return (
         <div className={styles.bgBlack}>
@@ -19,25 +52,31 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
                         <RiCloseLine />
                     </div>
                     <div className={styles.modalBody}>
-                        <form className='grid gap-5 pb-2'>
+                        <form className='grid gap-5 pb-2' onSubmit={onSubmit}> 
                             <div className='flex space-x-5'>
                                 <TextField 
-                                    label='Student ID'
-                                    name='id'
+                                    label='Student First Name'
+                                    name='firstname'
+                                    value={firstName}
+                                    onChange={onChange}
                                     size='small'
                                     required
                                 />
                                 <TextField 
-                                    label='Student Name'
-                                    name='name'
+                                    label='Student Last Name'
+                                    name='lastname'
                                     size='small'
+                                    value={lastName}
+                                    onChange={onChange}
                                     required
                                 />
                             </div>
                             <TextField 
                                 label='Student Email'
-                                name='name'
+                                name='email'
                                 size='small'
+                                value={email}
+                                onChange={onChange}
                                 required
                             />
                             <div>
@@ -46,22 +85,6 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
                                 </button>
                             </div>
                         </form>
-                        <p className='italic text-lg'>or</p>
-                        <div className='grid place-items-center'>
-                            <button 
-                                onClick={() => filePickerRef.current?.click()} 
-                                className={styles.bulkBtn}
-                            >
-                                <FiPlus size={23} className={styles.plusIcon} />
-                                <p className='sm:block'>Bulk Import</p>
-                            </button>
-                            <input 
-                                ref={filePickerRef}
-                                hidden 
-                                type='file' 
-                                accept='.xls, .xlsx' 
-                            />
-                        </div>
                     </div>
                 </div>
             </div>
