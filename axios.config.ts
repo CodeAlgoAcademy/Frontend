@@ -1,5 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import Router, { useRouter } from "next/router";
+import axios, { AxiosResponse } from "axios";
 import { getRefreshToken } from "utils/getTokens";
 
 const http = axios.create({

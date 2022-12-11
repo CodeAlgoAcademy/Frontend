@@ -46,7 +46,7 @@ const Levels: FC<Props> = ({ openedModal, updateOpenedModal }) => {
       <div className={styles.numbersSelectedContainer}>
         {levels.length === 0
           ? `0 levels selected`
-          : levels.map((level, index: number) => {
+          : levels.map((level: string, index: number) => {
               return (
                 <span key={index} className={styles.selectedItems}>
                   {level}
