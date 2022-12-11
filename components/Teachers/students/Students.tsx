@@ -17,10 +17,7 @@ const Students = () => {
             console.log(headings)
         } else {
             setHeadings((headings) => [...headings, id])
-            console.log(index)
-            console.log(headings)
         }
-        // console.log(index)
     }
 
     return (
