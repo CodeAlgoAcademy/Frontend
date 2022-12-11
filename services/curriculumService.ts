@@ -8,7 +8,7 @@ export const addUnits: any = createAsyncThunk(
   async (name, thunkApi) => {
     const state: any = thunkApi.getState();
     const { rearrangedUnits } = state.unit.addUnit;
-    console.log(rearrangedUnits);
+    console.log(JSON.stringify(rearrangedUnits));
     try {
       const { data } = await http.post(
         "/academics/curriculums/units/",
@@ -18,8 +18,26 @@ export const addUnits: any = createAsyncThunk(
         }
       );
       console.log(data);
+      return data;
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.response.data);
     }
   }
 );
+
+
+export const getAllCurriculums:any = createAsyncThunk('curriculumSlice/fetchCurriculum', 
+async (name, thunkApi) => {
+  try {
+    const {data} = await http.get(
+      "/academics/curriculums/units/",
+      {
+        headers: { Authorization: "Bearer " + getAccessToken() },
+      }
+    );
+      return data
+  } catch (error:any) {
+    return thunkApi.rejectWithValue(error.response.data);
+  }
+}
+)

@@ -55,7 +55,7 @@ const unitsSlice = createSlice({
           grades = [...grades, ...level.grades];
 
           // find the units from availableUnits
-          const unitFromAvailableUnits = level.unitsId.map((unitId) =>
+          const unitFromAvailableUnits = level.unitsId.map((unitId: string) =>
             availableUnits.find((availableUnit) => availableUnit.id === unitId)
           );
           console.log(unitFromAvailableUnits);
@@ -151,14 +151,13 @@ const unitsSlice = createSlice({
           unitObject.start_date = unit.startDate;
           unitObject.end_date = unit.endDate;
           unitObject.description = unit.hoverText;
-          unitObject.teacher = "alisjjex@gmail.com";
           // check the levels that have that unit and get their grades
           const levelsWithUnit = availableLevels.filter((level) =>
             level.unitsId.includes(`${unit.id}`)
           );
           const levelsGrade: string[] = [];
           levelsWithUnit.forEach((level) => {
-            level.grades.forEach((grade) => {
+            level.grades.forEach((grade: string) => {
               levelsGrade.push(grade);
             });
           });
