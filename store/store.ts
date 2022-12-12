@@ -9,6 +9,8 @@ import allClassesReducer from "./allClassesSlice"
 import currentClassReducer from "./currentClassSlice"
 import unitsSlice from "./unitsSlice"
 import calendarReducer from "./calendarSlice"
+import messagesReducer from "./messagesSlice"
+import studentReducer from "./studentSlice"
 import allCurriculumReducer from './allCurriculumSlice'
 import notesReducer from "./notesSlice"
 
@@ -25,6 +27,8 @@ const rootReducer = combineReducers({
 	currentClass: currentClassReducer,
 	unit: unitsSlice,
 	calendar: calendarReducer,
+	messages: messagesReducer,
+	students: studentReducer,
 	allCurriculum: allCurriculumReducer,
 	notes: notesReducer
 })

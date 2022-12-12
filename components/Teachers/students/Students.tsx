@@ -1,33 +1,42 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io'
 import { IoChatbubblesOutline } from 'react-icons/io5'
 import { HiOutlineDotsHorizontal } from 'react-icons/hi'
 import StudentTable from './StudentTable'
 import { sample_student_data } from './data'
+import { useDispatch, useSelector } from 'react-redux'
+import { getStudents } from 'store/studentSlice'
+import { IUserStudent } from 'types/interfaces'
 
 const Students = () => {
+    const dispatch = useDispatch()
     const [headings, setHeadings] = useState<number[]>([])
+    const { students } = useSelector((state: any) => state.students)
+
+    useEffect(() => {
+        dispatch(getStudents())
+    }, [dispatch])
 
     const handleStudents = (id: number) => {
         const index = headings.indexOf(id)
         
         if(index !== -1) {
             setHeadings((headings) => [...headings.slice(0, index), ...headings.slice(index + 1)])
-            console.log(index)
-            console.log(headings)
         } else {
             setHeadings((headings) => [...headings, id])
         }
     }
 
+    console.log(students)
+
     return (
         <div className={styles.container}>
-            {sample_student_data.map((student) => (
+            {students?.students?.map((student: any) => (
                 <div key={student.id} className='bg-[#fff] shadow-lg'>
                     <div className={styles.cardHeader}>
                         <div className='flex items-center'>
                             <div className={styles.cardHeaderName} onClick={() => handleStudents(student.id)}>
-                                <p className={styles.studentName}>{student.name}</p>
+                                <p className={styles.studentName}>{`${student.firstName} ${student.lastName}`}</p>
                                 {headings.includes(student.id) ? <IoIosArrowUp />: <IoIosArrowDown />}
                             </div>
                             <div className='text-[12px] px-2'>
@@ -42,8 +51,16 @@ const Students = () => {
                         </div>
                     </div>
 
-                    {headings.includes(student.id) && (
-                        <StudentTable details={student.courses} />
+                    {students?.courses?.length === 0 ? (
+                        <p className='w-full h-full grid place-content-center'>
+                            <span>No lesson available</span>
+                        </p>
+                    ) : (
+                        <>
+                            {headings.includes(student?.id) && (
+                                <StudentTable details={student?.courses} />
+                            )}
+                        </>
                     )}
                 </div>
             ))}

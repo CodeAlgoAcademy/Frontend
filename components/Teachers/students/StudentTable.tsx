@@ -14,7 +14,7 @@ const StudentTable = ({details}: {details: object[]}) => {
                 </tr>
             </thead>
             <tbody className='p-3'>
-                {details.map((course: any, index: number) => (
+                {details?.map((course: any, index: number) => (
                     <tr key={index} className={styles.bodyRow}>
                         <td className={styles.bodyColumn}>{course.lesson}</td>
 
