@@ -18,6 +18,7 @@ import allClassesReducer from "./allClassesSlice";
 import currentClassReducer from "./currentClassSlice";
 import unitsSlice from "./unitsSlice";
 import calendarReducer from "./calendarSlice";
+import messagesReducer from "./messagesSlice";
 import allCurriculumReducer from "./allCurriculumSlice";
 import notesReducer from "./notesSlice";
 import fetchReducer from "./fetchSlice";
@@ -38,6 +39,7 @@ const rootReducer = combineReducers({
   allCurriculum: allCurriculumReducer,
   notes: notesReducer,
   fetch: fetchReducer,
+  messages: messagesReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
