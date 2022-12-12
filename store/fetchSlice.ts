@@ -2,8 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IFetch } from "types/interfaces";
 
 const initialState: IFetch = {
-  errorModalOpen: true,
-  errors: ["No data", "Bad Network", "Buy Food"],
+  errorModalOpen: false,
+  errors: [],
   loading: false,
   loadingText: "",
 };
