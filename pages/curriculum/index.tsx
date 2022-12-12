@@ -86,18 +86,21 @@ export default function Index() {
         const today = getToday();
         const tempStartDate = tempCurriculum.start_date.split("-");
         const tempEndDate = tempCurriculum.end_date.split("-");
-        const endDate = {
-          day: parseInt(tempEndDate[2]),
-          month: parseInt(tempEndDate[1]),
-          year: parseInt(tempEndDate[0]),
-        };
+        const endDate = getCurriculumDate(tempCurriculum.end_date);
+        const startDate = getCurriculumDate(tempCurriculum.start_date);
         if (
           tempCurriculum.is_current === true &&
+          tempCurriculum.is_finished === false &&
           (endDate.year > today.year ||
             (endDate.year === today.year && endDate.month > today.month) ||
             (endDate.year === today.year &&
               endDate.month === today.month &&
-              endDate.day >= today.day))
+              endDate.day >= today.day)) &&
+          (startDate.year < today.year ||
+            (startDate.year === today.year && startDate.month < today.month) ||
+            (startDate.year === today.year &&
+              startDate.month === today.month &&
+              startDate.day <= today.day))
         ) {
           return tempCurriculum;
         }
@@ -115,18 +118,22 @@ export default function Index() {
         const today = getToday();
         const tempStartDate = tempCurriculum.start_date.split("-");
         const tempEndDate = tempCurriculum.end_date.split("-");
-        const startDate = {
-          day: parseInt(tempStartDate[2]),
-          month: parseInt(tempStartDate[1]),
-          year: parseInt(tempStartDate[0]),
-        };
-        const endDate = {
-          day: parseInt(tempEndDate[2]),
-          month: parseInt(tempEndDate[1]),
-          year: parseInt(tempEndDate[0]),
-        };
+        // const startDate = {
+        //   day: parseInt(tempStartDate[2]),
+        //   month: parseInt(tempStartDate[1]),
+        //   year: parseInt(tempStartDate[0]),
+        // };
+        // const endDate = {
+        //   day: parseInt(tempEndDate[2]),
+        //   month: parseInt(tempEndDate[1]),
+        //   year: parseInt(tempEndDate[0]),
+        // };
+
+        const endDate = getCurriculumDate(tempCurriculum.end_date);
+        const startDate = getCurriculumDate(tempCurriculum.start_date);
         if (
           tempCurriculum.is_current === false &&
+          tempCurriculum.is_finished === false &&
           (endDate.year > today.year ||
             (endDate.year === today.year && endDate.month > today.month) ||
             (endDate.year === today.year &&
@@ -143,6 +150,8 @@ export default function Index() {
       }
     }
   );
+  console.log("upcoming", upcomingCurriculum);
+  console.log("current", currentCurriculum);
 
   return (
     <div className="min-h-[100vh] flex flex-col">
@@ -249,7 +258,7 @@ export default function Index() {
                   <h1 className="text-[1.5rem] font-bold mt-10">
                     Upcoming Units
                   </h1>
-                  <div className="flex lg:flex-row flex-col items-center gap-8">
+                  <div className="grid lg:grid-cols-2 md:grid-cols-1 box-border gap-[2rem]">
                     {upcomingCurriculum.map((curriculum: Icurriculum) => {
                       return (
                         <SingleCurriculum
