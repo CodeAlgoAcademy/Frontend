@@ -38,7 +38,6 @@ const AddStudents = () => {
   const handleSubmit = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = await dispatch(addStudents());
-    console.log(data);
     dispatch(closeAddStudentsModal());
   };
 

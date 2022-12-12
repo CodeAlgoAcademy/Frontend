@@ -31,6 +31,10 @@ export interface IAllClasses {
   classes: IClass[];
 }
 
+export interface IAllCurriculum {
+  allCurriculum: Icurriculum[];
+}
+
 export interface IAddClass {
   student: ISingleStudent;
   class: ISingleClass;
@@ -59,10 +63,20 @@ export interface IUnitsSlice {
       start_date: string;
       title: string;
     }>;
-    levels: string[];
+    levels: string;
     grades: string[];
     chosenGrades: string[];
+    verified: boolean;
+    errorInUnits: string;
+    unitsWithError: { error: string }[];
   };
+}
+
+export interface IFetch {
+  errorModalOpen: boolean;
+  errorText: string;
+  loading: boolean;
+  loadingText: string;
 }
 
 // ============EXTRA INTERFACES AND TYPES
@@ -99,6 +113,20 @@ export interface IClass {
   color: string;
   totalStudent: number | string;
   id: number | string;
+}
+
+export interface Icurriculum {
+  title: string;
+  description: string;
+  end_date: string;
+  start_date: string;
+  teacher: null | string;
+  grades: string[];
+  id: number;
+  standard: string;
+  level: string;
+  is_current: boolean;
+  is_finished: boolean;
 }
 
 export interface ITeacher {
@@ -200,5 +228,5 @@ export interface ISchedule {
 }
 
 export interface INotes {
-  html: string
+  html: string;
 }

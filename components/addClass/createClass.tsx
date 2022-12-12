@@ -35,7 +35,7 @@ const CreateClass = () => {
       value: subject,
     },
     {
-      type: "number",
+      type: "text",
       name: "roomNumber",
       placeholder: "Enter Room Number*",
       value: roomNumber,
@@ -43,7 +43,7 @@ const CreateClass = () => {
     {
       type: "text",
       name: "coTeachers",
-      placeholder: "Add co-teachers*",
+      placeholder: "Add co-teachers",
       value: coTeachers,
     },
   ];
@@ -125,7 +125,7 @@ const CreateClass = () => {
                       dispatch(
                         updateClassDetails({ key: "color", value: color })
                       );
-                      dispatch(closeColorModal);
+                      dispatch(closeColorModal());
                     }}
                   ></span>
                 );
