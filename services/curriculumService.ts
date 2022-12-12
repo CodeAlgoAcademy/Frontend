@@ -11,7 +11,7 @@ import {
 export const addUnits: any = createAsyncThunk(
   "unitsSlice/addUnits",
   async (name, thunkApi) => {
-    const state: RootState = thunkApi.getState();
+    const state: any = thunkApi.getState();
     const dispatch = thunkApi.dispatch;
     const { rearrangedUnits, levels, standard, chosenGrades, unitsWithError } =
       state.unit.addUnit;
