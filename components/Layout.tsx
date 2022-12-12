@@ -3,6 +3,9 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { refreshToken } from "utils/getTokens";
+import ErrorModal from "./errorModal";
+import Preloader from "./preloader";
+
 interface Props {
   children?: ReactNode;
 }
@@ -44,6 +47,8 @@ const Layout = ({ children }: Props) => {
           <title>CodeAlgo Academy</title>
         </Head>
         <main>{children}</main>
+        <ErrorModal />
+        <Preloader />
       </div>
     </GoogleOAuthProvider>
   );

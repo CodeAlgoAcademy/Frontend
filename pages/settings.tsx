@@ -49,7 +49,7 @@ export default function Settings() {
   return (
     <div className="min-h-[100vh] flex flex-col">
       <GeneralNav />
-      {/* <Header /> */}
+      {/* <Header /> */}n
       <div className="flex items-stretch mb-auto grow bg-white">
         <div className="sidebar bg-white w-[270px]">
           <Sidebar />
@@ -68,7 +68,6 @@ export default function Settings() {
                 <Tab label="Change Email" sx={{textTransform:'capitalize', fontSize:'1.3rem', color: 'black', outlineColor: 'purple', fontWeight:"fontWeightBold"}} {...a11yProps(1)} />
               </Tabs>
           </Box>
-
           <TabPanel value={value} index={0}>
           <div className='sm:w-[80%]'>
             <div>
@@ -78,7 +77,7 @@ export default function Settings() {
             <div>
               <h3 className='mt-5 font-bold text-xl mb-2'>New password</h3>
               <TextField id="outlined-basic" fullWidth label="New Password"  variant="outlined" />
-            </div>
+            </div> 
             <div>
               <h3 className='mt-5 font-bold text-xl mb-2'>New password</h3>
               <TextField id="outlined-basic" fullWidth label="New Password"  variant="outlined" />

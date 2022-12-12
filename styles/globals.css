@@ -263,3 +263,16 @@ a {
 .edit-icon:hover span {
   opacity: 1;
 }
+
+.dots-animation {
+  animation: animate-dots 0.5s linear infinite;
+}
+
+@keyframes animate-dots {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
