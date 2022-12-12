@@ -31,7 +31,9 @@ export const loginUser: any = createAsyncThunk(
 
       if (error.response.data.non_field_errors) {
         dispatch(
-          openErrorModal({ errorText: error.response.data.non_field_errors[0] })
+          openErrorModal({
+            errorText: [error.response.data.non_field_errors[0]],
+          })
         );
       }
 
@@ -85,7 +87,9 @@ export const signUpUser: any = createAsyncThunk(
       dispatch(closePreloader());
       if (error.response.data.non_field_errors) {
         dispatch(
-          openErrorModal({ errorText: error.response.data.non_field_errors[0] })
+          openErrorModal({
+            errorText: [error.response.data.non_field_errors[0]],
+          })
         );
       }
       return thunkApi.rejectWithValue(error.response.data);
