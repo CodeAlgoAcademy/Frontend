@@ -1,12 +1,16 @@
 import http from "axios.config";
 export const getRefreshToken = () => {
-  const { refresh_token } = JSON.parse(`${localStorage.getItem("token")}`);
-  return refresh_token;
+  if (typeof window !== 'undefined') {
+    const token = JSON.parse(`${localStorage.getItem("token")}`);
+    return token?.refresh_token;
+  }
 };
 
 export const getAccessToken = () => {
-  const { access_token } = JSON.parse(`${localStorage.getItem("token")}`);
-  return access_token;
+  if (typeof window !== 'undefined') {
+    const token = JSON.parse(`${localStorage.getItem("token")}`);
+    return token?.access_token;
+  }
 };
 
 export const refreshToken = async () => {

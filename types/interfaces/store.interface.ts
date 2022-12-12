@@ -78,6 +78,16 @@ export interface IFetch {
   loading: boolean;
   loadingText: string;
 }
+export interface IUserConversation {
+  conversations: Conversations[];
+  openedMessageStudent: number | null;
+  openedStudentMessages: string[];
+}
+
+export interface IUserStudent {
+  newStudent: Student | null;
+  students: Student[];
+}
 
 // ============EXTRA INTERFACES AND TYPES
 export interface IUserData {
@@ -225,6 +235,33 @@ export interface ISchedule {
   Location: string;
   StartTime: string;
   EndTime: string;
+}
+
+export interface Conversations {
+  user: User;
+  message: IMessage;
+  id: number;
+}
+
+export interface User {
+  firstName: string;
+  lastName: string;
+  email: string;
+  id: number;
+}
+
+export interface IMessage {
+  user: User;
+  text: string;
+  is_read: boolean;
+  date: string;
+  id: number;
+}
+
+export interface Student {
+  firstName: string;
+  lastName: string;
+  email: string;
 }
 
 export interface INotes {
