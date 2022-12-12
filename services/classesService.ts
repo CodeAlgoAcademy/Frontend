@@ -24,7 +24,7 @@ export const getAllClasses: any = createAsyncThunk(
       return data;
     } catch (error: any) {
       dispatch(closePreloader());
-      dispatch(openErrorModal({ errorText: error.response.data.detail }));
+      dispatch(openErrorModal({ errorText: [error.response.data.detail] }));
       return thunkApi.rejectWithValue(error.response.data);
     }
   }
@@ -63,7 +63,7 @@ export const addClass: any = createAsyncThunk(
     } catch (error: any) {
       dispatch(closePreloader());
       console.log(error, "error");
-      dispatch(openErrorModal({ errorText: error.response.data.detail }));
+      dispatch(openErrorModal({ errorText: [error.response.data.detail] }));
       return thunkApi.rejectWithValue(error.response.data);
     }
   }

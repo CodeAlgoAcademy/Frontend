@@ -24,7 +24,7 @@ export const getNotes: any = createAsyncThunk(
     } catch (error: any) {
       console.log(error);
       dispatch(closePreloader());
-      dispatch(openErrorModal({ errorText: error.response.data.detail }));
+      dispatch(openErrorModal({ errorText: [error.message] }));
       return thunkApi.rejectWithValue(error.response.data);
     }
   }
@@ -54,7 +54,7 @@ export const updateNotes: any = createAsyncThunk(
     } catch (error: any) {
       dispatch(closePreloader());
       console.log(error);
-      dispatch(openErrorModal({ errorText: error.response.data.detail }));
+      dispatch(openErrorModal({ errorText: [error.message] }));
       return thunkApi.rejectWithValue(error.response.data);
     }
   }

@@ -64,7 +64,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
             <div className="flex-[0.75] flex flex-col gap-y-4 py-8 max-h-[90vh] overflow-hidden overflow-y-scroll">
               {levels === "" && (
                 <div className="px-4 text-center text-[22px] font-bold flex justify-center items-center h-full">
-                  Please Select one or more levels
+                  Please Select a level
                 </div>
               )}
               {units.map((unit: any, index: number) => {
@@ -217,7 +217,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
           <div className={`${styles.preview} z-[5]`}>
             {levels === "" && (
               <h1 className="text-center p-2 font-bold font-lg">
-                Please select one or more levels
+                Please select a level
               </h1>
             )}
           </div>

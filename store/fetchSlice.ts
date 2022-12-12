@@ -3,7 +3,7 @@ import { IFetch } from "types/interfaces";
 
 const initialState: IFetch = {
   errorModalOpen: true,
-  errorText: "",
+  errors: ["No data", "Bad Network", "Buy Food"],
   loading: false,
   loadingText: "",
 };
@@ -14,16 +14,16 @@ const fetchSlice = createSlice({
   reducers: {
     closeErrorModal: (state: IFetch) => {
       state.errorModalOpen = false;
-      state.errorText = "";
+      state.errors = [];
     },
     openErrorModal: (
       state: IFetch,
       action: PayloadAction<{
-        errorText: string;
+        errorText: string[];
       }>
     ) => {
       state.errorModalOpen = true;
-      state.errorText = action.payload.errorText;
+      state.errors = action.payload.errorText;
     },
     openPreloader: (
       state: IFetch,

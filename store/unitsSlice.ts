@@ -14,8 +14,6 @@ const initialState: IUnitsSlice = {
     levels: "",
     grades: [],
     chosenGrades: [],
-    verified: true,
-    errorInUnits: "",
     unitsWithError: [],
   },
 };
@@ -36,7 +34,6 @@ const unitsSlice = createSlice({
       action: PayloadAction<{ value: string }>
     ) => {
       state.addUnit.standard = action.payload.value;
-      state.addUnit.levels = "";
     },
     updateLevels: (
       state: IUnitsSlice,
@@ -106,7 +103,6 @@ const unitsSlice = createSlice({
             unit.isCurrent = false;
           } else if (action.payload.type === "start date") {
             unit.isChosen = true;
-            unit.isCurrent = false;
             unit.startDate = `${action.payload.value}`;
           } else if (action.payload.type === "end date") {
             unit.isChosen = true;
@@ -184,118 +180,99 @@ const unitsSlice = createSlice({
         month: new Date().getMonth() + 1,
         year: new Date().getFullYear(),
       };
-      let correctUnitsCount = 0;
-      state.addUnit.units.forEach((unit) => {
-        if (unit.startDate && unit.endDate) {
-          const startDate: string[] = unit.startDate.split("-");
-          const endDate: string[] = unit.endDate.split("-");
-          const startDateDetails: { day: number; month: number; year: number } =
-            {
+      const errors: string[] = [];
+      state.addUnit.units
+        .filter((unit) => unit.isChosen)
+        .forEach((unit) => {
+          if (unit.startDate && unit.endDate) {
+            const startDate: string[] = unit.startDate.split("-");
+            const endDate: string[] = unit.endDate.split("-");
+            const startDateDetails: {
+              day: number;
+              month: number;
+              year: number;
+            } = {
               day: parseInt(startDate[2]),
               month: parseInt(startDate[1]),
               year: parseInt(startDate[0]),
             };
-          const endDateDetails: { day: number; month: number; year: number } = {
-            day: parseInt(endDate[2]),
-            month: parseInt(endDate[1]),
-            year: parseInt(endDate[0]),
-          };
+            const endDateDetails: { day: number; month: number; year: number } =
+              {
+                day: parseInt(endDate[2]),
+                month: parseInt(endDate[1]),
+                year: parseInt(endDate[0]),
+              };
 
-          // if it is current and start date isn't today
-          if (
-            startDateDetails.year !== today.year &&
-            startDateDetails.month !== today.month &&
-            startDateDetails.day !== today.day &&
-            unit.isCurrent
-          ) {
-            state.addUnit.unitsWithError = [
-              ...state.addUnit.unitsWithError,
-              {
-                error: `${unit.title} unit start date should be today's date`,
-              },
-            ];
-          }
-          // if upcoming and start date is today
-          if (
-            startDateDetails.year === today.year &&
-            startDateDetails.month === today.month &&
-            startDateDetails.day === today.day &&
-            !unit.isCurrent
-          ) {
-            state.addUnit.unitsWithError = [
-              ...state.addUnit.unitsWithError,
-              {
-                error: `${unit.title} unit start date should not be  a future date since it is upcoming`,
-              },
-            ];
-          }
-          // if start date is less than today's date
-          if (
-            startDateDetails.year < today.year ||
-            (startDateDetails.year === today.year &&
-              startDateDetails.month > today.month) ||
-            (startDateDetails.year === today.year &&
-              startDateDetails.month === today.month &&
-              startDateDetails.day > today.day)
-          ) {
-            //if it current or upcoming
-            if (unit.isCurrent) {
-              state.addUnit.unitsWithError = [
-                ...state.addUnit.unitsWithError,
-                {
-                  error: `${unit.title} unit start date should be today's date`,
-                },
-              ];
-            } else {
-              state.addUnit.unitsWithError = [
-                ...state.addUnit.unitsWithError,
-                {
-                  error: `${unit.title} unit start date should be after today's date`,
-                },
-              ];
+            // if start date === end date
+            // if it is current and start date isn't today
+            if (
+              (startDateDetails.year !== today.year ||
+                startDateDetails.month !== today.month ||
+                startDateDetails.day !== today.day) &&
+              unit.isCurrent
+            ) {
+              errors.push(
+                `${unit.title} unit start date should be today's date`
+              );
             }
+            // if upcoming and start date is today
+            if (
+              startDateDetails.year === today.year &&
+              startDateDetails.month === today.month &&
+              startDateDetails.day === today.day &&
+              !unit.isCurrent
+            ) {
+              errors.push(
+                `${unit.title} unit start date should not be  a future date since it is upcoming`
+              );
+            }
+            // if start date is less than today's date and it is upcoming
+            if (
+              startDateDetails.year < today.year ||
+              (startDateDetails.year === today.year &&
+                startDateDetails.month > today.month) ||
+              (startDateDetails.year === today.year &&
+                startDateDetails.month === today.month &&
+                startDateDetails.day < today.day)
+            ) {
+              if (!unit.isCurrent) {
+                errors.push(
+                  `${unit.title} unit start date should be after today's date`
+                );
+              }
+            }
+            // if end date is less than or is today's date
+            if (
+              endDateDetails.year < today.year ||
+              (endDateDetails.year === today.year &&
+                endDateDetails.month > today.month) ||
+              (endDateDetails.year === today.year &&
+                endDateDetails.month === today.month &&
+                endDateDetails.day <= today.day)
+            ) {
+              errors.push(
+                `${unit.title} unit end date should be after it's start date and after today's date`
+              );
+            }
+            //  if start date is greater than end date
+            if (
+              startDateDetails.year > endDateDetails.year ||
+              (startDateDetails.year === endDateDetails.year &&
+                startDateDetails.month > endDateDetails.month) ||
+              (startDateDetails.year === endDateDetails.year &&
+                startDateDetails.month === endDateDetails.month &&
+                startDateDetails.day > endDateDetails.day)
+            ) {
+              console.log(startDateDetails.day, endDateDetails.day);
+              errors.push(
+                `${unit.title} unit end date should be after it's start date and after today's date`
+              );
+            }
+          } else {
+            errors.push(`${unit.title} unit does not have a start/end date`);
           }
-          // if end date is less than today's date
-          if (
-            endDateDetails.year < today.year ||
-            (endDateDetails.year === today.year &&
-              endDateDetails.month > today.month) ||
-            (endDateDetails.year === today.year &&
-              endDateDetails.month === today.month &&
-              endDateDetails.day > today.day)
-          ) {
-            state.addUnit.unitsWithError = [
-              ...state.addUnit.unitsWithError,
-              {
-                error: `${unit.title} unit end date should be after it's start date and after today's date`,
-              },
-            ];
-          }
-          //  if start date is greater than end date
-          if (
-            startDateDetails.year > endDateDetails.year ||
-            (startDateDetails.year === endDateDetails.year &&
-              startDateDetails.month > endDateDetails.month) ||
-            (startDateDetails.year === endDateDetails.year &&
-              startDateDetails.month === endDateDetails.month &&
-              startDateDetails.day > endDateDetails.day)
-          ) {
-            state.addUnit.unitsWithError = [
-              ...state.addUnit.unitsWithError,
-              {
-                error: `${unit.title} unit start date is after it's end date`,
-              },
-            ];
-          }
-        } else {
-          state.addUnit.unitsWithError = [
-            ...state.addUnit.unitsWithError,
-            {
-              error: `${unit.title} does not have a start/end date`,
-            },
-          ];
-        }
-      });
+        });
+      state.addUnit.unitsWithError = errors;
     },
   },
   extraReducers: {

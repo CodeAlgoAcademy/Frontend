@@ -66,15 +66,13 @@ export interface IUnitsSlice {
     levels: string;
     grades: string[];
     chosenGrades: string[];
-    verified: boolean;
-    errorInUnits: string;
-    unitsWithError: { error: string }[];
+    unitsWithError: string[];
   };
 }
 
 export interface IFetch {
   errorModalOpen: boolean;
-  errorText: string;
+  errors: string[];
   loading: boolean;
   loadingText: string;
 }

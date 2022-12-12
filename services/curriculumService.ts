@@ -11,24 +11,44 @@ import {
 export const addUnits: any = createAsyncThunk(
   "unitsSlice/addUnits",
   async (name, thunkApi) => {
-    const state: any = thunkApi.getState();
+    const state: RootState = thunkApi.getState();
     const dispatch = thunkApi.dispatch;
-    const { rearrangedUnits } = state.unit.addUnit;
+    const { rearrangedUnits, levels, standard, chosenGrades, unitsWithError } =
+      state.unit.addUnit;
+    const errors = [];
+
+    if (standard === "") {
+      errors.push("Please Select a standard");
+    }
+    if (levels === "") {
+      errors.push("Please Select a level");
+    }
+    if (rearrangedUnits.length === 0) {
+      errors.push("Please Select one or more units");
+    }
+    if (chosenGrades.length === 0) {
+      errors.push("Please Select one or more grades");
+    }
+    unitsWithError.forEach((error: string) => errors.push(error));
     dispatch(openPreloader({ loadingText: "Adding units" }));
     try {
-      const { data } = await http.post(
-        "/academics/curriculums/units/",
-        JSON.stringify(rearrangedUnits),
-        {
-          headers: { Authorization: "Bearer " + getAccessToken() },
-        }
-      );
-      dispatch(closePreloader());
-      return data;
+      if (errors.length === 0) {
+        const { data } = await http.post(
+          "/academics/curriculums/units/",
+          JSON.stringify(rearrangedUnits),
+          {
+            headers: { Authorization: "Bearer " + getAccessToken() },
+          }
+        );
+        dispatch(closePreloader());
+        return data;
+      } else {
+        dispatch(openErrorModal({ errorText: [...errors] }));
+        dispatch(closePreloader());
+      }
     } catch (error: any) {
       dispatch(closePreloader());
-      console.log(error);
-      dispatch(openErrorModal({ errorText: error.response.data.detail }));
+      dispatch(openErrorModal({ errorText: [error.message] }));
       return thunkApi.rejectWithValue(error.response.data);
     }
   }
@@ -46,9 +66,8 @@ export const getAllCurriculums: any = createAsyncThunk(
       dispatch(closePreloader());
       return data;
     } catch (error: any) {
-      console.log(error);
       dispatch(closePreloader());
-      dispatch(openErrorModal({ errorText: error.response.data.detail }));
+      dispatch(openErrorModal({ errorText: [error.message] }));
       return thunkApi.rejectWithValue(error.response.data);
     }
   }

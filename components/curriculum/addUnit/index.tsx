@@ -268,10 +268,11 @@ function AddUnit() {
             dispatch(rearrangeUnits());
             dispatch(verifyUnits());
             const data = await dispatch(addUnits());
-            if (!data?.error?.message) {
-              await dispatch(getAllCurriculums());
+            console.log(data);
+            if (!data?.error?.message && data.payload !== undefined) {
               dispatch(clearAddUnitsParams());
               dispatch(closeAddUnitModal());
+              await dispatch(getAllCurriculums());
             }
           }}
         >
