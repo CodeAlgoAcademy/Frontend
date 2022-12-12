@@ -5,7 +5,7 @@ import { BiArrowBack } from "react-icons/bi";
 
 const SingleCurriculum = ({ curriculum }: { curriculum: Icurriculum }) => {
   return (
-    <div className="flex-[50%]">
+    <div className="flex-[0.5]">
       <div
         style={{
           boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)",
@@ -13,7 +13,7 @@ const SingleCurriculum = ({ curriculum }: { curriculum: Icurriculum }) => {
         className="flex rounded-xl overflow-hidden mt-14"
       >
         <div
-          className="lg:w-[150px] w-[120px]"
+          className="w-[70px]"
           style={{ background: curriculum.level }}
         ></div>
         <div className="bg-white flex-1 w-full h-[17rem] p-8">
