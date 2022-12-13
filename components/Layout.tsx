@@ -39,20 +39,20 @@ const Layout = ({ children }: Props) => {
     }
   }, []);
   return (
-    <GoogleOAuthProvider
-      clientId={
-        "1015154836917-ria2t0r69q3jgc9td4cqb76h7lmnkann.apps.googleusercontent.com"
-      }
-    >
-      <div>
-        <Head>
-          <title>CodeAlgo Academy</title>
-        </Head>
-        <main>{children}</main>
-        <ErrorModal />
-        <Preloader />
-      </div>
-    </GoogleOAuthProvider>
+    // <GoogleOAuthProvider
+    //   clientId={
+    //     "1015154836917-ria2t0r69q3jgc9td4cqb76h7lmnkann.apps.googleusercontent.com"
+    //   }
+    // >
+    <div>
+      <Head>
+        <title>CodeAlgo Academy</title>
+      </Head>
+      <main>{children}</main>
+      <ErrorModal />
+      <Preloader />
+    </div>
+    // </GoogleOAuthProvider>
   );
 };
 
