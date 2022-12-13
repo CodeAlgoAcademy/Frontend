@@ -32,7 +32,7 @@ export interface IAllClasses {
 }
 
 export interface IAllCurriculum {
-  allCurriculum: Icurriculum[]
+  allCurriculum: Icurriculum[];
 }
 
 export interface IAddClass {
@@ -63,21 +63,28 @@ export interface IUnitsSlice {
       start_date: string;
       title: string;
     }>;
-    levels: string[];
+    levels: string;
     grades: string[];
     chosenGrades: string[];
+    unitsWithError: string[];
   };
 }
 
+export interface IFetch {
+  errorModalOpen: boolean;
+  errors: string[];
+  loading: boolean;
+  loadingText: string;
+}
 export interface IUserConversation {
-  conversations: Conversations[],
-  openedMessageStudent: number | null,
-  openedStudentMessages: string[]
+  conversations: Conversations[];
+  openedMessageStudent: number | null;
+  openedStudentMessages: string[];
 }
 
 export interface IUserStudent {
-  newStudent: Student | null,
-  students: Student[]
+  newStudent: Student | null;
+  students: Student[];
 }
 
 // ============EXTRA INTERFACES AND TYPES
@@ -119,8 +126,8 @@ export interface IClass {
 export interface Icurriculum {
   title: string;
   description: string;
-  end_date: string | null;
-  start_date: string | null;
+  end_date: string;
+  start_date: string;
   teacher: null | string;
   grades: string[];
   id: number;
@@ -229,32 +236,32 @@ export interface ISchedule {
 }
 
 export interface Conversations {
-  user: User,
-  message: IMessage,
-  id: number
+  user: User;
+  message: IMessage;
+  id: number;
 }
 
 export interface User {
-  firstName: string,
-  lastName: string,
-  email: string,
-  id: number
+  firstName: string;
+  lastName: string;
+  email: string;
+  id: number;
 }
 
 export interface IMessage {
-  user: User,
-  text: string,
-  is_read: boolean,
-  date: string,
-  id: number
+  user: User;
+  text: string;
+  is_read: boolean;
+  date: string;
+  id: number;
 }
 
 export interface Student {
-  firstName: string,
-  lastName: string,
-  email: string
+  firstName: string;
+  lastName: string;
+  email: string;
 }
 
 export interface INotes {
-  html: string
+  html: string;
 }

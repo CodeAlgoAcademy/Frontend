@@ -62,13 +62,15 @@ const GeneralNav = () => {
     <div className="py-6 px-[5%] bg-white flex items-center justify-between">
       <div className="relative flex items-center gap-40">
         <div className="absolute left-0 top-0">
-          <Image
-            src="/assets/CodeAlgo_Logo.png"
-            alt="logo"
-            className="md:cursor-pointer h-9"
-            width={100}
-            height={52}
-          />
+          <Link href="/addClass">
+            <Image
+              src="/assets/CodeAlgo_Logo.png"
+              alt="logo"
+              className="md:cursor-pointer h-9"
+              width={100}
+              height={52}
+            />
+          </Link>
         </div>
         <div></div>
         <div className="flex items-center gap-4">
