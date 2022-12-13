@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BsCircle, BsFillCircleFill } from "react-icons/bs";
-import { FaChevronLeft, FaGripLinesVertical } from 'react-icons/fa'
+import { FaChevronLeft, FaGripLinesVertical } from "react-icons/fa";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import Sidebar from "../../components/Sidebar";
@@ -12,7 +12,7 @@ import Link from "next/link";
 export default function Unit() {
   const [showModal, setShowModal] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
-  const [active, setActive] = useState<number[]>([])
+  const [active, setActive] = useState<number[]>([]);
 
   // add student oprions modal
   const cancelPresence = () => {
@@ -67,20 +67,16 @@ export default function Unit() {
     },
   ]);
 
-
-
-  
- 
-
   const handleClick = (id: number) => {
-    const index = active.indexOf(id)
-    if(index !== -1) {
-      setActive((active) => [...active.slice(0, index), ...active.slice(index + 1)])
-      console.log(index)
-      console.log(active)
-  } else {
-      setActive((active) => [...active, id])
-  }
+    const index = active.indexOf(id);
+    if (index !== -1) {
+      setActive((active) => [
+        ...active.slice(0, index),
+        ...active.slice(index + 1),
+      ]);
+    } else {
+      setActive((active) => [...active, id]);
+    }
   };
 
   return (
@@ -125,7 +121,9 @@ export default function Unit() {
                   <div className="border-r-2 flex items-center sm:gap-5 lg:gap-0 sm:pr-[1rem] sm:py-2 md:pr-[1.5rem] border-[#E6E6E6] py-5 pr-[4rem]  justify-between w-full">
                     <div className="flex items-center sm:gap-3 lg:gap-7">
                       <FaGripLinesVertical className="text-[#A0A0A0] text-[1.1rem] font-thin" />
-                      <p className="font-bold sm:text-[15px] lg:text-[20px]">{data.topics}</p>
+                      <p className="font-bold sm:text-[15px] lg:text-[20px]">
+                        {data.topics}
+                      </p>
                       {active.includes(data.id) && (
                         <p
                           onClick={() => setShowPreview(true)}
@@ -136,7 +134,9 @@ export default function Unit() {
                       )}
                     </div>
                     <div className="flex justify-around">
-                      <p className="sm:text-[10px] lg:text-[18px] font-semibold">{data.date}</p>
+                      <p className="sm:text-[10px] lg:text-[18px] font-semibold">
+                        {data.date}
+                      </p>
                       <div className="flex items-center gap-2  sm:ml-[1rem] lg:ml-[5rem]">
                         {data.status == "Published" ? (
                           <BsFillCircleFill className="text-[9px]  text-[#62C932]" />
@@ -153,26 +153,38 @@ export default function Unit() {
                     className="py-5 px-7 text-2xl"
                     onClick={() => handleClick(data.id)}
                   >
-                    {active.includes(data.id) ? <FiChevronUp /> : <FiChevronDown />}
+                    {active.includes(data.id) ? (
+                      <FiChevronUp />
+                    ) : (
+                      <FiChevronDown />
+                    )}
                   </div>
                 </div>
                 {active.includes(data.id) && (
-                  <div >
+                  <div>
                     <div className="flex  mx-12 py-6 border-[#E6E6E6] border-t-2 ">
                       {/* first division */}
                       <div className="flex-1 sm:pr-[1rem] lg:pr-[3rem] border-[#E6E6E6] border-r-2 py-[1rem]">
                         <div className="md:flex-col lg:flex-row gap-[3rem]">
-                          <p className=" md:text-[12px]  lg:text-[18px] font-bold">Description</p>
+                          <p className=" md:text-[12px]  lg:text-[18px] font-bold">
+                            Description
+                          </p>
                           <p className="md:text-[12px] lg:text-[16px] ">
                             In this lesson students will learn the basics of
                             loops and how to apply loops into their programs.
                           </p>
                         </div>
                         <div className="flex items-center gap-[3rem] mt-4">
-                          <p className="md:text-[12px]  lg:text-[18px] font-bold">Date Range</p>
+                          <p className="md:text-[12px]  lg:text-[18px] font-bold">
+                            Date Range
+                          </p>
                           <div className="flex items-center gap-[2rem]">
-                            <p className="sm:text-[12px] lg:text-[16px] ">April 10 - April 17</p>
-                            <p className="sm:text-[12px] lg:text-[16px] underline">edit</p>
+                            <p className="sm:text-[12px] lg:text-[16px] ">
+                              April 10 - April 17
+                            </p>
+                            <p className="sm:text-[12px] lg:text-[16px] underline">
+                              edit
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -180,7 +192,9 @@ export default function Unit() {
                       {/* second division */}
                       <div className=" flex-1 pl-[3rem] flex flex-col justify-between py-5">
                         <div className="flex  items-center gap-[4rem]">
-                          <p className="md:text-[12px]  lg:text-[18px] font-bold">Status</p>
+                          <p className="md:text-[12px]  lg:text-[18px] font-bold">
+                            Status
+                          </p>
                           <div className="flex gap-[6px] items-center border-2 border-[#E6E6E6] px-3 py-1">
                             {data.status == "Published" ? (
                               <BsFillCircleFill className="text-[9px]  text-[#62C932]" />
@@ -194,20 +208,23 @@ export default function Unit() {
                           </div>
                         </div>
                         <div className="flex  items-center mt-4 gap-[3rem]">
-                          <p className="md:text-[12px]  lg:text-[18px] font-bold">Assign To</p>
-                          <div className="flex items-center gap-[1rem] ">
-                            <IoIosAddCircleOutline
-                              className="md:text[10px] lg:text-[1.6rem]"
-                              onClick={() => setShowModal(true)}
-                            />
-                            <p className="md:text-[10px]  lg:text-[16px]">Add Student</p>
+                          <p className="md:text-[12px]  lg:text-[18px] font-bold">
+                            Assign To
+                          </p>
+                          <div
+                            className="flex items-center gap-[1rem] cursor-pointer"
+                            onClick={() => setShowModal(true)}
+                          >
+                            <IoIosAddCircleOutline className="md:text[10px] lg:text-[1.6rem]" />
+                            <p className="md:text-[10px]  lg:text-[16px]">
+                              Add Student
+                            </p>
                           </div>
                         </div>
                       </div>
                     </div>
 
                     {/* Student progress section */}
-                    
                   </div>
                 )}
               </div>

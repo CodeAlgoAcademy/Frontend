@@ -5,6 +5,14 @@ import { Props, styles } from ".";
 import { FaPlus } from "react-icons/fa";
 import { FaInfo } from "react-icons/fa";
 import { updateUnits } from "store/unitsSlice";
+import { BiChevronRight } from "react-icons/bi";
+
+const hints: string[] = [
+  "Kindly ensure you set a start date and end date for the units you are selecting",
+  "The selected end date must be greater than the start date",
+  "If the unit selected is current, ensure the start date is today's date",
+  "If it is upcoming, ensure the start date is a future date",
+];
 
 const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
   const dispatch = useDispatch();
@@ -13,13 +21,37 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
   );
   return (
     <article className="flex flex-row gap-x-2 relative">
-      {openedModal === "unit" && levels.length > 0 && (
+      {openedModal === "unit" && levels !== "" && (
         <div className="fixed top-0 left-0 z-30 w-full min-h-screen bg-[rgba(0,0,0,0.6)] flex justify-center items-center gap-y-4 overflow-hidden overflow-y-scroll close-dropdown">
-          <div className="bg-white w-[90vw] max-w-[1000px] overflow-hidden rounded-md flex md:flex-row flex-col-reverse">
-            <aside className="flex-[0.25] md:border-r-2 border-gray-300 md:py-8 py-6 px-4 flex flex-col justify-between gap-4">
+          <div className="bg-white max-h-[95vh] w-[90vw] max-w-[1000px] overflow-hidden rounded-md flex md:flex-row flex-col">
+            <aside className="flex-[0.25] md:border-r-2 border-gray-300 md:py-8 py-6 px-4 hidden md:flex flex-col justify-between gap-4">
               <h1 className="text-[22px] font-bold hidden md:block">
                 Add Unit(s)
               </h1>
+              {levels !== "" && (
+                <div className="flex flex-col">
+                  <h1 className="flex flex-row gap-x-3 font-bold text-[19px] items-center">
+                    <i className="w-[28px] h-[28px] text-white bg-mainPurple flex justify-center items-center rounded-full">
+                      <FaInfo />
+                    </i>
+                    Hints
+                  </h1>
+                  <main className="w-full max-h-[350px] py-4 overflow-hidden overflow-y-scroll border mt-2 rounded-md shadow-inner">
+                    <ul className="mt-2 flex flex-col gap-y-3">
+                      {hints.map((hint: string, index: number) => {
+                        return (
+                          <li className="flex items-start gap-x-4">
+                            <i className="text-[18px] text-mainPurple font-light mt-2">
+                              <BiChevronRight />
+                            </i>
+                            <span>{hint}</span>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </main>
+                </div>
+              )}
               <button
                 onClick={() => {
                   updateOpenedModal("");
@@ -30,23 +62,12 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
               </button>
             </aside>
             <div className="flex-[0.75] flex flex-col gap-y-4 py-8 max-h-[90vh] overflow-hidden overflow-y-scroll">
-              {levels.length === 0 && (
+              {levels === "" && (
                 <div className="px-4 text-center text-[22px] font-bold flex justify-center items-center h-full">
-                  Please Select one or more levels
+                  Please Select a level
                 </div>
               )}
-              {levels.length > 0 && (
-                <div className="pb-4 text-center flex justify-center items-center gap-x-4">
-                  <i className="text-sm font-light flex justify-center items-center bg-mainPurple w-[22px] h-[22px] text-white rounded-full cursor-pointer">
-                    <FaInfo />
-                  </i>
-                  <span>
-                    Kindly ensure start date and end date are chosen for all
-                    selected units
-                  </span>
-                </div>
-              )}
-              {units.map((unit:any, index: number) => {
+              {units.map((unit: any, index: number) => {
                 const elementWithCurrentProperty: any = units.find(
                   (unit: any) => unit.isCurrent && unit.isChosen
                 );
@@ -58,7 +79,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                     key={index}
                   >
                     <div className="relative">
-                      <p className="text-[22px] font-bold hoverElement cursor-pointer">
+                      <p className="text-[22px] font-bold hoverElement cursor-pointer w-fit">
                         {unit.title}
                       </p>
                       <p className="hoverText -top-[20px] right-[30px]">
@@ -73,8 +94,6 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                             : "bg-green-400 text-white"
                         }`}
                         onClick={() => {
-                          console.log(unit.id);
-                          console.log(elementWithCurrentProperty?.id);
                           if (
                             !elementWithCurrentProperty ||
                             elementWithCurrentProperty?.id === unit.id
@@ -169,6 +188,16 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                 );
               })}
             </div>
+            <footer className="flex-[0.25] md:border-r-2 border-gray-300 md:py-8 py-6 px-4 flex md:hidden flex-col-reverse justify-between gap-4">
+              <button
+                onClick={() => {
+                  updateOpenedModal("");
+                }}
+                className="px-3 py-2 font-bold rounded-[40px] bg-orange-400 text-white hover:bg-orange-600"
+              >
+                Done
+              </button>
+            </footer>
           </div>
         </div>
       )}
@@ -186,9 +215,9 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
         </i>
         {openedModal === "unit" && (
           <div className={`${styles.preview} z-[5]`}>
-            {levels.length === 0 && (
+            {levels === "" && (
               <h1 className="text-center p-2 font-bold font-lg">
-                Please select one or more levels
+                Please select a level
               </h1>
             )}
           </div>
