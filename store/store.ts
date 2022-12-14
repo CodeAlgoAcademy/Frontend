@@ -22,7 +22,7 @@ import messagesReducer from "./messagesSlice";
 import allCurriculumReducer from "./allCurriculumSlice";
 import notesReducer from "./notesSlice";
 import fetchReducer from "./fetchSlice";
-
+import studentReducer from "./studentSlice";
 const persistConfig = {
   key: "root",
   storage,
@@ -40,6 +40,7 @@ const rootReducer = combineReducers({
   notes: notesReducer,
   fetch: fetchReducer,
   messages: messagesReducer,
+  students: studentReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
