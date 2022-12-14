@@ -5,11 +5,14 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { refreshToken } from "utils/getTokens";
 import ErrorModal from "./errorModal";
 import Preloader from "./preloader";
+import { useDispatch } from "react-redux";
+import { closePreloader } from "../store/fetchSlice";
 
 interface Props {
   children?: ReactNode;
 }
 const Layout = ({ children }: Props) => {
+  const dispatch = useDispatch();
   const router = useRouter();
   useEffect(() => {
     const tokens = localStorage.getItem("token");
@@ -38,21 +41,24 @@ const Layout = ({ children }: Props) => {
       };
     }
   }, []);
+  useEffect(() => {
+    dispatch(closePreloader());
+  }, []);
   return (
-    // <GoogleOAuthProvider
-    //   clientId={
-    //     "1015154836917-ria2t0r69q3jgc9td4cqb76h7lmnkann.apps.googleusercontent.com"
-    //   }
-    // >
-    <div>
-      <Head>
-        <title>CodeAlgo Academy</title>
-      </Head>
-      <main>{children}</main>
-      <ErrorModal />
-      <Preloader />
-    </div>
-    // </GoogleOAuthProvider>
+    <GoogleOAuthProvider
+      clientId={
+        "1015154836917-ria2t0r69q3jgc9td4cqb76h7lmnkann.apps.googleusercontent.com"
+      }
+    >
+      <div>
+        <Head>
+          <title>CodeAlgo Academy</title>
+        </Head>
+        <main>{children}</main>
+        <ErrorModal />
+        <Preloader />
+      </div>
+    </GoogleOAuthProvider>
   );
 };
 
