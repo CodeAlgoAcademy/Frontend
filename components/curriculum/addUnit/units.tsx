@@ -40,7 +40,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                     <ul className="mt-2 flex flex-col gap-y-3">
                       {hints.map((hint: string, index: number) => {
                         return (
-                          <li className="flex items-start gap-x-4">
+                          <li className="flex items-start gap-x-4" key={index}>
                             <i className="text-[18px] text-mainPurple font-light mt-2">
                               <BiChevronRight />
                             </i>

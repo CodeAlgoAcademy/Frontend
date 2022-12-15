@@ -25,7 +25,7 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="flex p-5 justify-end">
+          {/* <div className="flex p-5 justify-end">
             <div className="flex text-xs items-center">
               <IconButton>
                 <IoIosArrowBack size={25} className={styles.pointer} />
@@ -35,7 +35,7 @@ const Index = () => {
                 <IoIosArrowForward size={25} className={styles.pointer} />
               </IconButton>
             </div>
-          </div>
+          </div> */}
 
           <Students />
           {isOpen && <AddStudentModal setIsOpen={setIsOpen} />}

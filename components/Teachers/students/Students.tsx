@@ -88,7 +88,7 @@ const Students = () => {
 export default Students;
 
 const styles = {
-  container: "sm:px-10 md:px-20 space-y-1",
+  container: "sm:px-10 md:px-20 space-y-2 mt-10",
   cardHeader: "flex justify-between py-6 px-2 sm:px-6 border-b items-center",
   cardHeaderName:
     "cursor-pointer w-28 sm:w-40 justify-between px-2 border-r flex space-x-3 items-center",

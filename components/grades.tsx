@@ -19,7 +19,6 @@ const availableGrades: Array<string> = [
   "5",
   "6",
   "7",
-  "8",
   "8+",
 ];
 
