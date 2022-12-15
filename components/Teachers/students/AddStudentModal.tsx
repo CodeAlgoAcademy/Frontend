@@ -56,7 +56,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
                             <div className='flex space-x-5'>
                                 <TextField 
                                     label='Student First Name'
-                                    name='firstname'
+                                    name='firstName'
                                     value={firstName}
                                     onChange={onChange}
                                     size='small'
@@ -64,7 +64,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
                                 />
                                 <TextField 
                                     label='Student Last Name'
-                                    name='lastname'
+                                    name='lastName'
                                     size='small'
                                     value={lastName}
                                     onChange={onChange}
