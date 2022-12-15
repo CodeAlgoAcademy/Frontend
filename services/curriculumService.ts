@@ -49,7 +49,7 @@ export const addUnits: any = createAsyncThunk(
         dispatch(openErrorModal({ errorText: [...errors] }));
       }
     } catch (error: any) {
-      if (error.status !== 401) {
+      if (error.response.status !== 401) {
         dispatch(openErrorModal({ errorText: [error.message] }));
       }
       return thunkApi.rejectWithValue(error.response.data);
@@ -68,7 +68,7 @@ export const getAllCurriculums: any = createAsyncThunk(
       console.log(data);
       return data;
     } catch (error: any) {
-      if (error.status !== 401) {
+      if (error.response.status !== 401) {
         dispatch(openErrorModal({ errorText: [error.message] }));
       }
       return thunkApi.rejectWithValue(error.response.data);
