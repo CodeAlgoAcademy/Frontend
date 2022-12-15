@@ -66,7 +66,7 @@ const CreateClass = () => {
         </h1>
       </header>
       <section className="grid md:grid-cols-2 gap-[1rem] items-start">
-        {inputFields.map((inputField: IInputFields, index: number) => {
+        {inputFields?.map((inputField: IInputFields, index: number) => {
           const { type, name, placeholder, value } = inputField;
 
           return (
@@ -115,7 +115,7 @@ const CreateClass = () => {
           {/* colors selector */}
           {colorsModalOpen && (
             <div className="color-modal p-2 rounded-md w-full absolute bottom-[100%] left-[50%] -translate-x-[50%] min-h-[120px] bg-white shadow-md z-[10] flex flex-row gap-4 flex-wrap">
-              {colors.map((color: string, index: number) => {
+              {colors?.map((color: string, index: number) => {
                 return (
                   <span
                     key={index}

@@ -26,8 +26,8 @@ const GeneralNav = () => {
     (state: RootState): CurrentClassState => state.currentClass
   );
   const classDetails = classes.map((item: CurrentClassState) => {
-    const { className, color } = item;
-    return { className, color };
+    const { className, color, id } = item;
+    return { className, color, id };
   });
   const otherClassDetails = classDetails.filter(
     (item: CurrentClassState) => item.className !== currentClass.className
@@ -117,6 +117,7 @@ const GeneralNav = () => {
                         updateCurrentClass({
                           className: navClass.className,
                           color: navClass.color,
+                          id: navClass.id,
                         })
                       );
                       const node = classBox.current;

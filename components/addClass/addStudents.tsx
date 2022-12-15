@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from "react";
-import { FaPlus } from "react-icons/fa";
+import { FaChevronLeft, FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { addStudents } from "services/classesService";
 import { updateClassDetails } from "../../store/addClassSlice";
@@ -43,13 +43,21 @@ const AddStudents = () => {
 
   return (
     <form className="py-8 flex-[0.9]" onSubmit={handleSubmit}>
-      <header className="px-8 w-full mb-6">
+      <header className="px-8 w-full mb-6 flex gap-x-2 items-center">
+        <span
+          className="text-[20px] font-bold"
+          onClick={() => {
+            dispatch(closeAddStudentsModal());
+          }}
+        >
+          <FaChevronLeft />
+        </span>
         <h1 className="md:text-[30px] text-[20px] font-bold">
           Add new student(s)
         </h1>
       </header>
       <section className="px-8 grid md:grid-cols-2 gap-[1rem] items-start">
-        {inputFields.map((inputField: IInputFields, index: number) => {
+        {inputFields?.map((inputField: IInputFields, index: number) => {
           const { name, type, placeholder, value } = inputField;
           return (
             <input

@@ -29,7 +29,7 @@ const ErrorModal = () => {
         <div className="bg-white p-4">
           {/* display errors */}
           <ul className="flex flex-col gap-y-2 mb-6">
-            {errors.map((error: string, index: number) => (
+            {errors?.map((error: string, index: number) => (
               <li
                 className="text-[16px] font-semibold flex flex-row gap-x-4 items-center"
                 key={index}
