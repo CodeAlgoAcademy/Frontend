@@ -13,18 +13,15 @@ export const getAllClasses: any = createAsyncThunk(
   async (name, thunkApi) => {
     const state: any = thunkApi.getState();
     const dispatch = thunkApi.dispatch;
-    dispatch(openPreloader({ loadingText: "Fetching Classes" }));
+
     try {
       const { data } = await http.get("/academics/class", {
         headers: {
           Authorization: `Bearer ${getAccessToken()}`,
         },
       });
-      dispatch(closePreloader());
       return data;
     } catch (error: any) {
-      dispatch(closePreloader());
-      dispatch(openErrorModal({ errorText: [error.response.data.detail] }));
       return thunkApi.rejectWithValue(error.response.data);
     }
   }
@@ -41,7 +38,6 @@ export const addClass: any = createAsyncThunk(
       class: { className, grade, subject, coTeachers, roomNumber, color },
     } = state.addClass;
 
-    dispatch(openPreloader({ loadingText: "Adding Class" }));
     try {
       const { data } = await http.post(
         "/academics/class/",
@@ -58,12 +54,19 @@ export const addClass: any = createAsyncThunk(
           },
         }
       );
-      dispatch(closePreloader());
+
       return { ...data };
     } catch (error: any) {
-      dispatch(closePreloader());
       console.log(error, "error");
-      dispatch(openErrorModal({ errorText: [error.response.data.detail] }));
+      dispatch(
+        openErrorModal({
+          errorText: [
+            error.response.data.detail
+              ? error.response.data.details
+              : error.message,
+          ],
+        })
+      );
       return thunkApi.rejectWithValue(error.response.data);
     }
   }
@@ -74,26 +77,37 @@ export const addStudents: any = createAsyncThunk(
   async (name, thunkApi) => {
     const state: any = thunkApi.getState();
     const dispatch = thunkApi.dispatch;
-    dispatch(openPreloader({ loadingText: "Adding Student(s)" }));
     const { firstName, lastName, email } = state.addClass.student;
 
     try {
       const { data } = await http.post(
         "/academics/class/1/student",
         {
-          firstName,
-          lastName,
-          email,
+          student: {
+            firstName,
+            lastName,
+            email,
+          },
         },
         {
           headers: { Authorization: `Bearer ${getAccessToken()}` },
         }
       );
-      dispatch(closePreloader());
+      console.log(data);
       return data;
     } catch (error: any) {
-      dispatch(closePreloader());
-      dispatch(openErrorModal({ errorText: error.response.data.detail }));
+      console.log(error);
+      if (error.response.status !== 401) {
+        dispatch(
+          openErrorModal({
+            errorText: [
+              error.response.data.detail
+                ? error.response.data.details
+                : error.message,
+            ],
+          })
+        );
+      }
       return thunkApi.rejectWithValue(error.response.data);
     }
   }

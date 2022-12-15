@@ -62,6 +62,7 @@ export interface IUnitsSlice {
       standard: string;
       start_date: string;
       title: string;
+      class_model: string | number;
     }>;
     levels: string;
     grades: string[];
@@ -135,6 +136,7 @@ export interface Icurriculum {
   level: string;
   is_current: boolean;
   is_finished: boolean;
+  class_model: string | number;
 }
 
 export interface ITeacher {
@@ -201,6 +203,7 @@ export interface AssignmentDetails {
 export interface CurrentClassState {
   className: string;
   color: string;
+  id: string | number;
 }
 
 export interface ILevels {

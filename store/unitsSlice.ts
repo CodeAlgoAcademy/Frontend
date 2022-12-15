@@ -263,7 +263,6 @@ const unitsSlice = createSlice({
                 startDateDetails.month === endDateDetails.month &&
                 startDateDetails.day > endDateDetails.day)
             ) {
-              console.log(startDateDetails.day, endDateDetails.day);
               errors.push(
                 `${unit.title} unit end date should be after it's start date and after today's date`
               );
