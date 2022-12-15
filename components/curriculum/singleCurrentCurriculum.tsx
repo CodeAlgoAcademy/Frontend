@@ -29,7 +29,7 @@ const SingleCurrentCurriculum = ({
         className="p-8 flex items-center justify-center rounded-l-xl"
         style={{ background: curriculum.level }}
       ></div>
-      <div className="bg-white w-[20rem] p-8 rounded-r-xl">
+      <div className="bg-white w-[20rem] p-8 rounded-r-xl flex-1">
         <div
           onClick={() => {
             setModalOpen((prev) => !prev);

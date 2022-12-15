@@ -26,7 +26,7 @@ export default function Index() {
   const [upcoming, setUpcoming] = useState<boolean>(false);
   const [active, setActive] = useState("current");
   const { addUnitModalOpen } = useSelector((state: RootState) => state.modal);
-
+  const { id } = useSelector((state: RootState) => state.currentClass);
   const dispatch = useDispatch();
 
   const getCurriculums = async () => {
@@ -82,7 +82,7 @@ export default function Index() {
   };
   const currentCurriculum = curriculum?.filter(
     (tempCurriculum: Icurriculum) => {
-      if (tempCurriculum.end_date) {
+      if (tempCurriculum.class_model === id) {
         const today = getToday();
         const tempStartDate = tempCurriculum.start_date.split("-");
         const tempEndDate = tempCurriculum.end_date.split("-");
@@ -109,25 +109,15 @@ export default function Index() {
   );
 
   const pastCurriculum = curriculum?.filter((tempCurriculum: Icurriculum) => {
-    return tempCurriculum.is_finished === true;
+    return (
+      tempCurriculum.is_finished === true && tempCurriculum.class_model === id
+    );
   });
 
   const upcomingCurriculum = curriculum?.filter(
     (tempCurriculum: Icurriculum) => {
-      if (tempCurriculum.end_date) {
+      if (tempCurriculum.class_model === id) {
         const today = getToday();
-        const tempStartDate = tempCurriculum.start_date.split("-");
-        const tempEndDate = tempCurriculum.end_date.split("-");
-        // const startDate = {
-        //   day: parseInt(tempStartDate[2]),
-        //   month: parseInt(tempStartDate[1]),
-        //   year: parseInt(tempStartDate[0]),
-        // };
-        // const endDate = {
-        //   day: parseInt(tempEndDate[2]),
-        //   month: parseInt(tempEndDate[1]),
-        //   year: parseInt(tempEndDate[0]),
-        // };
 
         const endDate = getCurriculumDate(tempCurriculum.end_date);
         const startDate = getCurriculumDate(tempCurriculum.start_date);
@@ -150,8 +140,6 @@ export default function Index() {
       }
     }
   );
-  console.log("upcoming", upcomingCurriculum);
-  console.log("current", currentCurriculum);
 
   return (
     <div className="min-h-[100vh] flex flex-col">
@@ -220,7 +208,7 @@ export default function Index() {
                   <h1 className="text-[1.5rem] font-bold mt-10 w-full">
                     Current Unit
                   </h1>
-                  <div className="grid lg:grid-cols-2 md:grid-cols-1  box-border lg:gap-[2rem] md:gap-[1rem]">
+                  <div className="flex flex-col md:flex-row justify-center md:justify-start flex-wrap  box-border lg:gap-[2rem] md:gap-[1rem]">
                     {currentCurriculum?.map((curriculum: Icurriculum) => {
                       return (
                         <SingleCurrentCurriculum
@@ -238,7 +226,7 @@ export default function Index() {
               {past && (
                 <div>
                   <h1 className="text-[1.5rem] font-bold mt-10">Past Units</h1>
-                  <div className="grid lg:grid-cols-2 md:grid-cols-1 box-border gap-[2rem]">
+                  <div className="flex flex-col md:flex-row justify-center md:justify-start flex-wrap  box-border lg:gap-[2rem] md:gap-[1rem]">
                     {pastCurriculum.map((curriculum: Icurriculum) => {
                       return (
                         <SingleCurriculum
@@ -258,7 +246,7 @@ export default function Index() {
                   <h1 className="text-[1.5rem] font-bold mt-10">
                     Upcoming Units
                   </h1>
-                  <div className="grid lg:grid-cols-2 md:grid-cols-1 box-border gap-[2rem]">
+                  <div className="flex flex-col md:flex-row justify-center md:justify-start flex-wrap  box-border lg:gap-[2rem] md:gap-[1rem]">
                     {upcomingCurriculum.map((curriculum: Icurriculum) => {
                       return (
                         <SingleCurriculum

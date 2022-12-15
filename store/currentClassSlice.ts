@@ -4,6 +4,7 @@ import { CurrentClassState } from "../types/interfaces";
 const initialState: CurrentClassState = {
   className: "",
   color: "",
+  id: "",
 };
 
 const currentClassSlice = createSlice({

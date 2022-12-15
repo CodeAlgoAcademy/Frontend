@@ -12,7 +12,6 @@ export const getNotes: any = createAsyncThunk(
   async (name, thunkApi) => {
     const state: any = thunkApi.getState();
     const dispatch = thunkApi.dispatch;
-    dispatch(openPreloader({ loadingText: "Fetching Notes" }));
     try {
       const { data } = await http.get("/academics/notes", {
         headers: {
@@ -24,7 +23,9 @@ export const getNotes: any = createAsyncThunk(
     } catch (error: any) {
       console.log(error);
       dispatch(closePreloader());
-      dispatch(openErrorModal({ errorText: [error.message] }));
+      if (error.response.status !== 401) {
+        dispatch(openErrorModal({ errorText: [error.message] }));
+      }
       return thunkApi.rejectWithValue(error.response.data);
     }
   }
@@ -49,12 +50,11 @@ export const updateNotes: any = createAsyncThunk(
           },
         }
       );
-      dispatch(closePreloader());
       return { ...data };
     } catch (error: any) {
-      dispatch(closePreloader());
-      console.log(error);
-      dispatch(openErrorModal({ errorText: [error.message] }));
+      if (error.response.status !== 401) {
+        dispatch(openErrorModal({ errorText: [error.message] }));
+      }
       return thunkApi.rejectWithValue(error.response.data);
     }
   }

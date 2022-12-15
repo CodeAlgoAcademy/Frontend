@@ -39,7 +39,7 @@ export const availableLevels: ILevels[] = [
   {
     title: "Yellow",
     unitsId: ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
-    grades: ["5", "6", "7", "8"],
+    grades: ["5", "6", "7"],
     hoverText: "I know some coding (Grades 5 - 8)",
   },
   {
@@ -268,7 +268,6 @@ function AddUnit() {
             dispatch(rearrangeUnits());
             dispatch(verifyUnits());
             const data = await dispatch(addUnits());
-            console.log(data);
             if (!data?.error?.message && data.payload !== undefined) {
               dispatch(clearAddUnitsParams());
               dispatch(closeAddUnitModal());

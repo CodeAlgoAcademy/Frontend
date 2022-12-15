@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { updateCurrentClass } from "store/currentClassSlice";
 
 const SingleClass: FC<IClass> = ({
+  id,
   className,
   grade,
   subject,
@@ -37,7 +38,7 @@ const SingleClass: FC<IClass> = ({
             <div
               className="pt-[16px] pb-2 flex justify-end items-center gap-x-4 w-fit cursor-pointer"
               onClick={() => {
-                dispatch(updateCurrentClass({ className, color }));
+                dispatch(updateCurrentClass({ className, color, id }));
               }}
             >
               <p className="text-[16px] font-semibold">Go To Dashboard</p>
