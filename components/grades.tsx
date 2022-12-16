@@ -19,7 +19,7 @@ const availableGrades: Array<string> = [
   "5",
   "6",
   "7",
-  "8",
+  "8+",
 ];
 
 const Grades: FC<gradesType> = ({ addStudents }) => {
@@ -52,7 +52,7 @@ const Grades: FC<gradesType> = ({ addStudents }) => {
                 <article
                   className={`w-full p-4 text-center border-2 cursor-pointer rounded-md font-bold ${
                     availableGrade === chosenGrade
-                      ? "border-purple-800 text-purple-800"
+                      ? "border-orange-600 text-orange-600"
                       : "border-gray-700 text-black"
                   }`}
                   key={index}
@@ -80,31 +80,22 @@ const Grades: FC<gradesType> = ({ addStudents }) => {
         </div>
 
         {/* buttons container */}
-        <div className="flex md:flex-row gap-3 flex-col mt-3">
+        <div className="mt-3">
           <button
-            className="flex-[0.4] text-center px-4 py-[10px] rounded-md text-gray-600 border-2 border-gray-600"
+            className="w-full text-center px-4 py-[10px] rounded-md text-white font-bold bg-orange-600"
             onClick={() => {
               // delete the chosen grade and set back to default
-              if (addStudents) {
-                dispatch(
-                  updateClassDetails({ key: "grade", value: "Change Grade" })
-                );
-              } else {
-                dispatch(updateUser({ key: "grade", value: "Change Grade" }));
-              }
+              // if (addStudents) {
+              //   dispatch(
+              //     updateClassDetails({ key: "grade", value: "Change Grade" })
+              //   );
+              // } else {
+              //   dispatch(updateUser({ key: "grade", value: "Change Grade" }));
+              // }
               dispatch(closeGradesModal());
             }}
           >
             Back
-          </button>
-          <button
-            className="flex-[0.6] text-center px-4 py-[10px] rounded-md bg-mainPurple text-white border-2 border-mainPurple"
-            onClick={() => {
-              // close modal, the grade has already been updated
-              dispatch(closeGradesModal());
-            }}
-          >
-            Finish
           </button>
         </div>
       </div>

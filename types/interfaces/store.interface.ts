@@ -31,6 +31,10 @@ export interface IAllClasses {
   classes: IClass[];
 }
 
+export interface IAllCurriculum {
+  allCurriculum: Icurriculum[];
+}
+
 export interface IAddClass {
   student: ISingleStudent;
   class: ISingleClass;
@@ -58,11 +62,30 @@ export interface IUnitsSlice {
       standard: string;
       start_date: string;
       title: string;
+      class_model: string | number;
     }>;
-    levels: string[];
+    levels: string;
     grades: string[];
     chosenGrades: string[];
+    unitsWithError: string[];
   };
+}
+
+export interface IFetch {
+  errorModalOpen: boolean;
+  errors: string[];
+  loading: boolean;
+  loadingText: string;
+}
+export interface IUserConversation {
+  conversations: Conversations[];
+  openedMessageStudent: number | null;
+  openedStudentMessages: string[];
+}
+
+export interface IUserStudent {
+  newStudent: Student | null;
+  students: Student[];
 }
 
 // ============EXTRA INTERFACES AND TYPES
@@ -99,6 +122,21 @@ export interface IClass {
   color: string;
   totalStudent: number | string;
   id: number | string;
+}
+
+export interface Icurriculum {
+  title: string;
+  description: string;
+  end_date: string;
+  start_date: string;
+  teacher: null | string;
+  grades: string[];
+  id: number;
+  standard: string;
+  level: string;
+  is_current: boolean;
+  is_finished: boolean;
+  class_model: string | number;
 }
 
 export interface ITeacher {
@@ -165,6 +203,7 @@ export interface AssignmentDetails {
 export interface CurrentClassState {
   className: string;
   color: string;
+  id: string | number;
 }
 
 export interface ILevels {
@@ -199,6 +238,33 @@ export interface ISchedule {
   EndTime: string;
 }
 
+export interface Conversations {
+  user: User;
+  message: IMessage;
+  id: number;
+}
+
+export interface User {
+  firstName: string;
+  lastName: string;
+  email: string;
+  id: number;
+}
+
+export interface IMessage {
+  user: User;
+  text: string;
+  is_read: boolean;
+  date: string;
+  id: number;
+}
+
+export interface Student {
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
 export interface INotes {
-  html: string
+  html: string;
 }
