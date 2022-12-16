@@ -1,5 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import Router, { useRouter } from "next/router";
+import axios, { AxiosResponse } from "axios";
 import { getRefreshToken } from "utils/getTokens";
 
 const http = axios.create({
@@ -14,7 +13,7 @@ http.interceptors.response.use(
   (response: AxiosResponse) => {
     return response;
   },
-  async (error) => {
+  async (error: { config: any; response: { status: number; }; }) => {
     const refreshToken = getRefreshToken();
     const config = error.config;
     if (error.response) {

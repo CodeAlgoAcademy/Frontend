@@ -9,8 +9,11 @@ import allClassesReducer from "./allClassesSlice"
 import currentClassReducer from "./currentClassSlice"
 import unitsSlice from "./unitsSlice"
 import scheduleReducer from "./scheduleSlice"
+import messagesReducer from "./messagesSlice"
+import allCurriculumReducer from "./allCurriculumSlice"
 import notesReducer from "./notesSlice"
-
+import fetchReducer from "./fetchSlice"
+import studentReducer from "./studentSlice"
 const persistConfig = {
 	key: "root",
 	storage
@@ -24,7 +27,11 @@ const rootReducer = combineReducers({
 	currentClass: currentClassReducer,
 	unit: unitsSlice,
 	schedule: scheduleReducer,
-	notes: notesReducer
+	allCurriculum: allCurriculumReducer,
+	notes: notesReducer,
+	fetch: fetchReducer,
+	messages: messagesReducer,
+	students: studentReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

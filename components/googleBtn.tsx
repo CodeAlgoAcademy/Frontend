@@ -10,7 +10,6 @@ const GoogleBtn: FC = () => {
   const router = useRouter();
   const handleClick = useGoogleLogin({
     onSuccess: async (codeResponse) => {
-      console.log(codeResponse);
       const data = await dispatch(loginWithGoogle(codeResponse.access_token));
       if (!data?.error?.message) {
         router.push("/addClass");

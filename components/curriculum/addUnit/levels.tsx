@@ -44,15 +44,11 @@ const Levels: FC<Props> = ({ openedModal, updateOpenedModal }) => {
         )}
       </div>
       <div className={styles.numbersSelectedContainer}>
-        {levels.length === 0
-          ? `0 levels selected`
-          : levels.map((level: string, index: number) => {
-              return (
-                <span key={index} className={styles.selectedItems}>
-                  {level}
-                </span>
-              );
-            })}
+        {levels === "" ? (
+          `0 levels selected`
+        ) : (
+          <span className={styles.selectedItems}>{levels}</span>
+        )}
       </div>
     </article>
   );
@@ -62,26 +58,22 @@ const LevelsInputContainer = ({ level }: { level: ILevels }) => {
   const dispatch = useDispatch();
   const { levels } = useSelector((state: RootState) => state.unit.addUnit);
   return (
-    <div className={`relative ${styles.inputContainer}`}>
+    <div className={`${styles.inputContainer} relative`}>
       <input
-        type="checkbox"
+        type="radio"
+        name="levels"
         id={level.title}
-        className="accent-mainPurple dropdown"
-        checked={levels.includes(level.title)}
-        onChange={(event: ChangeEvent<HTMLInputElement>) => {
-          if (event.target.checked) {
-            dispatch(updateLevels({ value: level.title, type: "add" }));
-          } else {
-            dispatch(
-              updateLevels({
-                value: level.title,
-                type: "remove",
-              })
-            );
-          }
+        onChange={() => {
+          dispatch(updateLevels({ value: level.title, type: "add" }));
         }}
+        className="hidden dropdown"
       />
-      <label htmlFor={level.title} className="hoverElement dropdown">
+      <label
+        htmlFor={level.title}
+        className={`hover:text-mainPurple dropdown ${
+          levels === level.title && "text-mainPurple"
+        }`}
+      >
         {level.title}
       </label>
       <p className={`hoverText right-[0px] -top-[10px]`}>{level.hoverText}</p>

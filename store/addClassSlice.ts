@@ -55,7 +55,7 @@ const addClassSlice = createSlice({
       builder.addCase(
         addClass.fulfilled,
         (state: IAddClass, action: PayloadAction) => {
-          console.log(action.payload);
+          console.log("fulfilled");
         }
       ),
       builder.addCase(
