@@ -65,9 +65,9 @@ const GeneralNav = () => {
             </div>
           </Link>
           <div className="relative h-[52px]">
-            <div className="overflow-hidden rounded-[28px] absolute left-0 top-0">
+            <div className="overflow-hidden z-10  border border-[#BDBDBD] rounded-[30px] absolute left-0 top-0">
               <div
-                className='rounded-[28px] z-10 w-[260px] border border-[#BDBDBD] divide-y overflow-hidden bg-white small-scroll-thumb'
+                className='rounded-[28px] w-[260px] divide-y overflow-hidden bg-white small-scroll-thumb'
                 style={ classListStyle }
                 ref={ classBox }>
                 <div className='py-2 px-3 relative flex items-center justify-between hover:bg-gray-100 cursor-pointer'>
