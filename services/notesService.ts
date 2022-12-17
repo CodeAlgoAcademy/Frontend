@@ -1,11 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import http from "axios.config";
 import { getAccessToken } from "utils/getTokens";
-import {
-  closePreloader,
-  openErrorModal,
-  openPreloader,
-} from "store/fetchSlice";
+import { closePreloader, openErrorModal } from "store/fetchSlice";
 
 export const getNotes: any = createAsyncThunk(
   "notesSlice/getNotes",
@@ -18,11 +14,9 @@ export const getNotes: any = createAsyncThunk(
           Authorization: `Bearer ${getAccessToken()}`,
         },
       });
-      dispatch(closePreloader());
       return data;
     } catch (error: any) {
       console.log(error);
-      dispatch(closePreloader());
       if (error.response.status !== 401) {
         dispatch(openErrorModal({ errorText: [error.message] }));
       }
@@ -37,7 +31,6 @@ export const updateNotes: any = createAsyncThunk(
     const state: any = thunkApi.getState();
     const dispatch = thunkApi.dispatch;
     const { html } = state.notes;
-    dispatch(openPreloader({ loadingText: "Updating Note" }));
     try {
       const { data } = await http.put(
         "/academics/notes",

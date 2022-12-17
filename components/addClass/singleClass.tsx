@@ -29,9 +29,7 @@ const SingleClass: FC<IClass> = ({
         <main className="mt-4 flex flex-col justify-between">
           <h2 className="font-bold">Grade {grade}</h2>
           <h2 className="font-bold">{subject}</h2>
-          <h2 className="font-bold">
-            {totalStudent?.toString().length} Student(s)
-          </h2>
+          <h2 className="font-bold">{totalStudent} Student(s)</h2>
         </main>
         <footer className="flex justify-end">
           <Link href="/dashboard">
