@@ -1,14 +1,21 @@
 import { IconButton } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FiPlus } from "react-icons/fi";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { useDispatch, useSelector } from "react-redux";
 import { GeneralNav, Sidebar } from "../../../components";
 import AddStudentModal from "../../../components/Teachers/students/AddStudentModal";
 import Students from "../../../components/Teachers/students/Students";
+import { RootState } from "store/store";
+import { getStudents } from "store/studentSlice";
 
 const Index = () => {
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
+  const { id } = useSelector((state: RootState) => state.currentClass);
+  useEffect(() => {
+    dispatch(getStudents());
+  }, [id]);
   return (
     <>
       <GeneralNav />
