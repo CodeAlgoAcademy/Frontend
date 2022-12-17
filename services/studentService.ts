@@ -15,14 +15,22 @@ const addStudent = async (data: Student, id: string) => {
   const response = await http.post(
     `/academics/class/${id}/student`,
     finalData,
-    config
+    {
+      headers: {
+        Authorization: `Bearer ${getAccessToken()}`,
+      },
+    }
   );
 
   return response.data;
 };
 
 const getStudents = async (id: string) => {
-  const response = await http.get(`/academics/class/${id}/student`, config);
+  const response = await http.get(`/academics/class/${id}/student`, {
+    headers: {
+      Authorization: `Bearer ${getAccessToken()}`,
+    },
+  });
 
   return response.data;
 };
