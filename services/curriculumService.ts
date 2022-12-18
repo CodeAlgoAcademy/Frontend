@@ -2,11 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "store/store";
 import http from "axios.config";
 import { getAccessToken } from "utils/getTokens";
-import {
-  closePreloader,
-  openErrorModal,
-  openPreloader,
-} from "store/fetchSlice";
+import { openErrorModal } from "store/fetchSlice";
 
 export const addUnits: any = createAsyncThunk(
   "unitsSlice/addUnits",
