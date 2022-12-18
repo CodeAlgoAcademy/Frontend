@@ -223,8 +223,7 @@ const unitsSlice = createSlice({
               !unit.isCurrent
             ) {
               errors.push(
-                `${unit.title} unit start date should not be  a future date since it is upcoming`
-              );
+                    `${unit.title} unit start date should be  a future date since it is upcoming`           );
             }
             // if start date is less than today's date and it is upcoming
             if (
