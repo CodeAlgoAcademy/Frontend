@@ -1,10 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import http from "axios.config";
-import {
-  closePreloader,
-  openErrorModal,
-  openPreloader,
-} from "store/fetchSlice";
+import { openErrorModal } from "store/fetchSlice";
 import { RootState } from "store/store";
 import { getAccessToken } from "utils/getTokens";
 
