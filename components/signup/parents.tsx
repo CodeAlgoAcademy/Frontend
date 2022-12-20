@@ -5,10 +5,12 @@ import { RootState } from "../../store/store";
 import styles from "../../styles/styles";
 import { countryList } from "./countries";
 import { updateUser } from "../../store/authSlice";
+import { generateUsername } from "../../utils/generateUsername";
+import UsernameButton from "./usernameButton";
 
 const Parents = () => {
   const dispatch = useDispatch();
-  const { firstname, lastname, email, password } = useSelector(
+  const { firstname, lastname, email, password, username } = useSelector(
     (state: RootState) => state.user.auth
   );
 
@@ -36,6 +38,12 @@ const Parents = () => {
       type: "password",
       placeholder: "Enter Password",
       value: password,
+    },
+    {
+      name: "username",
+      type: "text",
+      placeholder: "Enter Username",
+      value: username,
     },
   ];
 
@@ -74,6 +82,8 @@ const Parents = () => {
           );
         })}
       </select>
+
+      <UsernameButton />
     </div>
   );
 };
