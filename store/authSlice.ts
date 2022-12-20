@@ -15,6 +15,7 @@ const initialState: IUser = {
   id: 0,
   firstname: "",
   lastname: "",
+  username: "",
   email: "",
   isActive: false,
   createdAt: "",
@@ -24,7 +25,7 @@ const initialState: IUser = {
   // sign up stuffs
   country: "",
   // peculiar to students
-  grade: "Change Grade",
+  grade: "Select Grade",
   // peculiar to teachers
   schoolCountry: "",
   schoolName: "",
@@ -37,7 +38,7 @@ const initialState: IUser = {
     email: "",
     password: "",
     // peculiar to students
-    grade: "Change Grade",
+    grade: "Select Grade",
     // peculiar to teachers
     schoolCountry: "",
     schoolName: "",
@@ -45,6 +46,7 @@ const initialState: IUser = {
     is_student: false,
     is_teacher: false,
     country: "",
+    username: "",
   },
 };
 
