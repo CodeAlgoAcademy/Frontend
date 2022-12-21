@@ -65,7 +65,6 @@ export const getAllCurriculums: any = createAsyncThunk(
       const { data } = await http.get("/academics/curriculums/units/", {
         headers: { Authorization: "Bearer " + getAccessToken() },
       });
-      console.log(data);
       return data;
     } catch (error: any) {
       if (error.response.status !== 401) {

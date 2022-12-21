@@ -173,7 +173,7 @@ const GeneralNav = () => {
                   animate={ {
                     display: "block",
                     opacity: 1,
-                    transition: { duration: "1", delay: 0.3 },
+                    transition: { duration: "1", delay: 0.2 },
                   } }
                 >
                   { firstname + " " + lastname }
