@@ -24,14 +24,11 @@ const scheduleSlice = createSlice({
 			builder.addCase(getSchedule.rejected, (state: any, action: PayloadAction<any>) => {
 				console.error("Fetch Error")
 			}),
-			builder.addCase(postSchedule.fulfilled, (state: any, action: PayloadAction<any>) => {
-				console.log("Post Successful")
-			}),
 			builder.addCase(postSchedule.rejected, (state: any, action: PayloadAction<any>) => {
-				console.log(action)
+				console.error("Post Error")
 			}),
 			builder.addCase(putSchedule.rejected, (state: any, action: PayloadAction<any>) => {
-				console.log("Update Error")
+				console.error("Update Error")
 			}),
 			builder.addCase(deleteSchedule.rejected, (state: any, action: PayloadAction<any>) => {
 				console.error("Delete Error")
