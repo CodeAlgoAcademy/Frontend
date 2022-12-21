@@ -3,12 +3,15 @@ import Link from "next/link";
 import { Icurriculum } from "types/interfaces";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { BiArrowBack } from "react-icons/bi";
+import { useDispatch } from "react-redux";
+import { updateCurrentCurriculum } from "../../services/curriculumService";
 
 const SingleCurrentCurriculum = ({
   curriculum,
 }: {
   curriculum: Icurriculum;
 }) => {
+  const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   return (
     <div
@@ -18,7 +21,14 @@ const SingleCurrentCurriculum = ({
       className="flex rounded-xl justify-between flex-[0.5] bg-white mt-14 relative"
     >
       {modalOpen && (
-        <aside className="absolute top-[15px] right-[70px] px-2 py-2 rounded-md shadow-md flex flex-row gap-x-4 font-bold items-center min-w-fit bg-mainPurple text-white cursor-pointer">
+        <aside
+          onClick={() => {
+            dispatch(
+              updateCurrentCurriculum({ id: curriculum.id, curriculum })
+            );
+          }}
+          className="absolute top-[15px] right-[70px] px-2 py-2 rounded-md shadow-md flex flex-row gap-x-4 font-bold items-center min-w-fit bg-mainPurple text-white cursor-pointer"
+        >
           <span>
             <BiArrowBack />
           </span>
@@ -39,7 +49,7 @@ const SingleCurrentCurriculum = ({
         </div>
         <h1 className="font-bold mt-5 mb-5">{curriculum.title}</h1>
         <p>{curriculum.description}</p>
-        <div className="flex items-center sm:flex-col md:flex-row pt-[1.6rem] pb-[1rem] justify-between">
+        <div className="flex items-center md:flex-row pt-[1.6rem] pb-[1rem] justify-between">
           <p>{curriculum.start_date}</p>
           <Link href="curriculum/unit">
             <p className="px-5 py-[5px] whitespace-nowrap font-semibold border-black rounded-full border-2 w-fit cursor-pointer">

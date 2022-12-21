@@ -7,10 +7,13 @@ import { openGradesModal } from "../../store/modalSlice";
 import { FaChevronDown } from "react-icons/fa";
 import { updateUser } from "../../store/authSlice";
 import styles from "../../styles/styles";
+import { v4 } from "uuid";
+import { generateUsername } from "../../utils/generateUsername";
+import UsernameButton from "./usernameButton";
 
 const Students = () => {
   const dispatch = useDispatch();
-  const { grade, firstname, lastname, email, password } = useSelector(
+  const { grade, firstname, lastname, email, password, username } = useSelector(
     (state: RootState) => state.user.auth
   );
   const inputFields: IInputFields[] = [
@@ -37,6 +40,12 @@ const Students = () => {
       name: "password",
       placeholder: "Enter Password*",
       value: password,
+    },
+    {
+      type: "text",
+      name: "username",
+      placeholder: "Enter Username",
+      value: username,
     },
   ];
 
@@ -87,6 +96,8 @@ const Students = () => {
           <FaChevronDown />
         </span>
       </div>
+
+      <UsernameButton />
     </div>
   );
 };

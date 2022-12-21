@@ -2,17 +2,17 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IAddClass } from "../types/interfaces";
 import { colors } from "../components/addClass/colors";
 import { addClass } from "services/classesService";
-import { Action } from "@syncfusion/ej2-react-grids";
 
 const initialState: IAddClass = {
   student: {
     firstName: "",
     lastName: "",
     email: "",
+    username: "",
   },
   class: {
     className: "",
-    grade: "Change Grade",
+    grade: "Select Grade",
     subject: "",
     coTeachers: "",
     roomNumber: "",
