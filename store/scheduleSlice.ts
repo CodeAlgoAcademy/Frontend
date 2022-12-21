@@ -1,12 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { getSchedule, postSchedule, putSchedule, deleteSchedule } from "services/scheduleService"
-
-interface Schedule {
-	allSchedule: []
-	addedRecords: []
-	deletedRecords: []
-	changedRecords: []
-}
+import { Schedule } from "types/interfaces"
 
 const initialState: Schedule = {
 	allSchedule: [],
@@ -30,11 +24,14 @@ const scheduleSlice = createSlice({
 			builder.addCase(getSchedule.rejected, (state: any, action: PayloadAction<any>) => {
 				console.error("Fetch Error")
 			}),
+			builder.addCase(postSchedule.fulfilled, (state: any, action: PayloadAction<any>) => {
+				console.log("Post Successful")
+			}),
 			builder.addCase(postSchedule.rejected, (state: any, action: PayloadAction<any>) => {
-				console.error("Post Error")
+				console.log(action)
 			}),
 			builder.addCase(putSchedule.rejected, (state: any, action: PayloadAction<any>) => {
-				console.error("Update Error")
+				console.log("Update Error")
 			}),
 			builder.addCase(deleteSchedule.rejected, (state: any, action: PayloadAction<any>) => {
 				console.error("Delete Error")

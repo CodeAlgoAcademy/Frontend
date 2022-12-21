@@ -32,13 +32,17 @@ export const postSchedule = createAsyncThunk("scheduleSlice/postSchedule", async
 
 export const putSchedule = createAsyncThunk("scheduleSlice/putSchedule", async (name, thunkApi) => {
 	const state: any = thunkApi.getState()
-	const changedRecordId = state.schedule.changedRecords[0].Id
+	const changedRecord = state.schedule.changedRecords[0]
 	try {
-		const { data } = await http.put(`/academics/calendar/schedules/${changedRecordId}`, state.schedule.changedRecords[0], {
-			headers: {
-				Authorization: `Bearer ${getAccessToken()}`
+		const { data } = await http.put(
+			`/academics/calendar/schedules/${changedRecord.Id}`,
+			{ ...changedRecord },
+			{
+				headers: {
+					Authorization: `Bearer ${getAccessToken()}`
+				}
 			}
-		})
+		)
 		return { ...data }
 	} catch (error: any) {
 		return thunkApi.rejectWithValue(error.response.data)
