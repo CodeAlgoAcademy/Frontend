@@ -3,6 +3,7 @@ export interface IUser {
   id: number;
   firstname: string;
   lastname: string;
+  username: string;
   email: string;
   isActive: boolean;
   createdAt: string;
@@ -86,12 +87,18 @@ export interface IUserConversation {
 export interface IUserStudent {
   newStudent: Student | null;
   students: Student[];
+  studentComments: Array<{
+    text: string;
+    id: number | string;
+    date: string;
+  }>;
 }
 
 // ============EXTRA INTERFACES AND TYPES
 export interface IUserData {
   firstname: string;
   lastname: string;
+  username: string;
   email: string;
   password: string;
   country: string;
@@ -148,6 +155,7 @@ export interface ISingleStudent {
   firstName: string;
   lastName: string;
   email: string;
+  username:string;
 }
 
 export interface ISingleClass {

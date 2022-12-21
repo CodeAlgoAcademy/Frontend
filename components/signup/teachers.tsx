@@ -5,12 +5,13 @@ import styles from "../../styles/styles";
 import { RootState } from "../../store/store";
 import { IInputFields, IUser } from "../../types/interfaces";
 import { countryList } from "./countries";
+import { generateUsername } from "../../utils/generateUsername";
+import UsernameButton from "./usernameButton";
 
 const Teachers = () => {
   const dispatch = useDispatch();
-  const { firstname, lastname, email, password, schoolName } = useSelector(
-    (state: RootState) => state.user.auth
-  );
+  const { firstname, lastname, email, password, schoolName, username } =
+    useSelector((state: RootState) => state.user.auth);
   const inputFields: IInputFields[] = [
     {
       name: "firstname",
@@ -41,6 +42,12 @@ const Teachers = () => {
       type: "text",
       placeholder: "Enter School Name*",
       value: schoolName,
+    },
+    {
+      name: "username",
+      type: "text",
+      placeholder: "Enter Username",
+      value: username,
     },
   ];
 
@@ -80,6 +87,7 @@ const Teachers = () => {
           );
         })}
       </select>
+      <UsernameButton />
     </div>
   );
 };
