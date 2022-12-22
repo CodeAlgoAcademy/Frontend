@@ -131,79 +131,108 @@ const SingleStudent = ({
           )}
         {!studentCommentOpen &&
           studentCommentsTabOpen === student.firstName + student.email && (
-            <form className="w-[90vw] max-w-[400px] h-[90vh] max-h-[160px] overflow-hidden overflow-y-scroll rounded-md bg-white shadow-md absolute bottom-[100%] left-0 scale-up py-2 px-3 comment-tab">
-              <h2 className="font-bold text-[22px]">Comments</h2>
-              <div className="flex flex-col gap-y-2 mt-3">
-                {" "}
-                {studentComments?.map((comment: any, index: number) => {
-                  return (
-                    <article
-                      key={index}
-                      className="flex justify-between items-center gap-x-4"
-                    >
-                      {isEditingComment === comment.text + comment.date ? (
-                        <input
-                          onSubmit={(e) => e.preventDefault()}
-                          value={editingComment}
-                          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                            updateEditingComment(e.target.value)
-                          }
-                          type="text"
-                          placeholder="Max. of 100 characters"
-                          className="flex-1 px-4 py-2 rounded-md border-2 border-mainPurple outline-none"
-                        />
-                      ) : (
-                        <h1 className="px-4 py-2">{comment.text}</h1>
-                      )}
-                      <div className="flex items-center gap-x-2">
+            <section className="fixed top-0 left-0 w-full min-h-screen bg-[rgba(0,0,0,0.5)] flex justify-center items-center z-20">
+              <form className="w-[90vw] max-w-[400px] rounded-md bg-white shadow-md scale-up py-2 px-3 comment-tab">
+                <h2 className="font-bold text-[20px]">
+                  Comments on {student.firstName} {student.lastName}'s
+                  performance
+                </h2>
+                <div
+                  className={`flex flex-col gap-y-2 mt-3 h-[90vh] max-h-[230px] overflow-hidden overflow-y-scroll ${
+                    studentComments?.length === 0 &&
+                    "justify-center items-center"
+                  }`}
+                >
+                  {studentComments?.length === 0 && (
+                    <h1 className="text-[17px] font-bold">
+                      No comment added for this student
+                    </h1>
+                  )}
+                  {studentComments?.map((comment: any, index: number) => {
+                    return (
+                      <article
+                        key={index}
+                        className="flex justify-between items-center gap-x-4"
+                      >
                         {isEditingComment === comment.text + comment.date ? (
-                          <span
-                            className={`${styles.commentIcons} bg-green-600`}
-                            onClick={() => {
-                              if (
-                                editingComment === comment.text &&
-                                editingComment === ""
-                              ) {
-                                setIsEditingComment("");
-                              } else {
-                                updateStudentComment(
-                                  comment.id as string,
-                                  editingComment,
-                                  student.id
-                                );
-                              }
-                            }}
-                          >
-                            <FaSave />
-                          </span>
+                          <input
+                            onSubmit={(e) => e.preventDefault()}
+                            value={editingComment}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                              updateEditingComment(e.target.value)
+                            }
+                            type="text"
+                            placeholder="Max. of 100 characters"
+                            className="flex-1 px-4 py-2 rounded-md border-2 border-mainPurple outline-none"
+                          />
                         ) : (
+                          <h1 className="px-4 py-2">{comment.text}</h1>
+                        )}
+                        <div className="flex items-center gap-x-2">
+                          {isEditingComment === comment.text + comment.date ? (
+                            <span
+                              className={`${styles.commentIcons} bg-green-600`}
+                              onClick={() => {
+                                if (
+                                  editingComment === comment.text &&
+                                  editingComment === ""
+                                ) {
+                                  setIsEditingComment("");
+                                } else {
+                                  updateStudentComment(
+                                    comment.id as string,
+                                    editingComment,
+                                    student.id
+                                  );
+                                }
+                              }}
+                            >
+                              <FaSave />
+                            </span>
+                          ) : (
+                            <span
+                              className={`${styles.commentIcons} bg-green-600`}
+                              onClick={() => {
+                                setEditingComment(comment.text);
+                                setIsEditingComment(
+                                  comment.text + comment.date
+                                );
+                              }}
+                            >
+                              <FaEdit />
+                            </span>
+                          )}
                           <span
-                            className={`${styles.commentIcons} bg-green-600`}
+                            className={`${styles.commentIcons} bg-red-600`}
                             onClick={() => {
-                              setEditingComment(comment.text);
-                              setIsEditingComment(comment.text + comment.date);
+                              deleteStudentComment(
+                                comment.id as string,
+                                student.id
+                              );
                             }}
                           >
-                            <FaEdit />
+                            <FaTrash />
                           </span>
-                        )}
-                        <span
-                          className={`${styles.commentIcons} bg-red-600`}
-                          onClick={() => {
-                            deleteStudentComment(
-                              comment.id as string,
-                              student.id
-                            );
-                          }}
-                        >
-                          <FaTrash />
-                        </span>
-                      </div>
-                    </article>
-                  );
-                })}
-              </div>
-            </form>
+                        </div>
+                      </article>
+                    );
+                  })}
+                </div>
+
+                {studentComments?.length > 0 && (
+                  <div className="flex justify-end my-4">
+                    <button
+                      className="w-[150px] py-3 rounded-full text-white bg-mainPurple"
+                      onClick={() => {
+                        setStudentCommentsTabOpen("");
+                      }}
+                    >
+                      Close
+                    </button>
+                  </div>
+                )}
+              </form>
+            </section>
           )}
         <div className="flex items-center">
           <div
@@ -285,7 +314,7 @@ const styles = {
   actions: "flex text-[20px] text-slate-500 space-x-5",
   pointer: "cursor-pointer",
   commentIcons:
-    "w-[28px] h-[28px] rounded-md text-white flex justify-center items-center text-[15px]",
+    "w-[28px] h-[28px] rounded-md text-white flex justify-center items-center text-[15px] cursor-pointer",
 };
 
 export default SingleStudent;

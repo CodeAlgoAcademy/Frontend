@@ -41,12 +41,6 @@ const Students = () => {
       placeholder: "Enter Password*",
       value: password,
     },
-    {
-      type: "text",
-      name: "username",
-      placeholder: "Enter Username",
-      value: username,
-    },
   ];
 
   return (
@@ -97,6 +91,17 @@ const Students = () => {
         </span>
       </div>
 
+      <input
+        type="text"
+        placeholder={"Enter Username"}
+        name="username"
+        value={username}
+        required
+        className={styles.input}
+        onChange={(e) => {
+          dispatch(updateUser({ key: "username", value: e.target.value }));
+        }}
+      />
       <UsernameButton />
     </div>
   );

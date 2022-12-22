@@ -1,9 +1,12 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Link from "next/link";
 import { IClass } from "../../types/interfaces";
 import { FaChevronRight } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { updateCurrentClass } from "store/currentClassSlice";
+import { BiPlus } from "react-icons/bi";
+import AddStudentModal from "../Teachers/students/AddStudentModal";
+import { getAllClasses } from "services/classesService";
 
 const SingleClass: FC<IClass> = ({
   id,
@@ -14,6 +17,12 @@ const SingleClass: FC<IClass> = ({
   totalStudent,
 }) => {
   const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  useEffect(() => {
+    if (!isOpen) {
+      dispatch(getAllClasses());
+    }
+  }, [isOpen]);
   return (
     <article className="col-span-1 bg-white min-h-[200px] shadow-md hover:shadow-lg rounded-md overflow-hidden w-full flex">
       <aside
@@ -31,15 +40,27 @@ const SingleClass: FC<IClass> = ({
           <h2 className="font-bold">{subject}</h2>
           <h2 className="font-bold">{totalStudent} Student(s)</h2>
         </main>
-        <footer className="flex justify-end">
+        <footer className="flex justify-between mt-[16px] pb-2">
+          <div
+            className="text-[16px] font-semibold flex gap-x-2 items-center px-2 py-2 hover:bg-gray-100 cursor-pointer"
+            onClick={() => {
+              setIsOpen(true);
+              dispatch(updateCurrentClass({ className, color, id }));
+            }}
+          >
+            Add Students
+            <span className="text-[18px] font-bold">
+              <BiPlus />
+            </span>
+          </div>
           <Link href="/dashboard">
             <div
-              className="pt-[16px] pb-2 flex justify-end items-center gap-x-4 w-fit cursor-pointer"
+              className="flex justify-end items-center gap-x-2 w-fit cursor-pointer"
               onClick={() => {
                 dispatch(updateCurrentClass({ className, color, id }));
               }}
             >
-              <p className="text-[16px] font-semibold">Go To Dashboard</p>
+              <p className="text-[16px] font-semibold">Dashboard</p>
               <span className="text-[18px] w-[30px] h-[30px] border-2 border-black flex justify-center items-center rounded-full">
                 <FaChevronRight />
               </span>
@@ -47,6 +68,7 @@ const SingleClass: FC<IClass> = ({
           </Link>
         </footer>
       </div>
+      {isOpen && <AddStudentModal setIsOpen={setIsOpen} />}
     </article>
   );
 };
