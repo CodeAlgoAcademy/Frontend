@@ -27,11 +27,6 @@ function Calendar () {
    const [positionY, cycleY] = useCycle(-1000, 0)
    const [positionX, cycleX] = useCycle(500, 0)
 
-   function change (args: ChangeEventArgs): void {
-      scheduleObj.selectedDate = args.value
-      scheduleObj.dataBind()
-   }
-
    const triggerNotificationClose = () => {
       setEventNotification((prev) => !prev)
    }
@@ -66,20 +61,6 @@ function Calendar () {
    }
    const hideEventNotification = () => {
       cycleX(0)
-   }
-   async function onActionBegin (args: ActionEventArgs) {
-      const { requestType, changedRecords, addedRecords, deletedRecords } = args
-      let performAction: any = false
-      if (requestType === "eventCreate") {
-         if (addedRecords?.length) performAction = await addSchedule(addedRecords)
-      } else if (requestType === "eventChange") {
-         if (addedRecords?.length) performAction = await addSchedule(addedRecords)
-         if (changedRecords?.length) performAction = await changeSchedule(changedRecords)
-         if (deletedRecords?.length) performAction = await popSchedule(deletedRecords)
-      } else if (requestType === "eventRemove") {
-         if (deletedRecords?.length) performAction = await popSchedule(deletedRecords)
-      }
-      if (!performAction) args.cancel = true
    }
    useEffect(() => {
       hideEventNotification()
@@ -126,7 +107,20 @@ function Calendar () {
                      selectedDate={ new Date() }
                      ref={ schedule => scheduleObj = schedule }
                      eventSettings={ { dataSource: data } }
-                     actionBegin={ onActionBegin.bind(this) }
+                     actionBegin={ (args: ActionEventArgs) => {
+                        const { requestType, changedRecords, addedRecords, deletedRecords } = args
+                        let performAction: any = false
+                        if (requestType === "eventCreate") {
+                           if (addedRecords?.length) performAction = addSchedule(addedRecords)
+                        } else if (requestType === "eventChange") {
+                           if (addedRecords?.length) performAction = addSchedule(addedRecords)
+                           if (changedRecords?.length) performAction = changeSchedule(changedRecords)
+                           if (deletedRecords?.length) performAction = popSchedule(deletedRecords)
+                        } else if (requestType === "eventRemove") {
+                           if (deletedRecords?.length) performAction = popSchedule(deletedRecords)
+                        }
+                        if (!performAction) args.cancel = true
+                     } }
                   >
                      <ViewsDirective>
                         <ViewDirective option='Day' />
@@ -147,7 +141,10 @@ function Calendar () {
                                     showClearButton={ false }
                                     placeholder='Current Date'
                                     floatLabelType='Always'
-                                    change={ change.bind(this) }
+                                    change={ (args: ChangeEventArgs) => {
+                                       scheduleObj.selectedDate = args.value
+                                       scheduleObj.dataBind()
+                                    } }
                                  />
                               </td>
                            </tr>

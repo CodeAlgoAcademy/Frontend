@@ -70,6 +70,7 @@ const Grades: FC<gradesType> = ({ addStudents }) => {
                       );
                     }
                     setChosenGrade(availableGrade);
+                    dispatch(closeGradesModal());
                   }}
                 >
                   {availableGrade}
@@ -84,14 +85,6 @@ const Grades: FC<gradesType> = ({ addStudents }) => {
           <button
             className="w-full text-center px-4 py-[10px] rounded-md text-white font-bold bg-orange-600"
             onClick={() => {
-              // delete the chosen grade and set back to default
-              // if (addStudents) {
-              //   dispatch(
-              //     updateClassDetails({ key: "grade", value: "Change Grade" })
-              //   );
-              // } else {
-              //   dispatch(updateUser({ key: "grade", value: "Change Grade" }));
-              // }
               dispatch(closeGradesModal());
             }}
           >

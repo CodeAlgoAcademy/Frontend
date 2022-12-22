@@ -2,11 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "store/store";
 import http from "axios.config";
 import { getAccessToken } from "utils/getTokens";
-import {
-  closePreloader,
-  openErrorModal,
-  openPreloader,
-} from "store/fetchSlice";
+import { openErrorModal } from "store/fetchSlice";
+import { Icurriculum } from "types/interfaces";
 
 export const addUnits: any = createAsyncThunk(
   "unitsSlice/addUnits",
@@ -72,5 +69,26 @@ export const getAllCurriculums: any = createAsyncThunk(
       }
       return thunkApi.rejectWithValue(error.response.data);
     }
+  }
+);
+
+export const updateCurrentCurriculum: any = createAsyncThunk(
+  "curriculumSlice/updateCurriculum",
+  async (params: { curriculum: Icurriculum; id: number }, thunkApi) => {
+    const rearrangedUnit: Icurriculum = {
+      ...params.curriculum,
+      is_current: false,
+      is_finished: false,
+    };
+
+    try {
+      const { data } = await http.put(
+        "/academics/curriculums/units/" + params.id,
+        rearrangedUnit,
+        {
+          headers: { Authorization: "Bearer " + getAccessToken() },
+        }
+      );
+    } catch (error: any) {}
   }
 );

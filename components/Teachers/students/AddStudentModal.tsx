@@ -1,14 +1,18 @@
 import { TextField } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, ChangeEvent } from "react";
+import { generateUsername } from "utils/generateUsername";
 import { RiCloseLine } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { addStudent, getStudents } from "store/studentSlice";
-import { Student } from "types/interfaces";
+import { Student, IInputFields } from "types/interfaces";
+import style from "@/styles/styles";
+import { FaTimes, FaChevronLeft, FaPlus } from "react-icons/fa";
 
 interface State {
   firstName: string;
   lastName: string;
   email: string;
+  username: string;
 }
 
 const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
@@ -17,8 +21,9 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
     firstName: "",
     lastName: "",
     email: "",
+    username: "",
   });
-  const { email, firstName, lastName } = formData;
+  const { email, firstName, lastName, username } = formData;
 
   const onChange = (e: any) => {
     setFormData((prevState) => ({
@@ -26,6 +31,33 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
       [e.target.name]: e.target.value,
     }));
   };
+
+  const inputFields: IInputFields[] = [
+    {
+      type: "text",
+      name: "firstName",
+      placeholder: "Enter Student First Name",
+      value: firstName,
+    },
+    {
+      type: "text",
+      name: "lastName",
+      placeholder: "Enter Student Last Name",
+      value: lastName,
+    },
+    {
+      type: "email",
+      name: "email",
+      placeholder: "Enter Student Email",
+      value: email,
+    },
+    {
+      type: "text",
+      name: "username",
+      placeholder: "Enter Username",
+      value: username,
+    },
+  ];
 
   const onSubmit = (e: any) => {
     e.preventDefault();
@@ -45,54 +77,141 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
   };
 
   return (
-    <div className={styles.bgBlack}>
-      <div className={styles.centered}>
-        <div className={styles.modal}>
-          <div className={styles.modalHeader}>
-            <p className={styles.heading}>Add Student</p>
-          </div>
-          <div onClick={() => setIsOpen(false)} className={styles.closeBtn}>
-            <RiCloseLine />
-          </div>
-          <div className={styles.modalBody}>
-            <form className="grid gap-5 pb-2" onSubmit={onSubmit}>
-              <div className="flex space-x-5">
-                <TextField
-                  label="Student First Name"
-                  name="firstName"
-                  value={firstName}
-                  onChange={onChange}
-                  size="small"
+    <section className={`${style.modalOverlay} bg-[rgba(0,0,0,.25)]`}>
+      {/* modal itself */}
+      <main className="w-[90vw] max-w-[900px] mx-auto bg-white rounded-md flex shadow-lg relative">
+        <span
+          onClick={() => {
+            setIsOpen(false);
+          }}
+          className="text-[30px] font-thin absolute z-10 top-[30px] right-[30px]"
+        >
+          <FaTimes />
+        </span>
+        <aside
+          className={`flex-[0.075] min-h-full rounded-tl-md rounded-bl-md`}
+          style={{ backgroundColor: "#FFE977" }}
+        ></aside>
+
+        <form className="py-8 flex-[0.9]" onSubmit={onSubmit}>
+          <header className="px-8 w-full mb-6 flex gap-x-2 items-center">
+            <span
+              className="text-[20px] font-bold"
+              onClick={() => {
+                setIsOpen(false);
+              }}
+            >
+              <FaChevronLeft />
+            </span>
+            <h1 className="md:text-[30px] text-[20px] font-bold">
+              Add new student(s)
+            </h1>
+          </header>
+          <section className="px-8 grid md:grid-cols-2 gap-[1rem]">
+            {inputFields?.map((inputField: IInputFields, index: number) => {
+              const { name, type, placeholder, value } = inputField;
+              return (
+                <input
+                  key={index}
+                  type={type}
+                  name={name}
+                  placeholder={placeholder}
+                  value={value}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    onChange(e);
+                  }}
+                  className={style.input}
                   required
                 />
-                <TextField
-                  label="Student Last Name"
-                  name="lastName"
-                  size="small"
-                  value={lastName}
-                  onChange={onChange}
-                  required
-                />
-              </div>
-              <TextField
-                label="Student Email"
-                name="email"
-                size="small"
-                value={email}
-                onChange={onChange}
-                required
-              />
-              <div>
-                <button className={styles.addBtn} type="submit">
-                  Add Student
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+              );
+            })}
+            <button
+              type="button"
+              className=" px-2 py-3 rounded-md bg-mainPurple shadow-md text-white active:scale-[0.91]"
+              onClick={() => {
+                if (firstName || lastName) {
+                  const randomName = generateUsername(firstName, lastName);
+                  setFormData({ ...formData, username: randomName });
+                }
+              }}
+            >
+              Generate Username
+            </button>
+          </section>
+          <section className="flex w-full justify-between md:items-center items-end mt-8 md:flex-row md:gap-y-0 gap-y-4 flex-col pt-5 border-t-2 px-8">
+            <div>
+              {/* input container */}
+              <input type="file" id="studentsUpload" className="hidden" />
+              <label
+                htmlFor="studentsUpload"
+                className="w-full flex flex-row gap-x-2 items-center cursor-pointer"
+              >
+                <span className="w-[30px] h-[30px] border-2 border-black rounded-full flex justify-center items-center text-[20px] text-black font-lighter">
+                  <FaPlus />
+                </span>
+                <h3 className="text-[16px] font-bold">Bulk Import</h3>
+              </label>
+            </div>
+            <button
+              type="submit"
+              className="py-3 px-4 min-w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md"
+            >
+              Add Student(s)
+            </button>
+          </section>
+        </form>
+      </main>
+    </section>
   );
+  // return (
+  //   <div className={styles.bgBlack}>
+  //     <div className={styles.centered}>
+  //       <div className={styles.modal}>
+  //         <div className={styles.modalHeader}>
+  //           <p className={styles.heading}>Add Student</p>
+  //         </div>
+  //         <div onClick={() => setIsOpen(false)} className={styles.closeBtn}>
+  //           <RiCloseLine />
+  //         </div>
+  //         <div className={styles.modalBody}>
+  //           <form className="grid gap-5 pb-2" onSubmit={onSubmit}>
+  //             <div className="flex space-x-5">
+  //               <TextField
+  //                 label="Student First Name"
+  //                 name="firstName"
+  //                 value={firstName}
+  //                 onChange={onChange}
+  //                 size="small"
+  //                 required
+  //               />
+  //               <TextField
+  //                 label="Student Last Name"
+  //                 name="lastName"
+  //                 size="small"
+  //                 value={lastName}
+  //                 onChange={onChange}
+  //                 required
+  //               />
+  //             </div>
+  //             <TextField
+  //               label="Student Email"
+  //               name="email"
+  //               size="small"
+  //               value={email}
+  //               onChange={onChange}
+  //               required
+  //             />
+  //             <div>
+  //               <button className={styles.addBtn} type="submit">
+  //                 Add Student
+  //               </button>
+  //             </div>
+  //           </form>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
 };
 
 export default AddStudentModal;

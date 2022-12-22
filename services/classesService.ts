@@ -1,10 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import http from "axios.config";
-import {
-  closePreloader,
-  openErrorModal,
-  openPreloader,
-} from "store/fetchSlice";
+import { openErrorModal } from "store/fetchSlice";
 import { RootState } from "store/store";
 import { getAccessToken } from "utils/getTokens";
 
@@ -37,16 +33,33 @@ export const addClass: any = createAsyncThunk(
       student,
       class: { className, grade, subject, coTeachers, roomNumber, color },
     } = state.addClass;
-
+    const { firstName, lastName, email } = state.addClass.student;
+    const options =
+      firstName && lastName && email
+        ? {
+            className,
+            grade,
+            subject,
+            roomNumber,
+            color,
+            student: {
+              firstName,
+              lastName,
+              email,
+            },
+          }
+        : {
+            className,
+            grade,
+            subject,
+            roomNumber,
+            color,
+          };
     try {
       const { data } = await http.post(
         "/academics/class/",
         {
-          className,
-          grade,
-          subject,
-          roomNumber,
-          color,
+          ...options,
         },
         {
           headers: {
@@ -62,7 +75,7 @@ export const addClass: any = createAsyncThunk(
         openErrorModal({
           errorText: [
             error.response.data.detail
-              ? error.response.data.details
+              ? error.response.data.detail
               : error.message,
           ],
         })
@@ -93,7 +106,6 @@ export const addStudents: any = createAsyncThunk(
           headers: { Authorization: `Bearer ${getAccessToken()}` },
         }
       );
-      console.log(data);
       return data;
     } catch (error: any) {
       console.log(error);

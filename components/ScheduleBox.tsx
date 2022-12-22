@@ -12,13 +12,15 @@ const ScheduleBox = () => {
 	const dispatch = useDispatch<AppDispatch>()
 	function isToday (date: Date): boolean {
 		const today = new Date()
+		let result: boolean = false
 		try {
 			if (today.toDateString() === date?.toDateString()) {
-				return true
+				result = true
 			}
 		} catch {
-			return false
+			result = false
 		}
+		return result
 	}
 	function formatAMPM (date: Date) {
 		let hours = date.getHours()

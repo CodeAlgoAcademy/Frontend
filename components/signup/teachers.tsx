@@ -5,12 +5,13 @@ import styles from "../../styles/styles";
 import { RootState } from "../../store/store";
 import { IInputFields, IUser } from "../../types/interfaces";
 import { countryList } from "./countries";
+import { generateUsername } from "../../utils/generateUsername";
+import UsernameButton from "./usernameButton";
 
 const Teachers = () => {
   const dispatch = useDispatch();
-  const { firstname, lastname, email, password, schoolName } = useSelector(
-    (state: RootState) => state.user.auth
-  );
+  const { firstname, lastname, email, password, schoolName, username } =
+    useSelector((state: RootState) => state.user.auth);
   const inputFields: IInputFields[] = [
     {
       name: "firstname",
@@ -80,6 +81,18 @@ const Teachers = () => {
           );
         })}
       </select>
+      <input
+        type="text"
+        placeholder={"Enter Username"}
+        name="username"
+        value={username}
+        required
+        className={styles.input}
+        onChange={(e) => {
+          dispatch(updateUser({ key: "username", value: e.target.value }));
+        }}
+      />
+      <UsernameButton />
     </div>
   );
 };

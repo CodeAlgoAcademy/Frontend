@@ -7,10 +7,11 @@ import { closeAddStudentsModal } from "../../store/modalSlice";
 import { RootState } from "../../store/store";
 import styles from "../../styles/styles";
 import { IInputFields } from "../../types/interfaces";
+import { generateUsername } from "utils/generateUsername";
 
 const AddStudents = () => {
   const dispatch = useDispatch();
-  const { firstName, lastName, email } = useSelector(
+  const { firstName, lastName, email, username } = useSelector(
     (state: RootState) => state.addClass.student
   );
 
@@ -33,11 +34,16 @@ const AddStudents = () => {
       placeholder: "Enter Student Email",
       value: email,
     },
+    {
+      type: "text",
+      name: "username",
+      placeholder: "Enter Username",
+      value: username,
+    },
   ];
 
   const handleSubmit = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = await dispatch(addStudents());
     dispatch(closeAddStudentsModal());
   };
 
@@ -56,7 +62,7 @@ const AddStudents = () => {
           Add new student(s)
         </h1>
       </header>
-      <section className="px-8 grid md:grid-cols-2 gap-[1rem] items-start">
+      <section className="px-8 grid md:grid-cols-2 gap-[1rem]">
         {inputFields?.map((inputField: IInputFields, index: number) => {
           const { name, type, placeholder, value } = inputField;
           return (
@@ -79,6 +85,24 @@ const AddStudents = () => {
             />
           );
         })}
+        <button
+          type="button"
+          className=" px-2 py-3 rounded-md bg-mainPurple shadow-md text-white active:scale-[0.91]"
+          onClick={() => {
+            if (firstName || lastName) {
+              const randomName = generateUsername(firstName, lastName);
+              dispatch(
+                updateClassDetails({
+                  typeofState: "student",
+                  key: "username",
+                  value: randomName,
+                })
+              );
+            }
+          }}
+        >
+          Generate Username
+        </button>
       </section>
       <section className="flex w-full justify-between md:items-center items-end mt-8 md:flex-row md:gap-y-0 gap-y-4 flex-col pt-5 border-t-2 px-8">
         <div>
