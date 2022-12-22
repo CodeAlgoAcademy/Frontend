@@ -66,6 +66,8 @@ const Parents = () => {
           />
         );
       })}
+      <UsernameButton />
+
       <select
         className={styles.input}
         onChange={(event: ChangeEvent<HTMLSelectElement>) => {
@@ -82,8 +84,6 @@ const Parents = () => {
           );
         })}
       </select>
-
-      <UsernameButton />
     </div>
   );
 };
