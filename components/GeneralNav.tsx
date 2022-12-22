@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react"
+import React, { useState, useRef, ChangeEvent } from "react"
 import { useRouter } from "next/router"
 import Image from "next/image"
 import Link from "next/link"
@@ -11,13 +11,25 @@ import { updateCurrentClass } from "../store/currentClassSlice"
 import { IClass, CurrentClassState } from "../types/interfaces"
 import { motion } from "framer-motion"
 import { IoSettingsSharp } from "react-icons/io5"
-import { resetAuthUser } from "store/authSlice"
+import { resetAuthUser, updateUser } from "store/authSlice"
+import {
+  updateEmail,
+  updateFirstname,
+  updateLastname,
+} from "services/authService"
+import { AnyAction } from "@reduxjs/toolkit"
 
 const GeneralNav = () => {
   const [userDropDown, setUserDropDown] = useState<boolean>(false)
   const [settingsTabOpen, setSettingsTabOpen] = useState<boolean>(false)
   const dispatch = useDispatch()
   const router = useRouter()
+  const {
+    firstname: authFirstname,
+    lastname: authLastname,
+    password,
+    email,
+  } = useSelector((state: RootState) => state.user.auth)
   const classes = useSelector(
     (state: RootState): IClass[] => state.allClasses.classes
   )
@@ -58,6 +70,14 @@ const GeneralNav = () => {
     router.push("/login")
   }
 
+  const updateUserForm = async (e: ChangeEvent<HTMLFormElement>, func: any) => {
+    e.preventDefault()
+    const data = await dispatch(func())
+    if (!data?.error) {
+      setUserDropDown(false)
+    }
+  }
+
   return (
     <div className="py-6 px-[5%] bg-white flex items-center justify-between">
       <div className="relative flex items-center gap-40">
@@ -80,7 +100,7 @@ const GeneralNav = () => {
             </div>
           </Link>
           <div className="relative h-[52px]">
-            <div className="overflow-hidden z-10  border border-[#BDBDBD] rounded-[30px] absolute left-0 top-0">
+            <div className="overflow-hidden rounded-[28px] absolute left-0 top-0">
               <div
                 className="rounded-[28px] z-10 w-[260px] border border-[#BDBDBD] divide-y overflow-hidden bg-white small-scroll-thumb"
                 style={ classListStyle }
@@ -173,7 +193,7 @@ const GeneralNav = () => {
                   animate={ {
                     display: "block",
                     opacity: 1,
-                    transition: { duration: "1", delay: 0.2 },
+                    transition: { duration: "1", delay: 0.3 },
                   } }
                 >
                   { firstname + " " + lastname }
@@ -218,36 +238,100 @@ const GeneralNav = () => {
                   className={ `w-full flex flex-col mt-4 gap-2 transition duration-300 ${settingsTabOpen ? "h-[125px]" : "h-0"
                     } overflow-hidden` }
                 >
-                  <article className="w-full flex gap-2 h-[35px] items-center border hover:border-mainPurple rounded-[4px] px-2">
+                  <form
+                    onSubmit={ (e: ChangeEvent<HTMLFormElement>) => {
+                      updateUserForm(e, updateFirstname)
+                    } }
+                    className="w-full flex gap-2 h-[35px] items-center border hover:border-mainPurple rounded-[4px] px-2"
+                  >
                     <input
                       type="text"
-                      className="border-none outline-none w-full h-full text-black text-[15px] tracking-wider placeholder:text-gray-500 cursor-pointer"
-                      placeholder="Update username"
+                      className="border-none outline-none w-full h-full text-black text-[15px] tracking-wider placeholder:text-gray-500"
+                      placeholder="Update firstname"
+                      value={ authFirstname }
+                      onChange={ (e: ChangeEvent<HTMLInputElement>) => {
+                        dispatch(
+                          updateUser({
+                            key: "firstname",
+                            value: e.target.value,
+                          })
+                        )
+                      } }
                     />
-                    <span className="text-xl font-bold flex-[0.2] text-gray-900 relative">
+                    <button
+                      type="submit"
+                      className="text-xl cursor-pointer font-bold flex-[0.2] text-gray-900 relative"
+                    >
                       <FaEdit />
-                    </span>
-                  </article>
-                  <article className="w-full flex gap-2 h-[35px] items-center border hover:border-mainPurple rounded-[4px] px-2">
+                    </button>
+                  </form>
+                  <form
+                    onSubmit={ (e: ChangeEvent<HTMLFormElement>) => {
+                      updateUserForm(e, updateLastname)
+                    } }
+                    className="w-full flex gap-2 h-[35px] items-center border hover:border-mainPurple rounded-[4px] px-2"
+                  >
                     <input
                       type="text"
-                      className="border-none outline-none w-full h-full text-black text-[15px] tracking-wider placeholder:text-gray-500 cursor-pointer"
+                      className="border-none outline-none w-full h-full text-black text-[15px] tracking-wider placeholder:text-gray-500"
+                      placeholder="Update lastname"
+                      value={ authLastname }
+                      onChange={ (e: ChangeEvent<HTMLInputElement>) => {
+                        dispatch(
+                          updateUser({ key: "lastname", value: e.target.value })
+                        )
+                      } }
+                    />
+                    <button
+                      type="submit"
+                      className="text-xl cursor-pointer font-bold flex-[0.2] text-gray-900 relative"
+                    >
+                      <FaEdit />
+                    </button>
+                  </form>
+                  <form
+                    onSubmit={ (e: ChangeEvent<HTMLFormElement>) => {
+                      updateUserForm(e, updateEmail)
+                    } }
+                    className="w-full flex gap-2 h-[35px] items-center border hover:border-mainPurple rounded-[4px] px-2"
+                  >
+                    <input
+                      type="text"
+                      className="border-none outline-none w-full h-full text-black text-[15px] tracking-wider placeholder:text-gray-500"
                       placeholder="Update email"
+                      value={ email }
+                      onChange={ (e: ChangeEvent<HTMLInputElement>) => {
+                        dispatch(
+                          updateUser({ key: "email", value: e.target.value })
+                        )
+                      } }
                     />
-                    <span className="text-xl font-bold flex-[0.2] text-gray-900 relative">
+                    <button
+                      type="submit"
+                      className="text-xl cursor-pointer font-bold flex-[0.2] text-gray-900 relative"
+                    >
                       <FaEdit />
-                    </span>
-                  </article>
-                  <article className="w-full flex gap-2 h-[35px] items-center border hover:border-mainPurple rounded-[4px] px-2">
+                    </button>
+                  </form>
+                  <form className="w-full flex gap-2 h-[35px] items-center border hover:border-mainPurple rounded-[4px] px-2">
                     <input
                       type="text"
-                      className="border-none outline-none w-full h-full text-black text-[15px] tracking-wider placeholder:text-gray-500 cursor-pointer"
+                      className="border-none outline-none w-full h-full text-black text-[15px] tracking-wider placeholder:text-gray-500"
                       placeholder="Update password"
+                      value={ password }
+                      onChange={ (e: ChangeEvent<HTMLInputElement>) => {
+                        dispatch(
+                          updateUser({ key: "password", value: e.target.value })
+                        )
+                      } }
                     />
-                    <span className="text-xl font-bold flex-[0.2] text-gray-900 relative">
+                    <button
+                      type="submit"
+                      className="text-xl cursor-pointer font-bold flex-[0.2] text-gray-900 relative"
+                    >
                       <FaEdit />
-                    </span>
-                  </article>
+                    </button>
+                  </form>
                 </main>
               </div>
               <motion.div
