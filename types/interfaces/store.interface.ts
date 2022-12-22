@@ -271,7 +271,4 @@ export interface INotes {
 
 export interface Schedule {
 	allSchedule: []
-	addedRecords: []
-	deletedRecords: []
-	changedRecords: []
 }

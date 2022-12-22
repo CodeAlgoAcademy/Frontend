@@ -1,10 +1,9 @@
 import React, { useState, PropsWithChildren, useEffect } from "react"
-import { ScheduleComponent, ViewsDirective, ViewDirective, Day, Week, WorkWeek, Month, Agenda, Inject, Resize } from "@syncfusion/ej2-react-schedule"
+import { ScheduleComponent, ViewsDirective, ViewDirective, Day, Week, WorkWeek, Month, Agenda, ActionEventArgs, Inject, Resize } from "@syncfusion/ej2-react-schedule"
 import { DatePickerComponent, ChangeEventArgs } from "@syncfusion/ej2-react-calendars"
 import { Sidebar, GeneralNav } from "../components"
 import { useSelector, useDispatch } from "react-redux"
 import { AppDispatch, RootState } from "../store/store"
-import { updateSchedule } from "../store/scheduleSlice"
 import { FcGoogle } from "react-icons/fc"
 import { deleteSchedule, getSchedule, postSchedule, putSchedule } from "services/scheduleService"
 import { extend } from '@syncfusion/ej2-base'
@@ -17,19 +16,22 @@ import Image from "next/image"
 
 const PropertyPane = (props: PropsWithChildren) => <div className='mt-5'>{ props.children }</div>
 
-const Calendar = () => {
+function Calendar () {
    let scheduleObj: ScheduleComponent | any
    const dispatch = useDispatch<AppDispatch>()
    const scheduleData: Schedule = useSelector((state: RootState) => state.schedule)
    const data: Record<string, any>[] = extend([], scheduleData.allSchedule, true) as Record<string, any>[]
    const [eventNotificationType, setEventNotificationType] = useState(true)
    const [eventNotification, setEventNotification] = useState(false)
+   const [eventSuccess, setEventSuccess] = useState(true)
    const [positionY, cycleY] = useCycle(-1000, 0)
    const [positionX, cycleX] = useCycle(500, 0)
+
    function change (args: ChangeEventArgs): void {
       scheduleObj.selectedDate = args.value
       scheduleObj.dataBind()
    }
+
    const triggerNotificationClose = () => {
       setEventNotification((prev) => !prev)
    }
@@ -42,24 +44,42 @@ const Calendar = () => {
    const fetchSchedule = async () => {
       await dispatch(getSchedule())
    }
-   const changeSchedule = async () => {
-      const data = await dispatch(putSchedule())
+   const changeSchedule = async (args: any) => {
+      const data = await dispatch(putSchedule(args))
       const status = 'error' in data
       showEventNotification(!status)
+      return !status
    }
-   const addSchedule = async () => {
-      const data = await dispatch(postSchedule())
+   const addSchedule = async (args: any) => {
+      const data = await dispatch(postSchedule(args))
       const status = 'error' in data
+      status ? setEventSuccess((prev) => false) : setEventSuccess((prev) => true)
       showEventNotification(!status)
-
+      return !status
    }
-   const popSchedule = async () => {
-      const data = await dispatch(deleteSchedule())
+   const popSchedule = async (args: any) => {
+      const data = await dispatch(deleteSchedule(args))
       const status = 'error' in data
+      status ? setEventSuccess((prev) => false) : setEventSuccess((prev) => true)
       showEventNotification(!status)
+      return !status
    }
    const hideEventNotification = () => {
       cycleX(0)
+   }
+   async function onActionBegin (args: ActionEventArgs) {
+      const { requestType, changedRecords, addedRecords, deletedRecords } = args
+      let performAction: any = false
+      if (requestType === "eventCreate") {
+         if (addedRecords?.length) performAction = await addSchedule(addedRecords)
+      } else if (requestType === "eventChange") {
+         if (addedRecords?.length) performAction = await addSchedule(addedRecords)
+         if (changedRecords?.length) performAction = await changeSchedule(changedRecords)
+         if (deletedRecords?.length) performAction = await popSchedule(deletedRecords)
+      } else if (requestType === "eventRemove") {
+         if (deletedRecords?.length) performAction = await popSchedule(deletedRecords)
+      }
+      if (!performAction) args.cancel = true
    }
    useEffect(() => {
       hideEventNotification()
@@ -81,15 +101,14 @@ const Calendar = () => {
                <div className='flex right-[6px] top-8 items-center justify-center absolute pr-[2%] overflow-clip'>
                   <motion.div
                      animate={ { x: positionX } } transition={ { duration: 0.2 } }
-                     className="bg-white border border-slate-300 shadow-lg rounded-md gap-4 px-4 py-3 flex flex-row overflow-clip items-center relative">
+                     className="bg-white border border-slate-300 shadow-lg rounded-md gap-4 pl-6 pr-8 py-3 flex flex-row overflow-clip items-center relative">
                      <section className="w-6 h-full flex flex-col items-center justify-start">
                         <div className="text-xl" style={ { color: eventNotificationType ? "#53a653" : "#ED4337" } }>{
                            eventNotificationType ? <BsHandThumbsUp /> : <FiAlertTriangle /> }
                         </div>
                      </section>
-                     <section className="h-full flex flex-col items-start justify-end gap-1">
-                        <h1 className="text-base font-semibold text-zinc-800 antialiased">{ eventNotificationType ? "Updates saved!" : "Error Saving Updates" }</h1>
-                        <p className="text-sm font-medium text-zinc-400 antialiased"></p>
+                     <section className="h-full flex flex-col items-center justify-end gap-1">
+                        <h1 className="text-sm font-semibold text-zinc-800 antialiased">{ eventNotificationType ? "Updates saved!" : "Error Saving Updates" }</h1>
                      </section>
                      <div className="h-full content-[ ] w-1 flex self-end top-0 right-0 absolute" style={ { backgroundColor: eventNotificationType ? "#53a653" : "#ED4337" } }>
                      </div>
@@ -107,25 +126,7 @@ const Calendar = () => {
                      selectedDate={ new Date() }
                      ref={ schedule => scheduleObj = schedule }
                      eventSettings={ { dataSource: data } }
-                     actionBegin={ (args) => {
-                        const { requestType, changedRecords, addedRecords, deletedRecords } = args
-                        const payload = {
-                           allSchedule: scheduleData.allSchedule,
-                           changedRecords,
-                           addedRecords,
-                           deletedRecords
-                        }
-                        dispatch(updateSchedule(payload))
-                        if (requestType === "eventCreate") {
-                           addedRecords?.length && addSchedule()
-                        } else if (requestType === "eventChange") {
-                           addedRecords?.length && addSchedule()
-                           changedRecords?.length && changeSchedule()
-                           deletedRecords?.length && popSchedule()
-                        } else if (requestType === "eventRemove") {
-                           deletedRecords?.length && popSchedule()
-                        }
-                     } }
+                     actionBegin={ onActionBegin.bind(this) }
                   >
                      <ViewsDirective>
                         <ViewDirective option='Day' />
