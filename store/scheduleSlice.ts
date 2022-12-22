@@ -3,10 +3,7 @@ import { getSchedule, postSchedule, putSchedule, deleteSchedule } from "services
 import { Schedule } from "types/interfaces"
 
 const initialState: Schedule = {
-	allSchedule: [],
-	addedRecords: [],
-	deletedRecords: [],
-	changedRecords: []
+	allSchedule: []
 }
 
 const scheduleSlice = createSlice({

@@ -15,9 +15,7 @@ export const getSchedule = createAsyncThunk("scheduleSlice/getSchedule", async (
 	}
 })
 
-export const postSchedule = createAsyncThunk("scheduleSlice/postSchedule", async (name, thunkApi) => {
-	const state: any = thunkApi.getState()
-	const addedRecords = state.schedule.addedRecords
+export const postSchedule = createAsyncThunk("scheduleSlice/postSchedule", async (addedRecords: any, thunkApi) => {
 	try {
 		const { data } = await http.post("/academics/calendar/schedules/", addedRecords, {
 			headers: {
@@ -30,9 +28,8 @@ export const postSchedule = createAsyncThunk("scheduleSlice/postSchedule", async
 	}
 })
 
-export const putSchedule = createAsyncThunk("scheduleSlice/putSchedule", async (name, thunkApi) => {
-	const state: any = thunkApi.getState()
-	const changedRecord = state.schedule.changedRecords[0]
+export const putSchedule = createAsyncThunk("scheduleSlice/putSchedule", async (updatedRecords: any, thunkApi) => {
+	const changedRecord = updatedRecords[0]
 	try {
 		const { data } = await http.put(
 			`/academics/calendar/schedules/${changedRecord.Id}`,
@@ -49,12 +46,11 @@ export const putSchedule = createAsyncThunk("scheduleSlice/putSchedule", async (
 	}
 })
 
-export const deleteSchedule = createAsyncThunk("scheduleSlice/deleteSchedule", async (name, thunkApi) => {
-	const state: any = thunkApi.getState()
+export const deleteSchedule = createAsyncThunk("scheduleSlice/deleteSchedule", async (deletedRecords: any, thunkApi) => {
 	try {
 		const { data } = await http.delete("/academics/calendar/schedules/delete/", {
 			data: {
-				source: state.deletedRecords
+				source: deletedRecords
 			},
 			headers: {
 				Authorization: `Bearer ${getAccessToken()}`
