@@ -23,6 +23,7 @@ import allCurriculumReducer from "./allCurriculumSlice";
 import notesReducer from "./notesSlice";
 import fetchReducer from "./fetchSlice";
 import studentReducer from "./studentSlice";
+import lessonsReducer from './lessonsSlice'
 const persistConfig = {
   key: "root",
   storage,
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
   unit: unitsSlice,
   calendar: calendarReducer,
   allCurriculum: allCurriculumReducer,
+  allLessons: lessonsReducer,
   notes: notesReducer,
   fetch: fetchReducer,
   messages: messagesReducer,
