@@ -5,11 +5,13 @@ import { RootState } from "../../store/store";
 import styles from "../../styles/styles";
 import { countryList } from "./countries";
 import { updateUser } from "../../store/authSlice";
+import { generateUsername } from "../../utils/generateUsername";
+import UsernameButton from "./usernameButton";
 
 const Parents = () => {
   const dispatch = useDispatch();
-  const { firstname, lastname, email, password } = useSelector(
-    (state: RootState) => state.user
+  const { firstname, lastname, email, password, username } = useSelector(
+    (state: RootState) => state.user.auth
   );
 
   const inputFields: IInputFields[] = [
@@ -37,6 +39,12 @@ const Parents = () => {
       placeholder: "Enter Password",
       value: password,
     },
+    {
+      name: "username",
+      type: "text",
+      placeholder: "Enter Username",
+      value: username,
+    },
   ];
 
   return (
@@ -58,6 +66,8 @@ const Parents = () => {
           />
         );
       })}
+      <UsernameButton />
+
       <select
         className={styles.input}
         onChange={(event: ChangeEvent<HTMLSelectElement>) => {

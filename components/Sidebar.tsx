@@ -37,7 +37,7 @@ const links = [
 const Sidebar = () => {
   const router = useRouter();
   return (
-    <div className="md:overflow-hidden overflow-auto h-full md:hover:overflow-auto pb-10">
+    <div className="md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
       <>
         <div className="">
           {links.map((link) => (
@@ -45,7 +45,7 @@ const Sidebar = () => {
               <Link href={`${link.url}`}>
                 <div
                   className={
-                    router?.pathname.includes(`/${link.url}`)
+                    router?.pathname.includes(`${link.url}`)
                       ? "flex items-center gap-5 pl-8 py-5 bg-[#E5E5E5] rounded-l-[28px] cursor-pointer"
                       : "flex items-center gap-5 pl-8 py-5 text-gray-600 hover:bg-[#f3f3f3] rounded-l-[28px] cursor-pointer"
                   }
