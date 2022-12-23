@@ -33,8 +33,7 @@ const NavLinks = () => {
                 <div className="z-50 absolute top-16 hidden group-hover:md:block hover:md:block">
                   <div className="py-3">
                     <div
-                      className="w-4 h-4 left-3 absolute 
-                                        mt-1 bg-white rotate-45"
+                      className="w-4 h-4 left-3 absolute mt-1 bg-white rotate-45"
                     ></div>
                   </div>
                   <div className="bg-white p-1 grid grid-cols-1 gap-1">

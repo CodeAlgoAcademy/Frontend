@@ -1,25 +1,36 @@
-import React from 'react'
-import MessageList from './MessageList/MessageList'
-import { data } from './sampleData'
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import MessageList from "./MessageList/MessageList";
+import { data } from "./sampleData";
+import { getConversations } from "../../../../store/messagesSlice";
+import { RootState } from "store/store";
+import { IUserConversation } from "types/interfaces";
 
 const MessagesLists = () => {
-  return (
-    <div className='overflow-x-auto h-48'>
-      {data.map(({ id, message, name, online, read, received, seen, sent }) => (
-        <div key={id}>
-          <MessageList 
-            message={message}
-            name={name}
-            online={online}
-            read={read}
-            received={received}
-            seen={seen}
-            sent={sent}
-          />
-        </div>
-      ))}
-    </div>
-  )
-}
+  const { conversations } = useSelector((state: RootState) => state.messages);
+  const dispatch = useDispatch();
 
-export default MessagesLists
+  useEffect(() => {
+    dispatch(getConversations());
+  }, [dispatch]);
+
+  return (
+    <div className="overflow-x-auto h-48">
+      {conversations?.length !== 0 ? (
+        <>
+          {conversations?.map(({ id, message, user }: any) => (
+            <div key={id}>
+              <MessageList message={message} user={user} id={id} />
+            </div>
+          ))}
+        </>
+      ) : (
+        <div className="h-full w-full grid place-content-center">
+          <p>There are no Conversations</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default MessagesLists;

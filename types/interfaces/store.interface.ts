@@ -3,21 +3,21 @@ export interface IUser {
 	id: number
 	firstname: string
 	lastname: string
+	username: string
 	email: string
-	password: string
-	role: {
-		id: number
-		role_name: string
-		description: string
-	}
 	isActive: boolean
 	createdAt: string
 	updatedAt: string
 	access_token: string
+	refresh_token: string
 	country: string
 	grade: string
 	schoolCountry: string
 	schoolName: string
+	is_parent: boolean
+	is_student: boolean
+	is_teacher: boolean
+	auth: IUserData
 }
 
 export interface IModal {
@@ -32,6 +32,10 @@ export interface IAllClasses {
 	classes: IClass[]
 }
 
+export interface IAllCurriculum {
+	allCurriculum: Icurriculum[]
+}
+
 export interface IAddClass {
 	student: ISingleStudent
 	class: ISingleClass
@@ -42,25 +46,104 @@ export interface IUnitsSlice {
 		standard: string
 		units: Array<{
 			id: number | string
-			unit: string
+			title: string
 			isCurrent: boolean
 			startDate: string
 			endDate: string
 			hoverText: string
 			isChosen: boolean
 		}>
-		levels: string[]
+		rearrangedUnits: Array<{
+			description: string
+			end_date: string
+			grades: string[]
+			is_current: boolean
+			is_finished: boolean
+			level: string
+			standard: string
+			start_date: string
+			title: string
+			class_model: string | number
+		}>
+		levels: string
 		grades: string[]
 		chosenGrades: string[]
+		unitsWithError: string[]
 	}
 }
 
+export interface IFetch {
+	errorModalOpen: boolean
+	errors: string[]
+	loading: boolean
+	loadingText: string
+}
+export interface IUserConversation {
+	conversations: Conversations[]
+	openedMessageStudent: number | null
+	openedStudentMessages: string[]
+}
+
+export interface IUserStudent {
+	newStudent: Student | null
+	students: Student[]
+	studentComments: Array<{
+		text: string
+		id: number | string
+		date: string
+	}>
+}
+
 // ============EXTRA INTERFACES AND TYPES
+export interface IUserData {
+	firstname: string
+	lastname: string
+	username: string
+	email: string
+	password: string
+	country: string
+	// peculiar to students
+	grade: string
+	// peculiar to teachers
+	schoolCountry: string
+	schoolName: string
+	is_parent: boolean
+	is_student: boolean
+	is_teacher: boolean
+}
 
 export interface IClass {
-	students: ISingleStudent[]
-	classDetails: ISingleClass
-	teacher: ITeacher
+	teacher: {
+		email: string
+		firstname: string
+		lastname: string
+		country: string
+		schoolName: string
+		id: string | number
+	}
+	className: string
+	roomNumber: number | string
+	subject: string
+	coTeachers: string
+	grade: string
+	color: string
+	totalStudent: number | string
+	id: number | string
+}
+
+export interface Icurriculum {
+	title: string
+	description: string
+	end_date: string
+	start_date: string
+	teacher: null | string
+	grades: string[]
+	id: number
+	standard: string
+	level: string
+	is_current: boolean
+	is_finished: boolean
+	class_model: string | number
 }
 
 export interface ITeacher {
@@ -69,9 +152,10 @@ export interface ITeacher {
 }
 
 export interface ISingleStudent {
-	studentName: string
-	studentId: string
-	studentEmail: string
+	firstName: string
+	lastName: string
+	email: string
+	username: string
 }
 
 export interface ISingleClass {
@@ -101,8 +185,8 @@ export interface CurrentClassState {
 }
 
 export interface ILevels {
-	level: string
 	unitsId: Array<string>
+	title: string
 	grades: Array<string>
 	hoverText: string
 }
@@ -127,10 +211,11 @@ export interface AssignmentDetails {
 export interface CurrentClassState {
 	className: string
 	color: string
+	id: string | number
 }
 
 export interface ILevels {
-	level: string
+	title: string
 	unitsId: Array<string>
 	grades: Array<string>
 	hoverText: string
@@ -153,17 +238,45 @@ export interface AssignmentDetails {
 	students: AssignmentStudent[]
 }
 
-export interface SkillTests {
-	testId: string
-	testTitle: string
+export interface ISchedule {
+	Id: string
+	Subject: string
+	Location: string
+	StartTime: string
+	EndTime: string
 }
 
-export interface SkillDetails {
-	categoryId: string
-	categoryTitle: string
-	tests: SkillTests[]
+export interface Conversations {
+	user: User
+	message: IMessage
+	id: number
 }
 
-export interface DynamicChechbox {
-	[key: string]: boolean
+export interface User {
+	firstName: string
+	lastName: string
+	email: string
+	id: number
+}
+
+export interface IMessage {
+	user: User
+	text: string
+	is_read: boolean
+	date: string
+	id: number
+}
+
+export interface Student {
+	firstName: string
+	lastName: string
+	email: string
+}
+
+export interface INotes {
+	html: string
+}
+
+export interface Schedule {
+	allSchedule: []
 }
