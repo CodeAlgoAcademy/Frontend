@@ -131,6 +131,15 @@ export interface IClass {
   id: number | string;
 }
 
+export interface Ilessons {
+  title: string;
+  id: number;
+  description: string;
+  unit_name: string;
+  date: string;
+  status: string
+}
+
 export interface Icurriculum {
   title: string;
   description: string;

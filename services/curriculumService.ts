@@ -92,3 +92,5 @@ export const updateCurrentCurriculum: any = createAsyncThunk(
     } catch (error: any) {}
   }
 );
+
+
