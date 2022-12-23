@@ -106,7 +106,6 @@ export const loginWithGoogle: any = createAsyncThunk(
       const { data } = await http.post("/auth/google/", {
         access_token,
       });
-      console.log(data);
       return {
         access_token: data.access_token,
         refresh_token: data.refresh_token,
