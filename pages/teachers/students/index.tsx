@@ -35,7 +35,7 @@ const Index = () => {
       return {
         students: students?.students?.filter((student: any) => {
           if (
-            (student.firstName + student.lastName)
+            (student.firstName + " " + student.lastName)
               .toLowerCase()
               .includes(value.toLowerCase())
           ) {
