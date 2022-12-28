@@ -107,19 +107,21 @@ function Calendar () {
                      selectedDate={ new Date() }
                      ref={ schedule => scheduleObj = schedule }
                      eventSettings={ { dataSource: data } }
-                     actionBegin={ (args: ActionEventArgs) => {
+                     actionComplete={ async (args: ActionEventArgs) => {
                         const { requestType, changedRecords, addedRecords, deletedRecords } = args
                         let performAction: any = false
-                        if (requestType === "eventCreate") {
-                           if (addedRecords?.length) performAction = addSchedule(addedRecords)
-                        } else if (requestType === "eventChange") {
-                           if (addedRecords?.length) performAction = addSchedule(addedRecords)
-                           if (changedRecords?.length) performAction = changeSchedule(changedRecords)
-                           if (deletedRecords?.length) performAction = popSchedule(deletedRecords)
-                        } else if (requestType === "eventRemove") {
-                           if (deletedRecords?.length) performAction = popSchedule(deletedRecords)
+                        let isOnLine = navigator.onLine
+                        if (requestType === "eventCreated") {
+                           if (addedRecords?.length) performAction = await addSchedule(addedRecords)
+                        } else if (requestType === "eventChanged") {
+                           if (addedRecords?.length) performAction = await addSchedule(addedRecords)
+                           if (changedRecords?.length) performAction = await changeSchedule(changedRecords)
+                           if (deletedRecords?.length) performAction = await popSchedule(deletedRecords)
+                        } else if (requestType === "eventRemoved") {
+                           if (deletedRecords?.length) performAction = await popSchedule(deletedRecords)
                         }
-                        if (!performAction) args.cancel = true
+                        let isEventRequest = (requestType === "eventChanged" || requestType === "eventRemoved" || requestType === "eventCreated")
+                        if (!performAction && isEventRequest && !isOnLine) args.cancel = true
                      } }
                   >
                      <ViewsDirective>
