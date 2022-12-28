@@ -8,12 +8,18 @@ import AddStudentModal from "../../../components/Teachers/students/AddStudentMod
 import Students from "../../../components/Teachers/students/Students";
 import { RootState } from "store/store";
 import { getStudents } from "store/studentSlice";
+import { FaSearch } from "react-icons/fa";
 
 const Index = () => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { id } = useSelector((state: RootState) => state.currentClass);
   const [commentTabsOpened, setCommentTabsOpened] = useState<boolean>(false);
+  const { students } = useSelector((state: any) => state.students);
+  const [filteredStudents, setFilteredStudents] = useState({
+    students: students?.students,
+  });
+
   useEffect(() => {
     dispatch(getStudents());
   }, [id]);
@@ -22,6 +28,22 @@ const Index = () => {
     if (event.target.classList.contains("students-container")) {
       setCommentTabsOpened(false);
     }
+  };
+
+  const filterStudents = (value: string) => {
+    setFilteredStudents((prev) => {
+      return {
+        students: students?.students?.filter((student: any) => {
+          if (
+            (student.firstName + " " + student.lastName)
+              .toLowerCase()
+              .includes(value.toLowerCase())
+          ) {
+            return student;
+          }
+        }),
+      };
+    });
   };
   return (
     <>
@@ -50,8 +72,31 @@ const Index = () => {
               </IconButton>
             </div>
           </div> */}
+          <div className="flex justify-end w-full mt-4">
+            <form
+              className="w-[90vw]  gap-x-2 max-w-[250px] flex rounded-full border-2 border-mainPurple bg-white"
+              onSubmit={(e) => {
+                e.preventDefault();
+              }}
+            >
+              <input
+                type="text"
+                placeholder="Search Students"
+                className="bg-transparent py-2 px-4 flex-[.8] border-none outline-none"
+                onChange={(e) => {
+                  filterStudents(e.target.value);
+                }}
+              />
+              <button className="flex-[.2]" type="submit">
+                <FaSearch />
+              </button>
+            </form>
+          </div>
 
-          <Students commentTabsOpened={commentTabsOpened} />
+          <Students
+            commentTabsOpened={commentTabsOpened}
+            students={filteredStudents}
+          />
           {isOpen && <AddStudentModal setIsOpen={setIsOpen} />}
         </div>
       </div>

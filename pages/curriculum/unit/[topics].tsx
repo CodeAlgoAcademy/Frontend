@@ -39,9 +39,10 @@ export default function Unit() {
   
   useEffect(() => {
     getLessonsAll();
-}, []);
+}, [topics]);
 
 const { lessons } = useSelector((state: RootState) => state.allLessons)
+
 
 console?.log(lessons)
 
@@ -82,7 +83,7 @@ console?.log(lessons)
 
         <div className="px-[5.5rem] py-[2rem] w-full">
           <div className="flex justify-start items-center gap-6">
-            <Link href="/curriculum">
+            <Link href="/curriculum" onClick={() => {}}>
               <div className="text-[1.4rem] cursor-pointer">
                 <i>
                   <FaChevronLeft />
@@ -104,7 +105,7 @@ console?.log(lessons)
           </div>
           {/* curriculumn topic section */}
 
-          {lessons?.map((data: any) => {
+          {lessons && lessons.map((data: any) => {
             return (
               <div
                 key={data.id}

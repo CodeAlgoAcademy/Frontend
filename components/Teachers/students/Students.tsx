@@ -17,9 +17,13 @@ import {
 import { FaEdit, FaSave, FaTrash } from "react-icons/fa";
 import SingleStudent from "./singleStudent";
 
-const Students = ({ commentTabsOpened }: { commentTabsOpened: boolean }) => {
-  const { students } = useSelector((state: any) => state.students);
-
+const Students = ({
+  commentTabsOpened,
+  students,
+}: {
+  commentTabsOpened: boolean;
+  students: any;
+}) => {
   const [studentCommentOpen, setStudentCommentOpen] = useState<string>("");
   const [comment, setComment] = useState<string>("");
   const [studentCommentsTabOpen, setStudentCommentsTabOpen] =
@@ -53,7 +57,7 @@ const Students = ({ commentTabsOpened }: { commentTabsOpened: boolean }) => {
 export default Students;
 
 const styles = {
-  container: "sm:px-10 md:px-20 space-y-2 mt-20",
+  container: "px-8 space-y-2 mt-14",
   cardHeader:
     "flex justify-between py-6 px-2 sm:px-6 border-b items-center relative",
   cardHeaderName:
