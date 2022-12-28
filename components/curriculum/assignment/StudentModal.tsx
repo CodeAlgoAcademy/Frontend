@@ -1,9 +1,9 @@
 import React, { ChangeEventHandler, MouseEventHandler, useState } from 'react'
 import { RiArrowDropDownLine } from "react-icons/ri"
 import { Button } from "../../../components"
-import { AssignmentStudent, DynamicChechbox } from "../../../types/interfaces"
+import { Student, DynamicChechbox } from "types/interfaces"
 
-const StudentModal = ({ students, hideModal, handleStudentCheckboxChange, handleAllStudentChechbox, allStudentCheckbox, studentCheckbox }: { students: AssignmentStudent[]; hideModal: MouseEventHandler; handleStudentCheckboxChange: ChangeEventHandler; handleAllStudentChechbox: ChangeEventHandler; allStudentCheckbox: { isChecked: boolean }; studentCheckbox: DynamicChechbox }) => {
+const StudentModal = ({ students, hideModal, handleStudentCheckboxChange, handleAllStudentChechbox, allStudentCheckbox, studentCheckbox }: { students: Student[]; hideModal: MouseEventHandler; handleStudentCheckboxChange: Function; handleAllStudentChechbox: ChangeEventHandler; allStudentCheckbox: { isChecked: boolean }; studentCheckbox: DynamicChechbox }) => {
    return (
       <div className="py-12 h-[500px] min-w-[800px]">
          <h3 className="text-2xl font-semibold pl-12">Student(s)</h3>
@@ -25,12 +25,12 @@ const StudentModal = ({ students, hideModal, handleStudentCheckboxChange, handle
             </div>
          </div>
          <div className="p-12 h-[250px] grid grid-cols-4 scroll-smooth overflow-y-auto gap-x-6 gap-y-8 small-scroll-thumb">
-            { students.map(({ studentId }) => (<div key={ studentId } className="flex items-center gap-4">
+            { students.map(({ email, firstName, lastName }) => (<div key={ email } className="flex items-center gap-4">
                <label className="checkbox-container bottom-1">
-                  <input type="checkbox" name={ studentId } checked={ studentCheckbox[studentId] } onChange={ handleStudentCheckboxChange } />
+                  <input type="checkbox" name={ email } checked={ studentCheckbox[email] } onChange={ () => { handleStudentCheckboxChange({ email, firstName, lastName }) } } />
                   <span className="checkmark small-checkmark"></span>
                </label>
-               <p className="font-semibold">Students { studentId }</p>
+               <p className="font-semibold">Students { email }</p>
             </div>)) }
          </div>
          <div className="px-12 py-4 flex flex-row-reverse">

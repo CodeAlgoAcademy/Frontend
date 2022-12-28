@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react"
 import Link from "next/link"
 
-import { Button, Sidebar, GeneralNav } from "../../components"
+import { Button, Sidebar, GeneralNav } from "components"
 import { BsPlusCircle } from "react-icons/bs"
 import { FaTimes } from "react-icons/fa"
 import { IoPersonAddOutline } from "react-icons/io5"
 import { TbMedal } from "react-icons/tb"
-import { StudentModal, SkillModal } from "../../components/curriculum/assignment"
+import { StudentModal, SkillModal } from "components/curriculum/assignment"
 
-import { RootState } from "../../store/store"
+import { RootState } from "store/store"
 import { useSelector, useDispatch } from "react-redux"
-import { saveAssignment } from "../../store/newAssignmentSlice"
+import { saveAssignment } from "store/newAssignmentSlice"
+import { getStudents } from "store/studentSlice"
 
-import { SkillDetails, AssignmentDetails, AssignmentSkill, AssignmentStudent, DynamicChechbox } from "../../types/interfaces"
-
+import { SkillDetails, AssignmentDetails, AssignmentSkill, Student, DynamicChechbox } from "types/interfaces"
 
 const Assignments = () => {
    const modalDefaults = {
@@ -43,10 +43,7 @@ const Assignments = () => {
       (state: RootState): SkillDetails[] => state.skills
    )
 
-   const testStudents = [
-      { studentId: '1' }, { studentId: '2' }, { studentId: '3' }, { studentId: '4' }, { studentId: '5' }, { studentId: '6' }, { studentId: '7' }, { studentId: '8' }, { studentId: '9' }, { studentId: '10' }, { studentId: '11' }, { studentId: '12' }, { studentId: '13' }, { studentId: '14' }, { studentId: '15' }, { studentId: '16' }, { studentId: '17' }, { studentId: '18' }, { studentId: '19' }, { studentId: '20' }, { studentId: '21' }, { studentId: '22' }, { studentId: '23' }, { studentId: '24' }, { studentId: '25' }, { studentId: '26' }, { studentId: '27' }, { studentId: '28' }, { studentId: '29' }, { studentId: '30' }
-   ]
-
+   const { students } = useSelector((state: RootState) => state.students)
    const addSkill = (newSkill: AssignmentSkill) => {
       setAssignmentDetails((prev) => {
          const prevSkills = prev.skills
@@ -60,16 +57,16 @@ const Assignments = () => {
          return { ...prev, skills: newSkills }
       })
    }
-   const addStudent = (newStudent: AssignmentStudent) => {
+   const addStudent = (newStudent: Student) => {
       setAssignmentDetails((prev) => {
          const prevStudents = prev.students
          return { ...prev, students: [...prevStudents, newStudent] }
       })
    }
-   const removeStudent = (newStudent: AssignmentStudent) => {
+   const removeStudent = (newStudent: Student) => {
       setAssignmentDetails((prev) => {
          const prevStudents = prev.students
-         const newStudents = prevStudents.filter(student => student.studentId !== newStudent.studentId)
+         const newStudents = prevStudents.filter(student => student.email !== newStudent.email)
          return { ...prev, students: newStudents }
       })
    }
@@ -91,16 +88,16 @@ const Assignments = () => {
          removeSkill({ skillId: e.target.name })
       }
    }
-   const handleStudentCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+   const handleStudentCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>, studentDetails: Student) => {
       setStudentCheckbox((prev) => ({
          ...prev,
          [e.target.name]: e.target.checked,
       }))
       const value = e.target.checked
       if (value) {
-         addStudent({ studentId: e.target.name })
+         addStudent(studentDetails)
       } else {
-         removeStudent({ studentId: e.target.name })
+         removeStudent(studentDetails)
       }
    }
    const handleAllStudentChechbox = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,7 +107,7 @@ const Assignments = () => {
       const value = e.target.checked
       if (value) {
          setAssignmentDetails((prev) => {
-            return { ...prev, students: testStudents }
+            return { ...prev, students: students }
          })
          const newCheckboxes = Object.keys(studentCheckbox).reduce((prev, student) => {
             return { ...prev, [student]: true }
@@ -139,24 +136,30 @@ const Assignments = () => {
    }
    useEffect(() => {
       assingmentSkills.forEach((skillCategory) => {
-         const testStudents = skillCategory.tests
-         testStudents.forEach((test) => {
+         const students = skillCategory.tests
+         students.forEach((test) => {
             setSkillCheckbox((prev) => ({
                ...prev,
                [test.testId]: false
             }))
          })
       })
-      testStudents.forEach((student) => {
+      students.forEach((student) => {
          setStudentCheckbox((prev) => ({
             ...prev,
-            [student.studentId]: false
+            [student.email]: false
          }))
       })
    }, [])
+   const fetchAllStudents = async () => {
+      await getStudents()
+   }
    useEffect(() => {
       setAssignmentDetails((prev) => ({ ...prev, number: 0 }))
    }, [assignmentDetails.skills])
+   useEffect(() => {
+      fetchAllStudents()
+   }, [])
    return (
       <div className='min-h-[100vh] flex flex-col'>
          <GeneralNav />
@@ -350,7 +353,7 @@ const Assignments = () => {
                         <SkillModal skills={ assingmentSkills } hideModal={ hideModal } handleSkillCheckboxChange={ handleSkillCheckboxChange } skillCheckbox={ skillCheckbox } />
                      }
                      { modalItemsDisplay?.studentResponse &&
-                        <StudentModal students={ testStudents } hideModal={ hideModal } handleStudentCheckboxChange={ handleStudentCheckboxChange } handleAllStudentChechbox={ handleAllStudentChechbox } allStudentCheckbox={ allStudentCheckbox } studentCheckbox={ studentCheckbox } />
+                        <StudentModal students={ students } hideModal={ hideModal } handleStudentCheckboxChange={ handleStudentCheckboxChange } handleAllStudentChechbox={ handleAllStudentChechbox } allStudentCheckbox={ allStudentCheckbox } studentCheckbox={ studentCheckbox } />
                      }
                   </div>
                }
