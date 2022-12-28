@@ -195,17 +195,13 @@ export interface AssignmentSkill {
 	skillId: string
 }
 
-export interface AssignmentStudent {
-	studentId: string
-}
-
 export interface AssignmentDetails {
 	title: string
 	schedule: string
 	order: string
 	number: number
 	skills: AssignmentSkill[]
-	students: AssignmentStudent[]
+	students: Student[]
 }
 
 export interface CurrentClassState {
@@ -221,21 +217,19 @@ export interface ILevels {
 	hoverText: string
 }
 
-export interface AssignmentSkill {
-	skillId: string
+export interface SkillTests {
+	testId: string
+	testTitle: string
 }
 
-export interface AssignmentStudent {
-	studentId: string
+export interface SkillDetails {
+	categoryId: string
+	categoryTitle: string
+	tests: SkillTests[]
 }
 
-export interface AssignmentDetails {
-	title: string
-	schedule: string
-	order: string
-	number: number
-	skills: AssignmentSkill[]
-	students: AssignmentStudent[]
+export interface DynamicChechbox {
+	[key: string]: boolean
 }
 
 export interface ISchedule {
