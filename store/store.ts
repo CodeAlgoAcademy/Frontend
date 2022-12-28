@@ -7,13 +7,16 @@ import modalReducer from "./modalSlice"
 import addClassReducer from "./addClassSlice"
 import allClassesReducer from "./allClassesSlice"
 import currentClassReducer from "./currentClassSlice"
-import unitsSlice from "./unitsSlice"
 import scheduleReducer from "./scheduleSlice"
 import messagesReducer from "./messagesSlice"
 import allCurriculumReducer from "./allCurriculumSlice"
 import notesReducer from "./notesSlice"
 import fetchReducer from "./fetchSlice"
 import studentReducer from "./studentSlice"
+import skillsReducer from "./skillsSlice"
+import unitsSlice from "./unitsSlice"
+import newAssignmentReducer from "./newAssignmentSlice"
+
 const persistConfig = {
 	key: "root",
 	storage
@@ -31,7 +34,9 @@ const rootReducer = combineReducers({
 	notes: notesReducer,
 	fetch: fetchReducer,
 	messages: messagesReducer,
-	students: studentReducer
+	students: studentReducer,
+	skills: skillsReducer,
+	assignment: newAssignmentReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
