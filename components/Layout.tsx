@@ -47,7 +47,7 @@ const Layout = ({ children }: Props) => {
   return (
     <GoogleOAuthProvider
       clientId={
-        "1015154836917-ria2t0r69q3jgc9td4cqb76h7lmnkann.apps.googleusercontent.com"
+        "940744515784-51rroq4l7a90e7j41r5dl8lcrotg02nc.apps.googleusercontent.com"
       }
     >
       <div>
