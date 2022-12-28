@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from "react"
 import Link from "next/link"
 
-import { Button, Sidebar, GeneralNav } from "../../components"
+import { Button, Sidebar, GeneralNav } from "components"
 import { BsPlusCircle } from "react-icons/bs"
 import { FaTimes } from "react-icons/fa"
 import { IoPersonAddOutline } from "react-icons/io5"
 import { TbMedal } from "react-icons/tb"
-import { RiArrowDropDownLine } from "react-icons/ri"
-import { HiMagnifyingGlass } from "react-icons/hi2"
+import { StudentModal, SkillModal } from "components/curriculum/assignment"
 
-import { RootState } from "../../store/store"
+import { RootState } from "store/store"
 import { useSelector, useDispatch } from "react-redux"
-import { updateCurrentClass } from "../../store/currentClassSlice"
+import { saveAssignment } from "store/newAssignmentSlice"
+import { getStudents } from "store/studentSlice"
 
-import { IClass, CurrentClassState, AssignmentDetails, AssignmentSkill, AssignmentStudent } from "../../types/interfaces"
-
-interface DynamicChechbox {
-   [key: string]: boolean
-}
+import { SkillDetails, AssignmentDetails, AssignmentSkill, Student, DynamicChechbox } from "types/interfaces"
 
 const Assignments = () => {
    const modalDefaults = {
@@ -43,14 +39,11 @@ const Assignments = () => {
       students: []
    })
 
-   const testSkills = [
-      { categoryId: '1', categoryTitle: "1.OA.1", skills: [{ skillId: '1', name: "" }, { skillId: '2', name: "" }, { skillId: '3', name: "" }, { skillId: '4', name: "" }, { skillId: '5', name: "" }, { skillId: '6', name: "" }, { skillId: '7', name: "" }] }, { categoryId: '2', categoryTitle: "1.OA.2", skills: [{ skillId: '8', name: "" }, { skillId: '9', name: "" }, { skillId: '10', name: "" }, { skillId: '11', name: "" }] }, { categoryId: '3', categoryTitle: "1.OA.3", skills: [{ skillId: '12', name: "" }, { skillId: '13', name: "" }, { skillId: '14', name: "" }] }, { categoryId: '4', categoryTitle: "1.OA.4", skills: [{ skillId: '15', name: "" }, { skillId: '16', name: "" }, { skillId: '17', name: "" }, { skillId: '18', name: "" }, { skillId: '19', name: "" }] }, { categoryId: '5', categoryTitle: "1.OA.5", skills: [{ skillId: '20', name: "" }] }, { categoryId: '7', categoryTitle: "1.OA.7", skills: [{ skillId: '21', name: "" }] }, { categoryId: '8', categoryTitle: "1.OA.8", skills: [{ skillId: '22', name: "" }, { skillId: '23', name: "" }, { skillId: '24', name: "" }] }
-   ]
+   const assingmentSkills = useSelector(
+      (state: RootState): SkillDetails[] => state.skills
+   )
 
-   const testStudents = [
-      { studentId: '1' }, { studentId: '2' }, { studentId: '3' }, { studentId: '4' }, { studentId: '5' }, { studentId: '6' }, { studentId: '7' }, { studentId: '8' }, { studentId: '9' }, { studentId: '10' }, { studentId: '11' }, { studentId: '12' }, { studentId: '13' }, { studentId: '14' }, { studentId: '15' }, { studentId: '16' }, { studentId: '17' }, { studentId: '18' }, { studentId: '19' }, { studentId: '20' }, { studentId: '21' }, { studentId: '22' }, { studentId: '23' }, { studentId: '24' }, { studentId: '25' }, { studentId: '26' }, { studentId: '27' }, { studentId: '28' }, { studentId: '29' }, { studentId: '30' }
-   ]
-
+   const { students } = useSelector((state: RootState) => state.students)
    const addSkill = (newSkill: AssignmentSkill) => {
       setAssignmentDetails((prev) => {
          const prevSkills = prev.skills
@@ -64,16 +57,16 @@ const Assignments = () => {
          return { ...prev, skills: newSkills }
       })
    }
-   const addStudent = (newStudent: AssignmentStudent) => {
+   const addStudent = (newStudent: Student) => {
       setAssignmentDetails((prev) => {
          const prevStudents = prev.students
          return { ...prev, students: [...prevStudents, newStudent] }
       })
    }
-   const removeStudent = (newStudent: AssignmentStudent) => {
+   const removeStudent = (newStudent: Student) => {
       setAssignmentDetails((prev) => {
          const prevStudents = prev.students
-         const newStudents = prevStudents.filter(student => student.studentId !== newStudent.studentId)
+         const newStudents = prevStudents.filter(student => student.email !== newStudent.email)
          return { ...prev, students: newStudents }
       })
    }
@@ -95,16 +88,16 @@ const Assignments = () => {
          removeSkill({ skillId: e.target.name })
       }
    }
-   const handleStudentCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+   const handleStudentCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>, studentDetails: Student) => {
       setStudentCheckbox((prev) => ({
          ...prev,
          [e.target.name]: e.target.checked,
       }))
       const value = e.target.checked
       if (value) {
-         addStudent({ studentId: e.target.name })
+         addStudent(studentDetails)
       } else {
-         removeStudent({ studentId: e.target.name })
+         removeStudent(studentDetails)
       }
    }
    const handleAllStudentChechbox = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,7 +107,7 @@ const Assignments = () => {
       const value = e.target.checked
       if (value) {
          setAssignmentDetails((prev) => {
-            return { ...prev, students: testStudents }
+            return { ...prev, students: students }
          })
          const newCheckboxes = Object.keys(studentCheckbox).reduce((prev, student) => {
             return { ...prev, [student]: true }
@@ -142,25 +135,31 @@ const Assignments = () => {
       setModalItemsDisplay((prev) => prev = ({ ...modalDefaults, [modalName]: true }))
    }
    useEffect(() => {
-      testSkills.forEach((skillCategory) => {
-         const skills = skillCategory.skills
-         skills.forEach((skill) => {
+      assingmentSkills.forEach((skillCategory) => {
+         const students = skillCategory.tests
+         students.forEach((test) => {
             setSkillCheckbox((prev) => ({
                ...prev,
-               [skill.skillId]: false
+               [test.testId]: false
             }))
          })
       })
-      testStudents.forEach((student) => {
+      students.forEach((student) => {
          setStudentCheckbox((prev) => ({
             ...prev,
-            [student.studentId]: false
+            [student.email]: false
          }))
       })
    }, [])
+   const fetchAllStudents = async () => {
+      await getStudents()
+   }
    useEffect(() => {
       setAssignmentDetails((prev) => ({ ...prev, number: 0 }))
    }, [assignmentDetails.skills])
+   useEffect(() => {
+      fetchAllStudents()
+   }, [])
    return (
       <div className='min-h-[100vh] flex flex-col'>
          <GeneralNav />
@@ -299,7 +298,7 @@ const Assignments = () => {
             </div>
          </div>
          {
-            <div className={ `w-full h-full ${modalWrapperDisplay ? "showModal" : "hideModal"} backdrop-blur-sm bg-gray-100/50 fixed left-0 z-50 flex justify-center items-center` }>
+            <div className={ `w-full h-full ${modalWrapperDisplay ? "showModal" : "hideModal"} backdrop-blur-sm bg-gray-100/50 fixed left-0 flex justify-center items-center` }>
                {
                   modalWrapperDisplay &&
                   <div className="relative max-w-[850px] bg-white rounded-xl">
@@ -351,113 +350,10 @@ const Assignments = () => {
                         </div>
                      }
                      { modalItemsDisplay?.skillsResponse &&
-                        <div className="py-8 min-h-[650px] w-full">
-                           <div className="flex gap-8 pl-12  h-full items-stretch mb-auto grow">
-                              <div className="w-[180px] flex flex-col justify-between">
-                                 <div>
-                                    <h3 className="text-2xl font-semibold">Select Skill</h3>
-                                    <div className="mt-12 flex flex-col gap-4">
-                                       <div className="px-4 py-2 flex items-center justify-between w-full rounded-lg h-[46px] bg-gray-100 drop-shadow-md">
-                                          <p className="opacity-60 text-sm font-semibold">
-                                             Computer
-                                          </p>
-                                       </div>
-                                       <div className="px-4 py-2 flex items-center justify-between w-full rounded-lg h-[46px] bg-gray-100 drop-shadow-md">
-                                          <p className="opacity-60 text-sm font-semibold truncate ...">
-                                             Common Core
-                                          </p>
-                                          <span className="opacity-60 text-3xl cursor-pointer">
-                                             <RiArrowDropDownLine />
-                                          </span>
-                                       </div>
-                                       <div className="px-4 py-2 flex items-center justify-between w-full rounded-lg h-[46px] bg-gray-100 drop-shadow-md">
-                                          <p className="opacity-60 text-sm font-semibold truncate ...">
-                                             Grade 1
-                                          </p>
-                                          <span className="opacity-60 text-3xl cursor-pointer">
-                                             <RiArrowDropDownLine />
-                                          </span>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <span onClick={ hideModal } className="">
-                                    <Button color="#F28E2C" text="Done" />
-                                 </span>
-                              </div>
-                              <div>
-                                 <div className="relative max-w-[450px] bg-gray-100 rounded-lg px-16 py-[10px]">
-                                    <input type="text" className="bg-transparent outline-none border-none placeholder:font-semibold" name="asd" id="sd" placeholder="Search skill" />
-                                    <span className="absolute left-4 top-3 text-2xl text-gray-400"><HiMagnifyingGlass /> </span>
-                                 </div>
-                                 <div className="mt-12 h-[500px] pr-4 scroll-smooth overflow-y-auto grid grid-cols-1 gap-6 small-scroll-thumb">
-                                    { testSkills.map(({ categoryId, categoryTitle, skills }) => (<div key={ categoryTitle } className="rounded-xl bg-white drop-shadow-md border max-w-[550px]">
-                                       <div className="border-b h-14 px-4 flex justify-between gap-8 items-center relative">
-                                          <div className="flex items-center gap-4">
-                                             <div className="text-[#F28E2C] text-3xl"><TbMedal /></div>
-                                             <div className="flex items-center gap-2">
-                                                <h3 className="font-bold text-lg">{ categoryTitle }</h3>
-                                                <p className="opacity-60 text-sm font-semibold truncate ... w-[300px]">
-                                                   Use addition and subtraction with 20 to solve world hunger
-                                                </p>
-                                             </div>
-                                          </div>
-                                          <span className="bg-[#F28E2C]/70 text-xs font-bold opacity-70 rounded-2xl py-1 px-4 absolute right-4 top-4 truncate ...">{ skills.length } { skills.length > 1 ? "skills" : "skill" }</span>
-                                       </div>
-                                       <div className="divide-y">
-                                          { skills.map(({ name, skillId }) => (
-
-                                             <div key={ skillId } className="flex px-6 h-12 gap-4 items-center">
-                                                <label className="checkbox-container">
-                                                   <input type="checkbox" name={ skillId } checked={ skillCheckbox[skillId] } onChange={ handleSkillCheckboxChange } />
-                                                   <span className="checkmark small-checkmark"></span>
-                                                </label>
-                                                <p className="opacity-60 text-sm font-semibold truncate ... w-full">
-                                                   Use addition and subtraction with 20 to solve world hunger to solve world hunger
-                                                </p>
-                                             </div>))
-                                          }
-                                       </div>
-                                    </div>)) }
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
+                        <SkillModal skills={ assingmentSkills } hideModal={ hideModal } handleSkillCheckboxChange={ handleSkillCheckboxChange } skillCheckbox={ skillCheckbox } />
                      }
                      { modalItemsDisplay?.studentResponse &&
-                        <div className="py-12 h-[500px] min-w-[800px]">
-                           <h3 className="text-2xl font-semibold pl-12">Student(s)</h3>
-                           <div className="flex items-center justify-between px-12 py-4 border-b">
-                              <div className="flex items-center gap-4">
-                                 <label className="checkbox-container bottom-1">
-                                    <input type="checkbox" name="allStudents" checked={ allStudentCheckbox.isChecked } onChange={ handleAllStudentChechbox } />
-                                    <span className="checkmark big-checkmark"></span>
-                                 </label>
-                                 <p className="font-semibold">
-                                    { allStudentCheckbox.isChecked ? "Unselect all Students" : "Select all Students" }
-                                 </p>
-                              </div>
-                              <div className="rounded-md px-3 gap-6 flex items-center border py-1">
-                                 <span className="opacity-70 font-semibold">Class</span>
-                                 <span className="opacity-60 text-3xl cursor-pointer">
-                                    <RiArrowDropDownLine />
-                                 </span>
-                              </div>
-                           </div>
-                           <div className="p-12 h-[250px] grid grid-cols-4 scroll-smooth overflow-y-auto gap-x-6 gap-y-8 small-scroll-thumb">
-                              { testStudents.map(({ studentId }) => (<div key={ studentId } className="flex items-center gap-4">
-                                 <label className="checkbox-container bottom-1">
-                                    <input type="checkbox" name={ studentId } checked={ studentCheckbox[studentId] } onChange={ handleStudentCheckboxChange } />
-                                    <span className="checkmark small-checkmark"></span>
-                                 </label>
-                                 <p className="font-semibold">Students { studentId }</p>
-                              </div>)) }
-                           </div>
-                           <div className="px-12 py-4 flex flex-row-reverse">
-                              <span onClick={ hideModal } className="">
-                                 <Button color="#F28E2C" text="Confirm" />
-                              </span>
-                           </div>
-                        </div>
+                        <StudentModal students={ students } hideModal={ hideModal } handleStudentCheckboxChange={ handleStudentCheckboxChange } handleAllStudentChechbox={ handleAllStudentChechbox } allStudentCheckbox={ allStudentCheckbox } studentCheckbox={ studentCheckbox } />
                      }
                   </div>
                }

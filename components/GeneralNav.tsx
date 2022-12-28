@@ -37,14 +37,14 @@ const GeneralNav = () => {
   const currentClass = useSelector(
     (state: RootState): CurrentClassState => state.currentClass
   )
+
   const classDetails = classes.map((item: CurrentClassState) => {
     const { className, color, id } = item
     return { className, color, id }
   })
   const otherClassDetails = classDetails.filter(
-    (item: CurrentClassState) => item.className !== currentClass.className
+    (item) => item.className !== currentClass.className
   )
-
   const [classListView, setClassListView] = useState(false)
 
   const dropdownStyle = {
@@ -60,6 +60,7 @@ const GeneralNav = () => {
   } as React.CSSProperties
 
   const toggleUserDropDown = () => {
+    setUserDropDown(!userDropDown)
     setUserDropDown(!userDropDown)
   }
   const classBox = useRef<HTMLDivElement>(null)
@@ -363,3 +364,4 @@ const GeneralNav = () => {
 }
 
 export default GeneralNav
+
