@@ -7,7 +7,6 @@ import addClassReducer from "./addClassSlice";
 import allClassesReducer from "./allClassesSlice";
 import currentClassReducer from "./currentClassSlice";
 import unitsSlice from "./unitsSlice";
-import calendarReducer from "./calendarSlice";
 import messagesReducer from "./messagesSlice";
 import allCurriculumReducer from "./allCurriculumSlice";
 import notesReducer from "./notesSlice";
@@ -15,6 +14,9 @@ import fetchReducer from "./fetchSlice";
 import studentReducer from "./studentSlice";
 import lessonsReducer from './lessonsSlice';
 import scheduleReducer from "./scheduleSlice"
+import skillsReducer from "./skillsSlice"
+import newAssignmentReducer from "./newAssignmentSlice"
+
 const persistConfig = {
 	key: "root",
 	storage
@@ -27,13 +29,15 @@ const rootReducer = combineReducers({
   allClasses: allClassesReducer,
   currentClass: currentClassReducer,
   unit: unitsSlice,
-  calendar: calendarReducer,
   allCurriculum: allCurriculumReducer,
   allLessons: lessonsReducer,
   notes: notesReducer,
   fetch: fetchReducer,
   messages: messagesReducer,
   students: studentReducer,
+	skills: skillsReducer,
+  schedule: scheduleReducer,
+	assignment: newAssignmentReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
