@@ -43,12 +43,6 @@ const Teachers = () => {
       placeholder: "Enter School Name*",
       value: schoolName,
     },
-    {
-      name: "username",
-      type: "text",
-      placeholder: "Enter Username",
-      value: username,
-    },
   ];
 
   return (
@@ -87,6 +81,17 @@ const Teachers = () => {
           );
         })}
       </select>
+      <input
+        type="text"
+        placeholder={"Enter Username"}
+        name="username"
+        value={username}
+        required
+        className={styles.input}
+        onChange={(e) => {
+          dispatch(updateUser({ key: "username", value: e.target.value }));
+        }}
+      />
       <UsernameButton />
     </div>
   );
