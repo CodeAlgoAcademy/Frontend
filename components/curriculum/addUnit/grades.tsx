@@ -32,7 +32,7 @@ const Grade: FC<Props> = ({ openedModal, updateOpenedModal }) => {
           <div className={`${styles.preview}`}>
             {grades.length === 0 && (
               <h1 className="text-center p-2 font-bold font-lg">
-                Please select one or more levels
+                Please select a level
               </h1>
             )}
             {grades.length > 0 &&

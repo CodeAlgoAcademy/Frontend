@@ -51,7 +51,6 @@ const SignUp = () => {
 
   const updateTab = (tabName: string | undefined): void => {
     setActiveTab((prev) => tabName);
-    console.log(tabName);
     dispatch(updateUser({ key: "accountType", value: tabName as string }));
   };
 
@@ -141,7 +140,12 @@ const SignUp = () => {
             {/* display different components based on the active tab */}
             {currentTab?.component}
             <span className="flex flex-row items-center gap-x-2 mt-4">
-              <input type="checkbox" id="terms" required />
+              <input
+                type="checkbox"
+                id="terms"
+                className="accent-mainPurple"
+                required
+              />
               <label htmlFor="terms">I accept the terms and conditions</label>
             </span>
             <div className="text-right mt-4">

@@ -6,6 +6,7 @@ import {
   clearAddUnitsParams,
   displayUnitsAndGradesBasedOnLevels,
   rearrangeUnits,
+  verifyUnits,
 } from "store/unitsSlice";
 import { ILevels } from "types/interfaces";
 import Levels from "./levels";
@@ -13,7 +14,7 @@ import Standard from "./standard";
 import Unit from "./units";
 import Grade from "./grades";
 import { closeAddUnitModal } from "store/modalSlice";
-import { addUnits } from "services/curriculumService";
+import { addUnits, getAllCurriculums } from "services/curriculumService";
 
 export interface Props {
   openedModal: string;
@@ -38,7 +39,7 @@ export const availableLevels: ILevels[] = [
   {
     title: "Yellow",
     unitsId: ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
-    grades: ["5", "6", "7", "8"],
+    grades: ["5", "6", "7"],
     hoverText: "I know some coding (Grades 5 - 8)",
   },
   {
@@ -265,10 +266,12 @@ function AddUnit() {
           onClick={async () => {
             updateOpenedModal("");
             dispatch(rearrangeUnits());
+            dispatch(verifyUnits());
             const data = await dispatch(addUnits());
-            if (!data?.error?.message) {
+            if (!data?.error?.message && data.payload !== undefined) {
               dispatch(clearAddUnitsParams());
               dispatch(closeAddUnitModal());
+              await dispatch(getAllCurriculums());
             }
           }}
         >

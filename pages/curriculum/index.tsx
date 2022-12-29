@@ -1,84 +1,145 @@
-import { useEffect, useState } from "react"
-import { IoIosAddCircleOutline } from "react-icons/io"
-import loopImg from "../../public/assets/loopImg.png"
-import connect from "../../public/assets/connect.png"
-import bracket from "../../public/assets/bracket.png"
-import Image from "next/image"
-import { HiDotsHorizontal } from "react-icons/hi"
-import Link from "next/link"
-import { useRouter } from "next/router"
-import GeneralNav from "@/components/GeneralNav"
-import Sidebar from "@/components/Sidebar"
-import { useDispatch, useSelector } from "react-redux"
-import { openAddUnitModal } from "store/modalSlice"
-import AddUnit from "@/components/curriculum/addUnit"
-import { RootState } from "store/store"
-import {SlLoop} from 'react-icons/sl'
-import { getAllCurriculums } from "services/curriculumService"
-import { IAllCurriculum, Icurriculum } from "types/interfaces"
+import { useEffect, useState } from "react";
+import { IoIosAddCircleOutline } from "react-icons/io";
+import loopImg from "../../public/assets/loopImg.png";
+import connect from "../../public/assets/connect.png";
+import bracket from "../../public/assets/bracket.png";
+import Image from "next/image";
+import { HiDotsHorizontal } from "react-icons/hi";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import GeneralNav from "@/components/GeneralNav";
+import Sidebar from "@/components/Sidebar";
+import { useDispatch, useSelector } from "react-redux";
+import { openAddUnitModal } from "store/modalSlice";
+import AddUnit from "@/components/curriculum/addUnit";
+import { RootState } from "store/store";
+import { SlLoop } from "react-icons/sl";
+import { getAllCurriculums } from "services/curriculumService";
+import { IAllCurriculum, Icurriculum } from "types/interfaces";
+import { BiArrowBack } from "react-icons/bi";
+import SingleCurrentCurriculum from "@/components/curriculum/singleCurrentCurriculum";
+import SingleCurriculum from "@/components/curriculum/singleCurriculum";
 
+export default function Index() {
+  const [past, setPast] = useState<boolean>(false);
+  const [current, setCurrent] = useState<boolean>(true);
+  const [upcoming, setUpcoming] = useState<boolean>(false);
+  const [active, setActive] = useState("current");
+  const { addUnitModalOpen } = useSelector((state: RootState) => state.modal);
+  const { id } = useSelector((state: RootState) => state.currentClass);
+  const dispatch = useDispatch();
 
-export default function Index () {
-  const [past, setPast] = useState<boolean>(false)
-  const [current, setCurrent] = useState<boolean>(true)
-  const [upcoming, setUpcoming] = useState<boolean>(false)
-  const [active, setActive] = useState("current")
-  const { addUnitModalOpen } = useSelector((state: RootState) => state.modal)
-  
-  
- 
-  const dispatch = useDispatch()
-
-  
-  
   const getCurriculums = async () => {
-    const data = await dispatch(getAllCurriculums())
-    console.log(data)
-    if(!data?.error?.message) {
-
+    const data = await dispatch(getAllCurriculums());
+    if (!data?.error?.message) {
     }
-  }
+  };
 
   useEffect(() => {
-    getCurriculums();
-  }, [])
+    if (!addUnitModalOpen) {
+      getCurriculums();
+    }
+  }, []);
 
-  const {curriculum} = useSelector((state: RootState) => state.allCurriculum);
-  console.log(curriculum)
-  
+  const { curriculum } = useSelector((state: RootState) => state.allCurriculum);
 
   // curriculumn tab click functions
 
   const handlePast = () => {
-    setCurrent(false)
-    setUpcoming(false)
-    setPast(true)
-    setActive("past")
-  }
+    setCurrent(false);
+    setUpcoming(false);
+    setPast(true);
+    setActive("past");
+  };
 
   const handleCurrent = () => {
-    setPast(false)
-    setUpcoming(false)
-    setCurrent(true)
-    setActive("current")
-  }
+    setPast(false);
+    setUpcoming(false);
+    setCurrent(true);
+    setActive("current");
+  };
   const handleUpcoming = () => {
-    setPast(false)
-    setCurrent(false)
-    setUpcoming(true)
-    setActive("upcoming")
-  }
+    setPast(false);
+    setCurrent(false);
+    setUpcoming(true);
+    setActive("upcoming");
+  };
 
-  const currentCurriculum = curriculum?.filter((curriculum:Icurriculum) => {
-    return (curriculum.is_current === true )
-  })
+  const getToday = () => {
+    return {
+      day: new Date().getDate(),
+      month: new Date().getMonth() + 1,
+      year: new Date().getFullYear(),
+    };
+  };
+  const getCurriculumDate = (date: string) => {
+    const newDate: string[] = date.split("-");
+    return {
+      day: parseInt(newDate[2]),
+      month: parseInt(newDate[1]),
+      year: parseInt(newDate[0]),
+    };
+  };
+  const currentCurriculum = curriculum?.filter(
+    (tempCurriculum: Icurriculum) => {
+      if (tempCurriculum.class_model === id) {
+        const today = getToday();
+        const tempStartDate = tempCurriculum.start_date.split("-");
+        const tempEndDate = tempCurriculum.end_date.split("-");
+        const endDate = getCurriculumDate(tempCurriculum.end_date);
+        const startDate = getCurriculumDate(tempCurriculum.start_date);
+        if (
+          tempCurriculum.is_current === true &&
+          tempCurriculum.is_finished === false &&
+          (endDate.year > today.year ||
+            (endDate.year === today.year && endDate.month > today.month) ||
+            (endDate.year === today.year &&
+              endDate.month === today.month &&
+              endDate.day >= today.day)) &&
+          (startDate.year < today.year ||
+            (startDate.year === today.year && startDate.month < today.month) ||
+            (startDate.year === today.year &&
+              startDate.month === today.month &&
+              startDate.day <= today.day))
+        ) {
+          return tempCurriculum;
+        }
+      }
+    }
+  );
 
-  const pastCurriculum = curriculum?.filter((curriculum:Icurriculum) => {
-    return (curriculum.is_current === false )
-  })
+  const pastCurriculum = curriculum?.filter((tempCurriculum: Icurriculum) => {
+    return (
+      tempCurriculum.is_finished === true && tempCurriculum.class_model === id
+    );
+  });
 
+  const upcomingCurriculum = curriculum?.filter(
+    (tempCurriculum: Icurriculum) => {
+      if (tempCurriculum.class_model === id) {
+        const today = getToday();
 
- 
+        const endDate = getCurriculumDate(tempCurriculum.end_date);
+        const startDate = getCurriculumDate(tempCurriculum.start_date);
+        if (
+          tempCurriculum.is_current === false &&
+          tempCurriculum.is_finished === false &&
+          (endDate.year > today.year ||
+            (endDate.year === today.year && endDate.month > today.month) ||
+            (endDate.year === today.year &&
+              endDate.month === today.month &&
+              endDate.day >= today.day)) &&
+          (startDate.year > today.year ||
+            (startDate.year === today.year && startDate.month > today.month) ||
+            (startDate.year === today.year &&
+              startDate.month === today.month &&
+              startDate.day > today.day))
+        ) {
+          return tempCurriculum;
+        }
+      }
+    }
+  );
 
   return (
     <div className="min-h-[100vh] flex flex-col">
@@ -87,7 +148,7 @@ export default function Index () {
         <div className="sidebar bg-white w-[270px]">
           <Sidebar />
         </div>
-        { addUnitModalOpen ? (
+        {addUnitModalOpen ? (
           <AddUnit />
         ) : (
           <div className="px-[5.5rem] py-[2rem] flex-1 bg-[#EFEFEF]">
@@ -95,9 +156,9 @@ export default function Index () {
               <h1 className="font-bold text-3xl">Curriculum</h1>
               <div
                 className="flex gap-2 items-center cursor-pointer"
-                onClick={ () => {
-                  dispatch(openAddUnitModal())
-                } }
+                onClick={() => {
+                  dispatch(openAddUnitModal());
+                }}
               >
                 <IoIosAddCircleOutline className="text-4xl " />
                 <h1 className="text-[1.2rem]">Add Unit</h1>
@@ -110,7 +171,7 @@ export default function Index () {
                     ? "text-[1.2rem]  mr-8  border-b-[3px] hover:font-bold border-b-black hover:border-b-black transition duration-300 ease-out box-border"
                     : "text-[1.2rem]  mr-8 hover:font-bold  hover:border-b-black hover:border-b-[3px] box-border  transition duration-300 ease-out"
                 }
-                onClick={ handlePast }
+                onClick={handlePast}
               >
                 Past
               </h1>
@@ -121,7 +182,7 @@ export default function Index () {
                       ? "text-[1.2rem] border-b-[3px] font-bold border-b-black hover:font-bold hover:border-b-black transition duration-500 ease-out box-border"
                       : "text-[1.2rem]  hover:font-bold hover:border-b-black  hover:border-b-[3px] box-border transition duration-500 ease-out"
                   }
-                  onClick={ handleCurrent }
+                  onClick={handleCurrent}
                 >
                   Current
                 </h1>
@@ -132,150 +193,75 @@ export default function Index () {
                     ? "text-[1.2rem] ml-8 border-b-[3px] border-b-black  font-bold hover:font-bold hover:border-b-black transition duration-500 ease-out box-border"
                     : "text-[1.2rem] ml-8  hover:font-bold hover:border-b-black hover:border-b-[3px] box-border transition duration-500 ease-out"
                 }
-                onClick={ handleUpcoming }
+                onClick={handleUpcoming}
               >
                 Upcoming
               </h1>
             </div>
 
-            {/* curriculumn section */ }
+            {/* curriculumn section */}
 
             <div>
-              {/* current curriculum */ }
-              { current && (
+              {/* current curriculum */}
+              {current && (
                 <>
-                    <h1 className="text-[1.5rem] font-bold mt-10 w-full">
-                         Current Unit
-                    </h1>
-                    <div className="grid lg:grid-cols-2 md:grid-cols-1  box-border lg:gap-[2rem] md:gap-[1rem]">
-                        {currentCurriculum?.map((curriculum: Icurriculum) => {
-                          return (
-                             
-                                  <div
-                                    key={curriculum.id}
-                                    style={ { boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" } }
-                                    className="flex rounded-xl justify-between w-[70%] bg-white h-[23rem] mt-14 overflow-hidden"
-                                  >
-                                    <div className="p-8 flex items-center justify-center" style={{background: curriculum.level}}>
-                                      <span className="text-[5rem] text-white"><SlLoop /></span>
-                                    </div>
-                                    <div className="bg-white w-[20rem] h-[17rem] p-8 ">
-                                      <div>
-                                        <HiDotsHorizontal className="ml-auto text-3xl border-[#BDBDBD] mt-[-1rem] text-[#C4C4C4]" />
-                                      </div>
-                                      <h1 className="font-bold mt-5 mb-5">{curriculum.title}</h1>
-                                      <p>
-                                        Loops contain a set of instructions that are continually
-                                        repeated until a specific set of conditions are met.
-                                      </p>
-                                      <div className="flex items-center sm:flex-col md:flex-row mt-[2.1rem] justify-between">
-                                        <p>{curriculum.start_date}</p>
-                                        <Link href="curriculum/unit">
-                                          <p className="px-5 py-[5px] whitespace-nowrap font-semibold border-black rounded-full border-2 w-fit cursor-pointer">
-                                            view unit
-                                          </p>
-                                        </Link>
-                                      </div>
-                                    </div>
-                            </div>
-                          )
-                        })}
-                      </div>
-                    </>
-              ) }
+                  <h1 className="text-[1.5rem] font-bold mt-10 w-full">
+                    Current Unit
+                  </h1>
+                  <div className="flex flex-col md:flex-row justify-center md:justify-start flex-wrap  box-border lg:gap-[2rem] md:gap-[1rem]">
+                    {currentCurriculum?.map((curriculum: Icurriculum) => {
+                      return (
+                        <SingleCurrentCurriculum
+                          curriculum={curriculum}
+                          key={curriculum.id}
+                        />
+                      );
+                    })}
+                  </div>
+                </>
+              )}
 
-              {/* Past */ }
+              {/* Past */}
 
-              { past && (
+              {past && (
                 <div>
                   <h1 className="text-[1.5rem] font-bold mt-10">Past Units</h1>
-                    <div className="grid lg:grid-cols-2 md:grid-cols-1 box-border gap-[2rem]">
-                          {pastCurriculum.map((curriculum: Icurriculum) => {
-                            return (
-                                      <div className="flex-[50%]" key={curriculum.id}>
-                                        <div
-                                          style={ { boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" } }
-                                          className="flex rounded-xl overflow-hidden mt-14"
-                                        >
-                                          <div className="lg:w-[150px] w-[120px] bg-[#A0A0A0]" style={{background: curriculum.level}}></div>
-                                          <div className="bg-white flex-1 w-full h-[17rem] p-8">
-                                            <div>
-                                              <HiDotsHorizontal className="ml-auto text-3xl border-[#BDBDBD] mt-[-1rem] text-[#C4C4C4]" />
-                                            </div>
-                                            <h1 className="font-bold mb-3">{curriculum.title}</h1>
-                                            <p className="text-[15px]">
-                                              Compare multiple algorithms for the same task.
-                                              Analyze and refine multiple algorithms for the same
-                                              task and determine which algorithm is the most
-                                              efficient.
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </div>
-                            )
-                          })}
-                    </div>
+                  <div className="flex flex-col md:flex-row justify-center md:justify-start flex-wrap  box-border lg:gap-[2rem] md:gap-[1rem]">
+                    {pastCurriculum.map((curriculum: Icurriculum) => {
+                      return (
+                        <SingleCurriculum
+                          key={curriculum.id}
+                          curriculum={curriculum}
+                        />
+                      );
+                    })}
+                  </div>
                 </div>
-              ) }
+              )}
 
-              {/* upcoming */ }
+              {/* upcoming */}
 
-              { upcoming && (
+              {upcoming && (
                 <div>
                   <h1 className="text-[1.5rem] font-bold mt-10">
                     Upcoming Units
                   </h1>
-                  <div className="flex lg:flex-row flex-col items-center gap-8">
-                    <div className="flex-[50%]">
-                      <div
-                        style={ { boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" } }
-                        className="flex rounded-xl w-fit overflow-hidden mt-14"
-                      >
-                        <div className="lg:w-[150px] w-[120px] bg-[#A6CCA8] flex justify-center items-center">
-                          <Image src={ connect } alt="connect" />
-                        </div>
-                        <div className="bg-white flex-1 w-full h-[17rem] p-8">
-                          <div>
-                            <HiDotsHorizontal className="ml-auto text-3xl border-[#BDBDBD] mt-[-1rem] text-[#C4C4C4]" />
-                          </div>
-                          <h1 className="font-bold mb-3">Algorithm</h1>
-                          <p className="text-[15px]">
-                            Compare multiple algorithms for the same task.
-                            Analyze and refine multiple algorithms for the same
-                            task and determine which algorithm is the most
-                            efficient.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex-[50%]">
-                      <div
-                        style={ { boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)" } }
-                        className="flex rounded-xl w-fit overflow-hidden mt-14"
-                      >
-                        <div className="lg:w-[150px] w-[120px] bg-[#8FD3D8] flex justify-center items-center">
-                          <Image src={ bracket } alt="bracket" />
-                        </div>
-                        <div className="bg-white flex-1 w-full h-[17rem] p-8">
-                          <div>
-                            <HiDotsHorizontal className="ml-auto text-3xl border-[#BDBDBD] mt-[-1rem] text-[#C4C4C4]" />
-                          </div>
-                          <h1 className="font-bold mb-3">Variable</h1>
-                          <p className="text-[15px]">
-                            Utilize, create, and modify programs that use
-                            variables, with grade level appropriate data.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+                  <div className="flex flex-col md:flex-row justify-center md:justify-start flex-wrap  box-border lg:gap-[2rem] md:gap-[1rem]">
+                    {upcomingCurriculum.map((curriculum: Icurriculum) => {
+                      return (
+                        <SingleCurriculum
+                          key={curriculum.id}
+                          curriculum={curriculum}
+                        />
+                      );
+                    })}
                   </div>
                 </div>
-              ) }
+              )}
             </div>
           </div>
-        ) }
+        )}
       </div>
     </div>
-  )
+  );
 }

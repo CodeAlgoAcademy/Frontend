@@ -35,7 +35,7 @@ const modalSlice = createSlice({
       state.colorsModalOpen = !state.colorsModalOpen;
     },
     closeColorModal: (state: IModal) => {
-      state.colorsModalOpen = true;
+      state.colorsModalOpen = false;
     },
     openAddUnitModal: (state: IModal) => {
       state.addUnitModalOpen = true;
