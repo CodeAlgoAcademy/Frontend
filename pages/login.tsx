@@ -100,7 +100,15 @@ const Login = () => {
                 );
               })}
             </div>
-
+            <span className="flex flex-row items-center gap-x-2 mt-4">
+              <input
+                type="checkbox"
+                id="terms"
+                className="accent-mainPurple"
+                required
+              />
+              <label htmlFor="terms">I accept the terms and conditions</label>
+            </span>
             {/* login button */}
 
             <div className="text-right">
