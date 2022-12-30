@@ -242,11 +242,11 @@ export interface DynamicChechbox {
 }
 
 export interface ISchedule {
-	Id: string
+	id: string
 	Subject: string
-	Location: string
-	StartTime: string
-	EndTime: string
+	location: string
+	startTime: string
+	endTime: string
 }
 
 export interface Conversations {
