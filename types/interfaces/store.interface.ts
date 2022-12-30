@@ -70,6 +70,12 @@ export interface IUnitsSlice {
     chosenGrades: string[];
     unitsWithError: string[];
   };
+  currentUnitInView: {
+    id: string | number;
+    is_current: boolean;
+    is_finished: boolean;
+    start_date: string;
+  };
 }
 
 export interface IFetch {
@@ -141,7 +147,7 @@ export interface Icurriculum {
   start_date: string;
   teacher: null | string;
   grades: string[];
-  id: number;
+  id: number | string;
   standard: string;
   level: string;
   is_current: boolean;
@@ -205,7 +211,7 @@ export interface AssignmentDetails {
   number: number;
   skills: AssignmentSkill[];
   students: Student[];
-  isCurrent: boolean;
+  is_current: boolean;
 }
 export interface IMainAssignment {
   title: string;
@@ -214,7 +220,7 @@ export interface IMainAssignment {
   number: number;
   skills: AssignmentSkill[];
   students: Student[];
-  isCurrent: boolean;
+  is_current: boolean;
   status: string;
 }
 

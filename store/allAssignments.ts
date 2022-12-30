@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { addNewAssignments, getAssignments } from "services/assignmentService";
-import { IAllAssignments } from "types/interfaces";
+import { AssignmentDetails, IAllAssignments } from "types/interfaces";
 
 const initialState: IAllAssignments = {
   assignments: [],
@@ -25,8 +25,8 @@ const allAssignmentsReducer = createSlice({
     });
     builder.addCase(
       getAssignments.fulfilled,
-      (state: IAllAssignments, action: PayloadAction<IAllAssignments>) => {
-        return action.payload;
+      (state: IAllAssignments, action: PayloadAction<AssignmentDetails[]>) => {
+        return { ...state, assignments: action.payload };
       }
     );
     builder.addCase(getAssignments.rejected, (_, action: PayloadAction) => {

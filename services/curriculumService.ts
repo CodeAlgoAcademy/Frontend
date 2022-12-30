@@ -90,7 +90,6 @@ export const updateCurriculumToPast: any = createAsyncThunk(
           headers: { Authorization: "Bearer " + getAccessToken() },
         }
       );
-      console.log(data);
     } catch (error: any) {}
   }
 );
@@ -114,7 +113,6 @@ export const updateCurriculumToCurrent: any = createAsyncThunk(
           headers: { Authorization: "Bearer " + getAccessToken() },
         }
       );
-      console.log(data);
     } catch (error: any) {}
   }
 );

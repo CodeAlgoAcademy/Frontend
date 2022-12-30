@@ -9,7 +9,7 @@ const initialState: AssignmentDetails = {
   number: 0,
   skills: [],
   students: [],
-  isCurrent: true,
+  is_current: true,
 };
 
 const newAssignmentSlice = createSlice({

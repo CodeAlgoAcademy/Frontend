@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import http from "axios.config";
 import { openErrorModal } from "store/fetchSlice";
+import { RootState } from "store/store";
 import { AssignmentDetails } from "types/interfaces";
 import { getAccessToken } from "utils/getTokens";
 
@@ -12,26 +13,31 @@ export const addNewAssignments: any = createAsyncThunk(
       actionType,
       showModal,
       modalType,
+      resetAssignments,
     }: {
       assignment: AssignmentDetails;
       actionType: string;
       showModal: (modalName: string) => void;
       modalType: string;
+      resetAssignments: () => void;
     },
     thunkApi
   ) => {
+    const state: any = thunkApi.getState();
+    const { id, is_current, is_finished, start_date } =
+      state.unit.currentUnitInView;
     const dispatch = thunkApi.dispatch;
     const errors: string[] = [];
     // check errors
     if (assignment.title === "") {
       errors.push("Kindly Add an assignment title");
     }
-    if (!assignment.isCurrent && assignment.date === "") {
+    if (!assignment.is_current && assignment.date === "") {
       errors.push(
         "Assignment should have a start date since it is scheduled for later"
       );
     }
-    if (!assignment.isCurrent && new Date(assignment.date) === new Date()) {
+    if (!assignment.is_current && new Date(assignment.date) === new Date()) {
       errors.push(
         "Assignment date should not be todays since it is schedule for later"
       );
@@ -45,17 +51,36 @@ export const addNewAssignments: any = createAsyncThunk(
     if (assignment.students.length === 0) {
       errors.push("Select students(s) to be assigned to this tasks");
     }
-    const mainAssignment = { ...assignment, status: actionType };
-    console.log(mainAssignment);
+    // if it is past
+    if (is_finished) {
+      errors.push(
+        "The Current Unit is a past current, therefore, assignments cannot be added"
+      );
+    }
+    if (!is_current && !is_finished && new Date(start_date) > new Date()) {
+      errors.push(
+        "This unit is scheduled for a later date, kindly update to current before adding assignments"
+      );
+    }
+    const mainAssignment: any = { ...assignment, status: actionType };
+
+    mainAssignment.skills = assignment.skills.map((skill) => {
+      return { skillId: parseInt(skill.skillId) };
+    });
     try {
       if (errors.length === 0) {
-        // const { data } = await http.post("", mainAssignment, {
-        //   headers: {
-        //     Authorization: `Bearer ${getAccessToken()}`,
-        //   },
-        // });
-        // console.log(data);
+        const { data } = await http.post(
+          `/academics/curriculums/units/${id}/assignment/`,
+          mainAssignment,
+          {
+            headers: {
+              Authorization: `Bearer ${getAccessToken()}`,
+            },
+          }
+        );
         showModal(modalType);
+        resetAssignments();
+        dispatch(getAssignments());
       } else {
         dispatch(openErrorModal({ errorText: [...errors] }));
       }
@@ -68,13 +93,18 @@ export const addNewAssignments: any = createAsyncThunk(
 export const getAssignments: any = createAsyncThunk(
   "newAssignmentSlice/getAssignments",
   async (_, thunkApi) => {
+    const state: any = thunkApi.getState();
+    const { id } = state.unit.currentUnitInView;
+
     try {
-      const { data } = await http.get("", {
-        headers: {
-          Authorization: `Bearer ${getAccessToken()}`,
-        },
-      });
-      console.log(data);
+      const { data } = await http.get(
+        `/academics/curriculums/units/${id}/assignments/`,
+        {
+          headers: {
+            Authorization: `Bearer ${getAccessToken()}`,
+          },
+        }
+      );
       return data;
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.message);
