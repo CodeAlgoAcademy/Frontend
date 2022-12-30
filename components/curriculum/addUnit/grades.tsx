@@ -2,7 +2,7 @@ import React, { FC, ChangeEvent } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "store/store";
 import { Props, styles } from "./index";
-import { FaPlus } from "react-icons/fa";
+import { FaChevronDown, FaPlus } from "react-icons/fa";
 import { updateGrades } from "store/unitsSlice";
 
 const Grade: FC<Props> = ({ openedModal, updateOpenedModal }) => {
@@ -26,7 +26,7 @@ const Grade: FC<Props> = ({ openedModal, updateOpenedModal }) => {
       >
         <h1>Grade(s)</h1>
         <i>
-          <FaPlus />
+          <FaChevronDown />
         </i>
         {openedModal === "grade" && (
           <div className={`${styles.preview}`}>

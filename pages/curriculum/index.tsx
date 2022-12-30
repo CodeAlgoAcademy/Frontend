@@ -17,7 +17,6 @@ import { SlLoop } from "react-icons/sl";
 import { getAllCurriculums } from "services/curriculumService";
 import { IAllCurriculum, Icurriculum } from "types/interfaces";
 import { BiArrowBack } from "react-icons/bi";
-import SingleCurrentCurriculum from "@/components/curriculum/singleCurrentCurriculum";
 import SingleCurriculum from "@/components/curriculum/singleCurriculum";
 
 export default function Index() {
@@ -64,43 +63,12 @@ export default function Index() {
     setUpcoming(true);
     setActive("upcoming");
   };
-
-  const getToday = () => {
-    return {
-      day: new Date().getDate(),
-      month: new Date().getMonth() + 1,
-      year: new Date().getFullYear(),
-    };
-  };
-  const getCurriculumDate = (date: string) => {
-    const newDate: string[] = date.split("-");
-    return {
-      day: parseInt(newDate[2]),
-      month: parseInt(newDate[1]),
-      year: parseInt(newDate[0]),
-    };
-  };
   const currentCurriculum = curriculum?.filter(
     (tempCurriculum: Icurriculum) => {
       if (tempCurriculum.class_model === id) {
-        const today = getToday();
-        const tempStartDate = tempCurriculum.start_date.split("-");
-        const tempEndDate = tempCurriculum.end_date.split("-");
-        const endDate = getCurriculumDate(tempCurriculum.end_date);
-        const startDate = getCurriculumDate(tempCurriculum.start_date);
         if (
-          tempCurriculum.is_current === true &&
           tempCurriculum.is_finished === false &&
-          (endDate.year > today.year ||
-            (endDate.year === today.year && endDate.month > today.month) ||
-            (endDate.year === today.year &&
-              endDate.month === today.month &&
-              endDate.day >= today.day)) &&
-          (startDate.year < today.year ||
-            (startDate.year === today.year && startDate.month < today.month) ||
-            (startDate.year === today.year &&
-              startDate.month === today.month &&
-              startDate.day <= today.day))
+          new Date(tempCurriculum.start_date) <= new Date()
         ) {
           return tempCurriculum;
         }
@@ -117,23 +85,10 @@ export default function Index() {
   const upcomingCurriculum = curriculum?.filter(
     (tempCurriculum: Icurriculum) => {
       if (tempCurriculum.class_model === id) {
-        const today = getToday();
-
-        const endDate = getCurriculumDate(tempCurriculum.end_date);
-        const startDate = getCurriculumDate(tempCurriculum.start_date);
         if (
           tempCurriculum.is_current === false &&
           tempCurriculum.is_finished === false &&
-          (endDate.year > today.year ||
-            (endDate.year === today.year && endDate.month > today.month) ||
-            (endDate.year === today.year &&
-              endDate.month === today.month &&
-              endDate.day >= today.day)) &&
-          (startDate.year > today.year ||
-            (startDate.year === today.year && startDate.month > today.month) ||
-            (startDate.year === today.year &&
-              startDate.month === today.month &&
-              startDate.day > today.day))
+          new Date(tempCurriculum.start_date) > new Date()
         ) {
           return tempCurriculum;
         }
@@ -211,7 +166,8 @@ export default function Index() {
                   <div className="flex flex-col md:flex-row justify-center md:justify-start flex-wrap  box-border lg:gap-[2rem] md:gap-[1rem]">
                     {currentCurriculum?.map((curriculum: Icurriculum) => {
                       return (
-                        <SingleCurrentCurriculum
+                        <SingleCurriculum
+                          active={active}
                           curriculum={curriculum}
                           key={curriculum.id}
                         />
@@ -230,6 +186,7 @@ export default function Index() {
                     {pastCurriculum.map((curriculum: Icurriculum) => {
                       return (
                         <SingleCurriculum
+                          active={active}
                           key={curriculum.id}
                           curriculum={curriculum}
                         />
@@ -250,6 +207,7 @@ export default function Index() {
                     {upcomingCurriculum.map((curriculum: Icurriculum) => {
                       return (
                         <SingleCurriculum
+                          active={active}
                           key={curriculum.id}
                           curriculum={curriculum}
                         />

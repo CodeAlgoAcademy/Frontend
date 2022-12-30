@@ -7,7 +7,8 @@ import { addStudent, getStudents } from "store/studentSlice";
 import { Student, IInputFields } from "types/interfaces";
 import style from "@/styles/styles";
 import { FaTimes, FaChevronLeft, FaPlus } from "react-icons/fa";
-
+import { useRouter } from "next/router";
+import { getAllClasses } from "services/classesService";
 interface State {
   firstName: string;
   lastName: string;
@@ -17,6 +18,7 @@ interface State {
 
 const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const [formData, setFormData] = useState<State>({
     firstName: "",
     lastName: "",
@@ -72,6 +74,9 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
       if (data.payload?.status === 200) {
         setIsOpen(false);
         dispatch(getStudents());
+        if (router.pathname === "/addClass") {
+          dispatch(getAllClasses());
+        }
       }
     });
   };
@@ -83,6 +88,9 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
         <span
           onClick={() => {
             setIsOpen(false);
+            if (router.pathname === "/addClass") {
+              dispatch(getAllClasses());
+            }
           }}
           className="text-[30px] font-thin absolute z-10 top-[30px] right-[30px]"
         >
