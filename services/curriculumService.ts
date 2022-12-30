@@ -72,13 +72,13 @@ export const getAllCurriculums: any = createAsyncThunk(
   }
 );
 
-export const updateCurrentCurriculum: any = createAsyncThunk(
+export const updateCurriculumToPast: any = createAsyncThunk(
   "curriculumSlice/updateCurriculum",
   async (params: { curriculum: Icurriculum; id: number }, thunkApi) => {
     const rearrangedUnit: Icurriculum = {
       ...params.curriculum,
       is_current: false,
-      is_finished: false,
+      is_finished: true,
     };
 
     try {
@@ -89,6 +89,31 @@ export const updateCurrentCurriculum: any = createAsyncThunk(
           headers: { Authorization: "Bearer " + getAccessToken() },
         }
       );
+      console.log(data);
+    } catch (error: any) {}
+  }
+);
+
+export const updateCurriculumToCurrent: any = createAsyncThunk(
+  "curriculumSlice/updateCurriculum",
+  async (params: { curriculum: Icurriculum; id: number }, thunkApi) => {
+    const date = new Date();
+    const rearrangedUnit: Icurriculum = {
+      ...params.curriculum,
+      is_current: true,
+      is_finished: false,
+      start_date: `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`,
+    };
+
+    try {
+      const { data } = await http.put(
+        "/academics/curriculums/units/" + params.id,
+        rearrangedUnit,
+        {
+          headers: { Authorization: "Bearer " + getAccessToken() },
+        }
+      );
+      console.log(data);
     } catch (error: any) {}
   }
 );
