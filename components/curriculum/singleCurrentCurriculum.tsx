@@ -4,6 +4,7 @@ import { Icurriculum } from "types/interfaces";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { BiArrowBack } from "react-icons/bi";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 import { updateCurrentCurriculum } from "../../services/curriculumService";
 
 const SingleCurrentCurriculum = ({
@@ -13,6 +14,13 @@ const SingleCurrentCurriculum = ({
 }) => {
   const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const router = useRouter();
+
+  const topics = curriculum?.title
+  const enterLesson = () => {
+    router.push(`curriculum/unit/${topics}`)
+  }
+
   return (
     <div
       style={{
@@ -51,11 +59,11 @@ const SingleCurrentCurriculum = ({
         <p>{curriculum.description}</p>
         <div className="flex items-center md:flex-row pt-[1.6rem] pb-[1rem] justify-between">
           <p>{curriculum.start_date}</p>
-          <Link href="curriculum/unit">
-            <p className="px-5 py-[5px] whitespace-nowrap font-semibold border-black rounded-full border-2 w-fit cursor-pointer">
+         
+            <p onClick={enterLesson} className="px-5 py-[5px] whitespace-nowrap font-semibold border-black rounded-full border-2 w-fit cursor-pointer">
               view unit
             </p>
-          </Link>
+       
         </div>
       </div>
     </div>
