@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-
 import { Button, Sidebar, GeneralNav } from "components";
 import { BsPlusCircle } from "react-icons/bs";
 import { FaTimes } from "react-icons/fa";
@@ -10,8 +9,8 @@ import { StudentModal, SkillModal } from "components/curriculum/assignment";
 
 import { RootState } from "store/store";
 import { useSelector, useDispatch } from "react-redux";
-import { saveAssignment } from "store/newAssignmentSlice";
 import { getStudents } from "store/studentSlice";
+import SingleAssignment from "@/components/curriculum/assignment/singleAssignment";
 
 import {
   SkillDetails,
@@ -19,7 +18,46 @@ import {
   AssignmentSkill,
   Student,
   DynamicChechbox,
+  IMainAssignment,
 } from "types/interfaces";
+import { addNewAssignments } from "services/assignmentService";
+import { getDate } from "utils/getDate";
+const assignmentHistory: IMainAssignment[] = [
+  {
+    title: "coding bootcamp",
+    order: "random",
+    date: "2022-01-54",
+    number: 1,
+    skills: [{ skillId: "3" }, { skillId: "10" }],
+    students: [
+      {
+        firstName: "Issac",
+        lastName: "Newton",
+        email: "isaacnewton@gmail.com",
+      },
+      {
+        firstName: "Albert",
+        lastName: "Einstein",
+        email: "alberteinstring@gmail.com",
+      },
+    ],
+    isCurrent: false,
+    status: "draft",
+  },
+  {
+    title: "Job Tracking",
+    order: "sequence",
+    date: "",
+    number: 1,
+    skills: [{ skillId: "6" }, { skillId: "128" }],
+    students: [
+      { firstName: "Nikola", lastName: "Tesla", email: "tesla@gmail.com" },
+      { firstName: "Elon", lastName: "Musk", email: "elon@tesla.com" },
+    ],
+    isCurrent: true,
+    status: "draft",
+  },
+];
 
 const Assignments = () => {
   const modalDefaults = {
@@ -30,6 +68,7 @@ const Assignments = () => {
     skillsResponse: false,
     studentResponse: false,
   };
+  const dispatch = useDispatch();
   const [modalWrapperDisplay, setModalWrapperDisplay] = useState(false);
   const [modalItemsDisplay, setModalItemsDisplay] = useState(modalDefaults);
   const [historyType, setHistoryType] = useState("active");
@@ -41,7 +80,6 @@ const Assignments = () => {
   const [assignmentDetails, setAssignmentDetails] = useState<AssignmentDetails>(
     {
       title: "",
-      schedule: "now",
       order: "random",
       number: 0,
       skills: [],
@@ -162,11 +200,11 @@ const Assignments = () => {
   };
   const showModal = (modalName: string) => {
     setModalWrapperDisplay((prev) => true);
-    setModalItemsDisplay((prev) => (prev = { ...prev, [modalName]: true }));
+    setModalItemsDisplay((prev) => ({ ...modalDefaults, [modalName]: true }));
   };
   const hideModal = () => {
     setModalWrapperDisplay((prev) => false);
-    setTimeout(() => setModalItemsDisplay((prev) => modalDefaults), 1000);
+    setModalItemsDisplay((prev) => modalDefaults);
   };
   const switchModal = (modalName: string) => {
     setModalItemsDisplay(
@@ -294,7 +332,10 @@ const Assignments = () => {
                         name="schedule"
                         value="now"
                         checked={assignmentDetails.isCurrent}
-                        onChange={() => updateAssignmentSchedule(true)}
+                        onChange={() => {
+                          updateScheduleDate(getDate());
+                          updateAssignmentSchedule(true);
+                        }}
                       />
                       <label
                         className="form-check-label inline-block text-gray-800 font-medium"
@@ -408,7 +449,14 @@ const Assignments = () => {
               <div className="flex flex-row-reverse gap-4 mt-4">
                 <span
                   onClick={() => {
-                    showModal("createResponse");
+                    dispatch(
+                      addNewAssignments({
+                        assignment: assignmentDetails,
+                        actionType: "active",
+                        showModal,
+                        modalType: "createResponse",
+                      })
+                    );
                   }}
                 >
                   <Button color="#F28E2C" text="Create" />
@@ -423,8 +471,14 @@ const Assignments = () => {
                 <div className="mr-4">
                   <span
                     onClick={() => {
-                      console.log(assignmentDetails);
-                      showModal("saveResponse");
+                      dispatch(
+                        addNewAssignments({
+                          assignment: assignmentDetails,
+                          actionType: "draft",
+                          showModal,
+                          modalType: "saveResponse",
+                        })
+                      );
                     }}
                   >
                     <Button color="#F28E2C" text="Save" />
@@ -442,14 +496,14 @@ const Assignments = () => {
           } backdrop-blur-sm bg-gray-100/50 fixed left-0 flex justify-center items-center`}
         >
           {modalWrapperDisplay && (
-            <div className="relative max-w-[850px] bg-white rounded-xl">
+            <div className="relative max-w-[850px] bg-white rounded-xl overflow-hidden overflow-y-scroll max-h-[90vh]">
               <span
                 className="text-[22px] absolute right-8 top-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all ease-in-out opacity-60"
                 onClick={hideModal}
               >
                 <FaTimes />
               </span>
-              {modalItemsDisplay?.saveResponse && (
+              {modalItemsDisplay.saveResponse && (
                 <div className="w-full py-20 px-24 font-semibold text-center text-xl">
                   <p>You have successfully saved an assignment</p>
                   <p>
@@ -466,7 +520,7 @@ const Assignments = () => {
                   </p>
                 </div>
               )}
-              {modalItemsDisplay?.createResponse && (
+              {modalItemsDisplay.createResponse && (
                 <div className="w-full py-20 px-24 font-semibold text-center text-xl">
                   <p>You have successfully created an assignment</p>
                   <p>
@@ -483,7 +537,7 @@ const Assignments = () => {
                   </p>
                 </div>
               )}
-              {modalItemsDisplay?.cancelResponse && (
+              {modalItemsDisplay.cancelResponse && (
                 <div className="w-full py-20 px-24 font-bold text-xl">
                   <p className="text-xl">
                     Are you sure you want to{" "}
@@ -505,7 +559,7 @@ const Assignments = () => {
                   </div>
                 </div>
               )}
-              {modalItemsDisplay?.historyResponse && (
+              {modalItemsDisplay.historyResponse && (
                 <div className="p-12 min-h-[500px] min-w-[800px]">
                   <h3 className="text-2xl font-semibold">Assignment History</h3>
                   <div className="flex gap-6 items-center mt-8">
@@ -533,17 +587,31 @@ const Assignments = () => {
                       className="pb-2 border-b-[3px] font-bold text-black/50 cursor-pointer"
                       style={{
                         borderColor:
-                          historyType === "archived" ? "#F28E2C" : "white",
+                          historyType === "draft" ? "#F28E2C" : "white",
                       }}
-                      onClick={() => setHistoryType((prev) => "archived")}
+                      onClick={() => setHistoryType((prev) => "draft")}
                     >
                       Archived
                     </span>
                   </div>
-                  <div></div>
+                  <div className="mt-3 flex flex-col gap-3">
+                    {assignmentHistory?.map((assignment, index: number) => {
+                      if (
+                        assignment.status.toLowerCase() ===
+                        historyType.toLowerCase()
+                      ) {
+                        return (
+                          <SingleAssignment
+                            assignment={assignment}
+                            key={index}
+                          />
+                        );
+                      }
+                    })}
+                  </div>
                 </div>
               )}
-              {modalItemsDisplay?.skillsResponse && (
+              {modalItemsDisplay.skillsResponse && (
                 <SkillModal
                   skills={assingmentSkills}
                   hideModal={hideModal}
@@ -551,7 +619,7 @@ const Assignments = () => {
                   skillCheckbox={skillCheckbox}
                 />
               )}
-              {modalItemsDisplay?.studentResponse && (
+              {modalItemsDisplay.studentResponse && (
                 <StudentModal
                   students={students?.students}
                   hideModal={hideModal}

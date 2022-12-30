@@ -4,7 +4,11 @@ import Image from "next/image";
 import google from "../public/assets/google.png";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
-import { loginWithGoogle } from "services/authService";
+import {
+  loginWithGoogle,
+  signUpWithGoogle,
+  updateAccountType,
+} from "services/authService";
 import GoogleSignUpModal from "./signup/googleSignUpModal";
 const GoogleBtn: FC = () => {
   const dispatch = useDispatch();
@@ -20,9 +24,21 @@ const GoogleBtn: FC = () => {
   };
   const handleClick = useGoogleLogin({
     onSuccess: async (codeResponse) => {
-      const data = await dispatch(loginWithGoogle(codeResponse.access_token));
-      if (!data?.error?.message) {
-        router.push("/addClass");
+      if (router.pathname === "/login") {
+        const data = await dispatch(loginWithGoogle(codeResponse.access_token));
+        if (!data?.error?.message) {
+          router.push("/addClass");
+        }
+      } else if (router.pathname === "/signup") {
+        const data = await dispatch(
+          signUpWithGoogle(codeResponse.access_token)
+        );
+        if (!data?.error?.message) {
+          const data = await dispatch(updateAccountType(accountType));
+          if (!data?.error?.message) {
+            router.push("/addClass");
+          }
+        }
       }
     },
   });

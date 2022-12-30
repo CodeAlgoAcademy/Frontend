@@ -93,6 +93,9 @@ export interface IUserStudent {
     date: string;
   }>;
 }
+export interface IAllAssignments {
+  assignments: AssignmentDetails[];
+}
 
 // ============EXTRA INTERFACES AND TYPES
 export interface IUserData {
@@ -197,13 +200,22 @@ export interface AssignmentSkill {
 
 export interface AssignmentDetails {
   title: string;
-  schedule: boolean | string;
   order: string;
   date: string;
   number: number;
   skills: AssignmentSkill[];
   students: Student[];
   isCurrent: boolean;
+}
+export interface IMainAssignment {
+  title: string;
+  order: string;
+  date: string;
+  number: number;
+  skills: AssignmentSkill[];
+  students: Student[];
+  isCurrent: boolean;
+  status: string;
 }
 
 export interface CurrentClassState {

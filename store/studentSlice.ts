@@ -8,7 +8,7 @@ import { RootState } from "./store";
 
 const initialState: IUserStudent = {
   newStudent: null,
-  students: [],
+  students: { students: [] },
   studentComments: [],
 };
 
