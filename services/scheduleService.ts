@@ -18,7 +18,6 @@ export const getSchedule = createAsyncThunk("scheduleSlice/getSchedule", async (
 export const postSchedule = createAsyncThunk("scheduleSlice/postSchedule", async (addedRecords: any, thunkApi) => {
 	try {
 		delete addedRecords[0].Id
-		console.log(addedRecords)
 		const { data } = await http.post("/academics/calendar/schedules/", addedRecords, {
 			headers: {
 				Authorization: `Bearer ${getAccessToken()}`
@@ -32,6 +31,7 @@ export const postSchedule = createAsyncThunk("scheduleSlice/postSchedule", async
 
 export const putSchedule = createAsyncThunk("scheduleSlice/putSchedule", async (updatedRecords: any, thunkApi) => {
 	const changedRecord = updatedRecords[0]
+	console.log(changedRecord);
 	try {
 		const { data } = await http.put(
 			`/academics/calendar/schedules/${changedRecord.Id}`,
@@ -50,6 +50,7 @@ export const putSchedule = createAsyncThunk("scheduleSlice/putSchedule", async (
 
 export const deleteSchedule = createAsyncThunk("scheduleSlice/deleteSchedule", async (deletedRecords: any, thunkApi) => {
 	try {
+		console.log(deletedRecords)
 		const { data } = await http.delete("/academics/calendar/schedules/delete/", {
 			data: {
 				source: deletedRecords

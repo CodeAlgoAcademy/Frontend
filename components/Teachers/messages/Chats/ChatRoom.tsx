@@ -6,6 +6,7 @@ import { BsEmojiSmile } from 'react-icons/bs'
 import { BiSend } from 'react-icons/bi'
 
 const ChatRoom = () => {
+    
     return (
         <div className=''>
             <div className={styles.header}>
