@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button, Sidebar, GeneralNav } from "components";
 import { BsPlusCircle } from "react-icons/bs";
-import { FaTimes } from "react-icons/fa";
+import { FaChevronLeft, FaTimes } from "react-icons/fa";
 import { IoPersonAddOutline } from "react-icons/io5";
 import { TbMedal } from "react-icons/tb";
 import { StudentModal, SkillModal } from "components/curriculum/assignment";
@@ -20,44 +20,8 @@ import {
   DynamicChechbox,
   IMainAssignment,
 } from "types/interfaces";
-import { addNewAssignments } from "services/assignmentService";
+import { addNewAssignments, getAssignments } from "services/assignmentService";
 import { getDate } from "utils/getDate";
-const assignmentHistory: IMainAssignment[] = [
-  {
-    title: "coding bootcamp",
-    order: "random",
-    date: "2022-01-54",
-    number: 1,
-    skills: [{ skillId: "3" }, { skillId: "10" }],
-    students: [
-      {
-        firstName: "Issac",
-        lastName: "Newton",
-        email: "isaacnewton@gmail.com",
-      },
-      {
-        firstName: "Albert",
-        lastName: "Einstein",
-        email: "alberteinstring@gmail.com",
-      },
-    ],
-    isCurrent: false,
-    status: "draft",
-  },
-  {
-    title: "Job Tracking",
-    order: "sequence",
-    date: "",
-    number: 1,
-    skills: [{ skillId: "6" }, { skillId: "128" }],
-    students: [
-      { firstName: "Nikola", lastName: "Tesla", email: "tesla@gmail.com" },
-      { firstName: "Elon", lastName: "Musk", email: "elon@tesla.com" },
-    ],
-    isCurrent: true,
-    status: "draft",
-  },
-];
 
 const Assignments = () => {
   const modalDefaults = {
@@ -84,16 +48,31 @@ const Assignments = () => {
       number: 0,
       skills: [],
       students: [],
-      date: "",
-      isCurrent: true,
+      date: getDate(),
+      is_current: true,
     }
   );
 
   const assingmentSkills = useSelector(
     (state: RootState): SkillDetails[] => state.skills
   );
+  const { assignments } = useSelector(
+    (state: RootState) => state.allAssignments
+  );
 
   const { students } = useSelector((state: RootState) => state.students);
+
+  const resetAssignments = () => {
+    setAssignmentDetails({
+      title: "",
+      order: "random",
+      number: 0,
+      skills: [],
+      students: [],
+      date: getDate(),
+      is_current: true,
+    });
+  };
   const addSkill = (newSkill: AssignmentSkill) => {
     setAssignmentDetails((prev) => {
       const prevSkills = prev.skills;
@@ -132,7 +111,7 @@ const Assignments = () => {
   };
   const updateAssignmentSchedule = (value: boolean) => {
     setAssignmentDetails((prev) => {
-      return { ...prev, isCurrent: value };
+      return { ...prev, is_current: value };
     });
   };
   const updateScheduleDate = (value: string) => {
@@ -213,7 +192,6 @@ const Assignments = () => {
   };
   useEffect(() => {
     assingmentSkills.forEach((skillCategory) => {
-      console.log(skillCategory);
       skillCategory.tests.forEach((test) => {
         setSkillCheckbox((prev) => ({
           ...prev,
@@ -221,7 +199,6 @@ const Assignments = () => {
         }));
       });
     });
-    console.log(students?.students);
     students?.students?.forEach((student) => {
       setStudentCheckbox((prev) => ({
         ...prev,
@@ -232,6 +209,9 @@ const Assignments = () => {
   const fetchAllStudents = async () => {
     await getStudents();
   };
+  useEffect(() => {
+    dispatch(getAssignments());
+  }, []);
   useEffect(() => {
     setAssignmentDetails((prev) => ({ ...prev, number: 0 }));
   }, [assignmentDetails.skills]);
@@ -247,12 +227,19 @@ const Assignments = () => {
         </div>
         <div className="bg-[#E5E5E5] flex-1 px-[6%] py-8">
           <div className="flex justify-between items-center">
-            <h2
-              className="text-[28px] font-bold mb-6"
-              data-testid="curriculum-assignment-heading"
-            >
-              New Assignment
-            </h2>
+            <div className="flex items-center gap-x-2 mb-6">
+              <Link href={"/curriculum/unit"}>
+                <span className="text-[22px] font-bold cursor-pointer">
+                  <FaChevronLeft />
+                </span>
+              </Link>
+              <h2
+                className="text-[28px] font-bold"
+                data-testid="curriculum-assignment-heading"
+              >
+                New Assignment
+              </h2>
+            </div>
             <span className="hover:opacity-80 cursor-pointer flex items-center gap-3">
               <span className="text-lg">
                 <BsPlusCircle />
@@ -331,7 +318,7 @@ const Assignments = () => {
                         type="radio"
                         name="schedule"
                         value="now"
-                        checked={assignmentDetails.isCurrent}
+                        checked={assignmentDetails.is_current}
                         onChange={() => {
                           updateScheduleDate(getDate());
                           updateAssignmentSchedule(true);
@@ -350,7 +337,7 @@ const Assignments = () => {
                         type="radio"
                         name="schedule"
                         value="later"
-                        checked={!assignmentDetails.isCurrent}
+                        checked={!assignmentDetails.is_current}
                         onChange={() => updateAssignmentSchedule(false)}
                       />
                       <label
@@ -361,7 +348,7 @@ const Assignments = () => {
                       </label>
                     </div>
 
-                    {!assignmentDetails.isCurrent && (
+                    {!assignmentDetails.is_current && (
                       <div className="relative max-w-fit">
                         <input
                           type="date"
@@ -448,13 +435,14 @@ const Assignments = () => {
               </div>
               <div className="flex flex-row-reverse gap-4 mt-4">
                 <span
-                  onClick={() => {
-                    dispatch(
+                  onClick={async () => {
+                    await dispatch(
                       addNewAssignments({
                         assignment: assignmentDetails,
                         actionType: "active",
                         showModal,
                         modalType: "createResponse",
+                        resetAssignments,
                       })
                     );
                   }}
@@ -470,13 +458,14 @@ const Assignments = () => {
                 </span>
                 <div className="mr-4">
                   <span
-                    onClick={() => {
-                      dispatch(
+                    onClick={async () => {
+                      await dispatch(
                         addNewAssignments({
                           assignment: assignmentDetails,
                           actionType: "draft",
                           showModal,
                           modalType: "saveResponse",
+                          resetAssignments,
                         })
                       );
                     }}
@@ -595,7 +584,7 @@ const Assignments = () => {
                     </span>
                   </div>
                   <div className="mt-3 flex flex-col gap-3">
-                    {assignmentHistory?.map((assignment, index: number) => {
+                    {assignments?.map((assignment: any, index: number) => {
                       if (
                         assignment.status.toLowerCase() ===
                         historyType.toLowerCase()

@@ -17,6 +17,12 @@ const initialState: IUnitsSlice = {
     chosenGrades: [],
     unitsWithError: [],
   },
+  currentUnitInView: {
+    id: "",
+    is_current: false,
+    is_finished: false,
+    start_date: "",
+  },
 };
 
 const unitsSlice = createSlice({
@@ -215,6 +221,17 @@ const unitsSlice = createSlice({
         });
       state.addUnit.unitsWithError = errors;
     },
+    updateUnitInView: (
+      state: IUnitsSlice,
+      action: PayloadAction<{
+        id: string;
+        is_current: boolean;
+        is_finished: boolean;
+        start_date: string;
+      }>
+    ) => {
+      return { ...state, currentUnitInView: action.payload };
+    },
   },
   extraReducers: {
     [addUnits.pending]: (state: IUnitsSlice) => {
@@ -238,5 +255,6 @@ export const {
   clearAddUnitsParams,
   rearrangeUnits,
   verifyUnits,
+  updateUnitInView,
 } = unitsSlice.actions;
 export default unitsSlice.reducer;
