@@ -1,56 +1,67 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit"
-import storage from "./reduxStorage"
-import { persistReducer, persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist"
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import storage from "./reduxStorage";
+import {
+  persistReducer,
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
 
-import userReducer from "./authSlice"
-import modalReducer from "./modalSlice"
-import addClassReducer from "./addClassSlice"
-import allClassesReducer from "./allClassesSlice"
-import currentClassReducer from "./currentClassSlice"
-import scheduleReducer from "./scheduleSlice"
-import messagesReducer from "./messagesSlice"
-import allCurriculumReducer from "./allCurriculumSlice"
-import notesReducer from "./notesSlice"
-import fetchReducer from "./fetchSlice"
-import studentReducer from "./studentSlice"
-import skillsReducer from "./skillsSlice"
-import unitsSlice from "./unitsSlice"
-import newAssignmentReducer from "./newAssignmentSlice"
+import userReducer from "./authSlice";
+import modalReducer from "./modalSlice";
+import addClassReducer from "./addClassSlice";
+import allClassesReducer from "./allClassesSlice";
+import currentClassReducer from "./currentClassSlice";
+import scheduleReducer from "./scheduleSlice";
+import messagesReducer from "./messagesSlice";
+import allCurriculumReducer from "./allCurriculumSlice";
+import notesReducer from "./notesSlice";
+import fetchReducer from "./fetchSlice";
+import studentReducer from "./studentSlice";
+import skillsReducer from "./skillsSlice";
+import unitsSlice from "./unitsSlice";
+import newAssignmentReducer from "./newAssignmentSlice";
+import allAssignmentsReducer from "./allAssignments";
 
 const persistConfig = {
-	key: "root",
-	storage
-}
+  key: "root",
+  storage,
+};
 
 const rootReducer = combineReducers({
-	user: userReducer,
-	modal: modalReducer,
-	addClass: addClassReducer,
-	allClasses: allClassesReducer,
-	currentClass: currentClassReducer,
-	unit: unitsSlice,
-	schedule: scheduleReducer,
-	allCurriculum: allCurriculumReducer,
-	notes: notesReducer,
-	fetch: fetchReducer,
-	messages: messagesReducer,
-	students: studentReducer,
-	skills: skillsReducer,
-	assignment: newAssignmentReducer
-})
+  user: userReducer,
+  modal: modalReducer,
+  addClass: addClassReducer,
+  allClasses: allClassesReducer,
+  currentClass: currentClassReducer,
+  unit: unitsSlice,
+  schedule: scheduleReducer,
+  allCurriculum: allCurriculumReducer,
+  notes: notesReducer,
+  fetch: fetchReducer,
+  messages: messagesReducer,
+  students: studentReducer,
+  skills: skillsReducer,
+  addAssignment: newAssignmentReducer,
+  allAssignments: allAssignmentsReducer,
+});
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-	reducer: persistedReducer,
-	middleware: (getDefaultMiddleware) =>
-		getDefaultMiddleware({
-			serializableCheck: {
-				ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-			}
-		})
-})
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+});
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
-export const persistor = persistStore(store)
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export const persistor = persistStore(store);

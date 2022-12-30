@@ -16,7 +16,7 @@ const GoogleSignUpModal = ({
   const dispatch = useDispatch();
   return (
     <div className="absolute -bottom-[10%] right-0 w-[90vw] max-w-[250px] min-h-[200px] bg-white shadow-md rounded-md p-3 scale-up">
-      <p className="text-[18px] text-mainPurple font-bold">Register as: </p>
+      <p className="text-[18px] text-mainPurple font-bold">Register as a: </p>
       <div className="flex flex-col gap-y-2 mt-3">
         {["Parent", "Teacher", "Student"].map((accountType, index: number) => (
           <div key={index} className="flex gap-x-2 items-center">
@@ -53,6 +53,7 @@ const GoogleSignUpModal = ({
               );
             } else {
               handleClick();
+              closeModal();
             }
           }}
         >

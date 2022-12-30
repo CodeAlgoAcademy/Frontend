@@ -4,6 +4,7 @@ import http from "axios.config";
 import { getAccessToken } from "utils/getTokens";
 import { openErrorModal } from "store/fetchSlice";
 import { Icurriculum } from "types/interfaces";
+import { getDate } from "utils/getDate";
 
 export const addUnits: any = createAsyncThunk(
   "unitsSlice/addUnits",
@@ -102,7 +103,7 @@ export const updateCurriculumToCurrent: any = createAsyncThunk(
       ...params.curriculum,
       is_current: true,
       is_finished: false,
-      start_date: `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`,
+      start_date: getDate(),
     };
 
     try {

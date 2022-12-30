@@ -4,7 +4,6 @@ import { AssignmentDetails } from "../types/interfaces";
 
 const initialState: AssignmentDetails = {
   title: "",
-  schedule: "now",
   date: "",
   order: "random",
   number: 0,

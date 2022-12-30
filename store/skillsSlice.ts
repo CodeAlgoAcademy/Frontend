@@ -994,6 +994,30 @@ const MISSOURI_SEVEN = [
   },
 ];
 
+export const allSKills: SkillDetails[] = [
+  ...CTSA_ONE,
+  ...CTSA_TWO,
+  ...CTSA_THREE,
+  ...KANSAS_ONE,
+  ...KANSAS_TWO,
+  ...KANSAS_THREE,
+  ...KANSAS_FOUR,
+  ...KANSAS_FIVE,
+  ...KANSAS_SIX,
+  ...KANSAS_SEVEN,
+  ...NEW_YORK_ONE,
+  ...NEW_YORK_TWO,
+  ...NEW_YORK_THREE,
+  ...NEW_YORK_FOUR,
+  ...MISSOURI_ONE,
+  ...MISSOURI_TWO,
+  ...MISSOURI_THREE,
+  ...MISSOURI_FOUR,
+  ...MISSOURI_FIVE,
+  ...MISSOURI_SIX,
+  ...MISSOURI_SEVEN,
+];
+
 const initialState: SkillDetails[] = CTSA_ONE;
 
 const skillsSlice = createSlice({
