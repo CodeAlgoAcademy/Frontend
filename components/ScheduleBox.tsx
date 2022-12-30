@@ -44,7 +44,7 @@ const ScheduleBox = () => {
 		fetchSchedule()
 	}, [])
 	useEffect(() => {
-		const data = allSchedule.filter((item: any) => isToday(item.StartTime))
+		const data = allSchedule.filter((item: any) => isToday(item.startTime))
 		setCurrentSchedule((prev) => data)
 	}, [allSchedule])
 	return (
@@ -55,8 +55,8 @@ const ScheduleBox = () => {
 				</h3>
 				<div className='grid grid-cols-1 divide-y'>
 					{ currentSchedule.length > 0 && (
-						currentSchedule?.map(({ Id, StartTime, Subject }) => {
-							return <ScheduleItem key={ Id } time={ formatAMPM(StartTime) } item={ Subject } id={ Id } />
+						currentSchedule?.map(({ id, startTime, Subject }) => {
+							return <ScheduleItem key={ id } time={ formatAMPM(startTime) } item={ Subject } id={ id } />
 						}))
 					}
 				</div>
