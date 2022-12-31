@@ -22,6 +22,7 @@ import {
 } from "types/interfaces";
 import { addNewAssignments, getAssignments } from "services/assignmentService";
 import { getDate } from "utils/getDate";
+import { useRouter } from "next/router";
 
 const Assignments = () => {
   const modalDefaults = {
@@ -33,6 +34,7 @@ const Assignments = () => {
     studentResponse: false,
   };
   const dispatch = useDispatch();
+  const router = useRouter();
   const [modalWrapperDisplay, setModalWrapperDisplay] = useState(false);
   const [modalItemsDisplay, setModalItemsDisplay] = useState(modalDefaults);
   const [historyType, setHistoryType] = useState("active");
@@ -230,11 +232,14 @@ const Assignments = () => {
         <div className="bg-[#E5E5E5] flex-1 px-[6%] py-8">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-x-2 mb-6">
-              <Link href={"/curriculum/unit"}>
-                <span className="text-[22px] font-bold cursor-pointer">
-                  <FaChevronLeft />
-                </span>
-              </Link>
+              <span
+                className="text-[22px] font-bold cursor-pointer"
+                onClick={() => {
+                  router.back();
+                }}
+              >
+                <FaChevronLeft />
+              </span>
               <h2
                 className="text-[28px] font-bold"
                 data-testid="curriculum-assignment-heading"
