@@ -86,7 +86,7 @@ const Index = () => {
               <input
                 type="text"
                 placeholder="Search Students"
-                className="bg-transparent py-2 px-4 flex-[.8] border-none outline-none"
+                className="bg-transparent py-2 px-4 flex-[.8] border-none outline-none max-w-[220px]"
                 onChange={(e) => {
                   filterStudents(e.target.value);
                 }}
