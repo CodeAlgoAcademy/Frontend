@@ -4,6 +4,7 @@ import http from "axios.config";
 import { getAccessToken } from "utils/getTokens";
 import { openErrorModal } from "store/fetchSlice";
 import { Icurriculum } from "types/interfaces";
+import { getDate } from "utils/getDate";
 
 export const addUnits: any = createAsyncThunk(
   "unitsSlice/addUnits",
@@ -72,13 +73,36 @@ export const getAllCurriculums: any = createAsyncThunk(
   }
 );
 
-export const updateCurrentCurriculum: any = createAsyncThunk(
+export const updateCurriculumToPast: any = createAsyncThunk(
   "curriculumSlice/updateCurriculum",
   async (params: { curriculum: Icurriculum; id: number }, thunkApi) => {
     const rearrangedUnit: Icurriculum = {
       ...params.curriculum,
       is_current: false,
+      is_finished: true,
+    };
+
+    try {
+      const { data } = await http.put(
+        "/academics/curriculums/units/" + params.id,
+        rearrangedUnit,
+        {
+          headers: { Authorization: "Bearer " + getAccessToken() },
+        }
+      );
+    } catch (error: any) {}
+  }
+);
+
+export const updateCurriculumToCurrent: any = createAsyncThunk(
+  "curriculumSlice/updateCurriculum",
+  async (params: { curriculum: Icurriculum; id: number }, thunkApi) => {
+    const date = new Date();
+    const rearrangedUnit: Icurriculum = {
+      ...params.curriculum,
+      is_current: true,
       is_finished: false,
+      start_date: getDate(),
     };
 
     try {

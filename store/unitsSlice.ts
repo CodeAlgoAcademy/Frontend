@@ -5,6 +5,7 @@ import {
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IUnitsSlice } from "types/interfaces";
 import { addUnits } from "services/curriculumService";
+import { getDate } from "utils/getDate";
 
 const initialState: IUnitsSlice = {
   addUnit: {
@@ -16,13 +17,12 @@ const initialState: IUnitsSlice = {
     chosenGrades: [],
     unitsWithError: [],
   },
-};
-
-const getDate = () => {
-  const date = new Date();
-  return `${date.getFullYear()}-${date.getMonth() + 1}-${
-    date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
-  }`;
+  currentUnitInView: {
+    id: "",
+    is_current: false,
+    is_finished: false,
+    start_date: "",
+  },
 };
 
 const unitsSlice = createSlice({
@@ -173,67 +173,30 @@ const unitsSlice = createSlice({
     },
     verifyUnits: (state: IUnitsSlice, action: PayloadAction) => {
       state.addUnit.unitsWithError = [];
-      // check the end date, start date and compare with todays date
-      const today: { day: number; month: number; year: number } = {
-        day: new Date().getDate(),
-        month: new Date().getMonth() + 1,
-        year: new Date().getFullYear(),
-      };
       const errors: string[] = [];
       state.addUnit.units
         .filter((unit) => unit.isChosen)
         .forEach((unit) => {
           if (unit.startDate && unit.endDate) {
-            const startDate: string[] = unit.startDate.split("-");
-            const endDate: string[] = unit.endDate.split("-");
-            const startDateDetails: {
-              day: number;
-              month: number;
-              year: number;
-            } = {
-              day: parseInt(startDate[2]),
-              month: parseInt(startDate[1]),
-              year: parseInt(startDate[0]),
-            };
-            const endDateDetails: { day: number; month: number; year: number } =
-              {
-                day: parseInt(endDate[2]),
-                month: parseInt(endDate[1]),
-                year: parseInt(endDate[0]),
-              };
+            const start_date = new Date(unit.startDate);
+            const end_date = new Date(unit.endDate);
+            const today_date = new Date();
 
             // if start date === end date
             // if it is current and start date isn't today
-            if (
-              (startDateDetails.year !== today.year ||
-                startDateDetails.month !== today.month ||
-                startDateDetails.day !== today.day) &&
-              unit.isCurrent
-            ) {
+            if (start_date === end_date && unit.isCurrent) {
               errors.push(
                 `${unit.title} unit start date should be today's date`
               );
             }
             // if upcoming and start date is today
-            if (
-              startDateDetails.year === today.year &&
-              startDateDetails.month === today.month &&
-              startDateDetails.day === today.day &&
-              !unit.isCurrent
-            ) {
+            if (start_date === today_date && !unit.isCurrent) {
               errors.push(
                 `${unit.title} unit start date should be a future date since it is upcoming`
               );
             }
             // if start date is less than today's date and it is upcoming
-            if (
-              startDateDetails.year < today.year ||
-              (startDateDetails.year === today.year &&
-                startDateDetails.month > today.month) ||
-              (startDateDetails.year === today.year &&
-                startDateDetails.month === today.month &&
-                startDateDetails.day < today.day)
-            ) {
+            if (start_date < today_date) {
               if (!unit.isCurrent) {
                 errors.push(
                   `${unit.title} unit start date should be after today's date`
@@ -241,27 +204,13 @@ const unitsSlice = createSlice({
               }
             }
             // if end date is less than or is today's date
-            if (
-              endDateDetails.year < today.year ||
-              (endDateDetails.year === today.year &&
-                endDateDetails.month > today.month) ||
-              (endDateDetails.year === today.year &&
-                endDateDetails.month === today.month &&
-                endDateDetails.day <= today.day)
-            ) {
+            if (end_date <= today_date) {
               errors.push(
                 `${unit.title} unit end date should be after it's start date and after today's date`
               );
             }
             //  if start date is greater than end date
-            if (
-              startDateDetails.year > endDateDetails.year ||
-              (startDateDetails.year === endDateDetails.year &&
-                startDateDetails.month > endDateDetails.month) ||
-              (startDateDetails.year === endDateDetails.year &&
-                startDateDetails.month === endDateDetails.month &&
-                startDateDetails.day > endDateDetails.day)
-            ) {
+            if (start_date > end_date) {
               errors.push(
                 `${unit.title} unit end date should be after it's start date and after today's date`
               );
@@ -271,6 +220,17 @@ const unitsSlice = createSlice({
           }
         });
       state.addUnit.unitsWithError = errors;
+    },
+    updateUnitInView: (
+      state: IUnitsSlice,
+      action: PayloadAction<{
+        id: string;
+        is_current: boolean;
+        is_finished: boolean;
+        start_date: string;
+      }>
+    ) => {
+      return { ...state, currentUnitInView: action.payload };
     },
   },
   extraReducers: {
@@ -295,5 +255,6 @@ export const {
   clearAddUnitsParams,
   rearrangeUnits,
   verifyUnits,
+  updateUnitInView,
 } = unitsSlice.actions;
 export default unitsSlice.reducer;

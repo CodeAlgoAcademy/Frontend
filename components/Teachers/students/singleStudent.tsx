@@ -53,10 +53,6 @@ const SingleStudent = ({
     dispatch(getComment({ id }));
   };
 
-  useEffect(() => {
-    dispatch(getStudents());
-  }, [dispatch]);
-
   const handleStudents = (id: number) => {
     const index = headings.indexOf(id);
 
@@ -80,6 +76,7 @@ const SingleStudent = ({
       setComment("");
     }
   };
+  console.log(student);
 
   const updateStudentComment = async (
     id: string,
@@ -138,7 +135,7 @@ const SingleStudent = ({
                   performance
                 </h2>
                 <div
-                  className={`flex flex-col gap-y-2 mt-3 h-[90vh] max-h-[230px] overflow-hidden overflow-y-scroll ${
+                  className={`flex flex-col gap-y-2 mt-3 h-[90vh] max-h-[230px] overflow-y-scroll ${
                     studentComments?.length === 0 &&
                     "justify-center items-center"
                   }`}
@@ -152,7 +149,7 @@ const SingleStudent = ({
                     return (
                       <article
                         key={index}
-                        className="flex justify-between items-center gap-x-4"
+                        className="flex justify-between items-center gap-x-2"
                       >
                         {isEditingComment === comment.text + comment.date ? (
                           <input
@@ -166,7 +163,11 @@ const SingleStudent = ({
                             className="flex-1 px-4 py-2 rounded-md border-2 border-mainPurple outline-none"
                           />
                         ) : (
-                          <h1 className="px-4 py-2">{comment.text}</h1>
+                          <h1 className="px-4 py-2">
+                            {comment.text.length > 28
+                              ? `${comment.text.slice(0, 28)}...`
+                              : comment.text}
+                          </h1>
                         )}
                         <div className="flex items-center gap-x-2">
                           {isEditingComment === comment.text + comment.date ? (
@@ -219,18 +220,16 @@ const SingleStudent = ({
                   })}
                 </div>
 
-                {studentComments?.length > 0 && (
-                  <div className="flex justify-end my-4">
-                    <button
-                      className="w-[150px] py-3 rounded-full text-white bg-mainPurple"
-                      onClick={() => {
-                        setStudentCommentsTabOpen("");
-                      }}
-                    >
-                      Close
-                    </button>
-                  </div>
-                )}
+                <div className="flex justify-end my-4">
+                  <button
+                    className="w-[150px] py-3 rounded-full text-white bg-mainPurple"
+                    onClick={() => {
+                      setStudentCommentsTabOpen("");
+                    }}
+                  >
+                    Close
+                  </button>
+                </div>
               </form>
             </section>
           )}
@@ -289,14 +288,14 @@ const SingleStudent = ({
         </div>
       </div>
 
-      {students?.courses?.length === 0 ? (
+      {students?.assignments?.length === 0 ? (
         <p className="w-full h-full grid place-content-center">
           <span>No lesson available</span>
         </p>
       ) : (
         <>
           {headings.includes(student?.id) && (
-            <StudentTable details={student?.courses} />
+            <StudentTable details={student?.assignments} />
           )}
         </>
       )}
