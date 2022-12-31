@@ -14,7 +14,10 @@ import { openAddUnitModal } from "store/modalSlice";
 import AddUnit from "@/components/curriculum/addUnit";
 import { RootState } from "store/store";
 import { SlLoop } from "react-icons/sl";
-import { getAllCurriculums } from "services/curriculumService";
+import {
+  deleteCurriculum,
+  getAllCurriculums,
+} from "services/curriculumService";
 import { IAllCurriculum, Icurriculum } from "types/interfaces";
 import { BiArrowBack } from "react-icons/bi";
 import SingleCurriculum from "@/components/curriculum/singleCurriculum";
@@ -27,15 +30,13 @@ export default function Index() {
   const { addUnitModalOpen } = useSelector((state: RootState) => state.modal);
   const { id } = useSelector((state: RootState) => state.currentClass);
   const dispatch = useDispatch();
-  const router = useRouter()
+  const router = useRouter();
 
   const getCurriculums = async () => {
     const data = await dispatch(getAllCurriculums());
     if (!data?.error?.message) {
     }
   };
-
-  
 
   useEffect(() => {
     if (!addUnitModalOpen) {
@@ -98,6 +99,18 @@ export default function Index() {
       }
     }
   );
+
+  useEffect(() => {
+    pastCurriculum?.forEach((curriculum: Icurriculum) => {
+      const todayDate: any = new Date();
+      const endDate: any = new Date(curriculum.end_date);
+      const timeDifference: any = todayDate - endDate;
+      // check if it is up to 30 days
+      if (timeDifference / 1000 / 60 / 60 / 24 / 30 === 1) {
+        dispatch(deleteCurriculum(curriculum.id));
+      }
+    });
+  }, []);
 
   return (
     <div className="min-h-[100vh] flex flex-col">

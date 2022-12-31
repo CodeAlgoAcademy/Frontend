@@ -1212,13 +1212,17 @@ const skillsSlice = createSlice({
       const filteredState: SkillDetails[] = mainState?.filter((item) => {
         let testNames = "";
         item.tests.forEach((test) => {
-          testNames = `${testNames} ${test.testTitle}`;
+          testNames = `${testNames} ${test.testTitle}`.trim();
         });
         return (
           item.categoryTitle.includes(action.payload.params) ||
           item.categoryTitle.toLowerCase().includes(action.payload.params) ||
           testNames.includes(action.payload.params) ||
-          testNames.toLowerCase().includes(action.payload.params)
+          testNames.toLowerCase().includes(action.payload.params) ||
+          item.categoryId.includes(action.payload.params) ||
+          item.categoryId
+            .toLowerCase()
+            .includes(action.payload.params.toLowerCase())
         );
       });
       return filteredState;
