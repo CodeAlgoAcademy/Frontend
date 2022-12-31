@@ -33,7 +33,7 @@ const Layout = ({ children }: Props) => {
       router.pathname !== "/signup" &&
       tokens
     ) {
-      const interval: NodeJS.Timer = setInterval(refreshToken, 180000);
+      const interval: NodeJS.Timer = setInterval(refreshToken, 3000000);
       refreshToken();
 
       return () => {

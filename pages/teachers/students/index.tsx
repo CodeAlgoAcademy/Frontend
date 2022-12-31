@@ -24,6 +24,10 @@ const Index = () => {
     dispatch(getStudents());
   }, [id]);
 
+  useEffect(() => {
+    setFilteredStudents(() => ({ students: students?.students }));
+  }, [students?.students]);
+
   const closeCommentTabs = (event: any) => {
     if (event.target.classList.contains("students-container")) {
       setCommentTabsOpened(false);

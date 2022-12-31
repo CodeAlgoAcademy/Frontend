@@ -117,6 +117,65 @@ export const loginWithGoogle: any = createAsyncThunk(
   }
 );
 
+export const signUpWithGoogle: any = createAsyncThunk(
+  "authSlice/signUpWithGoogle",
+  async (access_token: string) => {
+    try {
+      const { data } = await http.post("/auth/google/", {
+        access_token,
+      });
+
+      return {
+        access_token: data.access_token,
+        refresh_token: data.refresh_token,
+        ...data.user,
+      };
+    } catch (error) {}
+  }
+);
+
+export const updateAccountType: any = createAsyncThunk(
+  "authSlice/updateAccountType",
+  async (accountType: string, thunkApi) => {
+    const is_parent: boolean = accountType === "Parent";
+    const is_teacher: boolean = accountType === "Teacher";
+    const is_student: boolean = accountType === "Student";
+    const state: any = thunkApi.getState();
+    const {
+      firstname,
+      lastname,
+      email,
+      country,
+      schoolCountry,
+      schoolName,
+      grade,
+    } = state.user;
+    try {
+      const { data } = await http.put(
+        "/auth/user",
+        {
+          firstname,
+          lastname,
+          email,
+          country,
+          schoolCountry,
+          schoolName,
+          is_student,
+          is_teacher,
+          is_parent,
+          grade,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${getAccessToken()}`,
+          },
+        }
+      );
+      return data;
+    } catch (error) {}
+  }
+);
+
 export const updateFirstname: any = createAsyncThunk(
   "authSlice/updateFirstname",
   async (_, thunkApi) => {

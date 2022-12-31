@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "store/store";
 import { Props, styles } from ".";
-import { FaPlus } from "react-icons/fa";
+import { FaChevronDown, FaPlus } from "react-icons/fa";
 import { FaInfo } from "react-icons/fa";
 import { updateUnits } from "store/unitsSlice";
 import { BiChevronRight } from "react-icons/bi";
@@ -82,7 +82,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                       <p className="text-[22px] font-bold hoverElement cursor-pointer w-fit">
                         {unit.title}
                       </p>
-                      <p className="hoverText -top-[20px] right-[30px]">
+                      <p className="hoverText bg-mainPurple after:bg-mainPurple -top-[20px] right-[30px]">
                         {unit.hoverText}
                       </p>
                     </div>
@@ -111,7 +111,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                         elementWithCurrentProperty?.id !== unit.id ? (
                           <>
                             <p className="hoverElement">Current</p>
-                            <div className="hoverText right-[0] -top-[70px] min-w-fit">
+                            <div className="hoverText after:bg-mainPurple bg-mainPurple right-[0] -top-[70px] min-w-fit">
                               You can only have one current unit
                             </div>
                           </>
@@ -156,7 +156,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                             );
                           }}
                         />
-                        <div className="hoverText right-[0] -top-[40px]">
+                        <div className="hoverText after:bg-mainPurple bg-mainPurple right-[0] -top-[40px]">
                           Start Date
                         </div>
                       </div>
@@ -179,7 +179,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                             );
                           }}
                         />
-                        <div className="hoverText right-[0] -top-[40px]">
+                        <div className="hoverText bg-mainPurple right-[0] -top-[40px]">
                           End Date
                         </div>
                       </div>
@@ -211,7 +211,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
       >
         <h1>Unit(s)</h1>
         <i>
-          <FaPlus />
+          <FaChevronDown />
         </i>
         {openedModal === "unit" && (
           <div className={`${styles.preview} z-[5]`}>
