@@ -30,7 +30,12 @@ const singleAssignment = ({ assignment }: { assignment: IMainAssignment }) => {
       {accordionOpen && (
         <main className="p-3">
           <div className="mb-2">
+            <div className="flex justify-start gap-2 items-center">
+              <p className="text-[17px] font-bold text-orange-600">Due Date:</p>
+              <p className="text-[17px]">{assignment.end_date}</p>
+            </div>
             <h1 className={styles.title}>Skills</h1>
+
             <div className="flex flex-col gap-2">
               {skills.map((skill, index: number) => {
                 return (

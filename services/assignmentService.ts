@@ -32,15 +32,21 @@ export const addNewAssignments: any = createAsyncThunk(
     if (assignment.title === "") {
       errors.push("Kindly Add an assignment title");
     }
-    if (!assignment.is_current && assignment.date === "") {
+    if (!assignment.is_current && assignment.start_date === "") {
       errors.push(
         "Assignment should have a start date since it is scheduled for later"
       );
     }
-    if (!assignment.is_current && new Date(assignment.date) === new Date()) {
+    if (
+      !assignment.is_current &&
+      new Date(assignment.start_date) === new Date()
+    ) {
       errors.push(
         "Assignment date should not be todays since it is schedule for later"
       );
+    }
+    if (assignment.end_date === "") {
+      errors.push("Kindly add an end date/deadline");
     }
     if (assignment.number == 0) {
       errors.push("Kindly set number of questions");
@@ -62,11 +68,15 @@ export const addNewAssignments: any = createAsyncThunk(
         "This unit is scheduled for a later date, kindly update to current before adding assignments"
       );
     }
+    if (new Date(assignment.end_date) < new Date(assignment.start_date)) {
+      errors.push("Deadline should be after the start date");
+    }
     const mainAssignment: any = { ...assignment, status: actionType };
 
     mainAssignment.skills = assignment.skills.map((skill) => {
       return { skillId: parseInt(skill.skillId) };
     });
+    console.log(mainAssignment);
     try {
       if (errors.length === 0) {
         const { data } = await http.post(

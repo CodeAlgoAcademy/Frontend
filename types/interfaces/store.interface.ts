@@ -140,6 +140,15 @@ export interface IClass {
   id: number | string;
 }
 
+export interface Ilessons {
+  title: string;
+  id: number;
+  description: string;
+  unit_name: string;
+  date: string;
+  status: string;
+}
+
 export interface Icurriculum {
   title: string;
   description: string;
@@ -207,7 +216,8 @@ export interface AssignmentSkill {
 export interface AssignmentDetails {
   title: string;
   order: string;
-  date: string;
+  start_date: string;
+  end_date: string;
   number: number;
   skills: AssignmentSkill[];
   students: Student[];
@@ -222,6 +232,8 @@ export interface IMainAssignment {
   students: Student[];
   is_current: boolean;
   status: string;
+  start_date: string;
+  end_date: string;
 }
 
 export interface CurrentClassState {
@@ -253,11 +265,11 @@ export interface DynamicChechbox {
 }
 
 export interface ISchedule {
-  Id: string;
+  id: string;
   Subject: string;
-  Location: string;
-  StartTime: string;
-  EndTime: string;
+  location: string;
+  startTime: string;
+  endTime: string;
 }
 
 export interface Conversations {
