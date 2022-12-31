@@ -1,11 +1,35 @@
 import { Avatar, IconButton } from '@mui/material'
-import React from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 import { chats } from './chatsData'
 import { GrAttachment } from 'react-icons/gr'
 import { BsEmojiSmile } from 'react-icons/bs'
 import { BiSend } from 'react-icons/bi'
 
 const ChatRoom = () => {
+    const [ messages, setMessages ] = useState([]);
+    const [ message, setMessage ] = useState('')
+
+    const client = new WebSocket('wss://sea-lion-app-43ury.ondigitalocean.app/chat/websocket/')
+
+    useEffect(() => {
+        client.onopen = () => {
+            console.log('Websocket Client Connected...')
+        }
+
+        client.onmessage = (message) => {
+            console.log(message)
+        }
+    }, [])
+
+    const onSubmit = (e: FormEvent) => {
+        e.preventDefault()
+
+        client.send(JSON.stringify({
+            type: "chat.message",
+            text: message,
+            receiver: 0 // TODO: User ID gotten from state
+        }))
+    }
     
     return (
         <div className=''>
@@ -30,6 +54,8 @@ const ChatRoom = () => {
                         <input 
                             placeholder='Send Message...'
                             className={styles.input}
+                            value={message}
+                            onChange={e => setMessage(e.target.value)}
                         />
                         <button hidden type='submit'></button>
                     </form>
