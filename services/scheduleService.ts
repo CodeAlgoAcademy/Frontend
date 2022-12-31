@@ -17,6 +17,8 @@ export const getSchedule = createAsyncThunk("scheduleSlice/getSchedule", async (
 
 export const postSchedule = createAsyncThunk("scheduleSlice/postSchedule", async (addedRecords: any, thunkApi) => {
 	try {
+		delete addedRecords[0].Id
+		console.log(addedRecords)
 		const { data } = await http.post("/academics/calendar/schedules/", addedRecords, {
 			headers: {
 				Authorization: `Bearer ${getAccessToken()}`

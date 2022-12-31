@@ -27,12 +27,15 @@ export default function Index() {
   const { addUnitModalOpen } = useSelector((state: RootState) => state.modal);
   const { id } = useSelector((state: RootState) => state.currentClass);
   const dispatch = useDispatch();
+  const router = useRouter()
 
   const getCurriculums = async () => {
     const data = await dispatch(getAllCurriculums());
     if (!data?.error?.message) {
     }
   };
+
+  
 
   useEffect(() => {
     if (!addUnitModalOpen) {

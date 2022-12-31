@@ -48,7 +48,8 @@ const Assignments = () => {
       number: 0,
       skills: [],
       students: [],
-      date: getDate(),
+      start_date: getDate(),
+      end_date: "",
       is_current: true,
     }
   );
@@ -69,7 +70,8 @@ const Assignments = () => {
       number: 0,
       skills: [],
       students: [],
-      date: getDate(),
+      start_date: getDate(),
+      end_date: "",
       is_current: true,
     });
   };
@@ -114,9 +116,9 @@ const Assignments = () => {
       return { ...prev, is_current: value };
     });
   };
-  const updateScheduleDate = (value: string) => {
+  const updateScheduleDate = (key: string, value: string) => {
     setAssignmentDetails((prev) => {
-      return { ...prev, date: value };
+      return { ...prev, [key]: value };
     });
   };
   const handleSkillCheckboxChange = (
@@ -207,7 +209,7 @@ const Assignments = () => {
     });
   }, []);
   const fetchAllStudents = async () => {
-    await getStudents();
+    await dispatch(getStudents());
   };
   useEffect(() => {
     dispatch(getAssignments());
@@ -310,7 +312,7 @@ const Assignments = () => {
                 <div className="rounded-r-md flex items-center justify-between px-4 min-w-[180px] shadow-right h-full">
                   <span className="font-bold">Scheduling</span>
                 </div>
-                <div className="px-14">
+                <div className="pl-14 pr-8">
                   <div className="flex items-center gap-4">
                     <div className="form-check flex items-center gap-2">
                       <input
@@ -320,7 +322,7 @@ const Assignments = () => {
                         value="now"
                         checked={assignmentDetails.is_current}
                         onChange={() => {
-                          updateScheduleDate(getDate());
+                          updateScheduleDate("start_date", getDate());
                           updateAssignmentSchedule(true);
                         }}
                       />
@@ -352,17 +354,30 @@ const Assignments = () => {
                       <div className="relative max-w-fit">
                         <input
                           type="date"
-                          value={assignmentDetails.date}
-                          className="hoverElement max-w-[150px] px-3 py-1 rounded-md outline-none border border-orange-600 text-[15px]"
+                          value={assignmentDetails.start_date}
+                          className="hoverElement max-w-[130px] px-3 py-1 rounded-md outline-none border border-orange-600 text-[15px]"
                           onChange={(e) => {
-                            updateScheduleDate(e.target.value);
+                            updateScheduleDate("start_date", e.target.value);
                           }}
                         />
                         <div className="hoverText right-[0] -top-[56px] bg-orange-600 after:bg-orange-600">
-                          Schedule date
+                          Start date
                         </div>
                       </div>
                     )}
+                    <div className="relative max-w-fit">
+                      <input
+                        type="date"
+                        value={assignmentDetails.end_date}
+                        className="hoverElement max-w-[130px] px-3 py-1 rounded-md outline-none border border-orange-600 text-[15px]"
+                        onChange={(e) => {
+                          updateScheduleDate("end_date", e.target.value);
+                        }}
+                      />
+                      <div className="hoverText right-[0] -top-[56px] bg-orange-600 after:bg-orange-600">
+                        End date
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

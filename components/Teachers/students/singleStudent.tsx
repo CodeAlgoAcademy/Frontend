@@ -76,6 +76,7 @@ const SingleStudent = ({
       setComment("");
     }
   };
+  console.log(student);
 
   const updateStudentComment = async (
     id: string,
@@ -287,14 +288,14 @@ const SingleStudent = ({
         </div>
       </div>
 
-      {students?.courses?.length === 0 ? (
+      {students?.assignments?.length === 0 ? (
         <p className="w-full h-full grid place-content-center">
           <span>No lesson available</span>
         </p>
       ) : (
         <>
           {headings.includes(student?.id) && (
-            <StudentTable details={student?.courses} />
+            <StudentTable details={student?.assignments} />
           )}
         </>
       )}

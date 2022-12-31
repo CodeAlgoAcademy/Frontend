@@ -3,16 +3,49 @@ import { BsCircle, BsFillCircleFill } from "react-icons/bs";
 import { FaChevronLeft, FaGripLinesVertical } from "react-icons/fa";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
-import Sidebar from "../../components/Sidebar";
-import AddStudent from "../../components/modals/AddStudent";
-import PreviewModal from "../../components/modals/PreviewModal";
-import { GeneralNav } from "../../components";
+import Sidebar from "../../../components/Sidebar";
+import AddStudent from "../../../components/modals/AddStudent";
+import PreviewModal from "../../../components/modals/PreviewModal";
+import { GeneralNav } from "../../../components";
 import Link from "next/link";
+// 
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { getAccessToken } from "utils/getTokens";
+import { openErrorModal } from "store/fetchSlice";
+import http from "axios.config";
+import { getAllLessons } from "services/lessonService";
+import { RootState } from "store/store";
+
 
 export default function Unit() {
   const [showModal, setShowModal] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [active, setActive] = useState<number[]>([]);
+  const dispatch = useDispatch();
+
+  const router = useRouter();
+  const {topics} = router.query;
+    
+
+
+  const getLessonsAll = async () => {
+
+    const data2 = await dispatch(getAllLessons(topics));
+    if (!data2?.error?.message) {
+    }
+  }
+  
+  useEffect(() => {
+    getLessonsAll();
+}, [topics]);
+
+const { lessons } = useSelector((state: RootState) => state.allLessons)
+
+
+console?.log(lessons)
+
 
   // add student oprions modal
   const cancelPresence = () => {
@@ -24,48 +57,6 @@ export default function Unit() {
     setShowPreview(false);
   };
 
-  const [unitData, setUnitData] = useState([
-    {
-      topics: "Intro To Conditional Statements",
-      description:
-        "In this lesson students will learn the basics of loops and how to apply loops into their programs.",
-      date: "April 10 - April 17",
-      status: "Published",
-      id: 1,
-    },
-    {
-      topics: "If Else",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, cum, rem voluptate cumque odio ex consequuntur velit quae voluptas debitis, numquam fugit consequatur ea corrupti iusto. Placeat autem voluptates voluptate consequuntur excepturi esse ullam ducimus mollitia accusantium, dolor dolorem in.",
-      date: "April 16 - April 19",
-      status: "Published",
-      id: 2,
-    },
-    {
-      topics: "	Logical Operators (Boolean Values, Comparison)",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, cum, rem voluptate cumque odio ex consequuntur velit quae voluptas debitis, numquam fugit consequatur ea corrupti iusto. Placeat autem voluptates voluptate consequuntur excepturi esse ullam ducimus mollitia accusantium, dolor dolorem in.",
-      date: "",
-      status: "Unpublished",
-      id: 3,
-    },
-    {
-      topics: "Intro to Control Statements",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, cum, rem voluptate cumque odio ex consequuntur velit quae voluptas debitis, numquam fugit consequatur ea corrupti iusto. Placeat autem voluptates voluptate consequuntur excepturi esse ullam ducimus mollitia accusantium, dolor dolorem in.",
-      date: "",
-      status: "Unpublished",
-      id: 4,
-    },
-    {
-      topics: "For Loops",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, cum, rem voluptate cumque odio ex consequuntur velit quae voluptas debitis, numquam fugit consequatur ea corrupti iusto. Placeat autem voluptates voluptate consequuntur excepturi esse ullam ducimus mollitia accusantium, dolor dolorem in.",
-      date: "",
-      status: "Unpublished",
-      id: 5,
-    },
-  ]);
 
   const handleClick = (id: number) => {
     const index = active.indexOf(id);
@@ -79,6 +70,9 @@ export default function Unit() {
     }
   };
 
+
+
+
   return (
     <div>
       <GeneralNav />
@@ -89,7 +83,7 @@ export default function Unit() {
 
         <div className="px-[5.5rem] py-[2rem] w-full">
           <div className="flex justify-start items-center gap-6">
-            <Link href="/curriculum">
+            <Link href="/curriculum" onClick={() => {}}>
               <div className="text-[1.4rem] cursor-pointer">
                 <i>
                   <FaChevronLeft />
@@ -97,7 +91,7 @@ export default function Unit() {
               </div>
             </Link>
             <div className="flex justify-between flex-1 gap-2">
-              <h1 className="font-bold text-3xl">Curriculum</h1>
+              <h1 className="font-bold text-3xl">{topics}</h1>
               <Link href="/curriculum/assignments">
                 <div className="flex gap-2 items-center cursor-pointer">
                   <IoIosAddCircleOutline className="text-4xl " />
@@ -111,7 +105,7 @@ export default function Unit() {
           </div>
           {/* curriculumn topic section */}
 
-          {unitData.map((data) => {
+          {lessons && lessons.map((data: any) => {
             return (
               <div
                 key={data.id}
@@ -122,7 +116,7 @@ export default function Unit() {
                     <div className="flex items-center sm:gap-3 lg:gap-7">
                       <FaGripLinesVertical className="text-[#A0A0A0] text-[1.1rem] font-thin" />
                       <p className="font-bold sm:text-[15px] lg:text-[20px]">
-                        {data.topics}
+                        {data.title}
                       </p>
                       {active.includes(data.id) && (
                         <p
@@ -239,3 +233,4 @@ export default function Unit() {
     </div>
   );
 }
+
