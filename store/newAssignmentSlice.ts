@@ -4,7 +4,8 @@ import { AssignmentDetails } from "../types/interfaces";
 
 const initialState: AssignmentDetails = {
   title: "",
-  date: "",
+  start_date: "",
+  end_date: "",
   order: "random",
   number: 0,
   skills: [],
