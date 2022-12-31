@@ -73,6 +73,26 @@ export const getAllCurriculums: any = createAsyncThunk(
   }
 );
 
+export const deleteCurriculum: any = createAsyncThunk(
+  "curriculumSlice/deleteCurriculum",
+  async (id: string, thunkApi) => {
+    const dispatch = thunkApi.dispatch;
+    try {
+      const { data } = await http.delete(`/academics/curriculums/units/${id}`, {
+        headers: {
+          Authorization: "Bearer " + getAccessToken(),
+        },
+      });
+      dispatch(getAllCurriculums());
+    } catch (error: any) {
+      if (error.response.status !== 401) {
+        dispatch(openErrorModal({ errorText: [error.message] }));
+      }
+      return thunkApi.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const updateCurriculumToPast: any = createAsyncThunk(
   "curriculumSlice/updateCurriculum",
   async (params: { curriculum: Icurriculum; id: number }, thunkApi) => {
@@ -80,6 +100,7 @@ export const updateCurriculumToPast: any = createAsyncThunk(
       ...params.curriculum,
       is_current: false,
       is_finished: true,
+      end_date: getDate(),
     };
 
     try {
@@ -116,5 +137,3 @@ export const updateCurriculumToCurrent: any = createAsyncThunk(
     } catch (error: any) {}
   }
 );
-
-

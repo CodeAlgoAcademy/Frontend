@@ -51,7 +51,7 @@ const StudentModal = ({
           <p className="text-[18px]">{className}</p>
         </div>
       </div>
-      <div className="p-12 h-[250px] grid grid-cols-4 scroll-smooth overflow-y-auto gap-x-6 gap-y-8 small-scroll-thumb">
+      <div className="p-12 h-[250px] grid grid-cols-3 scroll-smooth overflow-y-auto gap-x-6 gap-y-8 small-scroll-thumb">
         {students.map(({ email, firstName, lastName }) => (
           <div key={email} className="flex items-center gap-4 mx-2">
             <label className="checkbox-container bottom-1">
