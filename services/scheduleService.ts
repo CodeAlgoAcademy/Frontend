@@ -9,7 +9,6 @@ export const getSchedule = createAsyncThunk("scheduleSlice/getSchedule", async (
 				Authorization: `Bearer ${getAccessToken()}`
 			}
 		})
-		console.log(data)
 		return data
 	} catch (error: any) {
 		return thunkApi.rejectWithValue(error.response.data)
@@ -35,18 +34,47 @@ export const putSchedule = createAsyncThunk("scheduleSlice/putSchedule", async (
 		var a = updatedRecords[i];
 
 		for (var key in a) {
-			if (a.hasOwnProperty(key)) {
+			if (key !== 'Subject') {
 				a[key.charAt(0).toLowerCase() + key.substring(1)] = a[key];
 				delete a[key];
 			}
 		}
 		updatedRecords[i] = a
 	}
+	const { 
+		Subject, 
+		description, 
+		id, 
+		isAllDay, 
+		startTime, 
+		endTime, 
+		startTimeZone, 
+		endTimeZone, 
+		location, 
+		recurrenceRule,
+		recurrenceException,
+		recurrenceID,
+		followingID
+	} = updatedRecords[0]
+	const finalRecords = { Subject }
 
 	try {
 		const { data } = await http.put(
-			`/academics/calendar/schedules/${updatedRecords[0].Id}`,
-			{ ...updatedRecords },
+			`/academics/calendar/schedules/${id}`,
+			{ 
+				Subject,
+				description,
+				isAllDay,
+				startTime,
+				endTime,
+				startTimeZone,
+				endTimeZone,
+				location,
+				recurrenceRule,
+				recurrenceException,
+				recurrenceID,
+				followingID 
+			},
 			{
 				headers: {
 					Authorization: `Bearer ${getAccessToken()}`
@@ -72,7 +100,6 @@ export const deleteSchedule = createAsyncThunk("scheduleSlice/deleteSchedule", a
 			}
 			deletedRecords[i] = a
 		}
-		console.log(deletedRecords)
 
 		const { data } = await http.delete("/academics/calendar/schedules/delete/", {
 			data: JSON.stringify(deletedRecords),
