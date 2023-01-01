@@ -40,7 +40,6 @@ function Calendar () {
       await dispatch(getSchedule())
    }
    const changeSchedule = async (args: any) => {
-      console.log(args)
       const data = await dispatch(putSchedule(args))
       const status = 'error' in data
       showEventNotification(!status)
