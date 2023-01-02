@@ -30,51 +30,12 @@ export const postSchedule = createAsyncThunk("scheduleSlice/postSchedule", async
 })
 
 export const putSchedule = createAsyncThunk("scheduleSlice/putSchedule", async (updatedRecords: any, thunkApi) => {
-	for(var i = 0; i < updatedRecords.length; i++) {
-		var a = updatedRecords[i];
-
-		for (var key in a) {
-			if (key !== 'Subject') {
-				a[key.charAt(0).toLowerCase() + key.substring(1)] = a[key];
-				delete a[key];
-			}
-		}
-		updatedRecords[i] = a
-	}
-	const { 
-		Subject, 
-		description, 
-		id, 
-		isAllDay, 
-		startTime, 
-		endTime, 
-		startTimeZone, 
-		endTimeZone, 
-		location, 
-		recurrenceRule,
-		recurrenceException,
-		recurrenceID,
-		followingID
-	} = updatedRecords[0]
-	const finalRecords = { Subject }
+	const { Id, StartTimezone, EndTimezone, Guid, ...others} = updatedRecords[0]
 
 	try {
 		const { data } = await http.put(
-			`/academics/calendar/schedules/${id}`,
-			{ 
-				Subject,
-				description,
-				isAllDay,
-				startTime,
-				endTime,
-				startTimeZone,
-				endTimeZone,
-				location,
-				recurrenceRule,
-				recurrenceException,
-				recurrenceID,
-				followingID 
-			},
+			`/academics/calendar/schedules/${Id}`,
+			JSON.stringify(others),
 			{
 				headers: {
 					Authorization: `Bearer ${getAccessToken()}`
