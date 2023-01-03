@@ -23,7 +23,6 @@ const MessageList = ({ id, message, user }: Message) => {
             <StyledBadge
                 overlap="circular"
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                // variant={online ? 'dot': 'standard'}
             >
                 <div className='block'>
                     <Avatar 
