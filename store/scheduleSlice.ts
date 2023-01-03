@@ -21,13 +21,17 @@ const scheduleSlice = createSlice({
 			builder.addCase(getSchedule.rejected, (state: any, action: PayloadAction<any>) => {
 				console.error("Fetch Error")
 			}),
+			builder.addCase(postSchedule.fulfilled, (state: any, action: PayloadAction<any>) => {
+				console.info('Schedule created Successfully')
+				window.location.reload()
+			}),
 			builder.addCase(postSchedule.rejected, (state: any, action: PayloadAction<any>) => {
 				console.error("Post Error")
 			}),
 			builder.addCase(putSchedule.fulfilled, (state: any, action: PayloadAction<any>) => {
 				console.info('Schedule updated Successfully')
-				getSchedule()
-			})
+				window.location.reload()
+			}),
 			builder.addCase(putSchedule.rejected, (state: any, action: PayloadAction<any>) => {
 				console.error("Update Error")
 			}),
