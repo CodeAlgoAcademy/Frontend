@@ -24,6 +24,10 @@ const scheduleSlice = createSlice({
 			builder.addCase(postSchedule.rejected, (state: any, action: PayloadAction<any>) => {
 				console.error("Post Error")
 			}),
+			builder.addCase(putSchedule.fulfilled, (state: any, action: PayloadAction<any>) => {
+				console.info('Schedule updated Successfully')
+				getSchedule()
+			})
 			builder.addCase(putSchedule.rejected, (state: any, action: PayloadAction<any>) => {
 				console.error("Update Error")
 			}),

@@ -50,18 +50,6 @@ export const putSchedule = createAsyncThunk("scheduleSlice/putSchedule", async (
 
 export const deleteSchedule = createAsyncThunk("scheduleSlice/deleteSchedule", async (deletedRecords: any, thunkApi) => {
 	try {
-		for(var i = 0; i < deletedRecords.length; i++) {
-			var a = deletedRecords[i];
-
-			for (var key in a) {
-				if (a.hasOwnProperty(key) && key !== 'Subject') {
-					a[key.charAt(0).toLowerCase() + key.substring(1)] = a[key];
-					delete a[key];
-				}
-			}
-			deletedRecords[i] = a
-		}
-
 		const { data } = await http.delete("/academics/calendar/schedules/delete/", {
 			data: JSON.stringify(deletedRecords),
 			headers: {
