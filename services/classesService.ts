@@ -70,7 +70,6 @@ export const addClass: any = createAsyncThunk(
 
       return { ...data };
     } catch (error: any) {
-      console.log(error, "error");
       dispatch(
         openErrorModal({
           errorText: [
@@ -80,46 +79,6 @@ export const addClass: any = createAsyncThunk(
           ],
         })
       );
-      return thunkApi.rejectWithValue(error.response.data);
-    }
-  }
-);
-
-export const addStudents: any = createAsyncThunk(
-  "allClassesSlice/addStudents",
-  async (name, thunkApi) => {
-    const state: any = thunkApi.getState();
-    const dispatch = thunkApi.dispatch;
-    const { firstName, lastName, email } = state.addClass.student;
-
-    try {
-      const { data } = await http.post(
-        "/academics/class/1/student",
-        {
-          student: {
-            firstName,
-            lastName,
-            email,
-          },
-        },
-        {
-          headers: { Authorization: `Bearer ${getAccessToken()}` },
-        }
-      );
-      return data;
-    } catch (error: any) {
-      console.log(error);
-      if (error.response.status !== 401) {
-        dispatch(
-          openErrorModal({
-            errorText: [
-              error.response.data.detail
-                ? error.response.data.details
-                : error.message,
-            ],
-          })
-        );
-      }
       return thunkApi.rejectWithValue(error.response.data);
     }
   }

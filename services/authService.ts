@@ -60,6 +60,7 @@ export const signUpUser: any = createAsyncThunk(
       is_teacher,
       schoolCountry,
       country,
+      username,
     } = state.user.auth;
     const options = {
       email,
@@ -74,6 +75,7 @@ export const signUpUser: any = createAsyncThunk(
       is_parent,
       is_student,
       is_teacher,
+      username,
     };
     dispatch(openPreloader({ loadingText: "Creating Account" }));
     try {
@@ -149,6 +151,7 @@ export const updateAccountType: any = createAsyncThunk(
       schoolCountry,
       schoolName,
       grade,
+      username,
     } = state.user;
     try {
       const { data } = await http.put(
@@ -164,6 +167,7 @@ export const updateAccountType: any = createAsyncThunk(
           is_teacher,
           is_parent,
           grade,
+          username,
         },
         {
           headers: {
@@ -192,6 +196,7 @@ export const updateFirstname: any = createAsyncThunk(
       is_teacher,
       is_parent,
       grade,
+      username,
     } = state.user;
     try {
       const { data } = await http.put(
@@ -207,6 +212,7 @@ export const updateFirstname: any = createAsyncThunk(
           is_teacher,
           is_parent,
           grade,
+          username,
         },
         {
           headers: {
@@ -238,6 +244,7 @@ export const updateLastname: any = createAsyncThunk(
       is_teacher,
       is_parent,
       grade,
+      username,
     } = state.user;
     try {
       const { data } = await http.put(
@@ -253,6 +260,7 @@ export const updateLastname: any = createAsyncThunk(
           is_teacher,
           is_parent,
           grade,
+          username,
         },
         {
           headers: {
@@ -284,6 +292,7 @@ export const updateEmail: any = createAsyncThunk(
       is_teacher,
       is_parent,
       grade,
+      username,
     } = state.user;
     try {
       const { data } = await http.put(
@@ -299,6 +308,7 @@ export const updateEmail: any = createAsyncThunk(
           is_teacher,
           is_parent,
           grade,
+          username,
         },
         {
           headers: {

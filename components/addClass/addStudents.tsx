@@ -1,7 +1,6 @@
 import React, { ChangeEvent } from "react";
 import { FaChevronLeft, FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { addStudents } from "services/classesService";
 import { updateClassDetails } from "../../store/addClassSlice";
 import { closeAddStudentsModal } from "../../store/modalSlice";
 import { RootState } from "../../store/store";
@@ -104,9 +103,8 @@ const AddStudents = () => {
           Generate Username
         </button>
       </section>
-      <section className="flex w-full justify-between md:items-center items-end mt-8 md:flex-row md:gap-y-0 gap-y-4 flex-col pt-5 border-t-2 px-8">
-        <div>
-          {/* input container */}
+      <section className="flex w-full justify-end md:items-center items-end mt-8 md:flex-row md:gap-y-0 gap-y-4 flex-col pt-5 border-t-2 px-8">
+        {/* <div>
           <input type="file" id="studentsUpload" className="hidden" />
           <label
             htmlFor="studentsUpload"
@@ -117,7 +115,7 @@ const AddStudents = () => {
             </span>
             <h3 className="text-[16px] font-bold">Bulk Import</h3>
           </label>
-        </div>
+        </div> */}
         <button className="py-3 px-4 min-w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md">
           Add Student(s)
         </button>
