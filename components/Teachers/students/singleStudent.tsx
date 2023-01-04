@@ -76,8 +76,6 @@ const SingleStudent = ({
       setComment("");
     }
   };
-  console.log(student);
-
   const updateStudentComment = async (
     id: string,
     comment: string,

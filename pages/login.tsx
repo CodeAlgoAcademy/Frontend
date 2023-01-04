@@ -50,7 +50,7 @@ const Login = () => {
         <title>CodeAlgo Academy | Login</title>
       </Head>
 
-      <section className="w-full min-h-screen bg-gray-100 flex justify-center items-center">
+      <section className="w-full min-h-screen bg-[#E5E5E5]  flex justify-center items-center">
         <div className="bg-white w-[95vw] max-w-[600px] mx-auto rounded-md p-[40px] md:p-[50px] shadow-md">
           {/* title */}
           <div className="flex flex-col gap-y-1 mb-4">
@@ -121,9 +121,11 @@ const Login = () => {
             </div>
           </form>
 
-          <p className="text-right underline text-[16px] mt-2 cursor-pointer">
-            Forgot Password
-          </p>
+          <Link href="/change-password">
+            <p className="text-right underline text-[16px] mt-2 cursor-pointer font-bold">
+              Forgot Password
+            </p>
+          </Link>
         </div>
       </section>
     </main>
