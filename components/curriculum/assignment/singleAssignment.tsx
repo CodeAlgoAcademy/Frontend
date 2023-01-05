@@ -47,7 +47,6 @@ const singleAssignment = ({
                 <button
                   className="px-2 py-2 rounded-md text-white bg-orange-600 hover:shadow-md transition"
                   onClick={() => {
-                    console.log(assignment);
                     setEditAssignment(assignment, assignment.id as string);
                   }}
                 >

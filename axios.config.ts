@@ -50,13 +50,12 @@ http.interceptors.response.use(
   async (error) => {
     const prevRequest = error?.config;
     const refreshToken = getRefreshToken();
-    if (error?.response?.status === 401 && !prevRequest?.sent) {
+    if (error?.response?.status === 401 && !prevRequest?.sent && refreshToken) {
       prevRequest.sent = true;
       try {
         const { data } = await http.post("/auth/token/refresh/", {
           refresh: refreshToken,
         });
-        console.log("interceptor");
         const { access } = data;
         localStorage.setItem(
           "token",
