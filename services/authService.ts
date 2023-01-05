@@ -123,7 +123,6 @@ export const signUpWithGoogle: any = createAsyncThunk(
   "authSlice/signUpWithGoogle",
   async (access_token: string, thunkApi) => {
     try {
-      console.log(access_token);
       const { data } = await http.post("/auth/google-signup/", {
         access_token,
       });
@@ -162,7 +161,6 @@ export const updateAccountType: any = createAsyncThunk(
       grade,
       username,
     } = state.user;
-    console.log(email);
     try {
       const { data } = await http.put(
         "/auth/user",
