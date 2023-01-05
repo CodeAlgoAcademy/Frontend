@@ -67,12 +67,18 @@ export default function Index() {
     setUpcoming(true);
     setActive("upcoming");
   };
+
+  const todayDate = `${new Date().getFullYear()}-${
+    new Date().getMonth() + 1
+  }-${new Date().getDate()}`;
+
   const currentCurriculum = curriculum?.filter(
     (tempCurriculum: Icurriculum) => {
       if (tempCurriculum.class_model === id) {
         if (
           tempCurriculum.is_finished === false &&
-          new Date(tempCurriculum.start_date) <= new Date()
+          new Date(tempCurriculum.start_date).getTime() <=
+            new Date(todayDate).getTime()
         ) {
           return tempCurriculum;
         }
@@ -92,7 +98,8 @@ export default function Index() {
         if (
           tempCurriculum.is_current === false &&
           tempCurriculum.is_finished === false &&
-          new Date(tempCurriculum.start_date) > new Date()
+          new Date(tempCurriculum.start_date).getTime() >
+            new Date(todayDate).getTime()
         ) {
           return tempCurriculum;
         }
@@ -100,7 +107,6 @@ export default function Index() {
     }
   );
 
-  console.log(curriculum);
   useEffect(() => {
     pastCurriculum?.forEach((curriculum: Icurriculum) => {
       const todayDate: any = new Date();
