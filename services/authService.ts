@@ -105,7 +105,7 @@ export const loginWithGoogle: any = createAsyncThunk(
   "authSlice/loginWithGoogle",
   async (access_token: string, thunkApi) => {
     try {
-      const { data } = await http.post("/auth/google/", {
+      const { data } = await http.post("/auth/google-login/", {
         access_token,
       });
       return {
@@ -121,18 +121,27 @@ export const loginWithGoogle: any = createAsyncThunk(
 
 export const signUpWithGoogle: any = createAsyncThunk(
   "authSlice/signUpWithGoogle",
-  async (access_token: string) => {
+  async (access_token: string, thunkApi) => {
     try {
-      const { data } = await http.post("/auth/google/", {
+      console.log(access_token);
+      const { data } = await http.post("/auth/google-signup/", {
         access_token,
       });
-
       return {
         access_token: data.access_token,
         refresh_token: data.refresh_token,
         ...data.user,
       };
-    } catch (error) {}
+    } catch (error: any) {
+      if (error) {
+        thunkApi.dispatch(
+          openErrorModal({
+            errorText: ["A user already exists with this google account"],
+          })
+        );
+      }
+      return thunkApi.rejectWithValue(error.response.data);
+    }
   }
 );
 
@@ -153,6 +162,7 @@ export const updateAccountType: any = createAsyncThunk(
       grade,
       username,
     } = state.user;
+    console.log(email);
     try {
       const { data } = await http.put(
         "/auth/user",

@@ -60,7 +60,9 @@ const Login = () => {
             <p className="text-grey-800 md:text-lg text-[16px] text-center">
               New here?
               <Link href="/signup">
-                <a className="underline text-mainPurple">Create an account</a>
+                <a className="ml-2 underline text-mainPurple">
+                  Create an account
+                </a>
               </Link>
             </p>
           </div>
@@ -100,15 +102,6 @@ const Login = () => {
                 );
               })}
             </div>
-            <span className="flex flex-row items-center gap-x-2 mt-4">
-              <input
-                type="checkbox"
-                id="terms"
-                className="accent-mainPurple"
-                required
-              />
-              <label htmlFor="terms">I accept the terms and conditions</label>
-            </span>
             {/* login button */}
 
             <div className="text-right">

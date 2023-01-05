@@ -224,6 +224,7 @@ export interface AssignmentDetails {
   is_current: boolean;
 }
 export interface IMainAssignment {
+  id?: string | number;
   title: string;
   order: string;
   date: string;

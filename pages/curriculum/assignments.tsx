@@ -20,7 +20,11 @@ import {
   DynamicChechbox,
   IMainAssignment,
 } from "types/interfaces";
-import { addNewAssignments, getAssignments } from "services/assignmentService";
+import {
+  addNewAssignments,
+  getAssignments,
+  updateAssignment,
+} from "services/assignmentService";
 import { getDate } from "utils/getDate";
 import { useRouter } from "next/router";
 
@@ -43,6 +47,8 @@ const Assignments = () => {
   const [allStudentCheckbox, setAllStudentCheckbox] = useState({
     isChecked: false,
   });
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [editId, setEditId] = useState<number | string>("");
   const [assignmentDetails, setAssignmentDetails] = useState<AssignmentDetails>(
     {
       title: "",
@@ -64,6 +70,15 @@ const Assignments = () => {
   );
 
   const { students } = useSelector((state: RootState) => state.students);
+
+  const setEditAssignment = (assignment: any, id: string | number) => {
+    setAssignmentDetails(assignment);
+
+    setIsEditing(true);
+    setEditId(id);
+    setModalWrapperDisplay((prev) => false);
+    setModalItemsDisplay((prev) => modalDefaults);
+  };
 
   const resetAssignments = () => {
     setAssignmentDetails({
@@ -405,7 +420,7 @@ const Assignments = () => {
                       min={0}
                       max={100}
                       value={assignmentDetails?.number}
-                      step={assignmentDetails.skills?.length}
+                      // step={assignmentDetails?.skills?.length}
                       className="w-[380px] h-[12px] appearance-none rounded-lg bg-gray-200 opacity-90 outline-none transition-all hover:opacity-100 assignment-slider"
                       onChange={handleInputChange}
                     />
@@ -456,15 +471,28 @@ const Assignments = () => {
               <div className="flex flex-row-reverse gap-4 mt-4">
                 <span
                   onClick={async () => {
-                    await dispatch(
-                      addNewAssignments({
-                        assignment: assignmentDetails,
-                        actionType: "active",
-                        showModal,
-                        modalType: "createResponse",
-                        resetAssignments,
-                      })
-                    );
+                    if (!isEditing) {
+                      await dispatch(
+                        addNewAssignments({
+                          assignment: assignmentDetails,
+                          actionType: "active",
+                          showModal,
+                          modalType: "createResponse",
+                          resetAssignments,
+                        })
+                      );
+                    } else {
+                      await dispatch(
+                        updateAssignment({
+                          assignment: assignmentDetails,
+                          actionType: "active",
+                          showModal,
+                          modalType: "createResponse",
+                          resetAssignments,
+                          id: editId,
+                        })
+                      );
+                    }
                   }}
                 >
                   <Button color="#F28E2C" text="Create" />
@@ -479,18 +507,34 @@ const Assignments = () => {
                 <div className="mr-4">
                   <span
                     onClick={async () => {
-                      await dispatch(
-                        addNewAssignments({
-                          assignment: assignmentDetails,
-                          actionType: "draft",
-                          showModal,
-                          modalType: "saveResponse",
-                          resetAssignments,
-                        })
-                      );
+                      if (!isEditing) {
+                        await dispatch(
+                          addNewAssignments({
+                            assignment: assignmentDetails,
+                            actionType: "draft",
+                            showModal,
+                            modalType: "saveResponse",
+                            resetAssignments,
+                          })
+                        );
+                      } else {
+                        await dispatch(
+                          updateAssignment({
+                            assignment: assignmentDetails,
+                            actionType: "draft",
+                            showModal,
+                            modalType: "saveResponse",
+                            resetAssignments,
+                            id: editId,
+                          })
+                        );
+                      }
                     }}
                   >
-                    <Button color="#F28E2C" text="Save" />
+                    <Button
+                      color="#F28E2C"
+                      text={isEditing ? "Edit" : "Save"}
+                    />
                   </span>
                 </div>
               </div>
@@ -561,7 +605,12 @@ const Assignments = () => {
                       <Button color="#F28E2C" text="No" />
                     </span>
                     <Link href="/curriculum/">
-                      <span>
+                      <span
+                        onClick={() => {
+                          setIsEditing(false);
+                          setEditId("");
+                        }}
+                      >
                         <Button color="#F28E2C" text="Yes" />
                       </span>
                     </Link>
@@ -600,7 +649,7 @@ const Assignments = () => {
                       }}
                       onClick={() => setHistoryType((prev) => "draft")}
                     >
-                      Archived
+                      Draft
                     </span>
                   </div>
                   <div className="mt-3 flex flex-col gap-3">
@@ -611,6 +660,7 @@ const Assignments = () => {
                       ) {
                         return (
                           <SingleAssignment
+                            setEditAssignment={setEditAssignment}
                             assignment={assignment}
                             key={index}
                           />
