@@ -24,6 +24,10 @@ const Index = () => {
     dispatch(getStudents());
   }, [id]);
 
+  useEffect(() => {
+    setFilteredStudents(() => ({ students: students?.students }));
+  }, [students?.students]);
+
   const closeCommentTabs = (event: any) => {
     if (event.target.classList.contains("students-container")) {
       setCommentTabsOpened(false);
@@ -82,7 +86,7 @@ const Index = () => {
               <input
                 type="text"
                 placeholder="Search Students"
-                className="bg-transparent py-2 px-4 flex-[.8] border-none outline-none"
+                className="bg-transparent py-2 px-4 flex-[.8] border-none outline-none max-w-[220px]"
                 onChange={(e) => {
                   filterStudents(e.target.value);
                 }}
@@ -108,7 +112,7 @@ export default Index;
 
 const styles = {
   container:
-    "bg-gray-200 h-full px-5 md:px-20 py-5 overflow-x-auto min-h-screen flex-1 w-full students-container",
+    "bg-[#E5E5E5] h-full px-5 md:px-20 py-5 overflow-x-auto min-h-screen flex-1 w-full students-container",
   containerHeader:
     "flex justify-between py-3 items-center border-b border-b-slate-400 students-container",
   headerTitle: "font-medium text-[30px] students-container",

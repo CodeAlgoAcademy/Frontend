@@ -18,11 +18,6 @@ const SingleClass: FC<IClass> = ({
 }) => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  useEffect(() => {
-    if (!isOpen) {
-      dispatch(getAllClasses());
-    }
-  }, [isOpen]);
   return (
     <article className="col-span-1 bg-white min-h-[200px] shadow-md hover:shadow-lg rounded-md overflow-hidden w-full flex">
       <aside

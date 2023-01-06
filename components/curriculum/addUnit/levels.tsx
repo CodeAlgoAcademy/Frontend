@@ -4,7 +4,7 @@ import { RootState } from "store/store";
 import { Props, styles, availableLevels } from ".";
 import { ILevels } from "types/interfaces";
 import { updateLevels } from "store/unitsSlice";
-import { FaPlus } from "react-icons/fa";
+import { FaChevronDown, FaPlus } from "react-icons/fa";
 
 const Levels: FC<Props> = ({ openedModal, updateOpenedModal }) => {
   const { levels, standard } = useSelector(
@@ -26,7 +26,7 @@ const Levels: FC<Props> = ({ openedModal, updateOpenedModal }) => {
       >
         <h1>Level(s)</h1>
         <i>
-          <FaPlus />
+          <FaChevronDown />
         </i>
         {openedModal === "level" && (
           <div className={styles.preview}>
@@ -76,7 +76,11 @@ const LevelsInputContainer = ({ level }: { level: ILevels }) => {
       >
         {level.title}
       </label>
-      <p className={`hoverText right-[0px] -top-[10px]`}>{level.hoverText}</p>
+      <p
+        className={`hoverText right-[0px] -top-[10px] bg-mainPurple after:bg-mainPurple`}
+      >
+        {level.hoverText}
+      </p>
     </div>
   );
 };

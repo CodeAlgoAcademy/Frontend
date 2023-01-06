@@ -38,29 +38,28 @@ const Messages = () => {
                             </li>
                         </ul>
 
-                        <div className={styles.searchBox}>
-                            <div className={styles.inputContainer}>
-                                <AiOutlineSearch size={20} />
-                                <input 
-                                    className={styles.searchBoxInput}
-                                    placeholder='Search messages'
-                                />
-                            </div>
-                            <div>
-                                <MessagesLists />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className={styles.chatroom}>
-                        <ChatRoom />
-                    </div>
-                </div>
+            <div className={styles.searchBox}>
+              <div className={styles.inputContainer}>
+                <AiOutlineSearch size={20} />
+                <input
+                  className={styles.searchBoxInput}
+                  placeholder="Search messages"
+                />
+              </div>
+              <div>
+                <MessagesLists />
+              </div>
             </div>
+          </div>
 
+          <div className={styles.chatroom}>
+            <ChatRoom />
+          </div>
+        </div>
+      </div>
 
-            {/* Mobile View */}
-            {/* <div className='md:hidden bg-[#a5a091] h-screen'>
+      {/* Mobile View */}
+      {/* <div className='md:hidden bg-[#a5a091] h-screen'>
                 <div className="bg-[#8D887C] py-5 pl-5 pr-4 flex items-center justify-between">
                     <p className='text-[20px]'>Messages</p>
                     <div className='flex space-x-1'>
@@ -83,20 +82,22 @@ const Messages = () => {
                     </IconButton>
                 </div>
             </div> */}
-        </>
-    )
-}
+    </>
+  );
+};
 
-export default Messages
+export default Messages;
 
 const styles = {
-    container: 'bg-gray-200 block px-5 md:px-20 py-5 h-screen',
-    containerBody: 'flex justify-start p-5 space-x-32',
-    informationBox: 'bg-white p-5 text-xs font-light w-60 rounded-lg shadow-lg',
-    boxList: 'flex justify-between p-2 items-center',
-    important: 'bg-red-500 rounded-full p-[3px] text-[9px] w-4 h-4 flex justify-center items-center text-white font-semibold',
-    searchBox: 'bg-white rounded-lg pb-1 text-slate-800 shadow-lg',
-    inputContainer: 'bg-gray-300 flex p-2 rounded-t-lg items-center px-2',
-    searchBoxInput: 'outline-none bg-transparent pl-2 p-1 text-sm placeholder:text-slate-700',
-    chatroom: 'w-[528px] bg-slate-50 rounded-xl shadow pt-3',
-}
+  container: "bg-[#E5E5E5]  block px-5 md:px-20 py-5 h-screen",
+  containerBody: "flex justify-start p-5 space-x-32",
+  informationBox: "bg-white p-5 text-xs font-light w-60 rounded-lg shadow-lg",
+  boxList: "flex justify-between p-2 items-center",
+  important:
+    "bg-red-500 rounded-full p-[3px] text-[9px] w-4 h-4 flex justify-center items-center text-white font-semibold",
+  searchBox: "bg-white rounded-lg pb-1 text-slate-800 shadow-lg",
+  inputContainer: "bg-gray-300 flex p-2 rounded-t-lg items-center px-2",
+  searchBoxInput:
+    "outline-none bg-transparent pl-2 p-1 text-sm placeholder:text-slate-700",
+  chatroom: "w-[528px] bg-slate-50 rounded-xl shadow pt-3",
+};
