@@ -53,7 +53,7 @@ http.interceptors.response.use(
     if (error?.response?.status === 401 && !prevRequest?.sent && refreshToken) {
       prevRequest.sent = true;
       try {
-        const { data } = await http.post("/auth/token/refresh/", {
+        const { data } = await http.post("/auth /token/refresh/", {
           refresh: refreshToken,
         });
         const { access } = data;

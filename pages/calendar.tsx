@@ -17,10 +17,10 @@ import Image from "next/image"
 const PropertyPane = (props: PropsWithChildren) => <div className='mt-5'>{ props.children }</div>
 
 function Calendar () {
-   let scheduleObj: ScheduleComponent | any
-   const dispatch = useDispatch<AppDispatch>()
-   const scheduleData: Schedule = useSelector((state: RootState) => state.schedule)
-   const data: Record<string, any>[] = extend([], scheduleData.allSchedule, true) as Record<string, any>[]
+   let scheduleObj: ScheduleComponent;
+   const dispatch = useDispatch<AppDispatch>();
+   const scheduleData: Schedule = useSelector((state: RootState) => state.schedule);
+   const data: Record<string, any>[] = extend([], (scheduleData.allSchedule as Record<string, any>), null!, true) as Record<string, any>[];
    const [eventNotificationType, setEventNotificationType] = useState(true)
    const [eventNotification, setEventNotification] = useState(false)
    const [eventSuccess, setEventSuccess] = useState(true)
@@ -68,6 +68,7 @@ function Calendar () {
    useEffect(() => {
       fetchSchedule()
    }, [])
+
    return (
       <div className="min-h-[100vh] relative">
          <GeneralNav />
@@ -105,7 +106,7 @@ function Calendar () {
                   <ScheduleComponent
                      height='650px'
                      selectedDate={ new Date() }
-                     ref={ schedule => scheduleObj = schedule }
+                     ref={ schedule => scheduleObj = schedule! }
                      eventSettings={ { dataSource: data } }
                      actionComplete={ async (args: ActionEventArgs) => {
                         const { requestType, changedRecords, addedRecords, deletedRecords } = args
@@ -144,7 +145,7 @@ function Calendar () {
                                     placeholder='Current Date'
                                     floatLabelType='Always'
                                     change={ (args: ChangeEventArgs) => {
-                                       scheduleObj.selectedDate = args.value
+                                       scheduleObj.selectedDate = args.value!
                                        scheduleObj.dataBind()
                                     } }
                                  />
