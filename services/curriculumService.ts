@@ -4,6 +4,7 @@ import http from "axios.config";
 import { getAccessToken } from "utils/getTokens";
 import { openErrorModal } from "store/fetchSlice";
 import { Icurriculum } from "types/interfaces";
+import { getDate } from "utils/getDate";
 
 export const addUnits: any = createAsyncThunk(
   "unitsSlice/addUnits",
@@ -72,13 +73,34 @@ export const getAllCurriculums: any = createAsyncThunk(
   }
 );
 
-export const updateCurrentCurriculum: any = createAsyncThunk(
+export const deleteCurriculum: any = createAsyncThunk(
+  "curriculumSlice/deleteCurriculum",
+  async (id: string, thunkApi) => {
+    const dispatch = thunkApi.dispatch;
+    try {
+      const { data } = await http.delete(`/academics/curriculums/units/${id}`, {
+        headers: {
+          Authorization: "Bearer " + getAccessToken(),
+        },
+      });
+      dispatch(getAllCurriculums());
+    } catch (error: any) {
+      if (error.response.status !== 401) {
+        dispatch(openErrorModal({ errorText: [error.message] }));
+      }
+      return thunkApi.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const updateCurriculumToPast: any = createAsyncThunk(
   "curriculumSlice/updateCurriculum",
   async (params: { curriculum: Icurriculum; id: number }, thunkApi) => {
     const rearrangedUnit: Icurriculum = {
       ...params.curriculum,
       is_current: false,
-      is_finished: false,
+      is_finished: true,
+      end_date: getDate(),
     };
 
     try {
@@ -93,4 +115,25 @@ export const updateCurrentCurriculum: any = createAsyncThunk(
   }
 );
 
+export const updateCurriculumToCurrent: any = createAsyncThunk(
+  "curriculumSlice/updateCurriculum",
+  async (params: { curriculum: Icurriculum; id: number }, thunkApi) => {
+    const date = new Date();
+    const rearrangedUnit: Icurriculum = {
+      ...params.curriculum,
+      is_current: true,
+      is_finished: false,
+      start_date: getDate(),
+    };
 
+    try {
+      const { data } = await http.put(
+        "/academics/curriculums/units/" + params.id,
+        rearrangedUnit,
+        {
+          headers: { Authorization: "Bearer " + getAccessToken() },
+        }
+      );
+    } catch (error: any) {}
+  }
+);

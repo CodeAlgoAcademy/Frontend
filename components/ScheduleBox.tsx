@@ -10,11 +10,12 @@ const ScheduleBox = () => {
 	const [currentSchedule, setCurrentSchedule] = useState([])
 	const [allSchedule] = useState(scheduleData.allSchedule)
 	const dispatch = useDispatch<AppDispatch>()
+
 	function isToday (date: Date): boolean {
 		const today = new Date()
 		let result: boolean = false
 		try {
-			if (today.toDateString() === date?.toDateString()) {
+			if (today.toDateString() === new Date(date).toDateString()) {
 				result = true
 			}
 		} catch {
@@ -22,9 +23,11 @@ const ScheduleBox = () => {
 		}
 		return result
 	}
+
 	function formatAMPM (date: Date) {
-		let hours = date.getHours()
-		let minutes: any = date.getMinutes()
+		const changeDate = new Date(date);
+		let hours = changeDate.getHours()
+		let minutes: any = changeDate.getMinutes()
 		let ampm = hours >= 12 ? 'pm' : 'am'
 		hours = hours % 12
 		hours = hours ? hours : 12 // the hour '0' should be '12'
@@ -32,17 +35,17 @@ const ScheduleBox = () => {
 		let strTime = hours + ':' + minutes + ' ' + ampm
 		return strTime
 	}
-	const fetchSchedule = async () => {
-		const data = await dispatch(getSchedule())
-	}
+
 	const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 	const fullDate = new Date()
 	const date = fullDate.getDate()
 	const month = fullDate.getMonth()
 	const year = fullDate.getFullYear()
+
 	useEffect(() => {
-		fetchSchedule()
+		dispatch(getSchedule())
 	}, [])
+
 	useEffect(() => {
 		const data = allSchedule.filter((item: any) => isToday(item.StartTime))
 		setCurrentSchedule((prev) => data)
@@ -55,8 +58,8 @@ const ScheduleBox = () => {
 				</h3>
 				<div className='grid grid-cols-1 divide-y'>
 					{ currentSchedule.length > 0 && (
-						currentSchedule?.map(({ Id, StartTime, Subject }) => {
-							return <ScheduleItem key={ Id } time={ formatAMPM(StartTime) } item={ Subject } id={ Id } />
+						currentSchedule?.map(({ id, StartTime, Subject }, index) => {
+							return <ScheduleItem key={ index } time={ formatAMPM(StartTime) } item={ Subject } id={ id } />
 						}))
 					}
 				</div>

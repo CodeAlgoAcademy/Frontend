@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Navbar from "@/components/Navbar/Navbar";
-
+import Link from "next/link";
 const Home: NextPage = () => {
   return (
     <div className="">
@@ -15,14 +15,13 @@ const Home: NextPage = () => {
               Coding for kids and Teens made easy
             </p>
             <p className="md:w-[550px] text-sm">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore
-              quaerat deleniti libero, harum dolorem tenetur numquam facilis
-              omnis neque itaque consequatur rerum minus at, dolorum excepturi.
-              Illo voluptatem enim consectetr.
+              3D games from CodeAlgo academy will bring students to compiter sciences where they can teach themselves as they play.
             </p>
+           <Link href="/signup">
             <button className="bg-blue-400 p-3 rounded-lg">
-              Get Started for free
+              Sign up
             </button>
+            </Link>
           </div>
         </div>
       </div>

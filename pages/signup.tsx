@@ -62,7 +62,12 @@ const SignUp = () => {
     event.preventDefault();
     const data = await dispatch(signUpUser());
     if (!data?.error?.message) {
-      router.push("/addClass");
+      if(data?.payload?.is_teacher){
+        router.push("/addClass");
+
+      }else{
+        router.push("/comingSoon");
+      }
     }
   };
 
@@ -75,7 +80,7 @@ const SignUp = () => {
       <Head>
         <title>CodeAlgo Academy | Register</title>
       </Head>
-      <section className="w-full min-h-screen bg-gray-100 flex justify-center items-center py-6">
+      <section className="w-full min-h-screen bg-[#e5e5e5] flex justify-center items-center py-6">
         <div className="bg-white w-[95vw] max-w-[900px] mx-auto rounded-md p-[40px] md:p-[50px] shadow-md">
           {/* tabs */}
           <div className="w-full max-w-[600px] mx-auto mb-4 flex-row rounded-md overflow-hidden hidden md:flex">
@@ -165,7 +170,6 @@ const SignUp = () => {
                 <a className="underline text-mainPurple">Sign In</a>
               </Link>
             </p>
-            <p className="text-grey-800 underline">Forgot Password</p>
           </div>
         </div>
       </section>
