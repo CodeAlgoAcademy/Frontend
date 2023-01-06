@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import CleverBtn from "../components/cleverBtn";
@@ -6,13 +6,17 @@ import GoogleBtn from "../components/googleBtn";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { IInputFields } from "../types/interfaces";
-import { updateUser } from "../store/authSlice";
+import { loginUser } from "../services/authService";
+import { clearFields, updateUser } from "store/authSlice";
 import styles from "../styles/styles";
+import { useRouter } from "next/router";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { email, password } = useSelector((state: RootState) => state.user);
-
+  const { email, password } = useSelector(
+    (state: RootState) => state.user.auth
+  );
+  const router = useRouter();
   const inputFields: IInputFields[] = [
     {
       type: "email",
@@ -27,26 +31,43 @@ const Login = () => {
       value: password,
     },
   ];
+
+  const login = async (event: ChangeEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = await dispatch(loginUser());
+    if (!data?.error?.message) {
+      if(data?.payload?.is_teacher){
+        router.push("/addClass");
+
+      }else{
+        router.push("/comingSoon");
+      }
+    }
+  };
+
+  useEffect(() => {
+    dispatch(clearFields());
+  }, []);
+
   return (
     <main>
       <Head>
         <title>CodeAlgo Academy | Login</title>
       </Head>
 
-      <section className="w-full min-h-screen bg-gray-100 flex justify-center items-center">
-        <form
-          action=""
-          className="bg-white w-[95vw] max-w-[600px] mx-auto rounded-md p-[40px] md:p-[50px] shadow-md"
-        >
+      <section className="w-full min-h-screen bg-[#E5E5E5]  flex justify-center items-center">
+        <div className="bg-white w-[95vw] max-w-[600px] mx-auto rounded-md p-[40px] md:p-[50px] shadow-md">
           {/* title */}
           <div className="flex flex-col gap-y-1 mb-4">
             <h1 className="md:text-3xl text-center text-lg font-bold">
               Welcome to CodeAlgo Academy
             </h1>
-            <p className="text-grey-800 md:text-lg text-[16px]">
+            <p className="text-grey-800 md:text-lg text-[16px] text-center">
               New here?
               <Link href="/signup">
-                <a className="underline text-mainPurple">Create an account</a>
+                <a className="ml-2 underline text-mainPurple">
+                  Create an account
+                </a>
               </Link>
             </p>
           </div>
@@ -62,47 +83,48 @@ const Login = () => {
             OR
           </span>
 
-          {/* inputs */}
-          <div className="flex flex-col gap-y-3 mb-6 items-start">
-            {inputFields.map((inputField: IInputFields, index: number) => {
-              const { type, placeholder, name, value } = inputField;
-              return (
-                <input
-                  key={index}
-                  type={type}
-                  placeholder={placeholder}
-                  name={name}
-                  value={value}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                    dispatch(updateUser({ key: name, value: e.target.value }));
-                  }}
-                  minLength={name === "password" ? 8 : 0}
-                  required
-                  className={styles.input}
-                />
-              );
-            })}
-          </div>
+          <form className="w-full" onSubmit={login}>
+            {/* inputs */}
+            <div className="flex flex-col gap-y-3 mb-6 items-start">
+              {inputFields.map((inputField: IInputFields, index: number) => {
+                const { type, placeholder, name, value } = inputField;
+                return (
+                  <input
+                    key={index}
+                    type={type}
+                    placeholder={placeholder}
+                    name={name}
+                    value={value}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      dispatch(
+                        updateUser({ key: name, value: e.target.value })
+                      );
+                    }}
+                    minLength={name === "password" ? 8 : 0}
+                    required
+                    className={styles.input}
+                  />
+                );
+              })}
+            </div>
+            {/* login button */}
 
-          <span className="flex flex-row items-center gap-x-2 mt-4">
-            <input type="checkbox" id="terms" required />
-            <label htmlFor="terms">I accept the terms and conditions</label>
-          </span>
-          {/* login button */}
+            <div className="text-right">
+              <button
+                type="submit"
+                className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md"
+              >
+                Log In
+              </button>
+            </div>
+          </form>
 
-          <div className="text-right">
-            <button
-              type="submit"
-              className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md"
-            >
-              Log In
-            </button>
-          </div>
-
-          <p className="text-right underline text-[16px] mt-2 cursor-pointer">
-            Forgot Password
-          </p>
-        </form>
+          <Link href="/change-password">
+            <p className="text-right underline text-[16px] mt-2 cursor-pointer font-bold">
+              Forgot Password
+            </p>
+          </Link>
+        </div>
       </section>
     </main>
   );
