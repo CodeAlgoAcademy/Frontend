@@ -15,11 +15,12 @@ const Home: NextPage = () => {
               Coding for kids and Teens made easy
             </p>
             <p className="md:w-[550px] text-sm">
-            3D games from CodeAlgo academy will bring students to compiter sciences where they can teach themselves as they play.
+              3D games from CodeAlgo academy will bring students to compiter sciences where they can teach themselves as they play.
             </p>
-           <Link href="/signup"> <button className="bg-blue-400 p-3 rounded-lg">
-            Sign up
-            </button>
+           <Link href="/signup">
+            <button className="bg-blue-400 p-3 rounded-lg">
+              Sign up
+g            </button>
             </Link>
           </div>
         </div>
