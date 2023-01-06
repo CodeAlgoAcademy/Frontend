@@ -62,7 +62,12 @@ const SignUp = () => {
     event.preventDefault();
     const data = await dispatch(signUpUser());
     if (!data?.error?.message) {
-      router.push("/addClass");
+      if(data?.payload?.is_teacher){
+        router.push("/addClass");
+
+      }else{
+        router.push("/comingSoon");
+      }
     }
   };
 

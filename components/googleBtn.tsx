@@ -27,7 +27,12 @@ const GoogleBtn: FC = () => {
       if (router.pathname === "/login") {
         const data = await dispatch(loginWithGoogle(codeResponse.access_token));
         if (!data?.error?.message) {
-          router.push("/addClass");
+          if(data?.payload?.is_teacher){
+            router.push("/addClass");
+    
+          }else{
+            router.push("/comingSoon");
+          }
         }
       } else if (router.pathname === "/signup") {
         const data = await dispatch(
@@ -36,7 +41,11 @@ const GoogleBtn: FC = () => {
         if (!data?.error?.message) {
           const data = await dispatch(updateAccountType(accountType));
           if (!data?.error?.message) {
-            router.push("/addClass");
+            if(accountType === "Teacher"){
+              router.push("/addClass");
+            }else{
+              router.push("/comingSoon")
+            }
           }
         }
       }

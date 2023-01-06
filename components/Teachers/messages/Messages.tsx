@@ -1,36 +1,42 @@
-import { IconButton } from "@mui/material";
-import React from "react";
-import { AiOutlineSearch } from "react-icons/ai";
-import { FiPlus } from "react-icons/fi";
-import { HiDotsVertical } from "react-icons/hi";
-import ChatRoom from "./Chats/ChatRoom";
-import MessagesLists from "./MessagesLists/MessagesLists";
+import { IconButton } from '@mui/material'
+import React, { useEffect, useState, useRef } from 'react'
+import { AiOutlineSearch } from 'react-icons/ai'
+import { FiPlus } from 'react-icons/fi'
+import { HiDotsVertical } from 'react-icons/hi'
+import ChatRoom from './Chats/ChatRoom'
+import MessagesLists from './MessagesLists/MessagesLists';
+
+
 
 const Messages = () => {
-  return (
-    <>
-      {/* Large view */}
-      <div className={styles.container}>
-        <div className={styles.containerBody}>
-          <div className="space-y-10">
-            <ul className={styles.informationBox}>
-              <li className={styles.boxList}>
-                <p>All Messages</p>
-                <p className="text-center text-slate-400">22</p>
-              </li>
-              <li className={styles.boxList}>
-                <p>Important Messages</p>
-                <p className={styles.important}>4</p>
-              </li>
-              <li className={styles.boxList}>
-                <p>Unread Messages</p>
-                <p className="text-center">15</p>
-              </li>
-              <li className={styles.boxList}>
-                <p>Drafts</p>
-                <p className="text-center">3</p>
-              </li>
-            </ul>
+
+ 
+ 
+
+    return (
+        <>
+            {/* Large view */}
+            <div className={styles.container}>
+                <div className={styles.containerBody}>
+                    <div className='space-y-10'>
+                        <ul className={styles.informationBox}>
+                            <li className={styles.boxList}>
+                                <p>All Messages</p>
+                                <p className='text-center text-slate-400'>22</p>
+                            </li>
+                            <li className={styles.boxList}>
+                                <p>Important Messages</p>
+                                <p className={styles.important}>4</p>
+                            </li>
+                            <li className={styles.boxList}>
+                                <p>Unread Messages</p>
+                                <p className='text-center'>15</p>
+                            </li>
+                            <li className={styles.boxList}>
+                                <p>Drafts</p>
+                                <p className='text-center'>3</p>
+                            </li>
+                        </ul>
 
             <div className={styles.searchBox}>
               <div className={styles.inputContainer}>
