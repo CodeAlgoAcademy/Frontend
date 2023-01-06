@@ -36,7 +36,12 @@ const Login = () => {
     event.preventDefault();
     const data = await dispatch(loginUser());
     if (!data?.error?.message) {
-      router.push("/addClass");
+      if(data?.payload?.is_teacher){
+        router.push("/addClass");
+
+      }else{
+        router.push("/comingSoon");
+      }
     }
   };
 
@@ -50,7 +55,7 @@ const Login = () => {
         <title>CodeAlgo Academy | Login</title>
       </Head>
 
-      <section className="w-full min-h-screen bg-gray-100 flex justify-center items-center">
+      <section className="w-full min-h-screen bg-[#E5E5E5]  flex justify-center items-center">
         <div className="bg-white w-[95vw] max-w-[600px] mx-auto rounded-md p-[40px] md:p-[50px] shadow-md">
           {/* title */}
           <div className="flex flex-col gap-y-1 mb-4">
@@ -60,7 +65,9 @@ const Login = () => {
             <p className="text-grey-800 md:text-lg text-[16px] text-center">
               New here?
               <Link href="/signup">
-                <a className="underline text-mainPurple">Create an account</a>
+                <a className="ml-2 underline text-mainPurple">
+                  Create an account
+                </a>
               </Link>
             </p>
           </div>
@@ -100,15 +107,6 @@ const Login = () => {
                 );
               })}
             </div>
-            <span className="flex flex-row items-center gap-x-2 mt-4">
-              <input
-                type="checkbox"
-                id="terms"
-                className="accent-mainPurple"
-                required
-              />
-              <label htmlFor="terms">I accept the terms and conditions</label>
-            </span>
             {/* login button */}
 
             <div className="text-right">
@@ -121,9 +119,11 @@ const Login = () => {
             </div>
           </form>
 
-          <p className="text-right underline text-[16px] mt-2 cursor-pointer">
-            Forgot Password
-          </p>
+          <Link href="/change-password">
+            <p className="text-right underline text-[16px] mt-2 cursor-pointer font-bold">
+              Forgot Password
+            </p>
+          </Link>
         </div>
       </section>
     </main>

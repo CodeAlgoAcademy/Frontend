@@ -60,6 +60,7 @@ export const signUpUser: any = createAsyncThunk(
       is_teacher,
       schoolCountry,
       country,
+      username,
     } = state.user.auth;
     const options = {
       email,
@@ -74,6 +75,7 @@ export const signUpUser: any = createAsyncThunk(
       is_parent,
       is_student,
       is_teacher,
+      username,
     };
     dispatch(openPreloader({ loadingText: "Creating Account" }));
     try {
@@ -93,8 +95,10 @@ export const signUpUser: any = createAsyncThunk(
             errorText: [error.response.data.non_field_errors[0]],
           })
         );
+      } else {
+        dispatch(openErrorModal({ errorText: error.message }));
       }
-      return thunkApi.rejectWithValue(error.response.data);
+      return thunkApi.rejectWithValue(error);
     }
   }
 );
@@ -103,7 +107,7 @@ export const loginWithGoogle: any = createAsyncThunk(
   "authSlice/loginWithGoogle",
   async (access_token: string, thunkApi) => {
     try {
-      const { data } = await http.post("/auth/google/", {
+      const { data } = await http.post("/auth/google-login/", {
         access_token,
       });
       return {
@@ -119,18 +123,26 @@ export const loginWithGoogle: any = createAsyncThunk(
 
 export const signUpWithGoogle: any = createAsyncThunk(
   "authSlice/signUpWithGoogle",
-  async (access_token: string) => {
+  async (access_token: string, thunkApi) => {
     try {
-      const { data } = await http.post("/auth/google/", {
+      const { data } = await http.post("/auth/google-signup/", {
         access_token,
       });
-
       return {
         access_token: data.access_token,
         refresh_token: data.refresh_token,
         ...data.user,
       };
-    } catch (error) {}
+    } catch (error: any) {
+      if (error) {
+        thunkApi.dispatch(
+          openErrorModal({
+            errorText: ["A user already exists with this google account"],
+          })
+        );
+      }
+      return thunkApi.rejectWithValue(error.response.data);
+    }
   }
 );
 
@@ -149,6 +161,7 @@ export const updateAccountType: any = createAsyncThunk(
       schoolCountry,
       schoolName,
       grade,
+      username,
     } = state.user;
     try {
       const { data } = await http.put(
@@ -164,6 +177,7 @@ export const updateAccountType: any = createAsyncThunk(
           is_teacher,
           is_parent,
           grade,
+          username,
         },
         {
           headers: {
@@ -192,6 +206,7 @@ export const updateFirstname: any = createAsyncThunk(
       is_teacher,
       is_parent,
       grade,
+      username,
     } = state.user;
     try {
       const { data } = await http.put(
@@ -207,6 +222,7 @@ export const updateFirstname: any = createAsyncThunk(
           is_teacher,
           is_parent,
           grade,
+          username,
         },
         {
           headers: {
@@ -238,6 +254,7 @@ export const updateLastname: any = createAsyncThunk(
       is_teacher,
       is_parent,
       grade,
+      username,
     } = state.user;
     try {
       const { data } = await http.put(
@@ -253,6 +270,7 @@ export const updateLastname: any = createAsyncThunk(
           is_teacher,
           is_parent,
           grade,
+          username,
         },
         {
           headers: {
@@ -284,6 +302,7 @@ export const updateEmail: any = createAsyncThunk(
       is_teacher,
       is_parent,
       grade,
+      username,
     } = state.user;
     try {
       const { data } = await http.put(
@@ -299,6 +318,7 @@ export const updateEmail: any = createAsyncThunk(
           is_teacher,
           is_parent,
           grade,
+          username,
         },
         {
           headers: {

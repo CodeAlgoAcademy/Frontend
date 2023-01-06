@@ -178,13 +178,22 @@ const unitsSlice = createSlice({
         .filter((unit) => unit.isChosen)
         .forEach((unit) => {
           if (unit.startDate && unit.endDate) {
-            const start_date = new Date(unit.startDate);
-            const end_date = new Date(unit.endDate);
-            const today_date = new Date();
-
+            const start_date = new Date(unit.startDate).getTime();
+            const end_date = new Date(unit.endDate).getTime();
+            const today = new Date();
+            const today_date = new Date(
+              `${today.getFullYear()}-${
+                today.getMonth() + 1
+              }-${today.getDate()}`
+            ).getTime();
             // if start date === end date
+            if (start_date === end_date) {
+              errors.push(
+                `${unit.title} unit start date cannot be the same as end date`
+              );
+            }
             // if it is current and start date isn't today
-            if (start_date === end_date && unit.isCurrent) {
+            if (unit.isCurrent && start_date !== today_date) {
               errors.push(
                 `${unit.title} unit start date should be today's date`
               );

@@ -1,19 +1,22 @@
-import { createAsyncThunk } from "@reduxjs/toolkit"
-import http from "axios.config"
-import { getAccessToken } from "utils/getTokens"
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import http from "axios.config";
+import { getAccessToken } from "utils/getTokens";
 
-export const getSchedule = createAsyncThunk("scheduleSlice/getSchedule", async (name, thunkApi) => {
-	try {
-		const { data } = await http.get("/academics/calendar/schedules/", {
-			headers: {
-				Authorization: `Bearer ${getAccessToken()}`
-			}
-		})
-		return data
-	} catch (error: any) {
-		return thunkApi.rejectWithValue(error.response.data)
-	}
-})
+export const getSchedule = createAsyncThunk(
+  "scheduleSlice/getSchedule",
+  async (name, thunkApi) => {
+    try {
+      const { data } = await http.get("/academics/calendar/schedules/", {
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      });
+      return data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const postSchedule = createAsyncThunk("scheduleSlice/postSchedule", async (addedRecords: any, thunkApi) => {
 	try {

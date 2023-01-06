@@ -153,6 +153,40 @@ export const deleteStudentComment: any = createAsyncThunk(
     }
   }
 );
+export const studentsBulkImport: any = createAsyncThunk(
+  "newStudents/bulkImport",
+  async (formData, thunkApi) => {
+    const state: any = thunkApi.getState();
+    const dispatch = thunkApi.dispatch;
+    const { id } = state.currentClass;
+
+    try {
+      const { data } = await http.post(
+        `/academics/class/${id}/student/file`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${getAccessToken()}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(data);
+    } catch (error: any) {
+      if (error.response.status === 400)
+        dispatch(
+          openErrorModal({
+            errorText: [
+              "Please upload a valid csv file, with column names as id, email, firstName, lastName",
+            ],
+          })
+        );
+      return thunkApi.rejectWithValue(
+        "Please upload a valid csv file, with column names as id, email, firstName, lastName"
+      );
+    }
+  }
+);
 
 export const studentSlice = createSlice({
   name: "students",

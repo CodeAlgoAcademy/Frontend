@@ -3,7 +3,13 @@ import { FaChevronDown, FaChevronRight, FaChevronUp } from "react-icons/fa";
 import { allSKills } from "store/skillsSlice";
 import { IMainAssignment, SkillDetails } from "types/interfaces";
 
-const singleAssignment = ({ assignment }: { assignment: IMainAssignment }) => {
+const singleAssignment = ({
+  assignment,
+  setEditAssignment,
+}: {
+  assignment: IMainAssignment;
+  setEditAssignment: (assignment: any, id: string | number) => void;
+}) => {
   const [accordionOpen, setAccordionOpen] = useState<boolean>(false);
   const getSkill = (id: string): SkillDetails => {
     return allSKills.find((skill) => {
@@ -30,9 +36,23 @@ const singleAssignment = ({ assignment }: { assignment: IMainAssignment }) => {
       {accordionOpen && (
         <main className="p-3">
           <div className="mb-2">
-            <div className="flex justify-start gap-2 items-center">
-              <p className="text-[17px] font-bold text-orange-600">Due Date:</p>
-              <p className="text-[17px]">{assignment.end_date}</p>
+            <div className="flex justify-between gap-2 items-center">
+              <div className="flex justify-start gap-2 items-center">
+                <p className="text-[17px] font-bold text-orange-600">
+                  Due Date:
+                </p>
+                <p className="text-[17px]">{assignment.end_date}</p>
+              </div>
+              {assignment.status === "draft" && (
+                <button
+                  className="px-2 py-2 rounded-md text-white bg-orange-600 hover:shadow-md transition"
+                  onClick={() => {
+                    setEditAssignment(assignment, assignment.id as string);
+                  }}
+                >
+                  Edit Assignment
+                </button>
+              )}
             </div>
             <h1 className={styles.title}>Skills</h1>
 

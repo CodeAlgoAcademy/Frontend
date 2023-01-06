@@ -12,7 +12,7 @@ const MessagesLists = () => {
 
   useEffect(() => {
     dispatch(getConversations());
-  }, [dispatch]);
+  }, []);
 
   return (
     <div className="overflow-x-auto h-48">

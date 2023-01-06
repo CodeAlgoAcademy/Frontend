@@ -3,12 +3,17 @@ import React, { useState, ChangeEvent } from "react";
 import { generateUsername } from "utils/generateUsername";
 import { RiCloseLine } from "react-icons/ri";
 import { useDispatch } from "react-redux";
-import { addStudent, getStudents } from "store/studentSlice";
+import {
+  addStudent,
+  getStudents,
+  studentsBulkImport,
+} from "store/studentSlice";
 import { Student, IInputFields } from "types/interfaces";
 import style from "@/styles/styles";
 import { FaTimes, FaChevronLeft, FaPlus } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { getAllClasses } from "services/classesService";
+import { openErrorModal } from "store/fetchSlice";
 interface State {
   firstName: string;
   lastName: string;
@@ -25,6 +30,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
     email: "",
     username: "",
   });
+  const [file, setFile] = useState<any>(null);
   const { email, firstName, lastName, username } = formData;
 
   const onChange = (e: any) => {
@@ -63,20 +69,42 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
 
   const onSubmit = (e: any) => {
     e.preventDefault();
+    if (email && firstName && lastName) {
+      const data: Student = {
+        firstName,
+        lastName,
+        email,
+      };
 
-    const data: Student = {
-      firstName,
-      lastName,
-      email,
-    };
-
-    dispatch(addStudent(data)).then((data: any) => {
-      if (data.payload?.status === 200) {
-        setIsOpen(false);
-        dispatch(getStudents());
-        if (router.pathname === "/addClass") {
-          dispatch(getAllClasses());
+      dispatch(addStudent(data)).then((data: any) => {
+        if (data.payload?.status === 200) {
+          setIsOpen(false);
+          dispatch(getStudents());
+          if (router.pathname === "/addClass") {
+            dispatch(getAllClasses());
+          }
         }
+      });
+    }
+  };
+
+  const handleFileInputChange = (e: any) => {
+    if (!e.target.files[0].type.includes("csv")) {
+      dispatch(
+        openErrorModal({ errorText: ["Uploaded file is not a csv file"] })
+      );
+    } else {
+      setFile(e.target.files[0]);
+    }
+  };
+  const handleFileSubmit = () => {
+    const formData = new FormData();
+    formData.append("file", file, file.name);
+    dispatch(studentsBulkImport(formData)).then((data: any) => {
+      setIsOpen(false);
+      dispatch(getStudents());
+      if (router.pathname === "/addClass") {
+        dispatch(getAllClasses());
       }
     });
   };
@@ -129,7 +157,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
                     onChange(e);
                   }}
                   className={style.input}
-                  required
+                  required={!file && true}
                 />
               );
             })}
@@ -149,7 +177,15 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
           <section className="flex w-full justify-between md:items-center items-end mt-8 md:flex-row md:gap-y-0 gap-y-4 flex-col pt-5 border-t-2 px-8">
             <div>
               {/* input container */}
-              <input type="file" id="studentsUpload" className="hidden" />
+              <input
+                type="file"
+                id="studentsUpload"
+                className="hidden"
+                onChange={(e) => {
+                  handleFileInputChange(e);
+                }}
+                value=""
+              />
               <label
                 htmlFor="studentsUpload"
                 className="w-full flex flex-row gap-x-2 items-center cursor-pointer"
@@ -157,16 +193,40 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
                 <span className="w-[30px] h-[30px] border-2 border-black rounded-full flex justify-center items-center text-[20px] text-black font-lighter">
                   <FaPlus />
                 </span>
-                <h3 className="text-[16px] font-bold">Bulk Import</h3>
+                <h3 className="text-[16px] font-bold">
+                  {file
+                    ? "File Added, click add student button to finish upload"
+                    : "Bulk Import"}
+                </h3>
               </label>
             </div>
             <button
               type="submit"
               className="py-3 px-4 min-w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md"
+              onClick={() => {
+                if (file) {
+                  handleFileSubmit();
+                }
+              }}
             >
               Add Student(s)
             </button>
           </section>
+          {file && (
+            <div className="mt-2 w-full px-8">
+              <div
+                className="flex gap-x-2 items-center w-full hover:bg-red-50 max-w-fit py-3 px-3 cursor-pointer"
+                onClick={() => {
+                  setFile(null);
+                }}
+              >
+                <span className="text-red-600 text-[22px] cursor-pointer">
+                  <FaTimes />
+                </span>
+                <p>Delete Uploaded file</p>
+              </div>
+            </div>
+          )}
         </form>
       </main>
     </section>
