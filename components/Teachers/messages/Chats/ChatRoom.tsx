@@ -1,11 +1,39 @@
 import { Avatar, IconButton } from '@mui/material'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { chats } from './chatsData'
 import { GrAttachment } from 'react-icons/gr'
 import { BsEmojiSmile } from 'react-icons/bs'
 import { BiSend } from 'react-icons/bi'
+import { w3cwebsocket as W3CWebSocket } from "websocket";
+import { getAccessToken } from 'utils/getTokens'
+
+
+// const headers = {
+//     Authorization: "Bearer " + getAccessToken()
+// }
+// const client = new W3CWebSocket('wss://sea-lion-app-43ury.ondigitalocean.app/chat/websocket/'
+// )
 
 const ChatRoom = () => {
+
+    // useEffect(() => {
+    //         client.onopen = () => {
+    //             console.log('Websocet client connected')
+    //         };
+    //         // client.onmessage = (message) => {
+    //         //     const dataFromServer = JSON.parse(message.data);
+    //         //     console.log('got reply! ', dataFromServer)
+    //         // }
+    //    }, [])
+    
+    //    const handleClick = (value:any) => {
+    //     client.send(JSON.stringify({
+    //         type: "chat.message",
+    //         msg: value,
+    //     }))
+    //    }
+
+
     return (
         <div className=''>
             <div className={styles.header}>
