@@ -27,6 +27,7 @@
     "@syncfusion/ej2-react-schedule": "^20.3.61",
     "@types/uuid": "^9.0.0",
     "axios": "^1.1.3",
+    "entities": "^4.4.0",
     "framer-motion": "^7.10.3",
     "html-sanitize": "^1.1.5",
     "next": "^12.3.4",
