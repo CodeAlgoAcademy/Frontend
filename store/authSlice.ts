@@ -170,6 +170,7 @@ export const userSlice = createSlice({
     builder.addCase(
       signUpWithGoogle.fulfilled,
       (state: IUser, action: PayloadAction<IUser>) => {
+        console.log(action);
         localStorage.setItem(
           "token",
           JSON.stringify({

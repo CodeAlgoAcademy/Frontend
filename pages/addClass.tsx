@@ -30,7 +30,7 @@ const AddClass = () => {
       </Head>
 
       {/* navbar here */}
-      <section className="w-full bg-gray-50 min-h-screen">
+      <section className="w-full bg-gray-100  min-h-screen">
         <div className="w-full px-[16px] py-[30px] max-w-[1250px] mx-auto">
           <div className="w-full flex flex-wrap justify-between items-center">
             <h1 className="text-[2rem] font-bold">Home</h1>

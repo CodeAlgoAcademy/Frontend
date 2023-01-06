@@ -88,6 +88,8 @@ export interface IUserConversation {
   conversations: Conversations[];
   openedMessageStudent: number | null;
   openedStudentMessages: string[];
+  openedMessageOwner: User;
+  openedMessage: IMessage[];
 }
 
 export interface IUserStudent {
@@ -224,6 +226,7 @@ export interface AssignmentDetails {
   is_current: boolean;
 }
 export interface IMainAssignment {
+  id?: string | number;
   title: string;
   order: string;
   date: string;

@@ -24,9 +24,6 @@ const SingleCurriculum = ({
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const topics = curriculum?.title;
-  const enterLesson = () => {
-    router.push(`curriculum/unit/${topics}`);
-  };
   return (
     <div
       style={{
@@ -84,22 +81,23 @@ const SingleCurriculum = ({
         <p>{curriculum.description}</p>
         <div className="flex items-center md:flex-row pt-[1.6rem] pb-[1rem] justify-between">
           <p>{curriculum.start_date}</p>
-          <p
-            className="px-5 py-[5px] whitespace-nowrap font-semibold border-black rounded-full border-2 w-fit cursor-pointer"
-            onClick={() => {
-              dispatch(
-                updateUnitInView({
-                  id: curriculum.id as string,
-                  start_date: curriculum.start_date,
-                  is_current: curriculum.is_current,
-                  is_finished: curriculum.is_finished,
-                })
-              );
-              enterLesson();
-            }}
-          >
-            view unit
-          </p>
+          <Link href={`curriculum/unit/${topics}`}>
+            <p
+              className="px-5 py-[5px] whitespace-nowrap font-semibold border-black rounded-full border-2 w-fit cursor-pointer"
+              onClick={() => {
+                dispatch(
+                  updateUnitInView({
+                    id: curriculum.id as string,
+                    start_date: curriculum.start_date,
+                    is_current: curriculum.is_current,
+                    is_finished: curriculum.is_finished,
+                  })
+                );
+              }}
+            >
+              view unit
+            </p>
+          </Link>
         </div>
       </div>
     </div>
