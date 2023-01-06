@@ -97,7 +97,7 @@ export const signUpUser: any = createAsyncThunk(
           })
         );
       }
-      return thunkApi.rejectWithValue(error.response.data);
+      return thunkApi.rejectWithValue(error);
     }
   }
 );
