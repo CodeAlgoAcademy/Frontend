@@ -17,23 +17,26 @@ const ChatRoom = () => {
     (state: RootState) => state.messages
   );
   const { email } = useSelector((state: RootState) => state.user);
-  const [messages, setMessages] = useState<IMessage[]>([...openedMessage]);
+  const [messages, setMessages] = useState<IMessage[]>([]);
   const [typingText, setTypingText] = useState<string>("");
-  console.log(messages);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getOpenMesssages());
+    console.log(openedMessage);
   }, [openedMessageOwner]);
-  //     useEffect(() => {
-  //       openedMessage && setMessages(openedMessage);
-  //     }, [openedMessage]);
+  useEffect(() => {
+    if (openedMessage) {
+      const message = [...openedMessage];
+      setMessages(() => message);
+    }
+  }, [openedMessage]);
   const updateTypingText = (e: ChangeEvent<HTMLInputElement>) => {
     setTypingText(e.target.value);
   };
   const send_a_message = async () => {
     if (openedMessageOwner.id) {
       if (typingText !== "") {
-        const { data } = await http.post(
+        const response = await http.post(
           `/chat/teacher/message/${openedMessageOwner.id}`,
           {
             text: typingText,
@@ -44,7 +47,7 @@ const ChatRoom = () => {
             },
           }
         );
-        console.log(data);
+        console.log(response?.data);
       }
     } else {
       dispatch(openErrorModal({ errorText: ["No user to send a message"] }));
@@ -59,9 +62,13 @@ const ChatRoom = () => {
         </p>
       </div>
       <div className={styles.chatContainer}>
-        {messages
-          //   ?.sort((a: any, b: any) => a.date - b.date)
-          ?.reverse()
+        {[...messages]
+          ?.sort((a: any, b: any): any => {
+            const firstDate: any = new Date(a.date);
+            const secondDate: any = new Date(b.date);
+            return firstDate - secondDate;
+          })
+          //   ?.reverse()
           ?.map((chat, index) => (
             <div key={index}>
               <p
