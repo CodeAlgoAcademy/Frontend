@@ -89,13 +89,14 @@ export const signUpUser: any = createAsyncThunk(
       };
     } catch (error: any) {
       dispatch(closePreloader());
-      console.log(error)
       if (error.response.data.non_field_errors) {
         dispatch(
           openErrorModal({
             errorText: [error.response.data.non_field_errors[0]],
           })
         );
+      } else {
+        dispatch(openErrorModal({ errorText: error.message }));
       }
       return thunkApi.rejectWithValue(error);
     }
