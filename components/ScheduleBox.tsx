@@ -1,40 +1,67 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
+import ScheduleItem from "./ScheduleItem"
+import { getSchedule } from "services/scheduleService"
+import { useSelector, useDispatch } from "react-redux"
+import { AppDispatch, RootState } from "../store/store"
+import { Schedule } from "types/interfaces"
 
 const ScheduleBox = () => {
-	const [scheduleItems] = useState([
-		{
-			id: 1,
-			time: "9:30 am",
-			item: "tell class about guest speaker"
-		},
-		{
-			id: 2,
-			time: "11:15 am",
-			item: "reminder about presentation"
-		},
-		{
-			id: 3,
-			time: "2:15 pm",
-			item: "check in with Principal Smith"
+	const scheduleData: Schedule = useSelector((state: RootState) => state.schedule)
+	const [currentSchedule, setCurrentSchedule] = useState([])
+	const [allSchedule] = useState(scheduleData.allSchedule)
+	const dispatch = useDispatch<AppDispatch>()
+
+	function isToday (date: Date): boolean {
+		const today = new Date()
+		let result: boolean = false
+		try {
+			if (today.toDateString() === new Date(date).toDateString()) {
+				result = true
+			}
+		} catch {
+			result = false
 		}
-	])
+		return result
+	}
+
+	function formatAMPM (date: Date) {
+		const changeDate = new Date(date);
+		let hours = changeDate.getHours()
+		let minutes: any = changeDate.getMinutes()
+		let ampm = hours >= 12 ? 'pm' : 'am'
+		hours = hours % 12
+		hours = hours ? hours : 12 // the hour '0' should be '12'
+		minutes = minutes < 10 ? '0' + minutes : minutes
+		let strTime = hours + ':' + minutes + ' ' + ampm
+		return strTime
+	}
+
+	const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+	const fullDate = new Date()
+	const date = fullDate.getDate()
+	const month = fullDate.getMonth()
+	const year = fullDate.getFullYear()
+
+	useEffect(() => {
+		dispatch(getSchedule())
+	}, [])
+
+	useEffect(() => {
+		const data = allSchedule.filter((item: any) => isToday(item.StartTime))
+		setCurrentSchedule((prev) => data)
+	}, [allSchedule])
 	return (
 		<div className='rounded-md shadow-lg p-6 max-w-[380px] bg-white max-h-[212px] overflow-y-auto'>
 			<div className='min-h-[114px]'>
-				<h3 className='text-[20px] font-bold mb-3'>
-					Schedule - <span>Apr 14, 2022</span>
+				<h3 className='text-[20px] font-bold mb-3' data-testid='schedule-box-heading'>
+					Schedule - <span>{ `${months[month]} ${date}, ${year}` }</span>
 				</h3>
 				<div className='grid grid-cols-1 divide-y'>
-					{scheduleItems.map(({ id, time, item }) => {
-						return (
-							<div key={id} className='flex align-center px-3 py-1'>
-								<span className='w-[72px] flex'>
-									<p className='text-[#828282] inline-block align-middle my-auto text-sm'>{time}</p>
-								</span>
-								<span className='bg-[#d2c1f5b7] px-4 py-2 rounded-[6px] text-sm w-[235px] h-[35px] truncate ...'>{item}</span>
-							</div>
-						)
-					})}
+					{ currentSchedule.length > 0 && (
+						currentSchedule?.map(({ id, StartTime, Subject }, index) => {
+							return <ScheduleItem key={ index } time={ formatAMPM(StartTime) } item={ Subject } id={ id } />
+						}))
+					}
 				</div>
 			</div>
 		</div>

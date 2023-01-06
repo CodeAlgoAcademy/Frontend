@@ -1,4 +1,5 @@
 import React, { useState, useEffect, ReactElement, ChangeEvent } from "react";
+import { useDispatch } from "react-redux";
 import Head from "next/head";
 import Link from "next/link";
 import CleverBtn from "../components/cleverBtn";
@@ -8,6 +9,9 @@ import Students from "../components/signup/students";
 import Teachers from "../components/signup/teachers";
 import Parents from "../components/signup/parents";
 import { ITabs } from "../types/interfaces";
+import { useRouter } from "next/router";
+import { updateUser, clearFields } from "store/authSlice";
+import { signUpUser } from "services/authService";
 
 const tabs: ITabs[] = [
   {
@@ -26,6 +30,8 @@ const tabs: ITabs[] = [
 ];
 
 const SignUp = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<string | undefined>("Student");
   const [currentTab, setCurrentTab] = useState<ITabs>({
     tabName: "",
@@ -45,21 +51,37 @@ const SignUp = () => {
 
   const updateTab = (tabName: string | undefined): void => {
     setActiveTab((prev) => tabName);
+    dispatch(updateUser({ key: "accountType", value: tabName as string }));
   };
+
+  useEffect(() => {
+    dispatch(updateUser({ key: "accountType", value: "Student" }));
+  }, []);
+
+  const signup = async (event: ChangeEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = await dispatch(signUpUser());
+    if (!data?.error?.message) {
+      if(data?.payload?.is_teacher){
+        router.push("/addClass");
+
+      }else{
+        router.push("/comingSoon");
+      }
+    }
+  };
+
+  useEffect(() => {
+    dispatch(clearFields());
+  }, []);
 
   return (
     <main>
       <Head>
         <title>CodeAlgo Academy | Register</title>
       </Head>
-      <section className="w-full min-h-screen bg-gray-100 flex justify-center items-center py-6">
-        <form
-          onSubmit={(event: ChangeEvent<HTMLFormElement>) => {
-            event.preventDefault();
-          }}
-          action=""
-          className="bg-white w-[95vw] max-w-[900px] mx-auto rounded-md p-[40px] md:p-[50px] shadow-md"
-        >
+      <section className="w-full min-h-screen bg-[#e5e5e5] flex justify-center items-center py-6">
+        <div className="bg-white w-[95vw] max-w-[900px] mx-auto rounded-md p-[40px] md:p-[50px] shadow-md">
           {/* tabs */}
           <div className="w-full max-w-[600px] mx-auto mb-4 flex-row rounded-md overflow-hidden hidden md:flex">
             {tabs.map((tab: ITabs, index: number): React.ReactElement => {
@@ -103,7 +125,7 @@ const SignUp = () => {
             <h1 className="md:text-3xl text-lg text-center font-bold">
               Welcome To CodeAcademy
             </h1>
-            <p className="text-grey-800 md:text-lg text-[16px]">
+            <p className="text-grey-800 md:text-lg text-[16px] text-center">
               {"Let's get started"}
             </p>
           </div>
@@ -119,20 +141,27 @@ const SignUp = () => {
             OR
           </span>
 
-          {/* display different components based on the active tab */}
-          {currentTab?.component}
-          <span className="flex flex-row items-center gap-x-2 mt-4">
-            <input type="checkbox" id="terms" required />
-            <label htmlFor="terms">I accept the terms and conditions</label>
-          </span>
-          <div className="text-right mt-4">
-            <button
-              type="submit"
-              className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md"
-            >
-              Sign Up
-            </button>
-          </div>
+          <form className="w-full" onSubmit={signup}>
+            {/* display different components based on the active tab */}
+            {currentTab?.component}
+            <span className="flex flex-row items-center gap-x-2 mt-4">
+              <input
+                type="checkbox"
+                id="terms"
+                className="accent-mainPurple"
+                required
+              />
+              <label htmlFor="terms">I accept the terms and conditions</label>
+            </span>
+            <div className="text-right mt-4">
+              <button
+                type="submit"
+                className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md"
+              >
+                Sign Up
+              </button>
+            </div>
+          </form>
 
           <div className="flex md:flex-row md:justify-between md:items-center items-end mt-4 flex-col-reverse justify-center">
             <p className="text-grey-800 text-left md:text-lg text-[15px]">
@@ -141,9 +170,8 @@ const SignUp = () => {
                 <a className="underline text-mainPurple">Sign In</a>
               </Link>
             </p>
-            <p className="text-grey-800 underline">Forgot Password</p>
           </div>
-        </form>
+        </div>
       </section>
       {/* position fixed, for stundents only */}
       <Grades /> {/*Only when the grades button is clicked*/}
