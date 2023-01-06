@@ -19,8 +19,8 @@ const Home: NextPage = () => {
             </p>
            <Link href="/signup">
             <button className="bg-blue-400 p-3 rounded-lg">
-              Sign up
-g            </button>
+              Sign up            
+            </button>
             </Link>
           </div>
         </div>
