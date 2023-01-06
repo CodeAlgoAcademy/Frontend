@@ -18,7 +18,7 @@ const Home: NextPage = () => {
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore
               quaerat deleniti libero, harum dolorem tenetur numquam facilis
               omnis neque itaque consequatur rerum minus at, dolorum excepturi.
-              Illo voluptatem enim consectetur.
+              Illo voluptatem enim consectetr.
             </p>
             <button className="bg-blue-400 p-3 rounded-lg">
               Get Started for free
