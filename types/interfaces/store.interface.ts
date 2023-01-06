@@ -88,6 +88,8 @@ export interface IUserConversation {
   conversations: Conversations[];
   openedMessageStudent: number | null;
   openedStudentMessages: string[];
+  openedMessageOwner: User;
+  openedMessage: IMessage[];
 }
 
 export interface IUserStudent {
