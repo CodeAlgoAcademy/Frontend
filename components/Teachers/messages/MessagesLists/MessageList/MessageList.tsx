@@ -56,6 +56,26 @@ const MessageList = ({ id, message, user }: Message) => {
       </div>
       <div className="ml-auto">
         {/* {!received && (
+    return (
+        <div className={styles.container} onClick={setActiveStudent}>
+            <StyledBadge
+                overlap="circular"
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            >
+                <div className='block'>
+                    <Avatar 
+                        alt={message.user.firstName} 
+                        src='' 
+                        style={{ width: 30, height: 30 }}
+                    />
+                </div>
+            </StyledBadge>
+            <div className='text-xs ml-2 font-bold'>
+                <p>{`${message.user.firstName} ${message.user.firstName}`}</p>
+                <p className='text-[9px] w-36 truncate'>{message.text}</p>
+            </div>
+            <div className='ml-auto'>
+                {/* {!received && (
                     <div>
                         {(sent && !seen) && <IoCheckmark />}
                         {seen && <IoCheckmarkDone />}
