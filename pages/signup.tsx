@@ -62,6 +62,7 @@ const SignUp = () => {
     event.preventDefault();
     const data = await dispatch(signUpUser());
     if (!data?.error?.message) {
+      console.log(data);
       router.push("/addClass");
     }
   };
