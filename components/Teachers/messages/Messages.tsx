@@ -1,12 +1,18 @@
 import { IconButton } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { FiPlus } from 'react-icons/fi'
 import { HiDotsVertical } from 'react-icons/hi'
 import ChatRoom from './Chats/ChatRoom'
-import MessagesLists from './MessagesLists/MessagesLists'
+import MessagesLists from './MessagesLists/MessagesLists';
+
+
 
 const Messages = () => {
+
+ 
+ 
+
     return (
         <>
             {/* Large view */}
