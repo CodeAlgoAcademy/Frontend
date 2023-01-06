@@ -20,7 +20,7 @@ const Home: NextPage = () => {
            <Link href="/signup">
             <button className="bg-blue-400 p-3 rounded-lg">
               Sign up
-            </button>
+g            </button>
             </Link>
           </div>
         </div>
