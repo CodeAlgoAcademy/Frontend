@@ -86,6 +86,7 @@ export const messageSlice = createSlice({
           state: IUserConversation | any,
           action: PayloadAction<IUserConversation>
         ) => {
+          console.log(action.payload);
           state.conversations = action.payload;
         }
       )
@@ -96,7 +97,6 @@ export const messageSlice = createSlice({
         console.log(`Error: ${action.payload}`);
       })
       .addCase(getOpenMesssages.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.openedMessage = action.payload;
       });
   },
