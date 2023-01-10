@@ -1,9 +1,9 @@
-import React, { ChangeEventHandler, MouseEventHandler, useState } from "react";
-import { RiArrowDropDownLine } from "react-icons/ri";
-import { Button } from "../../../components";
-import { Student, DynamicChechbox } from "types/interfaces";
-import { useSelector } from "react-redux";
-import { RootState } from "store/store";
+import React, { ChangeEventHandler, MouseEventHandler, useState } from 'react';
+import { RiArrowDropDownLine } from 'react-icons/ri';
+import { Button } from '../../../components';
+import { Student, DynamicChechbox } from 'types/interfaces';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/store';
 
 const StudentModal = ({
   students,
@@ -20,9 +20,7 @@ const StudentModal = ({
   allStudentCheckbox: { isChecked: boolean };
   studentCheckbox: DynamicChechbox;
 }) => {
-  const { className, color } = useSelector(
-    (state: RootState) => state.currentClass
-  );
+  const { className, color } = useSelector((state: RootState) => state.currentClass);
   return (
     <div className="py-12 h-[500px] min-w-[800px]">
       <h3 className="text-2xl font-semibold pl-12">Student(s)</h3>
@@ -38,9 +36,7 @@ const StudentModal = ({
             <span className="checkmark big-checkmark"></span>
           </label>
           <p className="font-semibold">
-            {allStudentCheckbox.isChecked
-              ? "Unselect all Students"
-              : "Select all Students"}
+            {allStudentCheckbox.isChecked ? 'Unselect all Students' : 'Select all Students'}
           </p>
         </div>
         <div className="rounded-md px-3 gap-4 flex items-center border py-1">

@@ -1,24 +1,18 @@
-import React, { useState } from "react";
-import Link from "next/link";
-import { Icurriculum } from "types/interfaces";
-import { HiDotsHorizontal } from "react-icons/hi";
-import { BiArrowBack } from "react-icons/bi";
-import { useDispatch } from "react-redux";
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { Icurriculum } from 'types/interfaces';
+import { HiDotsHorizontal } from 'react-icons/hi';
+import { BiArrowBack } from 'react-icons/bi';
+import { useDispatch } from 'react-redux';
 import {
   getAllCurriculums,
   updateCurriculumToCurrent,
   updateCurriculumToPast,
-} from "../../services/curriculumService";
-import { updateUnitInView } from "store/unitsSlice";
-import { useRouter } from "next/router";
+} from '../../services/curriculumService';
+import { updateUnitInView } from 'store/unitsSlice';
+import { useRouter } from 'next/router';
 
-const SingleCurriculum = ({
-  curriculum,
-  active,
-}: {
-  curriculum: Icurriculum;
-  active: string;
-}) => {
+const SingleCurriculum = ({ curriculum, active }: { curriculum: Icurriculum; active: string }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -27,16 +21,14 @@ const SingleCurriculum = ({
   return (
     <div
       style={{
-        boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.1)",
+        boxShadow: '4px 4px 10px rgba(0, 0, 0, 0.1)',
       }}
       className="flex rounded-xl justify-between flex-[0.5] bg-white mt-14 relative"
     >
-      {modalOpen && active === "current" && (
+      {modalOpen && active === 'current' && (
         <aside
           onClick={async () => {
-            await dispatch(
-              updateCurriculumToPast({ id: curriculum.id, curriculum })
-            );
+            await dispatch(updateCurriculumToPast({ id: curriculum.id, curriculum }));
             setModalOpen(false);
             dispatch(getAllCurriculums());
           }}
@@ -48,12 +40,10 @@ const SingleCurriculum = ({
           Move to past
         </aside>
       )}
-      {modalOpen && active === "upcoming" && (
+      {modalOpen && active === 'upcoming' && (
         <aside
           onClick={async () => {
-            await dispatch(
-              updateCurriculumToCurrent({ id: curriculum.id, curriculum })
-            );
+            await dispatch(updateCurriculumToCurrent({ id: curriculum.id, curriculum }));
             setModalOpen(false);
             dispatch(getAllCurriculums());
           }}
@@ -91,7 +81,7 @@ const SingleCurriculum = ({
                     start_date: curriculum.start_date,
                     is_current: curriculum.is_current,
                     is_finished: curriculum.is_finished,
-                  })
+                  }),
                 );
               }}
             >
@@ -106,7 +96,7 @@ const SingleCurriculum = ({
 
 const styles = {
   aside:
-    "absolute top-[15px] right-[70px] px-2 py-2 rounded-md shadow-md flex flex-row gap-x-4 font-bold items-center min-w-fit bg-mainPurple text-white cursor-pointer",
+    'absolute top-[15px] right-[70px] px-2 py-2 rounded-md shadow-md flex flex-row gap-x-4 font-bold items-center min-w-fit bg-mainPurple text-white cursor-pointer',
 };
 
 export default SingleCurriculum;

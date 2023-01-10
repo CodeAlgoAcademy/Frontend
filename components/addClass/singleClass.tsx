@@ -1,34 +1,22 @@
-import React, { FC, useEffect, useState } from "react";
-import Link from "next/link";
-import { IClass } from "../../types/interfaces";
-import { FaChevronRight } from "react-icons/fa";
-import { useDispatch } from "react-redux";
-import { updateCurrentClass } from "store/currentClassSlice";
-import { BiPlus } from "react-icons/bi";
-import AddStudentModal from "../Teachers/students/AddStudentModal";
-import { getAllClasses } from "services/classesService";
+import React, { FC, useEffect, useState } from 'react';
+import Link from 'next/link';
+import { IClass } from '../../types/interfaces';
+import { FaChevronRight } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import { updateCurrentClass } from 'store/currentClassSlice';
+import { BiPlus } from 'react-icons/bi';
+import AddStudentModal from '../Teachers/students/AddStudentModal';
+import { getAllClasses } from 'services/classesService';
 
-const SingleClass: FC<IClass> = ({
-  id,
-  className,
-  grade,
-  subject,
-  color,
-  totalStudent,
-}) => {
+const SingleClass: FC<IClass> = ({ id, className, grade, subject, color, totalStudent }) => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
     <article className="col-span-1 bg-white min-h-[200px] shadow-md hover:shadow-lg rounded-md overflow-hidden w-full flex">
-      <aside
-        className={`flex-[0.15] h-full`}
-        style={{ backgroundColor: color }}
-      ></aside>
+      <aside className={`flex-[0.15] h-full`} style={{ backgroundColor: color }}></aside>
       <div className="flex-[0.85] h-full px-4 pb-4">
         <header className="py-4 border-b-2">
-          <h1 className="text-[25px] md:text-[30px] text-black font-bold">
-            {className}
-          </h1>
+          <h1 className="text-[25px] md:text-[30px] text-black font-bold">{className}</h1>
         </header>
         <main className="mt-4 flex flex-col justify-between">
           <h2 className="font-bold">Grade {grade}</h2>

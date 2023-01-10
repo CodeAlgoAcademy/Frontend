@@ -1,17 +1,17 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import http from "axios.config";
-import { openErrorModal } from "store/fetchSlice";
-import { RootState } from "store/store";
-import { getAccessToken } from "utils/getTokens";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import http from 'axios.config';
+import { openErrorModal } from 'store/fetchSlice';
+import { RootState } from 'store/store';
+import { getAccessToken } from 'utils/getTokens';
 
 export const getAllClasses: any = createAsyncThunk(
-  "allClassesSlice/getAllClasses",
+  'allClassesSlice/getAllClasses',
   async (name, thunkApi) => {
     const state: any = thunkApi.getState();
     const dispatch = thunkApi.dispatch;
 
     try {
-      const { data } = await http.get("/academics/class", {
+      const { data } = await http.get('/academics/class', {
         headers: {
           Authorization: `Bearer ${getAccessToken()}`,
         },
@@ -20,11 +20,11 @@ export const getAllClasses: any = createAsyncThunk(
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.response.data);
     }
-  }
+  },
 );
 
 export const addClass: any = createAsyncThunk(
-  "allClassesSlice/addClass",
+  'allClassesSlice/addClass',
   async (name, thunkApi) => {
     const state: any = thunkApi.getState();
     const dispatch = thunkApi.dispatch;
@@ -57,7 +57,7 @@ export const addClass: any = createAsyncThunk(
           };
     try {
       const { data } = await http.post(
-        "/academics/class/",
+        '/academics/class/',
         {
           ...options,
         },
@@ -65,21 +65,17 @@ export const addClass: any = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${getAccessToken()}`,
           },
-        }
+        },
       );
 
       return { ...data };
     } catch (error: any) {
       dispatch(
         openErrorModal({
-          errorText: [
-            error.response.data.detail
-              ? error.response.data.detail
-              : error.message,
-          ],
-        })
+          errorText: [error.response.data.detail ? error.response.data.detail : error.message],
+        }),
       );
       return thunkApi.rejectWithValue(error.response.data);
     }
-  }
+  },
 );

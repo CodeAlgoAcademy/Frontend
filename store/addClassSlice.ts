@@ -1,27 +1,27 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IAddClass } from "../types/interfaces";
-import { colors } from "../components/addClass/colors";
-import { addClass } from "services/classesService";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IAddClass } from '../types/interfaces';
+import { colors } from '../components/addClass/colors';
+import { addClass } from 'services/classesService';
 
 const initialState: IAddClass = {
   student: {
-    firstName: "",
-    lastName: "",
-    email: "",
-    username: "",
+    firstName: '',
+    lastName: '',
+    email: '',
+    username: '',
   },
   class: {
-    className: "",
-    grade: "Select Grade",
-    subject: "",
-    coTeachers: "",
-    roomNumber: "",
+    className: '',
+    grade: 'Select Grade',
+    subject: '',
+    coTeachers: '',
+    roomNumber: '',
     color: colors[0],
   },
 };
 
 const addClassSlice = createSlice({
-  name: "addClass",
+  name: 'addClass',
   initialState,
   reducers: {
     updateClassDetails: (
@@ -30,14 +30,12 @@ const addClassSlice = createSlice({
         key: string;
         value: string;
         typeofState?: string;
-      }>
+      }>,
     ) => {
-      if (action.payload.typeofState === "student") {
-        state.student[action.payload.key as keyof typeof state.student] =
-          action.payload.value;
+      if (action.payload.typeofState === 'student') {
+        state.student[action.payload.key as keyof typeof state.student] = action.payload.value;
       } else {
-        state.class[action.payload.key as keyof typeof state.class] =
-          action.payload.value;
+        state.class[action.payload.key as keyof typeof state.class] = action.payload.value;
       }
     },
     clearFields: (state: IAddClass) => {
@@ -46,24 +44,15 @@ const addClassSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      addClass.pending,
-      (state: IAddClass, action: PayloadAction) => {
-        console.log("pending");
-      }
-    ),
-      builder.addCase(
-        addClass.fulfilled,
-        (state: IAddClass, action: PayloadAction) => {
-          console.log("fulfilled");
-        }
-      ),
-      builder.addCase(
-        addClass.rejected,
-        (state: IAddClass, action: PayloadAction) => {
-          console.log(action.payload);
-        }
-      );
+    builder.addCase(addClass.pending, (state: IAddClass, action: PayloadAction) => {
+      console.log('pending');
+    }),
+      builder.addCase(addClass.fulfilled, (state: IAddClass, action: PayloadAction) => {
+        console.log('fulfilled');
+      }),
+      builder.addCase(addClass.rejected, (state: IAddClass, action: PayloadAction) => {
+        console.log(action.payload);
+      });
   },
 });
 

@@ -1,26 +1,22 @@
-import React, { FC, ChangeEvent } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "store/store";
-import { Props, styles } from "./index";
-import { FaChevronDown, FaPlus } from "react-icons/fa";
-import { updateGrades } from "store/unitsSlice";
+import React, { FC, ChangeEvent } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from 'store/store';
+import { Props, styles } from './index';
+import { FaChevronDown, FaPlus } from 'react-icons/fa';
+import { updateGrades } from 'store/unitsSlice';
 
 const Grade: FC<Props> = ({ openedModal, updateOpenedModal }) => {
   const dispatch = useDispatch();
-  const { grades, chosenGrades } = useSelector(
-    (state: RootState) => state.unit.addUnit
-  );
+  const { grades, chosenGrades } = useSelector((state: RootState) => state.unit.addUnit);
   return (
     <article className="flex flex-row gap-x-2 relative">
       <div
         className={`${styles.topic} ${
-          openedModal === "grade"
-            ? " outline-mainPurple"
-            : "outline-transparent"
+          openedModal === 'grade' ? ' outline-mainPurple' : 'outline-transparent'
         }`}
         onClick={(event: any) => {
-          if (!event.target.classList.contains("dropdown")) {
-            updateOpenedModal("grade");
+          if (!event.target.classList.contains('dropdown')) {
+            updateOpenedModal('grade');
           }
         }}
       >
@@ -28,12 +24,10 @@ const Grade: FC<Props> = ({ openedModal, updateOpenedModal }) => {
         <i>
           <FaChevronDown />
         </i>
-        {openedModal === "grade" && (
+        {openedModal === 'grade' && (
           <div className={`${styles.preview}`}>
             {grades.length === 0 && (
-              <h1 className="text-center p-2 font-bold font-lg">
-                Please select a level
-              </h1>
+              <h1 className="text-center p-2 font-bold font-lg">Please select a level</h1>
             )}
             {grades.length > 0 &&
               grades.map((grade: string, index: number) => {
@@ -46,13 +40,13 @@ const Grade: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                       checked={chosenGrades.includes(grade)}
                       onChange={(event: ChangeEvent<HTMLInputElement>) => {
                         if (event.target.checked) {
-                          dispatch(updateGrades({ value: grade, type: "add" }));
+                          dispatch(updateGrades({ value: grade, type: 'add' }));
                         } else {
                           dispatch(
                             updateGrades({
                               value: grade,
-                              type: "remove",
-                            })
+                              type: 'remove',
+                            }),
                           );
                         }
                       }}
