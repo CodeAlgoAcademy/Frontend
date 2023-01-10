@@ -7,9 +7,9 @@ import { BiSend } from "react-icons/bi";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 import { getAccessToken } from "utils/getTokens";
 
-// const headers = {
-//     Authorization: "Bearer " + getAccessToken()
-// }
+const headers = {
+    Authorization: "Bearer " + getAccessToken()
+}
 // const client = new W3CWebSocket('wss://sea-lion-app-43ury.ondigitalocean.app/chat/websocket/'
 // )
 
@@ -169,8 +169,15 @@ const ChatRoom = () => {
   const [message, setMessage] = useState("");
 
   const client = new WebSocket(
-    "wss://sea-lion-app-43ury.ondigitalocean.app/chat/websocket/"
+    "wss://sea-lion-app-43ury.ondigitalocean.app/chat/websocket/", 
   );
+
+  const handleClick = (value: string) => {
+    client.send(JSON.stringify({
+      type: "chat.message",
+      text: value
+    }))
+  }
 
   useEffect(() => {
     client.onopen = () => {
@@ -178,21 +185,25 @@ const ChatRoom = () => {
     };
 
     client.onmessage = (message) => {
-      console.log(message);
+      const dataFromServer = JSON.parse(message.data);
+      console.log('got reply', dataFromServer)
     };
   }, []);
 
-  const onSubmit = (e: FormEvent) => {
-    e.preventDefault();
+  // const onSubmit = (e: FormEvent) => {
+  //   e.preventDefault();
 
-    client.send(
-      JSON.stringify({
-        type: "chat.message",
-        text: message,
-        receiver: 0, // TODO: User ID gotten from state
-      })
-    );
-  };
+  //   client.send(
+  //     JSON.stringify({
+  //       type: "chat.message",
+  //       text: message,
+  //       receiver: 0, // TODO: User ID gotten from state
+  //     })
+  //   );
+  // };
+
+  
+   
 
   return (
     <div className="">
@@ -228,7 +239,7 @@ const ChatRoom = () => {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
             />
-            <button hidden type="submit"></button>
+            <button hidden type="submit" onClick={() => handleClick('hello')}></button>
           </form>
           <div className="flex space-x-5">
             <IconButton>
