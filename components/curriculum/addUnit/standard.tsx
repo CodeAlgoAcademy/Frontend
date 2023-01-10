@@ -1,9 +1,9 @@
-import React, { FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "store/store";
-import { Props, styles, standards } from ".";
-import { updateStandard } from "store/unitsSlice";
-import { FaChevronDown } from "react-icons/fa";
+import React, { FC } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'store/store';
+import { Props, styles, standards } from '.';
+import { updateStandard } from 'store/unitsSlice';
+import { FaChevronDown } from 'react-icons/fa';
 
 const Standard: FC<Props> = ({ openedModal, updateOpenedModal }) => {
   const dispatch = useDispatch();
@@ -12,13 +12,11 @@ const Standard: FC<Props> = ({ openedModal, updateOpenedModal }) => {
     <article className="flex flex-row gap-x-2 relative">
       <div
         className={`${styles.topic} ${
-          openedModal === "standard"
-            ? " outline-mainPurple"
-            : "outline-transparent"
+          openedModal === 'standard' ? ' outline-mainPurple' : 'outline-transparent'
         }`}
         onClick={(event: any) => {
-          if (!event.target.classList.contains("dropdown")) {
-            updateOpenedModal("standard");
+          if (!event.target.classList.contains('dropdown')) {
+            updateOpenedModal('standard');
           }
         }}
       >
@@ -26,7 +24,7 @@ const Standard: FC<Props> = ({ openedModal, updateOpenedModal }) => {
         <i>
           <FaChevronDown />
         </i>
-        {openedModal === "standard" && (
+        {openedModal === 'standard' && (
           <div className={`${styles.preview}`}>
             {standards.map((availableStandard: string, index: number) => (
               <div className={styles.inputContainer} key={index}>
@@ -36,14 +34,14 @@ const Standard: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                   id={availableStandard}
                   onChange={() => {
                     dispatch(updateStandard({ value: availableStandard }));
-                    updateOpenedModal("");
+                    updateOpenedModal('');
                   }}
                   className="hidden dropdown"
                 />
                 <label
                   htmlFor={availableStandard}
                   className={`hover:text-mainPurple dropdown ${
-                    standard === availableStandard && "text-mainPurple"
+                    standard === availableStandard && 'text-mainPurple'
                   }`}
                 >
                   {availableStandard}
@@ -55,8 +53,8 @@ const Standard: FC<Props> = ({ openedModal, updateOpenedModal }) => {
       </div>
       <div className={styles.numbersSelectedContainer}>
         <p>
-          {standard === "" ? (
-            "0 standards selected"
+          {standard === '' ? (
+            '0 standards selected'
           ) : (
             <span className={styles.selectedItems}>{standard}</span>
           )}
