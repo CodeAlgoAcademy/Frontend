@@ -1,22 +1,22 @@
-import React, { ChangeEvent, useEffect } from "react";
-import Head from "next/head";
-import Link from "next/link";
-import CleverBtn from "../components/cleverBtn";
-import GoogleBtn from "../components/googleBtn";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store/store";
-import { IInputFields } from "../types/interfaces";
-import { loginUser } from "../services/authService";
-import { clearFields, updateUser } from "store/authSlice";
-import styles from "../styles/styles";
-import { useRouter } from "next/router";
+import React, { ChangeEvent, useEffect } from "react"
+import Head from "next/head"
+import Link from "next/link"
+import CleverBtn from "../components/cleverBtn"
+import GoogleBtn from "../components/googleBtn"
+import { useDispatch, useSelector } from "react-redux"
+import { RootState } from "../store/store"
+import { IInputFields } from "../types/interfaces"
+import { loginUser } from "../services/authService"
+import { clearFields, updateUser } from "store/authSlice"
+import styles from "../styles/styles"
+import { useRouter } from "next/router"
 
 const Login = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const { email, password } = useSelector(
     (state: RootState) => state.user.auth
-  );
-  const router = useRouter();
+  )
+  const router = useRouter()
   const inputFields: IInputFields[] = [
     {
       type: "email",
@@ -30,24 +30,24 @@ const Login = () => {
       name: "password",
       value: password,
     },
-  ];
+  ]
 
   const login = async (event: ChangeEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = await dispatch(loginUser());
+    event.preventDefault()
+    const data = await dispatch(loginUser())
     if (!data?.error?.message) {
-      if(data?.payload?.is_teacher){
-        router.push("/addClass");
+      if (data?.payload?.is_teacher) {
+        router.push("/addClass")
 
-      }else{
-        router.push("/comingSoon");
+      } else {
+        router.push("/comingSoon")
       }
     }
-  };
+  }
 
   useEffect(() => {
-    dispatch(clearFields());
-  }, []);
+    dispatch(clearFields())
+  }, [])
 
   return (
     <main>
@@ -57,7 +57,7 @@ const Login = () => {
 
       <section className="w-full min-h-screen bg-[#E5E5E5]  flex justify-center items-center">
         <div className="bg-white w-[95vw] max-w-[600px] mx-auto rounded-md p-[40px] md:p-[50px] shadow-md">
-          {/* title */}
+          {/* title */ }
           <div className="flex flex-col gap-y-1 mb-4">
             <h1 className="md:text-3xl text-center text-lg font-bold">
               Welcome to CodeAlgo Academy
@@ -72,44 +72,49 @@ const Login = () => {
             </p>
           </div>
 
-          {/* providers button */}
+          {/* providers button */ }
           <div className="flex flex-col gap-y-2 md:gap-y-0 md:flex-row gap-x-6">
             <CleverBtn />
             <GoogleBtn />
           </div>
 
-          {/* or span */}
+          {/* or span */ }
           <span className="text-gray-700 block text-center my-5 relative after:absolute after:top-[50%] after:-translate-y-[50%] after:right-0 after:w-[42%] after:h-[1px] after:bg-gray-700 before:absolute before:top-[50%] before:-translate-y-[50%] before:left-0 before:w-[42%] before:h-[1px] before:bg-gray-700">
             OR
           </span>
 
-          <form className="w-full" onSubmit={login}>
-            {/* inputs */}
+          <form className="w-full" onSubmit={ login }>
+            {/* inputs */ }
             <div className="flex flex-col gap-y-3 mb-6 items-start">
-              {inputFields.map((inputField: IInputFields, index: number) => {
-                const { type, placeholder, name, value } = inputField;
+              { inputFields.map((inputField: IInputFields, index: number) => {
+                const { type, placeholder, name, value } = inputField
                 return (
                   <input
-                    key={index}
-                    type={type}
-                    placeholder={placeholder}
-                    name={name}
-                    value={value}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    key={ index }
+                    type={ type }
+                    placeholder={ placeholder }
+                    name={ name }
+                    value={ value }
+                    onChange={ (e: ChangeEvent<HTMLInputElement>) => {
                       dispatch(
                         updateUser({ key: name, value: e.target.value })
-                      );
-                    }}
-                    minLength={name === "password" ? 8 : 0}
+                      )
+                    } }
+                    minLength={ name === "password" ? 8 : 0 }
                     required
-                    className={styles.input}
+                    className={ styles.input }
                   />
-                );
-              })}
+                )
+              }) }
             </div>
-            {/* login button */}
+            {/* login button */ }
 
-            <div className="text-right">
+            <div className="flex items-center justify-between">
+              <Link href="/change-password">
+                <p className="underline text-[16px] mt-2 opacity-80 cursor-pointer font-semibold hover:opacity-90">
+                  Forgot Password
+                </p>
+              </Link>
               <button
                 type="submit"
                 className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md"
@@ -118,16 +123,10 @@ const Login = () => {
               </button>
             </div>
           </form>
-
-          <Link href="/change-password">
-            <p className="text-right underline text-[16px] mt-2 cursor-pointer font-bold">
-              Forgot Password
-            </p>
-          </Link>
         </div>
       </section>
     </main>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login
