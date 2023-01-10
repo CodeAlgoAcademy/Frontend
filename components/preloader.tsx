@@ -1,11 +1,9 @@
-import React from "react";
-import { FaSpinner } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import { RootState } from "store/store";
+import React from 'react';
+import { FaSpinner } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/store';
 const Preloader = () => {
-  const { loading, loadingText } = useSelector(
-    (state: RootState) => state.fetch
-  );
+  const { loading, loadingText } = useSelector((state: RootState) => state.fetch);
   if (!loading) {
     return <></>;
   }

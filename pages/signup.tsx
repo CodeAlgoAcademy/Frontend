@@ -1,30 +1,30 @@
-import React, { useState, useEffect, ReactElement, ChangeEvent } from "react";
-import { useDispatch } from "react-redux";
-import Head from "next/head";
-import Link from "next/link";
-import CleverBtn from "../components/cleverBtn";
-import GoogleBtn from "../components/googleBtn";
-import Grades from "../components/grades";
-import Students from "../components/signup/students";
-import Teachers from "../components/signup/teachers";
-import Parents from "../components/signup/parents";
-import { ITabs } from "../types/interfaces";
-import { useRouter } from "next/router";
-import { updateUser, clearFields } from "store/authSlice";
-import { signUpUser } from "services/authService";
+import React, { useState, useEffect, ReactElement, ChangeEvent } from 'react';
+import { useDispatch } from 'react-redux';
+import Head from 'next/head';
+import Link from 'next/link';
+import CleverBtn from '../components/cleverBtn';
+import GoogleBtn from '../components/googleBtn';
+import Grades from '../components/grades';
+import Students from '../components/signup/students';
+import Teachers from '../components/signup/teachers';
+import Parents from '../components/signup/parents';
+import { ITabs } from '../types/interfaces';
+import { useRouter } from 'next/router';
+import { updateUser, clearFields } from 'store/authSlice';
+import { signUpUser } from 'services/authService';
 
 const tabs: ITabs[] = [
   {
-    tabName: "Student",
+    tabName: 'Student',
     component: <Students />,
   },
 
   {
-    tabName: "Teacher",
+    tabName: 'Teacher',
     component: <Teachers />,
   },
   {
-    tabName: "Parent",
+    tabName: 'Parent',
     component: <Parents />,
   },
 ];
@@ -32,9 +32,9 @@ const tabs: ITabs[] = [
 const SignUp = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<string | undefined>("Student");
+  const [activeTab, setActiveTab] = useState<string | undefined>('Student');
   const [currentTab, setCurrentTab] = useState<ITabs>({
-    tabName: "",
+    tabName: '',
     component: <></>,
   });
   useEffect(() => {
@@ -51,22 +51,21 @@ const SignUp = () => {
 
   const updateTab = (tabName: string | undefined): void => {
     setActiveTab((prev) => tabName);
-    dispatch(updateUser({ key: "accountType", value: tabName as string }));
+    dispatch(updateUser({ key: 'accountType', value: tabName as string }));
   };
 
   useEffect(() => {
-    dispatch(updateUser({ key: "accountType", value: "Student" }));
+    dispatch(updateUser({ key: 'accountType', value: 'Student' }));
   }, []);
 
   const signup = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = await dispatch(signUpUser());
     if (!data?.error?.message) {
-      if(data?.payload?.is_teacher){
-        router.push("/addClass");
-
-      }else{
-        router.push("/comingSoon");
+      if (data?.payload?.is_teacher) {
+        router.push('/addClass');
+      } else {
+        router.push('/comingSoon');
       }
     }
   };
@@ -90,10 +89,8 @@ const SignUp = () => {
                   key={index}
                   className={`
                 flex-1 text-center p-3 text-[17px] cursor-pointer
-                ${index === 1 ? "border-y-2" : "border-2"}  
-                ${
-                  tab.tabName === activeTab ? "bg-mainPurple text-white" : null
-                }`}
+                ${index === 1 ? 'border-y-2' : 'border-2'}  
+                ${tab.tabName === activeTab ? 'bg-mainPurple text-white' : null}`}
                   onClick={() => updateTab(tab.tabName)}
                 >
                   {tab.tabName}
@@ -106,8 +103,7 @@ const SignUp = () => {
             className="w-[180px] mx-auto block md:hidden mb-4 p-2 text-[16px] outline-none border-2 rounded-md focus:border-mainPurple"
             onChange={(event: ChangeEvent<HTMLSelectElement>) => {
               // get the value
-              const value: string =
-                event.target.options[event.target.selectedIndex].value;
+              const value: string = event.target.options[event.target.selectedIndex].value;
               updateTab(value);
             }}
           >
@@ -122,9 +118,7 @@ const SignUp = () => {
 
           {/* title */}
           <div className="flex flex-col gap-y-1 mb-4">
-            <h1 className="md:text-3xl text-lg text-center font-bold">
-              Welcome To CodeAcademy
-            </h1>
+            <h1 className="md:text-3xl text-lg text-center font-bold">Welcome To CodeAcademy</h1>
             <p className="text-grey-800 md:text-lg text-[16px] text-center">
               {"Let's get started"}
             </p>
@@ -145,12 +139,7 @@ const SignUp = () => {
             {/* display different components based on the active tab */}
             {currentTab?.component}
             <span className="flex flex-row items-center gap-x-2 mt-4">
-              <input
-                type="checkbox"
-                id="terms"
-                className="accent-mainPurple"
-                required
-              />
+              <input type="checkbox" id="terms" className="accent-mainPurple" required />
               <label htmlFor="terms">I accept the terms and conditions</label>
             </span>
             <div className="text-right mt-4">
@@ -165,7 +154,7 @@ const SignUp = () => {
 
           <div className="flex md:flex-row md:justify-between md:items-center items-end mt-4 flex-col-reverse justify-center">
             <p className="text-grey-800 text-left md:text-lg text-[15px]">
-              Already have an account?{" "}
+              Already have an account?{' '}
               <Link href="/login">
                 <a className="underline text-mainPurple">Sign In</a>
               </Link>

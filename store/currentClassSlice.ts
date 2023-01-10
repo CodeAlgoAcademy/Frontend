@@ -1,20 +1,18 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CurrentClassState } from "../types/interfaces";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { CurrentClassState } from '../types/interfaces';
 
 const initialState: CurrentClassState = {
-  className: "",
-  color: "",
-  id: "",
+  className: '',
+  color: '',
+  id: '',
 };
 
 const currentClassSlice = createSlice({
-  name: "currentClass",
+  name: 'currentClass',
   initialState,
   reducers: {
-    updateCurrentClass: (
-      state: CurrentClassState,
-      action: PayloadAction<CurrentClassState>
-    ) => action.payload,
+    updateCurrentClass: (state: CurrentClassState, action: PayloadAction<CurrentClassState>) =>
+      action.payload,
   },
 });
 

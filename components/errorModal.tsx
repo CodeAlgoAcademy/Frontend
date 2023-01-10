@@ -1,14 +1,12 @@
-import React from "react";
-import { BiChevronRight } from "react-icons/bi";
-import { FaExclamationTriangle } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import { closeErrorModal } from "store/fetchSlice";
-import { RootState } from "store/store";
+import React from 'react';
+import { BiChevronRight } from 'react-icons/bi';
+import { FaExclamationTriangle } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeErrorModal } from 'store/fetchSlice';
+import { RootState } from 'store/store';
 
 const ErrorModal = () => {
-  const { errorModalOpen, errors } = useSelector(
-    (state: RootState) => state.fetch
-  );
+  const { errorModalOpen, errors } = useSelector((state: RootState) => state.fetch);
   const dispatch = useDispatch();
   if (!errorModalOpen) {
     return <></>;

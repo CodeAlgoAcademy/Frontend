@@ -1,11 +1,11 @@
-import axios, { AxiosResponse } from "axios";
-import { getRefreshToken } from "utils/getTokens";
+import axios, { AxiosResponse } from 'axios';
+import { getRefreshToken } from 'utils/getTokens';
 
 const http = axios.create({
   baseURL: `https://sea-lion-app-43ury.ondigitalocean.app`,
   headers: {
-    Accept: "application/json",
-    "Content-Type": "application/json",
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
   },
 });
 
@@ -53,24 +53,24 @@ http.interceptors.response.use(
     if (error?.response?.status === 401 && !prevRequest?.sent && refreshToken) {
       prevRequest.sent = true;
       try {
-        const { data } = await http.post("/auth /token/refresh/", {
+        const { data } = await http.post('/auth /token/refresh/', {
           refresh: refreshToken,
         });
         const { access } = data;
         localStorage.setItem(
-          "token",
+          'token',
           JSON.stringify({
             access_token: access,
             refresh_token: refreshToken,
-          })
+          }),
         );
-        prevRequest.headers["Authorization"] = "Bearer " + access;
+        prevRequest.headers['Authorization'] = 'Bearer ' + access;
         return http(prevRequest);
       } catch (error) {
         return Promise.reject(error);
       }
     }
-  }
+  },
 );
 
 export default http;
