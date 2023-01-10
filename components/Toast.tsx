@@ -27,18 +27,23 @@ const motionVariants = {
 }
 
 const Toast = () => {
+    let timeout: any;
     const notifications = useToasts()
     const dispatch = useDispatch()
 
-    const removeNotification = (id: number, timeout: number) => {
-        setTimeout(() => {
+    const removeNotification = (id: number, secs: number) => {
+        timeout = setTimeout(() => {
             dispatch(dismissNotification(id))
-        }, timeout)
+        }, secs)
+
+        clearTimeout(timeout)
     }
 
     const handleDismiss = (id: number) => {
         dispatch(dismissNotification(id))
     }
+
+    console.log(notifications)
 
     return (
         <Portal.Root>
@@ -54,7 +59,7 @@ const Toast = () => {
                                 exit="exit"
                                 variants={motionVariants['fadeLeft']}
                                 layout="position"
-                                // onLoad={() => removeNotification(id, autoHideDuration)}
+                                onMouseLeave={() => removeNotification(id, autoHideDuration)}
                             >
                                 <div className="flex gap-2 items-center">
                                     {notificationIcons[type]}

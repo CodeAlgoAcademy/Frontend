@@ -6,7 +6,7 @@ const success = (message: string) => {
     dispatch(displayNotification({
         id: Math.floor((Math.random() * 101) + 1),
         message,
-        autoHideDuration: 5000,
+        autoHideDuration: 3000,
         type: 'success',
         direction: 'fadeLeft',
         position: 'topRight'
@@ -18,7 +18,7 @@ const error = (message: string) => {
     dispatch(displayNotification({
         id: Math.floor((Math.random() * 101) + 1),
         message,
-        autoHideDuration: 5000,
+        autoHideDuration: 3000,
         type: 'success',
         direction: 'fadeLeft',
         position: 'topRight'
@@ -30,7 +30,7 @@ const info = (message: string) => {
     dispatch(displayNotification({
         id: Math.floor((Math.random() * 101) + 1),
         message,
-        autoHideDuration: 5000,
+        autoHideDuration: 3000,
         type: 'info',
         direction: 'fadeLeft',
         position: 'topRight'
