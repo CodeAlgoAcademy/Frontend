@@ -1,36 +1,36 @@
-import React from "react";
-import Link from "next/link";
-import { TbLayoutDashboard, TbClipboardText } from "react-icons/tb";
-import { FaUserGraduate } from "react-icons/fa";
-import { HiOutlineCalendar } from "react-icons/hi";
-import { BiMessageRounded } from "react-icons/bi";
-import { useRouter } from "next/router";
+import React from 'react';
+import Link from 'next/link';
+import { TbLayoutDashboard, TbClipboardText } from 'react-icons/tb';
+import { FaUserGraduate } from 'react-icons/fa';
+import { HiOutlineCalendar } from 'react-icons/hi';
+import { BiMessageRounded } from 'react-icons/bi';
+import { useRouter } from 'next/router';
 
 const links = [
   {
-    name: "dashboard",
+    name: 'dashboard',
     icon: <TbLayoutDashboard />,
-    url: "/dashboard",
+    url: '/dashboard',
   },
   {
-    name: "curriculum",
+    name: 'curriculum',
     icon: <TbClipboardText />,
-    url: "/curriculum",
+    url: '/curriculum',
   },
   {
-    name: "students",
+    name: 'students',
     icon: <FaUserGraduate />,
-    url: "/teachers/students",
+    url: '/teachers/students',
   },
   {
-    name: "calendar",
+    name: 'calendar',
     icon: <HiOutlineCalendar />,
-    url: "/calendar",
+    url: '/calendar',
   },
   {
-    name: "messages",
+    name: 'messages',
     icon: <BiMessageRounded />,
-    url: "/teachers/messages",
+    url: '/teachers/messages',
   },
 ];
 
@@ -46,14 +46,12 @@ const Sidebar = () => {
                 <div
                   className={
                     router?.pathname.includes(`${link.url}`)
-                      ? "flex items-center gap-5 pl-8 py-5 bg-[#E5E5E5] rounded-l-[28px] cursor-pointer"
-                      : "flex items-center gap-5 pl-8 py-5 text-gray-600 hover:bg-[#f3f3f3] rounded-l-[28px] cursor-pointer"
+                      ? 'flex items-center gap-5 pl-8 py-5 bg-[#E5E5E5] rounded-l-[28px] cursor-pointer'
+                      : 'flex items-center gap-5 pl-8 py-5 text-gray-600 hover:bg-[#f3f3f3] rounded-l-[28px] cursor-pointer'
                   }
                 >
                   <span className="text-xl">{link.icon}</span>
-                  <span className="capitalize font-semibold text-md">
-                    {link.name}
-                  </span>
+                  <span className="capitalize font-semibold text-md">{link.name}</span>
                 </div>
               </Link>
             </div>

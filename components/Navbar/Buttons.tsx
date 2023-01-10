@@ -1,8 +1,8 @@
-import Link from "next/link";
-import React from "react";
+import Link from 'next/link';
+import React from 'react';
 
 const styles = {
-  lgBtn: "uppercase p-3 text-white hover:bg-opacity-50 rounded",
+  lgBtn: 'uppercase p-3 text-white hover:bg-opacity-50 rounded',
 };
 
 const Buttons = () => {

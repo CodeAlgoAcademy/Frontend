@@ -1,23 +1,19 @@
-import React, { useState, useRef, ChangeEvent } from "react";
-import { useRouter } from "next/router";
-import Image from "next/image";
-import Link from "next/link";
-import { BiBell, BiHomeAlt, BiLogOut } from "react-icons/bi";
-import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
-import { FaChevronDown, FaChevronUp, FaEdit } from "react-icons/fa";
-import { RootState } from "../store/store";
-import { useSelector, useDispatch } from "react-redux";
-import { updateCurrentClass } from "../store/currentClassSlice";
-import { IClass, CurrentClassState } from "../types/interfaces";
-import { motion } from "framer-motion";
-import { IoSettingsSharp } from "react-icons/io5";
-import { resetAuthUser, updateUser } from "store/authSlice";
-import {
-  updateEmail,
-  updateFirstname,
-  updateLastname,
-} from "services/authService";
-import { AnyAction } from "@reduxjs/toolkit";
+import React, { useState, useRef, ChangeEvent } from 'react';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
+import Link from 'next/link';
+import { BiBell, BiHomeAlt, BiLogOut } from 'react-icons/bi';
+import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
+import { FaChevronDown, FaChevronUp, FaEdit } from 'react-icons/fa';
+import { RootState } from '../store/store';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateCurrentClass } from '../store/currentClassSlice';
+import { IClass, CurrentClassState } from '../types/interfaces';
+import { motion } from 'framer-motion';
+import { IoSettingsSharp } from 'react-icons/io5';
+import { resetAuthUser, updateUser } from 'store/authSlice';
+import { updateEmail, updateFirstname, updateLastname } from 'services/authService';
+import { AnyAction } from '@reduxjs/toolkit';
 
 const GeneralNav = () => {
   const [userDropDown, setUserDropDown] = useState<boolean>(false);
@@ -30,33 +26,29 @@ const GeneralNav = () => {
     password,
     email,
   } = useSelector((state: RootState) => state.user.auth);
-  const classes = useSelector(
-    (state: RootState): IClass[] => state.allClasses.classes
-  );
+  const classes = useSelector((state: RootState): IClass[] => state.allClasses.classes);
   const { firstname, lastname } = useSelector((state: RootState) => state.user);
-  const currentClass = useSelector(
-    (state: RootState): CurrentClassState => state.currentClass
-  );
+  const currentClass = useSelector((state: RootState): CurrentClassState => state.currentClass);
 
   const classDetails = classes.map((item: CurrentClassState) => {
     const { className, color, id } = item;
     return { className, color, id };
   });
   const otherClassDetails = classDetails.filter(
-    (item) => item.className !== currentClass.className
+    (item) => item.className !== currentClass.className,
   );
   const [classListView, setClassListView] = useState(false);
 
   const dropdownStyle = {
-    transform: classListView ? "rotate(180deg)" : "",
-    transition: "transform 150ms ease",
+    transform: classListView ? 'rotate(180deg)' : '',
+    transition: 'transform 150ms ease',
   };
 
   const classListStyle = {
-    maxHeight: classListView ? "" : "56px",
-    transition: "max-height 200ms ease",
-    overflowY: classListView ? "auto" : "hidden",
-    height: classListView ? "191.9px" : "",
+    maxHeight: classListView ? '' : '56px',
+    transition: 'max-height 200ms ease',
+    overflowY: classListView ? 'auto' : 'hidden',
+    height: classListView ? '191.9px' : '',
   } as React.CSSProperties;
 
   const toggleUserDropDown = () => {
@@ -66,9 +58,9 @@ const GeneralNav = () => {
   const classBox = useRef<HTMLDivElement>(null);
 
   const logout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
     dispatch(resetAuthUser());
-    router.push("/login");
+    router.push('/login');
   };
 
   const updateUserForm = async (e: ChangeEvent<HTMLFormElement>, func: any) => {
@@ -84,13 +76,15 @@ const GeneralNav = () => {
       <div className="relative flex items-center gap-40">
         <div className="absolute left-0 top-0">
           <Link href="/addClass">
-            <Image
-              src="/assets/CodeAlgo_Logo.png"
-              alt="logo"
-              className="md:cursor-pointer h-9"
-              width={100}
-              height={52}
-            />
+            <a>
+              <Image
+                src="/assets/CodeAlgo_Logo.png"
+                alt="logo"
+                className="md:cursor-pointer h-9"
+                width={100}
+                height={52}
+              />
+            </a>
           </Link>
         </div>
         <div></div>
@@ -113,18 +107,13 @@ const GeneralNav = () => {
                       style={{ backgroundColor: currentClass?.color }}
                       className='rounded-full content-[" "] w-[24px] h-[24px]'
                     ></span>
-                    <span className="font-bold text-[18px]">
-                      {currentClass.className}
-                    </span>
+                    <span className="font-bold text-[18px]">{currentClass.className}</span>
                   </div>
                   <div
                     className="hover:b rounded-lg p-1"
                     onClick={() => setClassListView((prev) => !prev)}
                   >
-                    <div
-                      className="text-[32px] text-[#838383]"
-                      style={dropdownStyle}
-                    >
+                    <div className="text-[32px] text-[#838383]" style={dropdownStyle}>
                       <RiArrowDropDownLine />
                     </div>
                   </div>
@@ -139,13 +128,13 @@ const GeneralNav = () => {
                           className: navClass.className,
                           color: navClass.color,
                           id: navClass.id,
-                        })
+                        }),
                       );
                       const node = classBox.current;
                       if (node) {
                         node.scroll({
                           top: 0,
-                          behavior: "smooth",
+                          behavior: 'smooth',
                         });
                       }
                       setClassListView((prev) => false);
@@ -156,9 +145,7 @@ const GeneralNav = () => {
                         style={{ backgroundColor: navClass?.color }}
                         className='rounded-full content-[" "] w-[24px] h-[24px]'
                       ></span>
-                      <span className="font-bold text-[18px]">
-                        {navClass.className}
-                      </span>
+                      <span className="font-bold text-[18px]">{navClass.className}</span>
                     </div>
                   </div>
                 ))}
@@ -172,7 +159,7 @@ const GeneralNav = () => {
           className={
             userDropDown
               ? `rounded-[20px] px-4 py-[6px] bg-white z-[50] border border-[#BDBDBD] absolute right-[8rem] top-7 w-[16rem] ${
-                  settingsTabOpen ? "h-[18rem]" : "h-[10rem]"
+                  settingsTabOpen ? 'h-[18rem]' : 'h-[10rem]'
                 } box-border duration-300 ease-in-out`
               : `rounded-[30px] px-2 py-[6px] h-[3rem] w-[7rem] border border-[#BDBDBD] absolute box-border right-[8rem] top-7 bg-white  transition-[width]`
           }
@@ -191,21 +178,18 @@ const GeneralNav = () => {
               <div>
                 <motion.h5
                   className="text-sm capitalize ml-2 font-[700] whitespace-nowrap"
-                  initial={{ display: "none", opacity: 0 }}
+                  initial={{ display: 'none', opacity: 0 }}
                   animate={{
-                    display: "block",
+                    display: 'block',
                     opacity: 1,
-                    transition: { duration: "1", delay: 0.3 },
+                    transition: { duration: '1', delay: 0.3 },
                   }}
                 >
-                  {firstname + " " + lastname}
+                  {firstname + ' ' + lastname}
                 </motion.h5>
               </div>
             )}
-            <div
-              className="text-[32px] pl-6 text-[#838383] "
-              onClick={toggleUserDropDown}
-            >
+            <div className="text-[32px] pl-6 text-[#838383] " onClick={toggleUserDropDown}>
               {userDropDown ? <RiArrowDropUpLine /> : <RiArrowDropDownLine />}
             </div>
           </div>
@@ -214,11 +198,11 @@ const GeneralNav = () => {
               <div>
                 <motion.header
                   className="flex w-full items-center  mt-4 pt-4 justify-between border-t border-black"
-                  initial={{ opacity: 0, y: "5px" }}
+                  initial={{ opacity: 0, y: '5px' }}
                   animate={{
                     opacity: 1,
                     y: 0,
-                    transition: { duration: "0.5" },
+                    transition: { duration: '0.5' },
                   }}
                   onClick={() => {
                     setSettingsTabOpen((prev) => !prev);
@@ -228,9 +212,7 @@ const GeneralNav = () => {
                     <span className="text-xl">
                       <IoSettingsSharp />
                     </span>
-                    <motion.h5 className="text-sm ml-2 font-[700] select-none">
-                      Settings
-                    </motion.h5>
+                    <motion.h5 className="text-sm ml-2 font-[700] select-none">Settings</motion.h5>
                   </div>
                   <span className="text-sm font-light">
                     {settingsTabOpen ? <FaChevronUp /> : <FaChevronDown />}
@@ -238,7 +220,7 @@ const GeneralNav = () => {
                 </motion.header>
                 <main
                   className={`w-full flex flex-col mt-4 gap-2 transition duration-300 ${
-                    settingsTabOpen ? "h-[125px]" : "h-0"
+                    settingsTabOpen ? 'h-[125px]' : 'h-0'
                   } overflow-hidden`}
                 >
                   <form
@@ -255,9 +237,9 @@ const GeneralNav = () => {
                       onChange={(e: ChangeEvent<HTMLInputElement>) => {
                         dispatch(
                           updateUser({
-                            key: "firstname",
+                            key: 'firstname',
                             value: e.target.value,
-                          })
+                          }),
                         );
                       }}
                     />
@@ -280,9 +262,7 @@ const GeneralNav = () => {
                       placeholder="Update lastname"
                       value={authLastname}
                       onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        dispatch(
-                          updateUser({ key: "lastname", value: e.target.value })
-                        );
+                        dispatch(updateUser({ key: 'lastname', value: e.target.value }));
                       }}
                     />
                     <button
@@ -304,9 +284,7 @@ const GeneralNav = () => {
                       placeholder="Update email"
                       value={email}
                       onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        dispatch(
-                          updateUser({ key: "email", value: e.target.value })
-                        );
+                        dispatch(updateUser({ key: 'email', value: e.target.value }));
                       }}
                     />
                     <button
@@ -323,9 +301,7 @@ const GeneralNav = () => {
                       placeholder="Update password"
                       value={password}
                       onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        dispatch(
-                          updateUser({ key: "password", value: e.target.value })
-                        );
+                        dispatch(updateUser({ key: 'password', value: e.target.value }));
                       }}
                     />
                     <button
@@ -339,11 +315,11 @@ const GeneralNav = () => {
               </div>
               <motion.div
                 className="cursor-pointer flex items-center mt-[1rem] pb-2"
-                initial={{ opacity: 0, y: "5px" }}
+                initial={{ opacity: 0, y: '5px' }}
                 animate={{
                   opacity: 1,
                   y: 0,
-                  transition: { delay: 0.3, duration: "0.5" },
+                  transition: { delay: 0.3, duration: '0.5' },
                 }}
                 onClick={logout}
               >

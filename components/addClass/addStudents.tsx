@@ -1,42 +1,42 @@
-import React, { ChangeEvent } from "react";
-import { FaChevronLeft, FaPlus } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import { updateClassDetails } from "../../store/addClassSlice";
-import { closeAddStudentsModal } from "../../store/modalSlice";
-import { RootState } from "../../store/store";
-import styles from "../../styles/styles";
-import { IInputFields } from "../../types/interfaces";
-import { generateUsername } from "utils/generateUsername";
+import React, { ChangeEvent } from 'react';
+import { FaChevronLeft, FaPlus } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateClassDetails } from '../../store/addClassSlice';
+import { closeAddStudentsModal } from '../../store/modalSlice';
+import { RootState } from '../../store/store';
+import styles from '../../styles/styles';
+import { IInputFields } from '../../types/interfaces';
+import { generateUsername } from 'utils/generateUsername';
 
 const AddStudents = () => {
   const dispatch = useDispatch();
   const { firstName, lastName, email, username } = useSelector(
-    (state: RootState) => state.addClass.student
+    (state: RootState) => state.addClass.student,
   );
 
   const inputFields: IInputFields[] = [
     {
-      type: "text",
-      name: "firstName",
-      placeholder: "Enter Student First Name",
+      type: 'text',
+      name: 'firstName',
+      placeholder: 'Enter Student First Name',
       value: firstName,
     },
     {
-      type: "text",
-      name: "lastName",
-      placeholder: "Enter Student Last Name",
+      type: 'text',
+      name: 'lastName',
+      placeholder: 'Enter Student Last Name',
       value: lastName,
     },
     {
-      type: "email",
-      name: "email",
-      placeholder: "Enter Student Email",
+      type: 'email',
+      name: 'email',
+      placeholder: 'Enter Student Email',
       value: email,
     },
     {
-      type: "text",
-      name: "username",
-      placeholder: "Enter Username",
+      type: 'text',
+      name: 'username',
+      placeholder: 'Enter Username',
       value: username,
     },
   ];
@@ -57,9 +57,7 @@ const AddStudents = () => {
         >
           <FaChevronLeft />
         </span>
-        <h1 className="md:text-[30px] text-[20px] font-bold">
-          Add new student(s)
-        </h1>
+        <h1 className="md:text-[30px] text-[20px] font-bold">Add new student(s)</h1>
       </header>
       <section className="px-8 grid md:grid-cols-2 gap-[1rem]">
         {inputFields?.map((inputField: IInputFields, index: number) => {
@@ -74,10 +72,10 @@ const AddStudents = () => {
               onChange={(e: ChangeEvent<HTMLInputElement>) => {
                 dispatch(
                   updateClassDetails({
-                    typeofState: "student",
+                    typeofState: 'student',
                     key: name,
                     value: e.target.value,
-                  })
+                  }),
                 );
               }}
               className={styles.input}
@@ -92,10 +90,10 @@ const AddStudents = () => {
               const randomName = generateUsername(firstName, lastName);
               dispatch(
                 updateClassDetails({
-                  typeofState: "student",
-                  key: "username",
+                  typeofState: 'student',
+                  key: 'username',
                   value: randomName,
-                })
+                }),
               );
             }
           }}

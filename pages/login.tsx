@@ -1,33 +1,31 @@
-import React, { ChangeEvent, useEffect } from "react";
-import Head from "next/head";
-import Link from "next/link";
-import CleverBtn from "../components/cleverBtn";
-import GoogleBtn from "../components/googleBtn";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store/store";
-import { IInputFields } from "../types/interfaces";
-import { loginUser } from "../services/authService";
-import { clearFields, updateUser } from "store/authSlice";
-import styles from "../styles/styles";
-import { useRouter } from "next/router";
+import React, { ChangeEvent, useEffect } from 'react';
+import Head from 'next/head';
+import Link from 'next/link';
+import CleverBtn from '../components/cleverBtn';
+import GoogleBtn from '../components/googleBtn';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store/store';
+import { IInputFields } from '../types/interfaces';
+import { loginUser } from '../services/authService';
+import { clearFields, updateUser } from 'store/authSlice';
+import styles from '../styles/styles';
+import { useRouter } from 'next/router';
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { email, password } = useSelector(
-    (state: RootState) => state.user.auth
-  );
+  const { email, password } = useSelector((state: RootState) => state.user.auth);
   const router = useRouter();
   const inputFields: IInputFields[] = [
     {
-      type: "email",
-      placeholder: "Enter Email*",
-      name: "email",
+      type: 'email',
+      placeholder: 'Enter Email*',
+      name: 'email',
       value: email,
     },
     {
-      type: "password",
-      placeholder: "Enter Password*",
-      name: "password",
+      type: 'password',
+      placeholder: 'Enter Password*',
+      name: 'password',
       value: password,
     },
   ];
@@ -36,11 +34,10 @@ const Login = () => {
     event.preventDefault();
     const data = await dispatch(loginUser());
     if (!data?.error?.message) {
-      if(data?.payload?.is_teacher){
-        router.push("/addClass");
-
-      }else{
-        router.push("/comingSoon");
+      if (data?.payload?.is_teacher) {
+        router.push('/addClass');
+      } else {
+        router.push('/comingSoon');
       }
     }
   };
@@ -65,9 +62,7 @@ const Login = () => {
             <p className="text-grey-800 md:text-lg text-[16px] text-center">
               New here?
               <Link href="/signup">
-                <a className="ml-2 underline text-mainPurple">
-                  Create an account
-                </a>
+                <a className="ml-2 underline text-mainPurple">Create an account</a>
               </Link>
             </p>
           </div>
@@ -96,11 +91,9 @@ const Login = () => {
                     name={name}
                     value={value}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      dispatch(
-                        updateUser({ key: name, value: e.target.value })
-                      );
+                      dispatch(updateUser({ key: name, value: e.target.value }));
                     }}
-                    minLength={name === "password" ? 8 : 0}
+                    minLength={name === 'password' ? 8 : 0}
                     required
                     className={styles.input}
                   />
@@ -109,7 +102,12 @@ const Login = () => {
             </div>
             {/* login button */}
 
-            <div className="text-right">
+            <div className="flex items-center justify-between">
+              <Link href="/change-password">
+                <p className="underline text-[16px] mt-2 opacity-80 cursor-pointer font-semibold hover:opacity-90">
+                  Forgot Password
+                </p>
+              </Link>
               <button
                 type="submit"
                 className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md"
@@ -118,12 +116,6 @@ const Login = () => {
               </button>
             </div>
           </form>
-
-          <Link href="/change-password">
-            <p className="text-right underline text-[16px] mt-2 cursor-pointer font-bold">
-              Forgot Password
-            </p>
-          </Link>
         </div>
       </section>
     </main>

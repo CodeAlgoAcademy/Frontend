@@ -1,5 +1,5 @@
-import { getAccessToken } from "utils/getTokens";
-import http from "../axios.config";
+import { getAccessToken } from 'utils/getTokens';
+import http from '../axios.config';
 
 const config = {
   headers: {
@@ -8,7 +8,7 @@ const config = {
 };
 
 const getConversations: any = async () => {
-  const response = await http.get("/chat/teacher/", config);
+  const response = await http.get('/chat/teacher/', config);
   return response.data;
 };
 
