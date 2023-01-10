@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "store/store";
-import { getAllCurriculums } from "services/curriculumService";
-import { Icurriculum } from "types/interfaces";
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'store/store';
+import { getAllCurriculums } from 'services/curriculumService';
+import { Icurriculum } from 'types/interfaces';
 
 const SummaryBox = () => {
   const { curriculum } = useSelector((state: RootState) => state.allCurriculum);
   const { id } = useSelector((state: RootState) => state.currentClass);
   const [currentLesson, setCurrentLesson] = useState<Icurriculum>({
-    title: "",
-    description: "",
-    end_date: "",
-    start_date: "",
-    teacher: "",
+    title: '',
+    description: '',
+    end_date: '',
+    start_date: '',
+    teacher: '',
     grades: [],
     id: 0,
-    standard: "",
-    level: "",
+    standard: '',
+    level: '',
     is_current: false,
     is_finished: false,
-    class_model: "",
+    class_model: '',
   });
   const dispatch = useDispatch();
   const getCurriculums = async () => {
@@ -52,15 +52,15 @@ const SummaryBox = () => {
     <div className="rounded-md shadow-lg p-6 w-[380px] bg-white flex flex-col justify-between">
       <div>
         <h3 className="text-[20px] font-bold mb-2">
-          Lesson - <span>{currentLesson.title || ""}</span>
+          Lesson - <span>{currentLesson.title || ''}</span>
         </h3>
         <p className="leading-normal text-base tracking-tight mb-4">
-          {currentLesson.description || ""}
+          {currentLesson.description || ''}
         </p>
       </div>
       <div
         className="rounded-md py-12 w-[100%]"
-        style={{ backgroundColor: currentLesson.level || "green" }}
+        style={{ backgroundColor: currentLesson.level || 'green' }}
       >
         <div className="w-[38%] relative aspect-[12/10] mx-auto">
           {/* <Image src={ loop } alt="current-lesson" layout="fill" /> */}

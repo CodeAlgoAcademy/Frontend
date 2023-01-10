@@ -1,10 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import http from "axios.config";
-import studentService from "services/studentService";
-import { IUserStudent, Student } from "types/interfaces";
-import { getAccessToken } from "utils/getTokens";
-import { openErrorModal } from "./fetchSlice";
-import { RootState } from "./store";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import http from 'axios.config';
+import studentService from 'services/studentService';
+import { IUserStudent, Student } from 'types/interfaces';
+import { getAccessToken } from 'utils/getTokens';
+import { openErrorModal } from './fetchSlice';
+import { RootState } from './store';
 
 const initialState: IUserStudent = {
   newStudent: null,
@@ -12,190 +12,165 @@ const initialState: IUserStudent = {
   studentComments: [],
 };
 
-export const addStudent: any = createAsyncThunk(
-  "new/student",
-  async (data: Student, thunkAPI) => {
-    const state: any = thunkAPI.getState();
-    const { id } = state.currentClass;
-    try {
-      return await studentService.addStudent(data, id);
-    } catch (error: any) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const addStudent: any = createAsyncThunk('new/student', async (data: Student, thunkAPI) => {
+  const state: any = thunkAPI.getState();
+  const { id } = state.currentClass;
+  try {
+    return await studentService.addStudent(data, id);
+  } catch (error: any) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const getStudents: any = createAsyncThunk(
-  "get/students",
-  async (_, thunkAPI) => {
-    const state: any = thunkAPI.getState();
-    const { id } = state.currentClass;
-    try {
-      return await studentService.getStudents(id);
-    } catch (error: any) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getStudents: any = createAsyncThunk('get/students', async (_, thunkAPI) => {
+  const state: any = thunkAPI.getState();
+  const { id } = state.currentClass;
+  try {
+    return await studentService.getStudents(id);
+  } catch (error: any) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
 export const getStudentComment: any = createAsyncThunk(
-  "get/student/comment",
+  'get/student/comment',
   async (params: { id: string; comment: string }, thunkApi) => {
     const dispatch = thunkApi.dispatch;
     try {
-      const { data } = await http.get(
-        "/academics/comment/student/" + params.id,
-        {
-          headers: {
-            Authorization: `Bearer ${getAccessToken()}`,
-          },
-        }
-      );
+      const { data } = await http.get('/academics/comment/student/' + params.id, {
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      });
       return data;
     } catch (error: any) {
       const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
+        (error.response && error.response.data && error.response.data.message) ||
         error.message ||
         error.toString();
       dispatch(openErrorModal({ errorText: [message] }));
       return thunkApi.rejectWithValue(message);
     }
-  }
+  },
 );
 
 export const addStudentComment: any = createAsyncThunk(
-  "add/student/comment",
+  'add/student/comment',
   async (params: { id: string; comment: string }, thunkApi) => {
     const dispatch = thunkApi.dispatch;
     try {
       const { data } = await http.post(
-        "/academics/comment/student/" + params.id,
+        '/academics/comment/student/' + params.id,
         { text: params.comment },
         {
           headers: {
             Authorization: `Bearer ${getAccessToken()}`,
           },
-        }
+        },
       );
     } catch (error: any) {
       const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
+        (error.response && error.response.data && error.response.data.message) ||
         error.message ||
         error.toString();
       dispatch(openErrorModal({ errorText: [message] }));
       return thunkApi.rejectWithValue(message);
     }
-  }
+  },
 );
 
 export const updateStudentComment: any = createAsyncThunk(
-  "add/student/comment",
+  'add/student/comment',
   async (params: { id: string; comment: string }, thunkApi) => {
     const dispatch = thunkApi.dispatch;
     try {
       const { data } = await http.put(
-        "/academics/comment/" + params.id,
+        '/academics/comment/' + params.id,
         { text: params.comment },
         {
           headers: {
             Authorization: `Bearer ${getAccessToken()}`,
           },
-        }
+        },
       );
     } catch (error: any) {
       const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
+        (error.response && error.response.data && error.response.data.message) ||
         error.message ||
         error.toString();
       dispatch(openErrorModal({ errorText: [message] }));
       return thunkApi.rejectWithValue(message);
     }
-  }
+  },
 );
 
 export const deleteStudentComment: any = createAsyncThunk(
-  "add/student/comment",
+  'add/student/comment',
   async (params: { id: string }, thunkApi) => {
     const dispatch = thunkApi.dispatch;
     try {
-      const { data } = await http.delete("/academics/comment/" + params.id, {
+      const { data } = await http.delete('/academics/comment/' + params.id, {
         headers: {
           Authorization: `Bearer ${getAccessToken()}`,
         },
       });
     } catch (error: any) {
       const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
+        (error.response && error.response.data && error.response.data.message) ||
         error.message ||
         error.toString();
       dispatch(openErrorModal({ errorText: [message] }));
       return thunkApi.rejectWithValue(message);
     }
-  }
+  },
 );
 export const studentsBulkImport: any = createAsyncThunk(
-  "newStudents/bulkImport",
+  'newStudents/bulkImport',
   async (formData, thunkApi) => {
     const state: any = thunkApi.getState();
     const dispatch = thunkApi.dispatch;
     const { id } = state.currentClass;
 
     try {
-      const { data } = await http.post(
-        `/academics/class/${id}/student/file`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${getAccessToken()}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const { data } = await http.post(`/academics/class/${id}/student/file`, formData, {
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       console.log(data);
     } catch (error: any) {
       if (error.response.status === 400)
         dispatch(
           openErrorModal({
             errorText: [
-              "Please upload a valid csv file, with column names as id, email, firstName, lastName",
+              'Please upload a valid csv file, with column names as id, email, firstName, lastName',
             ],
-          })
+          }),
         );
       return thunkApi.rejectWithValue(
-        "Please upload a valid csv file, with column names as id, email, firstName, lastName"
+        'Please upload a valid csv file, with column names as id, email, firstName, lastName',
       );
     }
-  }
+  },
 );
 
 export const studentSlice = createSlice({
-  name: "students",
+  name: 'students',
   initialState,
   reducers: {},
   extraReducers(builder) {
     builder
       .addCase(addStudent.pending, () => {
-        console.log("Loading...");
+        console.log('Loading...');
       })
       .addCase(addStudent.rejected, (_, action) => {
         console.log(`Error: ${action.payload}`);
@@ -204,7 +179,7 @@ export const studentSlice = createSlice({
         console.log(action.payload);
       })
       .addCase(getStudents.pending, () => {
-        console.log("Loading...");
+        console.log('Loading...');
       })
       .addCase(getStudents.rejected, (_, action) => {
         console.log(`Error: ${action.payload}`);
@@ -214,7 +189,7 @@ export const studentSlice = createSlice({
         state.students = action.payload;
       })
       .addCase(getStudentComment.pending, (_, action) => {
-        console.log("Loading...");
+        console.log('Loading...');
       })
       .addCase(getStudentComment.rejected, (_, action) => {
         console.log(`Error: ${action.payload}`);
@@ -223,7 +198,7 @@ export const studentSlice = createSlice({
         state.studentComments = action.payload;
       })
       .addCase(updateStudentComment.pending, (_, action) => {
-        console.log("updating comment...");
+        console.log('updating comment...');
       });
   },
 });

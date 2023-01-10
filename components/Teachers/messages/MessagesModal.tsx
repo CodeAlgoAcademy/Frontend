@@ -1,9 +1,9 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { BiChevronRight } from "react-icons/bi";
-import { FaTimes } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "store/store";
-import { getStudents } from "store/studentSlice";
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { BiChevronRight } from 'react-icons/bi';
+import { FaTimes } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'store/store';
+import { getStudents } from 'store/studentSlice';
 
 const MessagesModal = ({
   setModalOpen,
@@ -14,7 +14,7 @@ const MessagesModal = ({
 }) => {
   const dispatch = useDispatch();
   const { students } = useSelector((state: RootState) => state.students);
-  const [openedTab, setOpenedTab] = useState<string>("students");
+  const [openedTab, setOpenedTab] = useState<string>('students');
   useEffect(() => {
     dispatch(getStudents());
   }, []);
@@ -24,7 +24,7 @@ const MessagesModal = ({
     >
       <div
         className={`w-[90vw] relative max-w-[900px] mx-auto h-[700px] max-h-[90vh] bg-white shadow-md rounded-md flex overflow-hidden ${
-          modalOpen ? "showModal" : "hideModal"
+          modalOpen ? 'showModal' : 'hideModal'
         }`}
       >
         <span
@@ -37,11 +37,9 @@ const MessagesModal = ({
         </span>
         <div className="flex-[30%] md:border-r-2 border-b-2">
           <article
-            className={`${styles.tabsOpener} ${
-              openedTab === "students" && "bg-gray-100"
-            }`}
+            className={`${styles.tabsOpener} ${openedTab === 'students' && 'bg-gray-100'}`}
             onClick={() => {
-              setOpenedTab("students");
+              setOpenedTab('students');
             }}
           >
             <p>My Students</p>
@@ -50,11 +48,9 @@ const MessagesModal = ({
             </span>
           </article>
           <article
-            className={`${styles.tabsOpener} ${
-              openedTab === "teachers" && "bg-gray-100"
-            }`}
+            className={`${styles.tabsOpener} ${openedTab === 'teachers' && 'bg-gray-100'}`}
             onClick={() => {
-              setOpenedTab("teachers");
+              setOpenedTab('teachers');
             }}
           >
             <p>Teachers</p>
@@ -64,12 +60,12 @@ const MessagesModal = ({
           </article>
         </div>
         <div className="flex-[70%] flex flex-col justify-between">
-          {openedTab === "students" && (
+          {openedTab === 'students' && (
             <div className="p-8">
               <h1 className={styles.title}>Students</h1>
             </div>
           )}
-          {openedTab === "teachers" && (
+          {openedTab === 'teachers' && (
             <div className="p-8">
               <h1 className={styles.title}>Teachers</h1>
             </div>
@@ -90,9 +86,9 @@ const MessagesModal = ({
 };
 
 const styles = {
-  title: "text-[19px] font-bold",
+  title: 'text-[19px] font-bold',
   tabsOpener:
-    "cursor-pointer border-b-2 flex justify-between gap-x-2 px-3 py-3 items-center hover:bg-gray-50",
+    'cursor-pointer border-b-2 flex justify-between gap-x-2 px-3 py-3 items-center hover:bg-gray-50',
 };
 
 export default MessagesModal;

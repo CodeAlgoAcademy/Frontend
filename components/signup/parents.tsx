@@ -1,48 +1,48 @@
-import React, { ChangeEvent, ReactNode } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { IUser, IInputFields } from "../../types/interfaces";
-import { RootState } from "../../store/store";
-import styles from "../../styles/styles";
-import { countryList } from "./countries";
-import { updateUser } from "../../store/authSlice";
-import { generateUsername } from "../../utils/generateUsername";
-import UsernameButton from "./usernameButton";
+import React, { ChangeEvent, ReactNode } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { IUser, IInputFields } from '../../types/interfaces';
+import { RootState } from '../../store/store';
+import styles from '../../styles/styles';
+import { countryList } from './countries';
+import { updateUser } from '../../store/authSlice';
+import { generateUsername } from '../../utils/generateUsername';
+import UsernameButton from './usernameButton';
 
 const Parents = () => {
   const dispatch = useDispatch();
   const { firstname, lastname, email, password, username } = useSelector(
-    (state: RootState) => state.user.auth
+    (state: RootState) => state.user.auth,
   );
 
   const inputFields: IInputFields[] = [
     {
-      name: "firstname",
-      type: "text",
-      placeholder: "Enter Firstname",
+      name: 'firstname',
+      type: 'text',
+      placeholder: 'Enter Firstname',
       value: firstname,
     },
     {
-      name: "lastname",
-      type: "text",
-      placeholder: "Enter Lastname",
+      name: 'lastname',
+      type: 'text',
+      placeholder: 'Enter Lastname',
       value: lastname,
     },
     {
-      name: "email",
-      type: "email",
-      placeholder: "Enter Email",
+      name: 'email',
+      type: 'email',
+      placeholder: 'Enter Email',
       value: email,
     },
     {
-      name: "password",
-      type: "password",
-      placeholder: "Enter Password",
+      name: 'password',
+      type: 'password',
+      placeholder: 'Enter Password',
       value: password,
     },
     {
-      name: "username",
-      type: "text",
-      placeholder: "Enter Username",
+      name: 'username',
+      type: 'text',
+      placeholder: 'Enter Username',
       value: username,
     },
   ];
@@ -72,7 +72,7 @@ const Parents = () => {
         className={styles.input}
         onChange={(event: ChangeEvent<HTMLSelectElement>) => {
           const value = event.target.options[event.target.selectedIndex].value;
-          dispatch(updateUser({ key: "country", value }));
+          dispatch(updateUser({ key: 'country', value }));
         }}
       >
         <option value="Select Country">Select Country</option>
