@@ -1,44 +1,44 @@
-import React, { ChangeEvent, ReactNode } from "react";
-import { countryList } from "./countries";
-import { IInputFields, IUser } from "../../types/interfaces";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/store";
-import { openGradesModal } from "../../store/modalSlice";
-import { FaChevronDown } from "react-icons/fa";
-import { updateUser } from "../../store/authSlice";
-import styles from "../../styles/styles";
-import { v4 } from "uuid";
-import { generateUsername } from "../../utils/generateUsername";
-import UsernameButton from "./usernameButton";
+import React, { ChangeEvent, ReactNode } from 'react';
+import { countryList } from './countries';
+import { IInputFields, IUser } from '../../types/interfaces';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
+import { openGradesModal } from '../../store/modalSlice';
+import { FaChevronDown } from 'react-icons/fa';
+import { updateUser } from '../../store/authSlice';
+import styles from '../../styles/styles';
+import { v4 } from 'uuid';
+import { generateUsername } from '../../utils/generateUsername';
+import UsernameButton from './usernameButton';
 
 const Students = () => {
   const dispatch = useDispatch();
   const { grade, firstname, lastname, email, password, username } = useSelector(
-    (state: RootState) => state.user.auth
+    (state: RootState) => state.user.auth,
   );
   const inputFields: IInputFields[] = [
     {
-      type: "text",
-      name: "firstname",
-      placeholder: "Enter First Name*",
+      type: 'text',
+      name: 'firstname',
+      placeholder: 'Enter First Name*',
       value: firstname,
     },
     {
-      type: "text",
-      name: "lastname",
-      placeholder: "Enter Last Name*",
+      type: 'text',
+      name: 'lastname',
+      placeholder: 'Enter Last Name*',
       value: lastname,
     },
     {
-      type: "email",
-      name: "email",
-      placeholder: "Enter Email*",
+      type: 'email',
+      name: 'email',
+      placeholder: 'Enter Email*',
       value: email,
     },
     {
-      type: "password",
-      name: "password",
-      placeholder: "Enter Password*",
+      type: 'password',
+      name: 'password',
+      placeholder: 'Enter Password*',
       value: password,
     },
   ];
@@ -66,7 +66,7 @@ const Students = () => {
         className={styles.input}
         onChange={(event: ChangeEvent<HTMLSelectElement>) => {
           const value = event.target.options[event.target.selectedIndex].value;
-          dispatch(updateUser({ key: "country", value }));
+          dispatch(updateUser({ key: 'country', value }));
         }}
       >
         <option value="Select Country">Select Country</option>
@@ -93,13 +93,13 @@ const Students = () => {
 
       <input
         type="text"
-        placeholder={"Enter Username"}
+        placeholder={'Enter Username'}
         name="username"
         value={username}
         required
         className={styles.input}
         onChange={(e) => {
-          dispatch(updateUser({ key: "username", value: e.target.value }));
+          dispatch(updateUser({ key: 'username', value: e.target.value }));
         }}
       />
       <UsernameButton />

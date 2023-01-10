@@ -1,8 +1,8 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
-import { IClass } from "../../types/interfaces";
-import SingleClass from "./singleClass";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
+import { IClass } from '../../types/interfaces';
+import SingleClass from './singleClass';
 const Classes = () => {
   const { classes } = useSelector((state: RootState) => state.allClasses);
   return (

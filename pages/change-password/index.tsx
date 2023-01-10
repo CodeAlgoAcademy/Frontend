@@ -1,17 +1,17 @@
-import React, { ChangeEvent, useState } from "react";
-import Link from "next/link";
-import { FaChevronLeft, FaPaperPlane, FaTimes } from "react-icons/fa";
-import http from "axios.config";
+import React, { ChangeEvent, useState } from 'react';
+import Link from 'next/link';
+import { FaChevronLeft, FaPaperPlane, FaTimes } from 'react-icons/fa';
+import http from 'axios.config';
 
 const index = () => {
   const [modalOpened, setModalOpened] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>("");
+  const [email, setEmail] = useState<string>('');
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await http.post("/auth/password-reset/", {
+    await http.post('/auth/password-reset/', {
       email,
     });
-    setEmail("");
+    setEmail('');
     setModalOpened(true);
   };
 
@@ -20,14 +20,9 @@ const index = () => {
       <div className="w-[90vw] max-w-[500px] mx-auto rounded-md shadow-md bg-white p-8">
         <div className="text-center">
           <h1 className="text-[26px] font-bold">Forgot Password</h1>
-          <p className="text-gray-800">
-            Enter your email address to reset your password
-          </p>
+          <p className="text-gray-800">Enter your email address to reset your password</p>
         </div>
-        <form
-          className="w-full flex gap-y-4 flex-col mt-6"
-          onSubmit={handleSubmit}
-        >
+        <form className="w-full flex gap-y-4 flex-col mt-6" onSubmit={handleSubmit}>
           <div className="w-full">
             <input
               value={email}
@@ -60,20 +55,20 @@ const index = () => {
       {modalOpened && (
         <section
           className={
-            "fixed top-0 left-0 bg-[rgba(0,0,0,.6)] w-full min-h-screen flex justify-center items-center"
+            'fixed top-0 left-0 bg-[rgba(0,0,0,.6)] w-full min-h-screen flex justify-center items-center'
           }
         >
           <div
             className={`
           ${
-            modalOpened ? "showModal" : "hideModal"
+            modalOpened ? 'showModal' : 'hideModal'
           } w-[90vw] mx-auto max-w-[500px] bg-white shadow-md rounded-md relative z-20 p-8`}
           >
             <div className="flex justify-between items-center">
               <span className="text-[17px] font-bold flex gap-x-4 items-center cursor-pointer">
                 <i className="text-[22px] text-mainPurple">
                   <FaPaperPlane />
-                </i>{" "}
+                </i>{' '}
                 Password Reset
               </span>
               <span

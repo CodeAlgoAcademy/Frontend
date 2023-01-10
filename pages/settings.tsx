@@ -1,7 +1,7 @@
-import { Tab, Tabs, TextField, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import React, { useState } from "react";
-import { GeneralNav, Sidebar } from "../components";
+import { Tab, Tabs, TextField, Typography } from '@mui/material';
+import { Box } from '@mui/system';
+import React, { useState } from 'react';
+import { GeneralNav, Sidebar } from '../components';
 
 export default function Settings() {
   const [value, setValue] = useState(0);
@@ -38,7 +38,7 @@ export default function Settings() {
   function a11yProps(index: number) {
     return {
       id: `simple-tab-${index}`,
-      "aria-controls": `simple-tabpanel-${index}`,
+      'aria-controls': `simple-tabpanel-${index}`,
     };
   }
 
@@ -51,14 +51,11 @@ export default function Settings() {
           <Sidebar />
         </div>
         <div className="bg-[#E5E5E5] flex-1 px-[6%] py-8">
-          <h2
-            className="text-[28px] font-bold mb-6"
-            data-testid="dashboard-heading"
-          >
+          <h2 className="text-[28px] font-bold mb-6" data-testid="dashboard-heading">
             Settings
           </h2>
 
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs
               value={value}
               textColor="inherit"
@@ -68,22 +65,22 @@ export default function Settings() {
               <Tab
                 label="Change Password"
                 sx={{
-                  textTransform: "capitalize",
-                  fontSize: "1.3rem",
-                  color: "black",
-                  outlineColor: "purple",
-                  fontWeight: "fontWeightBold",
+                  textTransform: 'capitalize',
+                  fontSize: '1.3rem',
+                  color: 'black',
+                  outlineColor: 'purple',
+                  fontWeight: 'fontWeightBold',
                 }}
                 {...a11yProps(0)}
               />
               <Tab
                 label="Change Email"
                 sx={{
-                  textTransform: "capitalize",
-                  fontSize: "1.3rem",
-                  color: "black",
-                  outlineColor: "purple",
-                  fontWeight: "fontWeightBold",
+                  textTransform: 'capitalize',
+                  fontSize: '1.3rem',
+                  color: 'black',
+                  outlineColor: 'purple',
+                  fontWeight: 'fontWeightBold',
                 }}
                 {...a11yProps(1)}
               />
@@ -92,9 +89,7 @@ export default function Settings() {
           <TabPanel value={value} index={0}>
             <div className="sm:w-[80%]">
               <div>
-                <h3 className="mt-5 font-bold text-xl mb-2">
-                  Current password
-                </h3>
+                <h3 className="mt-5 font-bold text-xl mb-2">Current password</h3>
                 <TextField
                   id="outlined-basic"
                   fullWidth
@@ -104,21 +99,11 @@ export default function Settings() {
               </div>
               <div>
                 <h3 className="mt-5 font-bold text-xl mb-2">New password</h3>
-                <TextField
-                  id="outlined-basic"
-                  fullWidth
-                  label="New Password"
-                  variant="outlined"
-                />
+                <TextField id="outlined-basic" fullWidth label="New Password" variant="outlined" />
               </div>
               <div>
                 <h3 className="mt-5 font-bold text-xl mb-2">New password</h3>
-                <TextField
-                  id="outlined-basic"
-                  fullWidth
-                  label="New Password"
-                  variant="outlined"
-                />
+                <TextField id="outlined-basic" fullWidth label="New Password" variant="outlined" />
               </div>
               <div className="flex mt-5 items-center gap-4">
                 <button className="px-8 py-4  text-[#412281] rounded-lg font-bold bg-[#c6c4c8]">
@@ -135,21 +120,11 @@ export default function Settings() {
             <div className="sm:w-[80%]">
               <div>
                 <h3 className="mt-5 font-bold text-xl mb-2">Current email</h3>
-                <TextField
-                  id="outlined-basic"
-                  fullWidth
-                  label="Current Email"
-                  variant="outlined"
-                />
+                <TextField id="outlined-basic" fullWidth label="Current Email" variant="outlined" />
               </div>
               <div>
                 <h3 className="mt-5 font-bold text-xl mb-2">New Email</h3>
-                <TextField
-                  id="outlined-basic"
-                  fullWidth
-                  label="New Email"
-                  variant="outlined"
-                />
+                <TextField id="outlined-basic" fullWidth label="New Email" variant="outlined" />
               </div>
               <div className="flex mt-5 items-center gap-4">
                 <button className="px-8 py-4  text-[#412281] rounded-lg font-bold bg-[#c6c4c8]">

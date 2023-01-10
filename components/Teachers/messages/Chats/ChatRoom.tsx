@@ -1,51 +1,47 @@
-import { Avatar, IconButton } from "@mui/material";
-import React, { FormEvent, useEffect, useState, ChangeEvent } from "react";
-import { chats } from "./chatsData";
-import { IMessage } from "types/interfaces";
-import { GrAttachment } from "react-icons/gr";
-import { BsEmojiSmile } from "react-icons/bs";
-import { BiSend } from "react-icons/bi";
-import { w3cwebsocket as W3CWebSocket } from "websocket";
-import { getAccessToken } from "utils/getTokens";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "store/store";
-import { getConversations, getOpenMesssages } from "store/messagesSlice";
-import { openErrorModal } from "store/fetchSlice";
-import http from "axios.config";
+import { Avatar, IconButton } from '@mui/material';
+import React, { FormEvent, useEffect, useState, ChangeEvent } from 'react';
+import { chats } from './chatsData';
+import { IMessage } from 'types/interfaces';
+import { GrAttachment } from 'react-icons/gr';
+import { BsEmojiSmile } from 'react-icons/bs';
+import { BiSend } from 'react-icons/bi';
+import { w3cwebsocket as W3CWebSocket } from 'websocket';
+import { getAccessToken } from 'utils/getTokens';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from 'store/store';
+import { getConversations, getOpenMesssages } from 'store/messagesSlice';
+import { openErrorModal } from 'store/fetchSlice';
+import http from 'axios.config';
 
 // const headers = {
 //     Authorization: "Bearer " + getAccessToken()
 // }
-const client = new W3CWebSocket(
-  "wss://sea-lion-app-43ury.ondigitalocean.app/chat/websocket/"
-);
+const client = new W3CWebSocket('wss://sea-lion-app-43ury.ondigitalocean.app/chat/websocket/');
 // const client = new WebSocket(
 //   "wss://sea-lion-app-43ury.ondigitalocean.app/chat/websocket/"
 // );
 const ChatRoom = () => {
-  const { openedMessageOwner, openedMessage } = useSelector(
-    (state: RootState) => state.messages
-  );
+  const { openedMessageOwner, openedMessage } = useSelector((state: RootState) => state.messages);
   const { email } = useSelector((state: RootState) => state.user);
   const [messages, setMessages] = useState<IMessage[]>([...openedMessage]);
-  const [typingText, setTypingText] = useState<string>("");
+  const [typingText, setTypingText] = useState<string>('');
   const dispatch = useDispatch();
 
   const onSubmit = () => {
     client.send(
       JSON.stringify({
-        type: "chat.message",
+        type: 'chat.message',
         text: typingText,
         receiver: openedMessageOwner.id,
-      })
+      }),
     );
   };
 
   const send_a_message = async () => {
     if (openedMessageOwner.id) {
-      if (typingText !== "") {
+      if (typingText !== '') {
         const text = typingText;
-        setTypingText("");
+        setTypingText('');
         const { data } = await http.post(
           `/chat/teacher/message/${openedMessageOwner.id}`,
           {
@@ -55,14 +51,14 @@ const ChatRoom = () => {
             headers: {
               Authorization: `Bearer ${getAccessToken()}`,
             },
-          }
+          },
         );
 
         dispatch(getOpenMesssages());
-        dispatch(getConversations())
+        dispatch(getConversations());
       }
     } else {
-      dispatch(openErrorModal({ errorText: ["No user to send a message"] }));
+      dispatch(openErrorModal({ errorText: ['No user to send a message'] }));
     }
   };
   const updateTypingText = (e: ChangeEvent<HTMLInputElement>) => {
@@ -70,7 +66,7 @@ const ChatRoom = () => {
   };
   useEffect(() => {
     client.onopen = () => {
-      console.log("Websocket Client Connected...");
+      console.log('Websocket Client Connected...');
     };
 
     client.onmessage = (message) => {
@@ -100,9 +96,7 @@ const ChatRoom = () => {
             <div key={index}>
               <p
                 className={`${styles.chats} ${
-                  chat.user.email === email
-                    ? "ml-auto rounded-bl-lg"
-                    : "rounded-br-lg"
+                  chat.user.email === email ? 'ml-auto rounded-bl-lg' : 'rounded-br-lg'
                 }`}
               >
                 {chat.text}
@@ -285,10 +279,10 @@ const ChatRoom = () => {
 export default ChatRoom;
 
 const styles = {
-  header: "flex items-center space-x-2 border-b-2 p-2",
-  chatContainer: "h-80 space-y-1 p-5 px-5 overflow-y-auto",
-  chats: "bg-[#fff3cc] p-3 text-xs w-fit rounded-t-lg",
-  messageInputContainer: "bg-white w-full rounded-b-xl",
-  inputContainer: "flex items-center space-x-2 text-slate-400 p-4 px-7",
-  input: "w-full p-1 outline-none bg-transparent text-black",
+  header: 'flex items-center space-x-2 border-b-2 p-2',
+  chatContainer: 'h-80 space-y-1 p-5 px-5 overflow-y-auto',
+  chats: 'bg-[#fff3cc] p-3 text-xs w-fit rounded-t-lg',
+  messageInputContainer: 'bg-white w-full rounded-b-xl',
+  inputContainer: 'flex items-center space-x-2 text-slate-400 p-4 px-7',
+  input: 'w-full p-1 outline-none bg-transparent text-black',
 };
