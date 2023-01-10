@@ -1,11 +1,10 @@
 import { IconButton } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { FiPlus } from "react-icons/fi";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
-import { GeneralNav, Sidebar } from "../../../components";
-import AddStudentModal from "../../../components/Teachers/students/AddStudentModal";
-import Students from "../../../components/Teachers/students/Students";
+import { GeneralNav, Sidebar } from "../components";
+import AddStudentModal from "../components/Teachers/students/AddStudentModal";
+import Students from "../components/Teachers/students/Students";
 import { RootState } from "store/store";
 import { getStudents } from "store/studentSlice";
 import { FaSearch } from "react-icons/fa";
@@ -64,36 +63,21 @@ const Index = () => {
               <p className="sm:block">Add Student</p>
             </div>
           </div>
-
-          {/* <div className="flex p-5 justify-end">
-            <div className="flex text-xs items-center">
-              <IconButton>
-                <IoIosArrowBack size={25} className={styles.pointer} />
-              </IconButton>
-              <p>1 of 3</p>
-              <IconButton>
-                <IoIosArrowForward size={25} className={styles.pointer} />
-              </IconButton>
-            </div>
-          </div> */}
           <div className="flex justify-end w-full mt-4">
             <form
-              className="w-[90vw]  gap-x-2 max-w-[250px] flex rounded-full border-2 border-mainPurple bg-white"
+              className="bg-white flex items-center space-x-3 rounded-full p-1 px-2"
               onSubmit={(e) => {
                 e.preventDefault();
               }}
             >
-              <input
-                type="text"
-                placeholder="Search Students"
-                className="bg-transparent py-2 px-4 flex-[.8] border-none outline-none max-w-[220px]"
+              <FaSearch className="text-slate-400" />
+              <input 
+                className="bg-transparent outline-none text-slate-800 py-1"
                 onChange={(e) => {
                   filterStudents(e.target.value);
                 }}
               />
-              <button className="flex-[.2]" type="submit">
-                <FaSearch />
-              </button>
+              <button type="submit" hidden></button>
             </form>
           </div>
 

@@ -19,8 +19,8 @@ const Navbar = () => {
                 alt="logo"
                 src="/assets/CodeAlgo_Logo.png"
                 className={ styles.headerImage }
-                width={ 110 }
-                height={ 55 }
+                width={ 100 }
+                height={ 80 }
               />
             </a>
           </Link>
