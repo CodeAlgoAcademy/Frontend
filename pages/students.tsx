@@ -8,6 +8,8 @@ import Students from "../components/Teachers/students/Students";
 import { RootState } from "store/store";
 import { getStudents } from "store/studentSlice";
 import { FaSearch } from "react-icons/fa";
+import toast from "utils/toast";
+import Toast from "@/components/Toast";
 
 const Index = () => {
   const dispatch = useDispatch();
@@ -48,8 +50,12 @@ const Index = () => {
       };
     });
   };
+
+  toast.success('Hola!!!!')
+
   return (
     <>
+      {/* <Toast /> */}
       <GeneralNav />
       <div className="flex items-stretch mb-auto">
         <div className="sidebar bg-white w-[270px]">
