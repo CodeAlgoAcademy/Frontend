@@ -33,10 +33,7 @@ const NoteBox = () => {
       <div className="min-h-[114px]">
         <div className="flex align-center justify-between">
           <h3 className="text-[20px] font-bold mb-3">Notes</h3>
-          <span className="animate-pulse cursor-pointer text-lg" onClick={ () => {
-            dispatch(sanitizeNotes())
-            postNotes()
-          } }>
+          <span className="animate-pulse cursor-pointer text-lg">
             <FaSyncAlt />
           </span>
         </div>
@@ -45,6 +42,10 @@ const NoteBox = () => {
             innerRef={ contentEditableRef }
             html={ contentEditableState?.html }
             disabled={ false }
+            onBlur={ () => {
+              dispatch(sanitizeNotes())
+              postNotes()
+            } }
             onChange={ handleNotes }
             tagName="span"
           />
