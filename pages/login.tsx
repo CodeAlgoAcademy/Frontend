@@ -15,7 +15,7 @@ import toast from 'utils/toast';
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { isError, errorMessage } = useSelector((state: RootState) => state.user)
+  const { isError, errorMessage } = useSelector((state: RootState) => state.user);
   const { email, password } = useSelector((state: RootState) => state.user.auth);
   const router = useRouter();
   const inputFields: IInputFields[] = [
@@ -50,11 +50,11 @@ const Login = () => {
   }, []);
 
   useEffect(() => {
-    console.log(isError, errorMessage)
-    if(isError) {
-      toast.error(errorMessage, dispatch)
+    console.log(isError, errorMessage);
+    if (isError) {
+      toast.error(errorMessage, dispatch);
     }
-  }, [isError])
+  }, [isError]);
 
   return (
     <main>

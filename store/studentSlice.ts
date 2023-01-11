@@ -182,18 +182,18 @@ export const studentSlice = createSlice({
         console.log(action.payload);
       })
       .addCase(getStudents.pending, (state: IUserStudent) => {
-        state.isLoading = true
+        state.isLoading = true;
         console.log('Loading...');
       })
-      .addCase(getStudents.rejected, (state: IUserStudent, { payload }:  PayloadAction) => {
-        state.isLoading = false
-        state.isError = true
-        state.errorMessage = payload!
+      .addCase(getStudents.rejected, (state: IUserStudent, { payload }: PayloadAction) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.errorMessage = payload!;
         console.log(`Error: ${payload}`);
       })
       .addCase(getStudents.fulfilled, (state, action) => {
-        state.errorMessage = ''
-        state.isLoading = false
+        state.errorMessage = '';
+        state.isLoading = false;
         console.log(action.payload);
         state.students = action.payload;
       })

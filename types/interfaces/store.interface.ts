@@ -1,9 +1,9 @@
 // =============SLICES INTERFACES AND TYPES=============
 
 interface IStates {
-  isError?: boolean,
-  errorMessage: string
-  isLoading?: boolean
+  isError?: boolean;
+  errorMessage: string;
+  isLoading?: boolean;
 }
 
 export interface IUser extends IStates {
