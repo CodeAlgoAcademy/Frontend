@@ -1,5 +1,5 @@
 import { IconButton } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { FiPlus } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { GeneralNav, Sidebar } from "../components";
@@ -10,13 +10,14 @@ import { getStudents } from "store/studentSlice";
 import { FaSearch } from "react-icons/fa";
 import toast from "utils/toast";
 import Toast from "@/components/Toast";
+import { reset } from "store/notificationSlice";
 
 const Index = () => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { id } = useSelector((state: RootState) => state.currentClass);
   const [commentTabsOpened, setCommentTabsOpened] = useState<boolean>(false);
-  const { students } = useSelector((state: any) => state.students);
+  const { students, errorMessage, isError } = useSelector((state: RootState) => state.students);
   const [filteredStudents, setFilteredStudents] = useState({
     students: students?.students,
   });
@@ -28,6 +29,13 @@ const Index = () => {
   useEffect(() => {
     setFilteredStudents(() => ({ students: students?.students }));
   }, [students?.students]);
+
+  useLayoutEffect(() => {
+    console.log(isError, errorMessage)
+    if (isError) {
+      toast.error(errorMessage, dispatch)
+    }
+  }, [])
 
   const closeCommentTabs = (event: any) => {
     if (event.target.classList.contains("students-container")) {
@@ -51,11 +59,9 @@ const Index = () => {
     });
   };
 
-  toast.success('Hola!!!!')
-
   return (
     <>
-      {/* <Toast /> */}
+      <Toast />
       <GeneralNav />
       <div className="flex items-stretch mb-auto">
         <div className="sidebar bg-white w-[270px]">

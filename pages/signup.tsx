@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ReactElement, ChangeEvent } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Head from 'next/head';
 import Link from 'next/link';
 import CleverBtn from '../components/cleverBtn';
@@ -12,6 +12,9 @@ import { ITabs } from '../types/interfaces';
 import { useRouter } from 'next/router';
 import { updateUser, clearFields } from 'store/authSlice';
 import { signUpUser } from 'services/authService';
+import { RootState } from 'store/store';
+import toast from 'utils/toast';
+import Toast from '@/components/Toast';
 
 const tabs: ITabs[] = [
   {
@@ -32,6 +35,7 @@ const tabs: ITabs[] = [
 const SignUp = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const { isError, errorMessage } = useSelector((state: RootState) => state.user)
   const [activeTab, setActiveTab] = useState<string | undefined>('Student');
   const [currentTab, setCurrentTab] = useState<ITabs>({
     tabName: '',
@@ -58,6 +62,12 @@ const SignUp = () => {
     dispatch(updateUser({ key: 'accountType', value: 'Student' }));
   }, []);
 
+  useEffect(() => {
+    if(isError) {
+      toast.error(errorMessage, dispatch);
+    }
+  }, [])
+
   const signup = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = await dispatch(signUpUser());
@@ -76,6 +86,7 @@ const SignUp = () => {
 
   return (
     <main>
+      <Toast />
       <Head>
         <title>CodeAlgo Academy | Register</title>
       </Head>

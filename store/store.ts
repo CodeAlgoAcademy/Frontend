@@ -32,6 +32,7 @@ import notificationReducer from './notificationSlice'
 const persistConfig = {
   key: "root",
   storage,
+  blacklist: ['notifications']
 };
 
 const rootReducer = combineReducers({

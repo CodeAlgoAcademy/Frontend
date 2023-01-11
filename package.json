@@ -15,7 +15,6 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/material": "^5.10.12",
-    "@radix-ui/react-portal": "^1.0.1",
     "@react-oauth/google": "^0.5.1",
     "@reduxjs/toolkit": "^1.9.1",
     "@syncfusion/ej2": "^20.3.61",

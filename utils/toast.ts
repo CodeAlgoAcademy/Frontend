@@ -1,8 +1,7 @@
 import { useDispatch } from 'react-redux'
 import { displayNotification } from '../store/notificationSlice'
 
-const success = (message: string) => {
-    const dispatch = useDispatch()
+const success = (message: string, dispatch: any) => {
     dispatch(displayNotification({
         id: Math.floor((Math.random() * 101) + 1),
         message,
@@ -13,20 +12,18 @@ const success = (message: string) => {
     }))
 }
 
-const error = (message: string) => {
-    const dispatch = useDispatch()
+const error = (message: string, dispatch: any) => {
     dispatch(displayNotification({
         id: Math.floor((Math.random() * 101) + 1),
         message,
         autoHideDuration: 3000,
-        type: 'success',
+        type: 'error',
         direction: 'fadeLeft',
         position: 'topRight'
     }))
 }
 
-const info = (message: string) => {
-    const dispatch = useDispatch()
+const info = (message: string, dispatch: any) => {
     dispatch(displayNotification({
         id: Math.floor((Math.random() * 101) + 1),
         message,
