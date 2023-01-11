@@ -14,12 +14,13 @@ const addStudent = async (data: Student, id: string) => {
   };
   const response = await http.post(`/academics/class/${id}/student`, finalData, config);
 
-  return response?.data;
+  return response.data;
 };
 
 const getStudents = async (id: string) => {
   const response = await http.get(`/academics/class/${id}/student`, config);
-  return response?.data;
+  console.log(response)
+  return response.data;
 };
 
 const studentService = {
