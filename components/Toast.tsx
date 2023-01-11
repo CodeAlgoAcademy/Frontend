@@ -1,12 +1,11 @@
 import { AnimatePresence, AnimateSharedLayout, Variants, motion } from 'framer-motion'
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import { dismissNotification, reset, useToasts } from 'store/notificationSlice'
 import { Notification } from 'types/interfaces/notifications'
 import { RxCross2 } from 'react-icons/rx'
 import { BsFillCheckCircleFill } from 'react-icons/bs'
 import { AiOutlineWarning, AiOutlineInfoCircle } from 'react-icons/ai'
 import { useDispatch } from 'react-redux'
-import * as Portal from '@radix-ui/react-portal'
 
 const motionVariants = {
     fadeLeft:{
@@ -46,40 +45,38 @@ const Toast = () => {
     console.log(notifications)
 
     return (
-        <Portal.Root>
-            <AnimateSharedLayout>
-                <ul aria-live='assertive' className='flex fixed z-50 flex-col gap-4 m-4 lg:m-8 pointer-events-none'>
-                    <AnimatePresence initial={false}>
-                        {notifications.map(({id, type, message, autoHideDuration}, index) => (
-                            <motion.li
-                                key={index}
-                                className={`flex w-max items-center shadow px-4 py-3 rounded border transition-colors duration-100 min-w-[260px] text-sm pointer-events-auto ${notificationStyleVariants[type]}`}
-                                initial="initial"
-                                animate="animate"
-                                exit="exit"
-                                variants={motionVariants['fadeLeft']}
-                                layout="position"
-                                onMouseLeave={() => removeNotification(id, autoHideDuration)}
-                            >
-                                <div className="flex gap-2 items-center">
-                                    {notificationIcons[type]}
-                                    <span className="max-w-sm font-medium">{message}</span>
-                                </div>
+        <AnimateSharedLayout>
+            <ul aria-live='assertive' className='flex fixed z-50 flex-col gap-4 m-4 lg:m-8 pointer-events-none w-full'>
+                <AnimatePresence initial={false}>
+                    {notifications.map(({id, type, message, autoHideDuration}, index) => (
+                        <motion.li
+                            key={index}
+                            className={`flex w-max items-center shadow px-4 py-3 rounded border transition-colors duration-100 min-w-[260px] text-sm pointer-events-auto ${notificationStyleVariants[type]}`}
+                            initial="initial"
+                            animate="animate"
+                            exit="exit"
+                            variants={motionVariants['fadeLeft']}
+                            layout="position"
+                            onMouseLeave={() => removeNotification(id, autoHideDuration)}
+                        >
+                            <div className="flex gap-2 items-center">
+                                {notificationIcons[type]}
+                                <span className="max-w-sm font-medium">{message}</span>
+                            </div>
 
-                                <div className="pl-4 ml-auto">
-                                    <button
-                                    onClick={() => handleDismiss(id)}
-                                    className={`p-1 rounded transition-colors duration-100 ${closeButtonStyleVariants[type]}`}
-                                    >
-                                        <RxCross2 />
-                                    </button>
-                                </div>
-                            </motion.li>
-                        ))}
-                    </AnimatePresence>
-                </ul>
-            </AnimateSharedLayout>
-        </Portal.Root>
+                            <div className="pl-4 ml-auto">
+                                <button
+                                onClick={() => handleDismiss(id)}
+                                className={`p-1 rounded transition-colors duration-100 ${closeButtonStyleVariants[type]}`}
+                                >
+                                    <RxCross2 />
+                                </button>
+                            </div>
+                        </motion.li>
+                    ))}
+                </AnimatePresence>
+            </ul>
+        </AnimateSharedLayout>
     )
 }
 

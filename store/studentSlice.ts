@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import http from 'axios.config';
 import studentService from 'services/studentService';
 import { IUserStudent, Student } from 'types/interfaces';
@@ -7,6 +7,9 @@ import { openErrorModal } from './fetchSlice';
 import { RootState } from './store';
 
 const initialState: IUserStudent = {
+  isError: false,
+  isLoading: false,
+  errorMessage: '',
   newStudent: null,
   students: { students: [] },
   studentComments: [],
@@ -178,13 +181,19 @@ export const studentSlice = createSlice({
       .addCase(addStudent.fulfilled, (state, action) => {
         console.log(action.payload);
       })
-      .addCase(getStudents.pending, () => {
+      .addCase(getStudents.pending, (state: IUserStudent) => {
+        state.isLoading = true
         console.log('Loading...');
       })
-      .addCase(getStudents.rejected, (_, action) => {
-        console.log(`Error: ${action.payload}`);
+      .addCase(getStudents.rejected, (state: IUserStudent, { payload }:  PayloadAction) => {
+        state.isLoading = false
+        state.isError = true
+        state.errorMessage = payload!
+        console.log(`Error: ${payload}`);
       })
       .addCase(getStudents.fulfilled, (state, action) => {
+        state.errorMessage = ''
+        state.isLoading = false
         console.log(action.payload);
         state.students = action.payload;
       })

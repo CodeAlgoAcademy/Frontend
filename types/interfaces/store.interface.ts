@@ -1,5 +1,12 @@
 // =============SLICES INTERFACES AND TYPES=============
-export interface IUser {
+
+interface IStates {
+  isError?: boolean,
+  errorMessage: string
+  isLoading?: boolean
+}
+
+export interface IUser extends IStates {
   id: number;
   firstname: string;
   lastname: string;
@@ -92,7 +99,7 @@ export interface IUserConversation {
   openedMessage: IMessage[];
 }
 
-export interface IUserStudent {
+export interface IUserStudent extends IStates {
   newStudent: Student | null;
   students: { students: Student[] };
   studentComments: Array<{
