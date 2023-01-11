@@ -35,7 +35,7 @@ const tabs: ITabs[] = [
 const SignUp = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { isError, errorMessage } = useSelector((state: RootState) => state.user)
+  const { isError, errorMessage } = useSelector((state: RootState) => state.user);
   const [activeTab, setActiveTab] = useState<string | undefined>('Student');
   const [currentTab, setCurrentTab] = useState<ITabs>({
     tabName: '',
@@ -63,10 +63,10 @@ const SignUp = () => {
   }, []);
 
   useEffect(() => {
-    if(isError) {
+    if (isError) {
       toast.error(errorMessage, dispatch);
     }
-  }, [])
+  }, []);
 
   const signup = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();

@@ -88,10 +88,10 @@ function Calendar() {
   }, []);
 
   const fetchGoogle = useGoogleLogin({
-    onSuccess: async(response) => {
-      console.log(response)
-    }
-  })
+    onSuccess: async (response) => {
+      console.log(response);
+    },
+  });
 
   return (
     <div className="min-h-[100vh] relative">
