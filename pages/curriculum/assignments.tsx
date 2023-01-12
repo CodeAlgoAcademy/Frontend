@@ -512,9 +512,7 @@ const Assignments = () => {
       </div>
       {
         <div
-          className={`w-full h-full backdrop-blur-sm bg-gray-100/50 ${
-            modalWrapperDisplay ? 'showModal' : 'hideModal'
-          } fixed left-0 flex justify-center items-center`}
+          className={`w-full h-full backdrop-blur-sm bg-gray-100/50 fixed left-0 flex justify-center items-center ${modalWrapperDisplay?'showModal':'hideModal'}`}
         >
           {modalWrapperDisplay && (
             <div className="relative max-w-[850px] bg-white rounded-xl overflow-hidden overflow-y-scroll max-h-[90vh]">
