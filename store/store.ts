@@ -28,6 +28,7 @@ import newAssignmentReducer from './newAssignmentSlice';
 import allAssignmentsReducer from './allAssignments';
 import lessonsReducer from './lessonsSlice';
 import teacherReducer from './teacherSlice';
+import policySliceReducer from './policySlice';
 
 const persistConfig = {
   key: 'root',
@@ -52,6 +53,7 @@ const rootReducer = combineReducers({
   addAssignment: newAssignmentReducer,
   allAssignments: allAssignmentsReducer,
   allTeachers: teacherReducer,
+  policyCheck: policySliceReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

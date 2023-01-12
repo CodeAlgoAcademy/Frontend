@@ -3,7 +3,9 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa';
 import { getAccessToken } from 'utils/getTokens';
+import { useRouter } from 'next/router';
 const ErrorPage = () => {
+  const router = useRouter();
   return (
     <>
       <Head>
@@ -14,14 +16,18 @@ const ErrorPage = () => {
           Oops!
         </h1>
         <p className="text-[18px] text-gray-800 font-bold">The requested page doesn't exist</p>
-        <Link href={`${getAccessToken() ? '/addClass' : '/'}`}>
-          <button className="text-white flex gap-x-2 items-center py-4 px-6 text-[15px] rounded-full bg-orange-600 font-bold">
-            <span>
-              <FaArrowLeft />
-            </span>
-            Return to homepage
-          </button>
-        </Link>
+
+        <button
+          className="text-white flex gap-x-2 items-center py-4 px-6 text-[15px] rounded-full bg-orange-600 font-bold"
+          onClick={() => {
+            router.back();
+          }}
+        >
+          <span>
+            <FaArrowLeft />
+          </span>
+          Return to homepage
+        </button>
       </div>
     </>
   );

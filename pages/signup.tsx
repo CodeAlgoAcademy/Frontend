@@ -12,6 +12,8 @@ import { ITabs } from '../types/interfaces';
 import { useRouter } from 'next/router';
 import { updateUser, clearFields } from 'store/authSlice';
 import { signUpUser } from 'services/authService';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/store';
 
 const tabs: ITabs[] = [
   {
@@ -33,10 +35,14 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<string | undefined>('Student');
+  const [check, setCheck] = useState<boolean>(false);
+  const checkState = useSelector((state:RootState) => state.policyCheck.checked)
   const [currentTab, setCurrentTab] = useState<ITabs>({
     tabName: '',
     component: <></>,
   });
+
+  console.log(checkState)
   useEffect(() => {
     const tab = tabs.find((tab) => {
       if (tab.tabName === activeTab) {
@@ -57,6 +63,11 @@ const SignUp = () => {
   useEffect(() => {
     dispatch(updateUser({ key: 'accountType', value: 'Student' }));
   }, []);
+
+  const checkHandler = () => {
+    setCheck(true);
+    router.push('/privacyPolicy')
+  }
 
   const signup = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -139,7 +150,7 @@ const SignUp = () => {
             {/* display different components based on the active tab */}
             {currentTab?.component}
             <span className="flex flex-row items-center gap-x-2 mt-4">
-              <input type="checkbox" id="terms" className="accent-mainPurple" required />
+              <input type="checkbox" checked={checkState} onChange={checkHandler} id="terms" className="accent-mainPurple" required />
               <label htmlFor="terms">I accept the terms and conditions</label>
             </span>
             <div className="text-right mt-4">
