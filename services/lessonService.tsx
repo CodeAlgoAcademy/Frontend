@@ -7,7 +7,7 @@ export const getAllLessons: any = createAsyncThunk(
   'lessonSlice/getLessons',
   async (topics, thunkApi) => {
     const dispatch = thunkApi.dispatch;
-    dispatch(openPreloader({loadingText: "Fetching Lessons"}))
+    dispatch(openPreloader({ loadingText: 'Fetching Lessons' }));
     try {
       const { data } = await http.get(`/academics/curriculums/lessons/?unit=${topics}`, {
         headers: { Authorization: 'Bearer ' + getAccessToken() },
@@ -18,7 +18,7 @@ export const getAllLessons: any = createAsyncThunk(
       if (error.response.status !== 401) {
         dispatch(openErrorModal({ errorText: [error.message] }));
       }
-      dispatch(closePreloader())
+      dispatch(closePreloader());
       return thunkApi.rejectWithValue(error.response.data);
     }
   },

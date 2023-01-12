@@ -202,12 +202,12 @@ const SingleStudent = ({
         )}
         <div className="flex items-center">
           <div className={styles.cardHeaderName} onClick={() => handleStudents(student.id)}>
-            <div className='flex flex-col gap-y-2'>
-            <p className={styles.studentName}>{`${student.firstName} ${student.lastName}`}</p>
-            <p className='text-[14px] font-light'>{student?.email}</p>
+            <div className="flex flex-col gap-y-2">
+              <p className={styles.studentName}>{`${student.firstName} ${student.lastName}`}</p>
+              <p className="text-[14px] font-light">{student?.email}</p>
             </div>
-            <span className='text-[17px]'>
-            {headings.includes(student.id) ? <IoIosArrowUp /> : <IoIosArrowDown />}
+            <span className="text-[17px]">
+              {headings.includes(student.id) ? <IoIosArrowUp /> : <IoIosArrowDown />}
             </span>
           </div>
           <div className="text-[12px] px-2">

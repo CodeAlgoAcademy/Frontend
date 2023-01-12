@@ -72,7 +72,7 @@ export const addNewAssignments: any = createAsyncThunk(
     mainAssignment.skills = assignment.skills.map((skill) => {
       return { skillId: parseInt(skill.skillId) };
     });
-    dispatch(openPreloader({loadingText: "Adding Assignments"}))
+    dispatch(openPreloader({ loadingText: 'Adding Assignments' }));
     try {
       if (errors.length === 0) {
         const { data } = await http.post(
@@ -140,7 +140,7 @@ export const updateAssignment: any = createAsyncThunk(
     mainAssignment.skills = assignment.skills.map((skill) => {
       return { skillId: parseInt(skill.skillId) };
     });
-    dispatch(openPreloader({loadingText: "Editing Assignment"}))
+    dispatch(openPreloader({ loadingText: 'Editing Assignment' }));
     try {
       if (errors.length === 0) {
         const { data } = await http.put(
@@ -155,10 +155,9 @@ export const updateAssignment: any = createAsyncThunk(
         showModal(modalType);
         resetAssignments();
         dispatch(getAssignments());
-      dispatch(closePreloader());
-
+        dispatch(closePreloader());
       } else {
-      dispatch(closePreloader());
+        dispatch(closePreloader());
 
         dispatch(openErrorModal({ errorText: [...errors] }));
       }
@@ -176,7 +175,7 @@ export const getAssignments: any = createAsyncThunk(
     const state: any = thunkApi.getState();
     const { id } = state.unit.currentUnitInView;
     const dispatch = thunkApi.dispatch;
-    dispatch(openPreloader({loadingText: "Fetching Assignments"}));
+    dispatch(openPreloader({ loadingText: 'Fetching Assignments' }));
     try {
       const { data } = await http.get(`/academics/curriculums/units/${id}/assignments/`, {
         headers: {
