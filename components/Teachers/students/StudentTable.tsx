@@ -1,50 +1,60 @@
 import { LinearProgress } from '@mui/material';
 import React from 'react';
 
-const StudentTable = ({ details }: { details: object[] }) => {
+const StudentTable = ({ details, student }: { details: object[]; student: any }) => {
   return (
-    <table className={styles.table}>
-      <thead>
-        <tr className={styles.headingRow}>
-          <th className={styles.headingColumn}>Lesson</th>
-          <th className={styles.headingColumn}>Progress</th>
-          <th className={styles.headingColumn}>Assignment</th>
-          <th className={styles.headingColumn}>Status</th>
-          <th className={styles.headingColumn}>Due Date</th>
-        </tr>
-      </thead>
-      <tbody className="p-3">
-        {details?.map((course: any, index: number) => (
-          <tr key={index} className={styles.bodyRow}>
-            <td className={styles.bodyColumn}>{course.unit}</td>
+    <div>
+      <header className="flex gap-x-2 items-center px-[17px] pt-3">
+        <p className="text-[14px]">
+          <span className="font-bold">Email: </span> {student.email}
+        </p>
+        <p className="text-[14px]">
+          <span className="font-bold">Username: </span> {student.username}
+        </p>
+      </header>
+      <table className={styles.table}>
+        <thead>
+          <tr className={styles.headingRow}>
+            <th className={styles.headingColumn}>Lesson</th>
+            <th className={styles.headingColumn}>Progress</th>
+            <th className={styles.headingColumn}>Assignment</th>
+            <th className={styles.headingColumn}>Status</th>
+            <th className={styles.headingColumn}>Due Date</th>
+          </tr>
+        </thead>
+        <tbody className="p-3">
+          {details?.map((course: any, index: number) => (
+            <tr key={index} className={styles.bodyRow}>
+              <td className={styles.bodyColumn}>{course.unit}</td>
 
-            <td className={styles.progress}>
-              <LinearProgress
-                variant="determinate"
-                value={+course.progress}
-                sx={{ borderRadius: 5 }}
-                color="success"
-              />
-              <p>0%</p>
-            </td>
-            <td>
-              <td className={styles.assignment}>
-                {/* <LinearProgress
+              <td className={styles.progress}>
+                <LinearProgress
+                  variant="determinate"
+                  value={+course.progress}
+                  sx={{ borderRadius: 5 }}
+                  color="success"
+                />
+                <p>0%</p>
+              </td>
+              <td>
+                <td className={styles.assignment}>
+                  {/* <LinearProgress
                   variant="determinate"
                   value={+course.title}
                   sx={{ borderRadius: 5 }}
                   color="success"
                 /> */}
-                <p>{course.title}</p>
+                  <p>{course.title}</p>
+                </td>
               </td>
-            </td>
 
-            <td className={styles.bodyColumn}>{course.status}</td>
-            <td className={styles.bodyColumn}>{course.end_date}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+              <td className={styles.bodyColumn}>{course.status}</td>
+              <td className={styles.bodyColumn}>{course.end_date}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
