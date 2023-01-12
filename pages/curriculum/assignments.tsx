@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import { Button, Sidebar, GeneralNav } from "components";
-import { BsPlusCircle } from "react-icons/bs";
-import { FaChevronLeft, FaTimes } from "react-icons/fa";
-import { IoPersonAddOutline } from "react-icons/io5";
-import { TbMedal } from "react-icons/tb";
-import { StudentModal, SkillModal } from "components/curriculum/assignment";
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { Button, Sidebar, GeneralNav } from 'components';
+import { BsPlusCircle } from 'react-icons/bs';
+import { FaChevronLeft, FaTimes } from 'react-icons/fa';
+import { IoPersonAddOutline } from 'react-icons/io5';
+import { TbMedal } from 'react-icons/tb';
+import { StudentModal, SkillModal } from 'components/curriculum/assignment';
 
-import { RootState } from "store/store";
-import { useSelector, useDispatch } from "react-redux";
-import { getStudents } from "store/studentSlice";
-import SingleAssignment from "@/components/curriculum/assignment/singleAssignment";
+import { RootState } from 'store/store';
+import { useSelector, useDispatch } from 'react-redux';
+import { getStudents } from 'store/studentSlice';
+import SingleAssignment from '@/components/curriculum/assignment/singleAssignment';
 
 import {
   SkillDetails,
@@ -19,14 +19,10 @@ import {
   Student,
   DynamicChechbox,
   IMainAssignment,
-} from "types/interfaces";
-import {
-  addNewAssignments,
-  getAssignments,
-  updateAssignment,
-} from "services/assignmentService";
-import { getDate } from "utils/getDate";
-import { useRouter } from "next/router";
+} from 'types/interfaces';
+import { addNewAssignments, getAssignments, updateAssignment } from 'services/assignmentService';
+import { getDate } from 'utils/getDate';
+import { useRouter } from 'next/router';
 
 const Assignments = () => {
   const modalDefaults = {
@@ -41,33 +37,27 @@ const Assignments = () => {
   const router = useRouter();
   const [modalWrapperDisplay, setModalWrapperDisplay] = useState(false);
   const [modalItemsDisplay, setModalItemsDisplay] = useState(modalDefaults);
-  const [historyType, setHistoryType] = useState("active");
+  const [historyType, setHistoryType] = useState('active');
   const [skillCheckbox, setSkillCheckbox] = useState<DynamicChechbox>({});
   const [studentCheckbox, setStudentCheckbox] = useState<DynamicChechbox>({});
   const [allStudentCheckbox, setAllStudentCheckbox] = useState({
     isChecked: false,
   });
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [editId, setEditId] = useState<number | string>("");
-  const [assignmentDetails, setAssignmentDetails] = useState<AssignmentDetails>(
-    {
-      title: "",
-      order: "random",
-      number: 0,
-      skills: [],
-      students: [],
-      start_date: getDate(),
-      end_date: "",
-      is_current: true,
-    }
-  );
+  const [editId, setEditId] = useState<number | string>('');
+  const [assignmentDetails, setAssignmentDetails] = useState<AssignmentDetails>({
+    title: '',
+    order: 'random',
+    number: 0,
+    skills: [],
+    students: [],
+    start_date: getDate(),
+    end_date: '',
+    is_current: true,
+  });
 
-  const assingmentSkills = useSelector(
-    (state: RootState): SkillDetails[] => state.skills
-  );
-  const { assignments } = useSelector(
-    (state: RootState) => state.allAssignments
-  );
+  const assingmentSkills = useSelector((state: RootState): SkillDetails[] => state.skills);
+  const { assignments } = useSelector((state: RootState) => state.allAssignments);
 
   const { students } = useSelector((state: RootState) => state.students);
 
@@ -82,13 +72,13 @@ const Assignments = () => {
 
   const resetAssignments = () => {
     setAssignmentDetails({
-      title: "",
-      order: "random",
+      title: '',
+      order: 'random',
       number: 0,
       skills: [],
       students: [],
       start_date: getDate(),
-      end_date: "",
+      end_date: '',
       is_current: true,
     });
   };
@@ -101,9 +91,7 @@ const Assignments = () => {
   const removeSkill = (newSkill: AssignmentSkill) => {
     setAssignmentDetails((prev) => {
       const prevSkills = prev.skills;
-      const newSkills = prevSkills.filter(
-        (skill) => skill.skillId !== newSkill.skillId
-      );
+      const newSkills = prevSkills.filter((skill) => skill.skillId !== newSkill.skillId);
       return { ...prev, skills: newSkills };
     });
   };
@@ -116,9 +104,7 @@ const Assignments = () => {
   const removeStudent = (newStudent: Student) => {
     setAssignmentDetails((prev) => {
       const prevStudents = prev.students;
-      const newStudents = prevStudents.filter(
-        (student) => student.email !== newStudent.email
-      );
+      const newStudents = prevStudents.filter((student) => student.email !== newStudent.email);
       return { ...prev, students: newStudents };
     });
   };
@@ -138,9 +124,7 @@ const Assignments = () => {
       return { ...prev, [key]: value };
     });
   };
-  const handleSkillCheckboxChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleSkillCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSkillCheckbox((prev) => ({
       ...prev,
       [e.target.name]: e.target.checked,
@@ -154,7 +138,7 @@ const Assignments = () => {
   };
   const handleStudentCheckboxChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    studentDetails: Student
+    studentDetails: Student,
   ) => {
     setStudentCheckbox((prev) => ({
       ...prev,
@@ -176,23 +160,17 @@ const Assignments = () => {
       setAssignmentDetails((prev) => {
         return { ...prev, students: students?.students };
       });
-      const newCheckboxes = Object.keys(studentCheckbox).reduce(
-        (prev, student) => {
-          return { ...prev, [student]: true };
-        },
-        {}
-      );
+      const newCheckboxes = Object.keys(studentCheckbox).reduce((prev, student) => {
+        return { ...prev, [student]: true };
+      }, {});
       setStudentCheckbox(newCheckboxes);
     } else {
       setAssignmentDetails((prev) => {
         return { ...prev, students: [] };
       });
-      const newCheckboxes = Object.keys(studentCheckbox).reduce(
-        (prev, student) => {
-          return { ...prev, [student]: false };
-        },
-        {}
-      );
+      const newCheckboxes = Object.keys(studentCheckbox).reduce((prev, student) => {
+        return { ...prev, [student]: false };
+      }, {});
       setStudentCheckbox(newCheckboxes);
     }
   };
@@ -205,9 +183,7 @@ const Assignments = () => {
     setModalItemsDisplay((prev) => modalDefaults);
   };
   const switchModal = (modalName: string) => {
-    setModalItemsDisplay(
-      (prev) => (prev = { ...modalDefaults, [modalName]: true })
-    );
+    setModalItemsDisplay((prev) => (prev = { ...modalDefaults, [modalName]: true }));
   };
   useEffect(() => {
     assingmentSkills.forEach((skillCategory) => {
@@ -255,10 +231,7 @@ const Assignments = () => {
               >
                 <FaChevronLeft />
               </span>
-              <h2
-                className="text-[28px] font-bold"
-                data-testid="curriculum-assignment-heading"
-              >
+              <h2 className="text-[28px] font-bold" data-testid="curriculum-assignment-heading">
                 New Assignment
               </h2>
             </div>
@@ -269,7 +242,7 @@ const Assignments = () => {
               <span
                 className="text-lg font-semibold"
                 onClick={() => {
-                  showModal("historyResponse");
+                  showModal('historyResponse');
                 }}
               >
                 Assignment History
@@ -293,18 +266,17 @@ const Assignments = () => {
                   <span
                     className="text-2xl cursor-pointer rounded-full border p-1 hover:opacity-80 hover:scale-125 transition-all ease-in-out animate-pulse hover:animate-none"
                     onClick={() => {
-                      showModal("skillsResponse");
+                      showModal('skillsResponse');
                     }}
                   >
-                    <TbMedal />{" "}
+                    <TbMedal />{' '}
                   </span>
                 </div>
                 <div className="px-14">
                   <span className="font-medium">
                     {assignmentDetails.skills?.length} skill
-                    {assignmentDetails.skills?.length === 1 ? "" : "(s)"}{" "}
-                    selected
-                  </span>{" "}
+                    {assignmentDetails.skills?.length === 1 ? '' : '(s)'} selected
+                  </span>{' '}
                   value
                 </div>
               </div>
@@ -314,17 +286,16 @@ const Assignments = () => {
                   <span
                     className="text-2xl cursor-pointer rounded-full border p-1 hover:opacity-80 hover:scale-125 transition-all ease-in-out animate-pulse hover:animate-none"
                     onClick={() => {
-                      showModal("studentResponse");
+                      showModal('studentResponse');
                     }}
                   >
-                    <IoPersonAddOutline />{" "}
+                    <IoPersonAddOutline />{' '}
                   </span>
                 </div>
                 <div className="px-14">
                   <span className="font-medium">
                     {assignmentDetails.students?.length} student
-                    {assignmentDetails.students?.length === 1 ? "" : "(s)"}{" "}
-                    selected
+                    {assignmentDetails.students?.length === 1 ? '' : '(s)'} selected
                   </span>
                 </div>
               </div>
@@ -342,7 +313,7 @@ const Assignments = () => {
                         value="now"
                         checked={assignmentDetails.is_current}
                         onChange={() => {
-                          updateScheduleDate("start_date", getDate());
+                          updateScheduleDate('start_date', getDate());
                           updateAssignmentSchedule(true);
                         }}
                       />
@@ -377,7 +348,7 @@ const Assignments = () => {
                           value={assignmentDetails.start_date}
                           className="hoverElement max-w-[130px] px-3 py-1 rounded-md outline-none border border-orange-600 text-[15px]"
                           onChange={(e) => {
-                            updateScheduleDate("start_date", e.target.value);
+                            updateScheduleDate('start_date', e.target.value);
                           }}
                         />
                         <div className="hoverText right-[0] -top-[56px] bg-orange-600 after:bg-orange-600">
@@ -391,7 +362,7 @@ const Assignments = () => {
                         value={assignmentDetails.end_date}
                         className="hoverElement max-w-[130px] px-3 py-1 rounded-md outline-none border border-orange-600 text-[15px]"
                         onChange={(e) => {
-                          updateScheduleDate("end_date", e.target.value);
+                          updateScheduleDate('end_date', e.target.value);
                         }}
                       />
                       <div className="hoverText right-[0] -top-[56px] bg-orange-600 after:bg-orange-600">
@@ -439,7 +410,7 @@ const Assignments = () => {
                         type="radio"
                         name="order"
                         value="random"
-                        checked={assignmentDetails.order === "random"}
+                        checked={assignmentDetails.order === 'random'}
                         onChange={handleInputChange}
                       />
                       <label
@@ -455,7 +426,7 @@ const Assignments = () => {
                         type="radio"
                         name="order"
                         value="sequence"
-                        checked={assignmentDetails.order === "sequence"}
+                        checked={assignmentDetails.order === 'sequence'}
                         onChange={handleInputChange}
                       />
                       <label
@@ -475,22 +446,22 @@ const Assignments = () => {
                       await dispatch(
                         addNewAssignments({
                           assignment: assignmentDetails,
-                          actionType: "active",
+                          actionType: 'active',
                           showModal,
-                          modalType: "createResponse",
+                          modalType: 'createResponse',
                           resetAssignments,
-                        })
+                        }),
                       );
                     } else {
                       await dispatch(
                         updateAssignment({
                           assignment: assignmentDetails,
-                          actionType: "active",
+                          actionType: 'active',
                           showModal,
-                          modalType: "createResponse",
+                          modalType: 'createResponse',
                           resetAssignments,
                           id: editId,
-                        })
+                        }),
                       );
                     }
                   }}
@@ -499,7 +470,7 @@ const Assignments = () => {
                 </span>
                 <span
                   onClick={() => {
-                    showModal("cancelResponse");
+                    showModal('cancelResponse');
                   }}
                 >
                   <Button color="#F28E2C" text="Cancel" />
@@ -511,30 +482,27 @@ const Assignments = () => {
                         await dispatch(
                           addNewAssignments({
                             assignment: assignmentDetails,
-                            actionType: "draft",
+                            actionType: 'draft',
                             showModal,
-                            modalType: "saveResponse",
+                            modalType: 'saveResponse',
                             resetAssignments,
-                          })
+                          }),
                         );
                       } else {
                         await dispatch(
                           updateAssignment({
                             assignment: assignmentDetails,
-                            actionType: "draft",
+                            actionType: 'draft',
                             showModal,
-                            modalType: "saveResponse",
+                            modalType: 'saveResponse',
                             resetAssignments,
                             id: editId,
-                          })
+                          }),
                         );
                       }
                     }}
                   >
-                    <Button
-                      color="#F28E2C"
-                      text={isEditing ? "Edit" : "Save"}
-                    />
+                    <Button color="#F28E2C" text={isEditing ? 'Edit' : 'Save'} />
                   </span>
                 </div>
               </div>
@@ -545,7 +513,7 @@ const Assignments = () => {
       {
         <div
           className={`w-full h-full ${
-            modalWrapperDisplay ? "showModal" : "hideModal"
+            modalWrapperDisplay ? 'showModal' : 'hideModal'
           } backdrop-blur-sm bg-gray-100/50 fixed left-0 flex justify-center items-center`}
         >
           {modalWrapperDisplay && (
@@ -560,15 +528,15 @@ const Assignments = () => {
                 <div className="w-full py-20 px-24 font-semibold text-center text-xl">
                   <p>You have successfully saved an assignment</p>
                   <p>
-                    Click on{" "}
+                    Click on{' '}
                     <span
                       className="font-bold text-[#F28E2C] cursor-pointer"
                       onClick={() => {
-                        switchModal("historyResponse");
+                        switchModal('historyResponse');
                       }}
                     >
                       ASSINGMENT HISTORY
-                    </span>{" "}
+                    </span>{' '}
                     to view your Assingment.
                   </p>
                 </div>
@@ -577,15 +545,15 @@ const Assignments = () => {
                 <div className="w-full py-20 px-24 font-semibold text-center text-xl">
                   <p>You have successfully created an assignment</p>
                   <p>
-                    Click on{" "}
+                    Click on{' '}
                     <span
                       className="font-bold text-[#F28E2C] cursor-pointer"
                       onClick={() => {
-                        switchModal("historyResponse");
+                        switchModal('historyResponse');
                       }}
                     >
                       ASSINGMENT HISTORY
-                    </span>{" "}
+                    </span>{' '}
                     to view your Assingment.
                   </p>
                 </div>
@@ -593,7 +561,7 @@ const Assignments = () => {
               {modalItemsDisplay.cancelResponse && (
                 <div className="w-full py-20 px-24 font-bold text-xl">
                   <p className="text-xl">
-                    Are you sure you want to{" "}
+                    Are you sure you want to{' '}
                     <span className="text-[#E30F0F] text-center">Cancel?</span>
                   </p>
                   <div className="flex flex-row-reverse gap-4 mt-4">
@@ -608,7 +576,7 @@ const Assignments = () => {
                       <span
                         onClick={() => {
                           setIsEditing(false);
-                          setEditId("");
+                          setEditId('');
                         }}
                       >
                         <Button color="#F28E2C" text="Yes" />
@@ -624,40 +592,34 @@ const Assignments = () => {
                     <span
                       className="pb-2 border-b-[3px] font-bold text-black/50 cursor-pointer"
                       style={{
-                        borderColor:
-                          historyType === "active" ? "#F28E2C" : "white",
+                        borderColor: historyType === 'active' ? '#F28E2C' : 'white',
                       }}
-                      onClick={() => setHistoryType((prev) => "active")}
+                      onClick={() => setHistoryType((prev) => 'active')}
                     >
                       Active
                     </span>
                     <span
                       className="pb-2 border-b-[3px] font-bold text-black/50 cursor-pointer"
                       style={{
-                        borderColor:
-                          historyType === "completed" ? "#F28E2C" : "white",
+                        borderColor: historyType === 'completed' ? '#F28E2C' : 'white',
                       }}
-                      onClick={() => setHistoryType((prev) => "completed")}
+                      onClick={() => setHistoryType((prev) => 'completed')}
                     >
                       Completed
                     </span>
                     <span
                       className="pb-2 border-b-[3px] font-bold text-black/50 cursor-pointer"
                       style={{
-                        borderColor:
-                          historyType === "draft" ? "#F28E2C" : "white",
+                        borderColor: historyType === 'draft' ? '#F28E2C' : 'white',
                       }}
-                      onClick={() => setHistoryType((prev) => "draft")}
+                      onClick={() => setHistoryType((prev) => 'draft')}
                     >
                       Draft
                     </span>
                   </div>
                   <div className="mt-3 flex flex-col gap-3">
                     {assignments?.map((assignment: any, index: number) => {
-                      if (
-                        assignment.status.toLowerCase() ===
-                        historyType.toLowerCase()
-                      ) {
+                      if (assignment.status.toLowerCase() === historyType.toLowerCase()) {
                         return (
                           <SingleAssignment
                             setEditAssignment={setEditAssignment}

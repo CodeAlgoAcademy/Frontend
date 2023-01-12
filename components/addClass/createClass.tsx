@@ -1,49 +1,50 @@
-import React, { ChangeEvent } from "react";
-import { FaChevronDown, FaPlus } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
+import React, { ChangeEvent } from 'react';
+import { FaChevronDown, FaPlus } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   closeColorModal,
   openAddStudentsModal,
   toggleColorModal,
   openGradesModal,
   closeAddClassModal,
-} from "../../store/modalSlice";
-import { colors } from "./colors";
-import { RootState } from "../../store/store";
-import { IInputFields } from "../../types/interfaces";
-import { updateClassDetails, clearFields } from "../../store/addClassSlice";
-import styles from "../../styles/styles";
-import { addClass, getAllClasses } from "services/classesService";
+} from '../../store/modalSlice';
+import { colors } from './colors';
+import { RootState } from '../../store/store';
+import { IInputFields } from '../../types/interfaces';
+import { updateClassDetails, clearFields } from '../../store/addClassSlice';
+import styles from '../../styles/styles';
+import { addClass, getAllClasses } from 'services/classesService';
 
 const CreateClass = () => {
   const dispatch = useDispatch();
   const { colorsModalOpen } = useSelector((state: RootState) => state.modal);
-  const { className, subject, roomNumber, coTeachers, grade, color } =
-    useSelector((state: RootState) => state.addClass.class);
+  const { className, subject, roomNumber, coTeachers, grade, color } = useSelector(
+    (state: RootState) => state.addClass.class,
+  );
 
   const inputFields: IInputFields[] = [
     {
-      type: "text",
-      name: "className",
-      placeholder: "Enter Class Name*",
+      type: 'text',
+      name: 'className',
+      placeholder: 'Enter Class Name*',
       value: className,
     },
     {
-      type: "text",
-      name: "subject",
-      placeholder: "Enter Subject*",
+      type: 'text',
+      name: 'subject',
+      placeholder: 'Enter Subject*',
       value: subject,
     },
     {
-      type: "text",
-      name: "roomNumber",
-      placeholder: "Enter Room Number*",
+      type: 'text',
+      name: 'roomNumber',
+      placeholder: 'Enter Room Number*',
       value: roomNumber,
     },
     {
-      type: "text",
-      name: "coTeachers",
-      placeholder: "Add co-teachers",
+      type: 'text',
+      name: 'coTeachers',
+      placeholder: 'Add co-teachers',
       value: coTeachers,
     },
   ];
@@ -61,9 +62,7 @@ const CreateClass = () => {
   return (
     <form className="p-8 flex-[0.9]" onSubmit={handleSubmit}>
       <header className="w-full mb-6">
-        <h1 className="md:text-[30px] text-[20px] font-bold">
-          Create New Class
-        </h1>
+        <h1 className="md:text-[30px] text-[20px] font-bold">Create New Class</h1>
       </header>
       <section className="grid md:grid-cols-2 gap-[1rem] items-start">
         {inputFields?.map((inputField: IInputFields, index: number) => {
@@ -77,11 +76,9 @@ const CreateClass = () => {
               placeholder={placeholder}
               value={value}
               onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                dispatch(
-                  updateClassDetails({ key: name, value: e.target.value })
-                );
+                dispatch(updateClassDetails({ key: name, value: e.target.value }));
               }}
-              required={name === "coTeachers" ? false : true}
+              required={name === 'coTeachers' ? false : true}
               className={styles.input}
             />
           );
@@ -122,9 +119,7 @@ const CreateClass = () => {
                     className={`h-[38px] w-[38px] mx-auto rounded-full`}
                     style={{ backgroundColor: color }}
                     onClick={() => {
-                      dispatch(
-                        updateClassDetails({ key: "color", value: color })
-                      );
+                      dispatch(updateClassDetails({ key: 'color', value: color }));
                       dispatch(closeColorModal());
                     }}
                   ></span>

@@ -1,11 +1,5 @@
-import React from "react";
-import {
-  Sidebar,
-  ScheduleBox,
-  NoteBox,
-  GeneralNav,
-  SummaryBox,
-} from "../components";
+import React from 'react';
+import { Sidebar, ScheduleBox, NoteBox, GeneralNav, SummaryBox } from '../components';
 
 const Dashboard = () => {
   return (
@@ -17,10 +11,7 @@ const Dashboard = () => {
           <Sidebar />
         </div>
         <div className="bg-[#E5E5E5] flex-1 px-[6%] py-8">
-          <h2
-            className="text-[28px] font-bold mb-6"
-            data-testid="dashboard-heading"
-          >
+          <h2 className="text-[28px] font-bold mb-6" data-testid="dashboard-heading">
             Today at a Glance
           </h2>
           <div className="flex gap-10 flex-wrap">

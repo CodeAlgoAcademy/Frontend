@@ -1,19 +1,15 @@
-import { TextField } from "@mui/material";
-import React, { useState, ChangeEvent } from "react";
-import { generateUsername } from "utils/generateUsername";
-import { RiCloseLine } from "react-icons/ri";
-import { useDispatch } from "react-redux";
-import {
-  addStudent,
-  getStudents,
-  studentsBulkImport,
-} from "store/studentSlice";
-import { Student, IInputFields } from "types/interfaces";
-import style from "@/styles/styles";
-import { FaTimes, FaChevronLeft, FaPlus } from "react-icons/fa";
-import { useRouter } from "next/router";
-import { getAllClasses } from "services/classesService";
-import { openErrorModal } from "store/fetchSlice";
+import { TextField } from '@mui/material';
+import React, { useState, ChangeEvent } from 'react';
+import { generateUsername } from 'utils/generateUsername';
+import { RiCloseLine } from 'react-icons/ri';
+import { useDispatch } from 'react-redux';
+import { addStudent, getStudents, studentsBulkImport } from 'store/studentSlice';
+import { Student, IInputFields } from 'types/interfaces';
+import style from '@/styles/styles';
+import { FaTimes, FaChevronLeft, FaPlus } from 'react-icons/fa';
+import { useRouter } from 'next/router';
+import { getAllClasses } from 'services/classesService';
+import { openErrorModal } from 'store/fetchSlice';
 interface State {
   firstName: string;
   lastName: string;
@@ -25,10 +21,10 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const [formData, setFormData] = useState<State>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    username: "",
+    firstName: '',
+    lastName: '',
+    email: '',
+    username: '',
   });
   const [file, setFile] = useState<any>(null);
   const { email, firstName, lastName, username } = formData;
@@ -42,27 +38,27 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
 
   const inputFields: IInputFields[] = [
     {
-      type: "text",
-      name: "firstName",
-      placeholder: "Enter Student First Name",
+      type: 'text',
+      name: 'firstName',
+      placeholder: 'Enter Student First Name',
       value: firstName,
     },
     {
-      type: "text",
-      name: "lastName",
-      placeholder: "Enter Student Last Name",
+      type: 'text',
+      name: 'lastName',
+      placeholder: 'Enter Student Last Name',
       value: lastName,
     },
     {
-      type: "email",
-      name: "email",
-      placeholder: "Enter Student Email",
+      type: 'email',
+      name: 'email',
+      placeholder: 'Enter Student Email',
       value: email,
     },
     {
-      type: "text",
-      name: "username",
-      placeholder: "Enter Username",
+      type: 'text',
+      name: 'username',
+      placeholder: 'Enter Username',
       value: username,
     },
   ];
@@ -80,7 +76,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
         if (data.payload?.status === 200) {
           setIsOpen(false);
           dispatch(getStudents());
-          if (router.pathname === "/addClass") {
+          if (router.pathname === '/addClass') {
             dispatch(getAllClasses());
           }
         }
@@ -89,21 +85,19 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
   };
 
   const handleFileInputChange = (e: any) => {
-    if (!e.target.files[0].type.includes("csv")) {
-      dispatch(
-        openErrorModal({ errorText: ["Uploaded file is not a csv file"] })
-      );
+    if (!e.target.files[0].type.includes('csv')) {
+      dispatch(openErrorModal({ errorText: ['Uploaded file is not a csv file'] }));
     } else {
       setFile(e.target.files[0]);
     }
   };
   const handleFileSubmit = () => {
     const formData = new FormData();
-    formData.append("file", file, file.name);
+    formData.append('file', file, file.name);
     dispatch(studentsBulkImport(formData)).then((data: any) => {
       setIsOpen(false);
       dispatch(getStudents());
-      if (router.pathname === "/addClass") {
+      if (router.pathname === '/addClass') {
         dispatch(getAllClasses());
       }
     });
@@ -116,7 +110,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
         <span
           onClick={() => {
             setIsOpen(false);
-            if (router.pathname === "/addClass") {
+            if (router.pathname === '/addClass') {
               dispatch(getAllClasses());
             }
           }}
@@ -126,7 +120,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
         </span>
         <aside
           className={`flex-[0.075] min-h-full rounded-tl-md rounded-bl-md`}
-          style={{ backgroundColor: "#FFE977" }}
+          style={{ backgroundColor: '#FFE977' }}
         ></aside>
 
         <form className="py-8 flex-[0.9]" onSubmit={onSubmit}>
@@ -139,9 +133,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
             >
               <FaChevronLeft />
             </span>
-            <h1 className="md:text-[30px] text-[20px] font-bold">
-              Add new student(s)
-            </h1>
+            <h1 className="md:text-[30px] text-[20px] font-bold">Add new student(s)</h1>
           </header>
           <section className="px-8 grid md:grid-cols-2 gap-[1rem]">
             {inputFields?.map((inputField: IInputFields, index: number) => {
@@ -194,9 +186,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
                   <FaPlus />
                 </span>
                 <h3 className="text-[16px] font-bold">
-                  {file
-                    ? "File Added, click add student button to finish upload"
-                    : "Bulk Import"}
+                  {file ? 'File Added, click add student button to finish upload' : 'Bulk Import'}
                 </h3>
               </label>
             </div>
@@ -286,18 +276,17 @@ export default AddStudentModal;
 
 const styles = {
   bgBlack:
-    "bg-black bg-opacity-60 w-[100vw] min-h-[100vh] fixed z-0 top-0 left-0 grid place-items-center",
-  centered: " place-items-center fixed",
+    'bg-black bg-opacity-60 w-[100vw] min-h-[100vh] fixed z-0 top-0 left-0 grid place-items-center',
+  centered: ' place-items-center fixed',
   modal:
-    "border-l-[40px] border-l-yellow-500 relative w-4/5 bg-[#f4f4f4] z-10 rounded-xl shadow-lg",
-  modalHeader:
-    "h-14 bg-[#f4f4f4] overflow-hidden rounded-tl-2xl rounded-tr-2xl",
-  heading: "m-0 p-3 text-[#2c3e50] font-medium text-2xl text-center",
+    'border-l-[40px] border-l-yellow-500 relative w-4/5 bg-[#f4f4f4] z-10 rounded-xl shadow-lg',
+  modalHeader: 'h-14 bg-[#f4f4f4] overflow-hidden rounded-tl-2xl rounded-tr-2xl',
+  heading: 'm-0 p-3 text-[#2c3e50] font-medium text-2xl text-center',
   closeBtn:
-    "absolute top-0 right-0 text-[#f4f4f4] hover:bg-opacity-50 -mt-2 -mr-2 text-lg cursor-pointer p-1 rounded-full bg-red-500",
-  modalBody: "p-3 text-sm text-[#2c3e50] text-center",
+    'absolute top-0 right-0 text-[#f4f4f4] hover:bg-opacity-50 -mt-2 -mr-2 text-lg cursor-pointer p-1 rounded-full bg-red-500',
+  modalBody: 'p-3 text-sm text-[#2c3e50] text-center',
   addBtn:
-    "bg-purple-900 p-3 rounded-3xl text-white hover:bg-opacity-90 transition-all duration-500",
-  bulkBtn: "flex space-x-3 text-center items-center hover:bg-slate-200 p-3",
-  plusIcon: "border border-slate-700 rounded-full",
+    'bg-purple-900 p-3 rounded-3xl text-white hover:bg-opacity-90 transition-all duration-500',
+  bulkBtn: 'flex space-x-3 text-center items-center hover:bg-slate-200 p-3',
+  plusIcon: 'border border-slate-700 rounded-full',
 };

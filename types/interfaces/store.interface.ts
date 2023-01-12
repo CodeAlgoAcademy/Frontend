@@ -28,6 +28,10 @@ export interface IModal {
   addUnitModalOpen: boolean;
 }
 
+export interface IAllTeachers {
+  allTeachers: IAllTeachers[]
+}
+
 export interface IAllClasses {
   classes: IClass[];
 }

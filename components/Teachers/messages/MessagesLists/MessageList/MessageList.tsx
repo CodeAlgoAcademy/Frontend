@@ -1,11 +1,11 @@
-import { Avatar } from "@mui/material";
-import React from "react";
-import { IoCheckmark, IoCheckmarkDone } from "react-icons/io5";
-import { useDispatch, useSelector } from "react-redux";
-import { open_a_message, setOpenStudent } from "store/messagesSlice";
-import { RootState } from "store/store";
-import { IMessage, User } from "types/interfaces";
-import { StyledBadge } from "../../MuiConfig";
+import { Avatar } from '@mui/material';
+import React from 'react';
+import { IoCheckmark, IoCheckmarkDone } from 'react-icons/io5';
+import { useDispatch, useSelector } from 'react-redux';
+import { open_a_message, setOpenStudent } from 'store/messagesSlice';
+import { RootState } from 'store/store';
+import { IMessage, User } from 'types/interfaces';
+import { StyledBadge } from '../../MuiConfig';
 
 interface Message {
   id: number;
@@ -33,24 +33,16 @@ const MessageList = ({ id, message, user }: Message) => {
     >
       <StyledBadge
         overlap="circular"
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         // variant={online ? 'dot': 'standard'}
       >
         <div className="block">
-          <Avatar
-            alt={message.user.firstName}
-            src=""
-            style={{ width: 30, height: 30 }}
-          />
+          <Avatar alt={message.user.firstName} src="" style={{ width: 30, height: 30 }} />
         </div>
       </StyledBadge>
       <div className="text-xs ml-2">
         <p className="capitalize font-bold">{`${user.firstName} ${user.lastName}`}</p>
-        <p
-          className={`text-[9px] w-36 truncate ${
-            message.user.email !== email && "font-bold"
-          }`}
-        >
+        <p className={`text-[9px] w-36 truncate ${message.user.email !== email && 'font-bold'}`}>
           {message.text}
         </p>
       </div>
@@ -90,5 +82,5 @@ export default MessageList;
 
 const styles = {
   container:
-    "px-5 md:px-3 py-3 flex items-center cursor-pointer hover:bg-gray-300 md:hover:bg-slate-100",
+    'px-5 md:px-3 py-3 flex items-center cursor-pointer hover:bg-gray-300 md:hover:bg-slate-100',
 };

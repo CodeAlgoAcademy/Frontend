@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
-import Head from "next/head";
-import Modal from "../components/addClass/modal";
-import { FaPlus } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import { closeAddClassModal, openAddClassModal } from "../store/modalSlice";
-import Classes from "../components/addClass/classes";
-import { getAllClasses } from "services/classesService";
-import { RootState } from "store/store";
+import React, { useEffect } from 'react';
+import Head from 'next/head';
+import Modal from '../components/addClass/modal';
+import { FaPlus } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeAddClassModal, openAddClassModal } from '../store/modalSlice';
+import Classes from '../components/addClass/classes';
+import { getAllClasses } from 'services/classesService';
+import { RootState } from 'store/store';
 
 const AddClass = () => {
   const dispatch = useDispatch();
