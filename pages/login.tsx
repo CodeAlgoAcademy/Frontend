@@ -43,7 +43,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    dispatch(clearFields());
+    // dispatch(clearFields());
   }, []);
 
   return (
