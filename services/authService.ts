@@ -25,13 +25,13 @@ export const loginUser: any = createAsyncThunk('authSlice/loginUser', async (nam
   } catch (error: any) {
     dispatch(closePreloader());
 
-    // if (error.response.data.non_field_errors) {
-    //   dispatch(
-    //     openErrorModal({
-    //       errorText: [error.response.data.non_field_errors[0]],
-    //     })
-    //   );
-    // }
+    if (error.response.data.non_field_errors) {
+      dispatch(
+        openErrorModal({
+          errorText: [error.response.data.non_field_errors[0]],
+        })
+      );
+    }
 
     const message =
       (error.response && error.response.data && error.response.data.message) ||
@@ -85,15 +85,15 @@ export const signUpUser: any = createAsyncThunk('authSlice/signUpUser', async (n
     };
   } catch (error: any) {
     dispatch(closePreloader());
-    // if (error.response.data.non_field_errors) {
-    //   dispatch(
-    //     openErrorModal({
-    //       errorText: [error.response.data.non_field_errors[0]],
-    //     })
-    //   );
-    // } else {
-    //   dispatch(openErrorModal({ errorText: error.message }));
-    // }
+    if (error.response.data.non_field_errors) {
+      dispatch(
+        openErrorModal({
+          errorText: [error.response.data.non_field_errors[0]],
+        })
+      );
+    } else {
+      dispatch(openErrorModal({ errorText: error.message }));
+    }
     const message =
       (error.response && error.response.data && error.response.data.message) ||
       error.message ||
