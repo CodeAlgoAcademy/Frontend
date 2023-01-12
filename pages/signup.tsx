@@ -82,7 +82,7 @@ const SignUp = () => {
   };
 
   useEffect(() => {
-    dispatch(clearFields());
+    // dispatch(clearFields());g
   }, []);
 
   return (
