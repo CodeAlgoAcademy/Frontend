@@ -73,15 +73,14 @@ const Messages = () => {
             </div>
           </div>
 
-                    <div className={styles.chatroom}>
-                        <ChatRoom />
-                    </div>
-                </div>
-            </div>
+          <div className={styles.chatroom}>
+            <ChatRoom />
+          </div>
+        </div>
+      </div>
 
-
-            {/* Mobile View */}
-            {/* <div className='md:hidden bg-[#a5a091] h-screen'>
+      {/* Mobile View */}
+      {/* <div className='md:hidden bg-[#a5a091] h-screen'>
                 <div className="bg-[#8D887C] py-5 pl-5 pr-4 flex items-center justify-between">
                     <p className='text-[20px]'>Messages</p>
                     <div className='flex space-x-1'>
@@ -103,11 +102,11 @@ const Messages = () => {
                     </IconButton>
                 </div>
             </div> */}
-        </>
-    )
-}
+    </>
+  );
+};
 
-export default Messages
+export default Messages;
 
 const styles = {
   container: 'bg-[#E5E5E5]  block px-5 md:px-20 py-5 h-screen',

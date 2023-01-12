@@ -16,7 +16,9 @@ import http from 'axios.config';
 // const headers = {
 //     Authorization: "Bearer " + getAccessToken()
 // }
-const client = new W3CWebSocket(`wss://sea-lion-app-43ury.ondigitalocean.app/chat/websocket/?Authorization=${getAccessToken()}`);
+const client = new W3CWebSocket(
+  `wss://sea-lion-app-43ury.ondigitalocean.app/chat/websocket/?Authorization=${getAccessToken()}`,
+);
 // const client = new WebSocket(
 //   `wss://sea-lion-app-43ury.ondigitalocean.app/chat/websocket/?authorization=${getAccessToken()}}`
 // );
@@ -28,7 +30,7 @@ const ChatRoom = () => {
   const [typingText, setTypingText] = useState<string>('');
   const dispatch = useDispatch();
 
-  console.log(openedMessageOwner)
+  console.log(openedMessageOwner);
   // const send_a_message = async () => {
   //   if (openedMessageOwner.id) {
   //     if (typingText !== '') {
@@ -57,31 +59,31 @@ const ChatRoom = () => {
     setTypingText(e.target.value);
   };
 
-  const handleSend:any = (e:ChangeEvent<HTMLInputElement>) => {
-    if (typingText !== ''){
-      e.preventDefault()
-      client.send(JSON.stringify({
-        type: 'chat.message', 
-        text: typingText,
-        receiver: openedMessageOwner.id
-      }))
-      dispatch(getOpenMesssages())
-      setTypingText('')
+  const handleSend: any = (e: ChangeEvent<HTMLInputElement>) => {
+    if (typingText !== '') {
+      e.preventDefault();
+      client.send(
+        JSON.stringify({
+          type: 'chat.message',
+          text: typingText,
+          receiver: openedMessageOwner.id,
+        }),
+      );
+      dispatch(getOpenMesssages());
+      setTypingText('');
     }
-  }
+  };
 
   useEffect(() => {
     client.onopen = () => {
       console.log('Websocket Client Connected...');
     };
 
-    client.onmessage = (message:any) => {
-      const dataFromServer = JSON.parse(message.data)
+    client.onmessage = (message: any) => {
+      const dataFromServer = JSON.parse(message.data);
       console.log('serverr reply', dataFromServer);
     };
   }, []);
-
-  
 
   useEffect(() => {
     dispatch(getOpenMesssages());
@@ -119,8 +121,7 @@ const ChatRoom = () => {
           <IconButton>
             <GrAttachment size={20} />
           </IconButton>
-          <form className="w-full" onSubmit={handleSend}
-          >
+          <form className="w-full" onSubmit={handleSend}>
             <input
               placeholder="Send Message..."
               className={styles.input}

@@ -29,7 +29,7 @@ export interface IModal {
 }
 
 export interface IAllTeachers {
-  allTeachers: IAllTeachers[]
+  allTeachers: IAllTeachers[];
 }
 
 export interface IAllClasses {

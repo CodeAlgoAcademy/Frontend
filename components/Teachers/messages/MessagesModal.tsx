@@ -17,13 +17,12 @@ const MessagesModal = ({
 }) => {
   const dispatch = useDispatch();
   const { students } = useSelector((state: RootState) => state.students.students);
-  const {teachers} = useSelector((state: RootState) => state.allTeachers)
+  const { teachers } = useSelector((state: RootState) => state.allTeachers);
 
-  console.log(teachers)
-  
+  console.log(teachers);
 
   const [openedTab, setOpenedTab] = useState<string>('students');
-  
+
   useEffect(() => {
     dispatch(getStudents());
     dispatch(getTeachers());
@@ -65,6 +64,7 @@ const MessagesModal = ({
           >
             <p>Teachers</p>
             <span className="text-[20px]">
+              m[]
               <BiChevronRight />
             </span>
           </article>
@@ -74,17 +74,17 @@ const MessagesModal = ({
             <div className="p-8">
               <h1 className={styles.title}>Students</h1>
               <div>
-              {students?.map((student:any) => {
-                return (<p>{student.firstName}</p>)
-              })}
+                {students?.map((student: any) => {
+                  return <p>{student.firstName}</p>;
+                })}
               </div>
             </div>
           )}
           {openedTab === 'teachers' && (
             <div className="p-8">
               <h1 className={styles.title}>Teachers</h1>
-              {teachers?.map((teacher:any) => {
-                return (<p>{teacher.firstName}</p>)
+              {teachers?.map((teacher: any) => {
+                return <p>{teacher.firstName}</p>;
               })}
             </div>
           )}

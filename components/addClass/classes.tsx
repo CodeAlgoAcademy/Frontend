@@ -5,7 +5,7 @@ import { IClass } from '../../types/interfaces';
 import SingleClass from './singleClass';
 const Classes = () => {
   const { classes } = useSelector((state: RootState) => state.allClasses);
-  console.log(classes)
+  console.log(classes);
   return (
     <div className="grid lg:grid-cols-3 gap-6 md:grid-cols-2 grid-cols-1">
       {classes?.map((singleClass: IClass, index: number) => {
