@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from 'store/store';
 import http from 'axios.config';
 import { getAccessToken } from 'utils/getTokens';
-import { openErrorModal } from 'store/fetchSlice';
+import { closePreloader, openErrorModal, openPreloader } from 'store/fetchSlice';
 import { Icurriculum } from 'types/interfaces';
 import { getDate } from 'utils/getDate';
 
@@ -30,19 +30,25 @@ export const addUnits: any = createAsyncThunk('unitsSlice/addUnits', async (name
     errors.push('Please Select one or more grades');
   }
   unitsWithError.forEach((error: string) => errors.push(error));
+  dispatch(openPreloader({ loadingText: 'Adding Curriculum' }));
   try {
     if (errors.length === 0) {
       const { data } = await http.post('/academics/curriculums/units/', JSON.stringify(units), {
         headers: { Authorization: 'Bearer ' + getAccessToken() },
       });
+      dispatch(closePreloader());
       return data;
     } else {
+      dispatch(closePreloader());
+
       dispatch(openErrorModal({ errorText: [...errors] }));
     }
   } catch (error: any) {
     if (error.response.status !== 401) {
       dispatch(openErrorModal({ errorText: [error.message] }));
     }
+    dispatch(closePreloader());
+
     return thunkApi.rejectWithValue(error.response.data);
   }
 });
@@ -69,17 +75,20 @@ export const deleteCurriculum: any = createAsyncThunk(
   'curriculumSlice/deleteCurriculum',
   async (id: string, thunkApi) => {
     const dispatch = thunkApi.dispatch;
+    dispatch(openPreloader({ loadingText: 'Deleting Curriculum' }));
     try {
       const { data } = await http.delete(`/academics/curriculums/units/${id}`, {
         headers: {
           Authorization: 'Bearer ' + getAccessToken(),
         },
       });
+      dispatch(closePreloader());
       dispatch(getAllCurriculums());
     } catch (error: any) {
       if (error.response.status !== 401) {
         dispatch(openErrorModal({ errorText: [error.message] }));
       }
+      dispatch(closePreloader());
       return thunkApi.rejectWithValue(error.response.data);
     }
   },
@@ -94,12 +103,16 @@ export const updateCurriculumToPast: any = createAsyncThunk(
       is_finished: true,
       end_date: getDate(),
     };
-
+    const dispatch = thunkApi.dispatch;
+    dispatch(openPreloader({ loadingText: `Moving ${params.curriculum.title} to past` }));
     try {
       const { data } = await http.put('/academics/curriculums/units/' + params.id, rearrangedUnit, {
         headers: { Authorization: 'Bearer ' + getAccessToken() },
       });
-    } catch (error: any) {}
+      dispatch(closePreloader());
+    } catch (error: any) {
+      dispatch(closePreloader());
+    }
   },
 );
 
@@ -113,11 +126,16 @@ export const updateCurriculumToCurrent: any = createAsyncThunk(
       is_finished: false,
       start_date: getDate(),
     };
+    const dispatch = thunkApi.dispatch;
+    dispatch(openPreloader({ loadingText: `Moving ${params.curriculum.title} to past` }));
 
     try {
       const { data } = await http.put('/academics/curriculums/units/' + params.id, rearrangedUnit, {
         headers: { Authorization: 'Bearer ' + getAccessToken() },
       });
-    } catch (error: any) {}
+      dispatch(closePreloader());
+    } catch (error: any) {
+      dispatch(closePreloader());
+    }
   },
 );
