@@ -13,7 +13,9 @@ const ComingSoon = () => {
           <IoMdConstruct />
         </span>
       </h1>
-      <p className="text-black text-[18px] font-bold">This page is currently under construction</p>
+      <p className="text-black text-[18px] font-bold text-center">
+        This page is currently under construction
+      </p>
 
       <button
         className="text-white flex gap-x-2 items-center py-4 px-6 text-[15px] rounded-full bg-orange-600 font-bold"

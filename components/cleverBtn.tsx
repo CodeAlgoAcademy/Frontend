@@ -7,7 +7,7 @@ const CleverBtn: FC = () => {
 
   const handleClick = (): void => {
     // handle backend logic
-    router.push('/addClass');
+    router.push('/comingSoon');
   };
 
   return (

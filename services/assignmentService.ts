@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import http from 'axios.config';
-import { openErrorModal } from 'store/fetchSlice';
+import { closePreloader, openErrorModal, openPreloader } from 'store/fetchSlice';
 import { RootState } from 'store/store';
 import { AssignmentDetails } from 'types/interfaces';
 import { getAccessToken } from 'utils/getTokens';
@@ -72,6 +72,7 @@ export const addNewAssignments: any = createAsyncThunk(
     mainAssignment.skills = assignment.skills.map((skill) => {
       return { skillId: parseInt(skill.skillId) };
     });
+    dispatch(openPreloader({ loadingText: 'Adding Assignments' }));
     try {
       if (errors.length === 0) {
         const { data } = await http.post(
@@ -86,10 +87,13 @@ export const addNewAssignments: any = createAsyncThunk(
         showModal(modalType);
         resetAssignments();
         dispatch(getAssignments());
+        dispatch(closePreloader());
       } else {
         dispatch(openErrorModal({ errorText: [...errors] }));
+        dispatch(closePreloader());
       }
     } catch (error: any) {
+      dispatch(closePreloader());
       return thunkApi.rejectWithValue(error.message);
     }
   },
@@ -136,6 +140,7 @@ export const updateAssignment: any = createAsyncThunk(
     mainAssignment.skills = assignment.skills.map((skill) => {
       return { skillId: parseInt(skill.skillId) };
     });
+    dispatch(openPreloader({ loadingText: 'Editing Assignment' }));
     try {
       if (errors.length === 0) {
         const { data } = await http.put(
@@ -150,10 +155,15 @@ export const updateAssignment: any = createAsyncThunk(
         showModal(modalType);
         resetAssignments();
         dispatch(getAssignments());
+        dispatch(closePreloader());
       } else {
+        dispatch(closePreloader());
+
         dispatch(openErrorModal({ errorText: [...errors] }));
       }
     } catch (error: any) {
+      dispatch(closePreloader());
+
       return thunkApi.rejectWithValue(error.message);
     }
   },
@@ -164,15 +174,20 @@ export const getAssignments: any = createAsyncThunk(
   async (_, thunkApi) => {
     const state: any = thunkApi.getState();
     const { id } = state.unit.currentUnitInView;
-
+    const dispatch = thunkApi.dispatch;
+    dispatch(openPreloader({ loadingText: 'Fetching Assignments' }));
     try {
       const { data } = await http.get(`/academics/curriculums/units/${id}/assignments/`, {
         headers: {
           Authorization: `Bearer ${getAccessToken()}`,
         },
       });
+      dispatch(closePreloader());
+
       return data;
     } catch (error: any) {
+      dispatch(closePreloader());
+
       return thunkApi.rejectWithValue(error.message);
     }
   },

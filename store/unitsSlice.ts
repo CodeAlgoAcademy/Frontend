@@ -161,9 +161,7 @@ const unitsSlice = createSlice({
             const start_date = new Date(unit.startDate).getTime();
             const end_date = new Date(unit.endDate).getTime();
             const today = new Date();
-            const today_date = new Date(
-              `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`,
-            ).getTime();
+            const today_date = new Date(getDate()).getTime();
             // if start date === end date
             if (start_date === end_date) {
               errors.push(`${unit.title} unit start date cannot be the same as end date`);
