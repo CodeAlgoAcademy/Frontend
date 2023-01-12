@@ -23,9 +23,7 @@ const MessagesModal = ({
       className={`w-[100vw] min-h-screen flex justify-center items-center fixed left-0 top-0 z-20  backdrop-blur-sm bg-gray-100/50`}
     >
       <div
-        className={`w-[90vw] relative max-w-[900px] mx-auto h-[700px] max-h-[90vh] bg-white shadow-md rounded-md flex overflow-hidden ${
-          modalOpen ? 'showModal' : 'hideModal'
-        }`}
+        className={`w-[90vw] relative max-w-[900px] mx-auto h-[700px] max-h-[90vh] bg-white shadow-md rounded-md flex overflow-hidden`}
       >
         <span
           className="absolute top-[30px] right-[30px] z-20 text-[20px] font-bold text-[darkRed]"
