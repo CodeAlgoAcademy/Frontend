@@ -47,6 +47,7 @@ const Index = () => {
       };
     });
   };
+  
   return (
     <>
       <GeneralNav />
