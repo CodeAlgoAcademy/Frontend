@@ -51,7 +51,7 @@ const rootReducer = combineReducers({
   skills: skillsReducer,
   addAssignment: newAssignmentReducer,
   allAssignments: allAssignmentsReducer,
-  allTeachers: teacherReducer
+  allTeachers: teacherReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
