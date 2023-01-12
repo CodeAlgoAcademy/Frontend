@@ -17,7 +17,13 @@ import { Sidebar, GeneralNav } from '../components';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../store/store';
 import { FcGoogle } from 'react-icons/fc';
-import { deleteSchedule, getSchedule, postSchedule, putSchedule } from 'services/scheduleService';
+import {
+  deleteSchedule,
+  getSchedule,
+  postGoogleAccess,
+  postSchedule,
+  putSchedule,
+} from 'services/scheduleService';
 import { extend } from '@syncfusion/ej2-base';
 import { BsHandThumbsUp } from 'react-icons/bs';
 import { motion, useCycle } from 'framer-motion';
@@ -89,7 +95,8 @@ function Calendar() {
 
   const fetchGoogle = useGoogleLogin({
     onSuccess: async (response) => {
-      console.log(response);
+      const { access_token } = response;
+      dispatch(postGoogleAccess(access_token));
     },
   });
 

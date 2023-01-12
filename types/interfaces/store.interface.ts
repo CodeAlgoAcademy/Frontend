@@ -1,12 +1,6 @@
 // =============SLICES INTERFACES AND TYPES=============
 
-interface IStates {
-  isError?: boolean;
-  errorMessage: string;
-  isLoading?: boolean;
-}
-
-export interface IUser extends IStates {
+export interface IUser {
   id: number;
   firstname: string;
   lastname: string;
@@ -99,7 +93,7 @@ export interface IUserConversation {
   openedMessage: IMessage[];
 }
 
-export interface IUserStudent extends IStates {
+export interface IUserStudent {
   newStudent: Student | null;
   students: { students: Student[] };
   studentComments: Array<{
@@ -307,6 +301,7 @@ export interface Student {
   firstName: string;
   lastName: string;
   email: string;
+  username: string;
 }
 
 export interface INotes {
