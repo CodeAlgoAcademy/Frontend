@@ -13,8 +13,6 @@ import { useRouter } from 'next/router';
 import { updateUser, clearFields } from 'store/authSlice';
 import { signUpUser } from 'services/authService';
 import { RootState } from 'store/store';
-import toast from 'utils/toast';
-import Toast from '@/components/Toast';
 
 const tabs: ITabs[] = [
   {
@@ -35,7 +33,6 @@ const tabs: ITabs[] = [
 const SignUp = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { isError, errorMessage } = useSelector((state: RootState) => state.user);
   const [activeTab, setActiveTab] = useState<string | undefined>('Student');
   const [currentTab, setCurrentTab] = useState<ITabs>({
     tabName: '',
@@ -62,12 +59,6 @@ const SignUp = () => {
     dispatch(updateUser({ key: 'accountType', value: 'Student' }));
   }, []);
 
-  useEffect(() => {
-    if (isError) {
-      toast.error(errorMessage, dispatch);
-    }
-  }, []);
-
   const signup = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = await dispatch(signUpUser());
@@ -86,7 +77,6 @@ const SignUp = () => {
 
   return (
     <main>
-      <Toast />
       <Head>
         <title>CodeAlgo Academy | Register</title>
       </Head>
@@ -129,7 +119,9 @@ const SignUp = () => {
 
           {/* title */}
           <div className="flex flex-col gap-y-1 mb-4">
-            <h1 className="md:text-3xl text-lg text-center font-bold">Welcome To CodeAcademy</h1>
+            <h1 className="md:text-3xl text-lg text-center font-bold">
+              Welcome To CodeAlgo Academy
+            </h1>
             <p className="text-grey-800 md:text-lg text-[16px] text-center">
               {"Let's get started"}
             </p>

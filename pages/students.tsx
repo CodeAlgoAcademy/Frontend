@@ -8,16 +8,13 @@ import Students from '../components/Teachers/students/Students';
 import { RootState } from 'store/store';
 import { getStudents } from 'store/studentSlice';
 import { FaSearch } from 'react-icons/fa';
-import toast from 'utils/toast';
-import Toast from '@/components/Toast';
-import { reset } from 'store/notificationSlice';
 
 const Index = () => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { id } = useSelector((state: RootState) => state.currentClass);
   const [commentTabsOpened, setCommentTabsOpened] = useState<boolean>(false);
-  const { students, errorMessage, isError } = useSelector((state: RootState) => state.students);
+  const { students } = useSelector((state: RootState) => state.students);
   const [filteredStudents, setFilteredStudents] = useState({
     students: students?.students,
   });
@@ -29,13 +26,6 @@ const Index = () => {
   useEffect(() => {
     setFilteredStudents(() => ({ students: students?.students }));
   }, [students?.students]);
-
-  useLayoutEffect(() => {
-    console.log(isError, errorMessage);
-    if (isError) {
-      toast.error(errorMessage, dispatch);
-    }
-  }, []);
 
   const closeCommentTabs = (event: any) => {
     if (event.target.classList.contains('students-container')) {
@@ -59,7 +49,6 @@ const Index = () => {
 
   return (
     <>
-      <Toast />
       <GeneralNav />
       <div className="flex items-stretch mb-auto">
         <div className="sidebar bg-white w-[270px]">

@@ -7,9 +7,6 @@ import { closePreloader, openErrorModal, openPreloader } from './fetchSlice';
 import { RootState } from './store';
 
 const initialState: IUserStudent = {
-  isError: false,
-  isLoading: false,
-  errorMessage: '',
   newStudent: null,
   students: { students: [] },
   studentComments: [],
@@ -44,6 +41,7 @@ export const getStudents: any = createAsyncThunk('get/students', async (_, thunk
       (error.response && error.response.data && error.response.data.message) ||
       error.message ||
       error.toString();
+    console.log(message);
     return thunkAPI.rejectWithValue(message);
   }
 });
@@ -187,18 +185,12 @@ export const studentSlice = createSlice({
         console.log(action.payload);
       })
       .addCase(getStudents.pending, (state: IUserStudent) => {
-        state.isLoading = true;
         console.log('Loading...');
       })
       .addCase(getStudents.rejected, (state: IUserStudent, { payload }: PayloadAction) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.errorMessage = payload!;
         console.log(`Error: ${payload}`);
       })
       .addCase(getStudents.fulfilled, (state, action) => {
-        state.errorMessage = '';
-        state.isLoading = false;
         console.log(action.payload);
         state.students = action.payload;
       })

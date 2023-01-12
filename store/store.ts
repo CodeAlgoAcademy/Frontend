@@ -27,12 +27,10 @@ import skillsReducer from './skillsSlice';
 import newAssignmentReducer from './newAssignmentSlice';
 import allAssignmentsReducer from './allAssignments';
 import lessonsReducer from './lessonsSlice';
-import notificationReducer from './notificationSlice';
 
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['notifications'],
 };
 
 const rootReducer = combineReducers({
@@ -52,7 +50,6 @@ const rootReducer = combineReducers({
   skills: skillsReducer,
   addAssignment: newAssignmentReducer,
   allAssignments: allAssignmentsReducer,
-  notifications: notificationReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

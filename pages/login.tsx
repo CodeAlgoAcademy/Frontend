@@ -10,12 +10,9 @@ import { loginUser } from '../services/authService';
 import { clearFields, updateUser } from 'store/authSlice';
 import styles from '../styles/styles';
 import { useRouter } from 'next/router';
-import Toast from '@/components/Toast';
-import toast from 'utils/toast';
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { isError, errorMessage } = useSelector((state: RootState) => state.user);
   const { email, password } = useSelector((state: RootState) => state.user.auth);
   const router = useRouter();
   const inputFields: IInputFields[] = [
@@ -49,16 +46,8 @@ const Login = () => {
     dispatch(clearFields());
   }, []);
 
-  useEffect(() => {
-    console.log(isError, errorMessage);
-    if (isError) {
-      toast.error(errorMessage, dispatch);
-    }
-  }, [isError]);
-
   return (
     <main>
-      <Toast />
       <Head>
         <title>CodeAlgo Academy | Login</title>
       </Head>

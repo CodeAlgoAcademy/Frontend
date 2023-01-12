@@ -13,9 +13,6 @@ import {
 } from 'services/authService';
 
 const initialState: IUser = {
-  isError: false,
-  isLoading: false,
-  errorMessage: '',
   id: 0,
   firstname: '',
   lastname: '',
@@ -85,12 +82,9 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(loginUser.pending, (state: IUser, _) => {
-      state.isLoading = true;
       console.log('pending');
     });
     builder.addCase(loginUser.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
-      state.isLoading = false;
-      state.errorMessage = '';
       localStorage.setItem(
         'token',
         JSON.stringify({
@@ -105,22 +99,17 @@ export const userSlice = createSlice({
       };
     });
     builder.addCase(loginUser.rejected, (state: IUser, { payload }: PayloadAction) => {
-      state.isLoading = false;
       console.log(payload);
-      state.errorMessage = payload!;
     });
     builder.addCase(signUpUser.pending, (state: IUser) => {
       console.log('pending');
-      state.isLoading = true;
     });
     builder.addCase(signUpUser.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
-      state.isLoading = false;
-      state.errorMessage = '';
       localStorage.setItem(
         'token',
         JSON.stringify({
-          access_token: action.payload.access_token,
-          refresh_token: action.payload.refresh_token,
+          access_token: action.payload?.access_token,
+          refresh_token: action.payload?.refresh_token,
         }),
       );
       return {
@@ -128,19 +117,14 @@ export const userSlice = createSlice({
         ...action.payload,
       };
     });
-    builder.addCase(signUpUser.rejected, (state: IUser, { payload }: PayloadAction) => {
-      state.isLoading = false;
-      state.errorMessage = payload!;
-    });
-    builder.addCase(loginWithGoogle.pending, (state: IUser) => {
-      state.isLoading = true;
-    });
+    builder.addCase(signUpUser.rejected, (state: IUser, { payload }: PayloadAction) => {});
+    builder.addCase(loginWithGoogle.pending, (state: IUser) => {});
     builder.addCase(loginWithGoogle.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
       localStorage.setItem(
         'token',
         JSON.stringify({
-          access_token: action.payload.access_token,
-          refresh_token: action.payload.refresh_token,
+          access_token: action.payload?.access_token,
+          refresh_token: action.payload?.refresh_token,
         }),
       );
       return {
@@ -149,13 +133,10 @@ export const userSlice = createSlice({
       };
     });
     builder.addCase(loginWithGoogle.rejected, (state: IUser, { payload }: PayloadAction) => {
-      state.isLoading = false;
-      state.errorMessage = payload!;
       console.log(payload);
     });
     builder.addCase(signUpWithGoogle.pending, (state: IUser) => {
       console.log('pending');
-      state.isLoading = true;
     });
     builder.addCase(signUpWithGoogle.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
       console.log(action);
@@ -172,8 +153,6 @@ export const userSlice = createSlice({
       };
     });
     builder.addCase(signUpWithGoogle.rejected, (state: IUser, { payload }) => {
-      state.isLoading = false;
-      state.errorMessage = payload!;
       console.log(payload);
     });
     builder.addCase(updateFirstname.pending, () => {
@@ -183,8 +162,6 @@ export const userSlice = createSlice({
       return { ...state, ...action.payload };
     });
     builder.addCase(updateFirstname.rejected, (state: IUser, { payload }: PayloadAction) => {
-      state.isLoading = false;
-      state.errorMessage = payload!;
       console.log(payload);
     });
     builder.addCase(updateLastname.pending, () => {
@@ -200,8 +177,6 @@ export const userSlice = createSlice({
       return { ...state, ...action.payload };
     });
     builder.addCase(updateEmail.rejected, (state: IUser, { payload }: PayloadAction) => {
-      state.isLoading = false;
-      state.errorMessage = payload!;
       console.log(payload);
     });
     builder.addCase(updateAccountType.pending, () => {});
@@ -209,8 +184,6 @@ export const userSlice = createSlice({
       return { ...state, ...action.payload };
     });
     builder.addCase(updateAccountType.rejected, (state: IUser, { payload }: PayloadAction) => {
-      state.isLoading = false;
-      state.errorMessage = payload!;
       console.log(payload);
     });
   },
