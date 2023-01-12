@@ -309,3 +309,14 @@ export interface INotes {
 export interface Schedule {
   allSchedule: [];
 }
+
+export interface newLesson {
+  topic: {
+    title: string;
+    description: string;
+  };
+  students: Student[];
+  start_date: string;
+  end_date: string;
+  status: 'published' | 'unpublished';
+}

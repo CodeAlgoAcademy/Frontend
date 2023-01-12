@@ -115,11 +115,9 @@ export const signUpWithGoogle: any = createAsyncThunk(
   'authSlice/signUpWithGoogle',
   async (access_token: string, thunkApi) => {
     try {
-      console.log(access_token ,"access token")
       const { data } = await http.post('/auth/google-signup/', {
         access_token,
       });
-      console.log(data)
       return {
         access_token: data.access_token,
         refresh_token: data.refresh_token,
