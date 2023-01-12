@@ -30,7 +30,7 @@ export const addUnits: any = createAsyncThunk('unitsSlice/addUnits', async (name
     errors.push('Please Select one or more grades');
   }
   unitsWithError.forEach((error: string) => errors.push(error));
-  dispatch(openPreloader({loadingText: "Adding Curriculum"}));
+  dispatch(openPreloader({ loadingText: 'Adding Curriculum' }));
   try {
     if (errors.length === 0) {
       const { data } = await http.post('/academics/curriculums/units/', JSON.stringify(units), {
@@ -75,7 +75,7 @@ export const deleteCurriculum: any = createAsyncThunk(
   'curriculumSlice/deleteCurriculum',
   async (id: string, thunkApi) => {
     const dispatch = thunkApi.dispatch;
-    dispatch(openPreloader({loadingText: "Deleting Curriculum"}));
+    dispatch(openPreloader({ loadingText: 'Deleting Curriculum' }));
     try {
       const { data } = await http.delete(`/academics/curriculums/units/${id}`, {
         headers: {
@@ -103,15 +103,15 @@ export const updateCurriculumToPast: any = createAsyncThunk(
       is_finished: true,
       end_date: getDate(),
     };
-  const dispatch = thunkApi.dispatch;
-  dispatch(openPreloader({loadingText: `Moving ${params.curriculum.title} to past`}));
+    const dispatch = thunkApi.dispatch;
+    dispatch(openPreloader({ loadingText: `Moving ${params.curriculum.title} to past` }));
     try {
       const { data } = await http.put('/academics/curriculums/units/' + params.id, rearrangedUnit, {
         headers: { Authorization: 'Bearer ' + getAccessToken() },
       });
-      dispatch(closePreloader())
+      dispatch(closePreloader());
     } catch (error: any) {
-      dispatch(closePreloader())
+      dispatch(closePreloader());
     }
   },
 );
@@ -127,16 +127,15 @@ export const updateCurriculumToCurrent: any = createAsyncThunk(
       start_date: getDate(),
     };
     const dispatch = thunkApi.dispatch;
-    dispatch(openPreloader({loadingText: `Moving ${params.curriculum.title} to past`}));
+    dispatch(openPreloader({ loadingText: `Moving ${params.curriculum.title} to past` }));
 
     try {
       const { data } = await http.put('/academics/curriculums/units/' + params.id, rearrangedUnit, {
         headers: { Authorization: 'Bearer ' + getAccessToken() },
       });
-      dispatch(closePreloader())
+      dispatch(closePreloader());
     } catch (error: any) {
-      dispatch(closePreloader())
-
+      dispatch(closePreloader());
     }
   },
 );

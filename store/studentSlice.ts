@@ -16,7 +16,7 @@ export const addStudent: any = createAsyncThunk('new/student', async (data: Stud
   const state: any = thunkAPI.getState();
   const { id } = state.currentClass;
   const dispatch = thunkAPI.dispatch;
-  dispatch(openPreloader({loadingText: "Adding Student(s)"}))
+  dispatch(openPreloader({ loadingText: 'Adding Student(s)' }));
   try {
     const student = await studentService.addStudent(data, id);
     dispatch(closePreloader());
@@ -26,7 +26,7 @@ export const addStudent: any = createAsyncThunk('new/student', async (data: Stud
       (error.response && error.response.data && error.response.data.message) ||
       error.message ||
       error.toString();
-      dispatch(closePreloader());
+    dispatch(closePreloader());
     return thunkAPI.rejectWithValue(message);
   }
 });

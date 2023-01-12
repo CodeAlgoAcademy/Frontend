@@ -9,7 +9,7 @@ export const getAllClasses: any = createAsyncThunk(
   async (name, thunkApi) => {
     const state: any = thunkApi.getState();
     const dispatch = thunkApi.dispatch;
-    
+
     try {
       const { data } = await http.get('/academics/class', {
         headers: {
@@ -28,7 +28,7 @@ export const addClass: any = createAsyncThunk(
   async (name, thunkApi) => {
     const state: any = thunkApi.getState();
     const dispatch = thunkApi.dispatch;
-    dispatch(openPreloader({loadingText: "Adding Class"}));
+    dispatch(openPreloader({ loadingText: 'Adding Class' }));
     const {
       student,
       class: { className, grade, subject, coTeachers, roomNumber, color },
