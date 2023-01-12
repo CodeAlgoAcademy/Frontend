@@ -19,14 +19,18 @@ const PrivacyPolicy = () => {
         </p>
       </div>
       <div className="mt-[20px]">
-        <Policies title='Acknowloedgement' body=' By using our software, or by clicking on a box that states you agree to these terms, you
+        <Policies
+          title="Acknowloedgement"
+          body=' By using our software, or by clicking on a box that states you agree to these terms, you
           acknowledge that you have read, understood, and agree to be bound by these Terms of
           Service ("ToS"), which may be updated from time to time without notice to you. If you do
-          not agree to the terms outlined in, you may not use the website. ‍' />
-        
+          not agree to the terms outlined in, you may not use the website. ‍'
+        />
       </div>
       <div className="mt-[20px]">
-        <Policies title='Privacy' body={`At CodeAlgo, we take your privacy seriously. Please read this Non-Student User Privacy
+        <Policies
+          title="Privacy"
+          body={`At CodeAlgo, we take your privacy seriously. Please read this Non-Student User Privacy
           Policy to learn how we treat your personal data if you are note a Student User (defined
           below), such as parent or guardian, teacher or school administrator (collectively,
           “Non-Student Users”). If you’re a student user of the CodeAlgo’s Services under the age of
@@ -41,11 +45,13 @@ const PrivacyPolicy = () => {
           as described in this Privacy Policy. Remember that your use of CodeAlgo's Services is at
           all times subject to our Terms of Use, which incorporates this Privacy Policy. Any terms
           we use in this Policy without defining them have the definitions given to them in the
-          Terms of Use. ‍`} />
-        
+          Terms of Use. ‍`}
+        />
       </div>
       <div className="mt-[20px]">
-        <Policies title='Usage Requirements' body={`In order to use CodeAlgo, you must have: • an account; • a browser device, or mobile device
+        <Policies
+          title="Usage Requirements"
+          body={`In order to use CodeAlgo, you must have: • an account; • a browser device, or mobile device
           that meets or exceeds the system requirements; and • Internet access. We do not guarantee
           that CodeAlgo will be compatible or operate with your browser, Internet provider’s service
           plan, mobile carrier’s service plan, or any other piece of hardware, software, equipment,
@@ -72,8 +78,8 @@ const PrivacyPolicy = () => {
           have the right at all times and without notice to you to review and audit your access and
           use of CodeAlgo and your compliance with the terms of this ToS. We may suspend or
           terminate your CodeAlgo account and your access to CodeAlgo at our sole discretion and
-          without liability to you if we believe you have violated the terms of this ToS. ‍ ‍`} />
-        
+          without liability to you if we believe you have violated the terms of this ToS. ‍ ‍`}
+        />
       </div>
     </section>
   );
