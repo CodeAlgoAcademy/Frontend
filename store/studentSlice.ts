@@ -3,7 +3,7 @@ import http from 'axios.config';
 import studentService from 'services/studentService';
 import { IUserStudent, Student } from 'types/interfaces';
 import { getAccessToken } from 'utils/getTokens';
-import { openErrorModal } from './fetchSlice';
+import { closePreloader, openErrorModal, openPreloader } from './fetchSlice';
 import { RootState } from './store';
 
 const initialState: IUserStudent = {
@@ -15,13 +15,18 @@ const initialState: IUserStudent = {
 export const addStudent: any = createAsyncThunk('new/student', async (data: Student, thunkAPI) => {
   const state: any = thunkAPI.getState();
   const { id } = state.currentClass;
+  const dispatch = thunkAPI.dispatch;
+  dispatch(openPreloader({ loadingText: 'Adding Student(s)' }));
   try {
-    return await studentService.addStudent(data, id);
+    const student = await studentService.addStudent(data, id);
+    dispatch(closePreloader());
+    return student;
   } catch (error: any) {
     const message =
       (error.response && error.response.data && error.response.data.message) ||
       error.message ||
       error.toString();
+    dispatch(closePreloader());
     return thunkAPI.rejectWithValue(message);
   }
 });

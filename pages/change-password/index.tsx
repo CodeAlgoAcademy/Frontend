@@ -59,10 +59,7 @@ const index = () => {
           }
         >
           <div
-            className={`
-          ${
-            modalOpened ? 'showModal' : 'hideModal'
-          } w-[90vw] mx-auto max-w-[500px] bg-white shadow-md rounded-md relative z-20 p-8`}
+            className={` w-[90vw] mx-auto max-w-[500px] bg-white shadow-md rounded-md relative z-20 p-8`}
           >
             <div className="flex justify-between items-center">
               <span className="text-[17px] font-bold flex gap-x-4 items-center cursor-pointer">
