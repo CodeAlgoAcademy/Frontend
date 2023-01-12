@@ -204,7 +204,6 @@ const SingleStudent = ({
           <div className={styles.cardHeaderName} onClick={() => handleStudents(student.id)}>
             <div className="flex flex-col gap-y-2">
               <p className={styles.studentName}>{`${student.firstName} ${student.lastName}`}</p>
-              <p className="text-[14px] font-light">{student?.email}</p>
             </div>
             <span className="text-[17px]">
               {headings.includes(student.id) ? <IoIosArrowUp /> : <IoIosArrowDown />}
@@ -248,14 +247,18 @@ const SingleStudent = ({
           <span>No lesson available</span>
         </p>
       ) : (
-        <>{headings.includes(student?.id) && <StudentTable details={student?.assignments} />}</>
+        <>
+          {headings.includes(student?.id) && (
+            <StudentTable student={student} details={student?.assignments} />
+          )}
+        </>
       )}
     </div>
   );
 };
 
 const styles = {
-  cardHeader: 'flex justify-between py-4 px-2 sm:px-6 border-b items-center relative',
+  cardHeader: 'flex justify-between py-6 px-2 sm:px-6 border-b items-center relative',
   cardHeaderName:
     'cursor-pointer min-w-28 sm:min-w-40 justify-between px-2 border-r flex space-x-3 items-center',
   studentName: 'text-sm font-medium truncate w-full',
