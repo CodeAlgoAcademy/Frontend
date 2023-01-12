@@ -1,12 +1,12 @@
-import React from "react";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AssignmentDetails } from "../types/interfaces";
+import React from 'react';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AssignmentDetails } from '../types/interfaces';
 
 const initialState: AssignmentDetails = {
-  title: "",
-  start_date: "",
-  end_date: "",
-  order: "random",
+  title: '',
+  start_date: '',
+  end_date: '',
+  order: 'random',
   number: 0,
   skills: [],
   students: [],
@@ -14,13 +14,10 @@ const initialState: AssignmentDetails = {
 };
 
 const newAssignmentSlice = createSlice({
-  name: "newAssignment",
+  name: 'newAssignment',
   initialState,
   reducers: {
-    saveAssignment: (
-      state: AssignmentDetails,
-      action: PayloadAction<string>
-    ) => {},
+    saveAssignment: (state: AssignmentDetails, action: PayloadAction<string>) => {},
   },
 });
 

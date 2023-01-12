@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { IModal } from "../types/interfaces";
+import { createSlice } from '@reduxjs/toolkit';
+import { IModal } from '../types/interfaces';
 
 const initialState: IModal = {
   addClassModalOpen: false,
@@ -10,7 +10,7 @@ const initialState: IModal = {
 };
 
 const modalSlice = createSlice({
-  name: "modal",
+  name: 'modal',
   initialState,
   reducers: {
     openAddClassModal: (state: IModal) => {

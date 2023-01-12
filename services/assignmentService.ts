@@ -1,46 +1,39 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import http from "axios.config";
-import { openErrorModal } from "store/fetchSlice";
-import { RootState } from "store/store";
-import { AssignmentDetails } from "types/interfaces";
-import { getAccessToken } from "utils/getTokens";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import http from 'axios.config';
+import { openErrorModal } from 'store/fetchSlice';
+import { RootState } from 'store/store';
+import { AssignmentDetails } from 'types/interfaces';
+import { getAccessToken } from 'utils/getTokens';
 
 const checkAssignmentErrors = (assignment: AssignmentDetails): string[] => {
   const errors: string[] = [];
   // check errors
-  if (assignment.title === "") {
-    errors.push("Kindly Add an assignment title");
+  if (assignment.title === '') {
+    errors.push('Kindly Add an assignment title');
   }
-  if (!assignment.is_current && assignment.start_date === "") {
-    errors.push(
-      "Assignment should have a start date since it is scheduled for later"
-    );
+  if (!assignment.is_current && assignment.start_date === '') {
+    errors.push('Assignment should have a start date since it is scheduled for later');
   }
-  if (
-    !assignment.is_current &&
-    new Date(assignment.start_date) === new Date()
-  ) {
-    errors.push(
-      "Assignment date should not be todays since it is schedule for later"
-    );
+  if (!assignment.is_current && new Date(assignment.start_date) === new Date()) {
+    errors.push('Assignment date should not be todays since it is schedule for later');
   }
-  if (assignment.end_date === "") {
-    errors.push("Kindly add an end date/deadline");
+  if (assignment.end_date === '') {
+    errors.push('Kindly add an end date/deadline');
   }
   if (assignment.number == 0) {
-    errors.push("Kindly set number of questions");
+    errors.push('Kindly set number of questions');
   }
   if (assignment.skills.length === 0) {
-    errors.push("Select one or more assignment skills");
+    errors.push('Select one or more assignment skills');
   }
   if (assignment.students.length === 0) {
-    errors.push("Select students(s) to be assigned to this tasks");
+    errors.push('Select students(s) to be assigned to this tasks');
   }
   return errors;
 };
 
 export const addNewAssignments: any = createAsyncThunk(
-  "newAssignmentSlice/addNewAssignments",
+  'newAssignmentSlice/addNewAssignments',
   async (
     {
       assignment,
@@ -55,27 +48,24 @@ export const addNewAssignments: any = createAsyncThunk(
       modalType: string;
       resetAssignments: () => void;
     },
-    thunkApi
+    thunkApi,
   ) => {
     const state: any = thunkApi.getState();
-    const { id, is_current, is_finished, start_date } =
-      state.unit.currentUnitInView;
+    const { id, is_current, is_finished, start_date } = state.unit.currentUnitInView;
     const dispatch = thunkApi.dispatch;
     const errors: string[] = checkAssignmentErrors(assignment);
 
     // if it is past
     if (is_finished) {
-      errors.push(
-        "The Current Unit is a past current, therefore, assignments cannot be added"
-      );
+      errors.push('The Current Unit is a past current, therefore, assignments cannot be added');
     }
     if (!is_current && !is_finished && new Date(start_date) > new Date()) {
       errors.push(
-        "This unit is scheduled for a later date, kindly update to current before adding assignments"
+        'This unit is scheduled for a later date, kindly update to current before adding assignments',
       );
     }
     if (new Date(assignment.end_date) < new Date(assignment.start_date)) {
-      errors.push("Deadline should be after the start date");
+      errors.push('Deadline should be after the start date');
     }
     const mainAssignment: any = { ...assignment, status: actionType };
 
@@ -91,7 +81,7 @@ export const addNewAssignments: any = createAsyncThunk(
             headers: {
               Authorization: `Bearer ${getAccessToken()}`,
             },
-          }
+          },
         );
         showModal(modalType);
         resetAssignments();
@@ -102,11 +92,11 @@ export const addNewAssignments: any = createAsyncThunk(
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 export const updateAssignment: any = createAsyncThunk(
-  "newAssignmentSlice/updateAssignment",
+  'newAssignmentSlice/updateAssignment',
   async (
     {
       assignment,
@@ -123,27 +113,24 @@ export const updateAssignment: any = createAsyncThunk(
       resetAssignments: () => void;
       id: string | number;
     },
-    thunkApi
+    thunkApi,
   ) => {
     const state: any = thunkApi.getState();
-    const { id, is_current, is_finished, start_date } =
-      state.unit.currentUnitInView;
+    const { id, is_current, is_finished, start_date } = state.unit.currentUnitInView;
     const dispatch = thunkApi.dispatch;
     const errors: string[] = checkAssignmentErrors(assignment);
 
     // if it is past
     if (is_finished) {
-      errors.push(
-        "The Current Unit is a past current, therefore, assignments cannot be added"
-      );
+      errors.push('The Current Unit is a past current, therefore, assignments cannot be added');
     }
     if (!is_current && !is_finished && new Date(start_date) > new Date()) {
       errors.push(
-        "This unit is scheduled for a later date, kindly update to current before adding assignments"
+        'This unit is scheduled for a later date, kindly update to current before adding assignments',
       );
     }
     if (new Date(assignment.end_date) < new Date(assignment.start_date)) {
-      errors.push("Deadline should be after the start date");
+      errors.push('Deadline should be after the start date');
     }
     const mainAssignment: any = { ...assignment, status: actionType };
     mainAssignment.skills = assignment.skills.map((skill) => {
@@ -158,7 +145,7 @@ export const updateAssignment: any = createAsyncThunk(
             headers: {
               Authorization: `Bearer ${getAccessToken()}`,
             },
-          }
+          },
         );
         showModal(modalType);
         resetAssignments();
@@ -169,27 +156,24 @@ export const updateAssignment: any = createAsyncThunk(
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 export const getAssignments: any = createAsyncThunk(
-  "newAssignmentSlice/getAssignments",
+  'newAssignmentSlice/getAssignments',
   async (_, thunkApi) => {
     const state: any = thunkApi.getState();
     const { id } = state.unit.currentUnitInView;
 
     try {
-      const { data } = await http.get(
-        `/academics/curriculums/units/${id}/assignments/`,
-        {
-          headers: {
-            Authorization: `Bearer ${getAccessToken()}`,
-          },
-        }
-      );
+      const { data } = await http.get(`/academics/curriculums/units/${id}/assignments/`, {
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      });
       return data;
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.message);
     }
-  }
+  },
 );
