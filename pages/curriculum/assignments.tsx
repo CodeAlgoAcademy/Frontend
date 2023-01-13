@@ -512,7 +512,9 @@ const Assignments = () => {
       </div>
       {
         <div
-          className={`w-full h-full backdrop-blur-sm bg-gray-100/50 fixed left-0 flex justify-center items-center ${modalWrapperDisplay? 'showModal' : 'hideModal'}`}
+          className={`w-full h-full backdrop-blur-sm bg-gray-100/50 fixed left-0 flex justify-center items-center ${
+            modalWrapperDisplay ? 'showModal' : 'hideModal'
+          }`}
         >
           {modalWrapperDisplay && (
             <div className="relative max-w-[850px] bg-white rounded-xl overflow-hidden overflow-y-scroll max-h-[90vh]">
@@ -523,7 +525,7 @@ const Assignments = () => {
                 <FaTimes />
               </span>
               {modalItemsDisplay.saveResponse && (
-                <div className="w-full py-20 px-24 font-semibold text-center text-xl">
+                <div className="w-full py-20 px-24 font-semibold text-xl">
                   <p>You have successfully saved an assignment</p>
                   <p>
                     Click on{' '}
@@ -540,17 +542,19 @@ const Assignments = () => {
                 </div>
               )}
               {modalItemsDisplay.createResponse && (
-                <div className="w-full py-20 px-24 font-semibold text-center text-xl">
-                  <p>You have successfully created an assignment</p>
+                <div className="w-full space-y-2 py-20 px-10">
+                  <p className="text-2xl font-medium">
+                    You have successfully created an assignment
+                  </p>
                   <p>
                     Click on{' '}
                     <span
-                      className="font-bold text-[#F28E2C] cursor-pointer"
+                      className="text-[#F28E2C] cursor-pointer"
                       onClick={() => {
                         switchModal('historyResponse');
                       }}
                     >
-                      ASSINGMENT HISTORY
+                      assignment history
                     </span>{' '}
                     to view your Assingment.
                   </p>

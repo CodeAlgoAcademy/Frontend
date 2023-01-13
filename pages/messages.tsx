@@ -1,6 +1,6 @@
 import Messages from '@/components/Teachers/messages/Messages';
 import React from 'react';
-import { GeneralNav, Sidebar } from '../../../components';
+import { GeneralNav, Sidebar } from '../components';
 
 const index = () => {
   return (

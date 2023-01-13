@@ -38,8 +38,8 @@ export default function Unit() {
   }, [topics]);
 
   const { lessons } = useSelector((state: RootState) => state.allLessons);
-  const {currentUnitInView} = useSelector((state:RootState)=> state.unit);
-  console.log(currentUnitInView)
+  const { currentUnitInView } = useSelector((state: RootState) => state.unit);
+  console.log(currentUnitInView);
   // add student oprions modal
   const cancelPresence = () => {
     setShowModal(false);
