@@ -20,7 +20,7 @@ const links = [
   {
     name: 'students',
     icon: <FaUserGraduate />,
-    url: '/teachers/students',
+    url: '/students',
   },
   {
     name: 'calendar',
@@ -30,7 +30,7 @@ const links = [
   {
     name: 'messages',
     icon: <BiMessageRounded />,
-    url: '/teachers/messages',
+    url: '/messages',
   },
 ];
 
