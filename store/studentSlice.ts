@@ -1,9 +1,9 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import http from 'axios.config';
 import studentService from 'services/studentService';
 import { IUserStudent, Student } from 'types/interfaces';
 import { getAccessToken } from 'utils/getTokens';
-import { openErrorModal } from './fetchSlice';
+import { closePreloader, openErrorModal, openPreloader } from './fetchSlice';
 import { RootState } from './store';
 
 const initialState: IUserStudent = {
@@ -15,13 +15,18 @@ const initialState: IUserStudent = {
 export const addStudent: any = createAsyncThunk('new/student', async (data: Student, thunkAPI) => {
   const state: any = thunkAPI.getState();
   const { id } = state.currentClass;
+  const dispatch = thunkAPI.dispatch;
+  dispatch(openPreloader({ loadingText: 'Adding Student(s)' }));
   try {
-    return await studentService.addStudent(data, id);
+    const student = await studentService.addStudent(data, id);
+    dispatch(closePreloader());
+    return student;
   } catch (error: any) {
     const message =
       (error.response && error.response.data && error.response.data.message) ||
       error.message ||
       error.toString();
+    dispatch(closePreloader());
     return thunkAPI.rejectWithValue(message);
   }
 });
@@ -36,6 +41,7 @@ export const getStudents: any = createAsyncThunk('get/students', async (_, thunk
       (error.response && error.response.data && error.response.data.message) ||
       error.message ||
       error.toString();
+    console.log(message);
     return thunkAPI.rejectWithValue(message);
   }
 });
@@ -178,11 +184,11 @@ export const studentSlice = createSlice({
       .addCase(addStudent.fulfilled, (state, action) => {
         console.log(action.payload);
       })
-      .addCase(getStudents.pending, () => {
+      .addCase(getStudents.pending, (state: IUserStudent) => {
         console.log('Loading...');
       })
-      .addCase(getStudents.rejected, (_, action) => {
-        console.log(`Error: ${action.payload}`);
+      .addCase(getStudents.rejected, (state: IUserStudent, { payload }: PayloadAction) => {
+        console.log(`Error: ${payload}`);
       })
       .addCase(getStudents.fulfilled, (state, action) => {
         console.log(action.payload);

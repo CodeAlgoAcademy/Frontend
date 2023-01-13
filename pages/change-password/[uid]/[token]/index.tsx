@@ -76,10 +76,7 @@ const ResetPassword = () => {
             }
           >
             <div
-              className={`
-          ${
-            modalOpened ? 'showModal' : 'hideModal'
-          } w-[90vw] mx-auto max-w-[500px] bg-white shadow-md rounded-md relative z-20 p-8`}
+              className={`w-[90vw] mx-auto max-w-[500px] bg-white shadow-md rounded-md relative z-20 p-8`}
             >
               <div className="text-center font-bold text-[22px]">
                 <h1>Password reset was successful!</h1>

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import http from 'axios.config';
-import { openErrorModal } from 'store/fetchSlice';
+import { closePreloader, openErrorModal, openPreloader } from 'store/fetchSlice';
 import { RootState } from 'store/store';
 import { getAccessToken } from 'utils/getTokens';
 
@@ -28,7 +28,7 @@ export const addClass: any = createAsyncThunk(
   async (name, thunkApi) => {
     const state: any = thunkApi.getState();
     const dispatch = thunkApi.dispatch;
-
+    dispatch(openPreloader({ loadingText: 'Adding Class' }));
     const {
       student,
       class: { className, grade, subject, coTeachers, roomNumber, color },
@@ -67,6 +67,7 @@ export const addClass: any = createAsyncThunk(
           },
         },
       );
+      dispatch(closePreloader());
 
       return { ...data };
     } catch (error: any) {
@@ -75,6 +76,8 @@ export const addClass: any = createAsyncThunk(
           errorText: [error.response.data.detail ? error.response.data.detail : error.message],
         }),
       );
+      dispatch(closePreloader());
+
       return thunkApi.rejectWithValue(error.response.data);
     }
   },
