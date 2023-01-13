@@ -1,5 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getSchedule, postSchedule, putSchedule, deleteSchedule } from 'services/scheduleService';
+import {
+  getSchedule,
+  postSchedule,
+  putSchedule,
+  deleteSchedule,
+  postGoogleAccess,
+} from 'services/scheduleService';
 import { Schedule } from 'types/interfaces';
 
 const initialState: Schedule = {
@@ -38,6 +44,13 @@ const scheduleSlice = createSlice({
       builder.addCase(deleteSchedule.rejected, (state: any, action: PayloadAction<any>) => {
         console.error('Delete Error');
       });
+    builder.addCase(postGoogleAccess.fulfilled, (state: any, { payload }: PayloadAction) => {
+      console.log('Successful');
+      console.log(payload);
+    });
+    builder.addCase(postGoogleAccess.rejected, (state: any, { payload }) => {
+      console.log(payload);
+    });
   },
 });
 

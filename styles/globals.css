@@ -83,15 +83,11 @@ a {
 }
 .showModal {
   top: 0;
-  animation: showModalAnimation 0.25s ease-in;
-  -moz-animation: showModalAnimation 0.25s ease-in; /* Firefox */
-  -webkit-animation: showModalAnimation 0.25s ease-in; /* Safari and Chrome */
+  
 }
 .hideModal {
   top: -100vh;
-  animation: hideModalAnimation 0.3s ease-in;
-  -moz-animation: hideModalAnimation 0.3s ease-in; /* Firefox */
-  -webkit-animation: hideModalAnimation 0.3s ease-in; /* Safari and Chrome */
+
 }
 @keyframes showModalAnimation {
   from {

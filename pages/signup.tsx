@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ReactElement, ChangeEvent } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Head from 'next/head';
 import Link from 'next/link';
 import CleverBtn from '../components/cleverBtn';
@@ -12,6 +12,7 @@ import { ITabs } from '../types/interfaces';
 import { useRouter } from 'next/router';
 import { updateUser, clearFields } from 'store/authSlice';
 import { signUpUser } from 'services/authService';
+import { RootState } from 'store/store';
 
 const tabs: ITabs[] = [
   {
@@ -118,7 +119,9 @@ const SignUp = () => {
 
           {/* title */}
           <div className="flex flex-col gap-y-1 mb-4">
-            <h1 className="md:text-3xl text-lg text-center font-bold">Welcome To CodeAcademy</h1>
+            <h1 className="md:text-3xl text-lg text-center font-bold">
+              Welcome To CodeAlgo Academy
+            </h1>
             <p className="text-grey-800 md:text-lg text-[16px] text-center">
               {"Let's get started"}
             </p>

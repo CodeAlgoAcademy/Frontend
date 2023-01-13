@@ -1,4 +1,5 @@
 // =============SLICES INTERFACES AND TYPES=============
+
 export interface IUser {
   id: number;
   firstname: string;
@@ -300,6 +301,7 @@ export interface Student {
   firstName: string;
   lastName: string;
   email: string;
+  username: string;
 }
 
 export interface INotes {

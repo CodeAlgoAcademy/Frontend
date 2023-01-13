@@ -29,11 +29,16 @@ export const loginUser: any = createAsyncThunk('authSlice/loginUser', async (nam
       dispatch(
         openErrorModal({
           errorText: [error.response.data.non_field_errors[0]],
-        }),
+        })
       );
     }
 
-    return thunkApi.rejectWithValue(error.response.data);
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+
+    return thunkApi.rejectWithValue(message);
   }
 });
 
@@ -84,12 +89,17 @@ export const signUpUser: any = createAsyncThunk('authSlice/signUpUser', async (n
       dispatch(
         openErrorModal({
           errorText: [error.response.data.non_field_errors[0]],
-        }),
+        })
       );
     } else {
       dispatch(openErrorModal({ errorText: error.message }));
     }
-    return thunkApi.rejectWithValue(error);
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+
+    return thunkApi.rejectWithValue(message);
   }
 });
 
