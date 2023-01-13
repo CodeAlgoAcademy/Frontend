@@ -29,7 +29,7 @@ export const loginUser: any = createAsyncThunk('authSlice/loginUser', async (nam
       dispatch(
         openErrorModal({
           errorText: [error.response.data.non_field_errors[0]],
-        })
+        }),
       );
     }
 
@@ -89,7 +89,7 @@ export const signUpUser: any = createAsyncThunk('authSlice/signUpUser', async (n
       dispatch(
         openErrorModal({
           errorText: [error.response.data.non_field_errors[0]],
-        })
+        }),
       );
     } else {
       dispatch(openErrorModal({ errorText: error.message }));
