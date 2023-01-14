@@ -29,7 +29,7 @@ export const loginUser: any = createAsyncThunk('authSlice/loginUser', async (nam
       dispatch(
         openErrorModal({
           errorText: [error.response.data.non_field_errors[0]],
-        })
+        }),
       );
     }
 
@@ -89,7 +89,7 @@ export const signUpUser: any = createAsyncThunk('authSlice/signUpUser', async (n
       dispatch(
         openErrorModal({
           errorText: [error.response.data.non_field_errors[0]],
-        })
+        }),
       );
     } else {
       dispatch(openErrorModal({ errorText: error.message }));
@@ -109,7 +109,7 @@ export const loginWithGoogle: any = createAsyncThunk(
     try {
       const { data } = await http.post('/auth/google/', {
         access_token,
-        action: 'signin'
+        action: 'signin',
       });
       return {
         access_token: data.access_token,
@@ -128,7 +128,7 @@ export const signUpWithGoogle: any = createAsyncThunk(
     try {
       const { data } = await http.post('/auth/google/', {
         access_token,
-        action: 'signup'
+        action: 'signup',
       });
       return {
         access_token: data.access_token,

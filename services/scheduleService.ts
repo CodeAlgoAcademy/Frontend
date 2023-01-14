@@ -18,7 +18,7 @@ export const getSchedule = createAsyncThunk('scheduleSlice/getSchedule', async (
 export const postGoogleAccess = createAsyncThunk(
   'scheduleSlice/postGoogleAuth',
   async (access_token: any, thunkAPI) => {
-    const dispatch = thunkAPI.dispatch
+    const dispatch = thunkAPI.dispatch;
     try {
       console.log(access_token);
       const { data } = await http.post(

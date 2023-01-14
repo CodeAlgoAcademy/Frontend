@@ -59,7 +59,7 @@ const GeneralNav = () => {
 
   const logout = () => {
     localStorage.removeItem('token');
-    localStorage.removeItem('token_timestamp')
+    localStorage.removeItem('token_timestamp');
     dispatch(resetAuthUser());
     router.push('/login');
   };
