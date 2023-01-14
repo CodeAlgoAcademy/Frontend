@@ -2,7 +2,6 @@ import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa';
-import { getAccessToken } from 'utils/getTokens';
 import { useRouter } from 'next/router';
 const ErrorPage = () => {
   const router = useRouter();
