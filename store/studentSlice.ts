@@ -37,6 +37,7 @@ export const getStudents: any = createAsyncThunk('get/students', async (_, thunk
   try {
     return await studentService.getStudents(id);
   } catch (error: any) {
+    console.log(error)
     const message =
       (error.response && error.response.data && error.response.data.message) ||
       error.message ||
