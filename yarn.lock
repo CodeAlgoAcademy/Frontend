@@ -3504,10 +3504,10 @@
   "resolved" "https://registry.npmjs.org/fraction.js/-/fraction.js-4.2.0.tgz"
   "version" "4.2.0"
 
-"framer-motion@^8.3.4":
-  "integrity" "sha512-3HE8+25FYkm2C7mgwuVtY+TrknBywbkXBUMXziMdfKZmzxoBteffSgqNuLDpvNJIvpmrgy+AKgk67sYIXhm+aw=="
-  "resolved" "https://registry.npmjs.org/framer-motion/-/framer-motion-8.3.4.tgz"
-  "version" "8.3.4"
+framer-motion@^8.3.4:
+  version "8.3.4"
+  resolved "https://registry.npmjs.org/framer-motion/-/framer-motion-8.3.4.tgz"
+  integrity sha512-3HE8+25FYkm2C7mgwuVtY+TrknBywbkXBUMXziMdfKZmzxoBteffSgqNuLDpvNJIvpmrgy+AKgk67sYIXhm+aw==
   dependencies:
     "@motionone/dom" "^10.15.3"
     "hey-listen" "^1.0.8"
@@ -5228,6 +5228,13 @@
   dependencies:
     "loose-envify" "^1.1.0"
     "scheduler" "^0.23.0"
+
+react-google-recaptcha-v3@^1.10.1:
+  version "1.10.1"
+  resolved "https://registry.npmjs.org/react-google-recaptcha-v3/-/react-google-recaptcha-v3-1.10.1.tgz"
+  integrity sha512-K3AYzSE0SasTn+XvV2tq+6YaxM+zQypk9rbCgG4OVUt7Rh4ze9basIKefoBz9sC0CNslJj9N1uwTTgRMJQbQJQ==
+  dependencies:
+    hoist-non-react-statics "^3.3.2"
 
 "react-icons@^4.7.1":
   "integrity" "sha512-yHd3oKGMgm7zxo3EA7H2n7vxSoiGmHk5t6Ou4bXsfcgWyhfDKMpyKfhHR6Bjnn63c+YXBLBPUql9H4wPJM6sXw=="
