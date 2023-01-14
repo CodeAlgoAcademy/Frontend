@@ -20,7 +20,7 @@ import { FcGoogle } from 'react-icons/fc';
 import {
   deleteSchedule,
   getSchedule,
-  postGoogleAccess,
+  googleCalendar,
   postSchedule,
   putSchedule,
 } from 'services/scheduleService';
@@ -96,7 +96,7 @@ function Calendar() {
   const fetchGoogle = useGoogleLogin({
     onSuccess: async (response) => {
       const { access_token } = response;
-      dispatch(postGoogleAccess(access_token));
+      dispatch(googleCalendar(access_token));
     },
   });
 
