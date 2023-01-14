@@ -11,9 +11,6 @@ import Link from 'next/link';
 //
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getAccessToken } from 'utils/getTokens';
-import { openErrorModal } from 'store/fetchSlice';
 import http from 'axios.config';
 import { getAllLessons } from 'services/lessonService';
 import { RootState } from 'store/store';

@@ -13,13 +13,8 @@ import { getConversations, getOpenMesssages } from 'store/messagesSlice';
 import { openErrorModal } from 'store/fetchSlice';
 import http from 'axios.config';
 
-// const headers = {
-//     Authorization: "Bearer " + getAccessToken()
-// }
 const client = new W3CWebSocket('wss://sea-lion-app-43ury.ondigitalocean.app/chat/websocket/');
-// const client = new WebSocket(
-//   "wss://sea-lion-app-43ury.ondigitalocean.app/chat/websocket/"
-// );
+
 const ChatRoom = () => {
   const { openedMessageOwner, openedMessage } = useSelector((state: RootState) => state.messages);
   const { email } = useSelector((state: RootState) => state.user);
