@@ -93,7 +93,7 @@ export const userSlice = createSlice({
           refresh_token: action.payload.refresh_token,
         }),
       );
-      setTimeStamp()
+      setTimeStamp();
 
       return {
         ...state,
@@ -114,7 +114,7 @@ export const userSlice = createSlice({
           refresh_token: action.payload?.refresh_token,
         }),
       );
-      setTimeStamp()
+      setTimeStamp();
       return {
         ...state,
         ...action.payload,
@@ -130,7 +130,7 @@ export const userSlice = createSlice({
           refresh_token: action.payload?.refresh_token,
         }),
       );
-      setTimeStamp()
+      setTimeStamp();
 
       return {
         ...state,
