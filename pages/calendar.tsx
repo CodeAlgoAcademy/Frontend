@@ -98,6 +98,7 @@ function Calendar() {
       const { access_token } = response;
       dispatch(googleCalendar(access_token));
     },
+    scope: "https://www.googleapis.com/auth/calendar"
   });
 
   return (
