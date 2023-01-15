@@ -105,7 +105,7 @@ const ChatRoom = () => {
           <IconButton>
             <GrAttachment size={20} />
           </IconButton>
-          <form onSubmit={() => {}} className="w-full">
+          <form onSubmit={(e) => {e.preventDefault()}} className="w-full">
             <input
               placeholder="Send Message..."
               className={styles.input}
