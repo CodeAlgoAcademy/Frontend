@@ -12,7 +12,7 @@ import { ITabs } from '../types/interfaces';
 import { useRouter } from 'next/router';
 import { updateUser, clearFields } from 'store/authSlice';
 import { signUpUser } from 'services/authService';
-import { RootState } from 'store/store'; 
+import { RootState } from 'store/store';
 
 const tabs: ITabs[] = [
   {
@@ -77,7 +77,6 @@ const SignUp = () => {
       }
     }
   };
-
 
   return (
     <main>
