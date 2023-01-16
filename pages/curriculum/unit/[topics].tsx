@@ -109,6 +109,28 @@ export default function Unit() {
     }
   };
 
+  const getLessonDate = (date: string)=>{
+    const dates = date.split("-");
+    const month = parseInt(dates[1]);
+    const day = parseInt(dates[2]);
+    const months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+    return `${months[month < 10 && month.toString().length === 2 ? parseInt(month.toString()[1]) : month ]} ${day}`;
+  };
+
+
   return (
     <div>
       <GeneralNav />
@@ -273,7 +295,7 @@ export default function Unit() {
                     <div className="border-r-2 flex items-center sm:gap-5 lg:gap-0 sm:pr-[1rem] sm:py-2 md:pr-[1.5rem] border-[#E6E6E6] py-5 pr-[4rem]  justify-between w-full">
                       <div className="flex items-center sm:gap-3 lg:gap-7">
                         <FaGripLinesVertical className="text-[#A0A0A0] text-[1.1rem] font-thin" />
-                        <p className="font-bold sm:text-[15px] lg:text-[20px]">{data.title}</p>
+                        <p className="font-bold sm:text-[15px] lg:text-[20px]">{data.topic.title}</p>
                         {active.includes(data.id) && (
                           <p
                             onClick={() => setShowPreview(true)}
@@ -309,14 +331,13 @@ export default function Unit() {
                           <div className="md:flex-col lg:flex-row gap-[3rem]">
                             <p className=" md:text-[12px]  lg:text-[18px] font-bold">Description</p>
                             <p className="md:text-[12px] lg:text-[16px] ">
-                              In this lesson students will learn the basics of loops and how to
-                              apply loops into their programs.
+                              {data.topic.description}
                             </p>
                           </div>
                           <div className="flex items-center gap-[3rem] mt-4">
                             <p className="md:text-[12px]  lg:text-[18px] font-bold">Date Range</p>
                             <div className="flex items-center gap-[2rem]">
-                              <p className="sm:text-[12px] lg:text-[16px] ">April 10 - April 17</p>
+                              <p className="sm:text-[12px] lg:text-[16px] ">{getLessonDate(data.start_date)} - {getLessonDate(data.end_date)}</p>
                               <p className="sm:text-[12px] lg:text-[16px] underline">edit</p>
                             </div>
                           </div>
