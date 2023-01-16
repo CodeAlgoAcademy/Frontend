@@ -15,7 +15,7 @@ const ErrorPage = () => {
         <h1 className="text-orange-600 font-bold text-[64px] md:text-[100px] lg:text-[150px]">
           Oops!
         </h1>
-        <p className="text-[18px] text-gray-800 font-bold">The requested page doesn't exist</p>
+        <p className="text-[18px] text-gray-800 font-bold">The requested page {"doesn't"} exist</p>
 
         <button
           className="text-white flex gap-x-2 items-center py-4 px-6 text-[15px] rounded-full bg-orange-600 font-bold"
