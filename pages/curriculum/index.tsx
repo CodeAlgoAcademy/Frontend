@@ -18,6 +18,7 @@ import { deleteCurriculum, getAllCurriculums } from 'services/curriculumService'
 import { IAllCurriculum, Icurriculum } from 'types/interfaces';
 import { BiArrowBack } from 'react-icons/bi';
 import SingleCurriculum from '@/components/curriculum/singleCurriculum';
+import { getDate } from 'utils/getDate';
 
 export default function Index() {
   const [past, setPast] = useState<boolean>(false);
@@ -65,9 +66,7 @@ export default function Index() {
     setActive('upcoming');
   };
 
-  const todayDate = `${new Date().getFullYear()}-${
-    new Date().getMonth() + 1
-  }-${new Date().getDate()}`;
+  const todayDate = getDate();
 
   const currentCurriculum = curriculum?.filter((tempCurriculum: Icurriculum) => {
     if (tempCurriculum.class_model === id) {

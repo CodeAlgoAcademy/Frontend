@@ -13,65 +13,81 @@ import { getConversations, getOpenMesssages } from 'store/messagesSlice';
 import { openErrorModal } from 'store/fetchSlice';
 import http from 'axios.config';
 
-const client = new W3CWebSocket('wss://sea-lion-app-43ury.ondigitalocean.app/chat/websocket/');
-
+// const headers = {
+//     Authorization: "Bearer " + getAccessToken()
+// }
+const client = new W3CWebSocket(
+  `wss://sea-lion-app-43ury.ondigitalocean.app/chat/websocket/?Authorization=${getAccessToken()}`,
+);
+// const client = new WebSocket(
+//   `wss://sea-lion-app-43ury.ondigitalocean.app/chat/websocket/?authorization=${getAccessToken()}}`
+// );
 const ChatRoom = () => {
   const { openedMessageOwner, openedMessage } = useSelector((state: RootState) => state.messages);
+
   const { email } = useSelector((state: RootState) => state.user);
-  const [messages, setMessages] = useState<IMessage[]>([...openedMessage]);
+  const [messages, setMessages] = useState<IMessage[]>(openedMessage ? [...openedMessage] : []);
   const [typingText, setTypingText] = useState<string>('');
   const dispatch = useDispatch();
 
-  const onSubmit = () => {
-    client.send(
-      JSON.stringify({
-        type: 'chat.message',
-        text: typingText,
-        receiver: openedMessageOwner.id,
-      }),
-    );
-  };
+  console.log(openedMessageOwner);
+  // const send_a_message = async () => {
+  //   if (openedMessageOwner.id) {
+  //     if (typingText !== '') {
+  //       const text = typingText;
+  //       setTypingText('');
+  //       const { data } = await http.post(
+  //         `/chat/teacher/message/${openedMessageOwner.id}`,
+  //         {
+  //           text: text,
+  //         },
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${getAccessToken()}`,
+  //           },
+  //         },
+  //       );
 
-  const send_a_message = async () => {
-    if (openedMessageOwner.id) {
-      if (typingText !== '') {
-        const text = typingText;
-        setTypingText('');
-        const { data } = await http.post(
-          `/chat/teacher/message/${openedMessageOwner.id}`,
-          {
-            text: text,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${getAccessToken()}`,
-            },
-          },
-        );
-
-        dispatch(getOpenMesssages());
-        dispatch(getConversations());
-      }
-    } else {
-      dispatch(openErrorModal({ errorText: ['No user to send a message'] }));
-    }
-  };
+  //       dispatch(getOpenMesssages());
+  //       dispatch(getConversations());
+  //     }
+  //   } else {
+  //     dispatch(openErrorModal({ errorText: ['No user to send a message'] }));
+  //   }
+  // };
   const updateTypingText = (e: ChangeEvent<HTMLInputElement>) => {
     setTypingText(e.target.value);
   };
+
+  const handleSend: any = (e: ChangeEvent<HTMLInputElement>) => {
+    if (typingText !== '') {
+      e.preventDefault();
+      client.send(
+        JSON.stringify({
+          type: 'chat.message',
+          text: typingText,
+          receiver: openedMessageOwner.id,
+        }),
+      );
+      dispatch(getOpenMesssages());
+      setTypingText('');
+    }
+  };
+
   useEffect(() => {
     client.onopen = () => {
       console.log('Websocket Client Connected...');
     };
 
-    client.onmessage = (message) => {
-      console.log(message);
+    client.onmessage = (message: any) => {
+      const dataFromServer = JSON.parse(message.data);
+      console.log('serverr reply', dataFromServer);
     };
   }, []);
 
   useEffect(() => {
     dispatch(getOpenMesssages());
-  }, [openedMessageOwner]);
+  }, []);
   useEffect(() => {
     openedMessage && setMessages([...openedMessage]);
   }, [openedMessage]);
@@ -81,7 +97,7 @@ const ChatRoom = () => {
       <div className={styles.header}>
         <Avatar src="" alt="" />
         <p className="font-bold text-sm capitalize">
-          {openedMessageOwner.firstName} {openedMessageOwner.lastName}
+          {openedMessageOwner?.firstName} {openedMessageOwner?.lastName}
         </p>
       </div>
       <div className={styles.chatContainer}>
@@ -105,7 +121,7 @@ const ChatRoom = () => {
           <IconButton>
             <GrAttachment size={20} />
           </IconButton>
-          <form onSubmit={() => {}} className="w-full">
+          <form className="w-full" onSubmit={handleSend}>
             <input
               placeholder="Send Message..."
               className={styles.input}
@@ -118,12 +134,7 @@ const ChatRoom = () => {
             <IconButton>
               <BsEmojiSmile size={20} />
             </IconButton>
-            <IconButton
-              onClick={() => {
-                send_a_message();
-                onSubmit();
-              }}
-            >
+            <IconButton onClick={handleSend}>
               <BiSend size={20} />
             </IconButton>
           </div>

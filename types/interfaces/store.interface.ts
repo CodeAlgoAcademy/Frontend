@@ -1,5 +1,4 @@
 // =============SLICES INTERFACES AND TYPES=============
-
 export interface IUser {
   id: number;
   firstname: string;
@@ -27,6 +26,10 @@ export interface IModal {
   showAddStudents: boolean;
   colorsModalOpen: boolean;
   addUnitModalOpen: boolean;
+}
+
+export interface IAllTeachers {
+  allTeachers: IAllTeachers[];
 }
 
 export interface IAllClasses {
@@ -310,4 +313,15 @@ export interface INotes {
 
 export interface Schedule {
   allSchedule: [];
+}
+
+export interface newLesson {
+  topic: {
+    title: string;
+    description: string;
+  };
+  students: Student[];
+  start_date: string;
+  end_date: string;
+  status: 'published' | 'unpublished';
 }
