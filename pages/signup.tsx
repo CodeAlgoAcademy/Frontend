@@ -12,8 +12,7 @@ import { ITabs } from '../types/interfaces';
 import { useRouter } from 'next/router';
 import { updateUser, clearFields } from 'store/authSlice';
 import { signUpUser } from 'services/authService';
-import { useSelector } from 'react-redux';
-import { RootState } from 'store/store';
+import { RootState } from 'store/store'; 
 
 const tabs: ITabs[] = [
   {
