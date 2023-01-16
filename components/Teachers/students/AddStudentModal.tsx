@@ -74,7 +74,6 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
         email,
         username,
       };
-      console.log(data);
 
       dispatch(addStudent(data)).then((data: any) => {
         if (data.payload?.status === 200) {

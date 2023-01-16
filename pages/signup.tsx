@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ReactElement, ChangeEvent } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Head from 'next/head';
 import Link from 'next/link';
 import CleverBtn from '../components/cleverBtn';
@@ -41,8 +41,6 @@ const SignUp = () => {
     tabName: '',
     component: <></>,
   });
-
-  console.log(checkState);
   useEffect(() => {
     const tab = tabs.find((tab) => {
       if (tab.tabName === activeTab) {
@@ -81,9 +79,6 @@ const SignUp = () => {
     }
   };
 
-  useEffect(() => {
-    // dispatch(clearFields());g
-  }, []);
 
   return (
     <main>

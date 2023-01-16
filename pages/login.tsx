@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import CleverBtn from '../components/cleverBtn';
@@ -10,6 +10,8 @@ import { loginUser } from '../services/authService';
 import { clearFields, updateUser } from 'store/authSlice';
 import styles from '../styles/styles';
 import { useRouter } from 'next/router';
+import { useGoogleReCaptcha, GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
+import axios from 'axios';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -29,7 +31,9 @@ const Login = () => {
       value: password,
     },
   ];
-
+  const [recaptchaVerified, setRecaptchaVerified] = useState(false);
+  const [recaptchaLoading, setRecaptchaLoading] = useState(false);
+  const [notification, setNotification] = useState('');
   const login = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = await dispatch(loginUser());
@@ -41,9 +45,36 @@ const Login = () => {
       }
     }
   };
+  const { executeRecaptcha } = useGoogleReCaptcha();
+
+  const handleReCaptchaVerify = useCallback(async () => {
+    if (!executeRecaptcha) {
+      console.log('Execute recaptcha not yet available');
+      return;
+    }
+    const token = await executeRecaptcha('yourAction');
+    fetch('/api/recaptcha', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        gRecaptchaToken: token,
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res?.status === 'success') {
+          setRecaptchaVerified(true);
+        }
+        setRecaptchaLoading(false);
+        setNotification(res?.message);
+      });
+  }, [executeRecaptcha]);
 
   useEffect(() => {
-    // dispatch(clearFields());
+    dispatch(clearFields());
   }, []);
 
   return (
@@ -51,7 +82,6 @@ const Login = () => {
       <Head>
         <title>CodeAlgo Academy | Login</title>
       </Head>
-
       <section className="w-full min-h-screen bg-[#E5E5E5]  flex justify-center items-center">
         <div className="bg-white w-[95vw] max-w-[600px] mx-auto rounded-md p-[40px] md:p-[50px] shadow-md">
           {/* title */}
@@ -116,16 +146,75 @@ const Login = () => {
               </Link>
               <button
                 type="submit"
+                disabled={!recaptchaVerified}
                 className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md"
               >
                 Log In
               </button>
             </div>
           </form>
+          <div className="inline w- mx-auto">
+            <span className="flex items-center gap-8 mt-6 justify-center relative">
+              {recaptchaLoading ? (
+                <div className="relative w-3 h-3">
+                  <div className="spinner center">
+                    <div className="spinner-blade"></div>
+                    <div className="spinner-blade"></div>
+                    <div className="spinner-blade"></div>
+                    <div className="spinner-blade"></div>
+                    <div className="spinner-blade"></div>
+                    <div className="spinner-blade"></div>
+                    <div className="spinner-blade"></div>
+                    <div className="spinner-blade"></div>
+                    <div className="spinner-blade"></div>
+                    <div className="spinner-blade"></div>
+                    <div className="spinner-blade"></div>
+                    <div className="spinner-blade"></div>
+                  </div>
+                </div>
+              ) : (
+                <label className="checkbox_container block relative cursor-pointer text-[20px] select-none">
+                  <input
+                    checked={recaptchaVerified}
+                    type="checkbox"
+                    className="absolute opacity-0 cursor-pointer h-0 w-0"
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        handleReCaptchaVerify();
+                        setRecaptchaLoading(true);
+                      }
+                    }}
+                  />
+                  <div
+                    className="box_checkmark checkmark relative left-0 h-[1.3em] w-[1.3em] bg-[#606062] rounded-[5px] shadow-md"
+                    style={{ top: '-12px' }}
+                  ></div>
+                </label>
+              )}
+              {notification === 'Verification Successfull' && (
+                <p className="text-green-500 text-sm font-semibold text-center">{notification}</p>
+              )}
+              {notification === 'Verification Failed' ||
+                (notification === 'Error submitting verification data' && (
+                  <p className="text-red-500 text-sm font-semibold text-center">{notification}</p>
+                ))}
+              {notification === '' && (
+                <p className="text-sm font-semibold text-center">
+                  Click to verify you're not a robot.
+                </p>
+              )}
+            </span>
+          </div>
         </div>
       </section>
     </main>
   );
 };
 
-export default Login;
+export default function LoginPage(): React.ReactElement {
+  return (
+    <GoogleReCaptchaProvider reCaptchaKey={`${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}>
+      <Login />
+    </GoogleReCaptchaProvider>
+  );
+}
