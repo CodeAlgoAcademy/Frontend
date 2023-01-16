@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { FaChevronLeft, FaPaperPlane, FaTimes } from 'react-icons/fa';
 import http from 'axios.config';
 
-const index = () => {
+const ChangePassword = () => {
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
@@ -87,4 +87,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default ChangePassword;
