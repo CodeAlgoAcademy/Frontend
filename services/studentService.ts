@@ -27,7 +27,7 @@ const getStudents = async (id: string) => {
       Authorization: `Bearer ${getAccessToken()}`,
     },
   });
-  console.log(response.data);
+  console.log(response);
   return response.data;
 };
 

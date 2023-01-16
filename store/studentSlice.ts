@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import http from 'axios.config';
 import studentService from 'services/studentService';
 import { IUserStudent, Student } from 'types/interfaces';
@@ -37,10 +37,12 @@ export const getStudents: any = createAsyncThunk('get/students', async (_, thunk
   try {
     return await studentService.getStudents(id);
   } catch (error: any) {
+    console.log(error);
     const message =
       (error.response && error.response.data && error.response.data.message) ||
       error.message ||
       error.toString();
+    console.log(message);
     return thunkAPI.rejectWithValue(message);
   }
 });
@@ -183,11 +185,11 @@ export const studentSlice = createSlice({
       .addCase(addStudent.fulfilled, (state, action) => {
         console.log(action.payload);
       })
-      .addCase(getStudents.pending, () => {
+      .addCase(getStudents.pending, (state: IUserStudent) => {
         console.log('Loading...');
       })
-      .addCase(getStudents.rejected, (_, action) => {
-        console.log(`Error: ${action.payload}`);
+      .addCase(getStudents.rejected, (state: IUserStudent, { payload }: PayloadAction) => {
+        console.log(`Error: ${payload}`);
       })
       .addCase(getStudents.fulfilled, (state, action) => {
         console.log(action.payload);
