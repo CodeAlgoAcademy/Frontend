@@ -160,7 +160,7 @@ export const updateAccountType: any = createAsyncThunk(
           firstname,
           lastname,
           email,
-          country,
+          country : country ? country : "Canada",
           schoolCountry,
           schoolName,
           is_student,
