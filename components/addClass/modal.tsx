@@ -13,11 +13,11 @@ const Modal = () => {
   const { color } = useSelector((state: RootState) => state.addClass.class);
   const dispatch = useDispatch();
 
-  if (!addClassModalOpen) {
-    return <></>;
-  }
   return (
-    <section className={`${styles.modalOverlay} bg-[rgba(0,0,0,.25)]`}>
+    <section
+      className={`${styles.modalOverlay} bg-[rgba(0,0,0,.25)] ${!addClassModalOpen && 'hidden'}`}
+      data-testid="addClassModal"
+    >
       {/* modal itself */}
       <main className="w-[90vw] max-w-[900px] mx-auto bg-white rounded-md flex shadow-lg relative">
         <span

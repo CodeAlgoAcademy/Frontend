@@ -24,7 +24,7 @@ export const loginUser: any = createAsyncThunk('authSlice/loginUser', async (nam
     };
   } catch (error: any) {
     dispatch(closePreloader());
-
+    console.log(error);
     if (error.response.data.non_field_errors) {
       dispatch(
         openErrorModal({
@@ -33,12 +33,7 @@ export const loginUser: any = createAsyncThunk('authSlice/loginUser', async (nam
       );
     }
 
-    const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString();
-
-    return thunkApi.rejectWithValue(message);
+    return thunkApi.rejectWithValue(error.response.data);
   }
 });
 
@@ -91,15 +86,16 @@ export const signUpUser: any = createAsyncThunk('authSlice/signUpUser', async (n
           errorText: [error.response.data.non_field_errors[0]],
         }),
       );
+    } else if (error.response.data.email) {
+      dispatch(
+        openErrorModal({
+          errorText: [...error.response.data.email],
+        }),
+      );
     } else {
-      dispatch(openErrorModal({ errorText: error.message }));
+      dispatch(openErrorModal({ errorText: [error.message] }));
     }
-    const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString();
-
-    return thunkApi.rejectWithValue(message);
+    return thunkApi.rejectWithValue(error);
   }
 });
 
@@ -164,7 +160,7 @@ export const updateAccountType: any = createAsyncThunk(
           firstname,
           lastname,
           email,
-          country,
+          country : country ? country : "Canada",
           schoolCountry,
           schoolName,
           is_student,

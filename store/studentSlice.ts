@@ -210,5 +210,4 @@ export const studentSlice = createSlice({
   },
 });
 
-export const {} = studentSlice.actions;
 export default studentSlice.reducer;

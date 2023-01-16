@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getAllLessons } from 'services/lessonService';
+import { addLessons, getAllLessons } from 'services/lessonService';
 
 const initialState = {
   lessons: [],
