@@ -49,7 +49,8 @@ export const addLessons: any = createAsyncThunk(
           },
         },
       );
-      dispatch(closePreloader());
+      dispatch(closePreloader())
+      return data;
     } catch (error: any) {
       dispatch(openErrorModal({ errorText: [error.message || error.response.data] }));
       console.log(error.message);
