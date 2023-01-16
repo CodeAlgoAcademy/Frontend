@@ -1,22 +1,22 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import Head from 'next/head';
-import Link from 'next/link';
-import CleverBtn from '../components/cleverBtn';
-import GoogleBtn from '../components/googleBtn';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store/store';
-import { IInputFields } from '../types/interfaces';
-import { loginUser } from '../services/authService';
-import { clearFields, updateUser } from 'store/authSlice';
-import styles from '../styles/styles';
-import { useRouter } from 'next/router';
-import { useGoogleReCaptcha, GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
-import axios from 'axios';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import Head from 'next/head'
+import Link from 'next/link'
+import CleverBtn from '../components/cleverBtn'
+import GoogleBtn from '../components/googleBtn'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../store/store'
+import { IInputFields } from '../types/interfaces'
+import { loginUser } from '../services/authService'
+import { clearFields, updateUser } from 'store/authSlice'
+import styles from '../styles/styles'
+import { useRouter } from 'next/router'
+import { useGoogleReCaptcha, GoogleReCaptchaProvider } from 'react-google-recaptcha-v3'
+import axios from 'axios'
 
 const Login = () => {
-  const dispatch = useDispatch();
-  const { email, password } = useSelector((state: RootState) => state.user.auth);
-  const router = useRouter();
+  const dispatch = useDispatch()
+  const { email, password } = useSelector((state: RootState) => state.user.auth)
+  const router = useRouter()
   const inputFields: IInputFields[] = [
     {
       type: 'email',
@@ -30,29 +30,29 @@ const Login = () => {
       name: 'password',
       value: password,
     },
-  ];
-  const [recaptchaVerified, setRecaptchaVerified] = useState(false);
-  const [recaptchaLoading, setRecaptchaLoading] = useState(false);
-  const [notification, setNotification] = useState('');
+  ]
+  const [recaptchaVerified, setRecaptchaVerified] = useState(false)
+  const [recaptchaLoading, setRecaptchaLoading] = useState(false)
+  const [notification, setNotification] = useState('')
   const login = async (event: ChangeEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = await dispatch(loginUser());
+    event.preventDefault()
+    const data = await dispatch(loginUser())
     if (!data?.error?.message) {
       if (data?.payload?.is_teacher) {
-        router.push('/addClass');
+        router.push('/addClass')
       } else {
-        router.push('/comingSoon');
+        router.push('/comingSoon')
       }
     }
-  };
-  const { executeRecaptcha } = useGoogleReCaptcha();
+  }
+  const { executeRecaptcha } = useGoogleReCaptcha()
 
   const handleReCaptchaVerify = useCallback(async () => {
     if (!executeRecaptcha) {
-      console.log('Execute recaptcha not yet available');
-      return;
+      console.log('Execute recaptcha not yet available')
+      return
     }
-    const token = await executeRecaptcha('yourAction');
+    const token = await executeRecaptcha('yourAction')
     fetch('/api/recaptcha', {
       method: 'POST',
       headers: {
@@ -66,16 +66,16 @@ const Login = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res?.status === 'success') {
-          setRecaptchaVerified(true);
+          setRecaptchaVerified(true)
         }
-        setRecaptchaLoading(false);
-        setNotification(res?.message);
-      });
-  }, [executeRecaptcha]);
+        setRecaptchaLoading(false)
+        setNotification(res?.message)
+      })
+  }, [executeRecaptcha])
 
   useEffect(() => {
-    dispatch(clearFields());
-  }, []);
+    dispatch(clearFields())
+  }, [])
 
   return (
     <main>
@@ -84,7 +84,7 @@ const Login = () => {
       </Head>
       <section className="w-full min-h-screen bg-[#E5E5E5]  flex justify-center items-center">
         <div className="bg-white w-[95vw] max-w-[600px] mx-auto rounded-md p-[40px] md:p-[50px] shadow-md">
-          {/* title */}
+          {/* title */ }
           <div className="flex flex-col gap-y-1 mb-4">
             <h1 className="md:text-3xl text-center text-lg font-bold">
               Welcome to CodeAlgo Academy
@@ -97,40 +97,40 @@ const Login = () => {
             </p>
           </div>
 
-          {/* providers button */}
+          {/* providers button */ }
           <div className="flex flex-col gap-y-2 md:gap-y-0 md:flex-row gap-x-6">
             <CleverBtn />
             <GoogleBtn />
           </div>
 
-          {/* or span */}
+          {/* or span */ }
           <span className="text-gray-700 block text-center my-5 relative after:absolute after:top-[50%] after:-translate-y-[50%] after:right-0 after:w-[42%] after:h-[1px] after:bg-gray-700 before:absolute before:top-[50%] before:-translate-y-[50%] before:left-0 before:w-[42%] before:h-[1px] before:bg-gray-700">
             OR
           </span>
 
-          <form className="w-full" onSubmit={login}>
-            {/* inputs */}
+          <form className="w-full" onSubmit={ login }>
+            {/* inputs */ }
             <div className="flex flex-col gap-y-3 mb-6 items-start">
-              {inputFields.map((inputField: IInputFields, index: number) => {
-                const { type, placeholder, name, value } = inputField;
+              { inputFields.map((inputField: IInputFields, index: number) => {
+                const { type, placeholder, name, value } = inputField
                 return (
                   <input
-                    key={index}
-                    type={type}
-                    placeholder={placeholder}
-                    name={name}
-                    value={value}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      dispatch(updateUser({ key: name, value: e.target.value }));
-                    }}
-                    minLength={name === 'password' ? 8 : 0}
+                    key={ index }
+                    type={ type }
+                    placeholder={ placeholder }
+                    name={ name }
+                    value={ value }
+                    onChange={ (e: ChangeEvent<HTMLInputElement>) => {
+                      dispatch(updateUser({ key: name, value: e.target.value }))
+                    } }
+                    minLength={ name === 'password' ? 8 : 0 }
                     required
-                    className={styles.input}
+                    className={ styles.input }
                   />
-                );
-              })}
+                )
+              }) }
             </div>
-            {/* login button */}
+            {/* login button */ }
             <span className="flex flex-row items-center gap-x-2 mt-4">
               <input type="checkbox" id="terms" className="accent-mainPurple" required />
               <label htmlFor="terms">I accept the terms and conditions</label>
@@ -144,7 +144,7 @@ const Login = () => {
               </Link>
               <button
                 type="submit"
-                disabled={!recaptchaVerified}
+                disabled={ !recaptchaVerified }
                 className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md"
               >
                 Log In
@@ -153,7 +153,7 @@ const Login = () => {
           </form>
           <div className="inline w- mx-auto">
             <span className="flex items-center gap-8 mt-6 justify-center relative">
-              {recaptchaLoading ? (
+              { recaptchaLoading ? (
                 <div className="relative w-3 h-3">
                   <div className="spinner center">
                     <div className="spinner-blade"></div>
@@ -173,46 +173,46 @@ const Login = () => {
               ) : (
                 <label className="checkbox_container block relative cursor-pointer text-[20px] select-none">
                   <input
-                    checked={recaptchaVerified}
+                    checked={ recaptchaVerified }
                     type="checkbox"
                     className="absolute opacity-0 cursor-pointer h-0 w-0"
-                    onChange={(e) => {
+                    onChange={ (e) => {
                       if (e.target.checked) {
-                        handleReCaptchaVerify();
-                        setRecaptchaLoading(true);
+                        handleReCaptchaVerify()
+                        setRecaptchaLoading(true)
                       }
-                    }}
+                    } }
                   />
                   <div
-                    className="box_checkmark checkmark relative left-0 h-[1.3em] w-[1.3em] bg-[#606062] rounded-[5px] shadow-md"
-                    style={{ top: '-12px' }}
+                    className="box_checkmark checkmark relative left-0 h-[1.3em] w-[1.3em] bg-[#606062] border rounded-[5px] shadow-md"
+                    style={ { top: '-12px' } }
                   ></div>
                 </label>
-              )}
-              {notification === 'Verification Successfull' && (
-                <p className="text-green-500 text-sm font-semibold text-center">{notification}</p>
-              )}
-              {notification === 'Verification Failed' ||
+              ) }
+              { notification === 'Verification Successfull' && (
+                <p className="text-green-500 text-sm font-semibold text-center">{ notification }</p>
+              ) }
+              { notification === 'Verification Failed' ||
                 (notification === 'Error submitting verification data' && (
-                  <p className="text-red-500 text-sm font-semibold text-center">{notification}</p>
-                ))}
-              {notification === '' && (
+                  <p className="text-red-500 text-sm font-semibold text-center">{ notification }</p>
+                )) }
+              { notification === '' && (
                 <p className="text-sm font-semibold text-center">
                   Click to verify you're not a robot.
                 </p>
-              )}
+              ) }
             </span>
           </div>
         </div>
       </section>
     </main>
-  );
-};
+  )
+}
 
-export default function LoginPage(): React.ReactElement {
+export default function LoginPage (): React.ReactElement {
   return (
-    <GoogleReCaptchaProvider reCaptchaKey={`${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}>
+    <GoogleReCaptchaProvider reCaptchaKey={ `${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}` }>
       <Login />
     </GoogleReCaptchaProvider>
-  );
+  )
 }
