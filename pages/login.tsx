@@ -200,7 +200,7 @@ const Login = () => {
                 ))}
               {notification === '' && (
                 <p className="text-sm font-semibold text-center">
-                  Click to verify you're not a robot.
+                  Click to verify {"you're"} not a robot.
                 </p>
               )}
             </span>
