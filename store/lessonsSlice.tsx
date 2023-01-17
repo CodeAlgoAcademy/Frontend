@@ -3,12 +3,17 @@ import { addLessons, getAllLessons } from 'services/lessonService';
 
 const initialState = {
   lessons: [],
+  lessonOpened: {},
 };
 
 const lessonsSlice = createSlice({
   name: 'allLessons',
   initialState,
-  reducers: {},
+  reducers: {
+    updateLessonOpened: (state, action: PayloadAction<any>) => {
+      state.lessonOpened = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getAllLessons.pending, (state: any, action: PayloadAction) => {
       console.log('pending');
@@ -21,5 +26,7 @@ const lessonsSlice = createSlice({
       });
   },
 });
+
+export const { updateLessonOpened } = lessonsSlice.actions;
 
 export default lessonsSlice.reducer;

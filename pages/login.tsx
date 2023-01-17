@@ -146,7 +146,7 @@ const Login = () => {
               </Link>
               <button
                 type="submit"
-                disabled={!recaptchaVerified}
+                // disabled={ !recaptchaVerified }
                 className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md"
               >
                 Log In
@@ -186,7 +186,7 @@ const Login = () => {
                     }}
                   />
                   <div
-                    className="box_checkmark checkmark relative left-0 h-[1.3em] w-[1.3em] bg-[#606062] rounded-[5px] shadow-md"
+                    className="box_checkmark checkmark relative left-0 h-[1.3em] w-[1.3em] bg-[#606062] border rounded-[5px] shadow-md"
                     style={{ top: '-12px' }}
                   ></div>
                 </label>

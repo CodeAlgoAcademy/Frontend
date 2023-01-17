@@ -59,25 +59,28 @@ export const addLessons: any = createAsyncThunk(
   },
 );
 
-
-export const editLesson:any = createAsyncThunk("edit/lesson", async (data:any, thunkApi)=>{
+export const editLesson: any = createAsyncThunk('edit/lesson', async (data: any, thunkApi) => {
   const state: any = thunkApi.getState();
   const { currentUnitInView } = state.unit;
   const dispatch = thunkApi.dispatch;
-  dispatch(openPreloader({loadingText: "Editing Lesson"}));
-  try{
-    const {data:lesson} = await http.put(`academics/curriculums/units/${currentUnitInView.id}/lessons/${data.id}/`, {
-      ...data
-    }, {
-      headers: {
-        Authorization: `Bearer ${getAccessToken()}`,
-      }
-    });
+  dispatch(openPreloader({ loadingText: 'Editing Lesson' }));
+  try {
+    const { data: lesson } = await http.put(
+      `academics/curriculums/units/${currentUnitInView.id}/lessons/${data.id}/`,
+      {
+        ...data,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      },
+    );
     dispatch(closePreloader());
     return lesson;
-  }catch(error:any){
+  } catch (error: any) {
     dispatch(openErrorModal({ errorText: [error.message || error.response.data] }));
-      console.log(error.message);
-      dispatch(closePreloader());
+    console.log(error.message);
+    dispatch(closePreloader());
   }
-})
+});

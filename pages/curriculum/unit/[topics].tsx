@@ -17,7 +17,7 @@ import { openErrorModal } from 'store/fetchSlice';
 import http from 'axios.config';
 import { addLessons, getAllLessons } from 'services/lessonService';
 import { RootState } from 'store/store';
-import { newLesson } from 'types/interfaces';
+import { ISingleStudent, newLesson } from 'types/interfaces';
 import { getDate } from 'utils/getDate';
 import SingleLesson from '@/components/curriculum/unit/singleLesson';
 
@@ -36,7 +36,8 @@ export default function Unit() {
     end_date: getDate(),
     status: 'published',
   });
-
+  const [studentsAdded, setStudentsAdded] = useState<any[]>([]);
+  const [aboutToEditStudent, setAboutToEditStudent] = useState<boolean>(false);
   const updateTitle = (value: string) => {
     setLessonDetails({ ...lessonDetails, topic: { ...lessonDetails.topic, title: value } });
   };
@@ -52,7 +53,19 @@ export default function Unit() {
   const updateStatus = (value: 'published' | 'unpublished') => {
     setLessonDetails({ ...lessonDetails, status: value });
   };
+  const updateStudentsAddedForEachLesson = (value: any) => {
+    setStudentsAdded([...studentsAdded, value]);
+  };
 
+  const removeStudentAddedForEachLesson = (value: any) => {
+    setStudentsAdded(() => studentsAdded.filter((student) => student.id != value.id));
+  };
+  const addAllStudentsForEachLesson = (students: any[]) => {
+    setStudentsAdded(students);
+  };
+  const removeAllStudentsAddedForEachLesson = () => {
+    setStudentsAdded([]);
+  };
   const dispatch = useDispatch();
 
   const router = useRouter();
@@ -272,12 +285,25 @@ export default function Unit() {
                   setShowPreview={setShowPreview}
                   active={active}
                   handleClick={handleClick}
+                  studentsAdded={studentsAdded}
+                  aboutToEditStudent={aboutToEditStudent}
+                  cancelPresence={cancelPresence}
+                  addAllStudentsForEachLesson={addAllStudentsForEachLesson}
                 />
               );
             })}
         </div>
         {/* Add student modal component  */}
-        <AddStudent showModal={showModal} cancelPresence={cancelPresence} />
+        <AddStudent
+          showModal={showModal}
+          cancelPresence={cancelPresence}
+          studentsAdded={studentsAdded}
+          updateStudentsAddedForEachLesson={updateStudentsAddedForEachLesson}
+          removeStudentAddedForEachLesson={removeStudentAddedForEachLesson}
+          addAllStudentsForEachLesson={addAllStudentsForEachLesson}
+          removeAllStudentsAddedForEachLesson={removeAllStudentsAddedForEachLesson}
+          setAboutToEditStudent={setAboutToEditStudent}
+        />
         {/* preview modal components */}
         <PreviewModal showPreview={showPreview} cancelPreview={cancelPreview} />
       </div>
