@@ -31,6 +31,32 @@ export const addStudent: any = createAsyncThunk('new/student', async (data: Stud
   }
 });
 
+export const editStudent: any = createAsyncThunk("edit/student", async (student:any, thunkApi)=>{
+  const state:any  = thunkApi.getState();
+  const {id} = state.currentClass;
+  const dispatch = thunkApi.dispatch;
+  try {
+    const response = await http.put(`/academics/class/${id}/student/${student.id}`,{
+      student: {
+        firstName: student.firstName,
+        lastName: student.lastName,
+        email: student.email
+      }
+    },{
+      headers: {
+        Authorization: `Bearer ${getAccessToken()}`
+      }
+    });
+    return response;
+  } catch (error:any) {
+    const message = (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+      dispatch(openErrorModal({errorText: [message]}))
+    return thunkApi.rejectWithValue(message);
+  }
+})
+
 export const getStudents: any = createAsyncThunk('get/students', async (_, thunkAPI) => {
   const state: any = thunkAPI.getState();
   const { id } = state.currentClass;
@@ -145,7 +171,7 @@ export const studentsBulkImport: any = createAsyncThunk(
     const state: any = thunkApi.getState();
     const dispatch = thunkApi.dispatch;
     const { id } = state.currentClass;
-
+    dispatch(openPreloader({loadingText: "Adding Student"}))
     try {
       const { data } = await http.post(`/academics/class/${id}/student/file`, formData, {
         headers: {
@@ -153,18 +179,19 @@ export const studentsBulkImport: any = createAsyncThunk(
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log(data);
+      dispatch(closePreloader());
     } catch (error: any) {
       if (error.response.status === 400)
         dispatch(
           openErrorModal({
             errorText: [
-              'Please upload a valid csv file, with column names as id, email, firstName, lastName',
+              'Please upload a valid csv file, with column names as id, email, firstName, lastName, username',
             ],
           }),
         );
+        dispatch(closePreloader());
       return thunkApi.rejectWithValue(
-        'Please upload a valid csv file, with column names as id, email, firstName, lastName',
+        'Please upload a valid csv file, with column names as id, email, firstName, lastName, username',
       );
     }
   },

@@ -205,6 +205,9 @@ a {
 .checkbox-container input:checked ~ .checkmark {
   background-color: #f28e2c;
 }
+.checkbox-container input.accent-mainPurple:checked ~ .checkmark{
+  @apply bg-mainPurple
+}
 
 .checkmark:after {
   content: '';
