@@ -113,7 +113,8 @@ const SingleStudent = ({
           <section className="fixed top-0 left-0 w-full min-h-screen bg-[rgba(0,0,0,0.5)] flex justify-center items-center z-20">
             <form className="w-[90vw] max-w-[400px] rounded-md bg-white shadow-md scale-up py-2 px-3 comment-tab">
               <h2 className="font-bold text-[20px]">
-                Comments on {student.firstName} {student.lastName}{"'"}s performance
+                Comments on {student.firstName} {student.lastName}
+                {"'"}s performance
               </h2>
               <div
                 className={`flex flex-col gap-y-2 mt-3 h-[90vh] max-h-[230px] overflow-y-scroll ${
