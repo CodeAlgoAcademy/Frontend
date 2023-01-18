@@ -80,7 +80,7 @@ export default function Unit() {
     try {
       console.log('payload', lessonDetails);
       const { data } = await http.post(
-        `/curriculums/units/${currentUnitInView.id}/lessons`,
+        `/academics/curriculums/units/${currentUnitInView.id}/lessons`,
         {
           lessonDetails,
         },
