@@ -32,38 +32,47 @@ export const addClass: any = createAsyncThunk(
     const {
       student,
       class: { className, grade, subject, coTeachers, roomNumber, color },
+      file,
     } = state.addClass;
     const { firstName, lastName, email } = state.addClass.student;
-    const options =
-      firstName && lastName && email
-        ? {
-            className,
-            grade,
-            subject,
-            roomNumber,
-            color,
-            student: {
-              firstName,
-              lastName,
-              email,
-            },
-          }
-        : {
-            className,
-            grade,
-            subject,
-            roomNumber,
-            color,
-          };
+    const formData = new FormData();
+    formData.append('className', className);
+    formData.append('grade', grade);
+    formData.append('subject', subject);
+    formData.append('color', color);
+    formData.append('roomNumber', roomNumber);
+    file && formData.append('file', file);
+    // const options =
+    //   firstName && lastName && email
+    //     ? {
+    //         className,
+    //         grade,
+    //         subject,
+    //         roomNumber,
+    //         color,
+    //         student: {
+    //           firstName,
+    //           lastName,
+    //           email,
+    //         },
+    //       }
+    //     : {
+    //         className,
+    //         grade,
+    //         subject,
+    //         roomNumber,
+    //         color,
+    //       };
+
     try {
       const { data } = await http.post(
         '/academics/class/',
-        {
-          ...options,
-        },
+
+        formData,
         {
           headers: {
             Authorization: `Bearer ${getAccessToken()}`,
+            'Content-Type': 'multipart/form-data',
           },
         },
       );

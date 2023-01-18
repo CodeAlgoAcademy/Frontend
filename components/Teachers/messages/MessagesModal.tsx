@@ -110,8 +110,10 @@ const MessagesModal = ({
 
   const [openedTab, setOpenedTab] = useState<string>('students');
 
+
   useEffect(() => {
     dispatch(getStudents());
+    dispatch(getTeachers());
     dispatch(getTeachers());
   }, []);
   return (

@@ -17,7 +17,14 @@ import { Sidebar, GeneralNav } from '../components';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../store/store';
 import { FcGoogle } from 'react-icons/fc';
-import { deleteSchedule, getSchedule, postSchedule, putSchedule } from 'services/scheduleService';
+import {
+  deleteSchedule,
+  getGoogleCalendar,
+  getSchedule,
+  googleCalendar,
+  postSchedule,
+  putSchedule,
+} from 'services/scheduleService';
 import { extend } from '@syncfusion/ej2-base';
 import { BsHandThumbsUp } from 'react-icons/bs';
 import { motion, useCycle } from 'framer-motion';
@@ -25,6 +32,7 @@ import { FaTimes } from 'react-icons/fa';
 import { FiAlertTriangle } from 'react-icons/fi';
 import { Schedule } from 'types/interfaces';
 import Image from 'next/image';
+import { useGoogleLogin } from '@react-oauth/google';
 
 const PropertyPane = (props: PropsWithChildren) => <div className="mt-5">{props.children}</div>;
 
@@ -86,6 +94,15 @@ function Calendar() {
     fetchSchedule();
   }, []);
 
+  const fetchGoogle = useGoogleLogin({
+    onSuccess: async (response) => {
+      const { access_token } = response;
+      await dispatch(googleCalendar(access_token));
+      await dispatch(getGoogleCalendar());
+    },
+    scope: 'https://www.googleapis.com/auth/calendar',
+  });
+
   return (
     <div className="min-h-[100vh] relative">
       <GeneralNav />
@@ -125,7 +142,7 @@ function Calendar() {
           <div className="flex space-x-2 justify-center pl-[2%] absolute left-[6px] top-8">
             <motion.button
               className="tooltip text-3xl border border-gray-400"
-              onTap={() => cycleY()}
+              onClick={() => fetchGoogle()}
             >
               <FcGoogle />
               <span className="tooltiptext text-sm font-semibold">Connect Google Calendar</span>
@@ -189,7 +206,8 @@ function Calendar() {
           </div>
         </div>
       </div>
-      <motion.div
+
+      {/* <motion.div
         className={`w-full h-full backdrop-blur-sm bg-gray-100/50 fixed left-0 z-50 flex justify-center items-center top-0`}
         animate={{ y: positionY }}
         transition={{ duration: 0.2 }}
@@ -226,7 +244,7 @@ function Calendar() {
             </motion.button>
           </div>
         </div>
-      </motion.div>
+      </motion.div> */}
     </div>
   );
 }

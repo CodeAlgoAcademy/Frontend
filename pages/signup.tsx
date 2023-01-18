@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ReactElement, ChangeEvent } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Head from 'next/head';
 import Link from 'next/link';
 import CleverBtn from '../components/cleverBtn';
@@ -12,7 +12,6 @@ import { ITabs } from '../types/interfaces';
 import { useRouter } from 'next/router';
 import { updateUser, clearFields } from 'store/authSlice';
 import { signUpUser } from 'services/authService';
-import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 
 const tabs: ITabs[] = [
@@ -36,7 +35,7 @@ const SignUp = () => {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<string | undefined>('Student');
   const [check, setCheck] = useState<boolean>(false);
-  const checkState = useSelector((state:RootState) => state.policyCheck.checked)
+  const checkState = useSelector((state: RootState) => state.policyCheck.checked);
   const [currentTab, setCurrentTab] = useState<ITabs>({
     tabName: '',
     component: <></>,
@@ -66,8 +65,8 @@ const SignUp = () => {
 
   const checkHandler = () => {
     setCheck(true);
-    router.push('/privacyPolicy')
-  }
+    router.push('/privacyPolicy');
+  };
 
   const signup = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -80,10 +79,6 @@ const SignUp = () => {
       }
     }
   };
-
-  useEffect(() => {
-    // dispatch(clearFields());g
-  }, []);
 
   return (
     <main>
@@ -129,7 +124,9 @@ const SignUp = () => {
 
           {/* title */}
           <div className="flex flex-col gap-y-1 mb-4">
-            <h1 className="md:text-3xl text-lg text-center font-bold">Welcome To CodeAcademy</h1>
+            <h1 className="md:text-3xl text-lg text-center font-bold">
+              Welcome To CodeAlgo Academy
+            </h1>
             <p className="text-grey-800 md:text-lg text-[16px] text-center">
               {"Let's get started"}
             </p>
@@ -150,7 +147,14 @@ const SignUp = () => {
             {/* display different components based on the active tab */}
             {currentTab?.component}
             <span className="flex flex-row items-center gap-x-2 mt-4">
-              <input type="checkbox" checked={checkState} onChange={checkHandler} id="terms" className="accent-mainPurple" required />
+              <input
+                type="checkbox"
+                checked={checkState}
+                onChange={checkHandler}
+                id="terms"
+                className="accent-mainPurple"
+                required
+              />
               <label htmlFor="terms">I accept the terms and conditions</label>
             </span>
             <div className="text-right mt-4">
@@ -167,7 +171,9 @@ const SignUp = () => {
             <p className="text-grey-800 text-left md:text-lg text-[15px]">
               Already have an account?{' '}
               <Link href="/login">
-                <a className="underline text-mainPurple">Sign In</a>
+                <a className="underline text-mainPurple" data-testid="sign-in">
+                  Sign In
+                </a>
               </Link>
             </p>
           </div>

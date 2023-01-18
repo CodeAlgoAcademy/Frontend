@@ -53,7 +53,7 @@ const rootReducer = combineReducers({
   addAssignment: newAssignmentReducer,
   allAssignments: allAssignmentsReducer,
   allTeachers: teacherReducer,
-  policyCheck: policySliceReducer
+  policyCheck: policySliceReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

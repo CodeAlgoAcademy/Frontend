@@ -28,23 +28,11 @@ const Layout = ({ children }: Props) => {
     }
   }, []);
   useEffect(() => {
-    const tokens = localStorage.getItem('token');
-
-    if (router.pathname !== '/login' && router.pathname !== '/signup' && tokens) {
-      const interval: NodeJS.Timer = setInterval(refreshToken, 3000000);
-      refreshToken();
-
-      return () => {
-        clearInterval(interval);
-      };
-    }
-  }, []);
-  useEffect(() => {
     dispatch(closePreloader());
   }, []);
   return (
     <GoogleOAuthProvider
-      clientId={'http://354436342116-6kjbapf9ar5ad4rkho0hen2jndlcagff.apps.googleusercontent.com/'}
+      clientId={'354436342116-6kjbapf9ar5ad4rkho0hen2jndlcagff.apps.googleusercontent.com'}
     >
       <div>
         <Head>

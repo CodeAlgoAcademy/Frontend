@@ -1,20 +1,4 @@
-import React, { useEffect, useState, ChangeEvent } from 'react';
-import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
-import { IoChatbubblesOutline } from 'react-icons/io5';
-import { HiOutlineDotsHorizontal } from 'react-icons/hi';
-import StudentTable from './StudentTable';
-import { sample_student_data } from './data';
-import { useDispatch, useSelector } from 'react-redux';
-import { IUserStudent } from 'types/interfaces';
-import { BiEdit } from 'react-icons/bi';
-import {
-  getStudents,
-  addStudentComment as addComment,
-  updateStudentComment as editComment,
-  deleteStudentComment as deleteComment,
-  getStudentComment as getComment,
-} from 'store/studentSlice';
-import { FaEdit, FaSave, FaTrash } from 'react-icons/fa';
+import React, { useEffect, useState } from 'react';
 import SingleStudent from './singleStudent';
 
 const Students = ({
@@ -27,7 +11,7 @@ const Students = ({
   const [studentCommentOpen, setStudentCommentOpen] = useState<string>('');
   const [comment, setComment] = useState<string>('');
   const [studentCommentsTabOpen, setStudentCommentsTabOpen] = useState<string>('');
-
+  const [editStudentModalOpened, setEditStudentModalOpened] = useState<string>('');
   useEffect(() => {
     if (!commentTabsOpened) {
       setStudentCommentOpen('');
@@ -47,6 +31,8 @@ const Students = ({
           student={student}
           setStudentCommentsTabOpen={setStudentCommentsTabOpen}
           studentCommentsTabOpen={studentCommentsTabOpen}
+          editStudentModalOpened={editStudentModalOpened}
+          setEditStudentModalOpened={setEditStudentModalOpened}
         />
       ))}
     </div>

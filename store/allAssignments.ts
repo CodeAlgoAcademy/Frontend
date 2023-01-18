@@ -35,5 +35,4 @@ const allAssignmentsReducer = createSlice({
   },
 });
 
-export const {} = allAssignmentsReducer.actions;
 export default allAssignmentsReducer.reducer;
