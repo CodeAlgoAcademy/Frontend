@@ -60,7 +60,7 @@ export const getAccessToken = () => {
 
     if (
       (!localAccessToken || localAccessToken === undefined) &&
-      window.location.pathname !== '/login'
+      (window.location.pathname !== '/login' && window.location.pathname !== '/')
     ) {
       window.location.replace('login');
     }
