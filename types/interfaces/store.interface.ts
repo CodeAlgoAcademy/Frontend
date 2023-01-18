@@ -1,5 +1,4 @@
 // =============SLICES INTERFACES AND TYPES=============
-
 export interface IUser {
   id: number;
   firstname: string;
@@ -29,6 +28,10 @@ export interface IModal {
   addUnitModalOpen: boolean;
 }
 
+export interface IAllTeachers {
+  allTeachers: IAllTeachers[];
+}
+
 export interface IAllClasses {
   classes: IClass[];
 }
@@ -40,6 +43,7 @@ export interface IAllCurriculum {
 export interface IAddClass {
   student: ISingleStudent;
   class: ISingleClass;
+  file: any;
 }
 
 export interface IUnitsSlice {
@@ -302,6 +306,7 @@ export interface Student {
   lastName: string;
   email: string;
   username: string;
+  id?: string;
 }
 
 export interface INotes {
@@ -310,4 +315,15 @@ export interface INotes {
 
 export interface Schedule {
   allSchedule: [];
+}
+
+export interface newLesson {
+  topic: {
+    title: string;
+    description: string;
+  };
+  students: Student[];
+  start_date: string;
+  end_date: string;
+  status: 'published' | 'unpublished';
 }

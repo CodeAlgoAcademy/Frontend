@@ -15,24 +15,27 @@ export const getSchedule = createAsyncThunk('scheduleSlice/getSchedule', async (
   }
 });
 
-export const getGoogleCalendar = createAsyncThunk('scheduleSlice/getGoogleCalendar', async (name, thunkApi) => {
-  try {
-    const { data } = await http.get('/academics/calendar/calendar', {
-      headers: {
-        Authorization: `Bearer ${getAccessToken()}`,
-      },
-    });
-    console.log(data)
-    return data;
-  } catch (error: any) {
-    return thunkApi.rejectWithValue(error.response.data);
-  }
-});
+export const getGoogleCalendar = createAsyncThunk(
+  'scheduleSlice/getGoogleCalendar',
+  async (name, thunkApi) => {
+    try {
+      const { data } = await http.get('/academics/calendar/calendar', {
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      });
+      console.log(data);
+      return data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.response.data);
+    }
+  },
+);
 
 export const googleCalendar = createAsyncThunk(
   'scheduleSlice/googleCalendar',
   async (access_token: string, thunkAPI) => {
-    const dispatch = thunkAPI.dispatch
+    const dispatch = thunkAPI.dispatch;
     try {
       console.log(access_token);
       await http.post(
@@ -45,9 +48,9 @@ export const googleCalendar = createAsyncThunk(
         },
       );
 
-      const schedule = await dispatch(getGoogleCalendar())
+      const schedule = await dispatch(getGoogleCalendar());
 
-      return schedule
+      return schedule;
     } catch (error: any) {
       const message =
         (error.response && error.response.data && error.response.data.message) ||

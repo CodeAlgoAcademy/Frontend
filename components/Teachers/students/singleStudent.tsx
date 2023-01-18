@@ -1,4 +1,4 @@
-import React, { useEffect, useState, ChangeEvent, SetStateAction } from 'react';
+import React, { useEffect, useState, ChangeEvent, SetStateAction, Dispatch } from 'react';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { IoChatbubblesOutline } from 'react-icons/io5';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
@@ -11,8 +11,9 @@ import {
   updateStudentComment as editComment,
   deleteStudentComment as deleteComment,
   getStudentComment as getComment,
+  editStudent,
 } from 'store/studentSlice';
-import { FaEdit, FaSave, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaSave, FaTimes, FaTrash } from 'react-icons/fa';
 
 const SingleStudent = ({
   student,
@@ -22,21 +23,29 @@ const SingleStudent = ({
   setComment,
   studentCommentsTabOpen,
   setStudentCommentsTabOpen,
+  editStudentModalOpened,
+  setEditStudentModalOpened,
 }: {
   student: any;
   studentCommentOpen: string;
-  setStudentCommentOpen: any;
+  setStudentCommentOpen: Dispatch<SetStateAction<string>>;
   comment: string;
-  setComment: any;
+  setComment: Dispatch<SetStateAction<string>>;
   studentCommentsTabOpen: string;
-  setStudentCommentsTabOpen: any;
+  setStudentCommentsTabOpen: Dispatch<SetStateAction<string>>;
+  editStudentModalOpened: string;
+  setEditStudentModalOpened: Dispatch<SetStateAction<string>>;
 }) => {
   const dispatch = useDispatch();
   const [headings, setHeadings] = useState<number[]>([]);
   const { students, studentComments } = useSelector((state: any) => state.students);
   const [editingComment, setEditingComment] = useState<string>('');
   const [isEditingComment, setIsEditingComment] = useState<string>('');
-
+  const [editingStudentDetails, setEditingStudentDetails] = useState({
+    firstName: student?.firstName,
+    lastName: student?.lastName,
+    email: student?.email,
+  });
   const updateComment = (text: string): void => {
     if (comment.length < 100) {
       setComment(text);
@@ -84,8 +93,73 @@ const SingleStudent = ({
     getStudentComment(studentId);
   };
 
+  const updateEditingDetails = async (e: ChangeEvent<HTMLInputElement>) => {
+    setEditingStudentDetails((prev) => {
+      return { ...prev, [e.target.name as keyof typeof prev]: e.target.value };
+    });
+  };
+
+  const handleSubmittionOfEditDetails = async (e: ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await dispatch(editStudent({ id: student.id, ...editingStudentDetails }));
+    await dispatch(getStudents());
+    setEditStudentModalOpened('');
+  };
+
   return (
-    <div key={student.id} className="bg-[#fff] shadow-lg">
+    <div className="bg-[#fff] shadow-lg">
+      {editStudentModalOpened === student.id && (
+        <section className="fixed top-0 left-0 bg-[rgba(0,0,0,0.4)] z-20 w-full h-screen flex justify-center items-center">
+          <div className="w-[90vw] max-w-[350px] mx-auto p-6 bg-white shadow-md rounded-md">
+            <header className="mb-3 flex justify-between items-center">
+              <h1 className="font-bold">Edit {"Student's"} Details</h1>
+              <span
+                className="text-[18px] text-[darkRed] font-bold"
+                onClick={() => {
+                  setEditStudentModalOpened('');
+                }}
+              >
+                <FaTimes />
+              </span>
+            </header>
+            <form className="flex flex-col gap-y-2" onSubmit={handleSubmittionOfEditDetails}>
+              <input
+                value={editingStudentDetails.firstName}
+                type="text"
+                className={styles.input}
+                name="firstName"
+                required
+                placeholder="Enter Firstname*"
+                onChange={updateEditingDetails}
+              />
+              <input
+                value={editingStudentDetails.lastName}
+                type="text"
+                className={styles.input}
+                name="lastName"
+                required
+                placeholder="Enter Lastname*"
+                onChange={updateEditingDetails}
+              />
+              <input
+                value={editingStudentDetails.email}
+                type="email"
+                className={styles.input}
+                name="email"
+                required
+                placeholder="Enter email*"
+                onChange={updateEditingDetails}
+              />
+              <button
+                type="submit"
+                className="rounded-md text-white w-full mt-3 p-3 bg-mainPurple active:scale-[0.98]"
+              >
+                Edit Student Details
+              </button>
+            </form>
+          </div>
+        </section>
+      )}
       <div className={styles.cardHeader}>
         {!studentCommentsTabOpen && studentCommentOpen === student.firstName + student.email && (
           <form
@@ -113,7 +187,8 @@ const SingleStudent = ({
           <section className="fixed top-0 left-0 w-full min-h-screen bg-[rgba(0,0,0,0.5)] flex justify-center items-center z-20">
             <form className="w-[90vw] max-w-[400px] rounded-md bg-white shadow-md scale-up py-2 px-3 comment-tab">
               <h2 className="font-bold text-[20px]">
-                Comments on {student.firstName} {student.lastName}'s performance
+                Comments on {student.firstName} {student.lastName}
+                {"'"}s performance
               </h2>
               <div
                 className={`flex flex-col gap-y-2 mt-3 h-[90vh] max-h-[230px] overflow-y-scroll ${
@@ -214,7 +289,14 @@ const SingleStudent = ({
             {student.active ? `Active in ${student.active}` : 'Inactive'}
           </div>
         </div>
-
+        <span
+          className="flex-1 ml-4 underline cursor-pointer"
+          onClick={() => {
+            setEditStudentModalOpened(student.id);
+          }}
+        >
+          Edit {"student's"} details
+        </span>
         <div className={styles.actions}>
           <span
             onClick={() => {
@@ -267,6 +349,7 @@ const styles = {
   pointer: 'cursor-pointer',
   commentIcons:
     'w-[28px] h-[28px] rounded-md text-white flex justify-center items-center text-[15px] cursor-pointer',
+  input: 'w-full border focus:border-mainPurple p-3 rounded-md outline-none',
 };
 
 export default SingleStudent;

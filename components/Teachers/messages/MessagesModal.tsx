@@ -1,9 +1,12 @@
+import axios from 'axios';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { BiChevronRight } from 'react-icons/bi';
 import { FaTimes } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
+import { getTeachers } from 'services/teacherService';
 import { RootState } from 'store/store';
 import { getStudents } from 'store/studentSlice';
+import { getAccessToken } from 'utils/getTokens';
 
 const MessagesModal = ({
   setModalOpen,
@@ -12,11 +15,33 @@ const MessagesModal = ({
   modalOpen: boolean;
   setModalOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const [active, setActive] = useState(0);
+  const [filteredTeachers, setFilteredTeachers] = useState([]);
   const dispatch = useDispatch();
-  const { students } = useSelector((state: RootState) => state.students);
+  const { students } = useSelector((state: RootState) => state.students.students);
+  const { teachers } = useSelector((state: RootState) => state.allTeachers);
+
+  // const filterTeachers = (value: string) => {
+  //   setFilteredTeachers((prev:any) => {
+  //     return {
+  //       teachers: teachers?.filter((teacher: any) => {
+  //         if (
+  //           (teacher.firstName + ' ' + teacher.lastName).toLowerCase().includes(value.toLowerCase())
+  //         ) {
+  //           return teacher;
+  //         }
+  //       }),
+  //     };
+  //   });
+  // };
+
+  console.log(teachers);
+
   const [openedTab, setOpenedTab] = useState<string>('students');
+
   useEffect(() => {
     dispatch(getStudents());
+    dispatch(getTeachers());
   }, []);
   return (
     <section
@@ -57,17 +82,51 @@ const MessagesModal = ({
             </span>
           </article>
         </div>
-        <div className="flex-[70%] flex flex-col justify-between">
-          {openedTab === 'students' && (
-            <div className="p-8">
-              <h1 className={styles.title}>Students</h1>
-            </div>
-          )}
-          {openedTab === 'teachers' && (
-            <div className="p-8">
-              <h1 className={styles.title}>Teachers</h1>
-            </div>
-          )}
+        <div className="flex flex-col flex-[70%] justify-between">
+          <div className="flex-[80%] overflow-scroll scroll">
+            {openedTab === 'students' && (
+              <div className="pr-8 py-8">
+                <h1 className={styles.title}>Students</h1>
+                <div className="overflow-hidden">
+                  {students?.map((student: any) => {
+                    return (
+                      <p
+                        onClick={() => setActive(student.id)}
+                        key={student.id}
+                        className={
+                          active === student.id
+                            ? `p-5 border-y border-r bg-[#efecf5]  hover:bg-[#e9e2f5] `
+                            : `p-5 hover:bg-[#e9e2f5] border-y border-r`
+                        }
+                      >
+                        {student.firstName}
+                      </p>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+            {openedTab === 'teachers' && (
+              <div className="pr-8 py-8 ">
+                <h1 className={styles.title}>Teachers</h1>
+                {teachers?.map((teacher: any) => {
+                  return (
+                    <p
+                      onClick={() => setActive(teacher.id)}
+                      key={teacher.id}
+                      className={
+                        active === teacher.id
+                          ? `p-5 border-y border-r bg-[#efecf5]  hover:bg-[#e9e2f5] `
+                          : `p-5 hover:bg-[#e9e2f5] border-y border-r`
+                      }
+                    >
+                      {teacher.firstName}
+                    </p>
+                  );
+                })}
+              </div>
+            )}
+          </div>
           <div className="w-full flex gap-x-2 border-t-2">
             <input
               placeholder="Type Message..."
@@ -84,7 +143,7 @@ const MessagesModal = ({
 };
 
 const styles = {
-  title: 'text-[19px] font-bold',
+  title: 'text-[19px] font-bold pl-5 pb-5',
   tabsOpener:
     'cursor-pointer border-b-2 flex justify-between gap-x-2 px-3 py-3 items-center hover:bg-gray-50',
 };

@@ -2958,13 +2958,6 @@
   "resolved" "https://registry.npmjs.org/emoji-regex/-/emoji-regex-9.2.2.tgz"
   "version" "9.2.2"
 
-"end-of-stream@~0.1.5":
-  "integrity" "sha512-go5TQkd0YRXYhX+Lc3UrXkoKU5j+m72jEP5lHWr2Nh82L8wfZtH8toKgcg4T10o23ELIMGXQdwCbl+qAXIPDrw=="
-  "resolved" "https://registry.npmjs.org/end-of-stream/-/end-of-stream-0.1.5.tgz"
-  "version" "0.1.5"
-  dependencies:
-    "once" "~1.3.0"
-
 "enhanced-resolve@^5.10.0":
   "integrity" "sha512-QHTXI/sZQmko1cbDoNAa3mJ5qhWUUNAq3vR0/YiD379fWQrcfuoX1+HW2S0MTt7XmoPLapdaDKUtelUSPic7hQ=="
   "resolved" "https://registry.npmjs.org/enhanced-resolve/-/enhanced-resolve-5.12.0.tgz"
@@ -4901,13 +4894,6 @@
   dependencies:
     "wrappy" "1"
 
-"once@~1.3.0":
-  "integrity" "sha512-6vaNInhu+CHxtONf3zw3vq4SP2DOQhjBvIa3rNcG0+P7eKWlYH6Peu7rHizSloRU2EwMz6GraLieis9Ac9+p1w=="
-  "resolved" "https://registry.npmjs.org/once/-/once-1.3.3.tgz"
-  "version" "1.3.3"
-  dependencies:
-    "wrappy" "1"
-
 "onetime@^5.1.2":
   "integrity" "sha512-kbpaSSGJTWdAY5KPVeMOKXSrPtr8C8C7wodJbcsd51jRnmD+GZu8Y0VoU6Dm5Z4vWr0Ig/1NKuWRKf7j5aaYSg=="
   "resolved" "https://registry.npmjs.org/onetime/-/onetime-5.1.2.tgz"
@@ -4951,9 +4937,7 @@
   "resolved" "https://registry.npmjs.org/p-limit/-/p-limit-3.1.0.tgz"
   "version" "3.1.0"
   dependencies:
-    "end-of-stream" "~0.1.5"
-    "sequencify" "~0.0.7"
-    "stream-consume" "~0.1.0"
+    "yocto-queue" "^0.1.0"
 
 "p-locate@^4.1.0":
   "integrity" "sha512-R79ZZ/0wAxKGu3oYMlz8jy/kbhsNrS7SKZ7PxEHBgJ5+F2mtFW2fK2cOtBh1cHYkQsbzFV7I+EoRKe6Yt0oK7A=="
@@ -5516,11 +5500,6 @@
   dependencies:
     "lru-cache" "^6.0.0"
 
-"sequencify@~0.0.7":
-  "integrity" "sha512-YL8BPm0tp6SlXef/VqYpA/ijmTsDP2ZEXzsnqjkaWS7NP7Bfvw18NboL0O8WCIjy67sOCG3MYSK1PB4GC9XdtQ=="
-  "resolved" "https://registry.npmjs.org/sequencify/-/sequencify-0.0.7.tgz"
-  "version" "0.0.7"
-
 "serialize-javascript@^6.0.0":
   "integrity" "sha512-Qr3TosvguFt8ePWqsvRfrKyQXIiW+nGbYpy8XK24NQHE83caxWt+mIymTT19DGFbNWNLfEwsrkSmN64lVWB9ag=="
   "resolved" "https://registry.npmjs.org/serialize-javascript/-/serialize-javascript-6.0.0.tgz"
@@ -5533,7 +5512,7 @@
   "resolved" "https://registry.npmjs.org/shebang-command/-/shebang-command-2.0.0.tgz"
   "version" "2.0.0"
   dependencies:
-    "randombytes" "^2.1.0"
+    "shebang-regex" "^3.0.0"
 
 "side-channel@^1.0.3", "side-channel@^1.0.4":
   "integrity" "sha512-q5XPytqFEIKHkGdiMIrY10mvLRvnQh42/+GoBlFW3b2LXLE2xxJpZFdm94we0BaoV3RwJyGqg5wS7epxTv0Zvw=="
@@ -5601,11 +5580,6 @@
   "version" "2.0.6"
   dependencies:
     "escape-string-regexp" "^2.0.0"
-
-"stream-consume@~0.1.0":
-  "integrity" "sha512-tNa3hzgkjEP7XbCkbRXe1jpg+ievoa0O4SCFlMOYEscGSS4JJsckGL8swUyAa/ApGU3Ae4t6Honor4HhL+tRyg=="
-  "resolved" "https://registry.npmjs.org/stream-consume/-/stream-consume-0.1.1.tgz"
-  "version" "0.1.1"
 
 "string-length@^4.0.1":
   "integrity" "sha512-+l6rNN5fYHNhZZy41RXsYptCjA2Igmq4EG7kZAYFQI1E1VTXarr6ZPXBg6eq7Y6eK4FEhY6AJlyuFIb/v/S0VQ=="

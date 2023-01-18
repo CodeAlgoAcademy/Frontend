@@ -1,13 +1,17 @@
+import { TextField } from '@mui/material';
 import React, { useState, ChangeEvent } from 'react';
 import { generateUsername } from 'utils/generateUsername';
+import { RiCloseLine } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
 import { addStudent, getStudents, studentsBulkImport } from 'store/studentSlice';
 import { Student, IInputFields } from 'types/interfaces';
 import style from '@/styles/styles';
-import { FaTimes, FaChevronLeft, FaPlus } from 'react-icons/fa';
+import { FaTimes, FaChevronLeft, FaPlus, FaCheckDouble } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import { getAllClasses } from 'services/classesService';
 import { openErrorModal } from 'store/fetchSlice';
+import Image from 'next/image';
+import BulkImportModal from '@/components/bulkImportModal';
 interface State {
   firstName: string;
   lastName: string;
@@ -25,6 +29,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
     username: '',
   });
   const [file, setFile] = useState<any>(null);
+  const [bulkImportModalOpen, setBulkImportModalOpen] = useState<boolean>(false);
   const { email, firstName, lastName, username } = formData;
 
   const onChange = (e: any) => {
@@ -104,6 +109,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
 
   return (
     <section className={`${style.modalOverlay} bg-[rgba(0,0,0,.25)]`}>
+      {bulkImportModalOpen && <BulkImportModal setBulkImportModalOpen={setBulkImportModalOpen} />}
       {/* modal itself */}
       <main className="w-[90vw] max-w-[900px] mx-auto bg-white rounded-md flex shadow-lg relative">
         <span
@@ -165,7 +171,18 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
               Generate Username
             </button>
           </section>
-          <section className="flex w-full justify-between md:items-center items-end mt-8 md:flex-row md:gap-y-0 gap-y-4 flex-col pt-5 border-t-2 px-8">
+          <section className="pt-5 border-t-2 mt-8 px-8">
+            <button
+              type="button"
+              className="max-w-fit p-3 hover:bg-gray-100"
+              onClick={() => {
+                setBulkImportModalOpen(true);
+              }}
+            >
+              View Bulk Import Instructions
+            </button>
+          </section>
+          <section className="flex w-full justify-between md:items-center items-end md:flex-row md:gap-y-0 gap-y-4 flex-col pt-2 px-8">
             <div>
               {/* input container */}
               <input
@@ -220,6 +237,55 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
       </main>
     </section>
   );
+  // return (
+  //   <div className={styles.bgBlack}>
+  //     <div className={styles.centered}>
+  //       <div className={styles.modal}>
+  //         <div className={styles.modalHeader}>
+  //           <p className={styles.heading}>Add Student</p>
+  //         </div>
+  //         <div onClick={() => setIsOpen(false)} className={styles.closeBtn}>
+  //           <RiCloseLine />
+  //         </div>
+  //         <div className={styles.modalBody}>
+  //           <form className="grid gap-5 pb-2" onSubmit={onSubmit}>
+  //             <div className="flex space-x-5">
+  //               <TextField
+  //                 label="Student First Name"
+  //                 name="firstName"
+  //                 value={firstName}
+  //                 onChange={onChange}
+  //                 size="small"
+  //                 required
+  //               />
+  //               <TextField
+  //                 label="Student Last Name"
+  //                 name="lastName"
+  //                 size="small"
+  //                 value={lastName}
+  //                 onChange={onChange}
+  //                 required
+  //               />
+  //             </div>
+  //             <TextField
+  //               label="Student Email"
+  //               name="email"
+  //               size="small"
+  //               value={email}
+  //               onChange={onChange}
+  //               required
+  //             />
+  //             <div>
+  //               <button className={styles.addBtn} type="submit">
+  //                 Add Student
+  //               </button>
+  //             </div>
+  //           </form>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
 };
 
 export default AddStudentModal;
