@@ -4,7 +4,8 @@ import {
   postSchedule,
   putSchedule,
   deleteSchedule,
-  postGoogleAccess,
+  googleCalendar,
+  getGoogleCalendar,
 } from 'services/scheduleService';
 import { Schedule } from 'types/interfaces';
 
@@ -44,11 +45,11 @@ const scheduleSlice = createSlice({
       builder.addCase(deleteSchedule.rejected, (state: any, action: PayloadAction<any>) => {
         console.error('Delete Error');
       });
-    builder.addCase(postGoogleAccess.fulfilled, (state: any, { payload }: PayloadAction) => {
+    builder.addCase(getGoogleCalendar.fulfilled, (state: any, { payload }: PayloadAction) => {
       console.log('Successful');
-      console.log(payload);
+      state.allSchedule = payload;
     });
-    builder.addCase(postGoogleAccess.rejected, (state: any, { payload }) => {
+    builder.addCase(googleCalendar.rejected, (state: any, { payload }) => {
       console.log(payload);
     });
   },

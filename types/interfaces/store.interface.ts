@@ -43,7 +43,7 @@ export interface IAllCurriculum {
 export interface IAddClass {
   student: ISingleStudent;
   class: ISingleClass;
-  file: any
+  file: any;
 }
 
 export interface IUnitsSlice {
