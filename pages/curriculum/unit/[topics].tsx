@@ -277,9 +277,10 @@ export default function Unit() {
           {/* curriculumn topic section */}
 
           {lessons &&
-            lessons.map((data: any) => {
+            lessons.map((data: any, index: number) => {
               return (
                 <SingleLesson
+                  key={index}
                   data={data}
                   setShowModal={setShowModal}
                   setShowPreview={setShowPreview}
