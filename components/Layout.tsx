@@ -2,6 +2,7 @@ import React, { ReactNode, useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { refreshToken } from 'utils/getTokens';
 import ErrorModal from './errorModal';
 import Preloader from './preloader';
 import { useDispatch } from 'react-redux';

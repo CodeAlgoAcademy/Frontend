@@ -282,7 +282,7 @@ const Assignments = () => {
               </div>
               <div className="rounded-md h-[58px] bg-white flex items-center overflow-y-hidden">
                 <div className="rounded-r-md flex items-center justify-between px-4 w-[180px] shadow-right h-full">
-                  <span className="font-bold">Student(s)</span>
+                  <span className="font-bold">Student{'(s)'}</span>
                   <span
                     className="text-2xl cursor-pointer rounded-full border p-1 hover:opacity-80 hover:scale-125 transition-all ease-in-out animate-pulse hover:animate-none"
                     onClick={() => {
@@ -525,7 +525,7 @@ const Assignments = () => {
                 <FaTimes />
               </span>
               {modalItemsDisplay.saveResponse && (
-                <div className="w-full py-20 px-24 font-semibold text-xl">
+                <div className="w-full py-20 px-24 font-semibold text-center text-xl">
                   <p>You have successfully saved an assignment</p>
                   <p>
                     Click on{' '}
@@ -542,19 +542,17 @@ const Assignments = () => {
                 </div>
               )}
               {modalItemsDisplay.createResponse && (
-                <div className="w-full space-y-2 py-20 px-10">
-                  <p className="text-2xl font-medium">
-                    You have successfully created an assignment
-                  </p>
+                <div className="w-full py-20 px-24 font-semibold text-center text-xl">
+                  <p>You have successfully created an assignment</p>
                   <p>
                     Click on{' '}
                     <span
-                      className="text-[#F28E2C] cursor-pointer"
+                      className="font-bold text-[#F28E2C] cursor-pointer"
                       onClick={() => {
                         switchModal('historyResponse');
                       }}
                     >
-                      assignment history
+                      ASSINGMENT HISTORY
                     </span>{' '}
                     to view your Assingment.
                   </p>

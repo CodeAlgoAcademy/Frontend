@@ -98,9 +98,9 @@ function Calendar() {
     onSuccess: async (response) => {
       const { access_token } = response;
       await dispatch(googleCalendar(access_token));
-      await dispatch(getGoogleCalendar())
+      await dispatch(getGoogleCalendar());
     },
-    scope: "https://www.googleapis.com/auth/calendar"
+    scope: 'https://www.googleapis.com/auth/calendar',
   });
 
   return (

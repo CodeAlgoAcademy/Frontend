@@ -3,7 +3,7 @@ import { FaChevronDown, FaChevronRight, FaChevronUp } from 'react-icons/fa';
 import { allSKills } from 'store/skillsSlice';
 import { IMainAssignment, SkillDetails } from 'types/interfaces';
 
-const singleAssignment = ({
+const SingleAssignment = ({
   assignment,
   setEditAssignment,
 }: {
@@ -98,4 +98,4 @@ const styles = {
   title: 'text-[17px] font-bold capitalize',
 };
 
-export default singleAssignment;
+export default SingleAssignment;

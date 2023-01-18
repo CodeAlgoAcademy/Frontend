@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { IUser, IUserData } from '../types/interfaces';
+import { RootState } from './store';
 import {
   loginUser,
   signUpUser,
@@ -11,6 +12,7 @@ import {
   signUpWithGoogle,
   updateAccountType,
 } from 'services/authService';
+import { countryList } from '@/components/signup/countries';
 import { setTimeStamp } from 'utils/getTokens';
 
 const initialState: IUser = {
@@ -42,12 +44,12 @@ const initialState: IUser = {
     // peculiar to students
     grade: 'Select Grade',
     // peculiar to teachers
-    schoolCountry: '',
+    schoolCountry: countryList[0],
     schoolName: '',
     is_parent: false,
     is_student: false,
     is_teacher: false,
-    country: '',
+    country: countryList[0],
     username: '',
   },
 };
