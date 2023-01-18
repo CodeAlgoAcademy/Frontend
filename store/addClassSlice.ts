@@ -18,7 +18,7 @@ const initialState: IAddClass = {
     roomNumber: '',
     color: colors[0],
   },
-  file: ''
+  file: '',
 };
 
 const addClassSlice = createSlice({
@@ -39,8 +39,8 @@ const addClassSlice = createSlice({
         state.class[action.payload.key as keyof typeof state.class] = action.payload.value;
       }
     },
-    addFile : (state: IAddClass, action:PayloadAction)=>{
-      state.file = action.payload
+    addFile: (state: IAddClass, action: PayloadAction) => {
+      state.file = action.payload;
     },
     clearFields: (state: IAddClass) => {
       state.student = initialState.student;

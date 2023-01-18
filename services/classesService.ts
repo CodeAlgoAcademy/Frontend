@@ -32,16 +32,16 @@ export const addClass: any = createAsyncThunk(
     const {
       student,
       class: { className, grade, subject, coTeachers, roomNumber, color },
-      file
+      file,
     } = state.addClass;
     const { firstName, lastName, email } = state.addClass.student;
     const formData = new FormData();
-    formData.append("className", className);
-    formData.append("grade", grade);
-    formData.append("subject", subject);
-    formData.append("color", color);
-    formData.append("roomNumber", roomNumber);
-    file && formData.append("file", file);
+    formData.append('className', className);
+    formData.append('grade', grade);
+    formData.append('subject', subject);
+    formData.append('color', color);
+    formData.append('roomNumber', roomNumber);
+    file && formData.append('file', file);
     // const options =
     //   firstName && lastName && email
     //     ? {
@@ -63,7 +63,7 @@ export const addClass: any = createAsyncThunk(
     //         roomNumber,
     //         color,
     //       };
-          
+
     try {
       const { data } = await http.post(
         '/academics/class/',
@@ -72,7 +72,7 @@ export const addClass: any = createAsyncThunk(
         {
           headers: {
             Authorization: `Bearer ${getAccessToken()}`,
-            "Content-Type": "multipart/form-data"
+            'Content-Type': 'multipart/form-data',
           },
         },
       );
