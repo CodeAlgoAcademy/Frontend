@@ -43,35 +43,35 @@ const http = axios.create({
 //   }
 // );
 
-http.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  async (error) => {
-    const prevRequest = error?.config;
-    const refreshToken = getRefreshToken();
-    if (error?.response?.status === 401 && !prevRequest?.sent && refreshToken) {
-      prevRequest.sent = true;
-      try {
-        const { data } = await http.post('/auth /token/refresh/', {
-          refresh: refreshToken,
-        });
-        const { access } = data;
-        localStorage.setItem(
-          'token',
-          JSON.stringify({
-            access_token: access,
-            refresh_token: refreshToken,
-          }),
-        );
-        prevRequest.headers['Authorization'] = 'Bearer ' + access;
-        return http(prevRequest);
-      } catch (error) {
-        return Promise.reject(error);
-      }
-    }
-    return Promise.reject(error);
-  },
-);
+// http.interceptors.response.use(
+//   (response) => {
+//     return response;
+//   },
+//   async (error) => {
+//     const prevRequest = error?.config;
+//     const refreshToken = getRefreshToken();
+//     if (error?.response?.status === 401 && !prevRequest?.sent && refreshToken) {
+//       prevRequest.sent = true;
+//       try {
+//         const { data } = await http.post('/auth/token/refresh/', {
+//           refresh: refreshToken,
+//         });
+//         const { access } = data;
+//         localStorage.setItem(
+//           'token',
+//           JSON.stringify({
+//             access_token: access,
+//             refresh_token: refreshToken,
+//           }),
+//         );
+//         prevRequest.headers['Authorization'] = 'Bearer ' + access;
+//         return http(prevRequest);
+//       } catch (error) {
+//         return Promise.reject(error);
+//       }
+//     }
+//     return Promise.reject(error);
+//   },
+// );
 
 export default http;
