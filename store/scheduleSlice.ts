@@ -47,7 +47,7 @@ const scheduleSlice = createSlice({
       });
     builder.addCase(getGoogleCalendar.fulfilled, (state: any, { payload }: PayloadAction) => {
       console.log('Successful');
-      console.log(payload);
+      state.allSchedule = payload;
     });
     builder.addCase(googleCalendar.rejected, (state: any, { payload }) => {
       console.log(payload);

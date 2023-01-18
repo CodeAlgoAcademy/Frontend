@@ -19,6 +19,7 @@ import { AppDispatch, RootState } from '../store/store';
 import { FcGoogle } from 'react-icons/fc';
 import {
   deleteSchedule,
+  getGoogleCalendar,
   getSchedule,
   googleCalendar,
   postSchedule,
@@ -96,7 +97,8 @@ function Calendar() {
   const fetchGoogle = useGoogleLogin({
     onSuccess: async (response) => {
       const { access_token } = response;
-      dispatch(googleCalendar(access_token));
+      await dispatch(googleCalendar(access_token));
+      await dispatch(getGoogleCalendar())
     },
     scope: "https://www.googleapis.com/auth/calendar"
   });

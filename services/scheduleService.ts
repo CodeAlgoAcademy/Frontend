@@ -19,7 +19,7 @@ export const getGoogleCalendar = createAsyncThunk('scheduleSlice/getGoogleCalend
   try {
     const { data } = await http.get('/academics/calendar/calendar', {
       headers: {
-        Authorization: `Bearer ${getAccessToken()}`,
+        Authorization: `Bearer ${getAccessToken()}`, //Is thst it??
       },
     });
     console.log(data)
@@ -31,10 +31,10 @@ export const getGoogleCalendar = createAsyncThunk('scheduleSlice/getGoogleCalend
 
 export const googleCalendar = createAsyncThunk(
   'scheduleSlice/googleCalendar',
-  async (access_token: any, thunkAPI) => {
-    const dispatch = thunkAPI.dispatch;
+  async (access_token: string, thunkAPI) => {
+    const dispatch = thunkAPI.dispatch
     try {
-      console.log(access_token);
+      console.log(access_token); // this is what i should use??
       await http.post(
         '/auth/calendar/',
         { access_token },
@@ -45,9 +45,9 @@ export const googleCalendar = createAsyncThunk(
         },
       );
 
-      const schedules = dispatch(getGoogleCalendar())
+      const schedule = await dispatch(getGoogleCalendar())
 
-      return schedules;
+      return schedule
     } catch (error: any) {
       const message =
         (error.response && error.response.data && error.response.data.message) ||
