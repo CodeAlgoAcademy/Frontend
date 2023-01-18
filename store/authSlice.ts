@@ -11,7 +11,7 @@ import {
   signUpWithGoogle,
   updateAccountType,
 } from 'services/authService';
-import { setRefreshTimeStamp, setTimeStamp } from 'utils/getTokens';
+import { setTimeStamp } from 'utils/getTokens';
 
 const initialState: IUser = {
   id: 0,
@@ -94,7 +94,6 @@ export const userSlice = createSlice({
         }),
       );
       setTimeStamp();
-      setRefreshTimeStamp();
 
       return {
         ...state,
@@ -116,7 +115,6 @@ export const userSlice = createSlice({
         }),
       );
       setTimeStamp();
-      setRefreshTimeStamp()
       return {
         ...state,
         ...action.payload,
@@ -133,7 +131,6 @@ export const userSlice = createSlice({
         }),
       );
       setTimeStamp();
-      setRefreshTimeStamp()
 
       return {
         ...state,
@@ -156,7 +153,6 @@ export const userSlice = createSlice({
         }),
       );
       setTimeStamp();
-      setRefreshTimeStamp()
 
       return {
         ...state,

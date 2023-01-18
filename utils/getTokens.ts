@@ -3,20 +3,6 @@ import http from 'axios.config';
 const ACCESS_TOKEN_EXPIRATION_TIME = 3600 * 1000; // one hour expiration
 const REFRESH_TOKEN_EXPIRATION_TIME = 3600 * 1000 * 24; // one day expiration
 
-export const setRefreshTimeStamp = () => {
-  if (typeof window !== 'undefined') {
-    window.localStorage.setItem('refresh_token_timestamp', '' + Date.now());
-  }
-};
-
-const getRefreshTimeStamp = () => {
-  if (typeof window !== 'undefined') {
-    const timestamp: number = Number(window.localStorage.getItem('refresh_token_timestamp'));
-
-    return timestamp;
-  }
-};
-
 export const setTimeStamp = () => {
   if (typeof window !== 'undefined') {
     window.localStorage.setItem('token_timestamp', '' + Date.now());
@@ -33,7 +19,7 @@ const getTimeStamp = () => {
 
 export const refreshToken = async () => {
   if (typeof window !== 'undefined') {
-    if (Date.now() - getRefreshTimeStamp()! > REFRESH_TOKEN_EXPIRATION_TIME) {
+    if (Date.now() - getTimeStamp()! > REFRESH_TOKEN_EXPIRATION_TIME) {
       window.localStorage.removeItem('token')
       window.localStorage.removeItem('token_timestamp')
       console.error('Refresh token expired. Redirecting to Login page....')
