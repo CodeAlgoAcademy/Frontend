@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        home: "url('../public/assets/img1.png')",
+        home: "url('../public/assets/background.png')",
       },
       colors: {
         mainPurple: '#412281',

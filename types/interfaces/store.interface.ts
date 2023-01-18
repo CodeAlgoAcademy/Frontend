@@ -43,6 +43,7 @@ export interface IAllCurriculum {
 export interface IAddClass {
   student: ISingleStudent;
   class: ISingleClass;
+  file: any;
 }
 
 export interface IUnitsSlice {
@@ -304,6 +305,8 @@ export interface Student {
   firstName: string;
   lastName: string;
   email: string;
+  username: string;
+  id?: string;
 }
 
 export interface INotes {

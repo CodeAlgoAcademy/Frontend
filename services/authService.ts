@@ -24,7 +24,7 @@ export const loginUser: any = createAsyncThunk('authSlice/loginUser', async (nam
     };
   } catch (error: any) {
     dispatch(closePreloader());
-
+    console.log(error);
     if (error.response.data.non_field_errors) {
       dispatch(
         openErrorModal({
@@ -86,8 +86,14 @@ export const signUpUser: any = createAsyncThunk('authSlice/signUpUser', async (n
           errorText: [error.response.data.non_field_errors[0]],
         }),
       );
+    } else if (error.response.data.email) {
+      dispatch(
+        openErrorModal({
+          errorText: [...error.response.data.email],
+        }),
+      );
     } else {
-      dispatch(openErrorModal({ errorText: error.message }));
+      dispatch(openErrorModal({ errorText: [error.message] }));
     }
     return thunkApi.rejectWithValue(error);
   }
@@ -97,8 +103,9 @@ export const loginWithGoogle: any = createAsyncThunk(
   'authSlice/loginWithGoogle',
   async (access_token: string, thunkApi) => {
     try {
-      const { data } = await http.post('/auth/google-login/', {
+      const { data } = await http.post('/auth/google/', {
         access_token,
+        action: 'signin',
       });
       return {
         access_token: data.access_token,
@@ -115,8 +122,9 @@ export const signUpWithGoogle: any = createAsyncThunk(
   'authSlice/signUpWithGoogle',
   async (access_token: string, thunkApi) => {
     try {
-      const { data } = await http.post('/auth/google-signup/', {
+      const { data } = await http.post('/auth/google/', {
         access_token,
+        action: 'signup',
       });
       return {
         access_token: data.access_token,
@@ -152,7 +160,7 @@ export const updateAccountType: any = createAsyncThunk(
           firstname,
           lastname,
           email,
-          country,
+          country: country ? country : 'Canada',
           schoolCountry,
           schoolName,
           is_student,

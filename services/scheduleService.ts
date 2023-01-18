@@ -15,6 +15,52 @@ export const getSchedule = createAsyncThunk('scheduleSlice/getSchedule', async (
   }
 });
 
+export const getGoogleCalendar = createAsyncThunk(
+  'scheduleSlice/getGoogleCalendar',
+  async (name, thunkApi) => {
+    try {
+      const { data } = await http.get('/academics/calendar/calendar', {
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      });
+      console.log(data);
+      return data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const googleCalendar = createAsyncThunk(
+  'scheduleSlice/googleCalendar',
+  async (access_token: string, thunkAPI) => {
+    const dispatch = thunkAPI.dispatch;
+    try {
+      console.log(access_token);
+      await http.post(
+        '/auth/calendar/',
+        { access_token },
+        {
+          headers: {
+            Authorization: `Bearer ${getAccessToken()}`,
+          },
+        },
+      );
+
+      const schedule = await dispatch(getGoogleCalendar());
+
+      return schedule;
+    } catch (error: any) {
+      const message =
+        (error.response && error.response.data && error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  },
+);
+
 export const postSchedule = createAsyncThunk(
   'scheduleSlice/postSchedule',
   async (addedRecords: any, thunkApi) => {
