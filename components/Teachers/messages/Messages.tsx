@@ -8,11 +8,12 @@ import { HiDotsVertical } from 'react-icons/hi';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import ChatRoom from './Chats/ChatRoom';
+import MessageRoom from './MessagesLists/MessageRoom';
 import MessagesLists from './MessagesLists/MessagesLists';
 import MessagesModal from './MessagesModal';
 
 const Messages = () => {
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  // const [modalOpen, setModalOpen] = useState<boolean>(false);
   const { conversations } = useSelector((state: RootState) => state.messages);
   const [unreadMessages, setUnreadMessages] = useState<number>(0);
   const [allMessages, setAllMessages] = useState<number>(0);
@@ -26,7 +27,8 @@ const Messages = () => {
 
   return (
     <>
-      {/* Large view */}
+
+      {/* Large view
       {modalOpen && <MessagesModal modalOpen={modalOpen} setModalOpen={setModalOpen} />}
       <div className={styles.container}>
         <div
@@ -77,7 +79,7 @@ const Messages = () => {
             <ChatRoom />
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Mobile View */}
       {/* <div className='md:hidden bg-[#a5a091] h-screen'>
@@ -102,7 +104,11 @@ const Messages = () => {
                     </IconButton>
                 </div>
             </div> */}
+
+            <MessageRoom />
     </>
+
+
   );
 };
 
