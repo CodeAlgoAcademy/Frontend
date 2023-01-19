@@ -9,14 +9,22 @@ import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import { getAccessToken } from 'utils/getTokens';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store/store';
-import { getConversations, getOpenMesssages } from 'store/messagesSlice';
+import { getConversations, getOpenMesssages, open_a_message, setOpenStudent } from 'store/messagesSlice';
 import { openErrorModal } from 'store/fetchSlice';
 import http from 'axios.config';
+import { User } from 'types/interfaces';
+
+interface Message {
+  id: number;
+  message: IMessage;
+  user: User;
+}
 
 
 export const client = new W3CWebSocket(
   `wss://sea-lion-app-43ury.ondigitalocean.app/chat/websocket/?Authorization=${getAccessToken()}`,
 );
+
 
 const ChatRoom = () => {
   const { openedMessageOwner, openedMessage } = useSelector((state: RootState) => state.messages);
@@ -26,6 +34,10 @@ const ChatRoom = () => {
   const [typingText, setTypingText] = useState<string>('');
   const dispatch = useDispatch();
 
+  
+
+  // console.log(openedMessageOwner)
+  // console.log(openedMessage)
   // console.log(openedMessageOwner);
   // const send_a_message = async () => {
   //   if (openedMessageOwner.id) {
@@ -157,7 +169,7 @@ export default ChatRoom;
 
 const styles = {
   header: 'flex items-center space-x-2 border-b-2 p-2',
-  chatContainer: 'h-80 space-y-1 p-5 px-5 overflow-y-auto',
+  chatContainer: 'h-[35rem] space-y-1 p-5 px-5 overflow-y-auto',
   chats: 'bg-[#fff3cc] p-3 text-xs w-fit rounded-t-lg',
   messageInputContainer: 'bg-white w-full rounded-b-xl',
   inputContainer: 'flex items-center space-x-2 text-slate-400 p-4 px-7',
