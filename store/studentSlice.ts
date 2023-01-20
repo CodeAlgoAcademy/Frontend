@@ -35,6 +35,7 @@ export const editStudent: any = createAsyncThunk('edit/student', async (student:
   const state: any = thunkApi.getState();
   const { id } = state.currentClass;
   const dispatch = thunkApi.dispatch;
+  dispatch(openPreloader({loadingText: "Editing Student's Details"}))
   try {
     const response = await http.put(
       `/academics/class/${id}/student/${student.id}`,
@@ -51,6 +52,7 @@ export const editStudent: any = createAsyncThunk('edit/student', async (student:
         },
       },
     );
+    dispatch(closePreloader());
     return response;
   } catch (error: any) {
     const message =
@@ -58,6 +60,7 @@ export const editStudent: any = createAsyncThunk('edit/student', async (student:
       error.message ||
       error.toString();
     dispatch(openErrorModal({ errorText: [message] }));
+    dispatch(closePreloader());
     return thunkApi.rejectWithValue(message);
   }
 });
@@ -186,17 +189,11 @@ export const studentsBulkImport: any = createAsyncThunk(
       });
       dispatch(closePreloader());
     } catch (error: any) {
-      if (error.response.status === 400)
-        dispatch(
-          openErrorModal({
-            errorText: [
-              'Please upload a valid csv file, with column names as id, email, firstName, lastName, username',
-            ],
-          }),
-        );
+      console.log(error.response.data)
+      dispatch(openErrorModal({errorText: [error.response.data.message]}))
       dispatch(closePreloader());
       return thunkApi.rejectWithValue(
-        'Please upload a valid csv file, with column names as id, email, firstName, lastName, username',
+        error.response.data.message
       );
     }
   },

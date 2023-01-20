@@ -70,6 +70,7 @@ const SingleLesson = ({
   };
 
   const editStartDate = async () => {
+    dispatch(updateLessonOpened(data));
     if (data.start_date !== editDateDetails.start_date) {
       const errors: string[] = [];
 
@@ -91,6 +92,7 @@ const SingleLesson = ({
     }
   };
   const editEndDate = async () => {
+    dispatch(updateLessonOpened(data));
     if (data.end_date !== editDateDetails.end_date) {
       const errors: string[] = [];
       if (new Date(editDateDetails.end_date).getTime() < today_date) {
@@ -121,30 +123,32 @@ const SingleLesson = ({
   };
 
   const editStatus = async (value: 'published' | 'unpublished' | 'inactive') => {
+    dispatch(updateLessonOpened(data));
     const newLesson = { ...data };
     newLesson.status = value;
     await dispatch(editLesson(newLesson));
     await dispatch(getAllLessons());
     setStatusContainerOpened(false);
   };
-  const editStudents = async () => {
-    const newLesson = { ...data };
-    newLesson.students = studentsAdded;
-    await dispatch(editLesson(newLesson));
-    await dispatch(getAllLessons());
-    setShowModal(false);
-  };
+  // const editStudents = async () => {
+  //   const newLesson = { ...data };
+  //   console.log(newLesson);
+  //   newLesson.students = studentsAdded;
+  //   await dispatch(editLesson(newLesson));
+  //   await dispatch(getAllLessons());
+  //   setShowModal(false);
+  // };
 
   useEffect(() => {
     editStartDate();
   }, [editDateDetails.start_date]);
-  useEffect(() => {
-    if (!studentsUpdatedBefore) {
-      editStudents();
-    } else {
-      setStudentsUpdatedBefore(false);
-    }
-  }, [aboutToEditStudent]);
+  // useEffect(() => {
+  //   if (!studentsUpdatedBefore) {
+  //     editStudents();
+  //   } else {
+  //     setStudentsUpdatedBefore(false);
+  //   }
+  // }, [aboutToEditStudent]);
 
   useEffect(() => {
     editEndDate();
@@ -169,7 +173,7 @@ const SingleLesson = ({
           <div className="flex justify-around">
             <p className="sm:text-[10px] lg:text-[18px] font-semibold">{data.date}</p>
             <div className="flex items-center gap-2  sm:ml-[1rem] lg:ml-[5rem]">
-              {data.status == 'Published' ? (
+              {data.status.toLowerCase() == 'published' ? (
                 <BsFillCircleFill className="text-[9px]  text-[#62C932]" />
               ) : (
                 <BsCircle className="text-[9px] text-[#B0B0B0]" />
@@ -202,6 +206,9 @@ const SingleLesson = ({
                   <p
                     className="sm:text-[12px] lg:text-[16px] underline cursor-pointer"
                     onClick={() => {
+                      if (!editDateOpened) {
+                        dispatch(updateLessonOpened(data));
+                      }
                       setEditDateOpened((prev) => !prev);
                     }}
                   >
@@ -285,6 +292,7 @@ const SingleLesson = ({
                             : 'text-red-500'
                         }`}
                         onClick={(e: any) => {
+                          dispatch(updateLessonOpened(data));
                           editStatus(e.target.textContent);
                         }}
                       >
@@ -307,9 +315,9 @@ const SingleLesson = ({
                 <div
                   className="flex items-center gap-[1rem] cursor-pointer"
                   onClick={() => {
-                    console.log(data.students);
                     addAllStudentsForEachLesson(data.students);
                     setShowModal(true);
+                    dispatch(updateLessonOpened(data));
                   }}
                 >
                   <IoIosAddCircleOutline className="md:text[10px] lg:text-[1.6rem]" />
