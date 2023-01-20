@@ -20,7 +20,6 @@ const Messages = () => {
 
   useEffect(() => {
     const unread = conversations?.filter((conversation) => !conversation.message.is_read);
-    console.log(unread);
     setUnreadMessages(unread?.length);
     setAllMessages(conversations?.length);
   }, [conversations]);
