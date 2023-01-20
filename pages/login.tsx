@@ -74,7 +74,7 @@ const Login = () => {
   }, [executeRecaptcha]);
 
   useEffect(() => {
-    dispatch(clearFields());
+    // dispatch(clearFields());
   }, []);
 
   return (
