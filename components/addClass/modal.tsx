@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
@@ -7,11 +7,14 @@ import Grades from '../grades';
 import { closeAddClassModal, closeColorModal } from '../../store/modalSlice';
 import CreateClass from './createClass';
 import AddStudents from './addStudents';
-import { clearFields } from 'store/addClassSlice';
+import { addFile, clearFields } from 'store/addClassSlice';
 const Modal = () => {
   const { addClassModalOpen, showAddStudents } = useSelector((state: RootState) => state.modal);
   const { color } = useSelector((state: RootState) => state.addClass.class);
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(addFile({}));
+  }, []);
 
   return (
     <section

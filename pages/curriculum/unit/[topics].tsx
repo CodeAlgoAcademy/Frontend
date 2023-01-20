@@ -9,6 +9,7 @@ import PreviewModal from '../../../components/modals/PreviewModal';
 import { GeneralNav } from '../../../components';
 import Link from 'next/link';
 //
+import { editLesson } from 'services/lessonService';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { createAsyncThunk } from '@reduxjs/toolkit';
@@ -20,6 +21,7 @@ import { RootState } from 'store/store';
 import { ISingleStudent, newLesson } from 'types/interfaces';
 import { getDate } from 'utils/getDate';
 import SingleLesson from '@/components/curriculum/unit/singleLesson';
+import { getStudents } from 'store/studentSlice';
 
 export default function Unit() {
   const [showModal, setShowModal] = useState(false);
@@ -76,7 +78,13 @@ export default function Unit() {
     if (!data2?.error?.message) {
     }
   };
-
+  const editStudents = async (data: any) => {
+    const newLesson = { ...data };
+    newLesson.students = studentsAdded;
+    await dispatch(editLesson(newLesson));
+    await dispatch(getAllLessons());
+    setShowModal(false);
+  };
   useEffect(() => {
     getLessonsAll();
   }, []);
@@ -122,6 +130,9 @@ export default function Unit() {
       setActive((active) => [...active, id]);
     }
   };
+  useEffect(() => {
+    dispatch(getStudents());
+  }, []);
 
   return (
     <div>
@@ -276,23 +287,22 @@ export default function Unit() {
           </div>
           {/* curriculumn topic section */}
 
-          {lessons &&
-            lessons.map((data: any, index: number) => {
-              return (
-                <SingleLesson
-                  key={index}
-                  data={data}
-                  setShowModal={setShowModal}
-                  setShowPreview={setShowPreview}
-                  active={active}
-                  handleClick={handleClick}
-                  studentsAdded={studentsAdded}
-                  aboutToEditStudent={aboutToEditStudent}
-                  cancelPresence={cancelPresence}
-                  addAllStudentsForEachLesson={addAllStudentsForEachLesson}
-                />
-              );
-            })}
+          {lessons?.map((data: any, index: number) => {
+            return (
+              <SingleLesson
+                key={index}
+                data={data}
+                setShowModal={setShowModal}
+                setShowPreview={setShowPreview}
+                active={active}
+                handleClick={handleClick}
+                studentsAdded={studentsAdded}
+                aboutToEditStudent={aboutToEditStudent}
+                cancelPresence={cancelPresence}
+                addAllStudentsForEachLesson={addAllStudentsForEachLesson}
+              />
+            );
+          })}
         </div>
         {/* Add student modal component  */}
         <AddStudent
@@ -304,6 +314,7 @@ export default function Unit() {
           addAllStudentsForEachLesson={addAllStudentsForEachLesson}
           removeAllStudentsAddedForEachLesson={removeAllStudentsAddedForEachLesson}
           setAboutToEditStudent={setAboutToEditStudent}
+          editStudent={editStudents}
         />
         {/* preview modal components */}
         <PreviewModal showPreview={showPreview} cancelPreview={cancelPreview} />

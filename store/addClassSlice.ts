@@ -39,7 +39,7 @@ const addClassSlice = createSlice({
         state.class[action.payload.key as keyof typeof state.class] = action.payload.value;
       }
     },
-    addFile: (state: IAddClass, action: PayloadAction) => {
+    addFile: (state: IAddClass, action: PayloadAction<any>) => {
       state.file = action.payload;
     },
     clearFields: (state: IAddClass) => {

@@ -24,7 +24,6 @@ export const loginUser: any = createAsyncThunk('authSlice/loginUser', async (nam
     };
   } catch (error: any) {
     dispatch(closePreloader());
-    console.log(error);
     if (error.response.data.non_field_errors) {
       dispatch(
         openErrorModal({
@@ -113,7 +112,6 @@ export const loginWithGoogle: any = createAsyncThunk(
         ...data.user,
       };
     } catch (err) {
-      console.log(err);
     }
   },
 );

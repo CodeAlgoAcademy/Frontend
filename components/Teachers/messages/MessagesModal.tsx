@@ -35,8 +35,6 @@ const MessagesModal = ({
   //   });
   // };
 
-  console.log(teachers);
-
   const [openedTab, setOpenedTab] = useState<string>('students');
 
   useEffect(() => {
