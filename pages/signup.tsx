@@ -40,6 +40,8 @@ const SignUp = () => {
     tabName: '',
     component: <></>,
   });
+
+  console.log(checkState)
   useEffect(() => {
     const tab = tabs.find((tab) => {
       if (tab.tabName === activeTab) {
