@@ -13,21 +13,20 @@ import { getAccessToken } from 'utils/getTokens';
 import { client } from './Chats/ChatRoom';
 
 const MessagesModal = ({
-
   setModalOpen,
   modalOpen,
 }: {
   modalOpen: boolean;
   setModalOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const [active, setActive ] = useState(0)
-  const [filteredTeachers, setFilteredTeachers] = useState([])
-  const [typingText, setTypingText] = useState('')
+  const [active, setActive] = useState(0);
+  const [filteredTeachers, setFilteredTeachers] = useState([]);
+  const [typingText, setTypingText] = useState('');
   const dispatch = useDispatch();
   const { students } = useSelector((state: RootState) => state.students.students);
   const { teachers } = useSelector((state: RootState) => state.allTeachers);
 
-  const  handleSendNewMessage:any = async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleSendNewMessage: any = async (e: ChangeEvent<HTMLInputElement>) => {
     if (typingText !== '') {
       e.preventDefault();
       client.send(
@@ -49,14 +48,13 @@ const MessagesModal = ({
         },
       );
       setTypingText('');
-      await dispatch(getConversations())
-      await dispatch(getOpenMesssages())
-      setModalOpen(false)
+      await dispatch(getConversations());
+      await dispatch(getOpenMesssages());
+      setModalOpen(false);
     }
-  }
+  };
 
-
-    // const send_a_message = async () => {
+  // const send_a_message = async () => {
   //   if (openedMessageOwner.id) {
   //     if (typingText !== '') {
   //       const text = typingText;
@@ -106,10 +104,7 @@ const MessagesModal = ({
   //   });
   // };
 
-
-
   const [openedTab, setOpenedTab] = useState<string>('students');
-
 
   useEffect(() => {
     dispatch(getStudents());
@@ -155,43 +150,73 @@ const MessagesModal = ({
             </span>
           </article>
         </div>
-        <div className='flex flex-col flex-[70%] justify-between'>
-        <div className="flex-[80%] overflow-scroll scroll">
-          {openedTab === 'students' && (
-            <div className="pr-8 py-8">
-              <h1 className={styles.title}>Students</h1>
-              <div className='overflow-hidden'>
-                {students?.map((student: any) => {
-                  return <p onClick={() => setActive(student.id)} key={student.id} className={active === student.id ? `p-5 border-y border-r bg-[#efecf5]  hover:bg-[#e9e2f5] `: `p-5 hover:bg-[#e9e2f5] border-y border-r`}>{student.firstName}</p>;
+        <div className="flex flex-col flex-[70%] justify-between">
+          <div className="flex-[80%] overflow-scroll scroll">
+            {openedTab === 'students' && (
+              <div className="pr-8 py-8">
+                <h1 className={styles.title}>Students</h1>
+                <div className="overflow-hidden">
+                  {students?.map((student: any) => {
+                    return (
+                      <p
+                        onClick={() => setActive(student.id)}
+                        key={student.id}
+                        className={
+                          active === student.id
+                            ? `p-5 border-y border-r bg-[#efecf5]  hover:bg-[#e9e2f5] `
+                            : `p-5 hover:bg-[#e9e2f5] border-y border-r`
+                        }
+                      >
+                        {student.firstName}
+                      </p>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+            {openedTab === 'teachers' && (
+              <div className="pr-8 py-8 ">
+                <h1 className={styles.title}>Teachers</h1>
+                <div className="bg-gray-300 flex p-2 rounded-t-lg items-center px-2">
+                  <AiOutlineSearch size={20} />
+                  <input
+                    className="outline-none bg-transparent pl-2 p-1 text-sm placeholder:text-slate-700"
+                    placeholder="Search teachers"
+                  />
+                </div>
+                {teachers?.map((teacher: any) => {
+                  return (
+                    <p
+                      onClick={() => setActive(teacher.id)}
+                      key={teacher.id}
+                      className={
+                        active === teacher.id
+                          ? `p-5 border-y border-r bg-[#efecf5]  hover:bg-[#e9e2f5] `
+                          : `p-5 hover:bg-[#e9e2f5] border-y border-r`
+                      }
+                    >
+                      {teacher.firstName}
+                    </p>
+                  );
                 })}
               </div>
-            </div>
-          )}
-          {openedTab === 'teachers' && (
-            <div className="pr-8 py-8 ">
-              <h1 className={styles.title}>Teachers</h1>
-              <div className='bg-gray-300 flex p-2 rounded-t-lg items-center px-2'>
-                <AiOutlineSearch size={20} />
-                <input className='outline-none bg-transparent pl-2 p-1 text-sm placeholder:text-slate-700'placeholder="Search teachers" />
-              </div>
-              {teachers?.map((teacher: any) => {
-                return <p onClick={() => setActive(teacher.id)} key={teacher.id} className={active === teacher.id ? `p-5 border-y border-r bg-[#efecf5]  hover:bg-[#e9e2f5] `: `p-5 hover:bg-[#e9e2f5] border-y border-r`}>{teacher.firstName}</p>;
-              })}
-            </div>
-          )}
-        </div>
-        <div className="w-full flex gap-x-2 border-t-2">
+            )}
+          </div>
+          <div className="w-full flex gap-x-2 border-t-2">
             <input
               placeholder="Type Message..."
               className="w-[70%] md:w-[75%] px-2 py-3 outline-none border-none"
               onChange={(e) => setTypingText(e.target.value)}
               value={typingText}
             />
-            <button className="bg-mainPurple text-white px-2 py-3 text-center w-[30%] md:w-[25%]" onClick={handleSendNewMessage}>
+            <button
+              className="bg-mainPurple text-white px-2 py-3 text-center w-[30%] md:w-[25%]"
+              onClick={handleSendNewMessage}
+            >
               Send
             </button>
           </div>
-          </div>
+        </div>
       </div>
     </section>
   );

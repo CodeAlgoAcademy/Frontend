@@ -127,7 +127,7 @@ export const updateCurriculumToCurrent: any = createAsyncThunk(
       start_date: getDate(),
     };
     const dispatch = thunkApi.dispatch;
-    dispatch(openPreloader({ loadingText: `Moving ${params.curriculum.title} to past` }));
+    dispatch(openPreloader({ loadingText: `Moving ${params.curriculum.title} to current` }));
 
     try {
       const { data } = await http.put('/academics/curriculums/units/' + params.id, rearrangedUnit, {

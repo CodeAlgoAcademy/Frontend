@@ -119,10 +119,10 @@ const GeneralNav = () => {
                     </div>
                   </div>
                 </div>
-                {otherClassDetails?.map((navClass: CurrentClassState) => (
+                {otherClassDetails?.map((navClass: CurrentClassState, index: number) => (
                   <div
                     className="py-2 px-3 relative z-[50] flex items-center justify-between hover:bg-gray-100 cursor-pointer"
-                    key={navClass.className}
+                    key={index}
                     onClick={() => {
                       dispatch(
                         updateCurrentClass({
