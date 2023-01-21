@@ -126,7 +126,7 @@ const Login = () => {
             <div className="mx-auto ">
               <span className="flex flex-col items-center gap-2 mt-8 mb-6 justify-center relative">
                 <HCaptcha
-                  sitekey="5d06433e-07a1-4c1f-a27f-458ef21dc2ef"
+                  sitekey={`${process.env.NEXT_PUBLIC_RECAPTCHA_KEY}`}
                   onLoad={onReCaptchaLoad}
                   onVerify={onReCaptchaVerify}
                   onExpire={onReCaptchaExpire}
