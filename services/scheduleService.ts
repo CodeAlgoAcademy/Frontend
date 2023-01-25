@@ -24,7 +24,6 @@ export const getGoogleCalendar = createAsyncThunk(
           Authorization: `Bearer ${getAccessToken()}`,
         },
       });
-      console.log(data);
       return data;
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.response.data);
@@ -37,7 +36,6 @@ export const googleCalendar = createAsyncThunk(
   async (access_token: string, thunkAPI) => {
     const dispatch = thunkAPI.dispatch;
     try {
-      console.log(access_token);
       await http.post(
         '/auth/calendar/',
         { access_token },
