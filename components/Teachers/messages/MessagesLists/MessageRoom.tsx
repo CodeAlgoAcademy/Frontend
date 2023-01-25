@@ -9,6 +9,7 @@ import { getTeachers } from 'services/teacherService';
 import { getConversations, getOpenMesssages, open_a_message, setOpenStudent } from 'store/messagesSlice';
 import { RootState } from 'store/store';
 import { getStudents } from 'store/studentSlice';
+import { CurrentClassState, IClass } from 'types/interfaces';
 import { getAccessToken } from 'utils/getTokens';
 import ChatRoom, { client } from '../Chats/ChatRoom';
 
@@ -21,8 +22,7 @@ const MessageRoom = () => {
   const { teachers } = useSelector((state: RootState) => state.allTeachers);
   const { conversations } = useSelector((state: RootState) => state.messages);
   const [userSelected, setUserSelected] = useState<number>()
-
-  console.log(userSelected)
+  const currentClass = useSelector((state: RootState): CurrentClassState => state.currentClass);
 
 //   const setActiveStudent: any = () => {
 //     dispatch(setOpenStudent(userSelected));
@@ -94,7 +94,7 @@ const MessageRoom = () => {
     dispatch(getStudents());
     dispatch(getTeachers());
     dispatch(getConversations());
-  }, []);
+  }, [currentClass]);
 
   console.log(conversations)
 
@@ -116,7 +116,7 @@ const MessageRoom = () => {
                 </span>
             </div>
           <article
-            className='bg-gray-100 overflow-y-scroll flex-1'
+            className={openedStudent ? 'bg-gray-100 overflow-y-scroll flex-1': 'bg-gray-100 overflow-y-scroll'}
           >
                {openedStudent && <div className='overflow-hidden'>
                         {students?.map((student: any) => {
