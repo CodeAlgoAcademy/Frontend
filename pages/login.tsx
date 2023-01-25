@@ -32,8 +32,8 @@ const Login = () => {
     },
   ];
 
-  const captchaRef = React.useRef<HCaptcha>(null);
-  const [recaptchaVerified,setRecaptchaVerified] = useState(false);
+ // const captchaRef = React.useRef<HCaptcha>(null); //001 Triumfia
+ // const [recaptchaVerified,setRecaptchaVerified] = useState(false); //001 Triumfia
   const login = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = await dispatch(loginUser());
@@ -46,9 +46,9 @@ const Login = () => {
     }
   };;
 
-  const onReCaptchaVerify = useCallback(async () => {
+ /* const onReCaptchaVerify = useCallback(async () => {
     setRecaptchaVerified(() => true);
-  },[]);
+  },[]); 
 
   const onReCaptchaExpire = useCallback(async () => {
     setRecaptchaVerified(() => false);
@@ -61,7 +61,7 @@ const Login = () => {
     if(captchaRef.current !== null) {
       captchaRef.current.execute();
     }
-  };
+  }; */ //001 Triumfia
 
   useEffect(() => {
     // dispatch(clearFields());
@@ -125,13 +125,13 @@ const Login = () => {
             {/* login button */}
             <div className="mx-auto ">
               <span className="flex flex-col items-center gap-2 mt-8 mb-6 justify-center relative">
-                <HCaptcha
+      /*          <HCaptcha
                   sitekey={`${process.env.NEXT_PUBLIC_RECAPTCHA_KEY}`}
                   onLoad={onReCaptchaLoad}
                   onVerify={onReCaptchaVerify}
                   onExpire={onReCaptchaExpire}
                   ref={captchaRef}
-                />
+                /> */ //001 Triumfia
               </span>
               <span className="flex flex-row items-center gap-x-2 mt-4 mb-8 w-fit mx-auto">
                 <input type="checkbox" id="terms" className="accent-mainPurple" required />
@@ -146,7 +146,7 @@ const Login = () => {
               </Link>
               <button
                 type="submit"
-                disabled={!recaptchaVerified}
+         //       disabled={!recaptchaVerified} //001 Triumfia
                 className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md disabled:cursor-not-allowed disabled:bg-gray-300"
               >
                 Log In
