@@ -124,7 +124,7 @@ const Login = () => {
             </div>
             {/* login button */}
             <div className="mx-auto ">
-              <span className="flex flex-col items-center gap-2 mt-8 mb-6 justify-center relative">
+          //    <span className="flex flex-col items-center gap-2 mt-8 mb-6 justify-center relative">
               //  <HCaptcha
               //     sitekey={`${process.env.NEXT_PUBLIC_RECAPTCHA_KEY}`}
               //     onLoad={onReCaptchaLoad}
@@ -132,7 +132,7 @@ const Login = () => {
               //     onExpire={onReCaptchaExpire}
               //     ref={captchaRef}
               //   /> //001 Triumfia
-              </span>
+           //   </span>
               <span className="flex flex-row items-center gap-x-2 mt-4 mb-8 w-fit mx-auto">
                 <input type="checkbox" id="terms" className="accent-mainPurple" required />
                 <label htmlFor="terms">I accept the terms and conditions</label>
