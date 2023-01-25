@@ -9,7 +9,12 @@ import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import { getAccessToken } from 'utils/getTokens';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store/store';
-import { getConversations, getOpenMesssages, open_a_message, setOpenStudent } from 'store/messagesSlice';
+import {
+  getConversations,
+  getOpenMesssages,
+  open_a_message,
+  setOpenStudent,
+} from 'store/messagesSlice';
 import { openErrorModal } from 'store/fetchSlice';
 import http from 'axios.config';
 import { User } from 'types/interfaces';
@@ -20,11 +25,9 @@ interface Message {
   user: User;
 }
 
-
 export const client = new W3CWebSocket(
   `wss://sea-lion-app-43ury.ondigitalocean.app/chat/websocket/?Authorization=${getAccessToken()}`,
 );
-
 
 const ChatRoom = () => {
   const { openedMessageOwner, openedMessage } = useSelector((state: RootState) => state.messages);
@@ -33,8 +36,6 @@ const ChatRoom = () => {
   const [messages, setMessages] = useState<IMessage[]>(openedMessage ? [...openedMessage] : []);
   const [typingText, setTypingText] = useState<string>('');
   const dispatch = useDispatch();
-
-  
 
   // console.log(openedMessageOwner)
   // console.log(openedMessage)
@@ -69,29 +70,27 @@ const ChatRoom = () => {
 
   const handleSend: any = (e: ChangeEvent<HTMLInputElement>) => {
     if (openedMessageOwner.id) {
-    if (typingText !== '') {
-      e.preventDefault();
-      client.send(
-        JSON.stringify({
-          type: 'chat.message',
-          text: typingText,
-          receiver: openedMessageOwner.id,
-        }),
-      );
-      dispatch(getOpenMesssages());
-      dispatch(getConversations());
-      setTypingText('');
-    }
-  } else {
+      if (typingText !== '') {
+        e.preventDefault();
+        client.send(
+          JSON.stringify({
+            type: 'chat.message',
+            text: typingText,
+            receiver: openedMessageOwner.id,
+          }),
+        );
+        dispatch(getOpenMesssages());
+        dispatch(getConversations());
+        setTypingText('');
+      }
+    } else {
       dispatch(openErrorModal({ errorText: ['No user to send a message'] }));
     }
-  
-}
+  };
 
   useEffect(() => {
     client.onopen = () => {
       console.log('Websocket Client Connected...');
-
     };
 
     client.onmessage = (message: any) => {
@@ -100,8 +99,6 @@ const ChatRoom = () => {
       console.log('serverr reply', dataFromServer);
     };
   });
-
-
 
   useEffect(() => {
     dispatch(getOpenMesssages());
@@ -112,7 +109,7 @@ const ChatRoom = () => {
   }, [openedMessage]);
 
   return (
-    <div className="">
+    <div className="max-h-[35rem] h-[75vh]">
       <div className={styles.header}>
         <Avatar src="" alt="" />
         <p className="font-bold text-sm capitalize">
@@ -163,15 +160,13 @@ const ChatRoom = () => {
   );
 };
 
-
-
 export default ChatRoom;
 
 const styles = {
   header: 'flex items-center space-x-2 border-b-2 p-2',
-  chatContainer: 'h-[35rem] space-y-1 p-5 px-5 overflow-y-auto',
+  chatContainer: 'h-[100%] space-y-1 p-5 px-5 overflow-y-auto',
   chats: 'bg-[#fff3cc] p-3 text-xs w-fit rounded-t-lg',
   messageInputContainer: 'bg-white w-full rounded-b-xl',
-  inputContainer: 'flex items-center space-x-2 text-slate-400 p-4 px-7',
+  inputContainer: 'flex items-center space-x-2 text-slate-400',
   input: 'w-full p-1 outline-none bg-transparent text-black',
 };

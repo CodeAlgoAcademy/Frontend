@@ -13,6 +13,7 @@ type modalProps = {
   addAllStudentsForEachLesson: (students: any[]) => void;
   removeAllStudentsAddedForEachLesson: () => void;
   setAboutToEditStudent: Dispatch<SetStateAction<boolean>>;
+  editStudent: (data: any) => void;
 };
 
 // this is the modal that pops up when add Student is clicked
@@ -40,21 +41,12 @@ export default function AddStudent(props: modalProps) {
   };
   const { className, id } = useSelector((state: RootState) => state.currentClass);
   const { students } = useSelector((state: RootState) => state.students.students);
-
+  const { lessonOpened } = useSelector((state: RootState) => state.allLessons);
   return (
     <AnimatePresence exitBeforeEnter>
       {props.showModal && (
-        <motion.div
-          className="bg-black z-[20] bg-opacity-50 top-0 fixed w-full h-full flex justify-center items-center"
-          variants={backdropVariant}
-          initial="hidden"
-          animate="visible"
-          exit="hidden"
-        >
-          <motion.div
-            variants={modal}
-            className=" bg-white w-[90vw] max-w-[900px] mx-auto px-12 pt-6 pb-10 rounded-[10px]"
-          >
+        <div className="bg-black z-[20] bg-opacity-50 top-0 fixed w-full h-full flex justify-center items-center">
+          <div className=" bg-white w-[90vw] max-w-[900px] mx-auto px-12 pt-6 pb-10 rounded-[10px]">
             <div className="cursor-pointer" onClick={(event) => props.cancelPresence(event)}>
               <GiCancel className="text-[2rem] ml-auto" />
             </div>
@@ -124,14 +116,15 @@ export default function AddStudent(props: modalProps) {
                 onClick={() => {
                   if (props.studentsAdded.length > 0) {
                     props.setAboutToEditStudent((prev) => !prev);
+                    props.editStudent(lessonOpened);
                   }
                 }}
               >
                 Add Student(s)
               </button>
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       )}
     </AnimatePresence>
   );
