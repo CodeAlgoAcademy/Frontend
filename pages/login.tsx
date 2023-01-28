@@ -32,8 +32,8 @@ const Login = () => {
     },
   ];
 
- // const captchaRef = React.useRef<HCaptcha>(null); //001 Triumfia
- // const [recaptchaVerified,setRecaptchaVerified] = useState(false); //001 Triumfia
+  const captchaRef = React.useRef<HCaptcha>(null);
+  const [recaptchaVerified,setRecaptchaVerified] = useState(false);
   const login = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = await dispatch(loginUser());
@@ -46,9 +46,9 @@ const Login = () => {
     }
   };;
 
- /* const onReCaptchaVerify = useCallback(async () => {
+  const onReCaptchaVerify = useCallback(async () => {
     setRecaptchaVerified(() => true);
-  },[]); 
+  },[]);
 
   const onReCaptchaExpire = useCallback(async () => {
     setRecaptchaVerified(() => false);
@@ -61,7 +61,7 @@ const Login = () => {
     if(captchaRef.current !== null) {
       captchaRef.current.execute();
     }
-  }; */ //001 Triumfia
+  };
 
   useEffect(() => {
     // dispatch(clearFields());
@@ -124,7 +124,7 @@ const Login = () => {
             </div>
             {/* login button */}
             <div className="mx-auto ">
-          
+
               <span className="flex flex-row items-center gap-x-2 mt-4 mb-8 w-fit mx-auto">
                 <input type="checkbox" id="terms" className="accent-mainPurple" required />
                 <label htmlFor="terms">I accept the terms and conditions</label>
@@ -138,7 +138,7 @@ const Login = () => {
               </Link>
               <button
                 type="submit"
-         //       disabled={!recaptchaVerified} //001 Triumfia
+                //       disabled={!recaptchaVerified} //001 Triumfia
                 className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md disabled:cursor-not-allowed disabled:bg-gray-300"
               >
                 Log In

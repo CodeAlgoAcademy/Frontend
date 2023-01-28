@@ -1,13 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500&display=swap');
 
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
@@ -83,11 +84,9 @@ a {
 }
 .showModal {
   top: 0;
-  
 }
 .hideModal {
   top: -100vh;
-
 }
 @keyframes showModalAnimation {
   from {
@@ -205,8 +204,8 @@ a {
 .checkbox-container input:checked ~ .checkmark {
   background-color: #f28e2c;
 }
-.checkbox-container input.accent-mainPurple:checked ~ .checkmark{
-  @apply bg-mainPurple
+.checkbox-container input.accent-mainPurple:checked ~ .checkmark {
+  @apply bg-mainPurple;
 }
 
 .checkmark:after {
@@ -256,6 +255,18 @@ a {
 }
 :where(.small-scroll-thumb, .short-scroll-thumb)::-webkit-scrollbar-thumb {
   border-radius: 0px;
+}
+:where(.small-scroll-thumb, .blue-scroll-thumb)::-webkit-scrollbar-thumb {
+  background-color: #2073fa;
+  border-radius: 2px;
+}
+.small-scroll-thumb.blue-scroll-thumb::-webkit-scrollbar {
+  width: 4px;
+  background: #d8dbe2;
+  border-radius: 2px;
+}
+.small-scroll-thumb.blue-scroll-thumb.skill-box::-webkit-scrollbar {
+  margin-right: 16px;
 }
 
 .short-scroll-thumb::-webkit-scrollbar {
@@ -426,6 +437,17 @@ a {
   transform: rotate(330deg);
 }
 
+.parent-page * {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.red-progress-bar {
+  background: rgb(255, 213, 236);
+  background: linear-gradient(90deg, rgba(255, 213, 236, 1) 1%, rgba(251, 87, 176, 1) 60%);
+}
+.green-progress-bar {
+  background: rgb(241, 242, 245);
+  background: linear-gradient(90deg, rgba(241, 242, 245, 1) 1%, rgba(127, 217, 222, 1) 60%);
+}
 @keyframes spinner-fade9234 {
   0% {
     background-color: #69717d;

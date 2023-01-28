@@ -1,9 +1,9 @@
 import React from 'react';
-import { Sidebar, ScheduleBox, NoteBox, GeneralNav, SummaryBox } from '../components';
+import {Sidebar,ScheduleBox,NoteBox,GeneralNav,SummaryBox} from '../components';
 
 const Dashboard = () => {
   return (
-    <div className="min-h-[100vh] flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <GeneralNav />
       {/* <Header /> */}
       <div className="flex items-stretch mb-auto grow">
