@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function ParentSignUp5() {
   return (
-    <div>
+    <div key={5}>
       <h1 className='font-bold text-[28px]'>It’s time to create Connor’s log in</h1>
       <p className='block text-[14px] font-[400] mt-3'>You and your student will have separate log ins on CodeAlgo. Don’t worry, you will still have access to your student’s account. </p>
       <label className='block text-xl font-semibold mt-6'>Username</label>

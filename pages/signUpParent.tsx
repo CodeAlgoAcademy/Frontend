@@ -15,16 +15,16 @@ import React from 'react';
 
 export default function SignUpParent() {
     const {steps, currentStepIndex, step, isFirstStep, isLastStep, back, next} = useMultiForm([
-      <ParentSignUp1 />,
-      <ParentSignUp2 />,
-      <WelcomeForm />,
-      <ParentSignUp3 />,
-      <ParentSignUp4 />,
-      <ParentSignUp5 />,
-      <Safety1 />,
-      <Safety2 />,
-      <Safety3 />,
-      <ThankyouForm />
+      <ParentSignUp1 key={1} />,
+      <ParentSignUp2 key={2} />,
+      <WelcomeForm key={3} />,
+      <ParentSignUp3 key={4} />,
+      <ParentSignUp4 key={5} />,
+      <ParentSignUp5 key={6} />,
+      <Safety1 key={7} />,
+      <Safety2 key={8}/>,
+      <Safety3 key={9} />,
+      <ThankyouForm key={10}/>
     ]) 
     
   return (
