@@ -10,7 +10,7 @@ import { loginUser } from '../services/authService';
 import { clearFields, updateUser } from 'store/authSlice';
 import styles from '../styles/styles';
 import { useRouter } from 'next/router';
-import { default as HCaptcha } from '../utils/captcha';
+// import {default as HCaptcha} from '../utils/captcha';
 import axios from 'axios';
 
 const Login = () => {
@@ -32,7 +32,7 @@ const Login = () => {
     },
   ];
 
-  const captchaRef = React.useRef<HCaptcha>(null);
+  // const captchaRef = React.useRef<HCaptcha>(null);
   const [recaptchaVerified, setRecaptchaVerified] = useState(false);
   const login = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -58,9 +58,9 @@ const Login = () => {
     // execute function on it. you can use other functions as
     // documented here:
     // https://docs.hcaptcha.com/configuration#jsapi
-    if (captchaRef.current !== null) {
-      captchaRef.current.execute();
-    }
+    // if(captchaRef.current !== null) {
+    //   captchaRef.current.execute();
+    // }
   };
 
   useEffect(() => {
@@ -125,13 +125,13 @@ const Login = () => {
             {/* login button */}
             <div className="mx-auto ">
               <span className="flex flex-col items-center gap-2 mt-8 mb-6 justify-center relative">
-                <HCaptcha
+                {/* <HCaptcha
                   sitekey={`${process.env.NEXT_PUBLIC_RECAPTCHA_KEY}`}
                   onLoad={onReCaptchaLoad}
                   onVerify={onReCaptchaVerify}
                   onExpire={onReCaptchaExpire}
                   ref={captchaRef}
-                />
+                /> */}
               </span>
               <span className="flex flex-row items-center gap-x-2 mt-4 mb-8 w-fit mx-auto">
                 <input type="checkbox" id="terms" className="accent-mainPurple" required />
@@ -146,8 +146,9 @@ const Login = () => {
               </Link>
               <button
                 type="submit"
-                disabled={!recaptchaVerified}
-                className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md disabled:cursor-not-allowed disabled:bg-gray-300"
+                // disabled={!recaptchaVerified}
+                className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md "
+                // disabled:cursor-not-allowed disabled:bg-gray-300
               >
                 Log In
               </button>
