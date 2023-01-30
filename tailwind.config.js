@@ -9,6 +9,7 @@ module.exports = {
       colors: {
         mainPurple: '#412281',
       },
+      
     },
   },
   plugins: [],

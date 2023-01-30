@@ -25,11 +25,14 @@ const SingleAssignment = ({
 
   return (
     <div className="w-full bg-gray-200 shadow-md p-3 rounded-md">
-      <header className="w-full flex gap-4 justify-between items-center">
+      <header
+        className="w-full flex gap-4 justify-between items-center cursor-pointer"
+        onClick={toggleAccordion}
+      >
         <div className={styles.title}>
           <h1>{assignment.title}</h1>
         </div>
-        <span onClick={toggleAccordion} className="cursor-pointer">
+        <span className="cursor-pointer">
           {accordionOpen ? <FaChevronUp /> : <FaChevronDown />}
         </span>
       </header>
