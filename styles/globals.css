@@ -448,6 +448,9 @@ a {
   background: rgb(241, 242, 245);
   background: linear-gradient(90deg, rgba(241, 242, 245, 1) 1%, rgba(127, 217, 222, 1) 60%);
 }
+.blue-svg {
+  filter: invert(80%) sepia(70%) saturate(4500%) hue-rotate(200deg) brightness(105%) contrast(140%);
+}
 @keyframes spinner-fade9234 {
   0% {
     background-color: #69717d;
