@@ -12,7 +12,7 @@ const Buttons = () => {
         <Link href="/login">
           <button className={`bg-orange-500 ${styles.lgBtn}`}>Login</button>
         </Link>
-        <Link href="signup">
+        <Link href="/selectUserType">
           <button className={`bg-amber-500 ${styles.lgBtn}`}>Signup</button>
         </Link>
       </div>
@@ -22,7 +22,7 @@ const Buttons = () => {
         <Link href="/login">
           <button className={`bg-orange-500 ${styles.lgBtn}`}>Login</button>
         </Link>
-        <Link href="/signup">
+        <Link href="/selectUserType">
           <button className={`bg-amber-500 ${styles.lgBtn}`}>Signup</button>
         </Link>
       </div>
