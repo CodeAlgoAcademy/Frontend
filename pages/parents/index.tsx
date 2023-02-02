@@ -2,13 +2,12 @@ import DashboardBox from '@/components/parents/DashboardBox';
 import ParentLayout from '@/components/parents/ParentLayout';
 import ProgressBar from '@/components/parents/ProgressBar';
 import SkillBox from '@/components/parents/SkillBox';
-import Image from 'next/image';
 import React from 'react';
 
 const Dashboard = () => {
    return (
       <ParentLayout>
-         < div className=''>
+         < div className='overflow-x-auto scale-90 sm:scale-100 relative bottom-10 sm:bottom-0'>
             <div className='flex items-start justify-around flex-wrap mx-auto gap-x-4 gap-y-10 mb-10'>
                <DashboardBox title='Level' padding='large'>
                   <h2 className='text-center text-[22px] font-medium mt-14'>Level 11</h2>
