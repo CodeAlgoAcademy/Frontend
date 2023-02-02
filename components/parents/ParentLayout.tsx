@@ -1,4 +1,4 @@
-import React,{ReactNode} from 'react';
+import React,{ReactNode,useEffect,useState} from 'react';
 import SideNav from '@/components/parents/ParentSideNav';
 import MobileSideNav from '@/components/parents/ParentMobileSideNav';
 import Image from 'next/image';
@@ -8,14 +8,38 @@ interface Props {
 }
 
 const ParentLayout = ({children}: Props) => {
+   const [detachedNavDisplay,setDetachedNavDisplay] = useState(false);
+   const [width,setWidth] = useState(window.innerWidth);
+
+   useEffect(() => {
+      const handleResize = () => setWidth(window.innerWidth);
+      window.addEventListener('resize',handleResize);
+      return () => {
+         window.removeEventListener('resize',handleResize);
+      };
+   },[]);
    return (
       <>
          <div className='parent-page min-h-screen' >
-            <div className='flex items-stretch mb-auto grow bg-white px-[3%] py-11 relative'>
-               <MobileSideNav />
+            <div className='flex items-stretch mb-auto grow bg-white px-[4%] py-11 relative'>
+               <MobileSideNav className='hidden sm:flex' />
                <SideNav />
-               <main className='main bg-[#ECEDF3] rounded-[30px] grid place-items-centers w-full h-full py-9 px-[4%] mr-[1%]'>
-                  <div className='flex gap-3 w-fit ml-auto items-center mb-14'>
+               {width < 640 &&
+                  <div className='relative'>
+                     <div className='absolute sm:hidden left-[-8px] cursor-pointer rounded-lg h-12 w-12' onClick={() => {
+                        setDetachedNavDisplay((prev) => !prev);
+                     }}>
+                        <svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>Menu</title> <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fill-rule="evenodd"> <g id="Menu"> <rect id="Rectangle" fillRule="nonzero" x="0" y="0" width="24" height="24"> </rect> <line x1="5" y1="7" x2="19" y2="7" id="Path" stroke="#d9dadd" strokeWidth="2" strokeLinecap="round"> </line> <line x1="5" y1="17" x2="19" y2="17" id="Path" stroke="#d9dadd" strokeWidth="2" strokeLinecap="round"> </line> <line x1="5" y1="12" x2="19" y2="12" id="Path" stroke="#d9dadd" strokeWidth="2" strokeLinecap="round"> </line> </g> </g> </g></svg>
+                     </div>
+                     {
+                        detachedNavDisplay &&
+                        <div className='absolute left-0 top-[48px] px-2 bg-white z-20 border border-gray-300 rounded-md'>
+                           <MobileSideNav />
+                        </div>
+                     }
+                  </div>}
+               <main className='main mt-12 sm:mt-0 bg-[#ECEDF3] relative z-0 rounded-2xl sm:rounded-[30px] grid place-items-centers w-full h-full py-9 px-[4%] mr-[1%] overflow-x-hidden'>
+                  <div className='gap-3 w-fit absolute right-[4%] top-9 items-center mb-14 sm:flex hidden'>
                      <span className='relative top-1'>
                         <Image src="/assets/message.svg" alt="messages" width={22} height={22} className="blue-svg" />
                         <span className='w-5 h-5 absolute top-[-10px] right-[-10px] rounded-full text-xs text-white bg-[#FB4DAB] text-center leading-5 scale-75'>1</span>
@@ -30,7 +54,7 @@ const ParentLayout = ({children}: Props) => {
                         <path d="M1.7998 1.25L9.2998 8.75L16.7998 1.25" stroke="#2073FA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                      </svg>
                   </div>
-                  <div className='flex items-center gap-3 mb-9'>
+                  <div className='flex items-center gap-3 mb-9 mt-9'>
                      <h1 className='text-3xl text-[#2073FA] font-semibold'>Connor</h1>
                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="10" viewBox="0 0 18 10" className='scale-110' fill="none">
                         <path d="M1.7998 1.25L9.2998 8.75L16.7998 1.25" stroke="#2073FA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
