@@ -10,7 +10,7 @@ import { ChangeEvent, useEffect } from 'react';
 import { signUpUser } from 'services/authService';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import { updateUser } from 'store/authSlice';
+import { clearFields, updateUser } from 'store/authSlice';
 
 export default function Teacher() {
   const dispatch = useDispatch();
@@ -25,16 +25,18 @@ export default function Teacher() {
   
 
   const signup = async (event: ChangeEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = await dispatch(signUpUser());
-    if (!data?.error?.message) {
-      if (data?.payload?.is_teacher) {
-        router.push('/addClass');
-      } else {
-        router.push('/comingSoon');
-      }
+    if(!teacherSignUpStep){
+      event.preventDefault();
+      next()
+    } else {
+      const data = await dispatch(signUpUser());
+     if (!data?.error?.message) {
+       dispatch(clearFields());
+         router.push('/addClass');
+     }
+     dispatch(clearFields());
+     console.log(data)
     }
-    console.log(data)
   };
 
   return (
@@ -53,12 +55,10 @@ export default function Teacher() {
                     {step}
                   </div>
                   <div>
-                      {!teacherSignUpStep && <button className='block  h-[2.5rem] mt-6 text-center w-full text-white bg-[#2073FA] font-bold rounded-xl' type="button"  onClick={next}>Continue</button>}
+                      {!teacherSignUpStep && <button className='block  h-[2.5rem] mt-6 text-center w-full text-white bg-[#2073FA] font-bold rounded-xl' type="submit">Continue</button>}
                       {teacherSignUpStep && <button className='block  h-[2.5rem] mt-6 text-center w-full text-white bg-[#2073FA] font-bold rounded-xl' type="submit">Sign up</button>}
                       {(!isFirstStep && !isLastStep) && <button className='block text-center w-full mt-4' type="button" onClick={back}>back</button>}
                       {isFirstStep && <button className='block  h-[2.5rem] mt-6 text-center w-full bg-neutral-100/70 font-semibold rounded-xl text-black' type="button" onClick={back}>Sign Up with Google</button>}
-                      {isFirstStep && <button className='block  h-[2.5rem] mt-6 text-center w-full bg-neutral-100/70 font-semibold rounded-xl text-black' type="button" onClick={back}>Sign Up with Facebook</button>}
-                      {isLastStep && <button className='block text-center underline w-full mt-4'>Continue as student</button>}
                   </div>
               </form>
           </div>
