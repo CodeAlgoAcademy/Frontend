@@ -20,7 +20,7 @@ const linkDetails = [
 
 const ParentMobileSideNav = () => {
    return (
-      <div className='py-2 mr-[3%] min-w-[40px] flex lg:hidden divide-y sticky top-0 h-full flex-col gap-4 first:pt-0'>
+      <div className='py-2 mr-[3%] min-w-[40px] flex xl:hidden divide-y sticky top-0 h-full flex-col gap-4 first:pt-0'>
          {
             linkDetails.map((links,index) => {
                return (

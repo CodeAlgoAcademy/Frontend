@@ -33,7 +33,7 @@ const NavButton = ({image,title,notification,name,isIcon}: Props) => {
                </>
             }
             {
-               isIcon && detailsDisplay && <div className=' bg-white border border-slate-200 min-w-[80px] text-xs font-medium py-2 px-4 rounded-xl absolute top-0 left-[120%]'>
+               isIcon && detailsDisplay && <div className=' bg-white border detail-card border-slate-200 min-w-[80px] text-xs font-medium py-2 px-4 rounded-xl absolute top-0 left-[120%]'>
                   {title}
                </div>
             }
