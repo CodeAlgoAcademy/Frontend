@@ -20,6 +20,9 @@ const Layout = ({ children }: Props) => {
       router.pathname !== '/login' &&
       router.pathname !== '/' &&
       router.pathname !== '/signup' &&
+      router.pathname !== '/signup/teacher' &&
+      router.pathname !== '/signup/student' &&
+      router.pathname !== '/signup/parent' &&
       router.pathname !== '/comingSoon' &&
       router.pathname !== '/404' &&
       !tokens

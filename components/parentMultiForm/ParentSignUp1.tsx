@@ -16,7 +16,7 @@ export default function ParentSignUp1() {
         onChange={(e: ChangeEvent<HTMLInputElement>) => {
           dispatch(updateUser({key: 'email', value: e.target.value}));
         }}
-        type="email" className='block w-full h-[2.5rem] rounded-xl px-4 py-2 focus:outline-0 mt-3' placeholder='schoolTeach@gmail.com' required/>
+        type="email" className='block w-full h-[2.5rem] rounded-xl px-4 py-2 focus:outline-0 mt-3' placeholder='schoolTeach@gmail.com' required  />
     </div>
   );
 }
