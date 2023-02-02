@@ -18,9 +18,9 @@ const linkDetails = [
    ],
 ];
 
-const ParentMobileSideNav = () => {
+const ParentMobileSideNav = ({className}: {className?: string;}) => {
    return (
-      <div className='py-2 mr-[3%] min-w-[40px] flex xl:hidden divide-y sticky top-0 h-full flex-col gap-4 first:pt-0'>
+      <div className={`py-2 mr-[3%] min-w-[50px] flex xl:hidden divide-y sticky top-0 h-full z-20 flex-col gap-4 first:pt-0 ${className}`}>
          {
             linkDetails.map((links,index) => {
                return (
