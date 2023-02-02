@@ -65,7 +65,7 @@ const MessageRoom = () => {
 
   useEffect(() => {
     client.onopen = () => {
-      console.log('Websocket Client Connected...');
+      console.log('Websocket Client Connected... message room');
     };
 
     client.onmessage = (message: any) => {
@@ -97,7 +97,7 @@ const MessageRoom = () => {
     dispatch(getConversations());
   }, [currentClass]);
 
-  console.log(conversations);
+  // console.log(conversations);
 
   return (
     <section className={`w-[100vw] py-8 min-h-screen`}>

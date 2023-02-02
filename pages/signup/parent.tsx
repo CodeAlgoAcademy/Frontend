@@ -11,9 +11,10 @@ import WelcomeForm from '@/components/parentMultiForm/WelcomeForm';
 import useMultiForm from '@/components/useMultiForm';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 
-export default function SignUpParent() {
+export default function Parent() {
+    
     const {steps, currentStepIndex, step, isFirstStep, isLastStep, back, next} = useMultiForm([
       <ParentSignUp1 key={1} />,
       <ParentSignUp2 key={2} />,
@@ -26,6 +27,7 @@ export default function SignUpParent() {
       <Safety3 key={9} />,
       <ThankyouForm key={10}/>
     ]) 
+    
     
   return (
     <div className='bg-gradient-to-br from-[#78A8FB] to-[#C4D7F8] h-[100vh] p-[2rem] relative'>
