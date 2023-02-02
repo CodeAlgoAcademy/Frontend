@@ -21,8 +21,8 @@ const ParentLayout = ({children}: Props) => {
    return (
       <>
          <div className='parent-page min-h-screen' >
-            <div className='flex items-stretch mb-auto grow bg-white px-[4%] py-11 relative'>
-               <MobileSideNav className='hidden sm:flex' />
+            <div className='flex items-stretch mb-auto grow bg-white xl:px-[4%] md:pl-0 px-4 sm:pl-0 py-11 relative'>
+               <MobileSideNav className='hidden sm:flex mx-6 xl:ml-0 md:mr-6' />
                <SideNav />
                {width < 640 &&
                   <div className='relative'>
@@ -38,7 +38,7 @@ const ParentLayout = ({children}: Props) => {
                         </div>
                      }
                   </div>}
-               <main className='main mt-12 sm:mt-0 bg-[#ECEDF3] relative z-0 rounded-2xl sm:rounded-[30px] grid place-items-centers w-full h-full py-9 px-[4%] mr-[1%] overflow-x-hidden'>
+               <main className='main mt-12 sm:mt-0 bg-[#ECEDF3] relative z-0 rounded-2xl sm:rounded-[30px] grid place-items-centers w-full h-full py-9 px-0 sm:px-[4%] mr-[1%]'>
                   <div className='gap-3 w-fit absolute right-[4%] top-9 items-center mb-14 sm:flex hidden'>
                      <span className='relative top-1'>
                         <Image src="/assets/message.svg" alt="messages" width={22} height={22} className="blue-svg" />
@@ -54,8 +54,8 @@ const ParentLayout = ({children}: Props) => {
                         <path d="M1.7998 1.25L9.2998 8.75L16.7998 1.25" stroke="#2073FA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                      </svg>
                   </div>
-                  <div className='flex items-center gap-3 mb-9 mt-9'>
-                     <h1 className='text-3xl text-[#2073FA] font-semibold'>Connor</h1>
+                  <div className='flex items-center gap-3 mt-4 mb-0 sm:my-9 ml-4 sm:ml-0'>
+                     <h1 className='text-3xl text-[#2073FA] font-semibold'>Israel</h1>
                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="10" viewBox="0 0 18 10" className='scale-110' fill="none">
                         <path d="M1.7998 1.25L9.2998 8.75L16.7998 1.25" stroke="#2073FA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                      </svg>
