@@ -3,7 +3,7 @@ import NavButton from '@/components/parents/NavButton';
 
 const SideNav = () => {
    return (
-      <div className='parent-sidenav hidden lg:flex min-w-[240px] gap-14 flex-col mr-[8%] mt-3 h-full sticky top-[-5.5rem] flex-auto'>
+      <div className='parent-sidenav hidden xl:flex min-w-[240px] gap-14 flex-col mr-[4%] mt-3 h-full sticky top-[-5.5rem] flex-auto'>
          <div><h1 className='text-[#2073fa] font-semibold text-[32px] leading-10 text-center'>CodeAlgo</h1></div>
          <div>
             <NavButton title='Main Dashboard' image='Dashboard.svg' name="" />
