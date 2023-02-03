@@ -97,11 +97,6 @@ const MessageRoom = () => {
     dispatch(getConversations());
   }, [currentClass]);
 
-<<<<<<< HEAD
-  // console.log(conversations);
-
-=======
->>>>>>> 6224345c767323a6d93eea9bf8d08edfa2d88942
   return (
     <section className={`w-[100vw] py-8 min-h-screen`}>
       <div
