@@ -1,5 +1,6 @@
 import BarChart from '@/components/parents/BarChart';
 import ContentBox from '@/components/parents/ContentBox';
+import RecentInteraction from '@/components/parents/RecentInteraction';
 import ParentLayout from '@/components/parents/ParentLayout';
 import ProgressBar from '@/components/parents/ProgressBar';
 import SkillBox from '@/components/parents/SkillBox';
@@ -8,9 +9,9 @@ import React from 'react';
 const Dashboard = () => {
    return (
       <ParentLayout>
-         < div className='overflow-x-auto scale-90 sm:scale-100 relative bottom-10 sm:bottom-0'>
-            <div className='flex items-start justify-around flex-wrap mx-auto gap-x-4 gap-y-10 mb-10'>
-               <ContentBox size="base" title='Level' padding='large'>
+         < div className='overflow-x-auto scale-90 sm:scale-100 relative bottom-14 sm:bottom-0 mb-[-120px] sm:mb-0'>
+            <div className='flex items-start justify-around flex-wrap mx-auto gap-x-3 gap-y-10 mb-10'>
+               <ContentBox size="base" title='Level' padding='small'>
                   <h2 className='text-center text-[22px] font-medium mt-14'>Level 11</h2>
                   <p className='text-center font-light text-sm mt-2'>Variables & Syntax</p>
                   <div className='mt-6 ml-4'>
@@ -36,13 +37,12 @@ const Dashboard = () => {
                   </div>
                </ContentBox>
             </div>
-            <div className='flex items-start justify-around flex-wrap mx-auto gap-x-4 gap-y-10 mb-6'>
-               <ContentBox size="base" title='Screen Time' padding='large' showSublink={true}>
+            <div className='flex items-start justify-around flex-wrap mx-auto gap-x-3 gap-y-10 mb-6'>
+               <ContentBox size="base" title='Screen Time' padding='large' showSublink={true} link="parents/screen-time">
                   <BarChart data={[2.4,3.1,4,3.9,3.5,2.9,3]} barSpace={9.6} barWidth={3.3} maxHours={4} />
                </ContentBox>
-               <ContentBox size="base" title='Multiplayer' padding='large' showSublink={true}>
-                  <p className='mt-14 text-sm font-light'>Recent interactions (last 30 days)</p>
-                  <p className='text-[#A8ABB0] absolute text-sm bottom-5 text-center left-0 opacity-80 w-full'>All mail communication will go to the user’s parent account. </p>
+               <ContentBox size="base" title='Multiplayer' padding='large' showSublink={true} link="parents/multiplayer">
+                  <RecentInteraction />
                </ContentBox>
             </div>
          </div>
