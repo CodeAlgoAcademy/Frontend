@@ -18,11 +18,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../store/store';
 import { FcGoogle } from 'react-icons/fc';
 import {
+  deleteGoogleCalendar,
   deleteSchedule,
   getGoogleCalendar,
   getSchedule,
   googleCalendar,
+  postGoogleCalendar,
   postSchedule,
+  putGoogleCalendar,
   putSchedule,
 } from 'services/scheduleService';
 import { extend } from '@syncfusion/ej2-base';
@@ -65,20 +68,35 @@ function Calendar() {
     await dispatch(getSchedule());
   };
   const changeSchedule = async (args: any) => {
-    const data = await dispatch(putSchedule(args));
+    let data;
+    if (scheduleData.googleConnect) {
+      data = await dispatch(putGoogleCalendar(args))
+    } else {
+      data = await dispatch(putSchedule(args));
+    }
     const status = 'error' in data;
     showEventNotification(!status);
     return !status;
   };
   const addSchedule = async (args: any) => {
-    const data = await dispatch(postSchedule(args));
+    let data;
+    if (scheduleData.googleConnect) {
+      data = await dispatch(postGoogleCalendar(args))
+    } else {
+      data = await dispatch(postSchedule(args));
+    }
     const status = 'error' in data;
     status ? setEventSuccess((prev) => false) : setEventSuccess((prev) => true);
     showEventNotification(!status);
     return !status;
   };
   const popSchedule = async (args: any) => {
-    const data = await dispatch(deleteSchedule(args));
+    let data;
+    if (scheduleData.googleConnect) {
+      data = await dispatch(deleteGoogleCalendar(args))
+    } else {
+      data = await dispatch(deleteSchedule(args));
+    }
     const status = 'error' in data;
     status ? setEventSuccess((prev) => false) : setEventSuccess((prev) => true);
     showEventNotification(!status);
@@ -98,7 +116,6 @@ function Calendar() {
     onSuccess: async (response) => {
       const { access_token } = response;
       await dispatch(googleCalendar(access_token));
-      await dispatch(getGoogleCalendar());
     },
     scope: 'https://www.googleapis.com/auth/calendar',
   });
@@ -206,45 +223,6 @@ function Calendar() {
           </div>
         </div>
       </div>
-
-      {/* <motion.div
-        className={`w-full h-full backdrop-blur-sm bg-gray-100/50 fixed left-0 z-50 flex justify-center items-center top-0`}
-        animate={{ y: positionY }}
-        transition={{ duration: 0.2 }}
-      >
-        <div className="bg-white rounded-2xl border shadow-xl p-10 relative max-w-lg">
-          <motion.span
-            onTap={() => cycleY(0)}
-            className="text-[22px] absolute right-8 top-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all ease-out opacity-60"
-          >
-            <FaTimes />
-          </motion.span>
-          <div className="flex flex-col items-center space-y-4">
-            <span className="w-4/6 text-center">
-              <Image
-                alt="google-calendar"
-                src="/assets/google-calendar.svg"
-                width={80}
-                height={80}
-              />
-            </span>
-            <p className="text-sm text-gray-500 text-center w-5/6">
-              Hello, enter your gmail address to connect your Google Calendar.
-            </p>
-            <input
-              type="email"
-              placeholder="example@gmail.com"
-              className="border-2 rounded-lg w-full h-12 px-4 outline-none"
-            />
-            <motion.button
-              className="bg-[#f28e2c] text-white rounded-md font-semibold px-4 py-3 w-full"
-              onTap={() => cycleY(0)}
-            >
-              Connect
-            </motion.button>
-          </div>
-        </div>
-      </motion.div> */}
     </div>
   );
 }

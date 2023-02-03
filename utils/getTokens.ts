@@ -59,12 +59,13 @@ export const getAccessToken = () => {
     }
 
     if (
-      (!localAccessToken || localAccessToken === undefined) &&
-      window.location.pathname !== '/login' &&
-      window.location.pathname !== '/' && 
-      window.location.pathname !== "/signup" && 
-      window.location.pathname !== "/comingSoon" && 
-      window.location.pathname !== "/404"
+      (!localAccessToken || localAccessToken === undefined) && (
+        window.location.pathname !== '/login' &&
+        window.location.pathname !== '/' && 
+        window.location.pathname !== "/signup" && 
+        window.location.pathname !== "/comingSoon" && 
+        window.location.pathname !== "/404"
+      )
     ) {
       window.location.replace('login');
     }
