@@ -1,4 +1,5 @@
-import DashboardBox from '@/components/parents/DashboardBox';
+import BarChart from '@/components/parents/BarChart';
+import ContentBox from '@/components/parents/ContentBox';
 import ParentLayout from '@/components/parents/ParentLayout';
 import ProgressBar from '@/components/parents/ProgressBar';
 import SkillBox from '@/components/parents/SkillBox';
@@ -9,7 +10,7 @@ const Dashboard = () => {
       <ParentLayout>
          < div className='overflow-x-auto scale-90 sm:scale-100 relative bottom-10 sm:bottom-0'>
             <div className='flex items-start justify-around flex-wrap mx-auto gap-x-4 gap-y-10 mb-10'>
-               <DashboardBox title='Level' padding='large'>
+               <ContentBox size="base" title='Level' padding='large'>
                   <h2 className='text-center text-[22px] font-medium mt-14'>Level 11</h2>
                   <p className='text-center font-light text-sm mt-2'>Variables & Syntax</p>
                   <div className='mt-6 ml-4'>
@@ -23,8 +24,8 @@ const Dashboard = () => {
                         </div>
                      </div>
                   </div>
-               </DashboardBox>
-               <DashboardBox title='Skills' padding='small'>
+               </ContentBox>
+               <ContentBox size="base" title='Skills' padding='small'>
                   <div className='grid grid-cols-2 mt-14'>
                      <p className='text-center'>Completed Skills</p>
                      <p className='text-center'>Currently Learning</p>
@@ -33,16 +34,16 @@ const Dashboard = () => {
                      <SkillBox></SkillBox>
                      <SkillBox></SkillBox>
                   </div>
-               </DashboardBox>
+               </ContentBox>
             </div>
             <div className='flex items-start justify-around flex-wrap mx-auto gap-x-4 gap-y-10 mb-6'>
-               <DashboardBox title='Screen Time' padding='large' showSublink={true}>
-                  <p className='mt-14 text-sm font-light'>Daily Average</p>
-                  <h1 className='text-3xl font-semibold'>1h 32m</h1>
-               </DashboardBox>
-               <DashboardBox title='Multiplayer' padding='large' showSublink={true}>
+               <ContentBox size="base" title='Screen Time' padding='large' showSublink={true}>
+                  <BarChart data={[2.4,3.1,4,3.9,3.5,2.9,3]} barSpace={9.6} barWidth={3.3} maxHours={4} />
+               </ContentBox>
+               <ContentBox size="base" title='Multiplayer' padding='large' showSublink={true}>
                   <p className='mt-14 text-sm font-light'>Recent interactions (last 30 days)</p>
-               </DashboardBox>
+                  <p className='text-[#A8ABB0] absolute text-sm bottom-5 text-center left-0 opacity-80 w-full'>All mail communication will go to the user’s parent account. </p>
+               </ContentBox>
             </div>
          </div>
       </ParentLayout>
