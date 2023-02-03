@@ -72,11 +72,8 @@ export const signUpUser: any = createAsyncThunk('authSlice/signUpUser', async (n
     const { data } = await http.post('/auth/registration/', { ...options });
     dispatch(clearFields());
     dispatch(closePreloader());
-    return {
-      access_token: data.access_token,
-      refresh_token: data.refresh_token,
-      ...data?.user,
-    };
+    console.log(data)
+    return data;
   } catch (error: any) {
     dispatch(closePreloader());
     if (error.response.data.non_field_errors) {

@@ -41,7 +41,7 @@ const SignUp = () => {
     component: <></>,
   });
 
-  console.log(checkState)
+  console.log(checkState);
   useEffect(() => {
     const tab = tabs.find((tab) => {
       if (tab.tabName === activeTab) {
@@ -70,13 +70,10 @@ const SignUp = () => {
 
   const signup = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const data = await dispatch(signUpUser());
-    if (!data?.error?.message) {
-      if (data?.payload?.is_teacher) {
-        router.push('/addClass');
-      } else {
-        router.push('/comingSoon');
-      }
+    if (data?.payload?.detail) {
+      window.open('/verify-email', '_blank');
     }
   };
 

@@ -32,7 +32,7 @@ export default function Teacher() {
       const data = await dispatch(signUpUser());
      if (!data?.error?.message) {
        dispatch(clearFields());
-         router.push('/addClass');
+         router.push('/verify-email');
      }
      dispatch(clearFields());
      console.log(data)
