@@ -25,7 +25,7 @@ const BarChart = ({data,barSpace,barWidth,maxHours}: Props) => {
                         const space = `${(i * (barSpace + barWidth) + barSpace).toFixed(1)}%`;
                         const height = `${data[i] / maxHours * 100}%`;
                         return (
-                           <span key={i} className={`green-chart-bar absolute rounded-t-3xl content-[' ']`} style={{left: space,bottom: 0,height,width: barWidth + "%"}}></span>
+                           <span key={i} className={`green-chart-bar absolute rounded-t-[50px] content-[' ']`} style={{left: space,bottom: 0,height,width: barWidth + "%"}}></span>
                         );
                      })
                      }
