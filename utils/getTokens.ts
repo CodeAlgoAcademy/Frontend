@@ -57,12 +57,13 @@ export const getAccessToken = () => {
         refreshToken();
       }
     }
+    console.log(window.location.pathname)
     if (
       (!localAccessToken || localAccessToken === undefined) &&
       window.location.pathname !== '/login' &&
       window.location.pathname !== '/' && 
       window.location.pathname !== "/signup" && 
-      window.location.pathname !== "/comingSoon" && 
+      window.location.pathname !== "/comingSoon" &&
       window.location.pathname !== "/404" &&
       !window.location.pathname.includes("/verify-email") && 
       !window.location.pathname.includes("/change-password")
