@@ -30,17 +30,17 @@ const ScreenTimeComponent = ({
                     ? `repeating-conic-gradient(
                         from 0deg,
                       royalblue 0deg calc(3.6deg * ${(time.time * 100) / 8}),
-                      rgba(255, 255, 255, 0.24) calc(3.6deg * ${
+                      rgba(145, 151, 238, 0.24) calc(3.6deg * ${
                         (time.time * 100) / 8
                       }) calc(360deg))`
                     : `royalblue`
                 }
         `
-              : 'rgba(255, 255, 255, 0.24)',
+              : 'rgba(145, 151, 238, 0.24)',
         }}
       ></div>
       <div
-        className="bg-white text-[royalblue] flex justify-between items-center text-[13px] py-2 min-w-[100px] px-2 rounded-md cursor-pointer"
+        className="bg-[#f0f0f0]  border border-[royalblue] text-[royalblue] flex justify-between items-center text-[13px] py-2 min-w-[100px] px-2 rounded-md cursor-pointer"
         onClick={() => {
           toggleHoursList();
         }}
