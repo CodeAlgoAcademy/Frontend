@@ -29,11 +29,11 @@ const ScreenTimeComponent = ({
                   time.time !== 'No Limit'
                     ? `repeating-conic-gradient(
                         from 0deg,
-                      royalblue 0deg calc(3.6deg * ${(time.time * 100) / 8}),
+                      #2073FA 0deg calc(3.6deg * ${(time.time * 100) / 8}),
                       rgba(145, 151, 238, 0.24) calc(3.6deg * ${
                         (time.time * 100) / 8
                       }) calc(360deg))`
-                    : `royalblue`
+                    : `#2073FA`
                 }
         `
               : 'rgba(145, 151, 238, 0.24)',

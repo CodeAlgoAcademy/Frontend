@@ -21,8 +21,8 @@ const ParentLayout = ({ children }: Props) => {
   return (
     <>
       <div className="parent-page min-h-screen">
-        <div className="flex items-stretch mb-auto grow bg-white px-[4%] py-11 relative">
-          <MobileSideNav className="hidden sm:flex" />
+        <div className="flex items-stretch mb-auto grow bg-white xl:px-[4%] md:pl-0 px-4 sm:pl-0 py-11 relative">
+          <MobileSideNav className="hidden sm:flex mx-6 xl:ml-0 md:mr-6" />
           <SideNav />
           {width < 640 && (
             <div className="relative">
@@ -40,19 +40,17 @@ const ParentLayout = ({ children }: Props) => {
                   fill="#000000"
                 >
                   <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                  <g id="SVGRepo_tracerCarrier" strokeLinecap="round" stroke-linejoin="round"></g>
+                  <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
                   <g id="SVGRepo_iconCarrier">
-                    <title>Menu</title>
-                    <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fill-rule="evenodd">
+                    {' '}
+                    <title>Menu</title>{' '}
+                    <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+                      {' '}
                       <g id="Menu">
-                        <rect
-                          id="Rectangle"
-                          fillRule="nonzero"
-                          x="0"
-                          y="0"
-                          width="24"
-                          height="24"
-                        ></rect>
+                        {' '}
+                        <rect id="Rectangle" fillRule="nonzero" x="0" y="0" width="24" height="24">
+                          {' '}
+                        </rect>{' '}
                         <line
                           x1="5"
                           y1="7"
@@ -62,7 +60,9 @@ const ParentLayout = ({ children }: Props) => {
                           stroke="#d9dadd"
                           strokeWidth="2"
                           strokeLinecap="round"
-                        ></line>
+                        >
+                          {' '}
+                        </line>{' '}
                         <line
                           x1="5"
                           y1="17"
@@ -72,7 +72,9 @@ const ParentLayout = ({ children }: Props) => {
                           stroke="#d9dadd"
                           strokeWidth="2"
                           strokeLinecap="round"
-                        ></line>
+                        >
+                          {' '}
+                        </line>{' '}
                         <line
                           x1="5"
                           y1="12"
@@ -82,9 +84,11 @@ const ParentLayout = ({ children }: Props) => {
                           stroke="#d9dadd"
                           strokeWidth="2"
                           strokeLinecap="round"
-                        ></line>
-                      </g>
-                    </g>
+                        >
+                          {' '}
+                        </line>{' '}
+                      </g>{' '}
+                    </g>{' '}
                   </g>
                 </svg>
               </div>
@@ -95,7 +99,7 @@ const ParentLayout = ({ children }: Props) => {
               )}
             </div>
           )}
-          <main className="main mt-12 sm:mt-0 bg-[#ECEDF3] relative z-0 rounded-2xl sm:rounded-[30px] grid place-items-centers w-full min-h-full py-9 px-[4%] mr-[1%] overflow-x-hidden">
+          <main className="main mt-12 sm:mt-0 bg-[#ECEDF3] relative z-0 rounded-2xl sm:rounded-[30px] grid place-items-centers w-full h-full py-9 px-0 sm:px-[3%] mr-[1%]">
             <div className="gap-3 w-fit absolute right-[4%] top-9 items-center mb-14 sm:flex hidden">
               <span className="relative top-1">
                 <Image
@@ -155,8 +159,8 @@ const ParentLayout = ({ children }: Props) => {
                 />
               </svg>
             </div>
-            <div className="flex items-center gap-3 mb-9 mt-9">
-              <h1 className="text-3xl text-[#2073FA] font-semibold">Connor</h1>
+            <div className="flex items-center gap-3 mt-4 mb-4 sm:my-9 ml-4 sm:ml-0">
+              <h1 className="text-3xl text-[#2073FA] font-semibold">Israel</h1>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"

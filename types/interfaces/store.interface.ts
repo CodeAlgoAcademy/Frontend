@@ -327,3 +327,10 @@ export interface newLesson {
   end_date: string;
   status: 'published' | 'unpublished';
 }
+
+
+export interface IFriends {
+  id: string | number;
+  name: string;
+  is_friend: boolean;
+}
