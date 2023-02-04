@@ -465,7 +465,9 @@ a {
 .preloader {
   animation: preload 2s infinite ease-in-out 0.5s;
 }
-
+.student-input:hover + span {
+  display: block;
+}
 @keyframes preload {
   0% {
     border-left: 5px solid #412281;

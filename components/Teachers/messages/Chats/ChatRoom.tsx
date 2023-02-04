@@ -99,7 +99,7 @@ const ChatRoom = () => {
       console.log('serverr reply', dataFromServer);
       setMessages([...messages, dataFromServer]);
     };
-  });
+  }, []);
 
   useEffect(() => {
     dispatch(getOpenMesssages());

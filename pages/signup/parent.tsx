@@ -11,21 +11,23 @@ import WelcomeForm from '@/components/parentMultiForm/WelcomeForm';
 import useMultiForm from '@/components/useMultiForm';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 
-export default function SignUpParent() {
-  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useMultiForm([
-    <ParentSignUp1 key={1} />,
-    <ParentSignUp2 key={2} />,
-    <WelcomeForm key={3} />,
-    <ParentSignUp3 key={4} />,
-    <ParentSignUp4 key={5} />,
-    <ParentSignUp5 key={6} />,
-    <Safety1 key={7} />,
-    <Safety2 key={8} />,
-    <Safety3 key={9} />,
-    <ThankyouForm key={10} />,
-  ]);
+export default function Parent() {
+  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next, goTo } = useMultiForm(
+    [
+      <ParentSignUp1 key={1} />,
+      <ParentSignUp2 key={2} />,
+      <WelcomeForm key={3} />,
+      <ParentSignUp3 key={4} />,
+      <ParentSignUp4 key={5} />,
+      <ParentSignUp5 key={6} />,
+      <Safety1 key={7} />,
+      <Safety2 key={8} />,
+      <Safety3 key={9} />,
+      <ThankyouForm key={10} />,
+    ],
+  );
 
   return (
     <div className="bg-gradient-to-br from-[#78A8FB] to-[#C4D7F8] min-h-[100vh] p-[2rem] relative">
@@ -38,8 +40,12 @@ export default function SignUpParent() {
           </Link>
         </div>
       </div>
-      <div className="flex p-[4rem]  items-center justify-center">
-        <div className="bg-white mr-[-2rem] w-[600px] px-[5rem] py-[4rem] bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-20 rounded-[2.5rem]">
+      <div
+        className={`flex p-[4rem] items-center justify-center ${
+          currentStepIndex === 7 && 'mb-[5.7rem]'
+        }`}
+      >
+        <div className="bg-white mr-[-2rem] w-[700px] px-[4rem] py-[4rem] bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-20 rounded-[2.5rem]">
           <form>
             <div className="">{step}</div>
             <div>
@@ -50,6 +56,16 @@ export default function SignUpParent() {
               >
                 Continue
               </button>
+              {currentStepIndex === 6 && (
+                <p
+                  onClick={() => {
+                    goTo(8);
+                  }}
+                  className="my-3 text-center text-[14px] cursor-pointer underline font-bold"
+                >
+                  I do not want to set parental controls
+                </p>
+              )}
               {!isFirstStep && !isLastStep && (
                 <button className="block text-center w-full mt-4" type="button" onClick={back}>
                   back
