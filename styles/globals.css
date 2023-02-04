@@ -448,7 +448,10 @@ a {
   background: rgb(241, 242, 245);
   background: linear-gradient(90deg, rgba(241, 242, 245, 1) 1%, rgba(127, 217, 222, 1) 60%);
 }
-
+.green-chart-bar {
+  background: rgb(241, 242, 245);
+  background: linear-gradient(0deg, #bff2f5 60%, rgb(142, 229, 233) 90%);
+}
 .blue-svg {
   filter: invert(80%) sepia(70%) saturate(4500%) hue-rotate(200deg) brightness(105%) contrast(140%);
 }
