@@ -17,11 +17,14 @@ const Layout = ({ children }: Props) => {
   useEffect(() => {
     const tokens = localStorage.getItem('token');
     if (
-      router.pathname !== '/login' &&
       router.pathname !== '/' &&
-      router.pathname !== '/signup' &&
+      !router.pathname.toLowerCase().includes('/signup') &&
+      router.pathname !== '/selectUserType' &&
       router.pathname !== '/comingSoon' &&
       router.pathname !== '/404' &&
+      !router.pathname.includes('/verify-email') &&
+      !router.pathname.includes('/change-password') &&
+      !router.pathname.includes('/parents') &&
       !tokens
     ) {
       router.push('/login');

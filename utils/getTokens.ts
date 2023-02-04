@@ -57,6 +57,7 @@ export const getAccessToken = () => {
         refreshToken();
       }
     }
+    console.log(window.location.pathname)
     if (
       (!localAccessToken || localAccessToken === undefined) &&
       window.location.pathname !== '/login' &&

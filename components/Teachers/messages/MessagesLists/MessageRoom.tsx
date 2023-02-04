@@ -65,7 +65,7 @@ const MessageRoom = () => {
 
   useEffect(() => {
     client.onopen = () => {
-      console.log('Websocket Client Connected...');
+      console.log('Websocket Client Connected... message room');
     };
 
     client.onmessage = (message: any) => {
