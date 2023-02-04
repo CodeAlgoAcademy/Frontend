@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 const ErrorPage = () => {
   const router = useRouter();
   useEffect(() => {
-    if (window.location.pathname !== '/404') {
+    if (!window.location.pathname.includes('/404')) {
       window.location.replace('404');
     }
   }, []);
