@@ -51,8 +51,8 @@ const ScreenTime = () => {
             Make edits to screen time restrictions below
           </h2>
           <div className="flex gap-4 justify-center md:justify-start items-center flex-wrap mt-4">
-            {screenTimes.map((time) => {
-              return <ScreenTimeComponent updateTime={updateTime} time={time} />;
+            {screenTimes.map((time, index: number) => {
+              return <ScreenTimeComponent updateTime={updateTime} time={time} key={index} />;
             })}
           </div>
           <button className="w-[150px] py-2 px-3 rounded-md text-white bg-[#2073FA] shadow-sm hover:shadow-md mt-6">
@@ -60,26 +60,6 @@ const ScreenTime = () => {
           </button>
         </div>
       </div>
-    </ParentLayout>
-  );
-
-  return (
-    <ParentLayout>
-      <section>
-        <div className="rounded-2xl max-w-[90vw] mx-auto md:min-w-[420px] relative bg-white min-h-[340px] md:w-full px-8 py-10">
-          <h1 className="text-[#2073FA] text-[1.3rem] font-semibold">
-            Current screen time restrictions
-          </h1>
-          <h2 className="text-[14px] font-medium mt-2 mb-10">
-            Make edits to screen time restrictions below
-          </h2>
-          <div className="flex gap-4 justify-center md:justify-start items-center flex-wrap mt-4">
-            {screenTimes.map((time) => {
-              return <ScreenTimeComponent updateTime={updateTime} time={time} />;
-            })}
-          </div>
-        </div>
-      </section>
     </ParentLayout>
   );
 };

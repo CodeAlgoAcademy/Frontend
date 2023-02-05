@@ -82,7 +82,7 @@ const SignUp = () => {
       <Head>
         <title>CodeAlgo Academy | Register</title>
       </Head>
-      <section className="w-full min-h-screen bg-[#e5e5e5] flex justify-center items-center py-6">
+      <section className="w-full min-h-screen bg-[royalblue] shadow-md flex justify-center items-center py-6">
         <div className="bg-white w-[95vw] max-w-[900px] mx-auto rounded-md p-[40px] md:p-[50px] shadow-md">
           {/* tabs */}
           <div className="w-full max-w-[600px] mx-auto mb-4 flex-row rounded-md overflow-hidden hidden md:flex">
@@ -93,7 +93,7 @@ const SignUp = () => {
                   className={`
                 flex-1 text-center p-3 text-[17px] cursor-pointer
                 ${index === 1 ? 'border-y-2' : 'border-2'}  
-                ${tab.tabName === activeTab ? 'bg-mainPurple text-white' : null}`}
+                ${tab.tabName === activeTab ? 'bg-[#2073fa] text-white' : null}`}
                   onClick={() => updateTab(tab.tabName)}
                 >
                   {tab.tabName}
@@ -103,7 +103,7 @@ const SignUp = () => {
           </div>
           {/* smaller devices tab */}
           <select
-            className="w-[180px] mx-auto block md:hidden mb-4 p-2 text-[16px] outline-none border-2 rounded-md focus:border-mainPurple"
+            className="w-[180px] mx-auto block md:hidden mb-4 p-2 text-[16px] outline-none border-2 rounded-md focus:border-[#2073fa]"
             onChange={(event: ChangeEvent<HTMLSelectElement>) => {
               // get the value
               const value: string = event.target.options[event.target.selectedIndex].value;
@@ -149,7 +149,7 @@ const SignUp = () => {
                 checked={checkState}
                 onChange={checkHandler}
                 id="terms"
-                className="accent-mainPurple"
+                className="accent-[#2073fa]"
                 required
               />
               <label htmlFor="terms">I accept the terms and conditions</label>
@@ -157,7 +157,7 @@ const SignUp = () => {
             <div className="text-right mt-4">
               <button
                 type="submit"
-                className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md"
+                className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-[#2073fa] hover:shadow-md"
               >
                 Sign Up
               </button>

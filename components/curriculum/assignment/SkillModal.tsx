@@ -122,7 +122,7 @@ const SkillModal = ({
             </div>
           </div>
           <span onClick={hideModal} className="">
-            <Button color="#F28E2C" text="Done" />
+            <Button color="#2073fa" text="Done" />
           </span>
         </div>
         <div>
@@ -147,7 +147,7 @@ const SkillModal = ({
               >
                 <div className="border-b h-14 pl-4 pr-[84px] flex justify-between gap-8 items-center relative">
                   <div className="flex items-center gap-4">
-                    <div className="text-[#F28E2C] text-3xl">
+                    <div className="text-[#2073fa] text-3xl">
                       <TbMedal />
                     </div>
                     <div className="flex items-center gap-2">
@@ -160,7 +160,7 @@ const SkillModal = ({
                       </p>
                     </div>
                   </div>
-                  <span className="bg-[#F28E2C]/70 text-xs font-bold opacity-70 rounded-2xl py-1 px-4 absolute right-5 top-4 truncate ...">
+                  <span className="bg-[#2073fa]/70 text-xs font-bold opacity-70 rounded-2xl py-1 px-4 absolute right-5 top-4 truncate ...">
                     {tests.length} {tests.length > 1 ? 'skills' : 'skill'}
                   </span>
                 </div>

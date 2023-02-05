@@ -80,7 +80,7 @@ const Students = () => {
       </select>
 
       <div
-        className="w-full px-4 py-3 rounded-md flex justify-between items-center outline-none border-2 border-gray-400 focus:border-mainPurple text-black text-[16px] placeholder:text-black font-bold cursor-pointer"
+        className="w-full px-4 py-3 rounded-md flex justify-between items-center outline-none border-2 border-gray-400 focus:border-[#2073fa] text-black text-[16px] placeholder:text-black font-bold cursor-pointer"
         onClick={() => {
           dispatch(openGradesModal());
         }}

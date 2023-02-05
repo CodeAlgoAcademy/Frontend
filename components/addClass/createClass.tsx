@@ -84,7 +84,7 @@ const CreateClass = () => {
           );
         })}
         <div
-          className="w-full px-4 py-3 flex justify-between items-center rounded-md outline-none border-2 border-gray-400 focus:border-mainPurple text-black text-[16px] placeholder:text-black font-bold cursor-pointer"
+          className="w-full px-4 py-3 flex justify-between items-center rounded-md outline-none border-2 border-gray-400 focus:border-[#2073fa] text-black text-[16px] placeholder:text-black font-bold cursor-pointer"
           onClick={() => {
             dispatch(openGradesModal());
           }}
@@ -143,7 +143,7 @@ const CreateClass = () => {
         </div>
         <button
           type="submit"
-          className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md"
+          className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-[#2073fa] hover:shadow-md"
         >
           Create
         </button>

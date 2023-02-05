@@ -72,7 +72,7 @@ const Login = () => {
       <Head>
         <title>CodeAlgo Academy | Login</title>
       </Head>
-      <section className="w-full min-h-screen bg-[#E5E5E5]  flex justify-center items-center">
+      <section className="w-full min-h-screen bg-[royalblue] shadow-lg flex justify-center items-center">
         <div className="bg-white w-[95vw] max-w-[600px] mx-auto rounded-md p-[40px] md:p-[50px] shadow-md">
           {/* title */}
           <div className="flex flex-col gap-y-1 mb-4">
@@ -134,7 +134,7 @@ const Login = () => {
                 /> */}
               </span>
               <span className="flex flex-row items-center gap-x-2 mt-4 mb-8 w-fit mx-auto">
-                <input type="checkbox" id="terms" className="accent-mainPurple" required />
+                <input type="checkbox" id="terms" className="accent-[royalblue]" required />
                 <label htmlFor="terms">I accept the terms and conditions</label>
               </span>
             </div>
@@ -147,7 +147,7 @@ const Login = () => {
               <button
                 type="submit"
                 // disabled={!recaptchaVerified}
-                className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md "
+                className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-[royalblue] hover:shadow-md "
                 // disabled:cursor-not-allowed disabled:bg-gray-300
               >
                 Log In

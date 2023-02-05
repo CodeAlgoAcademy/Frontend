@@ -73,7 +73,7 @@ const StudentModal = ({
       </div>
       <div className="px-12 py-4 flex flex-row-reverse">
         <span onClick={hideModal} className="">
-          <Button color="#F28E2C" text="Confirm" />
+          <Button color="#2073fa" text="Confirm" />
         </span>
       </div>
     </div>

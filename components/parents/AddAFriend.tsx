@@ -6,7 +6,7 @@ const AddAFriend = () => {
     setDetail(value);
   };
   return (
-    <>
+    <section className="small-scroll-thumb blue-scroll-thumb">
       <p className="mt-14 text-sm font-light mb-4">
         CodeAlgo allows parents to limit students multiplayer interactions. Please enter the email
         or username of your student{"'"}s friend below. A request will be sent to the linked parent
@@ -24,7 +24,7 @@ const AddAFriend = () => {
       <p className="text-[14px]">
         Requests will be accepted or denied by the student{"'"}s parent account
       </p>
-    </>
+    </section>
   );
 };
 

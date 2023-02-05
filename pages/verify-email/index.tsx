@@ -33,7 +33,7 @@ const EmailVerification = () => {
           <p>If you {"didn't"} receive the link, click on</p>
           <button
             onClick={resendEmail}
-            className="mt-2 p-3 rounded-md w-[150px] bg-mainPurple text-white shadow-md"
+            className="mt-2 p-3 rounded-md w-[150px] bg-[#2073fe] text-white shadow-md"
           >
             Resend link
           </button>

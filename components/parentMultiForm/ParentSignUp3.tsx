@@ -38,9 +38,9 @@ export default function ParentSignUp3() {
     <div key={3}>
       <h1 className="font-bold text-[32px]">Add your student account(s)</h1>
       <div className="flex flex-col gap-y-4 mb-6">
-        {students.map((student) => {
+        {students.map((student, index: number) => {
           return (
-            <div>
+            <div key={index}>
               <label className="block text-xl font-semibold mt-6">Students Name</label>
               <div className="w-full relative">
                 <input
