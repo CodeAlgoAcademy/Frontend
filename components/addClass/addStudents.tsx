@@ -97,7 +97,7 @@ const AddStudents = () => {
         })}
         <button
           type="button"
-          className=" px-2 py-3 rounded-md bg-mainPurple shadow-md text-white active:scale-[0.91]"
+          className=" px-2 py-3 rounded-md bg-[#2073fa] shadow-md text-white active:scale-[0.91]"
           onClick={() => {
             if (firstName || lastName) {
               const randomName = generateUsername(firstName, lastName);
@@ -147,7 +147,7 @@ const AddStudents = () => {
             </h3>
           </label>
         </div>
-        <button className="py-3 px-4 min-w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md">
+        <button className="py-3 px-4 min-w-[150px] text-[16px] rounded-[30px] text-white bg-[#2073fa] hover:shadow-md">
           Add Student(s)
         </button>
       </section>

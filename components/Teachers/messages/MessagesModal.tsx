@@ -210,7 +210,7 @@ const MessagesModal = ({
               value={typingText}
             />
             <button
-              className="bg-mainPurple text-white px-2 py-3 text-center w-[30%] md:w-[25%]"
+              className="bg-[#2073fa] text-white px-2 py-3 text-center w-[30%] md:w-[25%]"
               onClick={handleSendNewMessage}
             >
               Send

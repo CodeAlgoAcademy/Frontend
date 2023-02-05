@@ -92,7 +92,7 @@ export default Index;
 
 const styles = {
   container:
-    'bg-[#E5E5E5] h-full px-5 md:px-20 py-5 overflow-x-auto min-h-screen flex-1 w-full students-container',
+    'bg-[#ECEDF3] h-full px-5 md:px-20 py-5 overflow-x-auto min-h-screen flex-1 w-full students-container',
   containerHeader:
     'flex justify-between py-3 items-center border-b border-b-slate-400 students-container',
   headerTitle: 'font-medium text-[30px] students-container',

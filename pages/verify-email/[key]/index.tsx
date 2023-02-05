@@ -35,7 +35,7 @@ const VerifyWithKey = () => {
       <div className="w-[90vw] max-w-[600px] mx-auto bg-white rounded-md shadow-lg p-6">
         {loading && (
           <div className="flex justify-center items-center flex-col gap-y-4">
-            <div className="preloader flex justify-center items-center w-[60px] h-[60px] rounded-full border-x-4 border-mainPurple"></div>
+            <div className="preloader flex justify-center items-center w-[60px] h-[60px] rounded-full border-x-4 border-[#2073fe]"></div>
             <p className="text-[21px] font-bold">Verifying your email address</p>
           </div>
         )}
@@ -49,7 +49,7 @@ const VerifyWithKey = () => {
             </p>
             <div className="mt-4 pt-4 border-t-4">
               <Link href={'/login'}>
-                <button className=" flex items-center gap-x-2 py-3 px-5 mx-auto text-white bg-mainPurple rounded-md">
+                <button className=" flex items-center gap-x-2 py-3 px-5 mx-auto text-white bg-[#2073fe] rounded-md">
                   <BiArrowBack /> Back to login
                 </button>
               </Link>

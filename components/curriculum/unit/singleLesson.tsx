@@ -222,12 +222,12 @@ const SingleLesson = ({
                     <input
                       type="date"
                       value={editDateDetails.start_date}
-                      className="hoverElement max-w-[130px] px-3 py-1 rounded-md outline-none border border-mainPurple text-[15px]"
+                      className="hoverElement max-w-[130px] px-3 py-1 rounded-md outline-none border border-[#2073fa] text-[15px]"
                       onChange={(e) => {
                         updateScheduleDate('start_date', e.target.value);
                       }}
                     />
-                    <div className="hoverText right-[0] -top-[56px] bg-mainPurple after:bg-mainPurple">
+                    <div className="hoverText right-[0] -top-[56px] bg-[#2073fa] after:bg-[#2073fa]">
                       Start date
                     </div>
                   </div>
@@ -235,12 +235,12 @@ const SingleLesson = ({
                     <input
                       type="date"
                       value={editDateDetails.end_date}
-                      className="hoverElement max-w-[130px] px-3 py-1 rounded-md outline-none border border-mainPurple text-[15px]"
+                      className="hoverElement max-w-[130px] px-3 py-1 rounded-md outline-none border border-[#2073fa] text-[15px]"
                       onChange={(e) => {
                         updateScheduleDate('end_date', e.target.value);
                       }}
                     />
-                    <div className="hoverText right-[0] -top-[56px] bg-mainPurple after:bg-mainPurple">
+                    <div className="hoverText right-[0] -top-[56px] bg-[#2073fa] after:bg-[#2073fa]">
                       End date
                     </div>
                   </div>

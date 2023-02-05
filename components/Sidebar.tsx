@@ -46,7 +46,7 @@ const Sidebar = () => {
                 <div
                   className={
                     router?.pathname.includes(`${link.url}`)
-                      ? 'flex items-center gap-5 pl-8 py-5 bg-[#E5E5E5] rounded-l-[28px] cursor-pointer'
+                      ? 'flex items-center gap-5 pl-8 py-5 text-white bg-[#2073fa] rounded-l-[28px] cursor-pointer'
                       : 'flex items-center gap-5 pl-8 py-5 text-gray-600 hover:bg-[#f3f3f3] rounded-l-[28px] cursor-pointer'
                   }
                 >
