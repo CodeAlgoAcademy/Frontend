@@ -228,7 +228,7 @@ const GeneralNav = () => {
                     onSubmit={(e: ChangeEvent<HTMLFormElement>) => {
                       updateUserForm(e, updateFirstname);
                     }}
-                    className="w-full flex gap-2 h-[35px] items-center border hover:border-mainPurple rounded-[4px] px-2"
+                    className="w-full flex gap-2 h-[35px] items-center border hover:border-[#2073fa] rounded-[4px] px-2"
                   >
                     <input
                       type="text"
@@ -255,7 +255,7 @@ const GeneralNav = () => {
                     onSubmit={(e: ChangeEvent<HTMLFormElement>) => {
                       updateUserForm(e, updateLastname);
                     }}
-                    className="w-full flex gap-2 h-[35px] items-center border hover:border-mainPurple rounded-[4px] px-2"
+                    className="w-full flex gap-2 h-[35px] items-center border hover:border-[#2073fa] rounded-[4px] px-2"
                   >
                     <input
                       type="text"
@@ -277,7 +277,7 @@ const GeneralNav = () => {
                     onSubmit={(e: ChangeEvent<HTMLFormElement>) => {
                       updateUserForm(e, updateEmail);
                     }}
-                    className="w-full flex gap-2 h-[35px] items-center border hover:border-mainPurple rounded-[4px] px-2"
+                    className="w-full flex gap-2 h-[35px] items-center border hover:border-[#2073fa] rounded-[4px] px-2"
                   >
                     <input
                       type="text"
@@ -295,7 +295,7 @@ const GeneralNav = () => {
                       <FaEdit />
                     </button>
                   </form>
-                  <form className="w-full flex gap-2 h-[35px] items-center border hover:border-mainPurple rounded-[4px] px-2">
+                  <form className="w-full flex gap-2 h-[35px] items-center border hover:border-[#2073fa] rounded-[4px] px-2">
                     <input
                       type="text"
                       className="border-none outline-none w-full h-full text-black text-[15px] tracking-wider placeholder:text-gray-500"

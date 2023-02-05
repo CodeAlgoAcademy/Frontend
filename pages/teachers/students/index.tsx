@@ -80,7 +80,7 @@ const Index = () => {
           </div> */}
           <div className="flex justify-end w-full mt-4">
             <form
-              className="w-[90vw] max-w-[250px] flex rounded-full border-2 border-mainPurple bg-white"
+              className="w-[90vw] max-w-[250px] flex rounded-full bg-white"
               onSubmit={(e) => {
                 e.preventDefault();
               }}
@@ -88,7 +88,7 @@ const Index = () => {
               <input
                 type="text"
                 placeholder="Search Students"
-                className="bg-transparent py-2 px-4 w-[210px] border-none outline-none"
+                className="bg-transparent py-2 px-4 w-[210px] border-2 border-[#2073fa]"
                 onChange={(e) => {
                   filterStudents(e.target.value);
                 }}
@@ -112,7 +112,7 @@ export default Index;
 
 const styles = {
   container:
-    'bg-[#E5E5E5] h-full px-5 md:px-20 py-5 overflow-x-auto min-h-screen flex-1 w-full students-container',
+    'bg-[#ECEDF3] h-full px-5 md:px-20 py-5 overflow-x-auto min-h-screen flex-1 w-full students-container',
   containerHeader:
     'flex justify-between py-3 items-center border-b border-b-slate-400 students-container',
   headerTitle: 'font-medium text-[30px] students-container',

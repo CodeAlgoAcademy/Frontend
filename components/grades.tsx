@@ -34,12 +34,11 @@ const Grades: FC<gradesType> = ({ addStudents }) => {
 
         <div className="grid grid-cols-4 gap-3 mt-4">
           {availableGrades.map((availableGrade: string, index: number): ReactElement => {
-            // if a grade is selected, give it a border-color and text-color of mainPurple
             return (
               <article
                 className={`w-full p-4 text-center border-2 cursor-pointer rounded-md font-bold ${
                   availableGrade === chosenGrade
-                    ? 'border-orange-600 text-orange-600'
+                    ? 'border-[#2073fa] text-[#2073fa]'
                     : 'border-gray-700 text-black'
                 }`}
                 key={index}
@@ -67,7 +66,7 @@ const Grades: FC<gradesType> = ({ addStudents }) => {
         {/* buttons container */}
         <div className="mt-3">
           <button
-            className="w-full text-center px-4 py-[10px] rounded-md text-white font-bold bg-orange-600"
+            className="w-full text-center px-4 py-[10px] rounded-md text-white font-bold bg-[#2073fa]"
             onClick={() => {
               dispatch(closeGradesModal());
             }}

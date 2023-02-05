@@ -55,7 +55,7 @@ export default function PreviewModal(props: modalProps) {
                 In this lesson students will learn the basics of loops and how to apply loops into
                 their programs.
               </p>
-              <button className="px-7 py-2 rounded-full font-bold text-[#412281] border border-[#412281] mt-10">
+              <button className="px-7 py-2 rounded-full font-bold text-[#2073fa] border border-[#2073fa] mt-10">
                 View quiz
               </button>
             </div>

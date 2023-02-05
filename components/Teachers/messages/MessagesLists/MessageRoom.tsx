@@ -104,7 +104,7 @@ const MessageRoom = () => {
       >
         <div className="flex h-[700px] flex-col flex-[30%] md:border-r-2 border-b-2">
           <div
-            className="flex justify-between items-center p-4 font-bold bg-[#412281] text-white"
+            className="flex justify-between items-center p-4 font-bold bg-[#2073fa] text-white"
             onClick={() => setOpenedStudent(!openedStudent)}
           >
             <p className="text-[20px">My Students</p>
@@ -144,7 +144,7 @@ const MessageRoom = () => {
             )}
           </article>
           <div
-            className="flex justify-between items-center p-4 font-bold bg-[#412281] text-white"
+            className="flex justify-between items-center p-4 font-bold bg-[#2073fa] text-white"
             onClick={() => {
               setOpenedTeachers(!openedTeachers);
             }}

@@ -16,7 +16,7 @@ const ChangePassword = () => {
   };
 
   return (
-    <main className="bg-[#E5E5E5] w-full min-h-screen flex justify-center items-center">
+    <main className="bg-[#ecedf3] w-full min-h-screen flex justify-center items-center">
       <div className="w-[90vw] max-w-[500px] mx-auto rounded-md shadow-md bg-white p-8">
         <div className="text-center">
           <h1 className="text-[26px] font-bold">Forgot Password</h1>
@@ -31,12 +31,12 @@ const ChangePassword = () => {
               }}
               type="email"
               required
-              className="px-3 py-3 rounded-md focus:border-mainPurple w-full border-2 outline-none"
+              className="px-3 py-3 rounded-md focus:border-[#2073fa] w-full border-2 outline-none"
               placeholder="Enter Your Email Address"
             />
           </div>
           <button
-            className="w-full rounded-md active:scale-[0.98] bg-mainPurple text-white py-3 px-3"
+            className="w-full rounded-md active:scale-[0.98] bg-[#2073fa] text-white py-3 px-3"
             type="submit"
           >
             Reset Password
@@ -63,7 +63,7 @@ const ChangePassword = () => {
           >
             <div className="flex justify-between items-center">
               <span className="text-[17px] font-bold flex gap-x-4 items-center cursor-pointer">
-                <i className="text-[22px] text-mainPurple">
+                <i className="text-[22px] text-[#2073fa]">
                   <FaPaperPlane />
                 </i>{' '}
                 Password Reset
