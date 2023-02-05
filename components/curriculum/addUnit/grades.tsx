@@ -12,7 +12,7 @@ const Grade: FC<Props> = ({ openedModal, updateOpenedModal }) => {
     <article className="flex flex-row gap-x-2 relative">
       <div
         className={`${styles.topic} ${
-          openedModal === 'grade' ? ' outline-mainPurple' : 'outline-transparent'
+          openedModal === 'grade' ? ' outline-[#2073fa]' : 'outline-transparent'
         }`}
         onClick={(event: any) => {
           if (!event.target.classList.contains('dropdown')) {
@@ -36,7 +36,7 @@ const Grade: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                     <input
                       type="checkbox"
                       id={grade}
-                      className="accent-mainPurple dropdown"
+                      className="accent-[#2073fa] dropdown"
                       checked={chosenGrades.includes(grade)}
                       onChange={(event: ChangeEvent<HTMLInputElement>) => {
                         if (event.target.checked) {

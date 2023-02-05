@@ -117,7 +117,7 @@ export default function Index() {
         {addUnitModalOpen ? (
           <AddUnit />
         ) : (
-          <div className="px-[5.5rem] py-[2rem] flex-1 bg-[#E5E5E5]">
+          <div className="px-[5.5rem] py-[2rem] flex-1 bg-[#ECEDF3]">
             <div className="flex justify-between">
               <h1 className="font-bold text-3xl">Curriculum</h1>
               <div

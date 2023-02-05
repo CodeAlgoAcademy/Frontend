@@ -152,7 +152,7 @@ const SingleStudent = ({
               />
               <button
                 type="submit"
-                className="rounded-md text-white w-full mt-3 p-3 bg-mainPurple active:scale-[0.98]"
+                className="rounded-md text-white w-full mt-3 p-3 bg-[#2073fa] active:scale-[0.98]"
               >
                 Edit Student Details
               </button>
@@ -170,14 +170,14 @@ const SingleStudent = ({
           >
             <input
               type="text"
-              className="flex-[0.8] px-2 py-2 border-2 border-mainPurple outline-none rounded-l-md text-black"
+              className="flex-[0.8] px-2 py-2 border-2 border-[#2073fa] outline-none rounded-l-md text-black"
               placeholder={`Max. of 100 characters`}
               value={comment}
               onChange={(e: ChangeEvent<HTMLInputElement>) => updateComment(e.target.value)}
             />
             <button
               type="submit"
-              className="bg-mainPurple text-white flex-[0.2] rounded-r-md text-[20px] flex justify-center items-center"
+              className="bg-[#2073fa] text-white flex-[0.2] rounded-r-md text-[20px] flex justify-center items-center"
             >
               <BiEdit />
             </button>
@@ -210,7 +210,7 @@ const SingleStudent = ({
                           }
                           type="text"
                           placeholder="Max. of 100 characters"
-                          className="flex-1 px-4 py-2 rounded-md border-2 border-mainPurple outline-none"
+                          className="flex-1 px-4 py-2 rounded-md border-2 border-[#2073fa] outline-none"
                         />
                       ) : (
                         <h1 className="px-4 py-2">
@@ -264,7 +264,7 @@ const SingleStudent = ({
 
               <div className="flex justify-end my-4">
                 <button
-                  className="w-[150px] py-3 rounded-full text-white bg-mainPurple"
+                  className="w-[150px] py-3 rounded-full text-white bg-[#2073fa]"
                   onClick={() => {
                     setStudentCommentsTabOpen('');
                   }}
@@ -349,7 +349,7 @@ const styles = {
   pointer: 'cursor-pointer',
   commentIcons:
     'w-[28px] h-[28px] rounded-md text-white flex justify-center items-center text-[15px] cursor-pointer',
-  input: 'w-full border focus:border-mainPurple p-3 rounded-md outline-none',
+  input: 'w-full border focus:border-[#2073fa] p-3 rounded-md outline-none',
 };
 
 export default SingleStudent;

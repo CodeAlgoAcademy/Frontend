@@ -41,12 +41,12 @@ const SingleAssignment = ({
           <div className="mb-2">
             <div className="flex justify-between gap-2 items-center">
               <div className="flex justify-start gap-2 items-center">
-                <p className="text-[17px] font-bold text-orange-600">Due Date:</p>
+                <p className="text-[17px] font-bold text-[#2073fa]">Due Date:</p>
                 <p className="text-[17px]">{assignment.end_date}</p>
               </div>
               {assignment.status === 'draft' && (
                 <button
-                  className="px-2 py-2 rounded-md text-white bg-orange-600 hover:shadow-md transition"
+                  className="px-2 py-2 rounded-md text-white bg-[#2073fa] hover:shadow-md transition"
                   onClick={() => {
                     setEditAssignment(assignment, assignment.id as string);
                   }}
@@ -61,7 +61,7 @@ const SingleAssignment = ({
               {skills.map((skill, index: number) => {
                 return (
                   <article key={index} className="flex gap-2 items-start">
-                    <span className="text-orange-600 pt-1 text-[15px]">
+                    <span className="text-[#2073fa] pt-1 text-[15px]">
                       <FaChevronRight />
                     </span>
                     <div>
@@ -78,7 +78,7 @@ const SingleAssignment = ({
             {assignment.students.map((student, index: number) => {
               return (
                 <article key={index} className="flex gap-2 items-start">
-                  <span className="text-orange-600 pt-1 text-[15px]">
+                  <span className="text-[#2073fa] pt-1 text-[15px]">
                     <FaChevronRight />
                   </span>
                   <div>

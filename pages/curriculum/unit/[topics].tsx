@@ -137,7 +137,7 @@ export default function Unit() {
   return (
     <div>
       <GeneralNav />
-      <div className="flex items-stretch mb-auto grow bg-[#E5E5E5] ">
+      <div className="flex items-stretch mb-auto grow bg-[#ECEDF3]">
         <div className="sidebar bg-white min-w-[270px]">
           <Sidebar />
         </div>
@@ -170,7 +170,7 @@ export default function Unit() {
                     <div className="w-full mb-4">
                       <input
                         type="text"
-                        className="w-full p-3 border-2 focus:border-mainPurple outline-none rounded-md"
+                        className="w-full p-3 border-2 focus:border-[#2073fa] outline-none rounded-md"
                         placeholder="Enter Lesson Title*"
                         required
                         value={lessonDetails.topic.title}
@@ -181,7 +181,7 @@ export default function Unit() {
                     </div>
                     <div className="w-full mb-4">
                       <textarea
-                        className="w-full h-[200px] resize-none p-3 border-2 focus:border-mainPurple outline-none rounded-md"
+                        className="w-full h-[200px] resize-none p-3 border-2 focus:border-[#2073fa] outline-none rounded-md"
                         required
                         placeholder="Enter Lesson Description*"
                         value={lessonDetails.topic.description}
@@ -229,7 +229,7 @@ export default function Unit() {
                         <input
                           type="date"
                           id="start_date"
-                          className="w-full p-3 border-2 focus:border-mainPurple outline-none rounded-md"
+                          className="w-full p-3 border-2 focus:border-[#2073fa] outline-none rounded-md"
                           value={lessonDetails.start_date}
                           onChange={(e) => {
                             updateStartDate(e.target.value);
@@ -242,7 +242,7 @@ export default function Unit() {
                         <input
                           type="date"
                           id="end_date"
-                          className="w-full p-3 border-2 focus:border-mainPurple outline-none rounded-md"
+                          className="w-full p-3 border-2 focus:border-[#2073fa] outline-none rounded-md"
                           value={lessonDetails.end_date}
                           onChange={(e) => {
                             updateEndDate(e.target.value);
@@ -253,7 +253,7 @@ export default function Unit() {
                     </div>
                     <button
                       type="submit"
-                      className="mt-4 bg-mainPurple text-white rounded-md p-3 text-center w-full"
+                      className="mt-4 bg-[#2073fa] text-white rounded-md p-3 text-center w-full"
                     >
                       Add Lesson
                     </button>

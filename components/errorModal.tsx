@@ -41,7 +41,7 @@ const ErrorModal = () => {
           </ul>
           <footer className="border-t pt-4 text-right">
             <button
-              className="min-w-[150px] py-3 rounded-full bg-mainPurple text-white"
+              className="min-w-[150px] py-3 rounded-full bg-red-600 text-white"
               onClick={() => {
                 dispatch(closeErrorModal());
               }}

@@ -272,7 +272,7 @@ function AddUnit() {
 
 export const styles = {
   preview:
-    'absolute w-[100%] max-h-[200px] overflow-hidden overflow-y-scroll z-40 bg-white flex flex-col rounded-b-md top-[100%] left-0 shadow-md outline outline-2 outline-mainPurple text-[15px] font-normal dropdown',
+    'absolute w-[100%] max-h-[200px] overflow-hidden overflow-y-scroll z-40 bg-white flex flex-col rounded-b-md top-[100%] left-0 shadow-md outline outline-2 outline-[#2073fa] text-[15px] font-normal dropdown',
   topic:
     'md:flex-[0.4] flex-[0.5] flex p-6 justify-between items-center bg-white rounded-md text-[17px] font-bold cursor-pointer relative outline outline-2',
   numbersSelectedContainer:
@@ -280,9 +280,9 @@ export const styles = {
   inputContainer: 'flex items-center gap-2 p-3 border-b-2 font-bold dropdown',
   button: 'py-[12px] text-center md:w-[150px] w-[120px] rounded-md hover:shadow-md font-bold',
   selectedItems:
-    'py-2 px-3 rounded-md bg-mainPurple text-white font-bold text-[16px] min-w-fit max-w-fit',
+    'py-2 px-3 rounded-md bg-[#2073fa] text-white font-bold text-[16px] min-w-fit max-w-fit',
   mainButton:
-    'w-[90vw] max-w-[200px] bg-orange-500 rounded-[30px] text-white font-bold py-3 block hover:shadow-md cursor-pointer',
+    'w-[90vw] max-w-[200px] bg-[#2073fa] rounded-[30px] text-white font-bold py-3 block hover:shadow-md cursor-pointer',
 };
 
 export default AddUnit;
