@@ -11,7 +11,7 @@ export default function useMultiForm(steps: ReactElement[]) {
     });
   }
   function back() {
-    if (previousStepIndex !== 0) {
+    if (currentStepIndex === 0) {
       setCurrentStepIndex(previousStepIndex);
       return;
     }
