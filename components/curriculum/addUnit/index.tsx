@@ -1,20 +1,20 @@
-import React, { useState, useEffect, useCallback, MouseEvent } from 'react';
-import { FaTimes } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'store/store';
+import React,{useState,useEffect,useCallback,MouseEvent} from 'react';
+import {FaTimes} from 'react-icons/fa';
+import {useDispatch,useSelector} from 'react-redux';
+import {RootState} from 'store/store';
 import {
   clearAddUnitsParams,
   displayUnitsAndGradesBasedOnLevels,
   rearrangeUnits,
   verifyUnits,
 } from 'store/unitsSlice';
-import { ILevels } from 'types/interfaces';
+import {ILevels} from 'types/interfaces';
 import Levels from './levels';
 import Standard from './standard';
 import Unit from './units';
 import Grade from './grades';
-import { closeAddUnitModal } from 'store/modalSlice';
-import { addUnits, getAllCurriculums } from 'services/curriculumService';
+import {closeAddUnitModal} from 'store/modalSlice';
+import {addUnits,getAllCurriculums} from 'services/curriculumService';
 
 export interface Props {
   openedModal: string;
@@ -32,19 +32,19 @@ export const standards: string[] = [
 export const availableLevels: ILevels[] = [
   {
     title: 'Green',
-    unitsId: ['1', '2', '3', '4', '5', '6', '7', '8'],
-    grades: ['K', '1', '2', '3', '4'],
+    unitsId: ['1','2','3','4','5','6','7','8'],
+    grades: ['K','1','2','3','4'],
     hoverText: "I'm new to coding (Grades K - 4)",
   },
   {
     title: 'Yellow',
-    unitsId: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
-    grades: ['5', '6', '7'],
+    unitsId: ['1','2','3','4','5','6','7','8','9'],
+    grades: ['5','6','7'],
     hoverText: 'I know some coding (Grades 5 - 8)',
   },
   {
     title: 'Orange',
-    unitsId: ['12', '11', '9', '13', '10', '14'],
+    unitsId: ['12','11','9','13','10','14'],
     grades: ['8+'],
     hoverText: 'I have been coding for a long time (Grades 8+)',
   },
@@ -186,14 +186,14 @@ export const availableUnits = [
 ];
 
 function AddUnit() {
-  const { addUnitModalOpen } = useSelector((state: RootState) => state.modal);
-  const { levels } = useSelector((state: RootState) => state.unit.addUnit);
+  const {addUnitModalOpen} = useSelector((state: RootState) => state.modal);
+  const {levels} = useSelector((state: RootState) => state.unit.addUnit);
   const addUnit = useSelector((state: RootState) => state.unit.addUnit);
-  const [openedModal, setOpenedModal] = useState<string>('');
+  const [openedModal,setOpenedModal] = useState<string>('');
 
   const dispatch = useDispatch();
   const updateOpenedModal = (modalToOpen: string) => {
-    if (openedModal === modalToOpen) {
+    if(openedModal === modalToOpen) {
       setOpenedModal('');
     } else {
       setOpenedModal(modalToOpen);
@@ -202,20 +202,20 @@ function AddUnit() {
 
   const changeUnitsAndGrades = useCallback(() => {
     dispatch(displayUnitsAndGradesBasedOnLevels());
-  }, [dispatch]);
+  },[dispatch]);
 
   useEffect(() => {
     changeUnitsAndGrades();
-  }, [levels, changeUnitsAndGrades]);
+  },[levels,changeUnitsAndGrades]);
 
-  if (!addUnitModalOpen) {
+  if(!addUnitModalOpen) {
     return <></>;
   }
   return (
     <section
-      className="flex-1 max-w-[1200px] min-h-screen w-full bg-gray-100 px-8 mx-auto rounded-md py-16 relative close-dropdown"
+      className="flex-1 max-w-[1200px] min-h-screen w-full bg-gray-100 px-8 mx-auto py-16 absolute left-0 top-0 close-dropdown"
       onClick={(event: any) => {
-        if (event.target.classList.contains('close-dropdown')) {
+        if(event.target.classList.contains('close-dropdown')) {
           updateOpenedModal('');
         }
       }}
@@ -256,7 +256,7 @@ function AddUnit() {
             dispatch(rearrangeUnits());
             dispatch(verifyUnits());
             const data = await dispatch(addUnits());
-            if (!data?.error?.message && data.payload !== undefined) {
+            if(!data?.error?.message && data.payload !== undefined) {
               dispatch(clearAddUnitsParams());
               dispatch(closeAddUnitModal());
               await dispatch(getAllCurriculums());
