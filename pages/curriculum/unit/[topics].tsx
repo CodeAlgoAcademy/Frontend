@@ -145,7 +145,7 @@ export default function Unit() {
         <div className="px-[5.5rem] py-[2rem] w-full">
           <div className="flex justify-start items-center gap-6">
             <Link href="/curriculum">
-              <div className="text-[1.4rem] cursor-pointer">
+              <div className="text-[1.4rem] text-!cursor-pointer">
                 <i>
                   <FaChevronLeft />
                 </i>
@@ -262,7 +262,7 @@ export default function Unit() {
               </section>
             )}
             <div className="flex justify-between items-center flex-1 gap-2">
-              <h1 className="font-bold text-3xl">{topics}</h1>
+              <h1 className="text-[#2073fa] font-bold text-3xl">{topics}</h1>
               <div className="flex items-center gap-x-2">
                 <div
                   className="flex gap-2 items-center cursor-pointer px-2 py-3 hover:bg-gray-50"
