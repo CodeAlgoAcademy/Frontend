@@ -145,7 +145,7 @@ export default function Unit() {
         <div className="px-[5.5rem] py-[2rem] w-full">
           <div className="flex justify-start items-center gap-6">
             <Link href="/curriculum">
-              <div className="text-[1.4rem] text-!cursor-pointer">
+              <div className="text-[1.4rem] text-[#2073fa] cursor-pointer">
                 <i>
                   <FaChevronLeft />
                 </i>
@@ -156,7 +156,7 @@ export default function Unit() {
               <section className="fixed top-0 left-0 w-full min-h-screen bg-[rgba(0,0,0,0.6)] z-20 flex justify-center items-center">
                 <div className="bg-white w-[90vw] max-w-[700px] max-h-[90vh] overflow-hidden overflow-y-scroll rounded-md shadow-md p-8">
                   <header className="justify-between items-center flex w-full mb-6">
-                    <h1 className="text-[26px] font-bold">Add Lesson</h1>
+                    <h1 className="text-[26px] font-bold text-[#2073fa]">Add Lesson</h1>
                     <span
                       className="text-[22px] text-[darkRed]"
                       onClick={() => {
@@ -191,7 +191,7 @@ export default function Unit() {
                       ></textarea>
                     </div>
                     <div className="w-full text-center gap-4 mb-2">
-                      <h1 className="text-center">Status</h1>
+                      <h1 className="text-center text-[#2073fa] font-bold">Status</h1>
                     </div>
                     <div className="mb-4 flex gap-5">
                       <div className="w-full">
@@ -225,7 +225,9 @@ export default function Unit() {
                     </div>
                     <div className="flex gap-4 md:flex-row flex-col">
                       <div className="w-full flex flex-col gap-y-2">
-                        <label htmlFor="start_date">Start Date*</label>
+                        <label htmlFor="start_date" className="text-[#2073fa] font-bold">
+                          Start Date*
+                        </label>
                         <input
                           type="date"
                           id="start_date"
@@ -238,7 +240,9 @@ export default function Unit() {
                         />
                       </div>
                       <div className="w-full flex flex-col gap-y-2">
-                        <label htmlFor="end_date">End Date*</label>
+                        <label htmlFor="end_date" className="text-[#2073fa] font-bold">
+                          End Date*
+                        </label>
                         <input
                           type="date"
                           id="end_date"
@@ -265,7 +269,7 @@ export default function Unit() {
               <h1 className="text-[#2073fa] font-bold text-3xl">{topics}</h1>
               <div className="flex items-center gap-x-2">
                 <div
-                  className="flex gap-2 items-center cursor-pointer px-2 py-3 hover:bg-gray-50"
+                  className="flex gap-2 text-[#2073fa] items-center cursor-pointer px-2 py-3 hover:bg-gray-50"
                   onClick={() => {
                     setAddLessonModalOpen(true);
                   }}
@@ -274,7 +278,7 @@ export default function Unit() {
                   <h1 className="text-[1.2rem]">Add Lesson</h1>
                 </div>
                 <Link href="/curriculum/assignments">
-                  <div className="flex gap-2 items-center cursor-pointer px-2 py-3 hover:bg-gray-50">
+                  <div className="flex gap-2 items-center cursor-pointer px-2 py-3 hover:bg-gray-50 text-[#2073fa]">
                     <IoIosAddCircleOutline className="text-4xl " />
                     <h1 className="text-[1.2rem]">Add Assignment</h1>
                   </div>
@@ -283,7 +287,7 @@ export default function Unit() {
             </div>
           </div>
           <div className="border-[#BDBDBD] pl-[1.5rem] mb-[3rem] pb-3 mt-7 border-b-[1.3px]">
-            <h2 className="text-[1.6rem] font-bold">Unit Control</h2>
+            <h2 className="text-[1.6rem] font-bold text-[#2073fa]">Unit Control</h2>
           </div>
           {/* curriculumn topic section */}
 

@@ -47,10 +47,16 @@ const Sidebar = () => {
                   className={
                     router?.pathname.includes(`${link.url}`)
                       ? 'flex items-center gap-5 pl-8 py-5 text-white bg-[#2073fa] rounded-l-[28px] cursor-pointer'
-                      : 'flex items-center gap-5 pl-8 py-5 text-gray-600 hover:bg-[#f3f3f3] rounded-l-[28px] cursor-pointer'
+                      : 'flex items-center gap-5 pl-8 py-5 text-gray-600  rounded-l-[28px] cursor-pointer hover:bg-slate-50 '
                   }
                 >
-                  <span className="text-xl">{link.icon}</span>
+                  <span
+                    className={`text-xl ${
+                      router?.pathname.includes(link.url) ? 'text-white' : 'text-[#2073fa]'
+                    }`}
+                  >
+                    {link.icon}
+                  </span>
                   <span className="capitalize font-semibold text-md">{link.name}</span>
                 </div>
               </Link>
