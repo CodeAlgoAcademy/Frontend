@@ -112,7 +112,7 @@ const SingleStudent = ({
         <section className="fixed top-0 left-0 bg-[rgba(0,0,0,0.4)] z-20 w-full h-screen flex justify-center items-center">
           <div className="w-[90vw] max-w-[350px] mx-auto p-6 bg-white shadow-md rounded-md">
             <header className="mb-3 flex justify-between items-center">
-              <h1 className="font-bold">Edit {"Student's"} Details</h1>
+              <h1 className="font-bold text-[#2073fa]">Edit {"Student's"} Details</h1>
               <span
                 className="text-[18px] text-[darkRed] font-bold"
                 onClick={() => {
