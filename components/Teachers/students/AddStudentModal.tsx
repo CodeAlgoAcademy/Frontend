@@ -119,7 +119,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
               dispatch(getAllClasses());
             }
           }}
-          className="text-[30px] font-thin absolute z-10 top-[30px] right-[30px]"
+          className="text-[30px] font-thin absolute z-10 top-[30px] right-[30px] text-red-600"
         >
           <FaTimes />
         </span>
@@ -129,7 +129,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
         ></aside>
 
         <form className="py-8 flex-[0.9]" onSubmit={onSubmit}>
-          <header className="px-8 w-full mb-6 flex gap-x-2 items-center">
+          <header className="px-8 w-full mb-6 flex gap-x-2 items-center text-[#2073fa]">
             <span
               className="text-[20px] font-bold"
               onClick={() => {
