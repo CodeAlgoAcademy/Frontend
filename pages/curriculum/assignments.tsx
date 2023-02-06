@@ -222,7 +222,7 @@ const Assignments = () => {
         </div>
         <div className="bg-[#ECEDF3] flex-1 px-[6%] py-8">
           <div className="flex justify-between items-center">
-            <div className="flex items-center gap-x-2 mb-6">
+            <div className="flex items-center gap-x-2 mb-6 text-[#2073fa]">
               <span
                 className="text-[22px] font-bold cursor-pointer"
                 onClick={() => {
@@ -235,7 +235,7 @@ const Assignments = () => {
                 New Assignment
               </h2>
             </div>
-            <span className="hover:opacity-80 cursor-pointer flex items-center gap-3">
+            <span className="hover:opacity-80 cursor-pointer flex items-center gap-3 text-[#2073fa]">
               <span className="text-lg">
                 <BsPlusCircle />
               </span>

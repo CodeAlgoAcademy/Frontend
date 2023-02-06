@@ -76,7 +76,7 @@ const Login = () => {
         <div className="bg-white w-[95vw] max-w-[600px] mx-auto rounded-md p-[40px] md:p-[50px] shadow-md">
           {/* title */}
           <div className="flex flex-col gap-y-1 mb-4">
-            <h1 className="md:text-3xl text-center text-lg font-bold">
+            <h1 className="md:text-3xl text-center text-[#2073fa] text-lg font-bold">
               Welcome to CodeAlgo Academy
             </h1>
             <p className="text-grey-800 md:text-lg text-[16px] text-center">
