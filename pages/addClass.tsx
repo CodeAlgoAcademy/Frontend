@@ -35,7 +35,7 @@ const AddClass = () => {
           <div className="w-full flex flex-wrap justify-between items-center">
             <h1 className="text-[2rem] font-bold text-[#2073fa]">Home</h1>
             <div
-              className="flex flex-row gap-x-2 items-center cursor-pointer"
+              className="flex flex-row gap-x-2 items-center cursor-pointer text-[#2073fa]"
               data-testid="open-modal"
               onClick={() => {
                 dispatch(openAddClassModal());
