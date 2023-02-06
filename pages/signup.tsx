@@ -121,7 +121,7 @@ const SignUp = () => {
 
           {/* title */}
           <div className="flex flex-col gap-y-1 mb-4">
-            <h1 className="md:text-3xl text-lg text-center font-bold">
+            <h1 className="md:text-3xl text-lg text-[#2073fa] text-center font-bold">
               Welcome To CodeAlgo Academy
             </h1>
             <p className="text-grey-800 md:text-lg text-[16px] text-center">

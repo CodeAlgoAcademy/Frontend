@@ -31,7 +31,7 @@ const VerifyWithKey = () => {
   }, []);
 
   return (
-    <section className="bg-[#e5e5e5] w-full min-h-screen flex justify-center items-center">
+    <section className="bg-[#ECEDF3] w-full min-h-screen flex justify-center items-center">
       <div className="w-[90vw] max-w-[600px] mx-auto bg-white rounded-md shadow-lg p-6">
         {loading && (
           <div className="flex justify-center items-center flex-col gap-y-4">

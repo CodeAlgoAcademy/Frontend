@@ -16,7 +16,7 @@ import { RootState } from 'store/store';
 import { getStudents } from 'store/studentSlice';
 import { CurrentClassState, IClass } from 'types/interfaces';
 import { getAccessToken } from 'utils/getTokens';
-import ChatRoom, { client } from '../Chats/ChatRoom';
+import ChatRoom from '../Chats/ChatRoom';
 
 const MessageRoom = () => {
   const [active, setActive] = useState(0);
@@ -63,16 +63,16 @@ const MessageRoom = () => {
   //     }
   //   }
 
-  useEffect(() => {
-    client.onopen = () => {
-      console.log('Websocket Client Connected... message room');
-    };
+  // useEffect(() => {
+  //   client.onopen = () => {
+  //     console.log('Websocket Client Connected... message room');
+  //   };
 
-    client.onmessage = (message: any) => {
-      const dataFromServer = JSON.parse(message.data);
-      console.log('serverr reply', dataFromServer);
-    };
-  }, []);
+  //   client.onmessage = (message: any) => {
+  //     const dataFromServer = JSON.parse(message.data);
+  //     console.log('serverr reply', dataFromServer);
+  //   };
+  // }, []);
 
   // const filterTeachers = (value: string) => {
   //   setFilteredTeachers((prev:any) => {
@@ -98,9 +98,9 @@ const MessageRoom = () => {
   }, [currentClass]);
 
   return (
-    <section className={`w-[100vw] py-8 min-h-screen`}>
+    <section className={`w-[100vw] p-8 min-h-screen`}>
       <div
-        className={`w-[90vw] relative max-w-[900px] mx-auto h-screen max-h-fit bg-white shadow-md rounded-md flex overflow-hidden`}
+        className={`w-[100%] max-w-[90vw] relative mx-auto h-screen max-h-fit bg-white shadow-md rounded-md flex overflow-hidden`}
       >
         <div className="flex h-[700px] flex-col flex-[30%] md:border-r-2 border-b-2">
           <div

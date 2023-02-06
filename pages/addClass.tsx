@@ -33,7 +33,7 @@ const AddClass = () => {
       <section className="w-full bg-[#ECEDF3] min-h-screen">
         <div className="w-full px-[16px] py-[30px] max-w-[1250px] mx-auto">
           <div className="w-full flex flex-wrap justify-between items-center">
-            <h1 className="text-[2rem] font-bold">Home</h1>
+            <h1 className="text-[2rem] font-bold text-[#2073fa]">Home</h1>
             <div
               className="flex flex-row gap-x-2 items-center cursor-pointer"
               data-testid="open-modal"
