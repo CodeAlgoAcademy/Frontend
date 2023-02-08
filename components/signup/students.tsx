@@ -85,7 +85,7 @@ const Students = () => {
           dispatch(openGradesModal());
         }}
       >
-        <p>{grade}</p>
+        <p>{grade === '' ? 'Select Grade' : grade}</p>
         <span>
           <FaChevronDown />
         </span>
