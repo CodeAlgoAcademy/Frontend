@@ -95,7 +95,6 @@ const ChatRoom = () => {
 
     client.onmessage = (message: any) => {
       const dataFromServer = JSON.parse(message.data);
-      console.log(dataFromServer);
       console.log('serverr reply', dataFromServer);
       setMessages([...messages, dataFromServer]);
     };
@@ -105,9 +104,9 @@ const ChatRoom = () => {
     dispatch(getOpenMesssages());
   }, [openedMessageOwner]);
 
-  useEffect(() => {
-    openedMessage && setMessages([...openedMessage]);
-  }, [openedMessage]);
+  // useEffect(() => {
+  //   openedMessage && setMessages([...openedMessage]);
+  // }, [openedMessage]);
 
   return (
     <div className="max-h-[35rem] h-[75vh]">

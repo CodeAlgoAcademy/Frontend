@@ -50,7 +50,7 @@ export default function Settings() {
         <div className="sidebar bg-white w-[270px]">
           <Sidebar />
         </div>
-        <div className="bg-[#E5E5E5] flex-1 px-[6%] py-8">
+        <div className="bg-[#ECEDF3] flex-1 px-[6%] py-8">
           <h2 className="text-[28px] font-bold mb-6" data-testid="dashboard-heading">
             Settings
           </h2>
@@ -106,10 +106,10 @@ export default function Settings() {
                 <TextField id="outlined-basic" fullWidth label="New Password" variant="outlined" />
               </div>
               <div className="flex mt-5 items-center gap-4">
-                <button className="px-8 py-4  text-[#412281] rounded-lg font-bold bg-[#c6c4c8]">
+                <button className="px-8 py-4  text-[#2073fa] rounded-lg font-bold bg-[#c6c4c8]">
                   Cancel
                 </button>
-                <button className="px-8 py-4  text-white rounded-lg font-bold bg-[#412281]">
+                <button className="px-8 py-4  text-white rounded-lg font-bold bg-[#2073fa]">
                   Update password
                 </button>
               </div>
@@ -127,10 +127,10 @@ export default function Settings() {
                 <TextField id="outlined-basic" fullWidth label="New Email" variant="outlined" />
               </div>
               <div className="flex mt-5 items-center gap-4">
-                <button className="px-8 py-4  text-[#412281] rounded-lg font-bold bg-[#c6c4c8]">
+                <button className="px-8 py-4  text-[#2073fa] rounded-lg font-bold bg-[#c6c4c8]">
                   Cancel
                 </button>
-                <button className="px-8 py-4  text-white rounded-lg font-bold bg-[#412281]">
+                <button className="px-8 py-4  text-white rounded-lg font-bold bg-[#2073fa]">
                   Update Email
                 </button>
               </div>

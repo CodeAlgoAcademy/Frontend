@@ -74,8 +74,8 @@ a {
   border-width: 0;
 }
 [type='radio']:checked {
-  box-shadow: 0 0 0 1px #f28e2c;
-  border-color: #f28e2c;
+  box-shadow: 0 0 0 1px #2073fa;
+  border-color: #2073fa;
   background-color: #fff;
   border-width: 0.325rem;
 }
@@ -151,8 +151,8 @@ a {
   height: 1.35rem;
   width: 1.35rem;
   cursor: pointer;
-  box-shadow: 0 0 0 1px #f28e2c;
-  border: 0.25rem solid #f28e2c;
+  box-shadow: 0 0 0 1px #2073fa;
+  border: 0.25rem solid #2073fa;
   background-color: #fff;
   border-radius: 50%;
 }
@@ -160,8 +160,8 @@ a {
   height: 1.35rem;
   width: 1.35rem;
   cursor: pointer;
-  box-shadow: 0 0 0 1px #f28e2c;
-  border: 0.25rem solid #f28e2c;
+  box-shadow: 0 0 0 1px #2073fa;
+  border: 0.25rem solid #2073fa;
   background-color: #fff;
   border-radius: 50%;
 }
@@ -202,10 +202,10 @@ a {
 }
 
 .checkbox-container input:checked ~ .checkmark {
-  background-color: #f28e2c;
+  background-color: #2073fa;
 }
 .checkbox-container input.accent-mainPurple:checked ~ .checkmark {
-  @apply bg-mainPurple;
+  @apply bg-[#2073fe];
 }
 
 .checkmark:after {
@@ -448,7 +448,10 @@ a {
   background: rgb(241, 242, 245);
   background: linear-gradient(90deg, rgba(241, 242, 245, 1) 1%, rgba(127, 217, 222, 1) 60%);
 }
-
+.green-chart-bar {
+  background: rgb(241, 242, 245);
+  background: linear-gradient(0deg, #bff2f5 60%, rgb(142, 229, 233) 90%);
+}
 .blue-svg {
   filter: invert(80%) sepia(70%) saturate(4500%) hue-rotate(200deg) brightness(105%) contrast(140%);
 }
@@ -465,18 +468,21 @@ a {
 .preloader {
   animation: preload 2s infinite ease-in-out 0.5s;
 }
+.student-input:hover + span {
+  display: block;
+}
 
 @keyframes preload {
   0% {
-    border-left: 5px solid #412281;
-    border-right: 5px solid #412281;
+    border-left: 5px solid #2073fa;
+    border-right: 5px solid #2073fa;
     border-top: 0;
     border-bottom: 0;
     transform: rotate(0deg);
   }
   100% {
-    border-top: 5px solid #412281;
-    border-bottom: 5px solid #412281;
+    border-top: 5px solid #2073fa;
+    border-bottom: 5px solid #2073fa;
     border-left: 0;
     border-right: 0;
     transform: rotate(360deg);

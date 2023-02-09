@@ -54,7 +54,7 @@ const BulkImportModal = ({
             onClick={() => {
               setBulkImportModalOpen(false);
             }}
-            className="mt-4 p-3 min-w-[150px] rounded-full text-white bg-mainPurple"
+            className="mt-4 p-3 min-w-[150px] rounded-full text-white bg-[#2073fa]"
           >
             Got it!
           </button>

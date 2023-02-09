@@ -67,6 +67,7 @@ export const signUpUser: any = createAsyncThunk('authSlice/signUpUser', async (n
     is_teacher,
     username,
   };
+  console.log(options)
   dispatch(openPreloader({ loadingText: 'Creating Account' }));
   try {
     const { data } = await http.post('/auth/registration/', { ...options });
@@ -91,7 +92,7 @@ export const signUpUser: any = createAsyncThunk('authSlice/signUpUser', async (n
     } else {
       dispatch(openErrorModal({ errorText: [error.message] }));
     }
-    return thunkApi.rejectWithValue(error);
+    return thunkApi.rejectWithValue(error.message);
   }
 });
 

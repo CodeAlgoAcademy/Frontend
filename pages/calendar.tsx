@@ -134,7 +134,7 @@ function Calendar() {
             <Sidebar />
           </div>
         </div>
-        <div className="bg-[#E5E5E5] flex-1 px-[2%] py-8 relative">
+        <div className="bg-[#ECEDF3] flex-1 px-[2%] py-8 relative">
           <div className="flex right-[6px] top-8 items-center justify-center absolute pr-[2%] overflow-clip">
             <motion.div
               animate={{ x: positionX }}

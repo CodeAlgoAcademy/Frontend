@@ -220,9 +220,9 @@ const Assignments = () => {
         <div className="sidebar bg-white w-[270px]">
           <Sidebar />
         </div>
-        <div className="bg-[#E5E5E5] flex-1 px-[6%] py-8">
+        <div className="bg-[#ECEDF3] flex-1 px-[6%] py-8">
           <div className="flex justify-between items-center">
-            <div className="flex items-center gap-x-2 mb-6">
+            <div className="flex items-center gap-x-2 mb-6 text-[#2073fa]">
               <span
                 className="text-[22px] font-bold cursor-pointer"
                 onClick={() => {
@@ -235,7 +235,7 @@ const Assignments = () => {
                 New Assignment
               </h2>
             </div>
-            <span className="hover:opacity-80 cursor-pointer flex items-center gap-3">
+            <span className="hover:opacity-80 cursor-pointer flex items-center gap-3 text-[#2073fa]">
               <span className="text-lg">
                 <BsPlusCircle />
               </span>
@@ -346,12 +346,12 @@ const Assignments = () => {
                         <input
                           type="date"
                           value={assignmentDetails.start_date}
-                          className="hoverElement max-w-[130px] px-3 py-1 rounded-md outline-none border border-orange-600 text-[15px]"
+                          className="hoverElement max-w-[130px] px-3 py-1 rounded-md outline-none border border-[#2073fa] text-[15px]"
                           onChange={(e) => {
                             updateScheduleDate('start_date', e.target.value);
                           }}
                         />
-                        <div className="hoverText right-[0] -top-[56px] bg-orange-600 after:bg-orange-600">
+                        <div className="hoverText right-[0] -top-[56px] bg-[#2073fa] after:bg-[#2073fa]">
                           Start date
                         </div>
                       </div>
@@ -360,12 +360,12 @@ const Assignments = () => {
                       <input
                         type="date"
                         value={assignmentDetails.end_date}
-                        className="hoverElement max-w-[130px] px-3 py-1 rounded-md outline-none border border-orange-600 text-[15px]"
+                        className="hoverElement max-w-[130px] px-3 py-1 rounded-md outline-none border border-[#2073fa] text-[15px]"
                         onChange={(e) => {
                           updateScheduleDate('end_date', e.target.value);
                         }}
                       />
-                      <div className="hoverText right-[0] -top-[56px] bg-orange-600 after:bg-orange-600">
+                      <div className="hoverText right-[0] -top-[56px] bg-[#2073fa] after:bg-[#2073fa]">
                         End date
                       </div>
                     </div>
@@ -466,14 +466,14 @@ const Assignments = () => {
                     }
                   }}
                 >
-                  <Button color="#F28E2C" text="Create" />
+                  <Button color="#2073fa" text="Create" />
                 </span>
                 <span
                   onClick={() => {
                     showModal('cancelResponse');
                   }}
                 >
-                  <Button color="#F28E2C" text="Cancel" />
+                  <Button color="#2073fa" text="Cancel" />
                 </span>
                 <div className="mr-4">
                   <span
@@ -502,158 +502,158 @@ const Assignments = () => {
                       }
                     }}
                   >
-                    <Button color="#F28E2C" text={isEditing ? 'Edit' : 'Save'} />
+                    <Button color="#2073fa" text={isEditing ? 'Edit' : 'Save'} />
                   </span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        {
-          <div
-            className={`w-full h-full bg-gray-100/50 fixed left-0 flex justify-center items-center ${
-              modalWrapperDisplay ? 'showModal' : 'hideModal'
-            }`}
-          >
-            {modalWrapperDisplay && (
-              <div className="relative max-w-[850px] bg-white rounded-xl overflow-hidden overflow-y-scroll max-h-[90vh]">
-                <span
-                  className="text-[22px] absolute right-8 top-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all ease-in-out opacity-60"
-                  onClick={hideModal}
-                >
-                  <FaTimes />
-                </span>
-                {modalItemsDisplay.saveResponse && (
-                  <div className="w-full py-20 px-24 font-semibold text-center text-xl">
-                    <p>You have successfully saved an assignment</p>
-                    <p>
-                      Click on{' '}
-                      <span
-                        className="font-bold text-[#F28E2C] cursor-pointer"
-                        onClick={() => {
-                          switchModal('historyResponse');
-                        }}
-                      >
-                        ASSINGMENT HISTORY
-                      </span>{' '}
-                      to view your Assingment.
-                    </p>
-                  </div>
-                )}
-                {modalItemsDisplay.createResponse && (
-                  <div className="w-full py-20 px-24 font-semibold text-center text-xl">
-                    <p>You have successfully created an assignment</p>
-                    <p>
-                      Click on{' '}
-                      <span
-                        className="font-bold text-[#F28E2C] cursor-pointer"
-                        onClick={() => {
-                          switchModal('historyResponse');
-                        }}
-                      >
-                        ASSINGMENT HISTORY
-                      </span>{' '}
-                      to view your Assingment.
-                    </p>
-                  </div>
-                )}
-                {modalItemsDisplay.cancelResponse && (
-                  <div className="w-full py-20 px-24 font-bold text-xl">
-                    <p className="text-xl">
-                      Are you sure you want to{' '}
-                      <span className="text-[#E30F0F] text-center">Cancel?</span>
-                    </p>
-                    <div className="flex flex-row-reverse gap-4 mt-4">
-                      <span
-                        onClick={() => {
-                          hideModal();
-                        }}
-                      >
-                        <Button color="#F28E2C" text="No" />
-                      </span>
-                      <Link href="/curriculum/">
-                        <span
-                          onClick={() => {
-                            setIsEditing(false);
-                            setEditId('');
-                          }}
-                        >
-                          <Button color="#F28E2C" text="Yes" />
-                        </span>
-                      </Link>
-                    </div>
-                  </div>
-                )}
-                {modalItemsDisplay.historyResponse && (
-                  <div className="p-12 min-h-[500px] min-w-[800px]">
-                    <h3 className="text-2xl font-semibold">Assignment History</h3>
-                    <div className="flex gap-6 items-center mt-8">
-                      <span
-                        className="pb-2 border-b-[3px] font-bold text-black/50 cursor-pointer"
-                        style={{
-                          borderColor: historyType === 'active' ? '#F28E2C' : 'white',
-                        }}
-                        onClick={() => setHistoryType((prev) => 'active')}
-                      >
-                        Active
-                      </span>
-                      <span
-                        className="pb-2 border-b-[3px] font-bold text-black/50 cursor-pointer"
-                        style={{
-                          borderColor: historyType === 'completed' ? '#F28E2C' : 'white',
-                        }}
-                        onClick={() => setHistoryType((prev) => 'completed')}
-                      >
-                        Completed
-                      </span>
-                      <span
-                        className="pb-2 border-b-[3px] font-bold text-black/50 cursor-pointer"
-                        style={{
-                          borderColor: historyType === 'draft' ? '#F28E2C' : 'white',
-                        }}
-                        onClick={() => setHistoryType((prev) => 'draft')}
-                      >
-                        Draft
-                      </span>
-                    </div>
-                    <div className="mt-3 flex flex-col gap-3">
-                      {assignments?.map((assignment: any, index: number) => {
-                        if (assignment.status.toLowerCase() === historyType.toLowerCase()) {
-                          return (
-                            <SingleAssignment
-                              setEditAssignment={setEditAssignment}
-                              assignment={assignment}
-                              key={index}
-                            />
-                          );
-                        }
-                      })}
-                    </div>
-                  </div>
-                )}
-                {modalItemsDisplay.skillsResponse && (
-                  <SkillModal
-                    skills={assingmentSkills}
-                    hideModal={hideModal}
-                    handleSkillCheckboxChange={handleSkillCheckboxChange}
-                    skillCheckbox={skillCheckbox}
-                  />
-                )}
-                {modalItemsDisplay.studentResponse && (
-                  <StudentModal
-                    students={students?.students}
-                    hideModal={hideModal}
-                    handleStudentCheckboxChange={handleStudentCheckboxChange}
-                    handleAllStudentChechbox={handleAllStudentChechbox}
-                    allStudentCheckbox={allStudentCheckbox}
-                    studentCheckbox={studentCheckbox}
-                  />
-                )}
-              </div>
-            )}
-          </div>
-        }
       </div>
+      {
+        <div
+          className={`w-full h-full backdrop-blur-sm bg-gray-100/50 fixed left-0 flex justify-center items-center ${
+            modalWrapperDisplay ? 'showModal' : 'hideModal'
+          }`}
+        >
+          {modalWrapperDisplay && (
+            <div className="relative max-w-[850px] bg-white rounded-xl overflow-hidden overflow-y-scroll max-h-[90vh]">
+              <span
+                className="text-[22px] absolute right-8 top-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all ease-in-out opacity-60"
+                onClick={hideModal}
+              >
+                <FaTimes />
+              </span>
+              {modalItemsDisplay.saveResponse && (
+                <div className="w-full py-20 px-24 font-semibold text-center text-xl">
+                  <p>You have successfully saved an assignment</p>
+                  <p>
+                    Click on{' '}
+                    <span
+                      className="font-bold text-[#2073fa] cursor-pointer"
+                      onClick={() => {
+                        switchModal('historyResponse');
+                      }}
+                    >
+                      ASSIGNMENT HISTORY
+                    </span>{' '}
+                    to view your Assignment.
+                  </p>
+                </div>
+              )}
+              {modalItemsDisplay.createResponse && (
+                <div className="w-full py-20 px-24 font-semibold text-center text-xl">
+                  <p>You have successfully created an assignment</p>
+                  <p>
+                    Click on{' '}
+                    <span
+                      className="font-bold text-[#2073fa] cursor-pointer"
+                      onClick={() => {
+                        switchModal('historyResponse');
+                      }}
+                    >
+                      ASSIGNMENT HISTORY
+                    </span>{' '}
+                    to view your Assignment.
+                  </p>
+                </div>
+              )}
+              {modalItemsDisplay.cancelResponse && (
+                <div className="w-full py-20 px-24 font-bold text-xl">
+                  <p className="text-xl">
+                    Are you sure you want to{' '}
+                    <span className="text-[#E30F0F] text-center">Cancel?</span>
+                  </p>
+                  <div className="flex flex-row-reverse gap-4 mt-4">
+                    <span
+                      onClick={() => {
+                        hideModal();
+                      }}
+                    >
+                      <Button color="#2073fa" text="No" />
+                    </span>
+                    <Link href="/curriculum/">
+                      <span
+                        onClick={() => {
+                          setIsEditing(false);
+                          setEditId('');
+                        }}
+                      >
+                        <Button color="#2073fa" text="Yes" />
+                      </span>
+                    </Link>
+                  </div>
+                </div>
+              )}
+              {modalItemsDisplay.historyResponse && (
+                <div className="p-12 min-h-[500px] min-w-[800px]">
+                  <h3 className="text-2xl font-semibold">Assignment History</h3>
+                  <div className="flex gap-6 items-center mt-8">
+                    <span
+                      className="pb-2 border-b-[3px] font-bold text-black/50 cursor-pointer"
+                      style={{
+                        borderColor: historyType === 'active' ? '#2073fa' : 'white',
+                      }}
+                      onClick={() => setHistoryType((prev) => 'active')}
+                    >
+                      Active
+                    </span>
+                    <span
+                      className="pb-2 border-b-[3px] font-bold text-black/50 cursor-pointer"
+                      style={{
+                        borderColor: historyType === 'completed' ? '#2073fa' : 'white',
+                      }}
+                      onClick={() => setHistoryType((prev) => 'completed')}
+                    >
+                      Completed
+                    </span>
+                    <span
+                      className="pb-2 border-b-[3px] font-bold text-black/50 cursor-pointer"
+                      style={{
+                        borderColor: historyType === 'draft' ? '#2073fa' : 'white',
+                      }}
+                      onClick={() => setHistoryType((prev) => 'draft')}
+                    >
+                      Draft
+                    </span>
+                  </div>
+                  <div className="mt-3 flex flex-col gap-3">
+                    {assignments?.map((assignment: any, index: number) => {
+                      if (assignment.status.toLowerCase() === historyType.toLowerCase()) {
+                        return (
+                          <SingleAssignment
+                            setEditAssignment={setEditAssignment}
+                            assignment={assignment}
+                            key={index}
+                          />
+                        );
+                      }
+                    })}
+                  </div>
+                </div>
+              )}
+              {modalItemsDisplay.skillsResponse && (
+                <SkillModal
+                  skills={assingmentSkills}
+                  hideModal={hideModal}
+                  handleSkillCheckboxChange={handleSkillCheckboxChange}
+                  skillCheckbox={skillCheckbox}
+                />
+              )}
+              {modalItemsDisplay.studentResponse && (
+                <StudentModal
+                  students={students?.students}
+                  hideModal={hideModal}
+                  handleStudentCheckboxChange={handleStudentCheckboxChange}
+                  handleAllStudentChechbox={handleAllStudentChechbox}
+                  allStudentCheckbox={allStudentCheckbox}
+                  studentCheckbox={studentCheckbox}
+                />
+              )}
+            </div>
+          )}
+        </div>
+      }
     </div>
   );
 };

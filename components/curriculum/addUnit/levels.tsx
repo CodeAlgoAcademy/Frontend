@@ -12,7 +12,7 @@ const Levels: FC<Props> = ({ openedModal, updateOpenedModal }) => {
     <article className="flex flex-row gap-x-2 relative">
       <div
         className={`${styles.topic} ${
-          openedModal === 'level' ? ' outline-mainPurple' : 'outline-transparent'
+          openedModal === 'level' ? ' outline-[#2073fa]' : 'outline-transparent'
         }`}
         onClick={(event: any) => {
           if (!event.target.classList.contains('dropdown')) {
@@ -66,11 +66,11 @@ const LevelsInputContainer = ({ level }: { level: ILevels }) => {
       />
       <label
         htmlFor={level.title}
-        className={`hover:text-mainPurple dropdown ${levels === level.title && 'text-mainPurple'}`}
+        className={`hover:text-[#2073fa] dropdown ${levels === level.title && 'text-[#2073fa]'}`}
       >
         {level.title}
       </label>
-      <p className={`hoverText right-[0px] -top-[10px] bg-mainPurple after:bg-mainPurple`}>
+      <p className={`hoverText right-[0px] -top-[10px] bg-[#2073fa] after:bg-[#2073fa]`}>
         {level.hoverText}
       </p>
     </div>
