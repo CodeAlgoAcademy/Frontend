@@ -3,6 +3,7 @@ import ParentSignUp2 from '@/components/parentMultiForm/ParentSignUp2';
 import ParentSignUp3 from '@/components/parentMultiForm/ParentSignUp3';
 import ParentSignUp4 from '@/components/parentMultiForm/ParentSignUp4';
 import ParentSignUp5 from '@/components/parentMultiForm/ParentSignUp5';
+import ParentSignUp6 from '@/components/parentMultiForm/ParentSignUp6';
 import Safety1 from '@/components/parentMultiForm/Safety1';
 import Safety2 from '@/components/parentMultiForm/Safety2';
 import Safety3 from '@/components/parentMultiForm/Safety3';
@@ -11,23 +12,39 @@ import WelcomeForm from '@/components/parentMultiForm/WelcomeForm';
 import useMultiForm from '@/components/useMultiForm';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { signUpUser } from 'services/authService';
 
 export default function Parent() {
+  const dispatch = useDispatch();
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next, goTo } = useMultiForm(
     [
       <ParentSignUp1 key={1} />,
       <ParentSignUp2 key={2} />,
-      <WelcomeForm key={3} />,
-      <ParentSignUp3 key={4} />,
+      <ParentSignUp3 key={3} />,
+      <WelcomeForm key={4} />,
       <ParentSignUp4 key={5} />,
       <ParentSignUp5 key={6} />,
-      <Safety1 key={7} />,
-      <Safety2 key={8} />,
-      <Safety3 key={9} />,
-      <ThankyouForm key={10} />,
+      <ParentSignUp6 key={7} />,
+      <Safety1 key={8} />,
+      <Safety2 key={9} />,
+      <Safety3 key={10} />,
+      <ThankyouForm key={11} />,
     ],
   );
+
+  const signUp = async (e: ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (currentStepIndex === 2) {
+      const data = await dispatch(signUpUser());
+      if (!data?.error?.message) {
+        next();
+      }
+    } else {
+      next();
+    }
+  };
 
   return (
     <div className="bg-gradient-to-br from-[#78A8FB] to-[#C4D7F8] min-h-[100vh] p-[2rem] relative">
@@ -42,24 +59,23 @@ export default function Parent() {
       </div>
       <div
         className={`flex p-[4rem] items-center justify-center ${
-          currentStepIndex === 7 && 'mb-[5.7rem]'
+          currentStepIndex === 8 && 'mb-[5.7rem]'
         }`}
       >
         <div className="bg-white mr-[-2rem] w-[700px] px-[4rem] py-[4rem] bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-20 rounded-[2.5rem]">
-          <form>
+          <form onSubmit={signUp}>
             <div className="">{step}</div>
             <div>
               <button
                 className="block  h-[2.5rem] mt-6 text-center w-full text-white bg-[#2073FA] font-bold rounded-xl"
-                type="button"
-                onClick={next}
+                type="submit"
               >
                 Continue
               </button>
-              {currentStepIndex === 6 && (
+              {currentStepIndex === 7 && (
                 <p
                   onClick={() => {
-                    goTo(8);
+                    goTo(9);
                   }}
                   className="my-3 text-center text-[14px] cursor-pointer underline font-bold"
                 >
