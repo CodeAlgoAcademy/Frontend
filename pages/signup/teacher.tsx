@@ -25,6 +25,10 @@ export default function Teacher() {
       <WelcomeForm key={3} />,
     ]);
 
+    useEffect(() => {
+      dispatch(updateUser({ key: 'accountType', value: 'Teacher' }));
+    }, []);
+
   const signup = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(auth);
