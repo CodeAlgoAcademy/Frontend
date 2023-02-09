@@ -5,14 +5,38 @@ import WelcomeForm from '@/components/parentMultiForm/WelcomeForm';
 import useMultiForm from '@/components/useMultiForm';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { ChangeEvent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { signUpUser } from 'services/authService';
+import { clearFields } from 'store/authSlice';
+import { RootState } from 'store/store';
 
 export default function Student() {
-  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } = useMultiForm([
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const { auth } = useSelector((state: RootState) => state.user);
+  const { steps, currentStepIndex, teacherSignUpStep, step, isFirstStep, isLastStep, back, next } = useMultiForm([
     <ParentSignUp1 key={1} />,
     <ParentSignUp2 key={2} />,
     <OtherInfoStudent key={4} />,
     <WelcomeForm key={3} />,
   ]);
+
+  const signup = async (event: ChangeEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log(auth);
+    if (!teacherSignUpStep) {
+      next();
+    } else {
+      const data = await dispatch(signUpUser());
+      if (!data?.error?.message) {
+        dispatch(clearFields());
+        router.push('/verify-email');
+      }
+      console.log(data);
+    }
+  };
 
   return (
     <div className="bg-gradient-to-br from-[#78A8FB] to-[#C4D7F8] min-h-[100vh] p-[2rem] relative">
@@ -27,13 +51,12 @@ export default function Student() {
       </div>
       <div className="flex p-[4rem]  items-center justify-center">
         <div className="bg-white mr-[-2rem] w-[600px] px-[5rem] py-[4rem] bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-20 rounded-[2.5rem]">
-          <form>
+          <form onSubmit={signup}>
             <div className="">{step}</div>
             <div>
               <button
                 className="block  h-[2.5rem] mt-6 text-center w-full text-white bg-[#2073FA] font-bold rounded-xl"
-                type="button"
-                onClick={next}
+                type="submit"
               >
                 Continue
               </button>
@@ -51,18 +74,10 @@ export default function Student() {
                   Sign Up with Google
                 </button>
               )}
-              {isFirstStep && (
-                <button
-                  className="block  h-[2.5rem] mt-6 text-center w-full bg-neutral-100/70 font-semibold rounded-xl text-black"
-                  type="button"
-                  onClick={back}
-                >
-                  Sign Up with Facebook
-                </button>
-              )}
+             
               {isLastStep && (
-                <button className="block text-center underline w-full mt-4">
-                  Continue as student
+                <button className="block text-center underline w-full mt-4" type="submit">
+                  Sign up
                 </button>
               )}
             </div>
