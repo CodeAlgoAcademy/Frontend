@@ -65,7 +65,11 @@ function Calendar() {
     setTimeout(triggerNotificationClose, 5000);
   };
   const fetchSchedule = async () => {
-    await dispatch(getSchedule());
+    if (scheduleData.googleConnect) {
+      await dispatch(getGoogleCalendar())
+    } else {
+      await dispatch(getSchedule());
+    }
   };
   const changeSchedule = async (args: any) => {
     let data;

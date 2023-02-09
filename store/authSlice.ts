@@ -47,7 +47,7 @@ const initialState: IUser = {
     schoolCountry: countryList[0],
     schoolName: '',
     is_parent: false,
-    is_student: false,
+    is_student: true,
     is_teacher: false,
     country: countryList[0],
     username: '',
@@ -62,7 +62,7 @@ export const userSlice = createSlice({
       localStorage.removeItem('token');
     },
     clearFields: (state: IUser) => {
-      return { ...state, auth: initialState.auth };
+      return { ...state, auth: {...initialState.auth, email: state.auth.email} };
     },
     updateUser: (
       state: IUser | any,
@@ -105,24 +105,24 @@ export const userSlice = createSlice({
     builder.addCase(loginUser.rejected, (state: IUser, { payload }: PayloadAction) => {
       console.log(payload);
     });
-    builder.addCase(signUpUser.pending, (state: IUser) => {
-      console.log('pending');
-    });
-    builder.addCase(signUpUser.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
-      localStorage.setItem(
-        'token',
-        JSON.stringify({
-          access_token: action.payload?.access_token,
-          refresh_token: action.payload?.refresh_token,
-        }),
-      );
-      setTimeStamp();
-      return {
-        ...state,
-        ...action.payload,
-      };
-    });
-    builder.addCase(signUpUser.rejected, (state: IUser, { payload }: PayloadAction) => {});
+    // builder.addCase(signUpUser.pending, (state: IUser) => {
+    //   console.log('pending');
+    // });
+    // builder.addCase(signUpUser.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
+    //   localStorage.setItem(
+    //     'token',
+    //     JSON.stringify({
+    //       access_token: action.payload?.access_token,
+    //       refresh_token: action.payload?.refresh_token,
+    //     }),
+    //   );
+    //   setTimeStamp();
+    //   return {
+    //     ...state,
+    //     ...action.payload,
+    //   };
+    // });
+    // builder.addCase(signUpUser.rejected, (state: IUser, { payload }: PayloadAction) => {});
     builder.addCase(loginWithGoogle.pending, (state: IUser) => {});
     builder.addCase(loginWithGoogle.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
       localStorage.setItem(

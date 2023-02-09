@@ -35,28 +35,24 @@ const scheduleSlice = createSlice({
       }),
       builder.addCase(postSchedule.fulfilled, (state: any, action: PayloadAction<any>) => {
         console.info('Schedule created Successfully');
-        window.location.reload();
       }),
       builder.addCase(postSchedule.rejected, (state: any, action: PayloadAction<any>) => {
         console.error('Post Error');
       }),
       builder.addCase(postGoogleCalendar.fulfilled, (state: any, action: PayloadAction<any>) => {
         console.info('Google calendar created Successfully');
-        window.location.reload();
       }),
       builder.addCase(postGoogleCalendar.rejected, (state: any, action: PayloadAction<any>) => {
         console.error('Google calendar Post Error');
       }),
       builder.addCase(putSchedule.fulfilled, (state: any, action: PayloadAction<any>) => {
         console.info('Schedule updated Successfully');
-        window.location.reload();
       }),
       builder.addCase(putSchedule.rejected, (state: any, action: PayloadAction<any>) => {
         console.error('Update Error');
       }),
       builder.addCase(putGoogleCalendar.fulfilled, (state: any, action: PayloadAction<any>) => {
         console.info('Google calendar updated Successfully');
-        window.location.reload();
       }),
       builder.addCase(putGoogleCalendar.rejected, (state: any, action: PayloadAction<any>) => {
         console.error('google calendar update Error');
