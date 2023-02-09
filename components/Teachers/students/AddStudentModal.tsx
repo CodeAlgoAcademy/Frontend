@@ -119,7 +119,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
               dispatch(getAllClasses());
             }
           }}
-          className="text-[30px] font-thin absolute z-10 top-[30px] right-[30px]"
+          className="text-[30px] font-thin absolute z-10 top-[30px] right-[30px] text-red-600"
         >
           <FaTimes />
         </span>
@@ -129,7 +129,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
         ></aside>
 
         <form className="py-8 flex-[0.9]" onSubmit={onSubmit}>
-          <header className="px-8 w-full mb-6 flex gap-x-2 items-center">
+          <header className="px-8 w-full mb-6 flex gap-x-2 items-center text-[#2073fa]">
             <span
               className="text-[20px] font-bold"
               onClick={() => {
@@ -160,7 +160,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
             })}
             <button
               type="button"
-              className=" px-2 py-3 rounded-md bg-mainPurple shadow-md text-white active:scale-[0.91]"
+              className=" px-2 py-3 rounded-md bg-[#2073fa] shadow-md text-white active:scale-[0.91]"
               onClick={() => {
                 if (firstName || lastName) {
                   const randomName = generateUsername(firstName, lastName);
@@ -208,7 +208,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
             </div>
             <button
               type="submit"
-              className="py-3 px-4 min-w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md"
+              className="py-3 px-4 min-w-[150px] text-[16px] rounded-[30px] text-white bg-[#2073fa] hover:shadow-md"
               onClick={() => {
                 if (file) {
                   handleFileSubmit();
@@ -253,7 +253,7 @@ const styles = {
     'absolute top-0 right-0 text-[#f4f4f4] hover:bg-opacity-50 -mt-2 -mr-2 text-lg cursor-pointer p-1 rounded-full bg-red-500',
   modalBody: 'p-3 text-sm text-[#2c3e50] text-center',
   addBtn:
-    'bg-purple-900 p-3 rounded-3xl text-white hover:bg-opacity-90 transition-all duration-500',
+    'bg-[royalblue] p-3 rounded-3xl text-white hover:bg-opacity-90 transition-all duration-500',
   bulkBtn: 'flex space-x-3 text-center items-center hover:bg-slate-200 p-3',
   plusIcon: 'border border-slate-700 rounded-full',
 };

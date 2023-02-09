@@ -91,7 +91,7 @@ const GeneralNav = () => {
         <div></div>
         <div className="flex items-center gap-4">
           <Link href={`/addClass`}>
-            <div className="text-[#616161] text-[24px]">
+            <div className="text-[#2073fa] text-[24px]">
               <BiHomeAlt />
             </div>
           </Link>
@@ -178,7 +178,7 @@ const GeneralNav = () => {
             {userDropDown && (
               <div>
                 <motion.h5
-                  className="text-sm capitalize ml-2 font-[700] whitespace-nowrap"
+                  className="text-sm capitalize ml-2 font-[700] whitespace-nowrap text-[#2073fa]"
                   initial={{ display: 'none', opacity: 0 }}
                   animate={{
                     display: 'block',
@@ -209,7 +209,7 @@ const GeneralNav = () => {
                     setSettingsTabOpen((prev) => !prev);
                   }}
                 >
-                  <div className="flex items-center">
+                  <div className="flex items-center text-[#2073fa]">
                     <span className="text-xl">
                       <IoSettingsSharp />
                     </span>
@@ -228,7 +228,7 @@ const GeneralNav = () => {
                     onSubmit={(e: ChangeEvent<HTMLFormElement>) => {
                       updateUserForm(e, updateFirstname);
                     }}
-                    className="w-full flex gap-2 h-[35px] items-center border hover:border-mainPurple rounded-[4px] px-2"
+                    className="w-full flex gap-2 h-[35px] items-center border hover:border-[#2073fa] rounded-[4px] px-2"
                   >
                     <input
                       type="text"
@@ -255,7 +255,7 @@ const GeneralNav = () => {
                     onSubmit={(e: ChangeEvent<HTMLFormElement>) => {
                       updateUserForm(e, updateLastname);
                     }}
-                    className="w-full flex gap-2 h-[35px] items-center border hover:border-mainPurple rounded-[4px] px-2"
+                    className="w-full flex gap-2 h-[35px] items-center border hover:border-[#2073fa] rounded-[4px] px-2"
                   >
                     <input
                       type="text"
@@ -277,7 +277,7 @@ const GeneralNav = () => {
                     onSubmit={(e: ChangeEvent<HTMLFormElement>) => {
                       updateUserForm(e, updateEmail);
                     }}
-                    className="w-full flex gap-2 h-[35px] items-center border hover:border-mainPurple rounded-[4px] px-2"
+                    className="w-full flex gap-2 h-[35px] items-center border hover:border-[#2073fa] rounded-[4px] px-2"
                   >
                     <input
                       type="text"
@@ -295,7 +295,7 @@ const GeneralNav = () => {
                       <FaEdit />
                     </button>
                   </form>
-                  <form className="w-full flex gap-2 h-[35px] items-center border hover:border-mainPurple rounded-[4px] px-2">
+                  <form className="w-full flex gap-2 h-[35px] items-center border hover:border-[#2073fa] rounded-[4px] px-2">
                     <input
                       type="text"
                       className="border-none outline-none w-full h-full text-black text-[15px] tracking-wider placeholder:text-gray-500"
@@ -315,7 +315,7 @@ const GeneralNav = () => {
                 </main>
               </div>
               <motion.div
-                className="cursor-pointer flex items-center mt-[1rem] pb-2"
+                className="cursor-pointer flex items-center mt-[1rem] pb-2 text-[#2073fa]"
                 initial={{ opacity: 0, y: '5px' }}
                 animate={{
                   opacity: 1,
@@ -333,7 +333,7 @@ const GeneralNav = () => {
             </div>
           )}
         </div>
-        <div className="text-[24px] text-[#616161] relative bell-shake cursor-pointer">
+        <div className="text-[24px] relative bell-shake cursor-pointer text-[#2073fa]">
           {/* <span className='rounded-full content-[" "] w-[10px] h-[10px] bg-red-600 absolute top-0 right-0'></span> */}
           <BiBell />
         </div>

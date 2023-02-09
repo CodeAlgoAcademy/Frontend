@@ -117,11 +117,11 @@ export default function Index() {
         {addUnitModalOpen ? (
           <AddUnit />
         ) : (
-          <div className="px-[5.5rem] py-[2rem] flex-1 bg-[#E5E5E5]">
+          <div className="px-[5.5rem] py-[2rem] flex-1 bg-[#ECEDF3]">
             <div className="flex justify-between">
-              <h1 className="font-bold text-3xl">Curriculum</h1>
+              <h1 className="font-bold text-3xl text-[#2073fa]">Curriculum</h1>
               <div
-                className="flex gap-2 items-center cursor-pointer"
+                className="flex gap-2 items-center cursor-pointer text-[#2073fa]"
                 onClick={() => {
                   dispatch(openAddUnitModal());
                 }}
@@ -134,8 +134,8 @@ export default function Index() {
               <h1
                 className={
                   active === 'past'
-                    ? 'text-[1.2rem]  mr-8  border-b-[3px] hover:font-bold border-b-black hover:border-b-black transition duration-300 ease-out box-border'
-                    : 'text-[1.2rem]  mr-8 hover:font-bold  hover:border-b-black hover:border-b-[3px] box-border  transition duration-300 ease-out'
+                    ? 'text-[1.2rem]  mr-8  border-b-[3px] text-[#2073fa] hover:font-bold border-b-[#2073fa] hover:border-b-[#2073fa] transition duration-300 ease-out box-border'
+                    : 'text-[1.2rem] text-[#2073fa]  mr-8 hover:font-bold  hover:border-b-[#2073fa] hover:border-b-[3px] box-border  transition duration-300 ease-out'
                 }
                 onClick={handlePast}
               >
@@ -145,8 +145,8 @@ export default function Index() {
                 <h1
                   className={
                     active === 'current'
-                      ? 'text-[1.2rem] border-b-[3px] font-bold border-b-black hover:font-bold hover:border-b-black transition duration-500 ease-out box-border'
-                      : 'text-[1.2rem]  hover:font-bold hover:border-b-black  hover:border-b-[3px] box-border transition duration-500 ease-out'
+                      ? 'text-[1.2rem]   border-b-[3px] text-[#2073fa] hover:font-bold border-b-[#2073fa] hover:border-b-[#2073fa] transition duration-300 ease-out box-border'
+                      : 'text-[1.2rem] text-[#2073fa]  hover:font-bold  hover:border-b-[#2073fa] hover:border-b-[3px] box-border  transition duration-300 ease-out'
                   }
                   onClick={handleCurrent}
                 >
@@ -156,8 +156,8 @@ export default function Index() {
               <h1
                 className={
                   active === 'upcoming'
-                    ? 'text-[1.2rem] ml-8 border-b-[3px] border-b-black  font-bold hover:font-bold hover:border-b-black transition duration-500 ease-out box-border'
-                    : 'text-[1.2rem] ml-8  hover:font-bold hover:border-b-black hover:border-b-[3px] box-border transition duration-500 ease-out'
+                    ? 'text-[1.2rem]  ml-8  border-b-[3px] text-[#2073fa] hover:font-bold border-b-[#2073fa] hover:border-b-[#2073fa] transition duration-300 ease-out box-border'
+                    : 'text-[1.2rem] text-[#2073fa]  hover:font-bold  hover:border-b-[#2073fa] ml-8 hover:border-b-[3px] box-border  transition duration-300 ease-out'
                 }
                 onClick={handleUpcoming}
               >
@@ -171,7 +171,9 @@ export default function Index() {
               {/* current curriculum */}
               {current && (
                 <>
-                  <h1 className="text-[1.5rem] font-bold mt-10 w-full">Current Unit</h1>
+                  <h1 className="text-[1.5rem] font-bold mt-10 w-full text-[#2073fa]">
+                    Current Unit
+                  </h1>
                   <div className="flex flex-col md:flex-row justify-center md:justify-start flex-wrap  box-border lg:gap-[2rem] md:gap-[1rem]">
                     {currentCurriculum?.map((curriculum: Icurriculum) => {
                       return (
@@ -190,7 +192,7 @@ export default function Index() {
 
               {past && (
                 <div>
-                  <h1 className="text-[1.5rem] font-bold mt-10">Past Units</h1>
+                  <h1 className="text-[1.5rem] font-bold mt-10 text-[#2073fa]">Past Units</h1>
                   <div className="flex flex-col md:flex-row justify-center md:justify-start flex-wrap  box-border lg:gap-[2rem] md:gap-[1rem]">
                     {pastCurriculum.map((curriculum: Icurriculum) => {
                       return (
@@ -209,7 +211,7 @@ export default function Index() {
 
               {upcoming && (
                 <div>
-                  <h1 className="text-[1.5rem] font-bold mt-10">Upcoming Units</h1>
+                  <h1 className="text-[1.5rem] font-bold mt-10 text-[#2073fa]">Upcoming Units</h1>
                   <div className="flex flex-col md:flex-row justify-center md:justify-start flex-wrap  box-border lg:gap-[2rem] md:gap-[1rem]">
                     {upcomingCurriculum.map((curriculum: Icurriculum) => {
                       return (

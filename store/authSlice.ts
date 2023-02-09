@@ -29,7 +29,7 @@ const initialState: IUser = {
   // sign up stuffs
   country: '',
   // peculiar to students
-  grade: 'Select Grade',
+  grade: '',
   // peculiar to teachers
   schoolCountry: '',
   schoolName: '',
@@ -42,7 +42,7 @@ const initialState: IUser = {
     email: '',
     password: '',
     // peculiar to students
-    grade: 'Select Grade',
+    grade: '',
     // peculiar to teachers
     schoolCountry: countryList[0],
     schoolName: '',
@@ -62,7 +62,7 @@ export const userSlice = createSlice({
       localStorage.removeItem('token');
     },
     clearFields: (state: IUser) => {
-      return { ...state, auth: {...initialState.auth, email: state.auth.email} };
+      return { ...state, auth: {...initialState.auth, email: state.auth.email, is_student: state.auth.is_student, is_parent: state.auth.is_parent, is_teacher:state.auth.is_teacher} };
     },
     updateUser: (
       state: IUser | any,
