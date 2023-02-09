@@ -8,13 +8,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ChangeEvent, useEffect } from 'react';
 import { signUpUser } from 'services/authService';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { clearFields, updateUser } from 'store/authSlice';
+import { RootState } from 'store/store';
 
 export default function Teacher() {
   const dispatch = useDispatch();
   const router = useRouter();
+  const { auth } = useSelector((state: RootState) => state.user);
   const { steps, currentStepIndex, step, teacherSignUpStep, isFirstStep, isLastStep, back, next } =
     useMultiForm([
       <ParentSignUp1 key={1} />,
@@ -25,7 +27,7 @@ export default function Teacher() {
 
   const signup = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
-
+    console.log(auth);
     if (!teacherSignUpStep) {
       next();
     } else {
@@ -34,7 +36,6 @@ export default function Teacher() {
         dispatch(clearFields());
         router.push('/verify-email');
       }
-      dispatch(clearFields());
       console.log(data);
     }
   };

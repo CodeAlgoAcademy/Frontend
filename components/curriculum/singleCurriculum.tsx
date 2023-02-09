@@ -65,7 +65,7 @@ const SingleCurriculum = ({ curriculum, active }: { curriculum: Icurriculum; act
             setModalOpen((prev) => !prev);
           }}
         >
-          <HiDotsHorizontal className="ml-auto text-3xl border-[#BDBDBD] mt-[-1rem] text-[#C4C4C4]" />
+          <HiDotsHorizontal className="ml-auto text-3xl border-[#2073fa] mt-[-1rem] text-[" />
         </div>
         <h1 className="font-bold mt-5 mb-5">{curriculum.title}</h1>
         <p>{curriculum.description}</p>

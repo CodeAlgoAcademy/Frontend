@@ -92,7 +92,7 @@ export const signUpUser: any = createAsyncThunk('authSlice/signUpUser', async (n
     } else {
       dispatch(openErrorModal({ errorText: [error.message] }));
     }
-    return thunkApi.rejectWithValue(error);
+    return thunkApi.rejectWithValue(error.message);
   }
 });
 

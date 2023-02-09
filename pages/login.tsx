@@ -1,38 +1,15 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import Head from 'next/head';
+import React, { ChangeEvent, useCallback, useState, useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
-import CleverBtn from '../components/cleverBtn';
-import GoogleBtn from '../components/googleBtn';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store/store';
-import { IInputFields } from '../types/interfaces';
-import { loginUser } from '../services/authService';
-import { clearFields, updateUser } from 'store/authSlice';
-import styles from '../styles/styles';
+import { RootState } from 'store/store';
+import { updateUser } from 'store/authSlice';
 import { useRouter } from 'next/router';
-// import {default as HCaptcha} from '../utils/captcha';
-import axios from 'axios';
-
-const Login = () => {
+import { loginUser } from 'services/authService';
+const LoginTest = () => {
   const dispatch = useDispatch();
-  const { email, password } = useSelector((state: RootState) => state.user.auth);
   const router = useRouter();
-  const inputFields: IInputFields[] = [
-    {
-      type: 'email',
-      placeholder: 'Enter Email*',
-      name: 'email',
-      value: email,
-    },
-    {
-      type: 'password',
-      placeholder: 'Enter Password*',
-      name: 'password',
-      value: password,
-    },
-  ];
-
-  // const captchaRef = React.useRef<HCaptcha>(null);
+  const { email, password } = useSelector((state: RootState) => state.user.auth);
   const [recaptchaVerified, setRecaptchaVerified] = useState(false);
   const login = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -40,6 +17,8 @@ const Login = () => {
     if (!data?.error?.message) {
       if (data?.payload?.is_teacher) {
         router.push('/addClass');
+      } else if (data?.payload?.is_parent) {
+        router.push('/parents');
       } else {
         router.push('/comingSoon');
       }
@@ -66,100 +45,71 @@ const Login = () => {
   useEffect(() => {
     // dispatch(clearFields());
   }, []);
-
   return (
-    <main>
-      <Head>
-        <title>CodeAlgo Academy | Login</title>
-      </Head>
-      <section className="w-full min-h-screen bg-[royalblue] shadow-lg flex justify-center items-center">
-        <div className="bg-white w-[95vw] max-w-[600px] mx-auto rounded-md p-[40px] md:p-[50px] shadow-md">
-          {/* title */}
-          <div className="flex flex-col gap-y-1 mb-4">
-            <h1 className="md:text-3xl text-center text-lg font-bold">
-              Welcome to CodeAlgo Academy
-            </h1>
-            <p className="text-grey-800 md:text-lg text-[16px] text-center">
-              New here?
-              <Link href="/signup">
-                <a className="ml-2 underline text-mainPurple" data-testid="go-to-signup">
-                  Create an account
-                </a>
-              </Link>
-            </p>
-          </div>
-
-          {/* providers button */}
-          <div className="flex flex-col gap-y-2 md:gap-y-0 md:flex-row gap-x-6">
-            <CleverBtn />
-            <GoogleBtn />
-          </div>
-
-          {/* or span */}
-          <span className="text-gray-700 block text-center my-5 relative after:absolute after:top-[50%] after:-translate-y-[50%] after:right-0 after:w-[42%] after:h-[1px] after:bg-gray-700 before:absolute before:top-[50%] before:-translate-y-[50%] before:left-0 before:w-[42%] before:h-[1px] before:bg-gray-700">
-            OR
-          </span>
-
-          <form className="w-full" onSubmit={login}>
-            {/* inputs */}
-            <div className="flex flex-col gap-y-3 mb-6 items-start">
-              {inputFields.map((inputField: IInputFields, index: number) => {
-                const { type, placeholder, name, value } = inputField;
-                return (
-                  <input
-                    key={index}
-                    type={type}
-                    placeholder={placeholder}
-                    name={name}
-                    value={value}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      dispatch(updateUser({ key: name, value: e.target.value }));
-                    }}
-                    minLength={name === 'password' ? 8 : 0}
-                    required
-                    className={styles.input}
-                  />
-                );
-              })}
-            </div>
-            {/* login button */}
-            <div className="mx-auto ">
-              <span className="flex flex-col items-center gap-2 mt-8 mb-6 justify-center relative">
-                {/* <HCaptcha
-                  sitekey={`${process.env.NEXT_PUBLIC_RECAPTCHA_KEY}`}
-                  onLoad={onReCaptchaLoad}
-                  onVerify={onReCaptchaVerify}
-                  onExpire={onReCaptchaExpire}
-                  ref={captchaRef}
-                /> */}
-              </span>
-              <span className="flex flex-row items-center gap-x-2 mt-4 mb-8 w-fit mx-auto">
-                <input type="checkbox" id="terms" className="accent-[royalblue]" required />
-                <label htmlFor="terms">I accept the terms and conditions</label>
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <Link href="/change-password">
-                <p className="underline text-[16px] mt-2 opacity-80 cursor-pointer font-medium hover:opacity-90 hover:text-mainPurple">
-                  Forgot Password
-                </p>
-              </Link>
-              <button
-                type="submit"
-                // disabled={!recaptchaVerified}
-                className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-[royalblue] hover:shadow-md "
-                // disabled:cursor-not-allowed disabled:bg-gray-300
-              >
-                Log In
-              </button>
-            </div>
+    <div className="bg-gradient-to-br from-[#78A8FB] to-[#C4D7F8] min-h-[100vh] p-[2rem] relative">
+      <div className="flex justify-between items-center">
+        <h1 className="text-white text-3xl font-bold">CodeAlgo</h1>
+        <div>
+          <span className="font-semibold">Yet to create account?</span>
+          <Link href="/selectUserType">
+            <span className="cursor-pointer ml-3 font-semibold text-[#2073FA]">Register</span>
+          </Link>
+        </div>
+      </div>
+      <div className={`flex p-[4rem] items-center justify-center `}>
+        <div className="bg-white mr-[-2rem] w-[700px] px-[4rem] py-[4rem] bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-20 rounded-[2.5rem]">
+          <h1 className="font-bold text-[32px]">Log in to your account</h1>
+          <form onSubmit={login}>
+            <label className="block text-xl font-semibold mt-6">Your email</label>
+            <input
+              value={email}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                dispatch(updateUser({ key: 'email', value: e.target.value }));
+              }}
+              type="email"
+              className="block w-full h-[2.5rem] rounded-xl px-4 py-2 focus:outline-0 mt-3"
+              placeholder="schoolTeach@gmail.com"
+              required
+            />
+            <label className="block text-xl font-semibold mt-6">Password</label>
+            <input
+              className="block w-full h-[2.5rem] rounded-xl px-4 py-2 focus:outline-0 mt-3"
+              value={password}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                dispatch(updateUser({ key: 'password', value: e.target.value }));
+              }}
+              type="password"
+              required
+            />
+            <button
+              className="block  h-[2.5rem] mt-6 text-center w-full text-white bg-[#2073FA] font-bold rounded-xl"
+              type="submit"
+            >
+              Login
+            </button>
+            <button
+              className="block  h-[2.5rem] mt-6 text-center w-full bg-neutral-100/70 font-semibold rounded-xl text-black"
+              type="button"
+            >
+              Sign In with Google
+            </button>
           </form>
         </div>
-      </section>
-    </main>
+        <div className="ml-[-2rem]">
+          <Image
+            src="/assets/ComputerGraphic.png"
+            width="829.8"
+            height="520.2"
+            alt="computer graphic"
+          />
+        </div>
+      </div>
+      <div className="box-border text-[16px] text-white bg-[#2073FA] font-semibold flex justify-between w-full absolute left-0 bottom-0 py-3 px-10">
+        <p>© 2023 CodeAlgoAcademy. All rights reserved.</p>
+        <p className="left-0">Get help</p>
+      </div>
+    </div>
   );
 };
 
-export default function LoginPage(): React.ReactElement {
-  return <Login />;
-}
+export default LoginTest;

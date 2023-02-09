@@ -160,7 +160,9 @@ const SingleLesson = ({
         <div className="border-r-2 flex items-center sm:gap-5 lg:gap-0 sm:pr-[1rem] sm:py-2 md:pr-[1.5rem] border-[#E6E6E6] py-5 pr-[4rem]  justify-between w-full">
           <div className="flex items-center sm:gap-3 lg:gap-7">
             <FaGripLinesVertical className="text-[#A0A0A0] text-[1.1rem] font-thin" />
-            <p className="font-bold sm:text-[15px] lg:text-[20px]">{data.topic.title}</p>
+            <p className="font-bold sm:text-[15px] lg:text-[20px] text-[#2073fa]">
+              {data.topic.title}
+            </p>
             {active.includes(data.id) && (
               <p
                 onClick={() => setShowPreview(true)}
@@ -194,11 +196,15 @@ const SingleLesson = ({
             {/* first division */}
             <div className="flex-[.60] sm:pr-[1rem] lg:pr-[1rem] border-[#E6E6E6] border-r-2 py-[1rem]">
               <div className="md:flex-col lg:flex-row gap-[3rem]">
-                <p className=" md:text-[12px]  lg:text-[18px] font-bold">Description</p>
+                <p className=" md:text-[12px]  lg:text-[18px] font-bold text-[#2073fa]">
+                  Description
+                </p>
                 <p className="md:text-[12px] lg:text-[16px] ">{data.topic.description}</p>
               </div>
               <div className="flex items-center gap-[1rem] mt-4">
-                <p className="md:text-[12px]  lg:text-[18px] font-bold">Date Range</p>
+                <p className="md:text-[12px]  lg:text-[18px] font-bold text-[#2073fa]">
+                  Date Range
+                </p>
                 <div className="flex items-center gap-[1rem]">
                   <p className="sm:text-[12px] lg:text-[16px] ">
                     {getLessonDate(data.start_date)} - {getLessonDate(data.end_date)}
@@ -251,7 +257,7 @@ const SingleLesson = ({
             {/* second division */}
             <div className=" flex-[.40]  pl-[1rem] flex flex-col justify-between py-5">
               <div className="flex  items-center gap-[4rem]">
-                <p className="md:text-[12px]  lg:text-[18px] font-bold">Status</p>
+                <p className="md:text-[12px]  lg:text-[18px] font-bold text-[#2073fa]">Status</p>
                 {!statusContainerOpened && (
                   <div
                     className="flex gap-[6px] items-center border-2 border-[#E6E6E6] px-3 py-1"
@@ -311,9 +317,9 @@ const SingleLesson = ({
                 )}
               </div>
               <div className="flex  items-center mt-4 gap-[3rem]">
-                <p className="md:text-[12px]  lg:text-[18px] font-bold">Assign To</p>
+                <p className="md:text-[12px]  lg:text-[18px] font-bold text-[#2073fa]">Assign To</p>
                 <div
-                  className="flex items-center gap-[1rem] cursor-pointer"
+                  className="flex items-center gap-[1rem] cursor-pointer text-[#2073fa]"
                   onClick={() => {
                     addAllStudentsForEachLesson(data.students);
                     setShowModal(true);
