@@ -20,7 +20,6 @@ const VerifyWithKey = () => {
   const key = router?.query?.key;
   const verifyEmail = async () => {
     if (key) {
-      console.log(key);
       setLoading(true);
       setError(false);
       try {
