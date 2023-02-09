@@ -158,8 +158,6 @@ export const deleteGoogleCalendar = createAsyncThunk(
   'scheduleSlice/deleteGoogleCalendar',
   async (deletedRecords: any, thunkApi) => {
     try {
-      const { EId, Subject, StartTime, EndTime, Location } = deletedRecords[0];
-      console.log(deletedRecords[0])
       const { data } = await http.delete(`/academics/calendar/${deletedRecords[0].EId}`, {
         data: JSON.stringify(deletedRecords[0]),
         headers: {
