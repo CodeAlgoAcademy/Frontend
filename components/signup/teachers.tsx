@@ -93,7 +93,6 @@ const Teachers = () => {
           dispatch(updateUser({ key: 'username', value: e.target.value }));
         }}
       />
-      <UsernameButton />
     </div>
   );
 };

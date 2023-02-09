@@ -81,7 +81,7 @@ export const postGoogleCalendar = createAsyncThunk(
   async (addedRecords: any, thunkApi) => {
     try {
       delete addedRecords[0].Id;
-      const { data } = await http.post('/academics/calendar/calendar', addedRecords, {
+      const { data } = await http.post('/academics/calendar/calendar', {...addedRecords[0]}, {
         headers: {
           Authorization: `Bearer ${getAccessToken()}`,
         },
@@ -118,7 +118,7 @@ export const putSchedule = createAsyncThunk(
 export const putGoogleCalendar = createAsyncThunk(
   'scheduleSlice/putGoogleCalendar',
   async (updatedRecords: any, thunkApi) => {
-    const { Id, StartTimezone, EndTimezone, Guid, ...others } = updatedRecords[0];
+    const { Id, EId, StartTimezone, EndTimezone, Guid, ...others } = updatedRecords[0];
 
     try {
       const { data } = await http.put(
@@ -158,8 +158,10 @@ export const deleteGoogleCalendar = createAsyncThunk(
   'scheduleSlice/deleteGoogleCalendar',
   async (deletedRecords: any, thunkApi) => {
     try {
-      const { data } = await http.delete(`/academics/calendar/delete/${deletedRecords.EId}`, {
-        data: JSON.stringify(deletedRecords),
+      const { EId, Subject, StartTime, EndTime, Location } = deletedRecords[0];
+      console.log(deletedRecords[0])
+      const { data } = await http.delete(`/academics/calendar/${deletedRecords[0].EId}`, {
+        data: JSON.stringify(deletedRecords[0]),
         headers: {
           Authorization: `Bearer ${getAccessToken()}`,
         },

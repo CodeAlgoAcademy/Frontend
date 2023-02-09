@@ -97,8 +97,9 @@ const ChatRoom = () => {
       const dataFromServer = JSON.parse(message.data);
       console.log(dataFromServer);
       console.log('serverr reply', dataFromServer);
+      setMessages([...messages, dataFromServer]);
     };
-  });
+  }, []);
 
   useEffect(() => {
     dispatch(getOpenMesssages());
