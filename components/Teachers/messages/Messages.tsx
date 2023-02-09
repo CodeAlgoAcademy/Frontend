@@ -26,7 +26,6 @@ const Messages = () => {
 
   return (
     <>
-
       {/* Large view
       {modalOpen && <MessagesModal modalOpen={modalOpen} setModalOpen={setModalOpen} />}
       <div className={styles.container}>
@@ -104,17 +103,15 @@ const Messages = () => {
                 </div>
             </div> */}
 
-            <MessageRoom />
+      <MessageRoom />
     </>
-
-
   );
 };
 
 export default Messages;
 
 const styles = {
-  container: 'bg-[#E5E5E5]  block px-5 md:px-20 py-5 h-screen',
+  container: 'bg-[#ECEDF3]  block px-5 md:px-20 py-5 h-screen',
   containerBody: 'flex justify-start p-5 space-x-32',
   informationBox: 'bg-white p-5 text-xs font-light w-60 rounded-lg shadow-lg',
   boxList: 'flex justify-between p-2 items-center',

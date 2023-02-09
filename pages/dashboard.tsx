@@ -11,7 +11,7 @@ const Dashboard = () => {
           <Sidebar />
         </div>
         <div className="bg-[#ECEDF3] flex-1 px-[6%] py-8">
-          <h2 className="text-[28px] font-bold mb-6" data-testid="dashboard-heading">
+          <h2 className="text-[28px] text-[#2073fa] font-bold mb-6" data-testid="dashboard-heading">
             Today at a Glance
           </h2>
           <div className="flex gap-10 flex-wrap">

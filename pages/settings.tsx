@@ -50,7 +50,7 @@ export default function Settings() {
         <div className="sidebar bg-white w-[270px]">
           <Sidebar />
         </div>
-        <div className="bg-[#E5E5E5] flex-1 px-[6%] py-8">
+        <div className="bg-[#ECEDF3] flex-1 px-[6%] py-8">
           <h2 className="text-[28px] font-bold mb-6" data-testid="dashboard-heading">
             Settings
           </h2>
