@@ -47,8 +47,8 @@ const Index = () => {
   };
 
   return (
-    <TeacherLayout>
-      <div className={styles.container} onClick={closeCommentTabs}>
+    <div onClick={closeCommentTabs}>
+      <TeacherLayout className={styles.container}>
         <div className={styles.containerHeader}>
           <p className={styles.headerTitle}>Students</p>
           <div className={styles.addDiv} onClick={() => setIsOpen(true)}>
@@ -76,8 +76,8 @@ const Index = () => {
 
         <Students commentTabsOpened={commentTabsOpened} students={filteredStudents} />
         {isOpen && <AddStudentModal setIsOpen={setIsOpen} />}
-      </div>
-    </TeacherLayout>
+      </TeacherLayout>
+    </div>
   );
 };
 
