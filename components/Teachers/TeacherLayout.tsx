@@ -15,7 +15,7 @@ const TeacherLayout = ({children,className}: Props) => {
       if(user_type !== "teacher") {
          router.push('/login');
       }
-   },[]);
+   },[router]);
    return (
       <div className="min-h-screen flex flex-col">
          <GeneralNav />
@@ -24,7 +24,7 @@ const TeacherLayout = ({children,className}: Props) => {
             <div className="sidebar bg-white w-[270px]">
                <Sidebar />
             </div>
-            <div className={`bg-[#E5E5E5] flex-1 px-[6%] py-8 ${className}`} >
+            <div className={`bg-[#ECEDF3] flex-1 px-[6%] py-8 ${className}`} >
                {children}
             </div>
          </div>
