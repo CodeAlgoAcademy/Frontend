@@ -20,7 +20,7 @@ const Index = () => {
 
   useEffect(() => {
     dispatch(getStudents());
-  },[id]);
+  },[dispatch,id]);
 
   useEffect(() => {
     setFilteredStudents(() => ({students: students?.students}));
