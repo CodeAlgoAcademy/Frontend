@@ -71,7 +71,7 @@ function Calendar() {
     } else {
       await dispatch(getSchedule());
     }
-  },[dispatch]);
+  },[dispatch,scheduleData.googleConnect]);
   const changeSchedule = async (args: any) => {
     let data;
     if(scheduleData.googleConnect) {
