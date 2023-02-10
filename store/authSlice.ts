@@ -93,6 +93,7 @@ export const userSlice = createSlice({
         JSON.stringify({
           access_token: action.payload.access_token,
           refresh_token: action.payload.refresh_token,
+          user_type: action.payload.is_student ? "student" : action.payload.is_teacher ? "teacher" : action.payload.is_parent ? "parent" : ""
         }),
       );
       setTimeStamp();
