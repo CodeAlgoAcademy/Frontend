@@ -1,83 +1,96 @@
-import React, { useEffect, useState } from 'react';
-import { BiMinusCircle, BiPlus } from 'react-icons/bi';
+import React, { useState } from 'react';
+import { BiRefresh } from 'react-icons/bi';
+import { generateUsername } from 'utils/generateUsername';
+
+interface StudentState {
+  firstname: string;
+  lastname: string;
+  username: string;
+}
 
 export default function ParentSignUp3() {
-  const [students, setStudents] = useState<{ name: string; index: number }[]>([
-    {
-      name: '',
-      index: 0,
-    },
-  ]);
+  const [formData, setFormData] = useState<StudentState>({
+    firstname: '',
+    lastname: '',
+    username: '',
+  });
+  const { firstname, lastname, username } = formData
 
-  const addStudentsInput = () => {
-    setStudents([...students, { name: '', index: students[students.length - 1].index + 1 }]);
+  const onChange = (e: any) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
   };
 
-  const removeInput = (index: number) => {
-    setStudents(students.filter((student) => student.index !== index));
-  };
-
-  const updateInputValue = (index: number, value: string) => {
-    setStudents((prev) => {
-      return prev.map((state) => {
-        if (state.index === index) {
-          state.name = value;
-        }
-        return state;
-      });
-    });
-  };
-
-  useEffect(() => {
-    if (students.length === 0) {
-      setStudents([{ name: '', index: 0 }]);
+  const generateusername = () => {
+    if (firstname && lastname) {
+      const rand = generateUsername(firstname, lastname)
+      setFormData({ ...formData, username: rand })
     }
-  }, [students]);
+  }
 
   return (
     <div key={3}>
-      <h1 className="font-bold text-[32px]">Add your student account(s)</h1>
-      <div className="flex flex-col gap-y-4 mb-6">
-        {students.map((student, index: number) => {
-          return (
-            <div key={index}>
-              <label className="block text-xl font-semibold mt-6">Students Name</label>
-              <div className="w-full relative">
-                <input
-                  type="text"
-                  className="block student-input w-full cursor-pointer rounded-xl px-4 py-2 focus:outline-0 mt-3 "
-                  value={student.name}
-                  onChange={(e) => {
-                    updateInputValue(student.index, e.target.value);
-                  }}
-                  autoFocus
-                  required
-                />
-                <span
-                  className="text-[27px] hidden text-[royalblue] cursor-pointer font-bold absolute top-[50%] right-[20px] -translate-y-[50%]"
-                  onClick={() => {
-                    removeInput(student.index);
-                  }}
-                >
-                  <BiMinusCircle />
-                </span>
-              </div>
+      <h1 className='font-bold text-[32px]'>Add your student account(s)</h1>
+      <form className='mt-6'>
+          <p>Student details</p>
+          <div className='grid grid-cols-2 gap-3'>
+            <div className="relative">
+              <input
+                type="text"
+                name="firstname"
+                id="firstname"
+                placeholder="First Name"
+                className={styles.input}
+                value={firstname}
+                onChange={onChange}
+                required
+              />
+              <label htmlFor="firstname" className={styles.label}>First Name</label>
             </div>
-          );
-        })}
-      </div>
-      <button
-        type="button"
-        onClick={() => {
-          addStudentsInput();
-        }}
-        className="bg-[#ececec86] text-center w-full rounded-xl p-3 flex justify-center items-center gap-x-2"
-      >
-        <span className="text-[17px]">
-          <BiPlus />
-        </span>
-        Add another student
-      </button>
+            <div className="relative">
+              <input
+                type="text"
+                name="lastname"
+                id="lastname"
+                placeholder="Last Name"
+                className={styles.input}
+                value={lastname}
+                onChange={onChange}
+                required
+              />
+              <label htmlFor="lastname" className={styles.label}>Last Name</label>
+            </div>
+          </div>
+          <div className='flex relative mt-6 items-center space-x-3'>
+            <div className="flex-1">
+              <input
+                type="text"
+                name="username"
+                id="username"
+                placeholder="username"
+                className={styles.input}
+                value={username}
+                onChange={onChange}
+                required
+              />
+              <label htmlFor="username" className={styles.label}>username</label>
+            </div>
+            <div title='Generate username' className={styles.generate} onClick={generateusername}>
+              <BiRefresh />
+            </div>
+          </div>
+      </form>
+      <button className={styles.addBtn} type="button">Add another student</button>
     </div>
   );
+}
+
+
+const styles = {
+  label: "pointer-events-none absolute top-3 left-2 origin-left -translate-y-1/2 transform text-[12px] text-slate-500 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-800 peer-focus:top-3 peer-focus:pl-0 peer-focus:text-[12px] peer-focus:text-slate-500",
+  input: "bg-white peer mt-1 w-full px-2 py-3 placeholder:text-transparent focus:border-slate-100 focus:outline-none",
+  generate: 'bg-blue-500 text-4xl rounded-xl h-full p-2 text-white cursor-pointer hover:bg-opacity-80',
+  addBtn: 'block p-2 mt-3 text-center w-full text-white bg-[#2073FA] font-bold rounded-xl'
 }
