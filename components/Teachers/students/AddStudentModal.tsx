@@ -237,55 +237,6 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
       </main>
     </section>
   );
-  // return (
-  //   <div className={styles.bgBlack}>
-  //     <div className={styles.centered}>
-  //       <div className={styles.modal}>
-  //         <div className={styles.modalHeader}>
-  //           <p className={styles.heading}>Add Student</p>
-  //         </div>
-  //         <div onClick={() => setIsOpen(false)} className={styles.closeBtn}>
-  //           <RiCloseLine />
-  //         </div>
-  //         <div className={styles.modalBody}>
-  //           <form className="grid gap-5 pb-2" onSubmit={onSubmit}>
-  //             <div className="flex space-x-5">
-  //               <TextField
-  //                 label="Student First Name"
-  //                 name="firstName"
-  //                 value={firstName}
-  //                 onChange={onChange}
-  //                 size="small"
-  //                 required
-  //               />
-  //               <TextField
-  //                 label="Student Last Name"
-  //                 name="lastName"
-  //                 size="small"
-  //                 value={lastName}
-  //                 onChange={onChange}
-  //                 required
-  //               />
-  //             </div>
-  //             <TextField
-  //               label="Student Email"
-  //               name="email"
-  //               size="small"
-  //               value={email}
-  //               onChange={onChange}
-  //               required
-  //             />
-  //             <div>
-  //               <button className={styles.addBtn} type="submit">
-  //                 Add Student
-  //               </button>
-  //             </div>
-  //           </form>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
 };
 
 export default AddStudentModal;

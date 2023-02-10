@@ -315,6 +315,7 @@ export interface INotes {
 
 export interface Schedule {
   allSchedule: [];
+  googleConnect: boolean;
 }
 
 export interface newLesson {

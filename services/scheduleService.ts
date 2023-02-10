@@ -76,6 +76,23 @@ export const postSchedule = createAsyncThunk(
   },
 );
 
+export const postGoogleCalendar = createAsyncThunk(
+  'scheduleSlice/postGoogleCalendar',
+  async (addedRecords: any, thunkApi) => {
+    try {
+      delete addedRecords[0].Id;
+      const { data } = await http.post('/academics/calendar/calendar', {...addedRecords[0]}, {
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      });
+      return { ...data };
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.response.data);
+    }
+  },
+);
+
 export const putSchedule = createAsyncThunk(
   'scheduleSlice/putSchedule',
   async (updatedRecords: any, thunkApi) => {
@@ -98,12 +115,51 @@ export const putSchedule = createAsyncThunk(
   },
 );
 
+export const putGoogleCalendar = createAsyncThunk(
+  'scheduleSlice/putGoogleCalendar',
+  async (updatedRecords: any, thunkApi) => {
+    const { Id, EId, StartTimezone, EndTimezone, Guid, ...others } = updatedRecords[0];
+
+    try {
+      const { data } = await http.put(
+        `/academics/calendar/${EId}`,
+        JSON.stringify(others),
+        {
+          headers: {
+            Authorization: `Bearer ${getAccessToken()}`,
+          },
+        },
+      );
+      return { ...data };
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.response.data);
+    }
+  },
+);
+
 export const deleteSchedule = createAsyncThunk(
   'scheduleSlice/deleteSchedule',
   async (deletedRecords: any, thunkApi) => {
     try {
       const { data } = await http.delete('/academics/calendar/schedules/delete/', {
         data: JSON.stringify(deletedRecords),
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      });
+      return { ...data };
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const deleteGoogleCalendar = createAsyncThunk(
+  'scheduleSlice/deleteGoogleCalendar',
+  async (deletedRecords: any, thunkApi) => {
+    try {
+      const { data } = await http.delete(`/academics/calendar/${deletedRecords[0].EId}`, {
+        data: JSON.stringify(deletedRecords[0]),
         headers: {
           Authorization: `Bearer ${getAccessToken()}`,
         },
