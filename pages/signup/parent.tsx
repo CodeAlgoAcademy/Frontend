@@ -14,12 +14,14 @@ import AuthLayout from '@/components/parents/AuthLayout';
 import useMultiForm from '@/components/useMultiForm';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { ChangeEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { signUpUser } from 'services/authService';
 
 export default function Parent() {
   const dispatch = useDispatch();
+  const router = useRouter();
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next, goTo } = useMultiForm(
     [
       <ParentSignUp1 key={1} />,
@@ -43,6 +45,9 @@ export default function Parent() {
       if (!data?.error?.message) {
         next();
       }
+      next();
+    } else if (currentStepIndex === 10) {
+      router.push('/parents');
     } else {
       next();
     }
@@ -71,7 +76,7 @@ export default function Parent() {
           )}
           {!isFirstStep && !isLastStep && (
             <button className="block text-center w-full mt-4" type="button" onClick={back}>
-              back
+              Back
             </button>
           )}
           {isFirstStep && <GoogleBtn />}

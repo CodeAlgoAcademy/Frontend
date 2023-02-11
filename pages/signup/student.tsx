@@ -30,7 +30,7 @@ export default function Student() {
           </button>
           {!isFirstStep && !isLastStep && (
             <button className="block text-center w-full mt-4" type="button" onClick={back}>
-              back
+              Back
             </button>
           )}
           {isFirstStep && <GoogleBtn />}
