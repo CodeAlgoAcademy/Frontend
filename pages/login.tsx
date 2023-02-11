@@ -50,7 +50,9 @@ const LoginTest = () => {
   return (
     <AuthLayout>
       <>
-        <h1 className="font-bold text-[32px]">Log in to your account</h1>
+        <h1 className="font-bold text-[25px] md:text-left text-center md:text-[32px]">
+          Log in to your account
+        </h1>
         <form onSubmit={login}>
           <label className="block text-xl font-semibold mt-6">Your email</label>
           <input
