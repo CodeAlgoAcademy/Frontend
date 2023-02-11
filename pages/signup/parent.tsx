@@ -75,7 +75,11 @@ export default function Parent() {
             <div className="">{step}</div>
             <div>
               {currentStepIndex === 7 && (
-                <button className='block p-2 mt-6 text-center w-full text-white bg-[#2073FA] font-bold rounded-xl' type="button" onClick={() => goTo(4)}>
+                <button
+                  className="block p-2 mt-6 text-center w-full text-white bg-[#2073FA] font-bold rounded-xl"
+                  type="button"
+                  onClick={() => goTo(4)}
+                >
                   Add another student
                 </button>
               )}

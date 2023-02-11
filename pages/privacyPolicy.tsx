@@ -1,9 +1,9 @@
 import Policies from '@/components/privacyPolicy/policies';
 import Image from 'next/image';
 import React from 'react';
-import {useDispatch,useSelector} from 'react-redux';
-import {useRouter} from 'next/router';
-import {checkPolicy,unCheckPolicy} from 'store/policySlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+import { checkPolicy, unCheckPolicy } from 'store/policySlice';
 
 const PrivacyPolicy = () => {
   const dispatch = useDispatch();

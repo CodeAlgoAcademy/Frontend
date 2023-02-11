@@ -66,7 +66,7 @@ function Calendar() {
   };
   const fetchSchedule = async () => {
     if (scheduleData.googleConnect) {
-      await dispatch(getGoogleCalendar())
+      await dispatch(getGoogleCalendar());
     } else {
       await dispatch(getSchedule());
     }
@@ -74,7 +74,7 @@ function Calendar() {
   const changeSchedule = async (args: any) => {
     let data;
     if (scheduleData.googleConnect) {
-      data = await dispatch(putGoogleCalendar(args))
+      data = await dispatch(putGoogleCalendar(args));
     } else {
       data = await dispatch(putSchedule(args));
     }
@@ -85,7 +85,7 @@ function Calendar() {
   const addSchedule = async (args: any) => {
     let data;
     if (scheduleData.googleConnect) {
-      data = await dispatch(postGoogleCalendar(args))
+      data = await dispatch(postGoogleCalendar(args));
     } else {
       data = await dispatch(postSchedule(args));
     }
@@ -97,7 +97,7 @@ function Calendar() {
   const popSchedule = async (args: any) => {
     let data;
     if (scheduleData.googleConnect) {
-      data = await dispatch(deleteGoogleCalendar(args))
+      data = await dispatch(deleteGoogleCalendar(args));
     } else {
       data = await dispatch(deleteSchedule(args));
     }

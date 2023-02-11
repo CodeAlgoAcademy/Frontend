@@ -35,7 +35,7 @@ export const editStudent: any = createAsyncThunk('edit/student', async (student:
   const state: any = thunkApi.getState();
   const { id } = state.currentClass;
   const dispatch = thunkApi.dispatch;
-  dispatch(openPreloader({loadingText: "Editing Student's Details"}))
+  dispatch(openPreloader({ loadingText: "Editing Student's Details" }));
   try {
     const response = await http.put(
       `/academics/class/${id}/student/${student.id}`,
@@ -189,12 +189,10 @@ export const studentsBulkImport: any = createAsyncThunk(
       });
       dispatch(closePreloader());
     } catch (error: any) {
-      console.log(error.response.data)
-      dispatch(openErrorModal({errorText: [error.response.data.message]}))
+      console.log(error.response.data);
+      dispatch(openErrorModal({ errorText: [error.response.data.message] }));
       dispatch(closePreloader());
-      return thunkApi.rejectWithValue(
-        error.response.data.message
-      );
+      return thunkApi.rejectWithValue(error.response.data.message);
     }
   },
 );
