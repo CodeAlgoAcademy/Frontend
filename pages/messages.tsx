@@ -4,7 +4,7 @@ import React from 'react';
 
 const index = () => {
   return (
-    <TeacherLayout className='px-0 py-0 border-t'>
+    <TeacherLayout className='pl-0 pr-0 pt-0 pb-0 border-t'>
       <Messages />
     </TeacherLayout>
   );
