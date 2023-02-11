@@ -335,3 +335,13 @@ export interface IFriends {
   name: string;
   is_friend: boolean;
 }
+
+export interface IParentChild {
+  // child: {
+    username: string,
+    fullname: string,
+    codingExperience: string,
+    dob: string,
+    password: string,
+  // }
+}
