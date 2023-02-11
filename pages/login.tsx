@@ -1,23 +1,24 @@
-import React, { ChangeEvent, useCallback, useState, useEffect } from 'react';
+import React,{ChangeEvent,useCallback,useEffect,useState} from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'store/store';
-import { updateUser } from 'store/authSlice';
-import { useRouter } from 'next/router';
-import { loginUser } from 'services/authService';
+import {useDispatch,useSelector} from 'react-redux';
+import {RootState} from 'store/store';
+import {updateUser} from 'store/authSlice';
+import {useRouter} from 'next/router';
+import {loginUser} from 'services/authService';
+
 const LoginTest = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { email, password } = useSelector((state: RootState) => state.user.auth);
-  const [recaptchaVerified, setRecaptchaVerified] = useState(false);
+  const {email,password} = useSelector((state: RootState) => state.user.auth);
+  const [recaptchaVerified,setRecaptchaVerified] = useState(false);
   const login = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = await dispatch(loginUser());
-    if (!data?.error?.message) {
-      if (data?.payload?.is_teacher) {
+    if(!data?.error?.message) {
+      if(data?.payload?.is_teacher) {
         router.push('/addClass');
-      } else if (data?.payload?.is_parent) {
+      } else if(data?.payload?.is_parent) {
         router.push('/parents');
       } else {
         router.push('/comingSoon');
@@ -27,11 +28,11 @@ const LoginTest = () => {
 
   const onReCaptchaVerify = useCallback(async () => {
     setRecaptchaVerified(() => true);
-  }, []);
+  },[]);
 
   const onReCaptchaExpire = useCallback(async () => {
     setRecaptchaVerified(() => false);
-  }, []);
+  },[]);
   const onReCaptchaLoad = () => {
     // this reaches out to the hCaptcha JS API and runs the
     // execute function on it. you can use other functions as
@@ -44,7 +45,7 @@ const LoginTest = () => {
 
   useEffect(() => {
     // dispatch(clearFields());
-  }, []);
+  },[]);
   return (
     <div className="bg-gradient-to-br from-[#78A8FB] to-[#C4D7F8] min-h-[100vh] p-[2rem] relative">
       <div className="flex justify-between items-center">
@@ -64,7 +65,7 @@ const LoginTest = () => {
             <input
               value={email}
               onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                dispatch(updateUser({ key: 'email', value: e.target.value }));
+                dispatch(updateUser({key: 'email',value: e.target.value}));
               }}
               type="email"
               className="block w-full h-[2.5rem] rounded-xl px-4 py-2 focus:outline-0 mt-3"
@@ -76,7 +77,7 @@ const LoginTest = () => {
               className="block w-full h-[2.5rem] rounded-xl px-4 py-2 focus:outline-0 mt-3"
               value={password}
               onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                dispatch(updateUser({ key: 'password', value: e.target.value }));
+                dispatch(updateUser({key: 'password',value: e.target.value}));
               }}
               type="password"
               required
