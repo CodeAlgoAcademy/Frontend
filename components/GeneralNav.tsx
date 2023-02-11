@@ -1,23 +1,23 @@
-import React, { useState, useRef, ChangeEvent } from 'react';
-import { useRouter } from 'next/router';
+import React,{useState,useRef,ChangeEvent} from 'react';
+import {useRouter} from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
-import { BiBell, BiHomeAlt, BiLogOut } from 'react-icons/bi';
-import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
-import { FaChevronDown, FaChevronUp, FaEdit } from 'react-icons/fa';
-import { RootState } from '../store/store';
-import { useSelector, useDispatch } from 'react-redux';
-import { updateCurrentClass } from '../store/currentClassSlice';
-import { IClass, CurrentClassState } from '../types/interfaces';
-import { motion } from 'framer-motion';
-import { IoSettingsSharp } from 'react-icons/io5';
-import { resetAuthUser, updateUser } from 'store/authSlice';
-import { updateEmail, updateFirstname, updateLastname } from 'services/authService';
-import { AnyAction } from '@reduxjs/toolkit';
+import {BiBell,BiHomeAlt,BiLogOut} from 'react-icons/bi';
+import {RiArrowDropDownLine,RiArrowDropUpLine} from 'react-icons/ri';
+import {FaChevronDown,FaChevronUp,FaEdit} from 'react-icons/fa';
+import {RootState} from '../store/store';
+import {useSelector,useDispatch} from 'react-redux';
+import {updateCurrentClass} from '../store/currentClassSlice';
+import {IClass,CurrentClassState} from '../types/interfaces';
+import {motion} from 'framer-motion';
+import {IoSettingsSharp} from 'react-icons/io5';
+import {resetAuthUser,updateUser} from 'store/authSlice';
+import {updateEmail,updateFirstname,updateLastname} from 'services/authService';
+import {AnyAction} from '@reduxjs/toolkit';
 
 const GeneralNav = () => {
-  const [userDropDown, setUserDropDown] = useState<boolean>(false);
-  const [settingsTabOpen, setSettingsTabOpen] = useState<boolean>(false);
+  const [userDropDown,setUserDropDown] = useState<boolean>(false);
+  const [settingsTabOpen,setSettingsTabOpen] = useState<boolean>(false);
   const dispatch = useDispatch();
   const router = useRouter();
   const {
@@ -27,17 +27,17 @@ const GeneralNav = () => {
     email,
   } = useSelector((state: RootState) => state.user.auth);
   const classes = useSelector((state: RootState): IClass[] => state.allClasses.classes);
-  const { firstname, lastname } = useSelector((state: RootState) => state.user);
+  const {firstname,lastname} = useSelector((state: RootState) => state.user);
   const currentClass = useSelector((state: RootState): CurrentClassState => state.currentClass);
 
   const classDetails = classes.map((item: CurrentClassState) => {
-    const { className, color, id } = item;
-    return { className, color, id };
+    const {className,color,id} = item;
+    return {className,color,id};
   });
   const otherClassDetails = classDetails.filter(
     (item) => item.className !== currentClass.className,
   );
-  const [classListView, setClassListView] = useState(false);
+  const [classListView,setClassListView] = useState(false);
 
   const dropdownStyle = {
     transform: classListView ? 'rotate(180deg)' : '',
@@ -64,31 +64,17 @@ const GeneralNav = () => {
     router.push('/login');
   };
 
-  const updateUserForm = async (e: ChangeEvent<HTMLFormElement>, func: any) => {
+  const updateUserForm = async (e: ChangeEvent<HTMLFormElement>,func: any) => {
     e.preventDefault();
     const data = await dispatch(func());
-    if (!data?.error) {
+    if(!data?.error) {
       setUserDropDown(false);
     }
   };
 
   return (
-    <div className="py-6 px-[5%] bg-white flex items-center justify-between">
+    <div className="pt-6 bg-white flex items-center justify-between">
       <div className="relative flex items-center gap-40">
-        <div className="absolute left-0 top-0">
-          <Link href="/addClass">
-            <a>
-              <Image
-                src="/assets/CodeAlgo_Logo.png"
-                alt="logo"
-                className="md:cursor-pointer h-9"
-                width={100}
-                height={52}
-              />
-            </a>
-          </Link>
-        </div>
-        <div></div>
         <div className="flex items-center gap-4">
           <Link href={`/addClass`}>
             <div className="text-[#2073fa] text-[24px]">
@@ -105,7 +91,7 @@ const GeneralNav = () => {
                 <div className="py-2 px-3 relative flex items-center justify-between hover:bg-gray-100 cursor-pointer">
                   <div className="flex items-center gap-3">
                     <span
-                      style={{ backgroundColor: currentClass?.color }}
+                      style={{backgroundColor: currentClass?.color}}
                       className='rounded-full content-[" "] w-[24px] h-[24px]'
                     ></span>
                     <span className="font-bold text-[18px]">{currentClass.className}</span>
@@ -119,7 +105,7 @@ const GeneralNav = () => {
                     </div>
                   </div>
                 </div>
-                {otherClassDetails?.map((navClass: CurrentClassState, index: number) => (
+                {otherClassDetails?.map((navClass: CurrentClassState,index: number) => (
                   <div
                     className="py-2 px-3 relative z-[50] flex items-center justify-between hover:bg-gray-100 cursor-pointer"
                     key={index}
@@ -132,7 +118,7 @@ const GeneralNav = () => {
                         }),
                       );
                       const node = classBox.current;
-                      if (node) {
+                      if(node) {
                         node.scroll({
                           top: 0,
                           behavior: 'smooth',
@@ -143,7 +129,7 @@ const GeneralNav = () => {
                   >
                     <div className="flex items-center gap-3">
                       <span
-                        style={{ backgroundColor: navClass?.color }}
+                        style={{backgroundColor: navClass?.color}}
                         className='rounded-full content-[" "] w-[24px] h-[24px]'
                       ></span>
                       <span className="font-bold text-[18px]">{navClass.className}</span>
@@ -159,9 +145,8 @@ const GeneralNav = () => {
         <div
           className={
             userDropDown
-              ? `rounded-[20px] px-4 py-[6px] bg-white z-[50] border border-[#BDBDBD] absolute right-[8rem] top-7 w-[16rem] ${
-                  settingsTabOpen ? 'h-[18rem]' : 'h-[10rem]'
-                } box-border duration-300 ease-in-out`
+              ? `rounded-[20px] px-4 py-[6px] bg-white z-[50] border border-[#BDBDBD] absolute right-[8rem] top-7 w-[16rem] ${settingsTabOpen ? 'h-[18rem]' : 'h-[10rem]'
+              } box-border duration-300 ease-in-out`
               : `rounded-[30px] px-2 py-[6px] h-[3rem] w-[7rem] border border-[#BDBDBD] absolute box-border right-[8rem] top-7 bg-white  transition-[width]`
           }
         >
@@ -179,11 +164,11 @@ const GeneralNav = () => {
               <div>
                 <motion.h5
                   className="text-sm capitalize ml-2 font-[700] whitespace-nowrap text-[#2073fa]"
-                  initial={{ display: 'none', opacity: 0 }}
+                  initial={{display: 'none',opacity: 0}}
                   animate={{
                     display: 'block',
                     opacity: 1,
-                    transition: { duration: '1', delay: 0.3 },
+                    transition: {duration: '1',delay: 0.3},
                   }}
                 >
                   {firstname + ' ' + lastname}
@@ -199,11 +184,11 @@ const GeneralNav = () => {
               <div>
                 <motion.header
                   className="flex w-full items-center  mt-4 pt-4 justify-between border-t border-black"
-                  initial={{ opacity: 0, y: '5px' }}
+                  initial={{opacity: 0,y: '5px'}}
                   animate={{
                     opacity: 1,
                     y: 0,
-                    transition: { duration: '0.5' },
+                    transition: {duration: '0.5'},
                   }}
                   onClick={() => {
                     setSettingsTabOpen((prev) => !prev);
@@ -220,13 +205,12 @@ const GeneralNav = () => {
                   </span>
                 </motion.header>
                 <main
-                  className={`w-full flex flex-col mt-4 gap-2 transition duration-300 ${
-                    settingsTabOpen ? 'h-[125px]' : 'h-0'
-                  } overflow-hidden`}
+                  className={`w-full flex flex-col mt-4 gap-2 transition duration-300 ${settingsTabOpen ? 'h-[125px]' : 'h-0'
+                    } overflow-hidden`}
                 >
                   <form
                     onSubmit={(e: ChangeEvent<HTMLFormElement>) => {
-                      updateUserForm(e, updateFirstname);
+                      updateUserForm(e,updateFirstname);
                     }}
                     className="w-full flex gap-2 h-[35px] items-center border hover:border-[#2073fa] rounded-[4px] px-2"
                   >
@@ -253,7 +237,7 @@ const GeneralNav = () => {
                   </form>
                   <form
                     onSubmit={(e: ChangeEvent<HTMLFormElement>) => {
-                      updateUserForm(e, updateLastname);
+                      updateUserForm(e,updateLastname);
                     }}
                     className="w-full flex gap-2 h-[35px] items-center border hover:border-[#2073fa] rounded-[4px] px-2"
                   >
@@ -263,7 +247,7 @@ const GeneralNav = () => {
                       placeholder="Update lastname"
                       value={authLastname}
                       onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        dispatch(updateUser({ key: 'lastname', value: e.target.value }));
+                        dispatch(updateUser({key: 'lastname',value: e.target.value}));
                       }}
                     />
                     <button
@@ -275,7 +259,7 @@ const GeneralNav = () => {
                   </form>
                   <form
                     onSubmit={(e: ChangeEvent<HTMLFormElement>) => {
-                      updateUserForm(e, updateEmail);
+                      updateUserForm(e,updateEmail);
                     }}
                     className="w-full flex gap-2 h-[35px] items-center border hover:border-[#2073fa] rounded-[4px] px-2"
                   >
@@ -285,7 +269,7 @@ const GeneralNav = () => {
                       placeholder="Update email"
                       value={email}
                       onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        dispatch(updateUser({ key: 'email', value: e.target.value }));
+                        dispatch(updateUser({key: 'email',value: e.target.value}));
                       }}
                     />
                     <button
@@ -302,7 +286,7 @@ const GeneralNav = () => {
                       placeholder="Update password"
                       value={password}
                       onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        dispatch(updateUser({ key: 'password', value: e.target.value }));
+                        dispatch(updateUser({key: 'password',value: e.target.value}));
                       }}
                     />
                     <button
@@ -316,11 +300,11 @@ const GeneralNav = () => {
               </div>
               <motion.div
                 className="cursor-pointer flex items-center mt-[1rem] pb-2 text-[#2073fa]"
-                initial={{ opacity: 0, y: '5px' }}
+                initial={{opacity: 0,y: '5px'}}
                 animate={{
                   opacity: 1,
                   y: 0,
-                  transition: { delay: 0.3, duration: '0.5' },
+                  transition: {delay: 0.3,duration: '0.5'},
                 }}
                 onClick={logout}
               >

@@ -18,14 +18,16 @@ const TeacherLayout = ({children,className}: Props) => {
    },[router]);
    return (
       <div className="min-h-screen flex flex-col">
-         <GeneralNav />
          {/* <Header /> */}
          <div className="flex items-stretch mb-auto grow">
-            <div className="sidebar bg-white w-[270px]">
+            <div className="sidebar bg-white w-[280px]">
                <Sidebar />
             </div>
-            <div className={`bg-[#ECEDF3] flex-1 px-[6%] py-8 ${className}`} >
-               {children}
+            <div className={`flex-1 pr-8 pb-6`} >
+               <GeneralNav />
+               <div className={`bg-[#ECEDF3] rounded-3xl px-[6%] py-8 mt-[44px] w-full min-h-[620px] ${className}`}>
+                  {children}
+               </div>
             </div>
          </div>
       </div>
