@@ -1,9 +1,9 @@
 import Policies from '@/components/privacyPolicy/policies';
 import Image from 'next/image';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
-import { checkPolicy, unCheckPolicy } from 'store/policySlice';
+import {useDispatch,useSelector} from 'react-redux';
+import {useRouter} from 'next/router';
+import {checkPolicy,unCheckPolicy} from 'store/policySlice';
 
 const PrivacyPolicy = () => {
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ const PrivacyPolicy = () => {
       <div className="max-w-[1200px] mx-auto px-6 py-12 ">
         <header className="flex flex-row gap-x-4 items-center w-full">
           <div className="w-[60px] h-[60px]">
-            <Image src="/assets/Coffee cup.png" width={'60px'} height={'60px'} />
+            <Image src="/assets/Coffee cup.png" width={'60px'} height={'60px'} alt="" />
           </div>
           <h1 className="text-[#2073fa] font-bold text-[28px]">CodeAlgo Academy Privacy Policy</h1>
         </header>
@@ -36,7 +36,7 @@ const PrivacyPolicy = () => {
         </div>
         <div className="mt-[20px]">
           <Policies
-            title="Acknowloedgement"
+            title="Acknowledgement"
             body=' By using our software, or by clicking on a box that states you agree to these terms, you
           acknowledge that you have read, understood, and agree to be bound by these Terms of
           Service ("ToS"), which may be updated from time to time without notice to you. If you do
