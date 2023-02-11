@@ -16,6 +16,7 @@ import Link from 'next/link';
 import React, { ChangeEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { signUpUser } from 'services/authService';
+import { addChild } from 'store/parentSlice';
 
 export default function Parent() {
   const dispatch = useDispatch();
@@ -38,14 +39,19 @@ export default function Parent() {
 
   const signUp = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // if (currentStepIndex === 2) {
-    //   const data = await dispatch(signUpUser());
-    //   if (!data?.error?.message) {
-    //     next();
-    //   }
-    // } else {
+    if (currentStepIndex === 2) {
+      const data = await dispatch(signUpUser());
+      if (!data?.error?.message) {
+        next();
+      }
+    } else if (currentStepIndex === 6) {
+      const data = await dispatch(addChild());
+      if (!data?.error?.message) {
+        next();
+      }
+    } else {
       next();
-    // }
+    }
   };
 
   return (
