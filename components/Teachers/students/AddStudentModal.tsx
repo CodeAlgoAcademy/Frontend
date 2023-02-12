@@ -111,7 +111,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
     <section className={`${style.modalOverlay} bg-[rgba(0,0,0,.25)]`}>
       {bulkImportModalOpen && <BulkImportModal setBulkImportModalOpen={setBulkImportModalOpen} />}
       {/* modal itself */}
-      <main className="w-[90vw] max-w-[900px] mx-auto bg-white rounded-md flex shadow-lg relative">
+      <main className="w-[90vw] h-fit max-h-[95vh] overflow-hidden overflow-y-scroll max-w-[900px] mx-auto bg-white rounded-md flex shadow-lg relative">
         <span
           onClick={() => {
             setIsOpen(false);
@@ -128,7 +128,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
           style={{ backgroundColor: '#FFE977' }}
         ></aside>
 
-        <form className="py-8 flex-[0.9]" onSubmit={onSubmit}>
+        <form className="py-8 flex-[0.9] h-full" onSubmit={onSubmit}>
           <header className="px-8 w-full mb-6 flex gap-x-2 items-center text-[#2073fa]">
             <span
               className="text-[20px] font-bold"

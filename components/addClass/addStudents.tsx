@@ -59,7 +59,7 @@ const AddStudents = () => {
   };
 
   return (
-    <form className="py-8 flex-[0.9]" onSubmit={handleSubmit}>
+    <form className="py-8 flex-[0.9] h-full" onSubmit={handleSubmit}>
       {bulkImportModalOpen && <BulkImportModal setBulkImportModalOpen={setBulkImportModalOpen} />}
       <header className="px-8 w-full mb-6 flex gap-x-2 items-center">
         <span
