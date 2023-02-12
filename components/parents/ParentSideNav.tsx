@@ -10,20 +10,20 @@ const SideNav = () => {
         </h1>
       </div>
       <div>
-        <NavButton title="Main Dashboard" image="Dashboard.svg" name="" />
+        <NavButton title="Main Dashboard" image="Dashboard.svg" url="/parents" />
       </div>
       <div className="relative">
-        <NavButton title="Messages" image="message.svg" name="messages" notification={1} />
+        <NavButton title="Messages" image="message.svg" url="/parents/messages" notification={1} />
       </div>
       <div>
         <h2 className="text-xl text-[#A8ABB0] ml-7 font-medium mb-3">ACCOUNT</h2>
-        <NavButton title="Billing" image="Billing.svg" name="billing" />
-        <NavButton title="Student Accounts" image="people.svg" name="student" />
+        <NavButton title="Billing" image="Billing.svg" url="/parents/billing" />
+        <NavButton title="Student Accounts" image="people.svg" url="/parents/student" />
       </div>
       <div>
         <h2 className="text-xl text-[#A8ABB0] ml-7 font-medium mb-3">SAFETY</h2>
-        <NavButton title="Screen Time" image="screen-time.svg" name="screen-time" />
-        <NavButton title="Multiplayer" image="game.svg" name="multiplayer" />
+        <NavButton title="Screen Time" image="screen-time.svg" url="/parents/screen-time" />
+        <NavButton title="Multiplayer" image="game.svg" url="/parents/multiplayer" />
       </div>
       <span className="text-center justify-self-end text-[#2073FA]">Get Help</span>
     </div>
