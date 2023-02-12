@@ -341,7 +341,8 @@ const SingleStudent = ({
 };
 
 const styles = {
-  cardHeader: 'flex justify-between py-6 px-2 sm:px-6 border-b items-center relative',
+  cardHeader:
+    'flex justify-between py-6 px-2 sm:px-6 border-b items-center relative overflow-x-scroll',
   cardHeaderName:
     'cursor-pointer min-w-28 sm:min-w-40 justify-between px-2 border-r flex space-x-3 items-center',
   studentName: 'text-sm font-medium truncate w-full',
