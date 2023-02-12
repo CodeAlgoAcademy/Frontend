@@ -9,6 +9,9 @@ module.exports = {
       colors: {
         mainPurple: '#412281',
       },
+      screens: {
+        xs: '400px',
+      },
     },
   },
   plugins: [],

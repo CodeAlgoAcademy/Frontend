@@ -284,7 +284,7 @@ const SingleStudent = ({
               {headings.includes(student.id) ? <IoIosArrowUp /> : <IoIosArrowDown />}
             </span>
           </div>
-          <div className="text-[12px] px-2">
+          <div className="text-[12px] px-2 md:block hidden">
             <span className={(student.active ? 'bg-green-500' : 'border-2') + styles.active}></span>
             {student.active ? `Active in ${student.active}` : 'Inactive'}
           </div>
@@ -295,7 +295,8 @@ const SingleStudent = ({
             setEditStudentModalOpened(student.id);
           }}
         >
-          Edit {"student's"} details
+          <span className="hidden md:block">Edit {"student's"} details</span>
+          <span className="md:hidden block">Edit</span>
         </span>
         <div className={styles.actions}>
           <span

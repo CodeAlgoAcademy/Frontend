@@ -22,6 +22,7 @@ import { ISingleStudent, newLesson } from 'types/interfaces';
 import { getDate } from 'utils/getDate';
 import SingleLesson from '@/components/curriculum/unit/singleLesson';
 import { getStudents } from 'store/studentSlice';
+import { BiArrowBack } from 'react-icons/bi';
 
 export default function Unit() {
   const [showModal, setShowModal] = useState(false);
@@ -142,15 +143,8 @@ export default function Unit() {
           <Sidebar />
         </div>
 
-        <div className="px-[5.5rem] py-[2rem] w-full">
+        <div className="md:px-[5.5rem] px-[1.2rem] py-[2rem] w-full">
           <div className="flex justify-start items-center gap-6">
-            <Link href="/curriculum">
-              <div className="text-[1.4rem] text-[#2073fa] cursor-pointer">
-                <i>
-                  <FaChevronLeft />
-                </i>
-              </div>
-            </Link>
             {/* add lesson modal */}
             {addLessonModalOpen && (
               <section className="fixed top-0 left-0 w-full min-h-screen bg-[rgba(0,0,0,0.6)] z-20 flex justify-center items-center">
@@ -265,8 +259,17 @@ export default function Unit() {
                 </div>
               </section>
             )}
-            <div className="flex justify-between items-center flex-1 gap-2">
-              <h1 className="text-[#2073fa] font-bold text-3xl">{topics}</h1>
+            <div className="flex justify-between sm:items-center flex-1 gap-2 sm:flex-row flex-col">
+              <div className="flex flex-row gap-x-2 items-center">
+                <Link href="/curriculum">
+                  <div className="md:text-[1.4rem] text-[1.2rem] text-[#2073fa] cursor-pointer">
+                    <i>
+                      <BiArrowBack />
+                    </i>
+                  </div>
+                </Link>
+                <h1 className="text-[#2073fa] font-bold md:text-3xl text-[22px]">{topics}</h1>
+              </div>
               <div className="flex items-center gap-x-2">
                 <div
                   className="flex gap-2 text-[#2073fa] items-center cursor-pointer px-2 py-3 hover:bg-gray-50"
@@ -286,8 +289,10 @@ export default function Unit() {
               </div>
             </div>
           </div>
-          <div className="border-[#BDBDBD] pl-[1.5rem] mb-[3rem] pb-3 mt-7 border-b-[1.3px]">
-            <h2 className="text-[1.6rem] font-bold text-[#2073fa]">Unit Control</h2>
+          <div className="border-[#BDBDBD] pl-[1.5rem] md:mb-[3rem] mb-[1.5rem] pb-3 mt-7 border-b-[1.3px]">
+            <h2 className="text-[1.2rem] md:text-[1.4rem] font-bold text-[#2073fa]">
+              Unit Control
+            </h2>
           </div>
           {/* curriculumn topic section */}
 

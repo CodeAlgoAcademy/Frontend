@@ -22,18 +22,18 @@ const Modal = () => {
       data-testid="addClassModal"
     >
       {/* modal itself */}
-      <main className="w-[90vw] max-w-[900px] mx-auto bg-white rounded-md flex shadow-lg relative">
+      <main className="w-[90vw] h-fit max-h-[95vh] overflow-hidden overflow-y-scroll max-w-[900px] mx-auto bg-white rounded-md flex shadow-lg relative">
         <span
           onClick={() => {
             dispatch(closeAddClassModal());
             dispatch(clearFields());
           }}
-          className="text-[30px] font-thin absolute z-10 top-[30px] right-[30px]"
+          className="text-[30px] font-thin absolute z-10 top-[30px] right-[30px] text-red-600"
         >
           <FaTimes />
         </span>
         <aside
-          className={`flex-[0.075] min-h-full rounded-tl-md rounded-bl-md`}
+          className={`flex-[0.075]  rounded-tl-md rounded-bl-md`}
           style={{ backgroundColor: color }}
         ></aside>
 

@@ -60,9 +60,9 @@ const CreateClass = () => {
   };
 
   return (
-    <form className="p-8 flex-[0.9]" onSubmit={handleSubmit}>
+    <form className="p-8 flex-[0.9] h-full" onSubmit={handleSubmit}>
       <header className="w-full mb-6">
-        <h1 className="md:text-[30px] text-[20px] font-bold">Create New Class</h1>
+        <h1 className="md:text-[30px] text-[20px] font-bold text-[#2073fa]">Create New Class</h1>
       </header>
       <section className="grid md:grid-cols-2 gap-[1rem] items-start">
         {inputFields?.map((inputField: IInputFields, index: number) => {

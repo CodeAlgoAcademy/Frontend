@@ -23,6 +23,7 @@ import {
 import { addNewAssignments, getAssignments, updateAssignment } from 'services/assignmentService';
 import { getDate } from 'utils/getDate';
 import { useRouter } from 'next/router';
+import { BiArrowBack } from 'react-icons/bi';
 
 const Assignments = () => {
   const modalDefaults = {
@@ -220,18 +221,21 @@ const Assignments = () => {
         <div className="sidebar bg-white w-[270px]">
           <Sidebar />
         </div>
-        <div className="bg-[#ECEDF3] flex-1 px-[6%] py-8">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-x-2 mb-6 text-[#2073fa]">
+        <div className="bg-[#ECEDF3] flex-1 px-[6%] py-8 overflow-x-hidden">
+          <div className="flex justify-between sm:items-center sm:flex-row flex-col gap-2 mb-6">
+            <div className="flex items-center gap-x-2 text-[#2073fa]">
               <span
                 className="text-[22px] font-bold cursor-pointer"
                 onClick={() => {
                   router.back();
                 }}
               >
-                <FaChevronLeft />
+                <BiArrowBack />
               </span>
-              <h2 className="text-[28px] font-bold" data-testid="curriculum-assignment-heading">
+              <h2
+                className="sm:text-[28px] text-[22px] font-bold"
+                data-testid="curriculum-assignment-heading"
+              >
                 New Assignment
               </h2>
             </div>
@@ -254,14 +258,14 @@ const Assignments = () => {
               type="text"
               name="title"
               id="assignmentTitle"
-              className="h-[44px] w-[400px] py-2 px-4 rounded-md outline-none"
+              className="h-[44px] w-[90vw] max-w-[400px] py-2 px-4 rounded-md outline-none"
               placeholder="Assignment Title"
               value={assignmentDetails.title}
               onChange={handleInputChange}
             />
             <div className="pt-4 mt-4 border-t border-[#BDBDBD] flex flex-col gap-4">
-              <div className="rounded-md h-[58px] bg-white flex items-center overflow-y-hidden">
-                <div className="rounded-r-md flex items-center justify-between px-4 w-[180px] shadow-right h-full">
+              <div className="rounded-md md:h-[58px] md:bg-white flex items-center overflow-y-hidden md:flex-row flex-col gap-y-2">
+                <div className="md:rounded-r-md rounded-md bg-white flex items-center md:justify-between justify-center gap-4 px-4 w-full md:w-[180px] shadow-right h-full md:py-0 py-2 ">
                   <span className="font-bold">Skill(s)</span>
                   <span
                     className="text-2xl cursor-pointer rounded-full border p-1 hover:opacity-80 hover:scale-125 transition-all ease-in-out animate-pulse hover:animate-none"
@@ -272,7 +276,7 @@ const Assignments = () => {
                     <TbMedal />{' '}
                   </span>
                 </div>
-                <div className="px-14">
+                <div className="md:px-14 bg-white md:bg-transparent w-full md:text-start text-center md:py-0 py-2 md:justify-start rounded-md">
                   <span className="font-medium">
                     {assignmentDetails.skills?.length} skill
                     {assignmentDetails.skills?.length === 1 ? '' : '(s)'} selected
@@ -280,8 +284,8 @@ const Assignments = () => {
                   value
                 </div>
               </div>
-              <div className="rounded-md h-[58px] bg-white flex items-center overflow-y-hidden">
-                <div className="rounded-r-md flex items-center justify-between px-4 w-[180px] shadow-right h-full">
+              <div className="rounded-md md:h-[58px] md:bg-white flex items-center overflow-y-hidden md:flex-row flex-col gap-y-2">
+                <div className="md:rounded-r-md rounded-md bg-white flex items-center md:justify-between justify-center gap-4 px-4 w-full md:w-[180px] shadow-right h-full md:py-0 py-2 ">
                   <span className="font-bold">Student{'(s)'}</span>
                   <span
                     className="text-2xl cursor-pointer rounded-full border p-1 hover:opacity-80 hover:scale-125 transition-all ease-in-out animate-pulse hover:animate-none"
@@ -292,19 +296,19 @@ const Assignments = () => {
                     <IoPersonAddOutline />{' '}
                   </span>
                 </div>
-                <div className="px-14">
+                <div className="md:px-14 bg-white md:bg-transparent w-full md:text-start text-center md:py-0 py-2 md:justify-start rounded-md">
                   <span className="font-medium">
                     {assignmentDetails.students?.length} student
                     {assignmentDetails.students?.length === 1 ? '' : '(s)'} selected
                   </span>
                 </div>
               </div>
-              <div className="rounded-md h-[58px] bg-white flex items-center">
-                <div className="rounded-r-md flex items-center justify-between px-4 min-w-[180px] shadow-right h-full">
+              <div className="rounded-md md:h-[58px] md:bg-white flex items-center md:flex-row flex-col gap-y-2">
+                <div className=" md:rounded-r-md rounded-md bg-white flex items-center md:justify-between justify-center gap-4 px-4 w-full md:w-[180px] shadow-right h-full md:py-0 py-2">
                   <span className="font-bold">Scheduling</span>
                 </div>
-                <div className="pl-14 pr-8">
-                  <div className="flex items-center gap-4">
+                <div className="md:px-14 bg-white md:bg-transparent w-full md:justify-start justify-center rounded-md px-6 md:py-0 py-4">
+                  <div className="flex items-center gap-4 flex-wrap md:flex-nowrap overflow-x-scroll">
                     <div className="form-check flex items-center gap-2">
                       <input
                         className=""
@@ -372,11 +376,11 @@ const Assignments = () => {
                   </div>
                 </div>
               </div>
-              <div className="rounded-md h-[58px] bg-white flex items-center overflow-y-hidden">
-                <div className="rounded-r-md flex items-center justify-between px-4 w-[180px] shadow-right h-full">
+              <div className="rounded-md md:h-[58px] md:bg-white flex items-center overflow-y-hidden md:flex-row flex-col gap-y-2">
+                <div className="md:rounded-r-md rounded-md bg-white flex items-center md:justify-between justify-center gap-4 px-4 w-full md:w-[180px] shadow-right h-full md:py-0 py-2">
                   <span className="font-bold">No. of questions</span>
                 </div>
-                <div className="px-14 flex gap-8 items-center">
+                <div className="px-14 flex gap-8 items-center bg-white md:bg-transparent w-full md:text-start text-center md:py-0 py-2 rounded-md">
                   <input
                     id="questionCount"
                     type="number"
@@ -384,7 +388,7 @@ const Assignments = () => {
                     className="bg-gray-100 px-4 py-2 max-w-[100px] assignment-input caret-transparent font-medium outline-none border-none rounded-md"
                     readOnly={true}
                   />
-                  <div>
+                  <div className="w-full">
                     <input
                       type="range"
                       name="number"
@@ -392,17 +396,17 @@ const Assignments = () => {
                       max={100}
                       value={assignmentDetails?.number}
                       // step={assignmentDetails?.skills?.length}
-                      className="w-[380px] h-[12px] appearance-none rounded-lg bg-gray-200 opacity-90 outline-none transition-all hover:opacity-100 assignment-slider"
+                      className="w-[90%] md:w-[380px] h-[12px] appearance-none rounded-lg bg-gray-200 opacity-90 outline-none transition-all hover:opacity-100 assignment-slider"
                       onChange={handleInputChange}
                     />
                   </div>
                 </div>
               </div>
-              <div className="rounded-md h-[58px] bg-white flex items-center overflow-y-hidden">
-                <div className="rounded-r-md flex items-center justify-between px-4 w-[180px] shadow-right h-full">
+              <div className="rounded-md md:h-[58px] md:bg-white flex items-center overflow-y-hidden md:flex-row flex-col gap-y-2">
+                <div className="md:rounded-r-md rounded-md bg-white flex items-center md:justify-between justify-center gap-4 px-4 w-full md:w-[180px] shadow-right h-full md:py-0 py-2 ">
                   <span className="font-bold">Order of questions</span>
                 </div>
-                <div className="px-14 flex items-center gap-8">
+                <div className="px-14 flex items-center gap-8 md:px-14 bg-white md:bg-transparent w-full md:justify-start justify-center md:py-0 py-2 rounded-md">
                   <div className="flex items-center gap-14">
                     <div className="form-check flex items-center gap-2">
                       <input
@@ -439,7 +443,7 @@ const Assignments = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-row-reverse gap-4 mt-4">
+              <div className="flex flex-row-reverse gap-4 mt-4 flex-wrap w-full  md:justify-end justify-center">
                 <span
                   onClick={async () => {
                     if (!isEditing) {
@@ -517,7 +521,7 @@ const Assignments = () => {
           }`}
         >
           {modalWrapperDisplay && (
-            <div className="relative max-w-[850px] bg-white rounded-xl overflow-hidden overflow-y-scroll max-h-[90vh]">
+            <div className="relative w-[90vw] max-w-[850px] bg-white rounded-xl overflow-hidden overflow-y-scroll max-h-[90vh] mx-auto">
               <span
                 className="text-[22px] absolute right-8 top-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all ease-in-out opacity-60"
                 onClick={hideModal}
@@ -525,7 +529,7 @@ const Assignments = () => {
                 <FaTimes />
               </span>
               {modalItemsDisplay.saveResponse && (
-                <div className="w-full py-20 px-24 font-semibold text-center text-xl">
+                <div className="w-full md:py-20 md:px-24 px-12 py-16 font-semibold text-center text-xl">
                   <p>You have successfully saved an assignment</p>
                   <p>
                     Click on{' '}
@@ -542,7 +546,7 @@ const Assignments = () => {
                 </div>
               )}
               {modalItemsDisplay.createResponse && (
-                <div className="w-full py-20 px-24 font-semibold text-center text-xl">
+                <div className="w-full md:py-20 md:px-24 px-12 py-16 font-semibold text-center text-xl">
                   <p>You have successfully created an assignment</p>
                   <p>
                     Click on{' '}
@@ -559,7 +563,7 @@ const Assignments = () => {
                 </div>
               )}
               {modalItemsDisplay.cancelResponse && (
-                <div className="w-full py-20 px-24 font-bold text-xl">
+                <div className="w-full md:py-20 md:px-24 px-12 py-16 font-semibold text-center text-xl">
                   <p className="text-xl">
                     Are you sure you want to{' '}
                     <span className="text-[#E30F0F] text-center">Cancel?</span>
@@ -586,7 +590,7 @@ const Assignments = () => {
                 </div>
               )}
               {modalItemsDisplay.historyResponse && (
-                <div className="p-12 min-h-[500px] min-w-[800px]">
+                <div className="md:p-12 py-12 px-7 min-h-[500px] w-[90vw] max-w-[800px]">
                   <h3 className="text-2xl font-semibold">Assignment History</h3>
                   <div className="flex gap-6 items-center mt-8">
                     <span
