@@ -5,6 +5,7 @@ import ParentSignUp3 from '@/components/parentMultiForm/ParentSignUp3';
 import ParentSignUp4 from '@/components/parentMultiForm/ParentSignUp4';
 import ParentSignUp5 from '@/components/parentMultiForm/ParentSignUp5';
 import ParentSignUp6 from '@/components/parentMultiForm/ParentSignUp6';
+import ParentSignUp7 from '@/components/parentMultiForm/ParentSignUp7';
 import Safety1 from '@/components/parentMultiForm/Safety1';
 import Safety2 from '@/components/parentMultiForm/Safety2';
 import Safety3 from '@/components/parentMultiForm/Safety3';
@@ -18,6 +19,7 @@ import { useRouter } from 'next/router';
 import React, { ChangeEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { signUpUser } from 'services/authService';
+import { addChild } from 'store/parentSlice';
 
 export default function Parent() {
   const dispatch = useDispatch();
@@ -31,10 +33,11 @@ export default function Parent() {
       <ParentSignUp4 key={5} />,
       <ParentSignUp5 key={6} />,
       <ParentSignUp6 key={7} />,
-      <Safety1 key={8} />,
-      <Safety2 key={9} />,
-      <Safety3 key={10} />,
-      <ThankyouForm key={11} />,
+      <ParentSignUp7 key={8} />,
+      <Safety1 key={9} />,
+      <Safety2 key={10} />,
+      <Safety3 key={11} />,
+      <ThankyouForm key={12} />,
     ],
   );
 
@@ -45,9 +48,13 @@ export default function Parent() {
       if (!data?.error?.message) {
         next();
       }
-      next();
     } else if (currentStepIndex === 10) {
       router.push('/parents');
+    } else if (currentStepIndex === 6) {
+      const data = await dispatch(addChild());
+      if (!data?.error?.message) {
+        next();
+      }
     } else {
       next();
     }
