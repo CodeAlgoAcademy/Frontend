@@ -62,9 +62,9 @@ const Index = () => {
               <p className="sm:block">Add Student</p>
             </div>
           </div>
-          <div className="flex justify-end w-full mt-4">
+          <div className="flex justify-center xs:justify-end w-full mt-4">
             <form
-              className="bg-white flex items-center space-x-3 rounded-full p-1 px-2"
+              className="bg-white flex items-center space-x-3 rounded-full p-1 px-2 w-[90vw] max-w-[250px]"
               onSubmit={(e) => {
                 e.preventDefault();
               }}
@@ -72,6 +72,7 @@ const Index = () => {
               <FaSearch className="text-slate-400" />
               <input
                 className="bg-transparent outline-none text-slate-800 py-1"
+                placeholder="Search students"
                 onChange={(e) => {
                   filterStudents(e.target.value);
                 }}
