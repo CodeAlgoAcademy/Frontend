@@ -1,6 +1,9 @@
 import React,{ReactNode,useEffect,useState} from 'react';
 import {Sidebar,GeneralNav} from '@/components/index';
 import {useRouter} from 'next/router';
+import TeacherMobileSideNav from './TeacherMobileSideNav';
+import {BiHomeAlt} from 'react-icons/bi';
+import Link from 'next/link';
 
 interface Props {
    children?: ReactNode;
@@ -33,12 +36,21 @@ const TeacherLayout = ({children,className}: Props) => {
                   <Sidebar />
                </div>
             )}
-            <div className={`flex-1 pr-8 pb-6`} style={{paddingLeft: width < 840 ? "32px" : "0"}} >
-               <GeneralNav />
-               {width < 640 && (
-                  <div className="relative">
+            {width < 840 && width > 500 && (
+               <div className='mt-14 ml-4'>
+                  <Link href={`/addClass`}>
+                     <div className="text-[#2073fa] text-[28px] flex justify-center">
+                        <BiHomeAlt />
+                     </div>
+                  </Link>
+                  <TeacherMobileSideNav />
+               </div>
+            )}
+            <div className={`flex-1 pr-[3vw] pb-6`} style={{paddingLeft: width < 840 ? "3vw" : "0"}} >
+               {width < 500 && (
+                  <div className='relative my-10 pr-8'>
                      <div
-                        className="absolute sm:hidden left-[-8px] cursor-pointer rounded-lg h-12 w-12"
+                        className="absolute left-0 cursor-pointer rounded-lg h-12 w-12"
                         onClick={() => {
                            setDetachedNavDisplay((prev) => !prev);
                         }}
@@ -105,12 +117,22 @@ const TeacherLayout = ({children,className}: Props) => {
                      </div>
                      {detachedNavDisplay && (
                         <div className="absolute left-0 top-[48px] px-2 bg-white z-20 border border-gray-300 rounded-md">
-                           A
+                           <div className='mt-4'>
+                              <Link href={`/addClass`}>
+                                 <div className="text-[#2073fa] text-[28px] flex justify-center">
+                                    <BiHomeAlt />
+                                 </div>
+                              </Link>
+                              <TeacherMobileSideNav />
+                           </div>
                         </div>
                      )}
                   </div>
                )}
-               <div className={`bg-[#ECEDF3] rounded-3xl px-[6%] py-8 mt-[44px] w-full min-h-[620px] ${className}`}>
+               {width > 840 && (
+                  <GeneralNav />
+               )}
+               <div className={`bg-[#ECEDF3] rounded-3xl px-[6%] py-8 ${width > 500 ? "mt-[45px]" : "mt-[100px]"} w-full min-h-[620px] ${className}`}>
                   {children}
                </div>
             </div>
