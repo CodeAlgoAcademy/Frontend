@@ -24,12 +24,11 @@ const Layout = ({ children }: Props) => {
       router.pathname !== '/404' &&
       !router.pathname.includes('/verify-email') &&
       !router.pathname.includes('/change-password') &&
-      !router.pathname.includes('/parents') &&
       !tokens
     ) {
       router.push('/login');
     }
-  }, []);
+  }, [router]);
   useEffect(() => {
     dispatch(closePreloader());
   }, []);

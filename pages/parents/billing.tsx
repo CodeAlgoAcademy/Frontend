@@ -3,11 +3,7 @@ import SideNav from '@/components/parents/ParentSideNav';
 import React from 'react';
 
 const Billing = () => {
-   return (
-      <ParentLayout>
-
-      </ParentLayout>
-   );
+  return <ParentLayout></ParentLayout>;
 };
 
 export default Billing;
