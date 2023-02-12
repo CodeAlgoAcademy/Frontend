@@ -4,6 +4,7 @@ import ParentSignUp3 from '@/components/parentMultiForm/ParentSignUp3';
 import ParentSignUp4 from '@/components/parentMultiForm/ParentSignUp4';
 import ParentSignUp5 from '@/components/parentMultiForm/ParentSignUp5';
 import ParentSignUp6 from '@/components/parentMultiForm/ParentSignUp6';
+import ParentSignUp7 from '@/components/parentMultiForm/ParentSignUp7';
 import Safety1 from '@/components/parentMultiForm/Safety1';
 import Safety2 from '@/components/parentMultiForm/Safety2';
 import Safety3 from '@/components/parentMultiForm/Safety3';
@@ -15,6 +16,7 @@ import Link from 'next/link';
 import React, { ChangeEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { signUpUser } from 'services/authService';
+import { addChild } from 'store/parentSlice';
 
 export default function Parent() {
   const dispatch = useDispatch();
@@ -27,10 +29,11 @@ export default function Parent() {
       <ParentSignUp4 key={5} />,
       <ParentSignUp5 key={6} />,
       <ParentSignUp6 key={7} />,
-      <Safety1 key={8} />,
-      <Safety2 key={9} />,
-      <Safety3 key={10} />,
-      <ThankyouForm key={11} />,
+      <ParentSignUp7 key={8} />,
+      <Safety1 key={9} />,
+      <Safety2 key={10} />,
+      <Safety3 key={11} />,
+      <ThankyouForm key={12} />,
     ],
   );
 
@@ -38,6 +41,11 @@ export default function Parent() {
     e.preventDefault();
     if (currentStepIndex === 2) {
       const data = await dispatch(signUpUser());
+      if (!data?.error?.message) {
+        next();
+      }
+    } else if (currentStepIndex === 6) {
+      const data = await dispatch(addChild());
       if (!data?.error?.message) {
         next();
       }
@@ -66,23 +74,32 @@ export default function Parent() {
           <form onSubmit={signUp}>
             <div className="">{step}</div>
             <div>
+              {currentStepIndex === 7 && (
+                <button
+                  className="block p-2 mt-6 text-center w-full text-white bg-[#2073FA] font-bold rounded-xl"
+                  type="button"
+                  onClick={() => goTo(4)}
+                >
+                  Add another student
+                </button>
+              )}
               <button
                 className="block  h-[2.5rem] mt-6 text-center w-full text-white bg-[#2073FA] font-bold rounded-xl"
                 type="submit"
               >
                 Continue
               </button>
-              {currentStepIndex === 7 && (
+              {currentStepIndex === 8 && (
                 <p
                   onClick={() => {
-                    goTo(9);
+                    goTo(10);
                   }}
                   className="my-3 text-center text-[14px] cursor-pointer underline font-bold"
                 >
                   I do not want to set parental controls
                 </p>
               )}
-              {!isFirstStep && !isLastStep && (
+              {!isFirstStep && !isLastStep && currentStepIndex !== 7 && (
                 <button className="block text-center w-full mt-4" type="button" onClick={back}>
                   back
                 </button>

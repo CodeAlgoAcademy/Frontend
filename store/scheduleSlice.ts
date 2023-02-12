@@ -14,7 +14,7 @@ import { Schedule } from 'types/interfaces';
 
 const initialState: Schedule = {
   allSchedule: [],
-  googleConnect: false
+  googleConnect: false,
 };
 
 const scheduleSlice = createSlice({
@@ -60,13 +60,13 @@ const scheduleSlice = createSlice({
       builder.addCase(deleteSchedule.rejected, (state: any, action: PayloadAction<any>) => {
         console.error('Delete Error');
       });
-      builder.addCase(deleteGoogleCalendar.rejected, (state: any, action: PayloadAction<any>) => {
-        console.error('google calendar delete Error');
-      });
+    builder.addCase(deleteGoogleCalendar.rejected, (state: any, action: PayloadAction<any>) => {
+      console.error('google calendar delete Error');
+    });
     builder.addCase(getGoogleCalendar.fulfilled, (state: any, { payload }: PayloadAction) => {
       console.log('Successful');
       state.googleConnect = true;
-      console.log(payload)
+      console.log(payload);
       state.allSchedule = payload;
     });
     builder.addCase(googleCalendar.rejected, (state: any, { payload }) => {

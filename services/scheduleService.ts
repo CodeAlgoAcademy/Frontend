@@ -81,11 +81,15 @@ export const postGoogleCalendar = createAsyncThunk(
   async (addedRecords: any, thunkApi) => {
     try {
       delete addedRecords[0].Id;
-      const { data } = await http.post('/academics/calendar/calendar', {...addedRecords[0]}, {
-        headers: {
-          Authorization: `Bearer ${getAccessToken()}`,
+      const { data } = await http.post(
+        '/academics/calendar/calendar',
+        { ...addedRecords[0] },
+        {
+          headers: {
+            Authorization: `Bearer ${getAccessToken()}`,
+          },
         },
-      });
+      );
       return { ...data };
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.response.data);
@@ -121,15 +125,11 @@ export const putGoogleCalendar = createAsyncThunk(
     const { Id, EId, StartTimezone, EndTimezone, Guid, ...others } = updatedRecords[0];
 
     try {
-      const { data } = await http.put(
-        `/academics/calendar/${EId}`,
-        JSON.stringify(others),
-        {
-          headers: {
-            Authorization: `Bearer ${getAccessToken()}`,
-          },
+      const { data } = await http.put(`/academics/calendar/${EId}`, JSON.stringify(others), {
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
         },
-      );
+      });
       return { ...data };
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.response.data);

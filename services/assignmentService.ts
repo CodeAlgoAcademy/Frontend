@@ -184,7 +184,6 @@ export const getAssignments: any = createAsyncThunk(
 
       return data;
     } catch (error: any) {
-
       return thunkApi.rejectWithValue(error.message);
     }
   },

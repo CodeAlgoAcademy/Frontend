@@ -62,7 +62,16 @@ export const userSlice = createSlice({
       localStorage.removeItem('token');
     },
     clearFields: (state: IUser) => {
-      return { ...state, auth: {...initialState.auth, email: state.auth.email, is_student: state.auth.is_student, is_parent: state.auth.is_parent, is_teacher:state.auth.is_teacher} };
+      return {
+        ...state,
+        auth: {
+          ...initialState.auth,
+          email: state.auth.email,
+          is_student: state.auth.is_student,
+          is_parent: state.auth.is_parent,
+          is_teacher: state.auth.is_teacher,
+        },
+      };
     },
     updateUser: (
       state: IUser | any,
@@ -93,7 +102,13 @@ export const userSlice = createSlice({
         JSON.stringify({
           access_token: action.payload.access_token,
           refresh_token: action.payload.refresh_token,
-          user_type: action.payload.is_student ? "student" : action.payload.is_teacher ? "teacher" : action.payload.is_parent ? "parent" : ""
+          user_type: action.payload.is_student
+            ? 'student'
+            : action.payload.is_teacher
+            ? 'teacher'
+            : action.payload.is_parent
+            ? 'parent'
+            : '',
         }),
       );
       setTimeStamp();
