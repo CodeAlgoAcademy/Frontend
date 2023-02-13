@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Button, Sidebar, GeneralNav } from 'components';
+import { Button } from 'components';
 import { BsPlusCircle } from 'react-icons/bs';
 import { FaChevronLeft, FaTimes } from 'react-icons/fa';
 import { IoPersonAddOutline } from 'react-icons/io5';
@@ -23,7 +23,7 @@ import {
 import { addNewAssignments, getAssignments, updateAssignment } from 'services/assignmentService';
 import { getDate } from 'utils/getDate';
 import { useRouter } from 'next/router';
-import { BiArrowBack } from 'react-icons/bi';
+import TeacherLayout from '@/components/Teachers/TeacherLayout';
 
 const Assignments = () => {
   const modalDefaults = {
@@ -215,43 +215,21 @@ const Assignments = () => {
     fetchAllStudents();
   }, []);
   return (
-    <div className="min-h-[100vh] flex flex-col">
-      <GeneralNav />
-      <div className="flex items-stretch mb-auto grow">
-        <div className="sidebar bg-white w-[270px]">
-          <Sidebar />
-        </div>
-        <div className="bg-[#ECEDF3] flex-1 px-[6%] py-8 overflow-x-hidden">
-          <div className="flex justify-between sm:items-center sm:flex-row flex-col gap-2 mb-6">
-            <div className="flex items-center gap-x-2 text-[#2073fa]">
-              <span
-                className="text-[22px] font-bold cursor-pointer"
-                onClick={() => {
-                  router.back();
-                }}
-              >
-                <BiArrowBack />
-              </span>
-              <h2
-                className="sm:text-[28px] text-[22px] font-bold"
-                data-testid="curriculum-assignment-heading"
-              >
-                New Assignment
-              </h2>
-            </div>
-            <span className="hover:opacity-80 cursor-pointer flex items-center gap-3 text-[#2073fa]">
-              <span className="text-lg">
-                <BsPlusCircle />
-              </span>
-              <span
-                className="text-lg font-semibold"
-                onClick={() => {
-                  showModal('historyResponse');
-                }}
-              >
-                Assignment History
-              </span>
+    <>
+      <TeacherLayout>
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-x-2 mb-6 text-[#2073fa]">
+            <span
+              className="text-[22px] font-bold cursor-pointer"
+              onClick={() => {
+                router.back();
+              }}
+            >
+              <FaChevronLeft />
             </span>
+            <h2 className="text-[28px] font-bold" data-testid="curriculum-assignment-heading">
+              New Assignment
+            </h2>
           </div>
           <div className="">
             <input
@@ -375,20 +353,11 @@ const Assignments = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="rounded-md md:h-[58px] md:bg-white flex items-center overflow-y-hidden md:flex-row flex-col gap-y-2">
-                <div className="md:rounded-r-md rounded-md bg-white flex items-center md:justify-between justify-center gap-4 px-4 w-full md:w-[180px] shadow-right h-full md:py-0 py-2">
-                  <span className="font-bold">No. of questions</span>
-                </div>
-                <div className="px-14 flex gap-8 items-center bg-white md:bg-transparent w-full md:text-start text-center md:py-0 py-2 rounded-md">
-                  <input
-                    id="questionCount"
-                    type="number"
-                    value={assignmentDetails?.number}
-                    className="bg-gray-100 px-4 py-2 max-w-[100px] assignment-input caret-transparent font-medium outline-none border-none rounded-md"
-                    readOnly={true}
-                  />
-                  <div className="w-full">
+                <div className="rounded-md md:h-[58px] md:bg-white flex items-center overflow-y-hidden md:flex-row flex-col gap-y-2">
+                  <div className="md:rounded-r-md rounded-md bg-white flex items-center md:justify-between justify-center gap-4 px-4 w-full md:w-[180px] shadow-right h-full md:py-0 py-2">
+                    <span className="font-bold">No. of questions</span>
+                  </div>
+                  <div className="px-14 flex gap-8 items-center bg-white md:bg-transparent w-full md:text-start text-center md:py-0 py-2 rounded-md">
                     <input
                       type="range"
                       name="number"
@@ -396,25 +365,18 @@ const Assignments = () => {
                       max={100}
                       value={assignmentDetails?.number}
                       // step={assignmentDetails?.skills?.length}
-                      className="w-[90%] md:w-[380px] h-[12px] appearance-none rounded-lg bg-gray-200 opacity-90 outline-none transition-all hover:opacity-100 assignment-slider"
+                      className="w-[380px] h-[12px] appearance-none rounded-lg bg-gray-200 opacity-90 outline-none transition-all hover:opacity-100 assignment-slider"
                       onChange={handleInputChange}
                     />
-                  </div>
-                </div>
-              </div>
-              <div className="rounded-md md:h-[58px] md:bg-white flex items-center overflow-y-hidden md:flex-row flex-col gap-y-2">
-                <div className="md:rounded-r-md rounded-md bg-white flex items-center md:justify-between justify-center gap-4 px-4 w-full md:w-[180px] shadow-right h-full md:py-0 py-2 ">
-                  <span className="font-bold">Order of questions</span>
-                </div>
-                <div className="px-14 flex items-center gap-8 md:px-14 bg-white md:bg-transparent w-full md:justify-start justify-center md:py-0 py-2 rounded-md">
-                  <div className="flex items-center gap-14">
-                    <div className="form-check flex items-center gap-2">
+                    <div className="w-full">
                       <input
-                        className=""
-                        type="radio"
-                        name="order"
-                        value="random"
-                        checked={assignmentDetails.order === 'random'}
+                        type="range"
+                        name="number"
+                        min={0}
+                        max={100}
+                        value={assignmentDetails?.number}
+                        // step={assignmentDetails?.skills?.length}
+                        className="w-[90%] md:w-[380px] h-[12px] appearance-none rounded-lg bg-gray-200 opacity-90 outline-none transition-all hover:opacity-100 assignment-slider"
                         onChange={handleInputChange}
                       />
                       <label
@@ -442,44 +404,48 @@ const Assignments = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="flex flex-row-reverse gap-4 mt-4 flex-wrap w-full  md:justify-end justify-center">
-                <span
-                  onClick={async () => {
-                    if (!isEditing) {
-                      await dispatch(
-                        addNewAssignments({
-                          assignment: assignmentDetails,
-                          actionType: 'active',
-                          showModal,
-                          modalType: 'createResponse',
-                          resetAssignments,
-                        }),
-                      );
-                    } else {
-                      await dispatch(
-                        updateAssignment({
-                          assignment: assignmentDetails,
-                          actionType: 'active',
-                          showModal,
-                          modalType: 'createResponse',
-                          resetAssignments,
-                          id: editId,
-                        }),
-                      );
-                    }
-                  }}
-                >
-                  <Button color="#2073fa" text="Create" />
-                </span>
-                <span
-                  onClick={() => {
-                    showModal('cancelResponse');
-                  }}
-                >
-                  <Button color="#2073fa" text="Cancel" />
-                </span>
-                <div className="mr-4">
+                <div className="rounded-md md:h-[58px] md:bg-white flex items-center overflow-y-hidden md:flex-row flex-col gap-y-2">
+                  <div className="md:rounded-r-md rounded-md bg-white flex items-center md:justify-between justify-center gap-4 px-4 w-full md:w-[180px] shadow-right h-full md:py-0 py-2 ">
+                    <span className="font-bold">Order of questions</span>
+                  </div>
+                  <div className="px-14 flex items-center gap-8 md:px-14 bg-white md:bg-transparent w-full md:justify-start justify-center md:py-0 py-2 rounded-md">
+                    <div className="flex items-center gap-14">
+                      <div className="form-check flex items-center gap-2">
+                        <input
+                          className=""
+                          type="radio"
+                          name="order"
+                          value="random"
+                          checked={assignmentDetails.order === 'random'}
+                          onChange={handleInputChange}
+                        />
+                        <label
+                          className="form-check-label inline-block text-gray-800 font-medium"
+                          htmlFor="order"
+                        >
+                          Random
+                        </label>
+                      </div>
+                      <div className="form-check flex items-center gap-2">
+                        <input
+                          className=""
+                          type="radio"
+                          name="order"
+                          value="sequence"
+                          checked={assignmentDetails.order === 'sequence'}
+                          onChange={handleInputChange}
+                        />
+                        <label
+                          className="form-check-label inline-block text-gray-800 font-medium"
+                          htmlFor="order"
+                        >
+                          Sequence
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-row-reverse gap-4 mt-4 flex-wrap w-full  md:justify-end justify-center">
                   <span
                     onClick={async () => {
                       if (!isEditing) {
@@ -513,7 +479,7 @@ const Assignments = () => {
             </div>
           </div>
         </div>
-      </div>
+      </TeacherLayout>
       {
         <div
           className={`w-full h-full backdrop-blur-sm bg-gray-100/50 fixed left-0 flex justify-center items-center ${
@@ -658,7 +624,7 @@ const Assignments = () => {
           )}
         </div>
       }
-    </div>
+    </>
   );
 };
 

@@ -23,6 +23,7 @@ import { getDate } from 'utils/getDate';
 import SingleLesson from '@/components/curriculum/unit/singleLesson';
 import { getStudents } from 'store/studentSlice';
 import { BiArrowBack } from 'react-icons/bi';
+import TeacherLayout from '@/components/Teachers/TeacherLayout';
 
 export default function Unit() {
   const [showModal, setShowModal] = useState(false);
@@ -136,198 +137,187 @@ export default function Unit() {
   }, []);
 
   return (
-    <div>
-      <GeneralNav />
-      <div className="flex items-stretch mb-auto grow bg-[#ECEDF3]">
-        <div className="sidebar bg-white min-w-[270px]">
-          <Sidebar />
-        </div>
-
-        <div className="md:px-[5.5rem] px-[1.2rem] py-[2rem] w-full">
-          <div className="flex justify-start items-center gap-6">
-            {/* add lesson modal */}
-            {addLessonModalOpen && (
-              <section className="fixed top-0 left-0 w-full min-h-screen bg-[rgba(0,0,0,0.6)] z-20 flex justify-center items-center">
-                <div className="bg-white w-[90vw] max-w-[700px] max-h-[90vh] overflow-hidden overflow-y-scroll rounded-md shadow-md p-8">
-                  <header className="justify-between items-center flex w-full mb-6">
-                    <h1 className="text-[26px] font-bold text-[#2073fa]">Add Lesson</h1>
-                    <span
-                      className="text-[22px] text-[darkRed]"
-                      onClick={() => {
-                        setAddLessonModalOpen(false);
-                      }}
-                    >
-                      <FaTimes />
-                    </span>
-                  </header>
-                  <form onSubmit={addLesson}>
-                    <div className="w-full mb-4">
-                      <input
-                        type="text"
-                        className="w-full p-3 border-2 focus:border-[#2073fa] outline-none rounded-md"
-                        placeholder="Enter Lesson Title*"
-                        required
-                        value={lessonDetails.topic.title}
-                        onChange={(e) => {
-                          updateTitle(e.target.value);
-                        }}
-                      />
-                    </div>
-                    <div className="w-full mb-4">
-                      <textarea
-                        className="w-full h-[200px] resize-none p-3 border-2 focus:border-[#2073fa] outline-none rounded-md"
-                        required
-                        placeholder="Enter Lesson Description*"
-                        value={lessonDetails.topic.description}
-                        onChange={(e) => {
-                          updateDescription(e.target.value);
-                        }}
-                      ></textarea>
-                    </div>
-                    <div className="w-full text-center gap-4 mb-2">
-                      <h1 className="text-center text-[#2073fa] font-bold">Status</h1>
-                    </div>
-                    <div className="mb-4 flex gap-5">
-                      <div className="w-full">
-                        <div
-                          className={`w-full p-3 rounded-md border-2 ${
-                            lessonDetails.status === 'published'
-                              ? 'border-green-600 text-green-600'
-                              : 'text-black'
-                          }  text-center cursor-pointer`}
-                          onClick={() => {
-                            updateStatus('published');
-                          }}
-                        >
-                          Published
-                        </div>
-                      </div>
-                      <div className="w-full">
-                        <div
-                          className={`w-full p-3 rounded-md border-2 ${
-                            lessonDetails.status === 'unpublished'
-                              ? 'border-red-600 text-red-600 '
-                              : 'text-black'
-                          } text-center cursor-pointer`}
-                          onClick={() => {
-                            updateStatus('unpublished');
-                          }}
-                        >
-                          Unpublished
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex gap-4 md:flex-row flex-col">
-                      <div className="w-full flex flex-col gap-y-2">
-                        <label htmlFor="start_date" className="text-[#2073fa] font-bold">
-                          Start Date*
-                        </label>
-                        <input
-                          type="date"
-                          id="start_date"
-                          className="w-full p-3 border-2 focus:border-[#2073fa] outline-none rounded-md"
-                          value={lessonDetails.start_date}
-                          onChange={(e) => {
-                            updateStartDate(e.target.value);
-                          }}
-                          required
-                        />
-                      </div>
-                      <div className="w-full flex flex-col gap-y-2">
-                        <label htmlFor="end_date" className="text-[#2073fa] font-bold">
-                          End Date*
-                        </label>
-                        <input
-                          type="date"
-                          id="end_date"
-                          className="w-full p-3 border-2 focus:border-[#2073fa] outline-none rounded-md"
-                          value={lessonDetails.end_date}
-                          onChange={(e) => {
-                            updateEndDate(e.target.value);
-                          }}
-                          required
-                        />
-                      </div>
-                    </div>
-                    <button
-                      type="submit"
-                      className="mt-4 bg-[#2073fa] text-white rounded-md p-3 text-center w-full"
-                    >
-                      Add Lesson
-                    </button>
-                  </form>
-                </div>
-              </section>
-            )}
-            <div className="flex justify-between sm:items-center flex-1 gap-2 sm:flex-row flex-col">
-              <div className="flex flex-row gap-x-2 items-center">
-                <Link href="/curriculum">
-                  <div className="md:text-[1.4rem] text-[1.2rem] text-[#2073fa] cursor-pointer">
-                    <i>
-                      <BiArrowBack />
-                    </i>
-                  </div>
-                </Link>
-                <h1 className="text-[#2073fa] font-bold md:text-3xl text-[22px]">{topics}</h1>
-              </div>
-              <div className="flex items-center gap-x-2">
-                <div
-                  className="flex gap-2 text-[#2073fa] items-center cursor-pointer px-2 py-3 hover:bg-gray-50"
+    <TeacherLayout>
+      <div className="flex justify-start items-center gap-6">
+        {/* add lesson modal */}
+        {addLessonModalOpen && (
+          <section className="fixed top-0 left-0 w-full min-h-screen bg-[rgba(0,0,0,0.6)] z-20 flex justify-center items-center">
+            <div className="bg-white w-[90vw] max-w-[700px] max-h-[90vh] overflow-hidden overflow-y-scroll rounded-md shadow-md p-8">
+              <header className="justify-between items-center flex w-full mb-6">
+                <h1 className="text-[26px] font-bold text-[#2073fa]">Add Lesson</h1>
+                <span
+                  className="text-[22px] text-[darkRed]"
                   onClick={() => {
-                    setAddLessonModalOpen(true);
+                    setAddLessonModalOpen(false);
                   }}
                 >
-                  <IoIosAddCircleOutline className="text-4xl " />
-                  <h1 className="text-[1.2rem]">Add Lesson</h1>
+                  <FaTimes />
+                </span>
+              </header>
+              <form onSubmit={addLesson}>
+                <div className="w-full mb-4">
+                  <input
+                    type="text"
+                    className="w-full p-3 border-2 focus:border-[#2073fa] outline-none rounded-md"
+                    placeholder="Enter Lesson Title*"
+                    required
+                    value={lessonDetails.topic.title}
+                    onChange={(e) => {
+                      updateTitle(e.target.value);
+                    }}
+                  />
                 </div>
-                <Link href="/curriculum/assignments">
-                  <div className="flex gap-2 items-center cursor-pointer px-2 py-3 hover:bg-gray-50 text-[#2073fa]">
-                    <IoIosAddCircleOutline className="text-4xl " />
-                    <h1 className="text-[1.2rem]">Add Assignment</h1>
+                <div className="w-full mb-4">
+                  <textarea
+                    className="w-full h-[200px] resize-none p-3 border-2 focus:border-[#2073fa] outline-none rounded-md"
+                    required
+                    placeholder="Enter Lesson Description*"
+                    value={lessonDetails.topic.description}
+                    onChange={(e) => {
+                      updateDescription(e.target.value);
+                    }}
+                  ></textarea>
+                </div>
+                <div className="w-full text-center gap-4 mb-2">
+                  <h1 className="text-center text-[#2073fa] font-bold">Status</h1>
+                </div>
+                <div className="mb-4 flex gap-5">
+                  <div className="w-full">
+                    <div
+                      className={`w-full p-3 rounded-md border-2 ${
+                        lessonDetails.status === 'published'
+                          ? 'border-green-600 text-green-600'
+                          : 'text-black'
+                      }  text-center cursor-pointer`}
+                      onClick={() => {
+                        updateStatus('published');
+                      }}
+                    >
+                      Published
+                    </div>
                   </div>
-                </Link>
-              </div>
+                  <div className="w-full">
+                    <div
+                      className={`w-full p-3 rounded-md border-2 ${
+                        lessonDetails.status === 'unpublished'
+                          ? 'border-red-600 text-red-600 '
+                          : 'text-black'
+                      } text-center cursor-pointer`}
+                      onClick={() => {
+                        updateStatus('unpublished');
+                      }}
+                    >
+                      Unpublished
+                    </div>
+                  </div>
+                </div>
+                <div className="flex gap-4 md:flex-row flex-col">
+                  <div className="w-full flex flex-col gap-y-2">
+                    <label htmlFor="start_date" className="text-[#2073fa] font-bold">
+                      Start Date*
+                    </label>
+                    <input
+                      type="date"
+                      id="start_date"
+                      className="w-full p-3 border-2 focus:border-[#2073fa] outline-none rounded-md"
+                      value={lessonDetails.start_date}
+                      onChange={(e) => {
+                        updateStartDate(e.target.value);
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className="w-full flex flex-col gap-y-2">
+                    <label htmlFor="end_date" className="text-[#2073fa] font-bold">
+                      End Date*
+                    </label>
+                    <input
+                      type="date"
+                      id="end_date"
+                      className="w-full p-3 border-2 focus:border-[#2073fa] outline-none rounded-md"
+                      value={lessonDetails.end_date}
+                      onChange={(e) => {
+                        updateEndDate(e.target.value);
+                      }}
+                      required
+                    />
+                  </div>
+                </div>
+                <button
+                  type="submit"
+                  className="mt-4 bg-[#2073fa] text-white rounded-md p-3 text-center w-full"
+                >
+                  Add Lesson
+                </button>
+              </form>
             </div>
+          </section>
+        )}
+        <div className="flex justify-between sm:items-center flex-1 gap-2 sm:flex-row flex-col">
+          <div className="flex flex-row gap-x-2 items-center">
+            <Link href="/curriculum">
+              <div className="md:text-[1.4rem] text-[1.2rem] text-[#2073fa] cursor-pointer">
+                <i>
+                  <BiArrowBack />
+                </i>
+              </div>
+            </Link>
+            <h1 className="text-[#2073fa] font-bold md:text-3xl text-[22px]">{topics}</h1>
           </div>
-          <div className="border-[#BDBDBD] pl-[1.5rem] md:mb-[3rem] mb-[1.5rem] pb-3 mt-7 border-b-[1.3px]">
-            <h2 className="text-[1.2rem] md:text-[1.4rem] font-bold text-[#2073fa]">
-              Unit Control
-            </h2>
+          <div className="flex items-center gap-x-2">
+            <div
+              className="flex gap-2 text-[#2073fa] items-center cursor-pointer px-2 py-3 hover:bg-gray-50"
+              onClick={() => {
+                setAddLessonModalOpen(true);
+              }}
+            >
+              <IoIosAddCircleOutline className="text-4xl " />
+              <h1 className="text-[1.2rem]">Add Assignment</h1>
+            </div>
+            <Link href="/curriculum/assignments">
+              <div className="flex gap-2 items-center cursor-pointer px-2 py-3 hover:bg-gray-50 text-[#2073fa]">
+                <IoIosAddCircleOutline className="text-4xl " />
+                <h1 className="text-[1.2rem]">Add Assignment</h1>
+              </div>
+            </Link>
           </div>
-          {/* curriculumn topic section */}
-
-          {lessons?.map((data: any, index: number) => {
-            return (
-              <SingleLesson
-                key={index}
-                data={data}
-                setShowModal={setShowModal}
-                setShowPreview={setShowPreview}
-                active={active}
-                handleClick={handleClick}
-                studentsAdded={studentsAdded}
-                aboutToEditStudent={aboutToEditStudent}
-                cancelPresence={cancelPresence}
-                addAllStudentsForEachLesson={addAllStudentsForEachLesson}
-              />
-            );
-          })}
         </div>
-        {/* Add student modal component  */}
-        <AddStudent
-          showModal={showModal}
-          cancelPresence={cancelPresence}
-          studentsAdded={studentsAdded}
-          updateStudentsAddedForEachLesson={updateStudentsAddedForEachLesson}
-          removeStudentAddedForEachLesson={removeStudentAddedForEachLesson}
-          addAllStudentsForEachLesson={addAllStudentsForEachLesson}
-          removeAllStudentsAddedForEachLesson={removeAllStudentsAddedForEachLesson}
-          setAboutToEditStudent={setAboutToEditStudent}
-          editStudent={editStudents}
-        />
-        {/* preview modal components */}
-        <PreviewModal showPreview={showPreview} cancelPreview={cancelPreview} />
       </div>
-    </div>
+      <div className="border-[#BDBDBD] pl-[1.5rem] md:mb-[3rem] mb-[1.5rem] pb-3 mt-7 border-b-[1.3px]">
+        <h2 className="text-[1.2rem] md:text-[1.4rem] font-bold text-[#2073fa]">Unit Control</h2>
+      </div>
+      {/* curriculumn topic section */}
+
+      {lessons?.map((data: any, index: number) => {
+        return (
+          <SingleLesson
+            key={index}
+            data={data}
+            setShowModal={setShowModal}
+            setShowPreview={setShowPreview}
+            active={active}
+            handleClick={handleClick}
+            studentsAdded={studentsAdded}
+            aboutToEditStudent={aboutToEditStudent}
+            cancelPresence={cancelPresence}
+            addAllStudentsForEachLesson={addAllStudentsForEachLesson}
+          />
+        );
+      })}
+      {/* Add student modal component  */}
+      <AddStudent
+        showModal={showModal}
+        cancelPresence={cancelPresence}
+        studentsAdded={studentsAdded}
+        updateStudentsAddedForEachLesson={updateStudentsAddedForEachLesson}
+        removeStudentAddedForEachLesson={removeStudentAddedForEachLesson}
+        addAllStudentsForEachLesson={addAllStudentsForEachLesson}
+        removeAllStudentsAddedForEachLesson={removeAllStudentsAddedForEachLesson}
+        setAboutToEditStudent={setAboutToEditStudent}
+        editStudent={editStudents}
+      />
+      {/* preview modal components */}
+      <PreviewModal showPreview={showPreview} cancelPreview={cancelPreview} />
+    </TeacherLayout>
   );
 }
