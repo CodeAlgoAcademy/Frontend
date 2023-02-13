@@ -1,12 +1,12 @@
 import TeacherLayout from '@/components/Teachers/TeacherLayout';
-import {Tab,Tabs,TextField,Typography} from '@mui/material';
-import {Box} from '@mui/system';
-import React,{useState} from 'react';
-import {GeneralNav,Sidebar} from '../components';
+import { Tab, Tabs, TextField, Typography } from '@mui/material';
+import { Box } from '@mui/system';
+import React, { useState } from 'react';
+import { GeneralNav, Sidebar } from '../components';
 
 export default function Settings() {
-  const [value,setValue] = useState(0);
-  const handleChange = (event: React.SyntheticEvent,newValue: number) => {
+  const [value, setValue] = useState(0);
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
@@ -17,7 +17,7 @@ export default function Settings() {
   }
 
   function TabPanel(props: TabPanelProps) {
-    const {children,value,index,...other} = props;
+    const { children, value, index, ...other } = props;
 
     return (
       <div
@@ -28,7 +28,7 @@ export default function Settings() {
         {...other}
       >
         {value === index && (
-          <Box sx={{p: 3}}>
+          <Box sx={{ p: 3 }}>
             <Typography>{children}</Typography>
           </Box>
         )}
@@ -48,7 +48,7 @@ export default function Settings() {
       <h2 className="text-[28px] font-bold mb-6" data-testid="dashboard-heading">
         Settings
       </h2>
-      <Box sx={{borderBottom: 1,borderColor: 'divider'}}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs
           value={value}
           textColor="inherit"
@@ -83,12 +83,7 @@ export default function Settings() {
         <div className="sm:w-[80%]">
           <div>
             <h3 className="mt-5 font-bold text-xl mb-2">Current password</h3>
-            <TextField
-              id="outlined-basic"
-              fullWidth
-              label="Current Password"
-              variant="outlined"
-            />
+            <TextField id="outlined-basic" fullWidth label="Current Password" variant="outlined" />
           </div>
           <div>
             <h3 className="mt-5 font-bold text-xl mb-2">New password</h3>
@@ -98,11 +93,11 @@ export default function Settings() {
             <h3 className="mt-5 font-bold text-xl mb-2">New password</h3>
             <TextField id="outlined-basic" fullWidth label="New Password" variant="outlined" />
           </div>
-          <div className="flex mt-5 items-center gap-4">
-            <button className="px-8 py-4  text-[#2073fa] rounded-lg font-bold bg-[#c6c4c8]">
+          <div className="flex mt-5 items-center gap-4 sm:flex-row flex-col">
+            <button className="px-8 py-4 w-full text-[#2073fa] rounded-lg font-bold bg-[#c6c4c8]">
               Cancel
             </button>
-            <button className="px-8 py-4  text-white rounded-lg font-bold bg-[#2073fa]">
+            <button className="px-8 py-4 w-full text-white rounded-lg font-bold bg-[#2073fa]">
               Update password
             </button>
           </div>
@@ -119,11 +114,11 @@ export default function Settings() {
             <h3 className="mt-5 font-bold text-xl mb-2">New Email</h3>
             <TextField id="outlined-basic" fullWidth label="New Email" variant="outlined" />
           </div>
-          <div className="flex mt-5 items-center gap-4">
-            <button className="px-8 py-4  text-[#2073fa] rounded-lg font-bold bg-[#c6c4c8]">
+          <div className="flex mt-5 items-center gap-4 sm:flex-row flex-col">
+            <button className="w-full px-8 py-4  text-[#2073fa] rounded-lg font-bold bg-[#c6c4c8]">
               Cancel
             </button>
-            <button className="px-8 py-4  text-white rounded-lg font-bold bg-[#2073fa]">
+            <button className="w-full px-8 py-4  text-white rounded-lg font-bold bg-[#2073fa]">
               Update Email
             </button>
           </div>
