@@ -1,32 +1,32 @@
 import axios from 'axios';
 import http from 'axios.config';
-import React, { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { AiOutlineSearch } from 'react-icons/ai';
-import { BiChevronDown, BiChevronRight, BiChevronUp } from 'react-icons/bi';
-import { FaTimes } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
-import { getTeachers } from 'services/teacherService';
+import React,{ChangeEvent,Dispatch,SetStateAction,useEffect,useState} from 'react';
+import {AiOutlineSearch} from 'react-icons/ai';
+import {BiChevronDown,BiChevronRight,BiChevronUp} from 'react-icons/bi';
+import {FaTimes} from 'react-icons/fa';
+import {useDispatch,useSelector} from 'react-redux';
+import {getTeachers} from 'services/teacherService';
 import {
   getConversations,
   getOpenMesssages,
   open_a_message,
   setOpenStudent,
 } from 'store/messagesSlice';
-import { RootState } from 'store/store';
-import { getStudents } from 'store/studentSlice';
-import { CurrentClassState, IClass } from 'types/interfaces';
-import { getAccessToken } from 'utils/getTokens';
+import {RootState} from 'store/store';
+import {getStudents} from 'store/studentSlice';
+import {CurrentClassState,IClass} from 'types/interfaces';
+import {getAccessToken} from 'utils/getTokens';
 import ChatRoom from '../Chats/ChatRoom';
 
 const MessageRoom = () => {
-  const [active, setActive] = useState(0);
-  const [filteredTeachers, setFilteredTeachers] = useState([]);
-  const [typingText, setTypingText] = useState('');
+  const [active,setActive] = useState(0);
+  const [filteredTeachers,setFilteredTeachers] = useState([]);
+  const [typingText,setTypingText] = useState('');
   const dispatch = useDispatch();
-  const { students } = useSelector((state: RootState) => state.students.students);
-  const { teachers } = useSelector((state: RootState) => state.allTeachers);
-  const { conversations } = useSelector((state: RootState) => state.messages);
-  const [userSelected, setUserSelected] = useState<number>();
+  const {students} = useSelector((state: RootState) => state.students.students);
+  const {teachers} = useSelector((state: RootState) => state.allTeachers);
+  const {conversations} = useSelector((state: RootState) => state.messages);
+  const [userSelected,setUserSelected] = useState<number>();
   const currentClass = useSelector((state: RootState): CurrentClassState => state.currentClass);
 
   //   const setActiveStudent: any = () => {
@@ -88,23 +88,23 @@ const MessageRoom = () => {
   //   });
   // };
 
-  const [openedStudent, setOpenedStudent] = useState<boolean>(false);
-  const [openedTeachers, setOpenedTeachers] = useState<boolean>(false);
+  const [openedStudent,setOpenedStudent] = useState<boolean>(false);
+  const [openedTeachers,setOpenedTeachers] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(getStudents());
     dispatch(getTeachers());
     dispatch(getConversations());
-  }, [currentClass]);
+  },[currentClass,dispatch]);
 
   return (
-    <section className={`w-[100vw] p-8 min-h-screen`}>
+    <>
       <div
-        className={`w-[100%] max-w-[90vw] relative mx-auto h-screen max-h-fit bg-white shadow-md rounded-md flex overflow-hidden`}
+        className={`w-full relative mx-auto h-full bg-white shadow-md rounded-md flex overflow-hidden`}
       >
-        <div className="flex h-[700px] flex-col flex-[30%] md:border-r-2 border-b-2">
+        <div className="flex flex-col md:border-r-2 border-b-2 min-w-[330px] bg-gray-100">
           <div
-            className="flex justify-between items-center p-4 font-bold bg-[#2073fa] text-white"
+            className="flex justify-between items-center p-4 font-bold bg-[#2073fa] text-white px-5 py-4"
             onClick={() => setOpenedStudent(!openedStudent)}
           >
             <p className="text-[20px">My Students</p>
@@ -199,7 +199,7 @@ const MessageRoom = () => {
           </div> */}
         </div>
       </div>
-    </section>
+    </>
   );
 };
 

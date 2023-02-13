@@ -1,27 +1,27 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import {useRouter} from 'next/router';
+import React,{useEffect,useState} from 'react';
 
 interface Props {
-  image?: string;
+  image?: string | JSX.Element;
   title: string;
   notification?: number;
-  name: string;
+  url: string;
   isIcon?: boolean;
 }
-const NavButton = ({ image, title, notification, name, isIcon }: Props) => {
-  const [active, setActive] = useState(false);
-  const [detailsDisplay, setDetailsDisplay] = useState(false);
+const NavButton = ({image,title,notification,url,isIcon}: Props) => {
+  const [active,setActive] = useState(false);
+  const [detailsDisplay,setDetailsDisplay] = useState(false);
   const router = useRouter();
   useEffect(() => {
-    setActive(() => `/parents${name ? '/' + name : ''}` === router.pathname);
-  }, [router.pathname, name]);
+    setActive(() => url === router.pathname);
+  },[router.pathname,url]);
 
   return (
-    <Link href={`/parents/${name}`}>
+    <Link href={`${url}`}>
       <button
-        className="py-[14px] px-7 flex relative items-center justify-center gap-5 w-full hover:bg-slate-50 rounded-3xl"
+        className="py-[14px] px-7 flex relative text-[26px] items-center justify-center gap-5 text-white w-full hover:bg-slate-50 rounded-3xl"
         style={{
           backgroundColor: active ? '#2073fa' : '',
           padding: !isIcon ? '14px 28px' : '12px',
@@ -31,16 +31,23 @@ const NavButton = ({ image, title, notification, name, isIcon }: Props) => {
         onMouseEnter={() => setDetailsDisplay(() => true)}
         onMouseLeave={() => setDetailsDisplay(() => false)}
       >
-        <Image
-          src={`/assets/${image}`}
-          alt={title}
-          width={20}
-          height={20}
-          className={active ? '' : 'blue-svg'}
-        />
+        {typeof (image) === "string"
+          ?
+          <Image
+            src={`/assets/${image}`}
+            alt={title}
+            width={20}
+            height={20}
+            className={active ? '' : 'blue-svg'}
+          />
+          :
+          <span className={active ? '' : 'blue-svg' + ""}>
+            {image}
+          </span>
+        }
         {!isIcon && (
           <>
-            <p className="font-medium select-none" style={{ color: active ? '#fff' : '' }}>
+            <p className="font-medium select-none capitalize" style={{color: active ? '#fff' : ''}}>
               {title}
             </p>
             {notification && (

@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React,{useState,useEffect} from 'react';
 import Link from 'next/link';
-import { Button, Sidebar, GeneralNav } from 'components';
-import { BsPlusCircle } from 'react-icons/bs';
-import { FaChevronLeft, FaTimes } from 'react-icons/fa';
-import { IoPersonAddOutline } from 'react-icons/io5';
-import { TbMedal } from 'react-icons/tb';
-import { StudentModal, SkillModal } from 'components/curriculum/assignment';
+import {Button} from 'components';
+import {BsPlusCircle} from 'react-icons/bs';
+import {FaChevronLeft,FaTimes} from 'react-icons/fa';
+import {IoPersonAddOutline} from 'react-icons/io5';
+import {TbMedal} from 'react-icons/tb';
+import {StudentModal,SkillModal} from 'components/curriculum/assignment';
 
-import { RootState } from 'store/store';
-import { useSelector, useDispatch } from 'react-redux';
-import { getStudents } from 'store/studentSlice';
+import {RootState} from 'store/store';
+import {useSelector,useDispatch} from 'react-redux';
+import {getStudents} from 'store/studentSlice';
 import SingleAssignment from '@/components/curriculum/assignment/singleAssignment';
 
 import {
@@ -20,9 +20,10 @@ import {
   DynamicChechbox,
   IMainAssignment,
 } from 'types/interfaces';
-import { addNewAssignments, getAssignments, updateAssignment } from 'services/assignmentService';
-import { getDate } from 'utils/getDate';
-import { useRouter } from 'next/router';
+import {addNewAssignments,getAssignments,updateAssignment} from 'services/assignmentService';
+import {getDate} from 'utils/getDate';
+import {useRouter} from 'next/router';
+import TeacherLayout from '@/components/Teachers/TeacherLayout';
 
 const Assignments = () => {
   const modalDefaults = {
@@ -35,17 +36,17 @@ const Assignments = () => {
   };
   const dispatch = useDispatch();
   const router = useRouter();
-  const [modalWrapperDisplay, setModalWrapperDisplay] = useState(false);
-  const [modalItemsDisplay, setModalItemsDisplay] = useState(modalDefaults);
-  const [historyType, setHistoryType] = useState('active');
-  const [skillCheckbox, setSkillCheckbox] = useState<DynamicChechbox>({});
-  const [studentCheckbox, setStudentCheckbox] = useState<DynamicChechbox>({});
-  const [allStudentCheckbox, setAllStudentCheckbox] = useState({
+  const [modalWrapperDisplay,setModalWrapperDisplay] = useState(false);
+  const [modalItemsDisplay,setModalItemsDisplay] = useState(modalDefaults);
+  const [historyType,setHistoryType] = useState('active');
+  const [skillCheckbox,setSkillCheckbox] = useState<DynamicChechbox>({});
+  const [studentCheckbox,setStudentCheckbox] = useState<DynamicChechbox>({});
+  const [allStudentCheckbox,setAllStudentCheckbox] = useState({
     isChecked: false,
   });
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [editId, setEditId] = useState<number | string>('');
-  const [assignmentDetails, setAssignmentDetails] = useState<AssignmentDetails>({
+  const [isEditing,setIsEditing] = useState<boolean>(false);
+  const [editId,setEditId] = useState<number | string>('');
+  const [assignmentDetails,setAssignmentDetails] = useState<AssignmentDetails>({
     title: '',
     order: 'random',
     number: 0,
@@ -57,11 +58,11 @@ const Assignments = () => {
   });
 
   const assingmentSkills = useSelector((state: RootState): SkillDetails[] => state.skills);
-  const { assignments } = useSelector((state: RootState) => state.allAssignments);
+  const {assignments} = useSelector((state: RootState) => state.allAssignments);
 
-  const { students } = useSelector((state: RootState) => state.students);
+  const {students} = useSelector((state: RootState) => state.students);
 
-  const setEditAssignment = (assignment: any, id: string | number) => {
+  const setEditAssignment = (assignment: any,id: string | number) => {
     setAssignmentDetails(assignment);
 
     setIsEditing(true);
@@ -85,27 +86,27 @@ const Assignments = () => {
   const addSkill = (newSkill: AssignmentSkill) => {
     setAssignmentDetails((prev) => {
       const prevSkills = prev.skills;
-      return { ...prev, skills: [...prevSkills, newSkill] };
+      return {...prev,skills: [...prevSkills,newSkill]};
     });
   };
   const removeSkill = (newSkill: AssignmentSkill) => {
     setAssignmentDetails((prev) => {
       const prevSkills = prev.skills;
       const newSkills = prevSkills.filter((skill) => skill.skillId !== newSkill.skillId);
-      return { ...prev, skills: newSkills };
+      return {...prev,skills: newSkills};
     });
   };
   const addStudent = (newStudent: Student) => {
     setAssignmentDetails((prev) => {
       const prevStudents = prev.students;
-      return { ...prev, students: [...prevStudents, newStudent] };
+      return {...prev,students: [...prevStudents,newStudent]};
     });
   };
   const removeStudent = (newStudent: Student) => {
     setAssignmentDetails((prev) => {
       const prevStudents = prev.students;
       const newStudents = prevStudents.filter((student) => student.email !== newStudent.email);
-      return { ...prev, students: newStudents };
+      return {...prev,students: newStudents};
     });
   };
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -116,12 +117,12 @@ const Assignments = () => {
   };
   const updateAssignmentSchedule = (value: boolean) => {
     setAssignmentDetails((prev) => {
-      return { ...prev, is_current: value };
+      return {...prev,is_current: value};
     });
   };
-  const updateScheduleDate = (key: string, value: string) => {
+  const updateScheduleDate = (key: string,value: string) => {
     setAssignmentDetails((prev) => {
-      return { ...prev, [key]: value };
+      return {...prev,[key]: value};
     });
   };
   const handleSkillCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -130,10 +131,10 @@ const Assignments = () => {
       [e.target.name]: e.target.checked,
     }));
     const value = e.target.checked;
-    if (value) {
-      addSkill({ skillId: e.target.name });
+    if(value) {
+      addSkill({skillId: e.target.name});
     } else {
-      removeSkill({ skillId: e.target.name });
+      removeSkill({skillId: e.target.name});
     }
   };
   const handleStudentCheckboxChange = (
@@ -145,7 +146,7 @@ const Assignments = () => {
       [e.target.name]: e.target.checked,
     }));
     const value = e.target.checked;
-    if (value) {
+    if(value) {
       addStudent(studentDetails);
     } else {
       removeStudent(studentDetails);
@@ -156,34 +157,34 @@ const Assignments = () => {
       isChecked: e.target.checked,
     });
     const value = e.target.checked;
-    if (value) {
+    if(value) {
       setAssignmentDetails((prev) => {
-        return { ...prev, students: students?.students };
+        return {...prev,students: students?.students};
       });
-      const newCheckboxes = Object.keys(studentCheckbox).reduce((prev, student) => {
-        return { ...prev, [student]: true };
-      }, {});
+      const newCheckboxes = Object.keys(studentCheckbox).reduce((prev,student) => {
+        return {...prev,[student]: true};
+      },{});
       setStudentCheckbox(newCheckboxes);
     } else {
       setAssignmentDetails((prev) => {
-        return { ...prev, students: [] };
+        return {...prev,students: []};
       });
-      const newCheckboxes = Object.keys(studentCheckbox).reduce((prev, student) => {
-        return { ...prev, [student]: false };
-      }, {});
+      const newCheckboxes = Object.keys(studentCheckbox).reduce((prev,student) => {
+        return {...prev,[student]: false};
+      },{});
       setStudentCheckbox(newCheckboxes);
     }
   };
   const showModal = (modalName: string) => {
     setModalWrapperDisplay((prev) => true);
-    setModalItemsDisplay((prev) => ({ ...modalDefaults, [modalName]: true }));
+    setModalItemsDisplay((prev) => ({...modalDefaults,[modalName]: true}));
   };
   const hideModal = () => {
     setModalWrapperDisplay((prev) => false);
     setModalItemsDisplay((prev) => modalDefaults);
   };
   const switchModal = (modalName: string) => {
-    setModalItemsDisplay((prev) => (prev = { ...modalDefaults, [modalName]: true }));
+    setModalItemsDisplay((prev) => (prev = {...modalDefaults,[modalName]: true}));
   };
   useEffect(() => {
     assingmentSkills.forEach((skillCategory) => {
@@ -200,255 +201,286 @@ const Assignments = () => {
         [student.email]: false,
       }));
     });
-  }, []);
+  },[]);
   const fetchAllStudents = async () => {
     await dispatch(getStudents());
   };
   useEffect(() => {
     dispatch(getAssignments());
-  }, []);
+  },[]);
   useEffect(() => {
-    setAssignmentDetails((prev) => ({ ...prev, number: 0 }));
-  }, [assignmentDetails.skills]);
+    setAssignmentDetails((prev) => ({...prev,number: 0}));
+  },[assignmentDetails.skills]);
   useEffect(() => {
     fetchAllStudents();
-  }, []);
+  },[]);
   return (
-    <div className="min-h-[100vh] flex flex-col">
-      <GeneralNav />
-      <div className="flex items-stretch mb-auto grow">
-        <div className="sidebar bg-white w-[270px]">
-          <Sidebar />
-        </div>
-        <div className="bg-[#ECEDF3] flex-1 px-[6%] py-8">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-x-2 mb-6 text-[#2073fa]">
-              <span
-                className="text-[22px] font-bold cursor-pointer"
-                onClick={() => {
-                  router.back();
-                }}
-              >
-                <FaChevronLeft />
-              </span>
-              <h2 className="text-[28px] font-bold" data-testid="curriculum-assignment-heading">
-                New Assignment
-              </h2>
-            </div>
-            <span className="hover:opacity-80 cursor-pointer flex items-center gap-3 text-[#2073fa]">
-              <span className="text-lg">
-                <BsPlusCircle />
-              </span>
-              <span
-                className="text-lg font-semibold"
-                onClick={() => {
-                  showModal('historyResponse');
-                }}
-              >
-                Assignment History
-              </span>
+    <>
+      <TeacherLayout>
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-x-2 mb-6 text-[#2073fa]">
+            <span
+              className="text-[22px] font-bold cursor-pointer"
+              onClick={() => {
+                router.back();
+              }}
+            >
+              <FaChevronLeft />
             </span>
+            <h2 className="text-[28px] font-bold" data-testid="curriculum-assignment-heading">
+              New Assignment
+            </h2>
           </div>
-          <div className="">
-            <input
-              type="text"
-              name="title"
-              id="assignmentTitle"
-              className="h-[44px] w-[400px] py-2 px-4 rounded-md outline-none"
-              placeholder="Assignment Title"
-              value={assignmentDetails.title}
-              onChange={handleInputChange}
-            />
-            <div className="pt-4 mt-4 border-t border-[#BDBDBD] flex flex-col gap-4">
-              <div className="rounded-md h-[58px] bg-white flex items-center overflow-y-hidden">
-                <div className="rounded-r-md flex items-center justify-between px-4 w-[180px] shadow-right h-full">
-                  <span className="font-bold">Skill(s)</span>
-                  <span
-                    className="text-2xl cursor-pointer rounded-full border p-1 hover:opacity-80 hover:scale-125 transition-all ease-in-out animate-pulse hover:animate-none"
-                    onClick={() => {
-                      showModal('skillsResponse');
-                    }}
-                  >
-                    <TbMedal />{' '}
-                  </span>
-                </div>
-                <div className="px-14">
-                  <span className="font-medium">
-                    {assignmentDetails.skills?.length} skill
-                    {assignmentDetails.skills?.length === 1 ? '' : '(s)'} selected
-                  </span>{' '}
-                  value
-                </div>
+          <span className="hover:opacity-80 cursor-pointer flex items-center gap-3 text-[#2073fa]">
+            <span className="text-lg">
+              <BsPlusCircle />
+            </span>
+            <span
+              className="text-lg font-semibold"
+              onClick={() => {
+                showModal('historyResponse');
+              }}
+            >
+              Assignment History
+            </span>
+          </span>
+        </div>
+        <div className="">
+          <input
+            type="text"
+            name="title"
+            id="assignmentTitle"
+            className="h-[44px] w-[400px] py-2 px-4 rounded-md outline-none"
+            placeholder="Assignment Title"
+            value={assignmentDetails.title}
+            onChange={handleInputChange}
+          />
+          <div className="pt-4 mt-4 border-t border-[#BDBDBD] flex flex-col gap-4">
+            <div className="rounded-md h-[58px] bg-white flex items-center overflow-y-hidden">
+              <div className="rounded-r-md flex items-center justify-between px-4 w-[180px] shadow-right h-full">
+                <span className="font-bold">Skill(s)</span>
+                <span
+                  className="text-2xl cursor-pointer rounded-full border p-1 hover:opacity-80 hover:scale-125 transition-all ease-in-out animate-pulse hover:animate-none"
+                  onClick={() => {
+                    showModal('skillsResponse');
+                  }}
+                >
+                  <TbMedal />{' '}
+                </span>
               </div>
-              <div className="rounded-md h-[58px] bg-white flex items-center overflow-y-hidden">
-                <div className="rounded-r-md flex items-center justify-between px-4 w-[180px] shadow-right h-full">
-                  <span className="font-bold">Student{'(s)'}</span>
-                  <span
-                    className="text-2xl cursor-pointer rounded-full border p-1 hover:opacity-80 hover:scale-125 transition-all ease-in-out animate-pulse hover:animate-none"
-                    onClick={() => {
-                      showModal('studentResponse');
-                    }}
-                  >
-                    <IoPersonAddOutline />{' '}
-                  </span>
-                </div>
-                <div className="px-14">
-                  <span className="font-medium">
-                    {assignmentDetails.students?.length} student
-                    {assignmentDetails.students?.length === 1 ? '' : '(s)'} selected
-                  </span>
-                </div>
+              <div className="px-14">
+                <span className="font-medium">
+                  {assignmentDetails.skills?.length} skill
+                  {assignmentDetails.skills?.length === 1 ? '' : '(s)'} selected
+                </span>{' '}
+                value
               </div>
-              <div className="rounded-md h-[58px] bg-white flex items-center">
-                <div className="rounded-r-md flex items-center justify-between px-4 min-w-[180px] shadow-right h-full">
-                  <span className="font-bold">Scheduling</span>
-                </div>
-                <div className="pl-14 pr-8">
-                  <div className="flex items-center gap-4">
-                    <div className="form-check flex items-center gap-2">
-                      <input
-                        className=""
-                        type="radio"
-                        name="schedule"
-                        value="now"
-                        checked={assignmentDetails.is_current}
-                        onChange={() => {
-                          updateScheduleDate('start_date', getDate());
-                          updateAssignmentSchedule(true);
-                        }}
-                      />
-                      <label
-                        className="form-check-label inline-block text-gray-800 font-medium"
-                        htmlFor="schedule"
-                      >
-                        Start Now
-                      </label>
-                    </div>
-                    <div className="form-check flex items-center gap-2">
-                      <input
-                        className=""
-                        type="radio"
-                        name="schedule"
-                        value="later"
-                        checked={!assignmentDetails.is_current}
-                        onChange={() => updateAssignmentSchedule(false)}
-                      />
-                      <label
-                        className="form-check-label inline-block text-gray-800 font-medium"
-                        htmlFor="schedule"
-                      >
-                        Schedule for later
-                      </label>
-                    </div>
+            </div>
+            <div className="rounded-md h-[58px] bg-white flex items-center overflow-y-hidden">
+              <div className="rounded-r-md flex items-center justify-between px-4 w-[180px] shadow-right h-full">
+                <span className="font-bold">Student{'(s)'}</span>
+                <span
+                  className="text-2xl cursor-pointer rounded-full border p-1 hover:opacity-80 hover:scale-125 transition-all ease-in-out animate-pulse hover:animate-none"
+                  onClick={() => {
+                    showModal('studentResponse');
+                  }}
+                >
+                  <IoPersonAddOutline />{' '}
+                </span>
+              </div>
+              <div className="px-14">
+                <span className="font-medium">
+                  {assignmentDetails.students?.length} student
+                  {assignmentDetails.students?.length === 1 ? '' : '(s)'} selected
+                </span>
+              </div>
+            </div>
+            <div className="rounded-md h-[58px] bg-white flex items-center">
+              <div className="rounded-r-md flex items-center justify-between px-4 min-w-[180px] shadow-right h-full">
+                <span className="font-bold">Scheduling</span>
+              </div>
+              <div className="pl-14 pr-8">
+                <div className="flex items-center gap-4">
+                  <div className="form-check flex items-center gap-2">
+                    <input
+                      className=""
+                      type="radio"
+                      name="schedule"
+                      value="now"
+                      checked={assignmentDetails.is_current}
+                      onChange={() => {
+                        updateScheduleDate('start_date',getDate());
+                        updateAssignmentSchedule(true);
+                      }}
+                    />
+                    <label
+                      className="form-check-label inline-block text-gray-800 font-medium"
+                      htmlFor="schedule"
+                    >
+                      Start Now
+                    </label>
+                  </div>
+                  <div className="form-check flex items-center gap-2">
+                    <input
+                      className=""
+                      type="radio"
+                      name="schedule"
+                      value="later"
+                      checked={!assignmentDetails.is_current}
+                      onChange={() => updateAssignmentSchedule(false)}
+                    />
+                    <label
+                      className="form-check-label inline-block text-gray-800 font-medium"
+                      htmlFor="schedule"
+                    >
+                      Schedule for later
+                    </label>
+                  </div>
 
-                    {!assignmentDetails.is_current && (
-                      <div className="relative max-w-fit">
-                        <input
-                          type="date"
-                          value={assignmentDetails.start_date}
-                          className="hoverElement max-w-[130px] px-3 py-1 rounded-md outline-none border border-[#2073fa] text-[15px]"
-                          onChange={(e) => {
-                            updateScheduleDate('start_date', e.target.value);
-                          }}
-                        />
-                        <div className="hoverText right-[0] -top-[56px] bg-[#2073fa] after:bg-[#2073fa]">
-                          Start date
-                        </div>
-                      </div>
-                    )}
+                  {!assignmentDetails.is_current && (
                     <div className="relative max-w-fit">
                       <input
                         type="date"
-                        value={assignmentDetails.end_date}
+                        value={assignmentDetails.start_date}
                         className="hoverElement max-w-[130px] px-3 py-1 rounded-md outline-none border border-[#2073fa] text-[15px]"
                         onChange={(e) => {
-                          updateScheduleDate('end_date', e.target.value);
+                          updateScheduleDate('start_date',e.target.value);
                         }}
                       />
                       <div className="hoverText right-[0] -top-[56px] bg-[#2073fa] after:bg-[#2073fa]">
-                        End date
+                        Start date
                       </div>
                     </div>
+                  )}
+                  <div className="relative max-w-fit">
+                    <input
+                      type="date"
+                      value={assignmentDetails.end_date}
+                      className="hoverElement max-w-[130px] px-3 py-1 rounded-md outline-none border border-[#2073fa] text-[15px]"
+                      onChange={(e) => {
+                        updateScheduleDate('end_date',e.target.value);
+                      }}
+                    />
+                    <div className="hoverText right-[0] -top-[56px] bg-[#2073fa] after:bg-[#2073fa]">
+                      End date
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="rounded-md h-[58px] bg-white flex items-center overflow-y-hidden">
-                <div className="rounded-r-md flex items-center justify-between px-4 w-[180px] shadow-right h-full">
-                  <span className="font-bold">No. of questions</span>
-                </div>
-                <div className="px-14 flex gap-8 items-center">
+            </div>
+            <div className="rounded-md h-[58px] bg-white flex items-center overflow-y-hidden">
+              <div className="rounded-r-md flex items-center justify-between px-4 w-[180px] shadow-right h-full">
+                <span className="font-bold">No. of questions</span>
+              </div>
+              <div className="px-14 flex gap-8 items-center">
+                <input
+                  id="questionCount"
+                  type="number"
+                  value={assignmentDetails?.number}
+                  className="bg-gray-100 px-4 py-2 max-w-[100px] assignment-input caret-transparent font-medium outline-none border-none rounded-md"
+                  readOnly={true}
+                />
+                <div>
                   <input
-                    id="questionCount"
-                    type="number"
+                    type="range"
+                    name="number"
+                    min={0}
+                    max={100}
                     value={assignmentDetails?.number}
-                    className="bg-gray-100 px-4 py-2 max-w-[100px] assignment-input caret-transparent font-medium outline-none border-none rounded-md"
-                    readOnly={true}
+                    // step={assignmentDetails?.skills?.length}
+                    className="w-[380px] h-[12px] appearance-none rounded-lg bg-gray-200 opacity-90 outline-none transition-all hover:opacity-100 assignment-slider"
+                    onChange={handleInputChange}
                   />
-                  <div>
+                </div>
+              </div>
+            </div>
+            <div className="rounded-md h-[58px] bg-white flex items-center overflow-y-hidden">
+              <div className="rounded-r-md flex items-center justify-between px-4 w-[180px] shadow-right h-full">
+                <span className="font-bold">Order of questions</span>
+              </div>
+              <div className="px-14 flex items-center gap-8">
+                <div className="flex items-center gap-14">
+                  <div className="form-check flex items-center gap-2">
                     <input
-                      type="range"
-                      name="number"
-                      min={0}
-                      max={100}
-                      value={assignmentDetails?.number}
-                      // step={assignmentDetails?.skills?.length}
-                      className="w-[380px] h-[12px] appearance-none rounded-lg bg-gray-200 opacity-90 outline-none transition-all hover:opacity-100 assignment-slider"
+                      className=""
+                      type="radio"
+                      name="order"
+                      value="random"
+                      checked={assignmentDetails.order === 'random'}
                       onChange={handleInputChange}
                     />
+                    <label
+                      className="form-check-label inline-block text-gray-800 font-medium"
+                      htmlFor="order"
+                    >
+                      Random
+                    </label>
+                  </div>
+                  <div className="form-check flex items-center gap-2">
+                    <input
+                      className=""
+                      type="radio"
+                      name="order"
+                      value="sequence"
+                      checked={assignmentDetails.order === 'sequence'}
+                      onChange={handleInputChange}
+                    />
+                    <label
+                      className="form-check-label inline-block text-gray-800 font-medium"
+                      htmlFor="order"
+                    >
+                      Sequence
+                    </label>
                   </div>
                 </div>
               </div>
-              <div className="rounded-md h-[58px] bg-white flex items-center overflow-y-hidden">
-                <div className="rounded-r-md flex items-center justify-between px-4 w-[180px] shadow-right h-full">
-                  <span className="font-bold">Order of questions</span>
-                </div>
-                <div className="px-14 flex items-center gap-8">
-                  <div className="flex items-center gap-14">
-                    <div className="form-check flex items-center gap-2">
-                      <input
-                        className=""
-                        type="radio"
-                        name="order"
-                        value="random"
-                        checked={assignmentDetails.order === 'random'}
-                        onChange={handleInputChange}
-                      />
-                      <label
-                        className="form-check-label inline-block text-gray-800 font-medium"
-                        htmlFor="order"
-                      >
-                        Random
-                      </label>
-                    </div>
-                    <div className="form-check flex items-center gap-2">
-                      <input
-                        className=""
-                        type="radio"
-                        name="order"
-                        value="sequence"
-                        checked={assignmentDetails.order === 'sequence'}
-                        onChange={handleInputChange}
-                      />
-                      <label
-                        className="form-check-label inline-block text-gray-800 font-medium"
-                        htmlFor="order"
-                      >
-                        Sequence
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-row-reverse gap-4 mt-4">
+            </div>
+            <div className="flex flex-row-reverse gap-4 mt-4">
+              <span
+                onClick={async () => {
+                  if(!isEditing) {
+                    await dispatch(
+                      addNewAssignments({
+                        assignment: assignmentDetails,
+                        actionType: 'active',
+                        showModal,
+                        modalType: 'createResponse',
+                        resetAssignments,
+                      }),
+                    );
+                  } else {
+                    await dispatch(
+                      updateAssignment({
+                        assignment: assignmentDetails,
+                        actionType: 'active',
+                        showModal,
+                        modalType: 'createResponse',
+                        resetAssignments,
+                        id: editId,
+                      }),
+                    );
+                  }
+                }}
+              >
+                <Button color="#2073fa" text="Create" />
+              </span>
+              <span
+                onClick={() => {
+                  showModal('cancelResponse');
+                }}
+              >
+                <Button color="#2073fa" text="Cancel" />
+              </span>
+              <div className="mr-4">
                 <span
                   onClick={async () => {
-                    if (!isEditing) {
+                    if(!isEditing) {
                       await dispatch(
                         addNewAssignments({
                           assignment: assignmentDetails,
-                          actionType: 'active',
+                          actionType: 'draft',
                           showModal,
-                          modalType: 'createResponse',
+                          modalType: 'saveResponse',
                           resetAssignments,
                         }),
                       );
@@ -456,9 +488,9 @@ const Assignments = () => {
                       await dispatch(
                         updateAssignment({
                           assignment: assignmentDetails,
-                          actionType: 'active',
+                          actionType: 'draft',
                           showModal,
-                          modalType: 'createResponse',
+                          modalType: 'saveResponse',
                           resetAssignments,
                           id: editId,
                         }),
@@ -466,55 +498,17 @@ const Assignments = () => {
                     }
                   }}
                 >
-                  <Button color="#2073fa" text="Create" />
+                  <Button color="#2073fa" text={isEditing ? 'Edit' : 'Save'} />
                 </span>
-                <span
-                  onClick={() => {
-                    showModal('cancelResponse');
-                  }}
-                >
-                  <Button color="#2073fa" text="Cancel" />
-                </span>
-                <div className="mr-4">
-                  <span
-                    onClick={async () => {
-                      if (!isEditing) {
-                        await dispatch(
-                          addNewAssignments({
-                            assignment: assignmentDetails,
-                            actionType: 'draft',
-                            showModal,
-                            modalType: 'saveResponse',
-                            resetAssignments,
-                          }),
-                        );
-                      } else {
-                        await dispatch(
-                          updateAssignment({
-                            assignment: assignmentDetails,
-                            actionType: 'draft',
-                            showModal,
-                            modalType: 'saveResponse',
-                            resetAssignments,
-                            id: editId,
-                          }),
-                        );
-                      }
-                    }}
-                  >
-                    <Button color="#2073fa" text={isEditing ? 'Edit' : 'Save'} />
-                  </span>
-                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </TeacherLayout>
       {
         <div
-          className={`w-full h-full backdrop-blur-sm bg-gray-100/50 fixed left-0 flex justify-center items-center ${
-            modalWrapperDisplay ? 'showModal' : 'hideModal'
-          }`}
+          className={`w-full h-full backdrop-blur-sm bg-gray-100/50 fixed left-0 flex justify-center items-center ${modalWrapperDisplay ? 'showModal' : 'hideModal'
+            }`}
         >
           {modalWrapperDisplay && (
             <div className="relative max-w-[850px] bg-white rounded-xl overflow-hidden overflow-y-scroll max-h-[90vh]">
@@ -618,8 +612,8 @@ const Assignments = () => {
                     </span>
                   </div>
                   <div className="mt-3 flex flex-col gap-3">
-                    {assignments?.map((assignment: any, index: number) => {
-                      if (assignment.status.toLowerCase() === historyType.toLowerCase()) {
+                    {assignments?.map((assignment: any,index: number) => {
+                      if(assignment.status.toLowerCase() === historyType.toLowerCase()) {
                         return (
                           <SingleAssignment
                             setEditAssignment={setEditAssignment}
@@ -654,7 +648,7 @@ const Assignments = () => {
           )}
         </div>
       }
-    </div>
+    </>
   );
 };
 
