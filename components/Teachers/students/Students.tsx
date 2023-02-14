@@ -42,7 +42,7 @@ const Students = ({
 export default Students;
 
 const styles = {
-  container: 'px-8 space-y-2 mt-14',
+  container: 'md:px-8 px-4 space-y-2 mt-14',
   cardHeader: 'flex justify-between py-6 px-2 sm:px-6 border-b items-center relative',
   cardHeaderName:
     'cursor-pointer w-28 sm:w-40 justify-between px-2 border-r flex space-x-3 items-center',

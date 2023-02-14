@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { FaGripLinesVertical, FaTimesCircle } from 'react-icons/fa';
+import { FaGripLinesVertical, FaTimes, FaTimesCircle } from 'react-icons/fa';
 import { BsFillCircleFill, BsCircle } from 'react-icons/bs';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import { IoIosAddCircleOutline } from 'react-icons/io';
@@ -157,30 +157,29 @@ const SingleLesson = ({
   return (
     <div className="flex-column bg-white rounded-lg transition duration-200 ease-in-out">
       <div className="bg-white flex items-center mt-[.7rem] py-[0.3rem] pl-[10px] rounded-lg transition duration-200 ease-out">
-        <div className="border-r-2 flex items-center sm:gap-5 lg:gap-0 sm:pr-[1rem] sm:py-2 md:pr-[1.5rem] border-[#E6E6E6] py-5 pr-[4rem]  justify-between w-full">
-          <div className="flex items-center sm:gap-3 lg:gap-7">
-            <FaGripLinesVertical className="text-[#A0A0A0] text-[1.1rem] font-thin" />
-            <p className="font-bold sm:text-[15px] lg:text-[20px] text-[#2073fa]">
+        <div className="border-r-2 flex items-center sm:gap-5 lg:gap-0 sm:pr-[1rem] sm:py-2 md:pr-[1.5rem] border-[#E6E6E6] py-5 pr-[4rem]  justify-between w-full flex-1">
+          <div className="flex items-center gap-2 sm:gap-3 lg:gap-7 flex-1 w-full">
+            <FaGripLinesVertical className="text-[#A0A0A0] text-[1.1rem] font-thin xs:block hidden" />
+            <p className="font-bold sm:text-[15px] lg:text-[20px] text-[#2073fa] flex-1 min-w-fit">
               {data.topic.title}
             </p>
             {active.includes(data.id) && (
               <p
                 onClick={() => setShowPreview(true)}
-                className=" sm:text-[10px] lg:text-[18px] text-[#A0A0A0] hover:underline cursor-pointer hover:text-black transition duration-200 ease-out"
+                className="sm:text-[14px] sm:ml-3 block lg:text-[18px] text-[#A0A0A0] hover:underline cursor-pointer hover:text-black transition duration-200 ease-out"
               >
                 Preview
               </p>
             )}
           </div>
-          <div className="flex justify-around">
-            <p className="sm:text-[10px] lg:text-[18px] font-semibold">{data.date}</p>
+          <div className="sm:flex justify-around hidden">
             <div className="flex items-center gap-2  sm:ml-[1rem] lg:ml-[5rem]">
               {data.status.toLowerCase() == 'published' ? (
                 <BsFillCircleFill className="text-[9px]  text-[#62C932]" />
               ) : (
                 <BsCircle className="text-[9px] text-[#B0B0B0]" />
               )}
-              <p className="sm:text-[10px] lg:text-[18px] font-semibold">
+              <p className="md:text-[15px] lg:text-[18px] font-semibold">
                 {data.status.toLowerCase() !== 'published' ? 'Unpublished' : 'Published'}
               </p>
             </div>
@@ -192,9 +191,9 @@ const SingleLesson = ({
       </div>
       {active.includes(data.id) && (
         <div>
-          <div className="flex  mx-12 py-6 border-[#E6E6E6] border-t-2 ">
+          <div className="flex px-12 py-6 border-[#E6E6E6] border-t-2 sm:flex-row flex-col">
             {/* first division */}
-            <div className="flex-[.60] sm:pr-[1rem] lg:pr-[1rem] border-[#E6E6E6] border-r-2 py-[1rem]">
+            <div className="flex-[.60] sm:pr-[1rem] border-[#E6E6E6] sm:border-r-2 py-[1rem]">
               <div className="md:flex-col lg:flex-row gap-[3rem]">
                 <p className=" md:text-[12px]  lg:text-[18px] font-bold text-[#2073fa]">
                   Description
@@ -255,7 +254,7 @@ const SingleLesson = ({
             </div>
 
             {/* second division */}
-            <div className=" flex-[.40]  pl-[1rem] flex flex-col justify-between py-5">
+            <div className=" flex-[.40]  sm:pl-[1rem] flex flex-col justify-between sm:py-5">
               <div className="flex  items-center gap-[4rem]">
                 <p className="md:text-[12px]  lg:text-[18px] font-bold text-[#2073fa]">Status</p>
                 {!statusContainerOpened && (
@@ -306,12 +305,12 @@ const SingleLesson = ({
                       </p>
                     </div>
                     <span
-                      className="text-[18px]"
+                      className="text-[15px] font-light cursor-pointer text-red-600"
                       onClick={() => {
                         setStatusContainerOpened(false);
                       }}
                     >
-                      <FaTimesCircle />
+                      <FaTimes />
                     </span>
                   </>
                 )}

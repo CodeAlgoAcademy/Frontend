@@ -59,7 +59,7 @@ const SingleCurriculum = ({ curriculum, active }: { curriculum: Icurriculum; act
         className="p-8 flex items-center justify-center rounded-l-xl"
         style={{ background: curriculum.level }}
       ></div>
-      <div className="bg-white w-[20rem] p-8 rounded-r-xl flex-1">
+      <div className="bg-white p-8 rounded-r-xl flex-1">
         <div
           onClick={() => {
             setModalOpen((prev) => !prev);
@@ -69,7 +69,7 @@ const SingleCurriculum = ({ curriculum, active }: { curriculum: Icurriculum; act
         </div>
         <h1 className="font-bold mt-5 mb-5">{curriculum.title}</h1>
         <p>{curriculum.description}</p>
-        <div className="flex items-center md:flex-row pt-[1.6rem] pb-[1rem] justify-between">
+        <div className="flex items-center md:flex-row flex-wrap gap-2 pt-[1.6rem] pb-[1rem] justify-between">
           <p>{curriculum.start_date}</p>
           <Link href={`curriculum/unit/${topics}`}>
             <p

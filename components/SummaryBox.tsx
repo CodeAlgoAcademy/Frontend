@@ -49,7 +49,7 @@ const SummaryBox = () => {
     getCurriculums();
   }, []);
   return (
-    <div className="rounded-md shadow-lg p-6 w-[380px] bg-white flex flex-col justify-between">
+    <div className="rounded-md shadow-lg p-6 w-[380px] max-w-full bg-white flex flex-col justify-between">
       <div>
         <h3 className="text-[20px] font-bold mb-2 text-[#2073fa]">
           Lesson - <span>{currentLesson.title || ''}</span>

@@ -71,7 +71,7 @@ export default function AddStudent(props: modalProps) {
               </div>
             </div>
 
-            <div className="p-12 h-[250px] grid grid-cols-3 scroll-smooth overflow-y-auto gap-x-6 gap-y-8 small-scroll-thumb">
+            <div className="p-6 md:p-12 sm:py-12 sm:px-8 h-[250px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 scroll-smooth overflow-y-auto sm:gap-x-4 md:gap-x-6 gap-y-8 small-scroll-thumb">
               {students.map(({ email, firstName, lastName, id }) => {
                 const checked = props.studentsAdded.find((student) => student.id == id);
                 return (

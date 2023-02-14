@@ -9,7 +9,7 @@ import { FaChevronDown, FaPlus } from 'react-icons/fa';
 const Levels: FC<Props> = ({ openedModal, updateOpenedModal }) => {
   const { levels, standard } = useSelector((state: RootState) => state.unit.addUnit);
   return (
-    <article className="flex flex-row gap-x-2 relative">
+    <article className="flex flex-col md:flex-row gap-2 relative">
       <div
         className={`${styles.topic} ${
           openedModal === 'level' ? ' outline-[#2073fa]' : 'outline-transparent'
