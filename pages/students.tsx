@@ -1,33 +1,33 @@
-import React,{useEffect,useState} from 'react';
-import {FiPlus} from 'react-icons/fi';
-import {useDispatch,useSelector} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { FiPlus } from 'react-icons/fi';
+import { useDispatch, useSelector } from 'react-redux';
 import AddStudentModal from '../components/Teachers/students/AddStudentModal';
 import Students from '../components/Teachers/students/Students';
-import {RootState} from 'store/store';
-import {getStudents} from 'store/studentSlice';
-import {FaSearch} from 'react-icons/fa';
+import { RootState } from 'store/store';
+import { getStudents } from 'store/studentSlice';
+import { FaSearch } from 'react-icons/fa';
 import TeacherLayout from '@/components/Teachers/TeacherLayout';
 
 const Index = () => {
   const dispatch = useDispatch();
-  const [isOpen,setIsOpen] = useState<boolean>(false);
-  const {id} = useSelector((state: RootState) => state.currentClass);
-  const [commentTabsOpened,setCommentTabsOpened] = useState<boolean>(false);
-  const {students} = useSelector((state: RootState) => state.students);
-  const [filteredStudents,setFilteredStudents] = useState({
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { id } = useSelector((state: RootState) => state.currentClass);
+  const [commentTabsOpened, setCommentTabsOpened] = useState<boolean>(false);
+  const { students } = useSelector((state: RootState) => state.students);
+  const [filteredStudents, setFilteredStudents] = useState({
     students: students?.students,
   });
 
   useEffect(() => {
     dispatch(getStudents());
-  },[dispatch,id]);
+  }, [dispatch, id]);
 
   useEffect(() => {
-    setFilteredStudents(() => ({students: students?.students}));
-  },[students?.students]);
+    setFilteredStudents(() => ({ students: students?.students }));
+  }, [students?.students]);
 
   const closeCommentTabs = (event: any) => {
-    if(event.target.classList.contains('students-container')) {
+    if (event.target.classList.contains('students-container')) {
       setCommentTabsOpened(false);
     }
   };
@@ -36,7 +36,7 @@ const Index = () => {
     setFilteredStudents((prev) => {
       return {
         students: students?.students?.filter((student: any) => {
-          if(
+          if (
             (student.firstName + ' ' + student.lastName).toLowerCase().includes(value.toLowerCase())
           ) {
             return student;
@@ -56,9 +56,10 @@ const Index = () => {
             <p className="sm:block">Add Student</p>
           </div>
         </div>
-        <div className="flex justify-end w-full mt-4">
+
+        <div className="flex justify-center xs:justify-end w-full mt-4">
           <form
-            className="bg-white flex items-center space-x-3 rounded-full p-1 px-2"
+            className="bg-white flex items-center space-x-3 rounded-full p-1 px-2 w-[90vw] max-w-[250px]"
             onSubmit={(e) => {
               e.preventDefault();
             }}
@@ -66,6 +67,7 @@ const Index = () => {
             <FaSearch className="text-slate-400" />
             <input
               className="bg-transparent outline-none text-slate-800 py-1"
+              placeholder="Search students"
               onChange={(e) => {
                 filterStudents(e.target.value);
               }}
@@ -73,7 +75,6 @@ const Index = () => {
             <button type="submit" hidden></button>
           </form>
         </div>
-
         <Students commentTabsOpened={commentTabsOpened} students={filteredStudents} />
         {isOpen && <AddStudentModal setIsOpen={setIsOpen} />}
       </TeacherLayout>

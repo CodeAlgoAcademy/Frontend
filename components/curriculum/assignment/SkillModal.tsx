@@ -39,15 +39,15 @@ const SkillModal = ({
   }, [dispatch, grade, skillType]);
   return (
     <div className="py-8 min-h-[650px] w-fit">
-      <div className="flex gap-8 pl-12  h-full items-stretch mb-auto grow">
-        <div className="w-[180px] flex flex-col justify-between">
+      <div className="flex gap-8 pl-12  h-full items-stretch mb-auto grow flex-col md:flex-row">
+        <div className="w-[180px] flex flex-col justify-between gap-4">
           <div>
             <h3 className="text-2xl font-semibold">Select Skill</h3>
-            <div className="mt-12 flex flex-col gap-4">
-              <div className="px-4 py-2 flex items-center justify-between w-full rounded-lg h-[46px] bg-gray-100 drop-shadow-md">
+            <div className="mt-12 flex md:flex-col gap-4 flex-row w-full flex-wrap justify-center md:justify-start items-center">
+              <div className="px-4 py-2 flex items-center justify-between rounded-lg h-[46px] bg-gray-100 drop-shadow-md md:min-w-fit min-w-[180px] md:mx-0 mx-auto max-w-fit">
                 <p className="opacity-60 text-sm font-semibold">Computer</p>
               </div>
-              <div className="px-4 py-2 flex items-center justify-between w-full relative rounded-lg z-top h-[46px] bg-gray-100 drop-shadow-md">
+              <div className="px-4 py-2 flex items-center justify-between w-full relative rounded-lg z-top h-[46px] bg-gray-100 drop-shadow-md flex-1 md:min-w-fit min-w-[180px] md:mx-0 mx-auto max-w-fit">
                 <p className="opacity-60 text-sm font-semibold truncate ...">{skillType}</p>
                 <span
                   className="opacity-60 text-3xl cursor-pointer"
@@ -60,7 +60,7 @@ const SkillModal = ({
                   <RiArrowDropDownLine />
                 </span>
                 {pickerDisplay.skill && (
-                  <div className="grid grid-cols-1 items-center gap-1 w-[90%] absolute top-10 left-0 rounded-lg overflow-y-auto h-32 bg-gray-100 drop-shadow-md small-scroll-thumb">
+                  <div className="grid grid-cols-1 items-center gap-1 w-[90%] absolute top-10 left-0 rounded-lg overflow-y-auto h-32 bg-gray-100 drop-shadow-md flex-1 small-scroll-thumb">
                     {['CTSA', 'Kansas', 'New York', 'Missouri'].map((skill) => (
                       <span
                         key={skill}
@@ -78,7 +78,7 @@ const SkillModal = ({
                   </div>
                 )}
               </div>
-              <div className="px-4 py-2 flex items-center justify-between w-full rounded-lg h-[46px] relative bg-gray-100 drop-shadow-md">
+              <div className="px-4 py-2 flex items-center justify-between w-full rounded-lg h-[46px] relative bg-gray-100 drop-shadow-md flex-1 md:min-w-fit min-w-[180px] md:mx-0 mx-auto max-w-fit">
                 <p className="opacity-60 text-sm font-semibold truncate ...">{grade}</p>
                 <span
                   className="opacity-60 text-3xl cursor-pointer"
@@ -121,7 +121,7 @@ const SkillModal = ({
               </div>
             </div>
           </div>
-          <span onClick={hideModal} className="">
+          <span onClick={hideModal} className="md:block hidden">
             <Button color="#2073fa" text="Done" />
           </span>
         </div>
@@ -153,7 +153,7 @@ const SkillModal = ({
                     <div className="flex items-center gap-2">
                       <h3 className="font-bold text-lg">{categoryId}</h3>
                       <p
-                        className="opacity-60 text-sm font-semibold truncate ... w-[300px] cursor-default"
+                        className="opacity-60 text-sm font-semibold truncate ... w-[300px] cursor-default md:block hidden"
                         title={categoryTitle}
                       >
                         {categoryTitle}
@@ -185,6 +185,11 @@ const SkillModal = ({
               </div>
             ))}
           </div>
+        </div>
+        <div className="md:hidden block">
+          <span onClick={hideModal} className="">
+            <Button color="#2073fa" text="Done" />
+          </span>
         </div>
       </div>
     </div>

@@ -6,7 +6,8 @@ import { RootState } from 'store/store';
 import { updateUser } from 'store/authSlice';
 import { useRouter } from 'next/router';
 import { loginUser } from 'services/authService';
-
+import AuthLayout from '@/components/parents/AuthLayout';
+import GoogleBtn from '@/components/googleBtn';
 const LoginTest = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -47,69 +48,43 @@ const LoginTest = () => {
     // dispatch(clearFields());
   }, []);
   return (
-    <div className="bg-gradient-to-br from-[#78A8FB] to-[#C4D7F8] min-h-[100vh] p-[2rem] relative">
-      <div className="flex justify-between items-center">
-        <h1 className="text-white text-3xl font-bold">CodeAlgo</h1>
-        <div>
-          <span className="font-semibold">Yet to create account?</span>
-          <Link href="/selectUserType">
-            <span className="cursor-pointer ml-3 font-semibold text-[#2073FA]">Register</span>
-          </Link>
-        </div>
-      </div>
-      <div className={`flex p-[4rem] items-center justify-center `}>
-        <div className="bg-white mr-[-2rem] w-[700px] px-[4rem] py-[4rem] bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-20 rounded-[2.5rem]">
-          <h1 className="font-bold text-[32px]">Log in to your account</h1>
-          <form onSubmit={login}>
-            <label className="block text-xl font-semibold mt-6">Your email</label>
-            <input
-              value={email}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                dispatch(updateUser({ key: 'email', value: e.target.value }));
-              }}
-              type="email"
-              className="block w-full h-[2.5rem] rounded-xl px-4 py-2 focus:outline-0 mt-3"
-              placeholder="schoolTeach@gmail.com"
-              required
-            />
-            <label className="block text-xl font-semibold mt-6">Password</label>
-            <input
-              className="block w-full h-[2.5rem] rounded-xl px-4 py-2 focus:outline-0 mt-3"
-              value={password}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                dispatch(updateUser({ key: 'password', value: e.target.value }));
-              }}
-              type="password"
-              required
-            />
-            <button
-              className="block  h-[2.5rem] mt-6 text-center w-full text-white bg-[#2073FA] font-bold rounded-xl"
-              type="submit"
-            >
-              Login
-            </button>
-            <button
-              className="block  h-[2.5rem] mt-6 text-center w-full bg-neutral-100/70 font-semibold rounded-xl text-black"
-              type="button"
-            >
-              Sign In with Google
-            </button>
-          </form>
-        </div>
-        <div className="ml-[-2rem]">
-          <Image
-            src="/assets/ComputerGraphic.png"
-            width="829.8"
-            height="520.2"
-            alt="computer graphic"
+    <AuthLayout>
+      <>
+        <h1 className="font-bold text-[25px] md:text-left text-center md:text-[32px]">
+          Log in to your account
+        </h1>
+        <form onSubmit={login}>
+          <label className="block text-xl font-semibold mt-6">Your email</label>
+          <input
+            value={email}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              dispatch(updateUser({ key: 'email', value: e.target.value }));
+            }}
+            type="email"
+            className="block w-full h-[2.5rem] rounded-xl px-4 py-2 focus:outline-0 mt-3"
+            placeholder="schoolTeach@gmail.com"
+            required
           />
-        </div>
-      </div>
-      <div className="box-border text-[16px] text-white bg-[#2073FA] font-semibold flex justify-between w-full absolute left-0 bottom-0 py-3 px-10">
-        <p>© 2023 CodeAlgoAcademy. All rights reserved.</p>
-        <p className="left-0">Get help</p>
-      </div>
-    </div>
+          <label className="block text-xl font-semibold mt-6">Password</label>
+          <input
+            className="block w-full h-[2.5rem] rounded-xl px-4 py-2 focus:outline-0 mt-3"
+            value={password}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              dispatch(updateUser({ key: 'password', value: e.target.value }));
+            }}
+            type="password"
+            required
+          />
+          <button
+            className="block  h-[2.5rem] mt-6 text-center w-full text-white bg-[#2073FA] font-bold rounded-xl"
+            type="submit"
+          >
+            Login
+          </button>
+          <GoogleBtn />
+        </form>
+      </>
+    </AuthLayout>
   );
 };
 

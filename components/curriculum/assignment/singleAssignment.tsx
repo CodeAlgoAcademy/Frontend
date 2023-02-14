@@ -39,7 +39,7 @@ const SingleAssignment = ({
       {accordionOpen && (
         <main className="p-3">
           <div className="mb-2">
-            <div className="flex justify-between gap-2 items-center">
+            <div className="flex justify-between gap-2 items-center flex-wrap my-2">
               <div className="flex justify-start gap-2 items-center">
                 <p className="text-[17px] font-bold text-[#2073fa]">Due Date:</p>
                 <p className="text-[17px]">{assignment.end_date}</p>

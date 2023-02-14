@@ -55,7 +55,7 @@ const ScreenTime = () => {
               return <ScreenTimeComponent updateTime={updateTime} time={time} key={index} />;
             })}
           </div>
-          <button className="w-[150px] py-2 px-3 rounded-md text-white bg-[#2073FA] shadow-sm hover:shadow-md mt-6">
+          <button className="w-[150px] py-2 px-3 rounded-md text-white bg-[#2073FA] shadow-sm hover:shadow-md mt-6 md:mx-0 mx-auto block">
             Save Changes
           </button>
         </div>
