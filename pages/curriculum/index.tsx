@@ -109,7 +109,7 @@ export default function Index() {
         <AddUnit />
       ) : (
         <>
-          <div className="flex justify-between">
+          <div className="flex justify-between flex-wrap">
             <h1 className="font-bold text-3xl text-[#2073fa]">Curriculum</h1>
             <div
               className="flex gap-2 items-center cursor-pointer text-[#2073fa]"
@@ -121,7 +121,7 @@ export default function Index() {
               <h1 className="text-[1.2rem]">Add Unit</h1>
             </div>
           </div>
-          <div className="flex px-[30%] justify-center mt-[3rem] items-center border-b border-[#BDBDBD] select-none">
+          <div className="flex px-[30%] overflow-x-scroll justify-center mt-[3rem] items-center border-b border-[#BDBDBD] select-none">
             <h1
               className={
                 active === 'past'
