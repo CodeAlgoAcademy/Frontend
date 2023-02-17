@@ -1,6 +1,6 @@
 import TeacherLayout from '@/components/Teachers/TeacherLayout';
 import React from 'react';
-import {ScheduleBox,NoteBox,SummaryBox} from '../../components';
+import {ScheduleBox,NoteBox,SummaryBox} from 'components';
 
 const Dashboard = () => {
   return (
