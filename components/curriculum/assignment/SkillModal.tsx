@@ -1,15 +1,15 @@
-import React, { ChangeEventHandler, MouseEventHandler, useState, useEffect } from 'react';
+import React,{ChangeEventHandler,MouseEventHandler,useState,useEffect} from 'react';
 
-import { TbMedal } from 'react-icons/tb';
-import { RiArrowDropDownLine } from 'react-icons/ri';
-import { HiMagnifyingGlass } from 'react-icons/hi2';
+import {TbMedal} from 'react-icons/tb';
+import {RiArrowDropDownLine} from 'react-icons/ri';
+import {HiMagnifyingGlass} from 'react-icons/hi2';
 
-import { Button } from '../../../components';
+import {Button} from '../../../components';
 
-import { SkillDetails, DynamicChechbox } from '../../../types/interfaces';
+import {SkillDetails,DynamicChechbox} from '../../../types/interfaces';
 
-import { useDispatch } from 'react-redux';
-import { updateSkills, searchSkills } from '../../../store/skillsSlice';
+import {useDispatch} from 'react-redux';
+import {updateSkills,searchSkills} from '../../../store/skillsSlice';
 
 const SkillModal = ({
   skills,
@@ -22,21 +22,21 @@ const SkillModal = ({
   handleSkillCheckboxChange: ChangeEventHandler;
   skillCheckbox: DynamicChechbox;
 }) => {
-  const [grade, setGrade] = useState('Grade 1');
-  const [skillType, setSkillType] = useState('CTSA');
-  const [searchParams, setSearchParams] = useState('');
-  const [pickerDisplay, setPickerDisplay] = useState({
+  const [grade,setGrade] = useState('Grade 1');
+  const [skillType,setSkillType] = useState('CTSA');
+  const [searchParams,setSearchParams] = useState('');
+  const [pickerDisplay,setPickerDisplay] = useState({
     grade: false,
     skill: false,
   });
   const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchParams((prev) => e.target.value);
-    dispatch(searchSkills({ params: e.target.value, grade, skillType }));
+    dispatch(searchSkills({params: e.target.value,grade,skillType}));
   };
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(updateSkills({ grade, skillType }));
-  }, [dispatch, grade, skillType]);
+    dispatch(updateSkills({grade,skillType}));
+  },[dispatch,grade,skillType]);
   return (
     <div className="py-8 min-h-[650px] w-fit">
       <div className="flex gap-8 pl-12  h-full items-stretch mb-auto grow flex-col md:flex-row">
@@ -53,7 +53,7 @@ const SkillModal = ({
                   className="opacity-60 text-3xl cursor-pointer"
                   onClick={() => {
                     setPickerDisplay((prev) => {
-                      return { grade: false, skill: !prev.skill };
+                      return {grade: false,skill: !prev.skill};
                     });
                   }}
                 >
@@ -61,14 +61,14 @@ const SkillModal = ({
                 </span>
                 {pickerDisplay.skill && (
                   <div className="grid grid-cols-1 items-center gap-1 w-[90%] absolute top-10 left-0 rounded-lg overflow-y-auto h-32 bg-gray-100 drop-shadow-md flex-1 small-scroll-thumb">
-                    {['CTSA', 'Kansas', 'New York', 'Missouri'].map((skill) => (
+                    {['CTSA','Kansas','New York','Missouri'].map((skill) => (
                       <span
                         key={skill}
                         className="opacity-50 text-sm text-center py-2 cursor-pointer hover:bg-gray-300 font-semibold"
                         onClick={() => {
                           setSkillType((prev) => skill);
                           setPickerDisplay((prev) => {
-                            return { grade: false, skill: false };
+                            return {grade: false,skill: false};
                           });
                         }}
                       >
@@ -84,7 +84,7 @@ const SkillModal = ({
                   className="opacity-60 text-3xl cursor-pointer"
                   onClick={() => {
                     setPickerDisplay((prev) => {
-                      return { skill: false, grade: !prev.grade };
+                      return {skill: false,grade: !prev.grade};
                     });
                   }}
                 >
@@ -109,7 +109,7 @@ const SkillModal = ({
                         onClick={() => {
                           setGrade((prev) => grade);
                           setPickerDisplay((prev) => {
-                            return { grade: false, skill: false };
+                            return {grade: false,skill: false};
                           });
                         }}
                       >
@@ -140,7 +140,7 @@ const SkillModal = ({
             </span>
           </div>
           <div className="mt-12 h-[500px] pr-4 scroll-smooth overflow-y-auto grid grid-cols-1 gap-6 small-scroll-thumb">
-            {skills.map(({ categoryId, categoryTitle, tests }) => (
+            {skills.map(({categoryId,categoryTitle,tests}) => (
               <div
                 key={categoryId}
                 className="rounded-xl bg-white drop-shadow-md border h-fit max-w-[550px]"
@@ -165,7 +165,7 @@ const SkillModal = ({
                   </span>
                 </div>
                 <div className="divide-y">
-                  {tests.map(({ testTitle, testId }) => (
+                  {tests.map(({testTitle,testId}) => (
                     <div key={testId} className="flex px-6 h-12 gap-4 items-center">
                       <label className="checkbox-container">
                         <input

@@ -60,7 +60,7 @@ const Sidebar = () => {
               <Link href={`${link.url}`}>
                 <div
                   className={
-                    activeLink === link.url
+                    activeLink === link.url || (router?.pathname.includes(link.url) && link.url !== "/teachers")
                       ? 'flex items-center gap-6 px-[30px] py-[14px] text-white bg-[#2073fa] rounded-[28px] cursor-pointer'
                       : 'flex items-center gap-6 px-[30px] py-[14px] text-gray-600  rounded-[28px] cursor-pointer hover:bg-slate-50 '
                   }
@@ -69,7 +69,7 @@ const Sidebar = () => {
                   }}
                 >
                   <span
-                    className={`text-lg ${activeLink === link.url ? 'text-white' : 'text-[#2073fa]'
+                    className={`text-lg ${activeLink === link.url || (router?.pathname.includes(link.url) && link.url !== "/teachers") ? 'text-white' : 'text-[#2073fa]'
                       }`}
                   >
                     {link.icon}
