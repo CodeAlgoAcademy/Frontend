@@ -1,12 +1,12 @@
 import TeacherLayout from '@/components/Teachers/TeacherLayout';
-import { Tab, Tabs, TextField, Typography } from '@mui/material';
-import { Box } from '@mui/system';
-import React, { useState } from 'react';
-import { GeneralNav, Sidebar } from '../components';
+import {Tab,Tabs,TextField,Typography} from '@mui/material';
+import {Box} from '@mui/system';
+import React,{useState} from 'react';
+import {GeneralNav,Sidebar} from '../../components';
 
 export default function Settings() {
-  const [value, setValue] = useState(0);
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const [value,setValue] = useState(0);
+  const handleChange = (event: React.SyntheticEvent,newValue: number) => {
     setValue(newValue);
   };
 
@@ -17,7 +17,7 @@ export default function Settings() {
   }
 
   function TabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
+    const {children,value,index,...other} = props;
 
     return (
       <div
@@ -28,7 +28,7 @@ export default function Settings() {
         {...other}
       >
         {value === index && (
-          <Box sx={{ p: 3 }}>
+          <Box sx={{p: 3}}>
             <Typography>{children}</Typography>
           </Box>
         )}
@@ -48,7 +48,7 @@ export default function Settings() {
       <h2 className="text-[28px] font-bold mb-6" data-testid="dashboard-heading">
         Settings
       </h2>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <Box sx={{borderBottom: 1,borderColor: 'divider'}}>
         <Tabs
           value={value}
           textColor="inherit"
