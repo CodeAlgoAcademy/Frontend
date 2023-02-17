@@ -2,7 +2,6 @@ import TeacherLayout from '@/components/Teachers/TeacherLayout';
 import {Tab,Tabs,TextField,Typography} from '@mui/material';
 import {Box} from '@mui/system';
 import React,{useState} from 'react';
-import {GeneralNav,Sidebar} from '../../components';
 
 export default function Settings() {
   const [value,setValue] = useState(0);
