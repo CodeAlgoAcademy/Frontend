@@ -13,9 +13,8 @@ import {
   Resize,
 } from '@syncfusion/ej2-react-schedule';
 import {DatePickerComponent,ChangeEventArgs} from '@syncfusion/ej2-react-calendars';
-import {Sidebar,GeneralNav} from '../components';
 import {useSelector,useDispatch} from 'react-redux';
-import {AppDispatch,RootState} from '../store/store';
+import {AppDispatch,RootState} from 'store/store';
 import {FcGoogle} from 'react-icons/fc';
 import {
   deleteGoogleCalendar,
