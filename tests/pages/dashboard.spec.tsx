@@ -1,5 +1,5 @@
 import React from 'react';
-import Dashboard from '../../pages/teachers/dashboard';
+import Dashboard from 'pages/teachers';
 import {describe,expect} from '@jest/globals';
 import {render} from '@testing-library/react';
 

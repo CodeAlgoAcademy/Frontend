@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import Link from 'next/link';
 import {TbLayoutDashboard,TbClipboardText} from 'react-icons/tb';
 import {FaUserGraduate} from 'react-icons/fa';
@@ -11,36 +11,37 @@ const links = [
   {
     name: 'dashboard',
     icon: <TbLayoutDashboard />,
-    url: '/dashboard',
+    url: '/teachers',
   },
   {
     name: 'curriculum',
     icon: <TbClipboardText />,
-    url: '/curriculum',
+    url: '/teachers/curriculum',
   },
   {
     name: 'students',
     icon: <FaUserGraduate />,
-    url: '/students',
+    url: '/teachers/students',
   },
   {
     name: 'calendar',
     icon: <HiOutlineCalendar />,
-    url: '/calendar',
+    url: '/teachers/calendar',
   },
   {
     name: 'messages',
     icon: <BiMessageRounded />,
-    url: '/messages',
+    url: '/teachers/messages',
   },
 ];
 
 const Sidebar = () => {
   const router = useRouter();
+  const [activeLink,setActiveLink] = useState(router.pathname);
   return (
     <div className="md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
       <div className="mx-auto my-8 w-fit">
-        <Link href="/addClass">
+        <Link href="/teachers/addClass">
           <a>
             <Image
               src="/assets/CodeAlgo_Logo.png"
@@ -59,13 +60,16 @@ const Sidebar = () => {
               <Link href={`${link.url}`}>
                 <div
                   className={
-                    router?.pathname.includes(`${link.url}`)
+                    activeLink === link.url
                       ? 'flex items-center gap-6 px-[30px] py-[14px] text-white bg-[#2073fa] rounded-[28px] cursor-pointer'
                       : 'flex items-center gap-6 px-[30px] py-[14px] text-gray-600  rounded-[28px] cursor-pointer hover:bg-slate-50 '
                   }
+                  onClick={() => {
+                    setActiveLink(() => link.url);
+                  }}
                 >
                   <span
-                    className={`text-lg ${router?.pathname.includes(link.url) ? 'text-white' : 'text-[#2073fa]'
+                    className={`text-lg ${activeLink === link.url ? 'text-white' : 'text-[#2073fa]'
                       }`}
                   >
                     {link.icon}
