@@ -1,5 +1,5 @@
-import React, { useState, useEffect, ReactElement, ChangeEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React,{useState,useEffect,ReactElement,ChangeEvent} from 'react';
+import {useDispatch,useSelector} from 'react-redux';
 import Head from 'next/head';
 import Link from 'next/link';
 import CleverBtn from '../components/cleverBtn';
@@ -8,11 +8,11 @@ import Grades from '../components/grades';
 import Students from '../components/signup/students';
 import Teachers from '../components/signup/teachers';
 import Parents from '../components/signup/parents';
-import { ITabs } from '../types/interfaces';
-import { useRouter } from 'next/router';
-import { updateUser, clearFields } from 'store/authSlice';
-import { signUpUser } from 'services/authService';
-import { RootState } from 'store/store';
+import {ITabs} from '../types/interfaces';
+import {useRouter} from 'next/router';
+import {updateUser,clearFields} from 'store/authSlice';
+import {signUpUser} from 'services/authService';
+import {RootState} from 'store/store';
 
 const tabs: ITabs[] = [
   {
@@ -33,10 +33,10 @@ const tabs: ITabs[] = [
 const SignUp = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<string | undefined>('Student');
-  const [check, setCheck] = useState<boolean>(false);
+  const [activeTab,setActiveTab] = useState<string | undefined>('Student');
+  const [check,setCheck] = useState<boolean>(false);
   const checkState = useSelector((state: RootState) => state.policyCheck.checked);
-  const [currentTab, setCurrentTab] = useState<ITabs>({
+  const [currentTab,setCurrentTab] = useState<ITabs>({
     tabName: '',
     component: <></>,
   });
@@ -44,24 +44,24 @@ const SignUp = () => {
   console.log(checkState);
   useEffect(() => {
     const tab = tabs.find((tab) => {
-      if (tab.tabName === activeTab) {
+      if(tab.tabName === activeTab) {
         return tab;
       }
     });
     const tabName: string | undefined = tab?.tabName;
     const component: ReactElement | undefined = tab?.component;
 
-    setCurrentTab({ tabName, component });
-  }, [activeTab]);
+    setCurrentTab({tabName,component});
+  },[activeTab]);
 
   const updateTab = (tabName: string | undefined): void => {
     setActiveTab((prev) => tabName);
-    dispatch(updateUser({ key: 'accountType', value: tabName as string }));
+    dispatch(updateUser({key: 'accountType',value: tabName as string}));
   };
 
   useEffect(() => {
-    dispatch(updateUser({ key: 'accountType', value: 'Student' }));
-  }, []);
+    dispatch(updateUser({key: 'accountType',value: 'Student'}));
+  },[dispatch]);
 
   const checkHandler = () => {
     setCheck(true);
@@ -72,8 +72,8 @@ const SignUp = () => {
     event.preventDefault();
 
     const data = await dispatch(signUpUser());
-    if (data?.payload?.detail) {
-      window.open('/verify-email', '_blank');
+    if(data?.payload?.detail) {
+      window.open('/verify-email','_blank');
     }
   };
 
@@ -86,7 +86,7 @@ const SignUp = () => {
         <div className="bg-white w-[95vw] max-w-[900px] mx-auto rounded-md p-[40px] md:p-[50px] shadow-md">
           {/* tabs */}
           <div className="w-full max-w-[600px] mx-auto mb-4 flex-row rounded-md overflow-hidden hidden md:flex">
-            {tabs.map((tab: ITabs, index: number): React.ReactElement => {
+            {tabs.map((tab: ITabs,index: number): React.ReactElement => {
               return (
                 <article
                   key={index}
@@ -110,7 +110,7 @@ const SignUp = () => {
               updateTab(value);
             }}
           >
-            {tabs.map((tab: ITabs, index: number): React.ReactElement => {
+            {tabs.map((tab: ITabs,index: number): React.ReactElement => {
               return (
                 <option value={tab.tabName} key={index}>
                   {tab.tabName}

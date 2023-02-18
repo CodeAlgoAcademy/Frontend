@@ -1,4 +1,4 @@
-import React,{ChangeEvent,useEffect,useRef,useState} from 'react';
+import React,{ChangeEvent,useCallback,useEffect,useRef,useState} from 'react';
 import {FaTimes} from 'react-icons/fa';
 import {IoIosAddCircleOutline} from 'react-icons/io';
 import AddStudent from 'components/modals/AddStudent';
@@ -68,11 +68,11 @@ export default function Unit() {
   const router = useRouter();
   const {topics} = router.query;
 
-  const getLessonsAll = async () => {
+  const getLessonsAll = useCallback(async () => {
     const data2 = await dispatch(getAllLessons());
     if(!data2?.error?.message) {
     }
-  };
+  },[dispatch]);
   const editStudents = async (data: any) => {
     const newLesson = {...data};
     newLesson.students = studentsAdded;
@@ -82,7 +82,7 @@ export default function Unit() {
   };
   useEffect(() => {
     getLessonsAll();
-  },[]);
+  },[getLessonsAll]);
 
   const {lessons} = useSelector((state: RootState) => state.allLessons);
   const {currentUnitInView} = useSelector((state: RootState) => state.unit);
@@ -127,7 +127,7 @@ export default function Unit() {
   };
   useEffect(() => {
     dispatch(getStudents());
-  },[]);
+  },[dispatch]);
 
   return (
     <TeacherLayout>

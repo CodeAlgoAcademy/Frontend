@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useCallback} from 'react';
 import Link from 'next/link';
 import {Button} from 'components';
 import {BsPlusCircle} from 'react-icons/bs';
@@ -201,19 +201,19 @@ const Assignments = () => {
         [student.email]: false,
       }));
     });
-  },[]);
-  const fetchAllStudents = async () => {
+  },[students?.students,assingmentSkills]);
+  const fetchAllStudents = useCallback(async () => {
     await dispatch(getStudents());
-  };
+  },[dispatch]);
   useEffect(() => {
     dispatch(getAssignments());
-  },[]);
+  },[dispatch]);
   useEffect(() => {
     setAssignmentDetails((prev) => ({...prev,number: 0}));
   },[assignmentDetails.skills]);
   useEffect(() => {
     fetchAllStudents();
-  },[]);
+  },[fetchAllStudents]);
   return (
     <>
       <TeacherLayout>
