@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
-import ContentEditable, { ContentEditableEvent } from 'react-contenteditable';
-import { RootState } from '../store/store';
-import { useSelector, useDispatch } from 'react-redux';
-import { INotes } from '../types/interfaces';
-import { handleChange, sanitizeNotes, resetNotes } from '../store/notesSlice';
-import { getNotes, updateNotes } from 'services/notesService';
-import { FaSyncAlt } from 'react-icons/fa';
+import React,{useCallback,useEffect} from 'react';
+import ContentEditable,{ContentEditableEvent} from 'react-contenteditable';
+import {RootState} from '../store/store';
+import {useSelector,useDispatch} from 'react-redux';
+import {INotes} from '../types/interfaces';
+import {handleChange,sanitizeNotes,resetNotes} from '../store/notesSlice';
+import {getNotes,updateNotes} from 'services/notesService';
+import {FaSyncAlt} from 'react-icons/fa';
 
 const NoteBox = () => {
   const contentEditableRef = React.createRef<HTMLElement>();
@@ -14,18 +14,18 @@ const NoteBox = () => {
   const handleNotes = (evt: ContentEditableEvent) => {
     dispatch(handleChange(evt.target.value));
   };
-  const fetchNotes = async () => {
+  const fetchNotes = useCallback(async () => {
     await dispatch(getNotes());
-  };
+  },[dispatch]);
   const postNotes = async () => {
     await dispatch(updateNotes());
   };
   useEffect(() => {
     contentEditableState.html == '' && dispatch(resetNotes());
-  }, [contentEditableState.html, dispatch]);
+  },[contentEditableState.html,dispatch]);
   useEffect(() => {
     fetchNotes();
-  }, []);
+  },[fetchNotes]);
   return (
     <div className="rounded-md shadow-lg p-6 max-w-[380px] bg-white max-h-[212px] overflow-y-auto">
       <div className="min-h-[114px]">

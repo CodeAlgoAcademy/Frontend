@@ -1,44 +1,44 @@
-import { useEffect, useState } from 'react';
-import { IoIosAddCircleOutline } from 'react-icons/io';
+import {useCallback,useEffect,useState} from 'react';
+import {IoIosAddCircleOutline} from 'react-icons/io';
 import Image from 'next/image';
-import { HiDotsHorizontal } from 'react-icons/hi';
+import {HiDotsHorizontal} from 'react-icons/hi';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
-import { openAddUnitModal } from 'store/modalSlice';
+import {useRouter} from 'next/router';
+import {useDispatch,useSelector} from 'react-redux';
+import {openAddUnitModal} from 'store/modalSlice';
 import AddUnit from '@/components/curriculum/addUnit';
-import { RootState } from 'store/store';
-import { SlLoop } from 'react-icons/sl';
-import { deleteCurriculum, getAllCurriculums } from 'services/curriculumService';
-import { IAllCurriculum, Icurriculum } from 'types/interfaces';
-import { BiArrowBack } from 'react-icons/bi';
+import {RootState} from 'store/store';
+import {SlLoop} from 'react-icons/sl';
+import {deleteCurriculum,getAllCurriculums} from 'services/curriculumService';
+import {IAllCurriculum,Icurriculum} from 'types/interfaces';
+import {BiArrowBack} from 'react-icons/bi';
 import SingleCurriculum from '@/components/curriculum/singleCurriculum';
-import { getDate } from 'utils/getDate';
+import {getDate} from 'utils/getDate';
 import TeacherLayout from '@/components/Teachers/TeacherLayout';
 
 export default function Index() {
-  const [past, setPast] = useState<boolean>(false);
-  const [current, setCurrent] = useState<boolean>(true);
-  const [upcoming, setUpcoming] = useState<boolean>(false);
-  const [active, setActive] = useState('current');
-  const { addUnitModalOpen } = useSelector((state: RootState) => state.modal);
-  const { id } = useSelector((state: RootState) => state.currentClass);
+  const [past,setPast] = useState<boolean>(false);
+  const [current,setCurrent] = useState<boolean>(true);
+  const [upcoming,setUpcoming] = useState<boolean>(false);
+  const [active,setActive] = useState('current');
+  const {addUnitModalOpen} = useSelector((state: RootState) => state.modal);
+  const {id} = useSelector((state: RootState) => state.currentClass);
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const getCurriculums = async () => {
+  const getCurriculums = useCallback(async () => {
     const data = await dispatch(getAllCurriculums());
-    if (!data?.error?.message) {
+    if(!data?.error?.message) {
     }
-  };
+  },[dispatch]);
 
   useEffect(() => {
-    if (!addUnitModalOpen) {
+    if(!addUnitModalOpen) {
       getCurriculums();
     }
-  }, []);
+  },[addUnitModalOpen,getCurriculums]);
 
-  const { curriculum } = useSelector((state: RootState) => state.allCurriculum);
+  const {curriculum} = useSelector((state: RootState) => state.allCurriculum);
 
   // curriculumn tab click functions
 
@@ -65,8 +65,8 @@ export default function Index() {
   const todayDate = getDate();
 
   const currentCurriculum = curriculum?.filter((tempCurriculum: Icurriculum) => {
-    if (tempCurriculum.class_model === id) {
-      if (
+    if(tempCurriculum.class_model === id) {
+      if(
         tempCurriculum.is_finished === false &&
         new Date(tempCurriculum.start_date).getTime() <= new Date(todayDate).getTime()
       ) {
@@ -80,8 +80,8 @@ export default function Index() {
   });
 
   const upcomingCurriculum = curriculum?.filter((tempCurriculum: Icurriculum) => {
-    if (tempCurriculum.class_model === id) {
-      if (
+    if(tempCurriculum.class_model === id) {
+      if(
         tempCurriculum.is_current === false &&
         tempCurriculum.is_finished === false &&
         new Date(tempCurriculum.start_date).getTime() > new Date(todayDate).getTime()
@@ -97,11 +97,11 @@ export default function Index() {
       const endDate: any = new Date(curriculum.end_date);
       const timeDifference: any = todayDate - endDate;
       // check if it is up to 30 days
-      if (timeDifference / 1000 / 60 / 60 / 24 / 30 === 1) {
+      if(timeDifference / 1000 / 60 / 60 / 24 / 30 === 1) {
         dispatch(deleteCurriculum(curriculum.id));
       }
     });
-  }, []);
+  },[dispatch,pastCurriculum]);
 
   return (
     <TeacherLayout>

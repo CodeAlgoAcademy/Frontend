@@ -1,13 +1,13 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { FaGripLinesVertical, FaTimes, FaTimesCircle } from 'react-icons/fa';
-import { BsFillCircleFill, BsCircle } from 'react-icons/bs';
-import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
-import { IoIosAddCircleOutline } from 'react-icons/io';
-import { getDate } from 'utils/getDate';
-import { useDispatch } from 'react-redux';
-import { openErrorModal } from 'store/fetchSlice';
-import { editLesson, getAllLessons } from 'services/lessonService';
-import { updateLessonOpened } from 'store/lessonsSlice';
+import React,{Dispatch,SetStateAction,useCallback,useEffect,useState} from 'react';
+import {FaGripLinesVertical,FaTimes,FaTimesCircle} from 'react-icons/fa';
+import {BsFillCircleFill,BsCircle} from 'react-icons/bs';
+import {FiChevronDown,FiChevronUp} from 'react-icons/fi';
+import {IoIosAddCircleOutline} from 'react-icons/io';
+import {getDate} from 'utils/getDate';
+import {useDispatch} from 'react-redux';
+import {openErrorModal} from 'store/fetchSlice';
+import {editLesson,getAllLessons} from 'services/lessonService';
+import {updateLessonOpened} from 'store/lessonsSlice';
 
 const getLessonDate = (date: string) => {
   const dates = date.split('-');
@@ -27,9 +27,8 @@ const getLessonDate = (date: string) => {
     'November',
     'December',
   ];
-  return `${
-    months[month < 10 && month.toString().length === 2 ? parseInt(month.toString()[1]) : month]
-  } ${day}`;
+  return `${months[month < 10 && month.toString().length === 2 ? parseInt(month.toString()[1]) : month]
+    } ${day}`;
 };
 
 const SingleLesson = ({
@@ -54,77 +53,77 @@ const SingleLesson = ({
   cancelPresence: () => void;
 }) => {
   const dispatch = useDispatch();
-  const [studentsUpdatedBefore, setStudentsUpdatedBefore] = useState<boolean>(true);
-  const [editDateOpened, setEditDateOpened] = useState<boolean>(false);
-  const [editDateDetails, setEditDateDetails] = useState({
+  const [studentsUpdatedBefore,setStudentsUpdatedBefore] = useState<boolean>(true);
+  const [editDateOpened,setEditDateOpened] = useState<boolean>(false);
+  const [editDateDetails,setEditDateDetails] = useState({
     start_date: data.start_date,
     end_date: data.end_date,
   });
-  const [statusContainerOpened, setStatusContainerOpened] = useState<boolean>(false);
+  const [statusContainerOpened,setStatusContainerOpened] = useState<boolean>(false);
 
   const today_date = new Date(getDate()).getTime();
-  const updateScheduleDate = (key: string, value: string) => {
+  const updateScheduleDate = (key: string,value: string) => {
     setEditDateDetails((prev) => {
-      return { ...prev, [key]: value };
+      return {...prev,[key]: value};
     });
   };
 
-  const editStartDate = async () => {
+  const editStartDate = useCallback(async () => {
     dispatch(updateLessonOpened(data));
-    if (data.start_date !== editDateDetails.start_date) {
+    if(data.start_date !== editDateDetails.start_date) {
       const errors: string[] = [];
 
-      if (new Date(editDateDetails.start_date).getTime() < today_date) {
+      if(new Date(editDateDetails.start_date).getTime() < today_date) {
         errors.push("Start date can't be before today's date");
       }
-      if (new Date(editDateDetails.start_date).getTime() > new Date(data.end_date).getTime()) {
+      if(new Date(editDateDetails.start_date).getTime() > new Date(data.end_date).getTime()) {
         errors.push("Start date can't be after / on the same day with end date");
       }
-      if (errors.length === 0) {
-        const newLesson = { ...data };
+      if(errors.length === 0) {
+        const newLesson = {...data};
         newLesson.start_date = editDateDetails.start_date;
         await dispatch(editLesson(newLesson));
         await dispatch(getAllLessons());
         setEditDateOpened(false);
       } else {
-        dispatch(openErrorModal({ errorText: errors }));
+        dispatch(openErrorModal({errorText: errors}));
       }
     }
-  };
-  const editEndDate = async () => {
+  },[data,dispatch,editDateDetails.start_date,today_date]);
+  const editEndDate = useCallback(async () => {
     dispatch(updateLessonOpened(data));
-    if (data.end_date !== editDateDetails.end_date) {
+    if(data.end_date !== editDateDetails.end_date) {
       const errors: string[] = [];
-      if (new Date(editDateDetails.end_date).getTime() < today_date) {
+      if(new Date(editDateDetails.end_date).getTime() < today_date) {
         errors.push("End date can't be before today's date");
       }
-      if (new Date(editDateDetails.start_date).getTime() !== new Date(data.start_date).getTime()) {
-        if (
+      if(new Date(editDateDetails.start_date).getTime() !== new Date(data.start_date).getTime()) {
+        if(
           new Date(editDateDetails.end_date).getTime() <
           new Date(editDateDetails.start_date).getTime()
         ) {
           errors.push("End date can't be less than start date");
         }
       } else {
-        if (new Date(editDateDetails.end_date).getTime() < new Date(data.start_date).getTime()) {
+        if(new Date(editDateDetails.end_date).getTime() < new Date(data.start_date).getTime()) {
           errors.push("End date can't be less than start date");
         }
       }
-      if (errors.length === 0) {
-        const newLesson = { ...data };
+      if(errors.length === 0) {
+        const newLesson = {...data};
         newLesson.end_date = editDateDetails.end_date;
         await dispatch(editLesson(newLesson));
         await dispatch(getAllLessons());
         setEditDateOpened(false);
       } else {
-        dispatch(openErrorModal({ errorText: errors }));
+        dispatch(openErrorModal({errorText: errors}));
       }
     }
-  };
+  },[data,dispatch,editDateDetails.end_date,editDateDetails.start_date,today_date]);
 
   const editStatus = async (value: 'published' | 'unpublished' | 'inactive') => {
     dispatch(updateLessonOpened(data));
-    const newLesson = { ...data };
+    const newLesson = {...data};
     newLesson.status = value;
     await dispatch(editLesson(newLesson));
     await dispatch(getAllLessons());
@@ -141,7 +140,7 @@ const SingleLesson = ({
 
   useEffect(() => {
     editStartDate();
-  }, [editDateDetails.start_date]);
+  },[editDateDetails.start_date,editStartDate]);
   // useEffect(() => {
   //   if (!studentsUpdatedBefore) {
   //     editStudents();
@@ -152,7 +151,7 @@ const SingleLesson = ({
 
   useEffect(() => {
     editEndDate();
-  }, [editDateDetails.end_date]);
+  },[editDateDetails.end_date,editEndDate]);
 
   return (
     <div className="flex-column bg-white rounded-lg transition duration-200 ease-in-out">
@@ -211,7 +210,7 @@ const SingleLesson = ({
                   <p
                     className="sm:text-[12px] lg:text-[16px] underline cursor-pointer"
                     onClick={() => {
-                      if (!editDateOpened) {
+                      if(!editDateOpened) {
                         dispatch(updateLessonOpened(data));
                       }
                       setEditDateOpened((prev) => !prev);
@@ -229,7 +228,7 @@ const SingleLesson = ({
                       value={editDateDetails.start_date}
                       className="hoverElement max-w-[130px] px-3 py-1 rounded-md outline-none border border-[#2073fa] text-[15px]"
                       onChange={(e) => {
-                        updateScheduleDate('start_date', e.target.value);
+                        updateScheduleDate('start_date',e.target.value);
                       }}
                     />
                     <div className="hoverText right-[0] -top-[56px] bg-[#2073fa] after:bg-[#2073fa]">
@@ -242,7 +241,7 @@ const SingleLesson = ({
                       value={editDateDetails.end_date}
                       className="hoverElement max-w-[130px] px-3 py-1 rounded-md outline-none border border-[#2073fa] text-[15px]"
                       onChange={(e) => {
-                        updateScheduleDate('end_date', e.target.value);
+                        updateScheduleDate('end_date',e.target.value);
                       }}
                     />
                     <div className="hoverText right-[0] -top-[56px] bg-[#2073fa] after:bg-[#2073fa]">
@@ -279,11 +278,10 @@ const SingleLesson = ({
                   <>
                     <div className="py-3 bg-white shadow-md text-center">
                       <p
-                        className={`md:text-[14px]  font-semibold cursor-pointer border-b px-5 ${
-                          data.status.toLowerCase() !== 'published'
-                            ? 'text-red-500'
-                            : 'text-green-500'
-                        }`}
+                        className={`md:text-[14px]  font-semibold cursor-pointer border-b px-5 ${data.status.toLowerCase() !== 'published'
+                          ? 'text-red-500'
+                          : 'text-green-500'
+                          }`}
                         onClick={() => {
                           setStatusContainerOpened(false);
                         }}
@@ -291,11 +289,10 @@ const SingleLesson = ({
                         {data.status.toLowerCase() !== 'published' ? 'Unpublished' : 'Published'}
                       </p>
                       <p
-                        className={`md:text-[14px]  font-semibold cursor-pointer px-5 ${
-                          data.status.toLowerCase() !== 'published'
-                            ? 'text-green-500'
-                            : 'text-red-500'
-                        }`}
+                        className={`md:text-[14px]  font-semibold cursor-pointer px-5 ${data.status.toLowerCase() !== 'published'
+                          ? 'text-green-500'
+                          : 'text-red-500'
+                          }`}
                         onClick={(e: any) => {
                           dispatch(updateLessonOpened(data));
                           editStatus(e.target.textContent);

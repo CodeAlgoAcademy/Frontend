@@ -1,16 +1,16 @@
 import axios from 'axios';
 import http from 'axios.config';
-import React, { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { AiOutlineSearch } from 'react-icons/ai';
-import { BiChevronRight } from 'react-icons/bi';
-import { FaTimes } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
-import { getTeachers } from 'services/teacherService';
-import { getConversations, getOpenMesssages } from 'store/messagesSlice';
-import { RootState } from 'store/store';
-import { getStudents } from 'store/studentSlice';
-import { getAccessToken } from 'utils/getTokens';
-import { client } from './Chats/ChatRoom';
+import React,{ChangeEvent,Dispatch,SetStateAction,useEffect,useState} from 'react';
+import {AiOutlineSearch} from 'react-icons/ai';
+import {BiChevronRight} from 'react-icons/bi';
+import {FaTimes} from 'react-icons/fa';
+import {useDispatch,useSelector} from 'react-redux';
+import {getTeachers} from 'services/teacherService';
+import {getConversations,getOpenMesssages} from 'store/messagesSlice';
+import {RootState} from 'store/store';
+import {getStudents} from 'store/studentSlice';
+import {getAccessToken} from 'utils/getTokens';
+import {client} from './Chats/ChatRoom';
 
 const MessagesModal = ({
   setModalOpen,
@@ -19,15 +19,15 @@ const MessagesModal = ({
   modalOpen: boolean;
   setModalOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const [active, setActive] = useState(0);
-  const [filteredTeachers, setFilteredTeachers] = useState([]);
-  const [typingText, setTypingText] = useState('');
+  const [active,setActive] = useState(0);
+  const [filteredTeachers,setFilteredTeachers] = useState([]);
+  const [typingText,setTypingText] = useState('');
   const dispatch = useDispatch();
-  const { students } = useSelector((state: RootState) => state.students.students);
-  const { teachers } = useSelector((state: RootState) => state.allTeachers);
+  const {students} = useSelector((state: RootState) => state.students.students);
+  const {teachers} = useSelector((state: RootState) => state.allTeachers);
 
   const handleSendNewMessage: any = async (e: ChangeEvent<HTMLInputElement>) => {
-    if (typingText !== '') {
+    if(typingText !== '') {
       e.preventDefault();
       client.send(
         JSON.stringify({
@@ -36,7 +36,7 @@ const MessagesModal = ({
           receiver: active,
         }),
       );
-      const { data } = await http.post(
+      const {data} = await http.post(
         `/chat/teacher/message/${active}`,
         {
           text: typingText,
@@ -86,9 +86,9 @@ const MessagesModal = ({
 
     client.onmessage = (message: any) => {
       const dataFromServer = JSON.parse(message.data);
-      console.log('serverr reply', dataFromServer);
+      console.log('serverr reply',dataFromServer);
     };
-  }, []);
+  },[]);
 
   // const filterTeachers = (value: string) => {
   //   setFilteredTeachers((prev:any) => {
@@ -104,13 +104,13 @@ const MessagesModal = ({
   //   });
   // };
 
-  const [openedTab, setOpenedTab] = useState<string>('students');
+  const [openedTab,setOpenedTab] = useState<string>('students');
 
   useEffect(() => {
     dispatch(getStudents());
     dispatch(getTeachers());
     dispatch(getTeachers());
-  }, []);
+  },[dispatch]);
   return (
     <section
       className={`w-[100vw] min-h-screen flex justify-center items-center fixed left-0 top-0 z-20  backdrop-blur-sm bg-gray-100/50`}
