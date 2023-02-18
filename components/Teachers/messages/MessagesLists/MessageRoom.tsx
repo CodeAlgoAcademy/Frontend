@@ -100,14 +100,14 @@ const MessageRoom = () => {
   return (
     <>
       <div
-        className={`w-full relative mx-auto h-full bg-white shadow-md rounded-md flex overflow-hidden`}
+        className={`w-full mx-auto h-full bg-white rounded-md flex overflow-hidden absolute top-0 left-0`}
       >
         <div className="flex flex-col md:border-r-2 border-b-2 min-w-[330px] bg-gray-100">
           <div
-            className="flex justify-between items-center p-4 font-bold bg-[#2073fa] text-white px-5 py-4"
+            className="flex justify-between items-center font-bold bg-[#2073fa] text-white px-5 py-4"
             onClick={() => setOpenedStudent(!openedStudent)}
           >
-            <p className="text-[20px">My Students</p>
+            <p className="text-[20px]">My Students</p>
             <span className="text-[20px]">
               {openedStudent ? <BiChevronUp /> : <BiChevronDown />}
             </span>
@@ -115,8 +115,8 @@ const MessageRoom = () => {
           <article
             className={
               openedStudent
-                ? 'bg-gray-100 overflow-y-scroll flex-1'
-                : 'bg-gray-100 overflow-y-scroll'
+                ? 'bg-gray-100 overflow-y-auto flex-1 p-0 max-h-full'
+                : 'bg-gray-100 overflow-y-auto'
             }
           >
             {openedStudent && (
@@ -132,8 +132,8 @@ const MessageRoom = () => {
                       key={student.id}
                       className={
                         active === student.id
-                          ? `p-5 border-y border-r bg-[#efecf5]  hover:bg-[#e9e2f5] `
-                          : `p-5 hover:bg-[#e9e2f5] border-y border-r`
+                          ? `p-5 border-y border-r bg-[#efecf5] cursor-pointer w-full hover:bg-[#e9e2f5]`
+                          : `p-5 hover:bg-[#e9e2f5] border-y border-r cursor-pointer`
                       }
                     >
                       {student.firstName}
@@ -154,7 +154,7 @@ const MessageRoom = () => {
               {openedTeachers ? <BiChevronUp /> : <BiChevronDown />}
             </span>
           </div>
-          <article className="bg-gray-100 overflow-y-scroll flex-1">
+          <article className="bg-gray-100 overflow-y-auto flex-1">
             {openedTeachers && (
               <div className="overflow-hidden">
                 {teachers?.map((teacher: any) => {
@@ -168,8 +168,8 @@ const MessageRoom = () => {
                       key={teacher.id}
                       className={
                         active === teacher.id
-                          ? `p-5 border-y border-r bg-[#efecf5]  hover:bg-[#e9e2f5] `
-                          : `p-5 hover:bg-[#e9e2f5] border-y border-r`
+                          ? `p-5 border-y border-r bg-[#efecf5] cursor-pointer hover:bg-[#e9e2f5] `
+                          : `p-5 hover:bg-[#e9e2f5] border-y cursor-pointer border-r`
                       }
                     >
                       {teacher.firstName}

@@ -98,18 +98,18 @@ const ChatRoom = () => {
       console.log('serverr reply',dataFromServer);
       setMessages([...messages,dataFromServer]);
     };
-  },[]);
+  },[messages]);
 
   useEffect(() => {
     dispatch(getOpenMesssages());
-  },[openedMessageOwner]);
+  },[openedMessageOwner,dispatch]);
 
   // useEffect(() => {
   //   openedMessage && setMessages([...openedMessage]);
   // }, [openedMessage]);
 
   return (
-    <div className="h-full relative">
+    <div className="h-full relative pb-8">
       <div className={styles.header}>
         <Avatar src="" alt="" />
         <p className="font-bold text-sm capitalize">
@@ -163,7 +163,7 @@ export default ChatRoom;
 
 const styles = {
   header: 'flex items-center space-x-2 border-b-2 p-2',
-  chatContainer: 'space-y-1 p-5 px-5 overflow-y-auto max-h-[100%]',
+  chatContainer: 'space-y-1 p-5 px-5 overflow-y-auto md:max-h-[564px] pb-[72px]',
   chats: 'bg-[#fff3cc] p-3 text-xs w-fit rounded-t-lg',
   messageInputContainer: 'bg-white w-full border-t p-2 rounded-b-xl absolute left-0 bottom-0',
   inputContainer: 'flex items-center space-x-2 text-slate-400',
