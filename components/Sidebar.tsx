@@ -40,10 +40,10 @@ const Sidebar = () => {
    const [activeLink, setActiveLink] = useState(router.pathname);
    return (
       <div className="overflow-auto pb-10 md:overflow-hidden md:hover:overflow-auto">
-         <div className="mx-auto my-8 w-fit">
+         <div className="relative mx-auto my-8 h-[60px] w-[100px]">
             <Link href="/teachers/addClass">
                <a>
-                  <Image src="/assets/CodeAlgo_Logo.png" alt="logo" loading="lazy" className="h-9 md:cursor-pointer" width={100} height={52} />
+                  <Image src="/assets/CodeAlgo_Logo.png" alt="logo" loading="lazy" className="md:cursor-pointer" layout="fill" objectFit="contain" />
                </a>
             </Link>
          </div>
