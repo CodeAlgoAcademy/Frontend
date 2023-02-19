@@ -30,10 +30,8 @@ import {
 import { extend } from "@syncfusion/ej2-base";
 import { BsHandThumbsUp } from "react-icons/bs";
 import { motion, useCycle } from "framer-motion";
-import { FaTimes } from "react-icons/fa";
 import { FiAlertTriangle } from "react-icons/fi";
 import { Schedule } from "types/interfaces";
-import Image from "next/image";
 import { useGoogleLogin } from "@react-oauth/google";
 import TeacherLayout from "@/components/Teachers/TeacherLayout";
 import Head from "next/head";
@@ -122,10 +120,12 @@ function Calendar() {
 
    return (
       <>
-         <Head>
-            <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/material.css" />
-         </Head>
          <TeacherLayout className="relative">
+            <style jsx>
+               {`
+                  @import url("https://cdn.syncfusion.com/ej2/material.css");
+               `}
+            </style>
             <div className="absolute right-[6px] top-8 flex items-center justify-center overflow-clip pr-[2%]">
                <motion.div
                   animate={{ x: positionX }}
