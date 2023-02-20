@@ -47,7 +47,7 @@ const NavButton = ({image,title,notification,url,isIcon}: Props) => {
         }
         {!isIcon && (
           <>
-            <p className="font-medium select-none capitalize" style={{color: active ? '#fff' : ''}}>
+            <p className="font-medium select-none capitalize text-[15px]" style={{color: active ? '#fff' : '#2073fa'}}>
               {title}
             </p>
             {notification && (
