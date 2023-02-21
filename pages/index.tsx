@@ -1,6 +1,4 @@
-import type { NextPage } from 'next';
-import Head from 'next/head';
-import Image from 'next/image';
+import type {NextPage} from 'next';
 import Navbar from '@/components/Navbar/Navbar';
 import Link from 'next/link';
 const Home: NextPage = () => {
@@ -8,7 +6,7 @@ const Home: NextPage = () => {
     <div className="">
       <div className="h-screen w-screen overflow-hidden">
         <Navbar />
-        <div className={styles.container} style={{ textShadow: '0px 2px 2px rgba(0,0,0,0.3)' }}>
+        <div className={styles.container} style={{textShadow: '0px 2px 2px rgba(0,0,0,0.3)'}}>
           <div className={styles.gradientContainer}></div>
           <div className={styles.textContainer}>
             <p className={styles.containerText}>Coding for kids and Teens made easy</p>

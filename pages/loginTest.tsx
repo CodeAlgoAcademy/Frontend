@@ -1,21 +1,20 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import React,{ChangeEvent,useCallback,useEffect,useState} from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import CleverBtn from '../components/cleverBtn';
 import GoogleBtn from '../components/googleBtn';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store/store';
-import { IInputFields } from '../types/interfaces';
-import { loginUser } from '../services/authService';
-import { clearFields, updateUser } from 'store/authSlice';
+import {useDispatch,useSelector} from 'react-redux';
+import {RootState} from '../store/store';
+import {IInputFields} from '../types/interfaces';
+import {loginUser} from '../services/authService';
+import {clearFields,updateUser} from 'store/authSlice';
 import styles from '../styles/styles';
-import { useRouter } from 'next/router';
+import {useRouter} from 'next/router';
 // import {default as HCaptcha} from '../utils/captcha';
-import axios from 'axios';
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { email, password } = useSelector((state: RootState) => state.user.auth);
+  const {email,password} = useSelector((state: RootState) => state.user.auth);
   const router = useRouter();
   const inputFields: IInputFields[] = [
     {
@@ -33,12 +32,12 @@ const Login = () => {
   ];
 
   // const captchaRef = React.useRef<HCaptcha>(null);
-  const [recaptchaVerified, setRecaptchaVerified] = useState(false);
+  const [recaptchaVerified,setRecaptchaVerified] = useState(false);
   const login = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = await dispatch(loginUser());
-    if (!data?.error?.message) {
-      if (data?.payload?.is_teacher) {
+    if(!data?.error?.message) {
+      if(data?.payload?.is_teacher) {
         router.push('/addClass');
       } else {
         router.push('/comingSoon');
@@ -48,11 +47,11 @@ const Login = () => {
 
   const onReCaptchaVerify = useCallback(async () => {
     setRecaptchaVerified(() => true);
-  }, []);
+  },[]);
 
   const onReCaptchaExpire = useCallback(async () => {
     setRecaptchaVerified(() => false);
-  }, []);
+  },[]);
   const onReCaptchaLoad = () => {
     // this reaches out to the hCaptcha JS API and runs the
     // execute function on it. you can use other functions as
@@ -65,7 +64,7 @@ const Login = () => {
 
   useEffect(() => {
     // dispatch(clearFields());
-  }, []);
+  },[]);
 
   return (
     <main>
@@ -103,8 +102,8 @@ const Login = () => {
           <form className="w-full" onSubmit={login}>
             {/* inputs */}
             <div className="flex flex-col gap-y-3 mb-6 items-start">
-              {inputFields.map((inputField: IInputFields, index: number) => {
-                const { type, placeholder, name, value } = inputField;
+              {inputFields.map((inputField: IInputFields,index: number) => {
+                const {type,placeholder,name,value} = inputField;
                 return (
                   <input
                     key={index}
@@ -113,7 +112,7 @@ const Login = () => {
                     name={name}
                     value={value}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      dispatch(updateUser({ key: name, value: e.target.value }));
+                      dispatch(updateUser({key: name,value: e.target.value}));
                     }}
                     minLength={name === 'password' ? 8 : 0}
                     required
@@ -148,7 +147,7 @@ const Login = () => {
                 type="submit"
                 // disabled={!recaptchaVerified}
                 className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-[royalblue] hover:shadow-md "
-                // disabled:cursor-not-allowed disabled:bg-gray-300
+              // disabled:cursor-not-allowed disabled:bg-gray-300
               >
                 Log In
               </button>

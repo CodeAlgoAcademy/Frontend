@@ -1,8 +1,8 @@
-import React, { ReactNode, useEffect, useState } from 'react';
-import { Sidebar, GeneralNav } from '@/components/index';
-import { useRouter } from 'next/router';
+import React,{ReactNode,useEffect,useState} from 'react';
+import {Sidebar,GeneralNav} from '@/components/index';
+import {useRouter} from 'next/router';
 import TeacherMobileSideNav from './TeacherMobileSideNav';
-import { BiHomeAlt } from 'react-icons/bi';
+import {BiHomeAlt} from 'react-icons/bi';
 import Link from 'next/link';
 
 interface Props {
@@ -10,23 +10,23 @@ interface Props {
   className?: string;
 }
 
-const TeacherLayout = ({ children, className }: Props) => {
+const TeacherLayout = ({children,className}: Props) => {
   const router = useRouter();
-  const [width, setWidth] = useState(window.innerWidth);
-  const [detachedNavDisplay, setDetachedNavDisplay] = useState(false);
+  const [width,setWidth] = useState(window.innerWidth);
+  const [detachedNavDisplay,setDetachedNavDisplay] = useState(false);
 
   useEffect(() => {
     const stringedToken = localStorage.getItem('token');
-    const { user_type } = JSON.parse(`${stringedToken}`);
+    const {user_type} = JSON.parse(`${stringedToken}`);
     const handleResize = () => setWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    if (user_type !== 'teacher') {
+    window.addEventListener('resize',handleResize);
+    if(user_type !== 'teacher') {
       router.push('/login');
     }
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize',handleResize);
     };
-  }, [router]);
+  },[router]);
   return (
     <div className="min-h-screen flex flex-col">
       {/* <Header /> */}
@@ -38,7 +38,7 @@ const TeacherLayout = ({ children, className }: Props) => {
         )}
         {width < 840 && width > 500 && (
           <div className="mt-14 ml-4">
-            <Link href={`/addClass`}>
+            <Link href={`/teachers/addClass`}>
               <div className="text-[#2073fa] text-[28px] flex justify-center">
                 <BiHomeAlt />
               </div>
@@ -46,7 +46,7 @@ const TeacherLayout = ({ children, className }: Props) => {
             <TeacherMobileSideNav />
           </div>
         )}
-        <div className={`flex-1 pr-[3vw] pb-6`} style={{ paddingLeft: width < 840 ? '3vw' : '0' }}>
+        <div className={`flex-1 pr-[3vw] pb-6`} style={{paddingLeft: width < 840 ? '3vw' : '0'}}>
           {width < 500 && (
             <div className="relative my-10 pr-8">
               <div
@@ -118,7 +118,7 @@ const TeacherLayout = ({ children, className }: Props) => {
               {detachedNavDisplay && (
                 <div className="absolute left-0 top-[48px] px-2 bg-white z-20 border border-gray-300 rounded-md">
                   <div className="mt-4">
-                    <Link href={`/addClass`}>
+                    <Link href={`/teachers/addClass`}>
                       <div className="text-[#2073fa] text-[28px] flex justify-center">
                         <BiHomeAlt />
                       </div>
@@ -131,9 +131,8 @@ const TeacherLayout = ({ children, className }: Props) => {
           )}
           {width > 840 && <GeneralNav />}
           <div
-            className={`bg-[#ECEDF3] rounded-3xl md:px-[6%] px-[1rem] py-8 ${
-              width > 500 ? 'mt-[45px]' : 'mt-[100px]'
-            } w-full min-h-[620px] max-w-[96vw] mx-auto ${className}`}
+            className={`bg-[#ECEDF3] rounded-3xl md:px-[6%] px-[1rem] py-8 ${width > 500 ? 'mt-[45px]' : 'mt-[100px]'
+              } w-full min-h-[620px] max-w-[96vw] mx-auto ${className}`}
           >
             {children}
           </div>

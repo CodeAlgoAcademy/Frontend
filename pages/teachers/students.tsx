@@ -1,33 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import { FiPlus } from 'react-icons/fi';
-import { useDispatch, useSelector } from 'react-redux';
-import AddStudentModal from '../components/Teachers/students/AddStudentModal';
-import Students from '../components/Teachers/students/Students';
-import { RootState } from 'store/store';
-import { getStudents } from 'store/studentSlice';
-import { FaSearch } from 'react-icons/fa';
+import React,{useEffect,useState} from 'react';
+import {FiPlus} from 'react-icons/fi';
+import {useDispatch,useSelector} from 'react-redux';
+import AddStudentModal from 'components/Teachers/students/AddStudentModal';
+import Students from 'components/Teachers/students/Students';
+import {RootState} from 'store/store';
+import {getStudents} from 'store/studentSlice';
+import {FaSearch} from 'react-icons/fa';
 import TeacherLayout from '@/components/Teachers/TeacherLayout';
 
 const Index = () => {
   const dispatch = useDispatch();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { id } = useSelector((state: RootState) => state.currentClass);
-  const [commentTabsOpened, setCommentTabsOpened] = useState<boolean>(false);
-  const { students } = useSelector((state: RootState) => state.students);
-  const [filteredStudents, setFilteredStudents] = useState({
+  const [isOpen,setIsOpen] = useState<boolean>(false);
+  const {id} = useSelector((state: RootState) => state.currentClass);
+  const [commentTabsOpened,setCommentTabsOpened] = useState<boolean>(false);
+  const {students} = useSelector((state: RootState) => state.students);
+  const [filteredStudents,setFilteredStudents] = useState({
     students: students?.students,
   });
 
   useEffect(() => {
     dispatch(getStudents());
-  }, [dispatch, id]);
+  },[dispatch,id]);
 
   useEffect(() => {
-    setFilteredStudents(() => ({ students: students?.students }));
-  }, [students?.students]);
+    setFilteredStudents(() => ({students: students?.students}));
+  },[students?.students]);
 
   const closeCommentTabs = (event: any) => {
-    if (event.target.classList.contains('students-container')) {
+    if(event.target.classList.contains('students-container')) {
       setCommentTabsOpened(false);
     }
   };
@@ -36,7 +36,7 @@ const Index = () => {
     setFilteredStudents((prev) => {
       return {
         students: students?.students?.filter((student: any) => {
-          if (
+          if(
             (student.firstName + ' ' + student.lastName).toLowerCase().includes(value.toLowerCase())
           ) {
             return student;
