@@ -1,16 +1,14 @@
-import React, { useEffect } from 'react';
+import React,{useEffect} from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
-import { FaArrowLeft } from 'react-icons/fa';
-import { getAccessToken } from 'utils/getTokens';
-import { useRouter } from 'next/router';
+import {FaArrowLeft} from 'react-icons/fa';
+import {useRouter} from 'next/router';
 const ErrorPage = () => {
   const router = useRouter();
   useEffect(() => {
-    if (!window.location.pathname.includes('/404')) {
+    if(!window.location.pathname.includes('/404')) {
       window.location.replace('404');
     }
-  }, []);
+  },[]);
   return (
     <>
       <Head>

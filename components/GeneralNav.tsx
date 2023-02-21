@@ -76,7 +76,7 @@ const GeneralNav = () => {
     <div className="pt-6 bg-white flex items-center justify-between">
       <div className="relative flex items-center gap-40">
         <div className="flex items-center gap-4">
-          <Link href={`/addClass`}>
+          <Link href={`/teachers/addClass`}>
             <div className="text-[#2073fa] text-[24px]">
               <BiHomeAlt />
             </div>
@@ -145,7 +145,7 @@ const GeneralNav = () => {
         <div
           className={
             userDropDown
-              ? `rounded-[20px] px-4 py-[6px] bg-white z-[50] border border-[#BDBDBD] absolute right-[8rem] top-7 w-[16rem] ${settingsTabOpen ? 'h-[18rem]' : 'h-[10rem]'
+              ? `rounded-[20px] px-4 py-[6px] bg-white z-[50] border border-[#BDBDBD] overflow-hidden absolute right-[8rem] top-7 w-[16rem] ${settingsTabOpen ? 'h-[18rem]' : 'h-[10rem]'
               } box-border duration-300 ease-in-out`
               : `rounded-[30px] px-2 py-[6px] h-[3rem] w-[7rem] border border-[#BDBDBD] absolute box-border right-[8rem] top-7 bg-white  transition-[width]`
           }

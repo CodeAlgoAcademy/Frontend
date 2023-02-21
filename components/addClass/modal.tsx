@@ -1,20 +1,20 @@
-import React, { useEffect } from 'react';
-import { FaTimes } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import React,{useEffect} from 'react';
+import {FaTimes} from 'react-icons/fa';
+import {useDispatch,useSelector} from 'react-redux';
+import {RootState} from '../../store/store';
 import styles from '../../styles/styles';
 import Grades from '../grades';
-import { closeAddClassModal, closeColorModal } from '../../store/modalSlice';
+import {closeAddClassModal,closeColorModal} from '../../store/modalSlice';
 import CreateClass from './createClass';
 import AddStudents from './addStudents';
-import { addFile, clearFields } from 'store/addClassSlice';
+import {addFile,clearFields} from 'store/addClassSlice';
 const Modal = () => {
-  const { addClassModalOpen, showAddStudents } = useSelector((state: RootState) => state.modal);
-  const { color } = useSelector((state: RootState) => state.addClass.class);
+  const {addClassModalOpen,showAddStudents} = useSelector((state: RootState) => state.modal);
+  const {color} = useSelector((state: RootState) => state.addClass.class);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(addFile({}));
-  }, []);
+  },[dispatch]);
 
   return (
     <section
@@ -34,7 +34,7 @@ const Modal = () => {
         </span>
         <aside
           className={`flex-[0.075]  rounded-tl-md rounded-bl-md`}
-          style={{ backgroundColor: color }}
+          style={{backgroundColor: color}}
         ></aside>
 
         {!showAddStudents ? <CreateClass /> : <AddStudents />}

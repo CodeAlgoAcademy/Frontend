@@ -1,38 +1,35 @@
 import React from 'react';
-import Link from 'next/link';
 import {TbLayoutDashboard,TbClipboardText} from 'react-icons/tb';
 import {FaUserGraduate} from 'react-icons/fa';
 import {HiOutlineCalendar} from 'react-icons/hi';
 import {BiMessageRounded} from 'react-icons/bi';
-import {useRouter} from 'next/router';
-import Image from 'next/image';
 import NavButton from 'components/parents/NavButton';
 
 const links = [
    {
       name: 'dashboard',
       icon: <TbLayoutDashboard />,
-      url: '/dashboard',
+      url: '/teachers',
    },
    {
       name: 'curriculum',
       icon: <TbClipboardText />,
-      url: '/curriculum',
+      url: '/teachers/curriculum',
    },
    {
       name: 'students',
       icon: <FaUserGraduate />,
-      url: '/students',
+      url: '/teachers/students',
    },
    {
       name: 'calendar',
       icon: <HiOutlineCalendar />,
-      url: '/calendar',
+      url: '/teachers/calendar',
    },
    {
       name: 'messages',
       icon: <BiMessageRounded />,
-      url: '/messages',
+      url: '/teachers/messages',
    },
 ];
 

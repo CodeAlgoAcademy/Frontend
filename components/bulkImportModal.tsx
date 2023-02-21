@@ -1,6 +1,6 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React,{Dispatch,SetStateAction} from 'react';
 import Image from 'next/image';
-import { FaTimes, FaCheckDouble } from 'react-icons/fa';
+import {FaTimes,FaCheckDouble} from 'react-icons/fa';
 import style from '@/styles/styles';
 
 const bulkImportData: string[] = [
@@ -37,10 +37,11 @@ const BulkImportModal = ({
             height={'250px'}
             objectFit={'cover'}
             objectPosition={'center'}
+            alt=""
           />
         </div>
         <div className="my-4">
-          {bulkImportData.map((instruction: string, index: number) => {
+          {bulkImportData.map((instruction: string,index: number) => {
             return (
               <article key={index} className="flex gap-x-4 items-center mb-2">
                 <span className="text-green-600">

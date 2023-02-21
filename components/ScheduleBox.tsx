@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React,{useState,useEffect} from 'react';
 import ScheduleItem from './ScheduleItem';
-import { getSchedule } from 'services/scheduleService';
-import { useSelector, useDispatch } from 'react-redux';
-import { AppDispatch, RootState } from '../store/store';
-import { Schedule } from 'types/interfaces';
+import {getSchedule} from 'services/scheduleService';
+import {useSelector,useDispatch} from 'react-redux';
+import {AppDispatch,RootState} from '../store/store';
+import {Schedule} from 'types/interfaces';
 
 const ScheduleBox = () => {
   const scheduleData: Schedule = useSelector((state: RootState) => state.schedule);
-  const [currentSchedule, setCurrentSchedule] = useState([]);
+  const [currentSchedule,setCurrentSchedule] = useState([]);
   const [allSchedule] = useState(scheduleData.allSchedule);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -15,7 +15,7 @@ const ScheduleBox = () => {
     const today = new Date();
     let result: boolean = false;
     try {
-      if (today.toDateString() === new Date(date).toDateString()) {
+      if(today.toDateString() === new Date(date).toDateString()) {
         result = true;
       }
     } catch {
@@ -57,12 +57,12 @@ const ScheduleBox = () => {
 
   useEffect(() => {
     dispatch(getSchedule());
-  }, []);
+  },[dispatch]);
 
   useEffect(() => {
     const data = allSchedule.filter((item: any) => isToday(item.StartTime));
     setCurrentSchedule((prev) => data);
-  }, [allSchedule]);
+  },[allSchedule]);
   return (
     <div className="rounded-md shadow-lg p-6 max-w-[380px] bg-white max-h-[212px] overflow-y-auto">
       <div className="min-h-[114px]">
@@ -74,7 +74,7 @@ const ScheduleBox = () => {
         </h3>
         <div className="grid grid-cols-1 divide-y">
           {currentSchedule.length > 0 &&
-            currentSchedule?.map(({ id, StartTime, Subject }, index) => {
+            currentSchedule?.map(({id,StartTime,Subject},index) => {
               return (
                 <ScheduleItem key={index} time={formatAMPM(StartTime)} item={Subject} id={id} />
               );
