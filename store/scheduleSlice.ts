@@ -1,15 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-  getSchedule,
-  postSchedule,
-  putSchedule,
+  deleteGoogleCalendar,
   deleteSchedule,
-  postGoogleAccess,
+  getGoogleCalendar,
+  getSchedule,
+  googleCalendar,
+  postGoogleCalendar,
+  postSchedule,
+  putGoogleCalendar,
+  putSchedule,
 } from 'services/scheduleService';
 import { Schedule } from 'types/interfaces';
 
 const initialState: Schedule = {
   allSchedule: [],
+  googleConnect: false,
 };
 
 const scheduleSlice = createSlice({
@@ -23,32 +28,48 @@ const scheduleSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getSchedule.fulfilled, (state: any, action: PayloadAction<Schedule>) => {
       state.allSchedule = action.payload;
+      state.googleConnect = false;
     }),
       builder.addCase(getSchedule.rejected, (state: any, action: PayloadAction<any>) => {
         console.error('Fetch Error');
       }),
       builder.addCase(postSchedule.fulfilled, (state: any, action: PayloadAction<any>) => {
         console.info('Schedule created Successfully');
-        window.location.reload();
       }),
       builder.addCase(postSchedule.rejected, (state: any, action: PayloadAction<any>) => {
         console.error('Post Error');
       }),
+      builder.addCase(postGoogleCalendar.fulfilled, (state: any, action: PayloadAction<any>) => {
+        console.info('Google calendar created Successfully');
+      }),
+      builder.addCase(postGoogleCalendar.rejected, (state: any, action: PayloadAction<any>) => {
+        console.error('Google calendar Post Error');
+      }),
       builder.addCase(putSchedule.fulfilled, (state: any, action: PayloadAction<any>) => {
         console.info('Schedule updated Successfully');
-        window.location.reload();
       }),
       builder.addCase(putSchedule.rejected, (state: any, action: PayloadAction<any>) => {
         console.error('Update Error');
       }),
+      builder.addCase(putGoogleCalendar.fulfilled, (state: any, action: PayloadAction<any>) => {
+        console.info('Google calendar updated Successfully');
+      }),
+      builder.addCase(putGoogleCalendar.rejected, (state: any, action: PayloadAction<any>) => {
+        console.error('google calendar update Error');
+      }),
       builder.addCase(deleteSchedule.rejected, (state: any, action: PayloadAction<any>) => {
         console.error('Delete Error');
       });
-    builder.addCase(postGoogleAccess.fulfilled, (state: any, { payload }: PayloadAction) => {
-      console.log('Successful');
-      console.log(payload);
+    builder.addCase(deleteGoogleCalendar.rejected, (state: any, action: PayloadAction<any>) => {
+      console.error('google calendar delete Error');
     });
-    builder.addCase(postGoogleAccess.rejected, (state: any, { payload }) => {
+    builder.addCase(getGoogleCalendar.fulfilled, (state: any, { payload }: PayloadAction) => {
+      console.log('Successful');
+      state.googleConnect = true;
+      console.log(payload);
+      state.allSchedule = payload;
+    });
+    builder.addCase(googleCalendar.rejected, (state: any, { payload }) => {
       console.log(payload);
     });
   },

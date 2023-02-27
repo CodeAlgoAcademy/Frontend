@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import { getAllClasses } from 'services/classesService';
 import { openErrorModal } from 'store/fetchSlice';
 import Image from 'next/image';
+import BulkImportModal from '@/components/bulkImportModal';
 interface State {
   firstName: string;
   lastName: string;
@@ -105,62 +106,12 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
       }
     });
   };
-  const bulkImportData: string[] = [
-    'Kindly check the above image for the structure of the file',
-    'Make sure all paramaters (id, email, firstname, lastname and username) are filled',
-    'Ensure the file is saved in a csv format (i.e the file extension is .csv)',
-  ];
 
   return (
     <section className={`${style.modalOverlay} bg-[rgba(0,0,0,.25)]`}>
-      {bulkImportModalOpen && (
-        <section className={`${style.modalOverlay} z-[40] bg-[rgba(0,0,0,.60)]`}>
-          <main className="w-[90vw] max-w-[900px] mx-auto bg-white px-8 py-6 shadow-lg rounded-md">
-            <header className="flex justify-between items-center mb-6">
-              <h1 className="text-[26px] font-bold w-full">Bulk Import Instructions</h1>
-              <span
-                className="font-bold text-[24px] text-[darkRed] cursor-pointer"
-                onClick={() => {
-                  setBulkImportModalOpen(false);
-                }}
-              >
-                <FaTimes />
-              </span>
-            </header>
-            <div className="w-full">
-              <Image
-                src={'/assets/csv file structure.png'}
-                width={'1750px'}
-                height={'250px'}
-                objectFit={'cover'}
-                objectPosition={'center'}
-              />
-            </div>
-            <div className="my-4">
-              {bulkImportData.map((instruction: string, index: number) => {
-                return (
-                  <article key={index} className="flex gap-x-4 items-center mb-2">
-                    <span className="text-green-600">
-                      <FaCheckDouble />
-                    </span>
-                    {instruction}
-                  </article>
-                );
-              })}
-              <button
-                onClick={() => {
-                  setBulkImportModalOpen(false);
-                }}
-                className="mt-4 p-3 min-w-[150px] rounded-full text-white bg-mainPurple"
-              >
-                Got it!
-              </button>
-            </div>
-          </main>
-        </section>
-      )}
+      {bulkImportModalOpen && <BulkImportModal setBulkImportModalOpen={setBulkImportModalOpen} />}
       {/* modal itself */}
-      <main className="w-[90vw] max-w-[900px] mx-auto bg-white rounded-md flex shadow-lg relative">
+      <main className="w-[90vw] h-fit max-h-[95vh] overflow-hidden overflow-y-scroll max-w-[900px] mx-auto bg-white rounded-md flex shadow-lg relative">
         <span
           onClick={() => {
             setIsOpen(false);
@@ -168,7 +119,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
               dispatch(getAllClasses());
             }
           }}
-          className="text-[30px] font-thin absolute z-10 top-[30px] right-[30px]"
+          className="text-[30px] font-thin absolute z-10 top-[30px] right-[30px] text-red-600"
         >
           <FaTimes />
         </span>
@@ -177,8 +128,8 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
           style={{ backgroundColor: '#FFE977' }}
         ></aside>
 
-        <form className="py-8 flex-[0.9]" onSubmit={onSubmit}>
-          <header className="px-8 w-full mb-6 flex gap-x-2 items-center">
+        <form className="py-8 flex-[0.9] h-full" onSubmit={onSubmit}>
+          <header className="px-8 w-full mb-6 flex gap-x-2 items-center text-[#2073fa]">
             <span
               className="text-[20px] font-bold"
               onClick={() => {
@@ -209,7 +160,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
             })}
             <button
               type="button"
-              className=" px-2 py-3 rounded-md bg-mainPurple shadow-md text-white active:scale-[0.91]"
+              className=" px-2 py-3 rounded-md bg-[#2073fa] shadow-md text-white active:scale-[0.91]"
               onClick={() => {
                 if (firstName || lastName) {
                   const randomName = generateUsername(firstName, lastName);
@@ -257,7 +208,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
             </div>
             <button
               type="submit"
-              className="py-3 px-4 min-w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md"
+              className="py-3 px-4 min-w-[150px] text-[16px] rounded-[30px] text-white bg-[#2073fa] hover:shadow-md"
               onClick={() => {
                 if (file) {
                   handleFileSubmit();
@@ -286,55 +237,6 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
       </main>
     </section>
   );
-  // return (
-  //   <div className={styles.bgBlack}>
-  //     <div className={styles.centered}>
-  //       <div className={styles.modal}>
-  //         <div className={styles.modalHeader}>
-  //           <p className={styles.heading}>Add Student</p>
-  //         </div>
-  //         <div onClick={() => setIsOpen(false)} className={styles.closeBtn}>
-  //           <RiCloseLine />
-  //         </div>
-  //         <div className={styles.modalBody}>
-  //           <form className="grid gap-5 pb-2" onSubmit={onSubmit}>
-  //             <div className="flex space-x-5">
-  //               <TextField
-  //                 label="Student First Name"
-  //                 name="firstName"
-  //                 value={firstName}
-  //                 onChange={onChange}
-  //                 size="small"
-  //                 required
-  //               />
-  //               <TextField
-  //                 label="Student Last Name"
-  //                 name="lastName"
-  //                 size="small"
-  //                 value={lastName}
-  //                 onChange={onChange}
-  //                 required
-  //               />
-  //             </div>
-  //             <TextField
-  //               label="Student Email"
-  //               name="email"
-  //               size="small"
-  //               value={email}
-  //               onChange={onChange}
-  //               required
-  //             />
-  //             <div>
-  //               <button className={styles.addBtn} type="submit">
-  //                 Add Student
-  //               </button>
-  //             </div>
-  //           </form>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
 };
 
 export default AddStudentModal;
@@ -351,7 +253,7 @@ const styles = {
     'absolute top-0 right-0 text-[#f4f4f4] hover:bg-opacity-50 -mt-2 -mr-2 text-lg cursor-pointer p-1 rounded-full bg-red-500',
   modalBody: 'p-3 text-sm text-[#2c3e50] text-center',
   addBtn:
-    'bg-purple-900 p-3 rounded-3xl text-white hover:bg-opacity-90 transition-all duration-500',
+    'bg-[royalblue] p-3 rounded-3xl text-white hover:bg-opacity-90 transition-all duration-500',
   bulkBtn: 'flex space-x-3 text-center items-center hover:bg-slate-200 p-3',
   plusIcon: 'border border-slate-700 rounded-full',
 };

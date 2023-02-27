@@ -43,6 +43,7 @@ export interface IAllCurriculum {
 export interface IAddClass {
   student: ISingleStudent;
   class: ISingleClass;
+  file: any;
 }
 
 export interface IUnitsSlice {
@@ -305,6 +306,7 @@ export interface Student {
   lastName: string;
   email: string;
   username: string;
+  id?: string;
 }
 
 export interface INotes {
@@ -313,6 +315,7 @@ export interface INotes {
 
 export interface Schedule {
   allSchedule: [];
+  googleConnect: boolean;
 }
 
 export interface newLesson {
@@ -324,4 +327,20 @@ export interface newLesson {
   start_date: string;
   end_date: string;
   status: 'published' | 'unpublished';
+}
+
+export interface IFriends {
+  id: string | number;
+  name: string;
+  is_friend: boolean;
+}
+
+export interface IParentChild {
+  // child: {
+  username: string;
+  fullname: string;
+  codingExperience: string;
+  dob: string;
+  password: string;
+  // }
 }

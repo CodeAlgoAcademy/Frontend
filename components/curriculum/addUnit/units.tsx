@@ -18,7 +18,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
   const dispatch = useDispatch();
   const { units, levels } = useSelector((state: RootState) => state.unit.addUnit);
   return (
-    <article className="flex flex-row gap-x-2 relative">
+    <article className="flex flex-col md:flex-row gap-2 relative">
       {openedModal === 'unit' && levels !== '' && (
         <div className="fixed top-0 left-0 z-40 w-full min-h-screen bg-[rgba(0,0,0,0.6)] flex justify-center items-center gap-y-4 overflow-hidden overflow-y-scroll close-dropdown">
           <div className="bg-white max-h-[95vh] w-[90vw] max-w-[1000px] overflow-hidden rounded-md flex md:flex-row flex-col">
@@ -27,7 +27,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
               {levels !== '' && (
                 <div className="flex flex-col">
                   <h1 className="flex flex-row gap-x-3 font-bold text-[19px] items-center">
-                    <i className="w-[28px] h-[28px] text-white bg-mainPurple flex justify-center items-center rounded-full">
+                    <i className="w-[28px] h-[28px] text-white bg-[#2073fa] flex justify-center items-center rounded-full">
                       <FaInfo />
                     </i>
                     Hints
@@ -37,7 +37,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                       {hints.map((hint: string, index: number) => {
                         return (
                           <li className="flex items-start gap-x-4" key={index}>
-                            <i className="text-[18px] text-mainPurple font-light mt-2">
+                            <i className="text-[18px] text-[#2073fa] font-light mt-2">
                               <BiChevronRight />
                             </i>
                             <span>{hint}</span>
@@ -52,7 +52,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                 onClick={() => {
                   updateOpenedModal('');
                 }}
-                className="px-3 py-2 font-bold rounded-[40px] bg-orange-400 text-white hover:bg-orange-600"
+                className="px-3 py-2 font-bold rounded-[40px] bg-[#2073fa] text-white hover:bg-[royalblue]"
               >
                 Done
               </button>
@@ -78,7 +78,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                       <p className="text-[22px] font-bold hoverElement cursor-pointer w-fit">
                         {unit.title}
                       </p>
-                      <p className="hoverText bg-mainPurple after:bg-mainPurple -top-[20px] right-[30px]">
+                      <p className="hoverText bg-[#2073fa] after:bg-[#2073fa] -top-[20px] right-[30px]">
                         {unit.hoverText}
                       </p>
                     </div>
@@ -107,7 +107,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                         elementWithCurrentProperty?.id !== unit.id ? (
                           <>
                             <p className="hoverElement">Current</p>
-                            <div className="hoverText after:bg-mainPurple bg-mainPurple right-[0] -top-[70px] min-w-fit">
+                            <div className="hoverText after:bg-[#2073fa] bg-[#2073fa] right-[0] -top-[70px] min-w-fit">
                               You can only have one current unit
                             </div>
                           </>
@@ -152,7 +152,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                             );
                           }}
                         />
-                        <div className="hoverText after:bg-mainPurple bg-mainPurple right-[0] -top-[40px]">
+                        <div className="hoverText after:bg-[#2073fa] bg-[#2073fa] right-[0] -top-[40px]">
                           Start Date
                         </div>
                       </div>
@@ -175,9 +175,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                             );
                           }}
                         />
-                        <div className="hoverText bg-mainPurple right-[0] -top-[40px]">
-                          End Date
-                        </div>
+                        <div className="hoverText bg-[#2073fa] right-[0] -top-[40px]">End Date</div>
                       </div>
                     </div>
                   </div>
@@ -189,7 +187,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                 onClick={() => {
                   updateOpenedModal('');
                 }}
-                className="px-3 py-2 font-bold rounded-[40px] bg-orange-400 text-white hover:bg-orange-600"
+                className="px-3 py-2 font-bold rounded-[40px] bg-[#2073fa] text-white hover:bg-[#2073fa]"
               >
                 Done
               </button>
@@ -199,7 +197,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
       )}
       <div
         className={`${styles.topic} ${
-          openedModal === 'unit' ? ' outline-mainPurple' : 'outline-transparent'
+          openedModal === 'unit' ? ' outline-[#2073fa]' : 'outline-transparent'
         }`}
         onClick={() => {
           updateOpenedModal('unit');

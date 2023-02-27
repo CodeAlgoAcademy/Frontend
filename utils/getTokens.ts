@@ -1,6 +1,7 @@
 import http from 'axios.config';
 
-const EXPIRATION_TIME = 3600 * 1000;
+const ACCESS_TOKEN_EXPIRATION_TIME = 3600 * 1000; // one hour expiration
+const REFRESH_TOKEN_EXPIRATION_TIME = 3600 * 1000 * 24; // one day expiration
 
 export const setTimeStamp = () => {
   if (typeof window !== 'undefined') {
@@ -8,7 +9,7 @@ export const setTimeStamp = () => {
   }
 };
 
-export const getTimeStamp = () => {
+const getTimeStamp = () => {
   if (typeof window !== 'undefined') {
     const timestamp: number = Number(window.localStorage.getItem('token_timestamp'));
 
@@ -18,23 +19,30 @@ export const getTimeStamp = () => {
 
 export const refreshToken = async () => {
   if (typeof window !== 'undefined') {
-    try {
-      const { data } = await http.post('/auth/token/refresh/', {
-        refresh: getRefreshToken(),
-      });
-      const { access } = data;
-      localStorage.setItem(
-        'token',
-        JSON.stringify({
-          access_token: access,
-          refresh_token: getRefreshToken(),
-        }),
-      );
-      setTimeStamp();
-      window.location.reload();
-      return;
-    } catch (e) {
-      console.error(e);
+    if (Date.now() - getTimeStamp()! > REFRESH_TOKEN_EXPIRATION_TIME) {
+      window.localStorage.removeItem('token');
+      window.localStorage.removeItem('token_timestamp');
+      console.error('Refresh token expired. Redirecting to Login page....');
+      window.location.replace('login');
+    } else {
+      try {
+        const { data } = await http.post('/auth/token/refresh/', {
+          refresh: getRefreshToken(),
+        });
+        const { access } = data;
+        localStorage.setItem(
+          'token',
+          JSON.stringify({
+            access_token: access,
+            refresh_token: getRefreshToken(),
+          }),
+        );
+        setTimeStamp();
+        window.location.reload();
+        return;
+      } catch (e) {
+        console.error(e);
+      }
     }
   }
 };
@@ -44,18 +52,27 @@ export const getAccessToken = () => {
     const localAccessToken = getToken();
 
     if (getTimeStamp() !== undefined && getTimeStamp() !== 0) {
-      if (Date.now() - getTimeStamp()! > EXPIRATION_TIME) {
+      if (Date.now() - getTimeStamp()! > ACCESS_TOKEN_EXPIRATION_TIME) {
         console.warn('Access token expired. Refreshing...');
         refreshToken();
       }
     }
+    // console.log(window.location.pathname)
+    // if (
+    //   (!localAccessToken || localAccessToken === undefined) &&
+    //   window.location.pathname !== '/login' &&
+    //   window.location.pathname !== '/' &&
+    //   !window.location.pathname.toLowerCase().includes("/signup") &&
+    //   window.location.pathname !== "/selectUserType" &&
+    //   window.location.pathname !== "/comingSoon" &&
+    //   window.location.pathname !== "/404" &&
+    //   !window.location.pathname.includes("/verify-email") &&
+    //   !window.location.pathname.includes("/change-password") &&
+    //   !window.location.pathname.includes("/parents")
 
-    if (
-      (!localAccessToken || localAccessToken === undefined) &&
-      window.location.pathname !== '/login'
-    ) {
-      window.location.replace('login');
-    }
+    // ) {
+    //   window.location.replace('login');
+    // }
 
     return localAccessToken;
   }

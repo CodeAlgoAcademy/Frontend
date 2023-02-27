@@ -1,13 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500&display=swap');
 
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
@@ -73,8 +74,8 @@ a {
   border-width: 0;
 }
 [type='radio']:checked {
-  box-shadow: 0 0 0 1px #f28e2c;
-  border-color: #f28e2c;
+  box-shadow: 0 0 0 1px #2073fa;
+  border-color: #2073fa;
   background-color: #fff;
   border-width: 0.325rem;
 }
@@ -83,11 +84,9 @@ a {
 }
 .showModal {
   top: 0;
-  
 }
 .hideModal {
   top: -100vh;
-
 }
 @keyframes showModalAnimation {
   from {
@@ -152,8 +151,8 @@ a {
   height: 1.35rem;
   width: 1.35rem;
   cursor: pointer;
-  box-shadow: 0 0 0 1px #f28e2c;
-  border: 0.25rem solid #f28e2c;
+  box-shadow: 0 0 0 1px #2073fa;
+  border: 0.25rem solid #2073fa;
   background-color: #fff;
   border-radius: 50%;
 }
@@ -161,8 +160,8 @@ a {
   height: 1.35rem;
   width: 1.35rem;
   cursor: pointer;
-  box-shadow: 0 0 0 1px #f28e2c;
-  border: 0.25rem solid #f28e2c;
+  box-shadow: 0 0 0 1px #2073fa;
+  border: 0.25rem solid #2073fa;
   background-color: #fff;
   border-radius: 50%;
 }
@@ -203,7 +202,10 @@ a {
 }
 
 .checkbox-container input:checked ~ .checkmark {
-  background-color: #f28e2c;
+  background-color: #2073fa;
+}
+.checkbox-container input.accent-mainPurple:checked ~ .checkmark {
+  @apply bg-[#2073fe];
 }
 
 .checkmark:after {
@@ -253,6 +255,18 @@ a {
 }
 :where(.small-scroll-thumb, .short-scroll-thumb)::-webkit-scrollbar-thumb {
   border-radius: 0px;
+}
+:where(.small-scroll-thumb, .blue-scroll-thumb)::-webkit-scrollbar-thumb {
+  background-color: #2073fa;
+  border-radius: 2px;
+}
+.small-scroll-thumb.blue-scroll-thumb::-webkit-scrollbar {
+  width: 4px;
+  background: #d8dbe2;
+  border-radius: 2px;
+}
+.small-scroll-thumb.blue-scroll-thumb.skill-box::-webkit-scrollbar {
+  margin-right: 16px;
 }
 
 .short-scroll-thumb::-webkit-scrollbar {
@@ -421,6 +435,58 @@ a {
   -webkit-transform: rotate(330deg);
   -ms-transform: rotate(330deg);
   transform: rotate(330deg);
+}
+
+.parent-page * {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.red-progress-bar {
+  background: rgb(255, 213, 236);
+  background: linear-gradient(90deg, rgba(255, 213, 236, 1) 1%, rgba(251, 87, 176, 1) 60%);
+}
+.green-progress-bar {
+  background: rgb(241, 242, 245);
+  background: linear-gradient(90deg, rgba(241, 242, 245, 1) 1%, rgba(127, 217, 222, 1) 60%);
+}
+.green-chart-bar {
+  background: rgb(241, 242, 245);
+  background: linear-gradient(0deg, #bff2f5 60%, rgb(142, 229, 233) 90%);
+}
+.blue-svg {
+  filter: invert(80%) sepia(70%) saturate(4500%) hue-rotate(200deg) brightness(105%) contrast(140%);
+}
+
+.detail-card {
+  background: rgb(235, 236, 242);
+  box-shadow: rgba(200, 200, 200, 0.17) 0px -23px 25px 0px inset,
+    rgba(196, 196, 196, 0.15) 0px -36px 30px 0px inset,
+    rgba(199, 199, 199, 0.1) 0px -79px 40px 0px inset, rgba(191, 191, 191, 0.06) 0px 2px 1px,
+    rgba(127, 127, 127, 0.09) 0px 4px 2px, rgba(223, 223, 223, 0.09) 0px 8px 4px,
+    rgba(186, 186, 186, 0.09) 0px 16px 8px, rgba(190, 190, 190, 0.09) 0px 32px 16px;
+}
+
+.preloader {
+  animation: preload 2s infinite ease-in-out 0.5s;
+}
+.student-input:hover + span {
+  display: block;
+}
+
+@keyframes preload {
+  0% {
+    border-left: 5px solid #2073fa;
+    border-right: 5px solid #2073fa;
+    border-top: 0;
+    border-bottom: 0;
+    transform: rotate(0deg);
+  }
+  100% {
+    border-top: 5px solid #2073fa;
+    border-bottom: 5px solid #2073fa;
+    border-left: 0;
+    border-right: 0;
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes spinner-fade9234 {

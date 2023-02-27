@@ -26,7 +26,7 @@ const ResetPassword = () => {
     }
   };
   return (
-    <main className="bg-[#E5E5E5] w-full min-h-screen flex justify-center items-center">
+    <main className="bg-[#ecedf3] w-full min-h-screen flex justify-center items-center">
       <div className="w-[90vw] max-w-[500px] mx-auto rounded-md shadow-md bg-white p-8">
         <div className="text-center">
           <h1 className="text-[26px] font-bold">Forgot Password</h1>
@@ -42,7 +42,7 @@ const ResetPassword = () => {
               minLength={8}
               type="password"
               required
-              className="px-3 py-3 rounded-md focus:border-mainPurple w-full border-2 outline-none"
+              className="px-3 py-3 rounded-md focus:border-[#2073fa] w-full border-2 outline-none"
               placeholder="Enter Your New Password"
             />
           </div>
@@ -55,7 +55,7 @@ const ResetPassword = () => {
               minLength={8}
               type="password"
               required
-              className="px-3 py-3 rounded-md focus:border-mainPurple w-full border-2 outline-none"
+              className="px-3 py-3 rounded-md focus:border-[#2073fa] w-full border-2 outline-none"
               placeholder="Confirm Your New Password"
             />
             {password !== '' && confirmPassword !== '' && password !== confirmPassword && (
@@ -63,7 +63,7 @@ const ResetPassword = () => {
             )}
           </div>
           <button
-            className="w-full rounded-md active:scale-[0.98] bg-mainPurple text-white py-3 px-3"
+            className="w-full rounded-md active:scale-[0.98] bg-[#2073fa] text-white py-3 px-3"
             type="submit"
           >
             Reset Password
@@ -82,7 +82,7 @@ const ResetPassword = () => {
                 <h1>Password reset was successful!</h1>
               </div>
               <Link href="/login">
-                <button className="mt-6 w-full bg-mainPurple py-3 rounded-md shadow-md text-white flex items-center justify-center font-bold gap-x-4">
+                <button className="mt-6 w-full bg-[#2073fa] py-3 rounded-md shadow-md text-white flex items-center justify-center font-bold gap-x-4">
                   <i>
                     <FaArrowLeft />
                   </i>
