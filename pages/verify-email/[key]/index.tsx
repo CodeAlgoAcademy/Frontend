@@ -26,8 +26,15 @@ const VerifyWithKey = () => {
             const { data } = await http.post("/auth/confirm-email/", {
                key: router.query.key,
             });
+            const signUpType = JSON.parse(localStorage.getItem("parent-signup") as string);
+
+            localStorage.removeItem("parent-signup");
             setLoading(false);
             setError(false);
+            if (signUpType) {
+               window.open("", "_self");
+               window.close();
+            }
          } catch (error: any) {
             console.log(error.message);
             dispatch(openErrorModal({ errorText: [error.message] }));

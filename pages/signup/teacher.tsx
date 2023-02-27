@@ -32,6 +32,7 @@ export default function Teacher() {
          next();
       } else {
          const data = await dispatch(signUpUser());
+         localStorage.removeItem("parent-signup");
          if (!data?.error?.message) {
             dispatch(clearFields());
             router.push("/verify-email");
