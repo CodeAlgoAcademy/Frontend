@@ -74,7 +74,7 @@ const SingleCurriculum = ({ curriculum, active }: { curriculum: Icurriculum; act
                               start_date: curriculum.start_date,
                               is_current: curriculum.is_current,
                               is_finished: curriculum.is_finished,
-                           }),
+                           })
                         );
                      }}
                   >

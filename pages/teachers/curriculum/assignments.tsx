@@ -420,7 +420,7 @@ const Assignments = () => {
                                     showModal,
                                     modalType: "createResponse",
                                     resetAssignments,
-                                 }),
+                                 })
                               );
                            } else {
                               await dispatch(
@@ -431,7 +431,7 @@ const Assignments = () => {
                                     modalType: "createResponse",
                                     resetAssignments,
                                     id: editId,
-                                 }),
+                                 })
                               );
                            }
                         }}
@@ -456,7 +456,7 @@ const Assignments = () => {
                                        showModal,
                                        modalType: "saveResponse",
                                        resetAssignments,
-                                    }),
+                                    })
                                  );
                               } else {
                                  await dispatch(
@@ -467,7 +467,7 @@ const Assignments = () => {
                                        modalType: "saveResponse",
                                        resetAssignments,
                                        id: editId,
-                                    }),
+                                    })
                                  );
                               }
                            }}
