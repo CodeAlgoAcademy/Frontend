@@ -76,7 +76,6 @@ export const messageSlice = createSlice({
       .addCase(
         getConversations.fulfilled,
         (state: IUserConversation | any, action: PayloadAction<IUserConversation>) => {
-          console.log(action.payload);
           state.conversations = action.payload;
         },
       )

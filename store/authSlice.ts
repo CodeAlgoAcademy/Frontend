@@ -29,7 +29,7 @@ const initialState: IUser = {
   // sign up stuffs
   country: '',
   // peculiar to students
-  grade: 'Select Grade',
+  grade: '',
   // peculiar to teachers
   schoolCountry: '',
   schoolName: '',
@@ -42,12 +42,12 @@ const initialState: IUser = {
     email: '',
     password: '',
     // peculiar to students
-    grade: 'Select Grade',
+    grade: '',
     // peculiar to teachers
     schoolCountry: countryList[0],
     schoolName: '',
     is_parent: false,
-    is_student: false,
+    is_student: true,
     is_teacher: false,
     country: countryList[0],
     username: '',
@@ -62,7 +62,16 @@ export const userSlice = createSlice({
       localStorage.removeItem('token');
     },
     clearFields: (state: IUser) => {
-      return { ...state, auth: initialState.auth };
+      return {
+        ...state,
+        auth: {
+          ...initialState.auth,
+          email: state.auth.email,
+          is_student: state.auth.is_student,
+          is_parent: state.auth.is_parent,
+          is_teacher: state.auth.is_teacher,
+        },
+      };
     },
     updateUser: (
       state: IUser | any,
@@ -93,6 +102,13 @@ export const userSlice = createSlice({
         JSON.stringify({
           access_token: action.payload.access_token,
           refresh_token: action.payload.refresh_token,
+          user_type: action.payload.is_student
+            ? 'student'
+            : action.payload.is_teacher
+            ? 'teacher'
+            : action.payload.is_parent
+            ? 'parent'
+            : '',
         }),
       );
       setTimeStamp();
@@ -105,24 +121,24 @@ export const userSlice = createSlice({
     builder.addCase(loginUser.rejected, (state: IUser, { payload }: PayloadAction) => {
       console.log(payload);
     });
-    builder.addCase(signUpUser.pending, (state: IUser) => {
-      console.log('pending');
-    });
-    builder.addCase(signUpUser.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
-      localStorage.setItem(
-        'token',
-        JSON.stringify({
-          access_token: action.payload?.access_token,
-          refresh_token: action.payload?.refresh_token,
-        }),
-      );
-      setTimeStamp();
-      return {
-        ...state,
-        ...action.payload,
-      };
-    });
-    builder.addCase(signUpUser.rejected, (state: IUser, { payload }: PayloadAction) => {});
+    // builder.addCase(signUpUser.pending, (state: IUser) => {
+    //   console.log('pending');
+    // });
+    // builder.addCase(signUpUser.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
+    //   localStorage.setItem(
+    //     'token',
+    //     JSON.stringify({
+    //       access_token: action.payload?.access_token,
+    //       refresh_token: action.payload?.refresh_token,
+    //     }),
+    //   );
+    //   setTimeStamp();
+    //   return {
+    //     ...state,
+    //     ...action.payload,
+    //   };
+    // });
+    // builder.addCase(signUpUser.rejected, (state: IUser, { payload }: PayloadAction) => {});
     builder.addCase(loginWithGoogle.pending, (state: IUser) => {});
     builder.addCase(loginWithGoogle.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
       localStorage.setItem(

@@ -15,14 +15,29 @@ export const getSchedule = createAsyncThunk('scheduleSlice/getSchedule', async (
   }
 });
 
-export const postGoogleAccess = createAsyncThunk(
-  'scheduleSlice/postGoogleAuth',
-  async (access_token: any, thunkAPI) => {
+export const getGoogleCalendar = createAsyncThunk(
+  'scheduleSlice/getGoogleCalendar',
+  async (name, thunkApi) => {
+    try {
+      const { data } = await http.get('/academics/calendar/calendar', {
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      });
+      return data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const googleCalendar = createAsyncThunk(
+  'scheduleSlice/googleCalendar',
+  async (access_token: string, thunkAPI) => {
     const dispatch = thunkAPI.dispatch;
     try {
-      console.log(access_token);
-      const { data } = await http.post(
-        '/auth/google-signup/',
+      await http.post(
+        '/auth/calendar/',
         { access_token },
         {
           headers: {
@@ -31,7 +46,9 @@ export const postGoogleAccess = createAsyncThunk(
         },
       );
 
-      return { ...data };
+      const schedule = await dispatch(getGoogleCalendar());
+
+      return schedule;
     } catch (error: any) {
       const message =
         (error.response && error.response.data && error.response.data.message) ||
@@ -52,6 +69,27 @@ export const postSchedule = createAsyncThunk(
           Authorization: `Bearer ${getAccessToken()}`,
         },
       });
+      return { ...data };
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const postGoogleCalendar = createAsyncThunk(
+  'scheduleSlice/postGoogleCalendar',
+  async (addedRecords: any, thunkApi) => {
+    try {
+      delete addedRecords[0].Id;
+      const { data } = await http.post(
+        '/academics/calendar/calendar',
+        { ...addedRecords[0] },
+        {
+          headers: {
+            Authorization: `Bearer ${getAccessToken()}`,
+          },
+        },
+      );
       return { ...data };
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.response.data);
@@ -81,12 +119,47 @@ export const putSchedule = createAsyncThunk(
   },
 );
 
+export const putGoogleCalendar = createAsyncThunk(
+  'scheduleSlice/putGoogleCalendar',
+  async (updatedRecords: any, thunkApi) => {
+    const { Id, EId, StartTimezone, EndTimezone, Guid, ...others } = updatedRecords[0];
+
+    try {
+      const { data } = await http.put(`/academics/calendar/${EId}`, JSON.stringify(others), {
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      });
+      return { ...data };
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.response.data);
+    }
+  },
+);
+
 export const deleteSchedule = createAsyncThunk(
   'scheduleSlice/deleteSchedule',
   async (deletedRecords: any, thunkApi) => {
     try {
       const { data } = await http.delete('/academics/calendar/schedules/delete/', {
         data: JSON.stringify(deletedRecords),
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      });
+      return { ...data };
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const deleteGoogleCalendar = createAsyncThunk(
+  'scheduleSlice/deleteGoogleCalendar',
+  async (deletedRecords: any, thunkApi) => {
+    try {
+      const { data } = await http.delete(`/academics/calendar/${deletedRecords[0].EId}`, {
+        data: JSON.stringify(deletedRecords[0]),
         headers: {
           Authorization: `Bearer ${getAccessToken()}`,
         },

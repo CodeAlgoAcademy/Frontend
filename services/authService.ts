@@ -24,7 +24,6 @@ export const loginUser: any = createAsyncThunk('authSlice/loginUser', async (nam
     };
   } catch (error: any) {
     dispatch(closePreloader());
-    console.log(error);
     if (error.response.data.non_field_errors) {
       dispatch(
         openErrorModal({
@@ -68,16 +67,14 @@ export const signUpUser: any = createAsyncThunk('authSlice/signUpUser', async (n
     is_teacher,
     username,
   };
+  console.log(options);
   dispatch(openPreloader({ loadingText: 'Creating Account' }));
   try {
     const { data } = await http.post('/auth/registration/', { ...options });
     dispatch(clearFields());
     dispatch(closePreloader());
-    return {
-      access_token: data.access_token,
-      refresh_token: data.refresh_token,
-      ...data?.user,
-    };
+    console.log(data);
+    return data;
   } catch (error: any) {
     dispatch(closePreloader());
     if (error.response.data.non_field_errors) {
@@ -95,7 +92,7 @@ export const signUpUser: any = createAsyncThunk('authSlice/signUpUser', async (n
     } else {
       dispatch(openErrorModal({ errorText: [error.message] }));
     }
-    return thunkApi.rejectWithValue(error);
+    return thunkApi.rejectWithValue(error.message);
   }
 });
 
@@ -112,9 +109,7 @@ export const loginWithGoogle: any = createAsyncThunk(
         refresh_token: data.refresh_token,
         ...data.user,
       };
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   },
 );
 
@@ -160,7 +155,7 @@ export const updateAccountType: any = createAsyncThunk(
           firstname,
           lastname,
           email,
-          country : country ? country : "Canada",
+          country: country ? country : 'Canada',
           schoolCountry,
           schoolName,
           is_student,

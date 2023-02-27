@@ -175,19 +175,15 @@ export const getAssignments: any = createAsyncThunk(
     const state: any = thunkApi.getState();
     const { id } = state.unit.currentUnitInView;
     const dispatch = thunkApi.dispatch;
-    dispatch(openPreloader({ loadingText: 'Fetching Assignments' }));
     try {
       const { data } = await http.get(`/academics/curriculums/units/${id}/assignments/`, {
         headers: {
           Authorization: `Bearer ${getAccessToken()}`,
         },
       });
-      dispatch(closePreloader());
 
       return data;
     } catch (error: any) {
-      dispatch(closePreloader());
-
       return thunkApi.rejectWithValue(error.message);
     }
   },

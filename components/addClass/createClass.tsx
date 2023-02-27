@@ -60,9 +60,9 @@ const CreateClass = () => {
   };
 
   return (
-    <form className="p-8 flex-[0.9]" onSubmit={handleSubmit}>
+    <form className="p-8 flex-[0.9] h-full" onSubmit={handleSubmit}>
       <header className="w-full mb-6">
-        <h1 className="md:text-[30px] text-[20px] font-bold">Create New Class</h1>
+        <h1 className="md:text-[30px] text-[20px] font-bold text-[#2073fa]">Create New Class</h1>
       </header>
       <section className="grid md:grid-cols-2 gap-[1rem] items-start">
         {inputFields?.map((inputField: IInputFields, index: number) => {
@@ -84,7 +84,7 @@ const CreateClass = () => {
           );
         })}
         <div
-          className="w-full px-4 py-3 flex justify-between items-center rounded-md outline-none border-2 border-gray-400 focus:border-mainPurple text-black text-[16px] placeholder:text-black font-bold cursor-pointer"
+          className="w-full px-4 py-3 flex justify-between items-center rounded-md outline-none border-2 border-gray-400 focus:border-[#2073fa] text-black text-[16px] placeholder:text-black font-bold cursor-pointer"
           onClick={() => {
             dispatch(openGradesModal());
           }}
@@ -143,7 +143,7 @@ const CreateClass = () => {
         </div>
         <button
           type="submit"
-          className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-mainPurple hover:shadow-md"
+          className="py-3 w-[150px] text-[16px] rounded-[30px] text-white bg-[#2073fa] hover:shadow-md"
         >
           Create
         </button>

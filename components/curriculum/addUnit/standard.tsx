@@ -9,10 +9,10 @@ const Standard: FC<Props> = ({ openedModal, updateOpenedModal }) => {
   const dispatch = useDispatch();
   const { standard } = useSelector((state: RootState) => state.unit.addUnit);
   return (
-    <article className="flex flex-row gap-x-2 relative">
+    <article className="flex flex-col md:flex-row gap-2 relative">
       <div
         className={`${styles.topic} ${
-          openedModal === 'standard' ? ' outline-mainPurple' : 'outline-transparent'
+          openedModal === 'standard' ? ' outline-[#2073fa]' : 'outline-transparent'
         }`}
         onClick={(event: any) => {
           if (!event.target.classList.contains('dropdown')) {
@@ -40,8 +40,8 @@ const Standard: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                 />
                 <label
                   htmlFor={availableStandard}
-                  className={`hover:text-mainPurple dropdown ${
-                    standard === availableStandard && 'text-mainPurple'
+                  className={`hover:text-[#2073fa] dropdown ${
+                    standard === availableStandard && 'text-[#2073fa]'
                   }`}
                 >
                   {availableStandard}
