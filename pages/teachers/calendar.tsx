@@ -121,11 +121,11 @@ function Calendar() {
    return (
       <>
          <TeacherLayout className="relative">
-            <style jsx>
+            {/* <style jsx>
                {`
                   @import url("https://cdn.syncfusion.com/ej2/material.css");
                `}
-            </style>
+            </style> */}
             <div className="absolute right-[6px] top-8 flex items-center justify-center overflow-clip pr-[2%]">
                <motion.div
                   animate={{ x: positionX }}
