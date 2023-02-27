@@ -70,7 +70,7 @@ const ChatRoom = () => {
                   type: "chat.message",
                   text: typingText,
                   receiver: openedMessageOwner.id,
-               }),
+               })
             );
             dispatch(getOpenMesssages());
             dispatch(getConversations());
