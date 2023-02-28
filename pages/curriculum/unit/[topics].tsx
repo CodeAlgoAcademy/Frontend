@@ -130,6 +130,7 @@ export default function Unit() {
       setActive((active) => [...active, id]);
     }
   };
+  
   useEffect(() => {
     dispatch(getStudents());
   }, []);

@@ -41,7 +41,7 @@ export default function Student() {
   return (
     <div className="bg-gradient-to-br from-[#78A8FB] to-[#C4D7F8] min-h-[100vh] p-[2rem] relative">
       <div className="flex justify-between items-center">
-        <h1 className="text-white text-3xl font-bold">CodeAlgo</h1>
+        <Link href="/"><h1 className="text-white text-3xl cursor-pointer font-bold">CodeAlgo</h1></Link>
         <div>
           <span className="font-semibold">Already have an account?</span>
           <Link href="/login">
