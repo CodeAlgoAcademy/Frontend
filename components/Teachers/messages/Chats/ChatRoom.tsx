@@ -94,7 +94,9 @@ const ChatRoom = () => {
    }, [messages]);
 
    useEffect(() => {
-      dispatch(getOpenMesssages());
+      if (openedMessageOwner.id) {
+         dispatch(getOpenMesssages());
+      }
    }, [openedMessageOwner, dispatch]);
 
    useEffect(() => {
