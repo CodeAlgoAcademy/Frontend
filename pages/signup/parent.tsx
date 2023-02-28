@@ -49,7 +49,7 @@ export default function Parent() {
   return (
     <div className="bg-gradient-to-br from-[#78A8FB] to-[#C4D7F8] min-h-[100vh] p-[2rem] relative">
       <div className="flex justify-between items-center">
-        <h1 className="text-white text-3xl font-bold">CodeAlgo</h1>
+        <Link href="/"><h1 className="text-white cursor-pointer text-3xl font-bold">CodeAlgo</h1></Link>
         <div>
           <span className="font-semibold">Already have an account?</span>
           <Link href="/login">
@@ -94,15 +94,6 @@ export default function Parent() {
                   onClick={back}
                 >
                   Sign Up with Google
-                </button>
-              )}
-              {isFirstStep && (
-                <button
-                  className="block  h-[2.5rem] mt-6 text-center w-full bg-neutral-100/70 font-semibold rounded-xl text-black"
-                  type="button"
-                  onClick={back}
-                >
-                  Sign Up with Facebook
                 </button>
               )}
               {isLastStep && (

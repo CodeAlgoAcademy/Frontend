@@ -48,9 +48,9 @@ const LoginTest = () => {
   return (
     <div className="bg-gradient-to-br from-[#78A8FB] to-[#C4D7F8] min-h-[100vh] p-[2rem] relative">
       <div className="flex justify-between items-center">
-        <h1 className="text-white text-3xl font-bold">CodeAlgo</h1>
+        <Link href="/"><h1  className="text-white text-3xl font-bold cursor-pointer">CodeAlgo</h1></Link>
         <div>
-          <span className="font-semibold">Yet to create account?</span>
+          <span className="font-semibold">New here?</span>
           <Link href="/selectUserType">
             <span className="cursor-pointer ml-3 font-semibold text-[#2073FA]">Register</span>
           </Link>
