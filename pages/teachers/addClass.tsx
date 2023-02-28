@@ -12,13 +12,13 @@ const AddClass = () => {
    const dispatch = useDispatch();
    const { allClasses } = useSelector((state: RootState) => state);
 
-   const getClasss = async () => {
+   const getClass = async () => {
       const data = await dispatch(getAllClasses());
       if (!data?.error?.message) {
       }
    };
    useEffect(() => {
-      getClasss();
+      getClass();
       dispatch(closeAddClassModal());
    }, []);
 
