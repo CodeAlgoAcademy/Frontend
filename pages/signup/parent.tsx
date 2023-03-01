@@ -51,7 +51,6 @@ export default function Parent() {
          if (!data?.error?.message) {
             setModalOpen(true);
          }
-         next();
       } else if (currentStepIndex === 10) {
          router.push("/parents");
       } else if (currentStepIndex === 6) {
