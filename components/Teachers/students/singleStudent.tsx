@@ -1,10 +1,10 @@
-import React, { useEffect, useState, ChangeEvent, SetStateAction, Dispatch } from 'react';
-import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
-import { IoChatbubblesOutline } from 'react-icons/io5';
-import { HiOutlineDotsHorizontal } from 'react-icons/hi';
+import React,{useEffect,useState,ChangeEvent,SetStateAction,Dispatch} from 'react';
+import {IoIosArrowDown,IoIosArrowUp} from 'react-icons/io';
+import {IoChatbubblesOutline} from 'react-icons/io5';
+import {HiOutlineDotsHorizontal} from 'react-icons/hi';
 import StudentTable from './StudentTable';
-import { useDispatch, useSelector } from 'react-redux';
-import { BiEdit } from 'react-icons/bi';
+import {useDispatch,useSelector} from 'react-redux';
+import {BiEdit} from 'react-icons/bi';
 import {
   getStudents,
   addStudentComment as addComment,
@@ -13,7 +13,7 @@ import {
   getStudentComment as getComment,
   editStudent,
 } from 'store/studentSlice';
-import { FaEdit, FaSave, FaTimes, FaTrash } from 'react-icons/fa';
+import {FaEdit,FaSave,FaTimes,FaTrash} from 'react-icons/fa';
 
 const SingleStudent = ({
   student,
@@ -37,47 +37,47 @@ const SingleStudent = ({
   setEditStudentModalOpened: Dispatch<SetStateAction<string>>;
 }) => {
   const dispatch = useDispatch();
-  const [headings, setHeadings] = useState<number[]>([]);
-  const { students, studentComments } = useSelector((state: any) => state.students);
-  const [editingComment, setEditingComment] = useState<string>('');
-  const [isEditingComment, setIsEditingComment] = useState<string>('');
-  const [editingStudentDetails, setEditingStudentDetails] = useState({
+  const [headings,setHeadings] = useState<number[]>([]);
+  const {students,studentComments} = useSelector((state: any) => state.students);
+  const [editingComment,setEditingComment] = useState<string>('');
+  const [isEditingComment,setIsEditingComment] = useState<string>('');
+  const [editingStudentDetails,setEditingStudentDetails] = useState({
     firstName: student?.firstName,
     lastName: student?.lastName,
     email: student?.email,
   });
   const updateComment = (text: string): void => {
-    if (comment.length < 100) {
+    if(comment.length < 100) {
       setComment(text);
     }
   };
   const updateEditingComment = (text: string) => {
-    if (comment.length < 100) {
+    if(comment.length < 100) {
       setEditingComment(text);
     }
   };
   const getStudentComment = (id: string) => {
-    dispatch(getComment({ id }));
+    dispatch(getComment({id}));
   };
 
   const handleStudents = (id: number) => {
     const index = headings.indexOf(id);
 
-    if (index !== -1) {
-      setHeadings((headings) => [...headings.slice(0, index), ...headings.slice(index + 1)]);
+    if(index !== -1) {
+      setHeadings((headings) => [...headings.slice(0,index),...headings.slice(index + 1)]);
     } else {
-      setHeadings((headings) => [...headings, id]);
+      setHeadings((headings) => [...headings,id]);
     }
   };
-  const addStudentComment = async (event: ChangeEvent<HTMLFormElement>, id: string) => {
+  const addStudentComment = async (event: ChangeEvent<HTMLFormElement>,id: string) => {
     event.preventDefault();
-    if (comment) {
-      await dispatch(addComment({ id, comment }));
+    if(comment) {
+      await dispatch(addComment({id,comment}));
       setStudentCommentOpen('');
       setComment('');
     }
   };
-  const updateStudentComment = async (id: string, comment: string, studentId: string) => {
+  const updateStudentComment = async (id: string,comment: string,studentId: string) => {
     setIsEditingComment('');
     await dispatch(
       editComment({
@@ -88,20 +88,20 @@ const SingleStudent = ({
     getStudentComment(studentId);
   };
 
-  const deleteStudentComment = async (id: string, studentId: string) => {
-    await dispatch(deleteComment({ id }));
+  const deleteStudentComment = async (id: string,studentId: string) => {
+    await dispatch(deleteComment({id}));
     getStudentComment(studentId);
   };
 
   const updateEditingDetails = async (e: ChangeEvent<HTMLInputElement>) => {
     setEditingStudentDetails((prev) => {
-      return { ...prev, [e.target.name as keyof typeof prev]: e.target.value };
+      return {...prev,[e.target.name as keyof typeof prev]: e.target.value};
     });
   };
 
   const handleSubmittionOfEditDetails = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await dispatch(editStudent({ id: student.id, ...editingStudentDetails }));
+    await dispatch(editStudent({id: student.id,...editingStudentDetails}));
     await dispatch(getStudents());
     setEditStudentModalOpened('');
   };
@@ -164,7 +164,7 @@ const SingleStudent = ({
         {!studentCommentsTabOpen && studentCommentOpen === student.firstName + student.email && (
           <form
             onSubmit={(event: ChangeEvent<HTMLFormElement>) => {
-              addStudentComment(event, student.id);
+              addStudentComment(event,student.id);
             }}
             className="absolute right-[100px] bottom-[20%] w-[90vw] max-w-[250px] cursor-pointer rounded-md bg-white shadow-md z-2 flex scale-up"
           >
@@ -191,14 +191,13 @@ const SingleStudent = ({
                 {"'"}s performance
               </h2>
               <div
-                className={`flex flex-col gap-y-2 mt-3 h-[90vh] max-h-[230px] overflow-y-scroll ${
-                  studentComments?.length === 0 && 'justify-center items-center'
-                }`}
+                className={`flex flex-col gap-y-2 mt-3 h-[90vh] max-h-[230px] overflow-y-scroll ${studentComments?.length === 0 && 'justify-center items-center'
+                  }`}
               >
                 {studentComments?.length === 0 && (
                   <h1 className="text-[17px] font-bold">No comment added for this student</h1>
                 )}
-                {studentComments?.map((comment: any, index: number) => {
+                {studentComments?.map((comment: any,index: number) => {
                   return (
                     <article key={index} className="flex justify-between items-center gap-x-2">
                       {isEditingComment === comment.text + comment.date ? (
@@ -215,7 +214,7 @@ const SingleStudent = ({
                       ) : (
                         <h1 className="px-4 py-2">
                           {comment.text.length > 28
-                            ? `${comment.text.slice(0, 28)}...`
+                            ? `${comment.text.slice(0,28)}...`
                             : comment.text}
                         </h1>
                       )}
@@ -224,7 +223,7 @@ const SingleStudent = ({
                           <span
                             className={`${styles.commentIcons} bg-green-600`}
                             onClick={() => {
-                              if (editingComment === comment.text && editingComment === '') {
+                              if(editingComment === comment.text && editingComment === '') {
                                 setIsEditingComment('');
                               } else {
                                 updateStudentComment(
@@ -251,7 +250,7 @@ const SingleStudent = ({
                         <span
                           className={`${styles.commentIcons} bg-red-600`}
                           onClick={() => {
-                            deleteStudentComment(comment.id as string, student.id);
+                            deleteStudentComment(comment.id as string,student.id);
                           }}
                         >
                           <FaTrash />
@@ -277,14 +276,14 @@ const SingleStudent = ({
         )}
         <div className="flex items-center">
           <div className={styles.cardHeaderName} onClick={() => handleStudents(student.id)}>
-            <div className="flex flex-col gap-y-2">
+            <div className="flex flex-col gap-y-2 w-[128px] text-ellipsis overflow-hidden">
               <p className={styles.studentName}>{`${student.firstName} ${student.lastName}`}</p>
             </div>
             <span className="text-[17px]">
               {headings.includes(student.id) ? <IoIosArrowUp /> : <IoIosArrowDown />}
             </span>
           </div>
-          <div className="text-[12px] px-2">
+          <div className="text-[12px] px-2 md:block hidden">
             <span className={(student.active ? 'bg-green-500' : 'border-2') + styles.active}></span>
             {student.active ? `Active in ${student.active}` : 'Inactive'}
           </div>
@@ -295,7 +294,8 @@ const SingleStudent = ({
             setEditStudentModalOpened(student.id);
           }}
         >
-          Edit {"student's"} details
+          <span className="hidden md:block">Edit {"student's"} details</span>
+          <span className="md:hidden block">Edit</span>
         </span>
         <div className={styles.actions}>
           <span
@@ -312,7 +312,7 @@ const SingleStudent = ({
           <span
             onClick={() => {
               setStudentCommentOpen('');
-              if (studentCommentsTabOpen === student.firstName + student.email) {
+              if(studentCommentsTabOpen === student.firstName + student.email) {
                 setStudentCommentsTabOpen('');
               } else {
                 setStudentCommentsTabOpen(student.firstName + student.email);
@@ -340,7 +340,8 @@ const SingleStudent = ({
 };
 
 const styles = {
-  cardHeader: 'flex justify-between py-6 px-2 sm:px-6 border-b items-center relative',
+  cardHeader:
+    'flex justify-between py-6 px-2 sm:px-6 border-b items-center relative overflow-x-scroll',
   cardHeaderName:
     'cursor-pointer min-w-28 sm:min-w-40 justify-between px-2 border-r flex space-x-3 items-center',
   studentName: 'text-sm font-medium truncate w-full',

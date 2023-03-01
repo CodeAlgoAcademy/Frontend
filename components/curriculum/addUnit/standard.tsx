@@ -9,7 +9,7 @@ const Standard: FC<Props> = ({ openedModal, updateOpenedModal }) => {
   const dispatch = useDispatch();
   const { standard } = useSelector((state: RootState) => state.unit.addUnit);
   return (
-    <article className="flex flex-row gap-x-2 relative">
+    <article className="flex flex-col md:flex-row gap-2 relative">
       <div
         className={`${styles.topic} ${
           openedModal === 'standard' ? ' outline-[#2073fa]' : 'outline-transparent'

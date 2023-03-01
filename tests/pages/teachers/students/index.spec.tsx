@@ -1,4 +1,4 @@
-import Students from '@/pages/teachers/students';
+import Students from '@/pages/teachers/students/students';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { useState } from 'react';
 

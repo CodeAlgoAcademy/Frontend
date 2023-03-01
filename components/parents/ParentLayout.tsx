@@ -1,23 +1,30 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React,{ReactNode,useEffect,useState} from 'react';
 import SideNav from '@/components/parents/ParentSideNav';
 import MobileSideNav from '@/components/parents/ParentMobileSideNav';
 import Image from 'next/image';
+import {useRouter} from 'next/router';
 
 interface Props {
   children?: ReactNode;
 }
 
-const ParentLayout = ({ children }: Props) => {
-  const [detachedNavDisplay, setDetachedNavDisplay] = useState(false);
-  const [width, setWidth] = useState(window.innerWidth);
+const ParentLayout = ({children}: Props) => {
+  const router = useRouter();
+  const [detachedNavDisplay,setDetachedNavDisplay] = useState(false);
+  const [width,setWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize',handleResize);
+    const stringedToken = localStorage.getItem('token');
+    const {user_type} = JSON.parse(`${stringedToken}`);
+    if(user_type !== 'parent') {
+      router.push('/login');
+    }
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize',handleResize);
     };
-  }, []);
+  },[router]);
   return (
     <>
       <div className="parent-page min-h-screen">

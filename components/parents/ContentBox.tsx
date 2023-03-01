@@ -17,7 +17,7 @@ const ContentBox = ({ children, title, showSublink, padding, size, link }: Props
       style={{ width: size === 'large' ? '100%' : 'auto' }}
     >
       <div
-        className="rounded-2xl relative py-6 bg-white h-[340px]"
+        className="rounded-2xl relative py-6 bg-white min-h-[340px]"
         style={{
           paddingLeft: padding === 'small' ? '24px' : '44px',
           paddingRight: padding === 'small' ? '24px' : '44px',

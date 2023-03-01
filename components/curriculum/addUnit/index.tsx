@@ -239,9 +239,9 @@ function AddUnit() {
 
         <Grade openedModal={openedModal} updateOpenedModal={updateOpenedModal} />
       </div>
-      <div className="flex justify-center mt-8 gap-x-4 gap-y-2 items-center w-full flex-col md:flex-row">
+      <div className="flex justify-center mt-8 gap-x-4 gap-y-2 items-center w-full flex-row flex-wrap">
         <button
-          className={styles.mainButton}
+          className={styles.mainButton + 'hidden sm:block'}
           onClick={() => {
             dispatch(clearAddUnitsParams());
             updateOpenedModal('');
@@ -282,7 +282,7 @@ export const styles = {
   selectedItems:
     'py-2 px-3 rounded-md bg-[#2073fa] text-white font-bold text-[16px] min-w-fit max-w-fit',
   mainButton:
-    'w-[90vw] max-w-[200px] bg-[#2073fa] rounded-[30px] text-white font-bold py-3 block hover:shadow-md cursor-pointer',
+    'w-[90vw] max-w-[200px] bg-[#2073fa] rounded-[30px] text-white font-bold py-3 hover:shadow-md cursor-pointer',
 };
 
 export default AddUnit;

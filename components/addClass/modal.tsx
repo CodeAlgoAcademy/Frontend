@@ -1,20 +1,20 @@
-import React, { useEffect } from 'react';
-import { FaTimes } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import React,{useEffect} from 'react';
+import {FaTimes} from 'react-icons/fa';
+import {useDispatch,useSelector} from 'react-redux';
+import {RootState} from '../../store/store';
 import styles from '../../styles/styles';
 import Grades from '../grades';
-import { closeAddClassModal, closeColorModal } from '../../store/modalSlice';
+import {closeAddClassModal,closeColorModal} from '../../store/modalSlice';
 import CreateClass from './createClass';
 import AddStudents from './addStudents';
-import { addFile, clearFields } from 'store/addClassSlice';
+import {addFile,clearFields} from 'store/addClassSlice';
 const Modal = () => {
-  const { addClassModalOpen, showAddStudents } = useSelector((state: RootState) => state.modal);
-  const { color } = useSelector((state: RootState) => state.addClass.class);
+  const {addClassModalOpen,showAddStudents} = useSelector((state: RootState) => state.modal);
+  const {color} = useSelector((state: RootState) => state.addClass.class);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(addFile({}));
-  }, []);
+  },[dispatch]);
 
   return (
     <section
@@ -22,19 +22,19 @@ const Modal = () => {
       data-testid="addClassModal"
     >
       {/* modal itself */}
-      <main className="w-[90vw] max-w-[900px] mx-auto bg-white rounded-md flex shadow-lg relative">
+      <main className="w-[90vw] h-fit max-h-[95vh] overflow-hidden overflow-y-scroll max-w-[900px] mx-auto bg-white rounded-md flex shadow-lg relative">
         <span
           onClick={() => {
             dispatch(closeAddClassModal());
             dispatch(clearFields());
           }}
-          className="text-[30px] font-thin absolute z-10 top-[30px] right-[30px]"
+          className="text-[30px] font-thin absolute z-10 top-[30px] right-[30px] text-red-600"
         >
           <FaTimes />
         </span>
         <aside
-          className={`flex-[0.075] min-h-full rounded-tl-md rounded-bl-md`}
-          style={{ backgroundColor: color }}
+          className={`flex-[0.075]  rounded-tl-md rounded-bl-md`}
+          style={{backgroundColor: color}}
         ></aside>
 
         {!showAddStudents ? <CreateClass /> : <AddStudents />}

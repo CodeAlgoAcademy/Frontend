@@ -9,7 +9,7 @@ const Grade: FC<Props> = ({ openedModal, updateOpenedModal }) => {
   const dispatch = useDispatch();
   const { grades, chosenGrades } = useSelector((state: RootState) => state.unit.addUnit);
   return (
-    <article className="flex flex-row gap-x-2 relative">
+    <article className="flex md:flex-row flex-col gap-2 relative">
       <div
         className={`${styles.topic} ${
           openedModal === 'grade' ? ' outline-[#2073fa]' : 'outline-transparent'

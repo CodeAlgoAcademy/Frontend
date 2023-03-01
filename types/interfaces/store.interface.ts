@@ -315,6 +315,7 @@ export interface INotes {
 
 export interface Schedule {
   allSchedule: [];
+  googleConnect: boolean;
 }
 
 export interface newLesson {
@@ -328,9 +329,18 @@ export interface newLesson {
   status: 'published' | 'unpublished';
 }
 
-
 export interface IFriends {
   id: string | number;
   name: string;
   is_friend: boolean;
+}
+
+export interface IParentChild {
+  // child: {
+  username: string;
+  fullname: string;
+  codingExperience: string;
+  dob: string;
+  password: string;
+  // }
 }
