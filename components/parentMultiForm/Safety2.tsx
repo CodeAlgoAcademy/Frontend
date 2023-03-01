@@ -1,40 +1,26 @@
-import React, { useState } from 'react';
-import ScreenTimeComponent from './screenTimeComponent';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateScreentime } from "store/parentSlice";
+import { RootState } from "store/store";
+import { days } from "types/interfaces";
+import ScreenTimeComponent from "./screenTimeComponent";
 
 export default function Sasfety2() {
-  const [screenTimes, setScreenTimes] = useState<{ day: string; time: '' | number | 'No Limit' }[]>(
-    [
-      { day: 'Monday', time: '' },
-      { day: 'Tuesday', time: '' },
-      { day: 'Wednesday', time: '' },
-      { day: 'Thursday', time: '' },
-      { day: 'Friday', time: '' },
-      { day: 'Saturday', time: '' },
-      { day: 'Sunday', time: '' },
-    ],
-  );
+   const { screentime } = useSelector((state: RootState) => state.parent);
+   const dispatch = useDispatch();
 
-  const updateTime = (day: string, hour: number | 'No Limit') => {
-    setScreenTimes((times) => {
-      return times.map((time) => {
-        if (time.day === day) {
-          time.time = hour;
-        }
-        return time;
-      });
-    });
-  };
-  return (
-    <div key={7}>
-      <h1 className="font-bold text-[30px]">Would you like to limit Conor&apos;s screentime?</h1>
-      <p className="text-[16px] font-[400] mt-3">
-        Set your student&apos;s daily CodeAlgo screen time below.
-      </p>
-      <div className="flex gap-4 flex-wrap mt-4 justify-center md:justify-start">
-        {screenTimes.map((time, index: number) => {
-          return <ScreenTimeComponent updateTime={updateTime} time={time} key={index} />;
-        })}
+   const updateTime = (day: string, hour: number | "No Limit") => {
+      dispatch(updateScreentime({ day, hour }));
+   };
+   return (
+      <div key={7}>
+         <h1 className="text-[30px] font-bold">Would you like to limit Conor&apos;s screentime?</h1>
+         <p className="mt-3 text-[16px] font-[400]">Set your student&apos;s daily CodeAlgo screen time below.</p>
+         <div className="mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
+            {screentime?.map((time, index: number) => {
+               return <ScreenTimeComponent updateTime={updateTime} time={time} key={index} />;
+            })}
+         </div>
       </div>
-    </div>
-  );
+   );
 }

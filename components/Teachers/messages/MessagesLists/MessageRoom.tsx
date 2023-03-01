@@ -24,65 +24,6 @@ const MessageRoom = () => {
    const [userSelected, setUserSelected] = useState<number>();
    const currentClass = useSelector((state: RootState): CurrentClassState => state.currentClass);
    const { email } = useSelector((state: RootState) => state.user);
-   //   const setActiveStudent: any = () => {
-   //     dispatch(setOpenStudent(userSelected));
-   //   };
-   //   const open_active_messages = () => {
-   //     dispatch(open_a_message(user));
-   //   };
-
-   //   const  handleSendNewMessage:any = async (e: ChangeEvent<HTMLInputElement>) => {
-   //     if (typingText !== '') {
-   //       e.preventDefault();
-   //       client.send(
-   //         JSON.stringify({
-   //           type: 'chat.message',
-   //           text: typingText,
-   //           receiver: active,
-   //         }),
-   //       );
-   //       const { data } = await http.post(
-   //         `/chat/teacher/message/${active}`,
-   //         {
-   //           text: typingText,
-   //         },
-   //         {
-   //           headers: {
-   //             Authorization: `Bearer ${getAccessToken()}`,
-   //           },
-   //         },
-   //       );
-   //       setTypingText('');
-   //       await dispatch(getConversations())
-   //       await dispatch(getOpenMesssages())
-   //     }
-   //   }
-
-   // useEffect(() => {
-   //   client.onopen = () => {
-   //     console.log('Websocket Client Connected... message room');
-   //   };
-
-   //   client.onmessage = (message: any) => {
-   //     const dataFromServer = JSON.parse(message.data);
-   //     console.log('serverr reply', dataFromServer);
-   //   };
-   // }, []);
-
-   // const filterTeachers = (value: string) => {
-   //   setFilteredTeachers((prev:any) => {
-   //     return {
-   //       teachers: teachers?.filter((teacher: any) => {
-   //         if (
-   //           (teacher.firstName + ' ' + teacher.lastName).toLowerCase().includes(value.toLowerCase())
-   //         ) {
-   //           return teacher;
-   //         }
-   //       }),
-   //     };
-   //   });
-   // };
-
    const [openedStudent, setOpenedStudent] = useState<boolean>(false);
    const [openedTeachers, setOpenedTeachers] = useState<boolean>(false);
 
@@ -170,18 +111,6 @@ const MessageRoom = () => {
                <div className="h-full min-w-[300px]">
                   <ChatRoom />
                </div>
-
-               {/* <div className="w-full flex gap-x-2 border-t-2">
-            <input
-              placeholder="Type Message..."
-              className="w-[70%] md:w-[75%] px-2 py-3 outline-none border-none"
-              onChange={(e) => setTypingText(e.target.value)}
-              value={typingText}
-            />
-            <button className="bg-mainPurple text-white px-2 py-3 text-center w-[30%] md:w-[25%]" onClick={handleSendNewMessage}>
-              Send
-            </button>
-          </div> */}
             </div>
          </div>
       </>
