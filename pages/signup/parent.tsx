@@ -18,14 +18,14 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { ChangeEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { signUpUser } from "services/authService";
-import { addChild } from "store/parentSlice";
+import { loginUser, signUpUser } from "services/authService";
+import { addChild, addChildScreentimeDetails } from "store/parentSlice";
 import { FiCheckCircle } from "react-icons/fi";
 import { RootState } from "store/store";
 export default function Parent() {
    const dispatch = useDispatch();
    const router = useRouter();
-   const { email } = useSelector((state: RootState) => state.user.auth);
+   const { email, password } = useSelector((state: RootState) => state.user.auth);
    const [modalOpen, setModalOpen] = useState(false);
    const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next, goTo } = useMultiForm([
       <ParentSignUp1 key={1} />,
@@ -33,8 +33,8 @@ export default function Parent() {
       <ParentSignUp3 key={3} />,
       <WelcomeForm key={4} />,
       <ParentSignUp4 key={5} />,
-      <ParentSignUp5 key={6} />,
-      <ParentSignUp6 key={7} />,
+      <ParentSignUp5 key={7} />,
+      <ParentSignUp6 key={6} />,
       <ParentSignUp7 key={8} />,
       <Safety1 key={9} />,
       <Safety2 key={10} />,
@@ -56,6 +56,11 @@ export default function Parent() {
       } else if (currentStepIndex === 6) {
          const data = await dispatch(addChild());
          if (!data?.error?.message) {
+            router.push("/parents");
+         }
+      } else if (currentStepIndex === 9) {
+         const data = await dispatch(addChildScreentimeDetails());
+         if (!data?.error) {
             next();
          }
       } else {
@@ -115,7 +120,12 @@ export default function Parent() {
                   </div>
                   <button
                      className="mx-auto block max-w-fit rounded-md bg-[#2073fa] px-6 py-3 font-bold text-white"
-                     onClick={() => {
+                     onClick={async () => {
+                        const isNotVerified = localStorage.getItem("parent-signup");
+                        if (!isNotVerified) {
+                           const { data } = await dispatch(loginUser());
+                           console.log(data);
+                        }
                         setModalOpen(false);
                         next();
                      }}
