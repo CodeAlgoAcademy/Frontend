@@ -3,10 +3,13 @@ import { useGoogleLogin } from '@react-oauth/google';
 import Image from 'next/image';
 import google from '../public/assets/google.png';
 import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginWithGoogle, signUpWithGoogle, updateAccountType } from 'services/authService';
 import GoogleSignUpModal from './signup/googleSignUpModal';
+import { RootState } from 'store/store';
+import { FcGoogle } from 'react-icons/fc';
 const GoogleBtn: FC = () => {
+  const { is_parent, is_teacher, is_student } = useSelector((state: RootState) => state.user.auth);
   const dispatch = useDispatch();
   const router = useRouter();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -25,17 +28,23 @@ const GoogleBtn: FC = () => {
         if (!data?.error?.message) {
           if (data?.payload?.is_teacher) {
             router.push('/addClass');
+          } else if (data?.payload?.is_parent) {
+            router.push('/parents');
           } else {
             router.push('/comingSoon');
           }
         }
-      } else if (router.pathname === '/signup') {
+      } else if (router.pathname.includes('/signup')) {
         const data = await dispatch(signUpWithGoogle(codeResponse.access_token));
         if (!data?.error?.message) {
-          const data = await dispatch(updateAccountType(accountType));
+          const data = await dispatch(
+            updateAccountType(is_parent ? 'Parent' : is_teacher ? 'Teacher' : 'Student'),
+          );
           if (!data?.error?.message) {
-            if (accountType === 'Teacher') {
+            if (is_teacher) {
               router.push('/addClass');
+            } else if (is_parent) {
+              router.push('/parents');
             } else {
               router.push('/comingSoon');
             }
@@ -48,22 +57,16 @@ const GoogleBtn: FC = () => {
     <div className="relative flex-1 w-full">
       <button
         onClick={() => {
-          router.pathname === '/login' ? handleClick() : toggleModal();
+          handleClick();
         }}
-        className=" w-full border-2 border-gray-300 rounded flex flex-row gap-x-4 p-2 items-center h-[50px] md:justify-start justify-center hover:bg-blue-50"
+        className="h-[2.5rem] mt-6 text-center w-full bg-neutral-100/70 font-semibold rounded-xl text-black flex justify-center items-center gap-4"
+        type="button"
       >
-        <Image src={google} alt="google" height={'30px'} width={'30px'} />
-        <p>Connect With Google</p>
+        <i className="text-[22px]">
+          <FcGoogle />
+        </i>
+        <span>{router.pathname === '/login' ? 'Sign in' : 'Sign up'} with Google</span>
       </button>
-
-      {modalOpen && router.pathname === '/signup' && (
-        <GoogleSignUpModal
-          handleClick={handleClick}
-          closeModal={closeModal}
-          accountType={accountType}
-          setAccountType={setAccountType}
-        />
-      )}
     </div>
   );
 };

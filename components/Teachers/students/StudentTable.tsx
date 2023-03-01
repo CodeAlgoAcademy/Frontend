@@ -3,7 +3,7 @@ import React from 'react';
 
 const StudentTable = ({ details, student }: { details: object[]; student: any }) => {
   return (
-    <div>
+    <div className="w-full overflow-x-scroll md:max-h-fit max-h-[300px] overflow-y-scroll">
       <header className="flex gap-x-2 items-center px-[17px] pt-3">
         <p className="text-[14px]">
           <span className="font-bold">Email: </span> {student.email}

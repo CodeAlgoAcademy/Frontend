@@ -18,7 +18,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
   const dispatch = useDispatch();
   const { units, levels } = useSelector((state: RootState) => state.unit.addUnit);
   return (
-    <article className="flex flex-row gap-x-2 relative">
+    <article className="flex flex-col md:flex-row gap-2 relative">
       {openedModal === 'unit' && levels !== '' && (
         <div className="fixed top-0 left-0 z-40 w-full min-h-screen bg-[rgba(0,0,0,0.6)] flex justify-center items-center gap-y-4 overflow-hidden overflow-y-scroll close-dropdown">
           <div className="bg-white max-h-[95vh] w-[90vw] max-w-[1000px] overflow-hidden rounded-md flex md:flex-row flex-col">

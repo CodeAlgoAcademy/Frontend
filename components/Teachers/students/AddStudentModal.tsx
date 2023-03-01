@@ -111,7 +111,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
     <section className={`${style.modalOverlay} bg-[rgba(0,0,0,.25)]`}>
       {bulkImportModalOpen && <BulkImportModal setBulkImportModalOpen={setBulkImportModalOpen} />}
       {/* modal itself */}
-      <main className="w-[90vw] max-w-[900px] mx-auto bg-white rounded-md flex shadow-lg relative">
+      <main className="w-[90vw] h-fit max-h-[95vh] overflow-hidden overflow-y-scroll max-w-[900px] mx-auto bg-white rounded-md flex shadow-lg relative">
         <span
           onClick={() => {
             setIsOpen(false);
@@ -128,7 +128,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
           style={{ backgroundColor: '#FFE977' }}
         ></aside>
 
-        <form className="py-8 flex-[0.9]" onSubmit={onSubmit}>
+        <form className="py-8 flex-[0.9] h-full" onSubmit={onSubmit}>
           <header className="px-8 w-full mb-6 flex gap-x-2 items-center text-[#2073fa]">
             <span
               className="text-[20px] font-bold"
@@ -237,55 +237,6 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
       </main>
     </section>
   );
-  // return (
-  //   <div className={styles.bgBlack}>
-  //     <div className={styles.centered}>
-  //       <div className={styles.modal}>
-  //         <div className={styles.modalHeader}>
-  //           <p className={styles.heading}>Add Student</p>
-  //         </div>
-  //         <div onClick={() => setIsOpen(false)} className={styles.closeBtn}>
-  //           <RiCloseLine />
-  //         </div>
-  //         <div className={styles.modalBody}>
-  //           <form className="grid gap-5 pb-2" onSubmit={onSubmit}>
-  //             <div className="flex space-x-5">
-  //               <TextField
-  //                 label="Student First Name"
-  //                 name="firstName"
-  //                 value={firstName}
-  //                 onChange={onChange}
-  //                 size="small"
-  //                 required
-  //               />
-  //               <TextField
-  //                 label="Student Last Name"
-  //                 name="lastName"
-  //                 size="small"
-  //                 value={lastName}
-  //                 onChange={onChange}
-  //                 required
-  //               />
-  //             </div>
-  //             <TextField
-  //               label="Student Email"
-  //               name="email"
-  //               size="small"
-  //               value={email}
-  //               onChange={onChange}
-  //               required
-  //             />
-  //             <div>
-  //               <button className={styles.addBtn} type="submit">
-  //                 Add Student
-  //               </button>
-  //             </div>
-  //           </form>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
 };
 
 export default AddStudentModal;

@@ -67,13 +67,13 @@ export const signUpUser: any = createAsyncThunk('authSlice/signUpUser', async (n
     is_teacher,
     username,
   };
-  console.log(options)
+  console.log(options);
   dispatch(openPreloader({ loadingText: 'Creating Account' }));
   try {
     const { data } = await http.post('/auth/registration/', { ...options });
     dispatch(clearFields());
     dispatch(closePreloader());
-    console.log(data)
+    console.log(data);
     return data;
   } catch (error: any) {
     dispatch(closePreloader());
@@ -109,8 +109,7 @@ export const loginWithGoogle: any = createAsyncThunk(
         refresh_token: data.refresh_token,
         ...data.user,
       };
-    } catch (err) {
-    }
+    } catch (err) {}
   },
 );
 

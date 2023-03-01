@@ -1,19 +1,19 @@
-import React, { FC, useEffect, useState } from 'react';
+import React,{FC,useEffect,useState} from 'react';
 import Link from 'next/link';
-import { IClass } from '../../types/interfaces';
-import { FaChevronRight } from 'react-icons/fa';
-import { useDispatch } from 'react-redux';
-import { updateCurrentClass } from 'store/currentClassSlice';
-import { BiPlus } from 'react-icons/bi';
+import {IClass} from '../../types/interfaces';
+import {FaChevronRight} from 'react-icons/fa';
+import {useDispatch} from 'react-redux';
+import {updateCurrentClass} from 'store/currentClassSlice';
+import {BiPlus} from 'react-icons/bi';
 import AddStudentModal from '../Teachers/students/AddStudentModal';
-import { getAllClasses } from 'services/classesService';
+import {getAllClasses} from 'services/classesService';
 
-const SingleClass: FC<IClass> = ({ id, className, grade, subject, color, totalStudent }) => {
+const SingleClass: FC<IClass> = ({id,className,grade,subject,color,totalStudent}) => {
   const dispatch = useDispatch();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen,setIsOpen] = useState<boolean>(false);
   return (
     <article className="col-span-1 bg-white min-h-[200px] shadow-md hover:shadow-lg rounded-md overflow-hidden w-full flex">
-      <aside className={`flex-[0.15] h-full`} style={{ backgroundColor: color }}></aside>
+      <aside className={`flex-[0.15] h-full`} style={{backgroundColor: color}}></aside>
       <div className="flex-[0.85] h-full px-4 pb-4">
         <header className="py-4 border-b-2">
           <h1 className="text-[25px] md:text-[30px] text-black font-bold">{className}</h1>
@@ -28,7 +28,7 @@ const SingleClass: FC<IClass> = ({ id, className, grade, subject, color, totalSt
             className="text-[16px] font-semibold flex gap-x-2 items-center px-2 py-2 hover:bg-gray-100 cursor-pointer"
             onClick={() => {
               setIsOpen(true);
-              dispatch(updateCurrentClass({ className, color, id }));
+              dispatch(updateCurrentClass({className,color,id}));
             }}
           >
             Add Students
@@ -36,11 +36,11 @@ const SingleClass: FC<IClass> = ({ id, className, grade, subject, color, totalSt
               <BiPlus />
             </span>
           </div>
-          <Link href="/dashboard">
+          <Link href="/teachers">
             <div
               className="flex justify-end items-center gap-x-2 w-fit cursor-pointer"
               onClick={() => {
-                dispatch(updateCurrentClass({ className, color, id }));
+                dispatch(updateCurrentClass({className,color,id}));
               }}
             >
               <p className="text-[16px] font-semibold">Dashboard</p>
