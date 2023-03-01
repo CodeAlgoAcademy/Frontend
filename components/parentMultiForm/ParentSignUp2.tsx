@@ -32,14 +32,14 @@ export default function ParentSignUp2() {
         required
       />
 
-      {/* <label className='block text-xl font-semibold mt-6'>Verify Password</label>
+      <label className='block text-xl font-semibold mt-6'>Password</label>
         <input className='block w-full h-[2.5rem] rounded-xl px-4 mb-[2.5rem] py-2 
         focus:outline-0 mt-3' 
-         value={verifyPassword}
+         value={password}
          onChange={(e: ChangeEvent<HTMLInputElement>) => {
-          setVerifyPassword(e.target.value)
+          dispatch(updateUser({key: 'password', value: e.target.value}))
          }}
-        type="password" required/> */}
+        type="password" required/>
     </div>
   );
 }
