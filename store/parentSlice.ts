@@ -36,6 +36,8 @@ export const addChild: any = createAsyncThunk("parent/child/new", async (_, thun
       return child;
    } catch (error: any) {
       dispatch(closePreloader());
+      console.log(error);
+
       if (error.response.data.non_field_errors) {
          dispatch(
             openErrorModal({
@@ -46,6 +48,12 @@ export const addChild: any = createAsyncThunk("parent/child/new", async (_, thun
          dispatch(
             openErrorModal({
                errorText: [...error.response.data.email],
+            })
+         );
+      } else if (error.response.data.username) {
+         dispatch(
+            openErrorModal({
+               errorText: [...error.response.data.username],
             })
          );
       } else {
