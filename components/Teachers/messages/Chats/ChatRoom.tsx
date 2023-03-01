@@ -19,9 +19,7 @@ interface Message {
    message: IMessage;
    user: User;
 }
-
-export const client = new W3CWebSocket(`wss://sea-lion-app-43ury.ondigitalocean.app/chat/websocket/?Authorization=${getAccessToken()}`);
-
+const client = new W3CWebSocket(`wss://sea-lion-app-43ury.ondigitalocean.app/chat/websocket/?Authorization=${getAccessToken()}`);
 const ChatRoom = () => {
    const { openedMessageOwner, openedMessage } = useSelector((state: RootState) => state.messages);
 
@@ -30,33 +28,6 @@ const ChatRoom = () => {
    const [typingText, setTypingText] = useState<string>("");
    const dispatch = useDispatch();
 
-   // console.log(openedMessageOwner)
-   // console.log(openedMessage)
-   // console.log(openedMessageOwner);
-   // const send_a_message = async () => {
-   //   if (openedMessageOwner.id) {
-   //     if (typingText !== '') {
-   //       const text = typingText;
-   //       setTypingText('');
-   //       const { data } = await http.post(
-   //         `/chat/teacher/message/${openedMessageOwner.id}`,
-   //         {
-   //           text: text,
-   //         },
-   //         {
-   //           headers: {
-   //             Authorization: `Bearer ${getAccessToken()}`,
-   //           },
-   //         },
-   //       );
-
-   //       dispatch(getOpenMesssages());
-   //       dispatch(getConversations());
-   //     }
-   //   } else {
-   //     dispatch(openErrorModal({ errorText: ['No user to send a message'] }));
-   //   }
-   // };
    const updateTypingText = (e: ChangeEvent<HTMLInputElement>) => {
       setTypingText(e.target.value);
    };
