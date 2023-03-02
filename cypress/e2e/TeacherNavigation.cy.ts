@@ -3,3 +3,4 @@ describe('Teacher navigation', () => {
      cy.visit('/')
       })
 });
+export{}
