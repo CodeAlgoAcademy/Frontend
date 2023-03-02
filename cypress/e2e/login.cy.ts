@@ -8,3 +8,4 @@ describe('Login', () => {
       // login in with correct parameters for all three user types and validate redirection to the correct page
   })
 });
+export{}

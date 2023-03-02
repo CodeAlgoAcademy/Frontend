@@ -3,3 +3,4 @@ describe('Parent navigation', () => {
      cy.visit('/')
       })
 });
+export{}
