@@ -1,6 +1,5 @@
 import { Avatar, IconButton } from "@mui/material";
 import React, { FormEvent, useEffect, useState, ChangeEvent } from "react";
-import { chats } from "./chatsData";
 import { IMessage } from "types/interfaces";
 import { GrAttachment } from "react-icons/gr";
 import { BsEmojiSmile } from "react-icons/bs";
@@ -9,9 +8,8 @@ import { w3cwebsocket as W3CWebSocket } from "websocket";
 import { getAccessToken } from "utils/getTokens";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "store/store";
-import { getConversations, getOpenMesssages, open_a_message, setOpenStudent } from "store/messagesSlice";
+import { getConversations, getOpenMesssages } from "store/messagesSlice";
 import { openErrorModal } from "store/fetchSlice";
-import http from "axios.config";
 import { User } from "types/interfaces";
 
 interface Message {
@@ -119,7 +117,7 @@ export default ChatRoom;
 
 const styles = {
    header: "flex items-center space-x-2 border-b-2 p-2",
-   chatContainer: "space-y-1 p-5 px-5 overflow-y-auto md:max-h-[564px] pb-[72px]",
+   chatContainer: "space-y-1 p-5 px-5 overflow-y-scroll sm:max-h-[500px] min-h-[500px] max-h-[500px] md:max-h-[564px] sm:min-h-[500px] pb-[72px]",
    chats: "bg-[#fff3cc] p-3 text-xs w-fit rounded-t-lg",
    messageInputContainer: "bg-white w-full border-t p-2 rounded-b-xl absolute left-0 bottom-0",
    inputContainer: "flex items-center space-x-2 text-slate-400",

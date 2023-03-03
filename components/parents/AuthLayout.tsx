@@ -14,11 +14,11 @@ const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
       <>
          <div className="relative flex min-h-[100vh] w-full flex-col justify-between bg-gradient-to-br from-[#78A8FB] to-[#C4D7F8] pt-[2rem] md:pt-[2rem]">
             <div className="flex items-center justify-between px-[1.3rem] md:px-[4rem]">
-               <h1 className="text-3xl font-bold text-white">CodeAlgo</h1>
+            <Link href="/"><h1  className="text-white text-3xl font-bold cursor-pointer">CodeAlgo</h1></Link>
                <div className="flex flex-wrap gap-2">
                   {router.pathname === "/login" ? (
                      <>
-                        <span className="hidden font-semibold sm:block">Yet to create account?</span>
+                        <span className="hidden font-semibold sm:block">New here?</span>
                         <Link href="/selectUserType">
                            <span className="ml-3 cursor-pointer font-semibold text-[#2073FA]">Register</span>
                         </Link>
