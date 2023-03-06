@@ -337,6 +337,11 @@ export interface IFriends {
 
 export type days = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
 
+export interface screentimeTypes {
+   dayOfTheWeek: days;
+   timeLimit: "" | number | "No Limit";
+}
+
 export interface IParentChild {
    // child: {
    username: string;
@@ -344,6 +349,6 @@ export interface IParentChild {
    codingExperience: string;
    dob: string;
    password: string;
-   screentime?: { day: days; time: "" | number | "No Limit" }[];
+   timeLimits: screentimeTypes[];
    // }
 }

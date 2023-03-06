@@ -1,24 +1,24 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import parentService from "services/parentService";
-import { IParentChild } from "types/interfaces";
+import { IParentChild, screentimeTypes } from "types/interfaces";
 import { closePreloader, openErrorModal, openPreloader } from "./fetchSlice";
 import { RootState } from "./store";
 
 const initialState: IParentChild = {
    // child: {
-   codingExperience: "",
+   codingExperience: "experienced",
    dob: "",
    fullname: "",
    password: "",
    username: "",
-   screentime: [
-      { day: "Monday", time: "" },
-      { day: "Tuesday", time: "" },
-      { day: "Wednesday", time: "" },
-      { day: "Thursday", time: "" },
-      { day: "Friday", time: "" },
-      { day: "Saturday", time: "" },
-      { day: "Sunday", time: "" },
+   timeLimits: [
+      { dayOfTheWeek: "Monday", timeLimit: "" },
+      { dayOfTheWeek: "Tuesday", timeLimit: "" },
+      { dayOfTheWeek: "Wednesday", timeLimit: "" },
+      { dayOfTheWeek: "Thursday", timeLimit: "" },
+      { dayOfTheWeek: "Friday", timeLimit: "" },
+      { dayOfTheWeek: "Saturday", timeLimit: "" },
+      { dayOfTheWeek: "Sunday", timeLimit: "" },
    ],
    // }
 };
@@ -26,8 +26,13 @@ const initialState: IParentChild = {
 export const addChild: any = createAsyncThunk("parent/child/new", async (_, thunkAPI) => {
    const state: any = thunkAPI.getState();
    const dispatch = thunkAPI.dispatch;
-   const { fullname, password, username, codingExperience, dob } = state.parent;
-   const data = { fullname, password, username, codingExperience, dob };
+   const { fullname, password, username, codingExperience, dob, timeLimits } = state.parent;
+   const timeLimitsFormatted = timeLimits.map((timeInfo: screentimeTypes, index: number) => {
+      return { ...timeInfo, timeLimit: typeof timeInfo.timeLimit === "number" ? `${timeInfo.timeLimit}:00:00` : timeInfo.timeLimit };
+   });
+   console.log(timeLimitsFormatted);
+
+   const data = { fullname, password, username, codingExperience, dob, timeLimits: timeLimitsFormatted };
    dispatch(openPreloader({ loadingText: "Adding Child" }));
 
    try {
@@ -63,24 +68,6 @@ export const addChild: any = createAsyncThunk("parent/child/new", async (_, thun
    }
 });
 
-export const addChildScreentimeDetails: any = createAsyncThunk("parentSlice/addChildScreentime", async (data, thunkApi) => {
-   const state: any = thunkApi.getState();
-   const dispatch = thunkApi.dispatch;
-   const { screentime } = state.parent;
-   dispatch(openPreloader({ loadingText: "Adding child's screentime details" }));
-   try {
-      const data = await parentService.addChildScreentime({ screentime });
-      console.log(data);
-      dispatch(closePreloader());
-
-      return data;
-   } catch (error) {
-      dispatch(closePreloader());
-
-      console.log(error);
-   }
-});
-
 export const parentSlice = createSlice({
    name: "parents",
    initialState,
@@ -97,10 +84,13 @@ export const parentSlice = createSlice({
       resetChild: (state: IParentChild) => {
          return initialState;
       },
+      resetScreenTime: (state: IParentChild) => {
+         return { ...state, timeLimits: initialState.timeLimits };
+      },
       updateScreentime: (state: IParentChild, action: PayloadAction<{ day: string; hour: number | "No Limit" }>) => {
-         state.screentime = state?.screentime?.map((time) => {
-            if (time.day === action.payload.day) {
-               time.time = action.payload.hour;
+         state.timeLimits = state?.timeLimits?.map((time) => {
+            if (time.dayOfTheWeek === action.payload.day) {
+               time.timeLimit = action.payload.hour;
             }
             return time;
          });
@@ -117,5 +107,5 @@ export const parentSlice = createSlice({
    },
 });
 
-export const { resetChild, updateChild, updateScreentime } = parentSlice.actions;
+export const { resetChild, updateChild, updateScreentime, resetScreenTime } = parentSlice.actions;
 export default parentSlice.reducer;
