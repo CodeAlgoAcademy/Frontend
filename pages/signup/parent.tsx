@@ -19,13 +19,14 @@ import { useRouter } from "next/router";
 import React, { ChangeEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, signUpUser } from "services/authService";
-import { addChild, addChildScreentimeDetails } from "store/parentSlice";
+import { addChild, resetScreenTime } from "store/parentSlice";
 import { FiCheckCircle } from "react-icons/fi";
 import { RootState } from "store/store";
 export default function Parent() {
    const dispatch = useDispatch();
    const router = useRouter();
    const { email, password } = useSelector((state: RootState) => state.user.auth);
+   const parent = useSelector((state: RootState) => state.parent);
    const [modalOpen, setModalOpen] = useState(false);
    const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next, goTo } = useMultiForm([
       <ParentSignUp1 key={1} />,
@@ -44,28 +45,30 @@ export default function Parent() {
 
    const signUp = async (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
+      console.log(parent, currentStepIndex);
       if (currentStepIndex === 2) {
          const data = await dispatch(signUpUser());
          localStorage.setItem("parent-signup", JSON.stringify(true));
-
          if (!data?.error?.message) {
             setModalOpen(true);
          }
          next();
-      } else if (currentStepIndex === 10) {
-         router.push("/parents");
-      } else if (currentStepIndex === 6) {
+      } else if (currentStepIndex === 9) {
          const data = await dispatch(addChild());
          if (!data?.error?.message) {
-            router.push("/parents");
+            goTo(10);
          }
-      } else if (currentStepIndex === 9) {
-         const data = await dispatch(addChildScreentimeDetails());
-         if (!data?.error) {
-            next();
-         }
+      } else if (currentStepIndex === 10) {
+         router.push("/parents");
       } else {
          next();
+      }
+   };
+   const addChildWithoutParentalControls = async () => {
+      dispatch(resetScreenTime());
+      const data = await dispatch(addChild());
+      if (!data?.error?.message) {
+         router.push("/parents");
       }
    };
 
@@ -79,12 +82,7 @@ export default function Parent() {
                      Continue
                   </button>
                   {currentStepIndex === 7 && (
-                     <p
-                        onClick={() => {
-                           goTo(9);
-                        }}
-                        className="my-3 cursor-pointer text-center text-[14px] font-bold underline"
-                     >
+                     <p onClick={addChildWithoutParentalControls} className="my-3 cursor-pointer text-center text-[14px] font-bold underline">
                         I do not want to set parental controls
                      </p>
                   )}
