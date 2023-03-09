@@ -1,12 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateChild } from "store/parentSlice";
+import { updateChild } from "store/parentChildSlice";
 import { RootState } from "store/store";
 import { generateUsername } from "utils/generateUsername";
 
 export default function ParentSignUp5() {
    const dispatch = useDispatch();
-   const { fullname, password, username } = useSelector((state: RootState) => state.parent);
+   const { fullname, password, username } = useSelector((state: RootState) => state.parentChild);
 
    const onChange = (e: any) => {
       dispatch(updateChild({ key: e.target.name, value: e.target.value }));

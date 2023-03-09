@@ -1,67 +1,62 @@
-import React, { useState } from 'react';
-import ParentLayout from '@/components/parents/ParentLayout';
-import SideNav from '@/components/parents/ParentSideNav';
+import React, { useState } from "react";
+import ParentLayout from "@/components/parents/ParentLayout";
+import SideNav from "@/components/parents/ParentSideNav";
 // import React from 'react';
-import ContentBox from '@/components/parents/ContentBox';
-import BarChart from '@/components/parents/BarChart';
-import DashboardBox from '@/components/parents/DashboardBox';
-import ScreenTimeComponent from '@/components/parentMultiForm/screenTimeComponent';
+import ContentBox from "@/components/parents/ContentBox";
+import BarChart from "@/components/parents/BarChart";
+import DashboardBox from "@/components/parents/DashboardBox";
+import ScreenTimeComponent from "@/components/parentMultiForm/screenTimeComponent";
+import { screentimeTypes } from "types/interfaces";
 
 const ScreenTime = () => {
-  const [screenTimes, setScreenTimes] = useState<{ day: string; time: '' | number | 'No Limit' }[]>(
-    [
-      { day: 'Monday', time: 8 },
-      { day: 'Tuesday', time: 'No Limit' },
-      { day: 'Wednesday', time: 5 },
-      { day: 'Thursday', time: 3 },
-      { day: 'Friday', time: 7 },
-      { day: 'Saturday', time: 0 },
-      { day: 'Sunday', time: 2 },
-    ],
-  );
+   const [timeLimits, setTimeLimits] = useState<screentimeTypes[]>([
+      { dayOfTheWeek: "Monday", timeLimit: 8 },
+      { dayOfTheWeek: "Tuesday", timeLimit: "No Limit" },
+      { dayOfTheWeek: "Wednesday", timeLimit: 5 },
+      { dayOfTheWeek: "Thursday", timeLimit: 3 },
+      { dayOfTheWeek: "Friday", timeLimit: 7 },
+      { dayOfTheWeek: "Saturday", timeLimit: 0 },
+      { dayOfTheWeek: "Sunday", timeLimit: 2 },
+   ]);
 
-  const updateTime = (day: string, hour: number | 'No Limit') => {
-    setScreenTimes((times) => {
-      return times.map((time) => {
-        if (time.day === day) {
-          time.time = hour;
-        }
-        return time;
+   const updateTime = (day: string, hour: number | "No Limit") => {
+      setTimeLimits((times) => {
+         return times.map((time) => {
+            if (time.dayOfTheWeek === day) {
+               time.timeLimit = hour;
+            }
+            return time;
+         });
       });
-    });
-  };
-  return (
-    <ParentLayout>
-      <div className="overflow-x-auto flex flex-col gap-9 mx-4 sm:mx-0">
-        <ContentBox size="large" title="Screen Time" padding="large">
-          <BarChart
-            data={screenTimes.map((time) => {
-              return time.time === 'No Limit' ? 8 : (time.time as number);
-            })}
-            barSpace={9.6}
-            barWidth={3.3}
-            maxHours={8}
-          />
-        </ContentBox>
-        <div className="rounded-2xl max-w-[90vw] mx-auto md:min-w-[420px] relative bg-white min-h-[340px] md:w-full px-8 py-10">
-          <h1 className="text-[#2073FA] text-[1.3rem] font-semibold">
-            Current screen time restrictions
-          </h1>
-          <h2 className="text-[14px] font-medium mt-2 mb-10">
-            Make edits to screen time restrictions below
-          </h2>
-          <div className="flex gap-4 justify-center md:justify-start items-center flex-wrap mt-4">
-            {screenTimes.map((time, index: number) => {
-              return <ScreenTimeComponent updateTime={updateTime} time={time} key={index} />;
-            })}
-          </div>
-          <button className="w-[150px] py-2 px-3 rounded-md text-white bg-[#2073FA] shadow-sm hover:shadow-md mt-6 md:mx-0 mx-auto block">
-            Save Changes
-          </button>
-        </div>
-      </div>
-    </ParentLayout>
-  );
+   };
+   return (
+      <ParentLayout>
+         <div className="mx-4 flex flex-col gap-9 overflow-x-auto sm:mx-0">
+            <ContentBox size="large" title="Screen Time" padding="large">
+               <BarChart
+                  data={timeLimits.map((time) => {
+                     return time.timeLimit === "No Limit" ? 8 : (time.timeLimit as number);
+                  })}
+                  barSpace={9.6}
+                  barWidth={3.3}
+                  maxHours={8}
+               />
+            </ContentBox>
+            <div className="relative mx-auto min-h-[340px] max-w-[90vw] rounded-2xl bg-white px-8 py-10 md:w-full md:min-w-[420px]">
+               <h1 className="text-[1.3rem] font-semibold text-[#2073FA]">Current screen time restrictions</h1>
+               <h2 className="mt-2 mb-10 text-[14px] font-medium">Make edits to screen time restrictions below</h2>
+               <div className="mt-4 flex flex-wrap items-center justify-center gap-4 md:justify-start">
+                  {timeLimits.map((time, index: number) => {
+                     return <ScreenTimeComponent updateTime={updateTime} time={time} key={index} />;
+                  })}
+               </div>
+               <button className="mx-auto mt-6 block w-[150px] rounded-md bg-[#2073FA] py-2 px-3 text-white shadow-sm hover:shadow-md md:mx-0">
+                  Save Changes
+               </button>
+            </div>
+         </div>
+      </ParentLayout>
+   );
 };
 
 export default ScreenTime;
