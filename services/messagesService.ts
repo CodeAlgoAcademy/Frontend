@@ -7,7 +7,7 @@ const config = {
    },
 };
 
-const getConversations: any = async () => {
+const getTeacherConversations: any = async () => {
    const response = await http.get("/chat/teacher/", {
       headers: {
          Authorization: `Bearer ${getAccessToken()}`,
@@ -16,7 +16,7 @@ const getConversations: any = async () => {
    return response.data;
 };
 
-const getMessages: any = async (id: number) => {
+const getTeacherMessages: any = async (id: number) => {
    const response = await http.get(`/chat/teacher/message/${id}`, {
       headers: {
          Authorization: `Bearer ${getAccessToken()}`,
@@ -25,9 +25,19 @@ const getMessages: any = async (id: number) => {
    return response.data;
 };
 
+const getParentMessages: any = async (id: number) => {
+   const response = await http.get(`/chat/parent/message/${id}`, {
+      headers: {
+         Authorization: `Bearer ${getAccessToken()}`,
+      },
+   });
+   return response.data;
+};
+
 const messageService = {
-   getConversations,
-   getMessages,
+   getTeacherConversations,
+   getTeacherMessages,
+   getParentMessages,
 };
 
 export default messageService;

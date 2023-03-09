@@ -291,6 +291,7 @@ export interface User {
    lastName: string;
    email: string;
    id: number;
+   fullName?: string;
 }
 
 export interface IMessage {
