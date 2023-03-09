@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { getTeachers } from "services/teacherService";
-import { getConversations, open_a_message } from "store/messagesSlice";
+import { open_a_message } from "store/messagesSlice";
 import { RootState } from "store/store";
 import { getStudents } from "store/studentSlice";
 import { CurrentClassState } from "types/interfaces";
@@ -22,7 +22,6 @@ const ChatTabs = () => {
    useEffect(() => {
       dispatch(getStudents());
       dispatch(getTeachers());
-      dispatch(getConversations());
    }, [currentClass, dispatch]);
 
    return (

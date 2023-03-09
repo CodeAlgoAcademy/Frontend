@@ -19,14 +19,14 @@ import { useRouter } from "next/router";
 import React, { ChangeEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, signUpUser } from "services/authService";
-import { addChild, resetScreenTime } from "store/parentSlice";
+import { addChild, resetScreenTime } from "store/parentChildSlice";
 import { FiCheckCircle } from "react-icons/fi";
 import { RootState } from "store/store";
 export default function Parent() {
    const dispatch = useDispatch();
    const router = useRouter();
    const { email, password } = useSelector((state: RootState) => state.user.auth);
-   const parent = useSelector((state: RootState) => state.parent);
+   const parent = useSelector((state: RootState) => state.parentChild);
    const [modalOpen, setModalOpen] = useState(false);
    const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next, goTo } = useMultiForm([
       <ParentSignUp1 key={1} />,

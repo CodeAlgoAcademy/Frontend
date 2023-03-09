@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { resetChild } from "store/parentSlice";
+import { resetChild } from "store/parentChildSlice";
 
 const ParentSignUp7 = () => {
    return (
