@@ -8,9 +8,10 @@ import { w3cwebsocket as W3CWebSocket } from "websocket";
 import { getAccessToken } from "utils/getTokens";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "store/store";
-import { getConversations, getOpenMesssages } from "store/messagesSlice";
+import { getParentOpenMesssages, getTeacherConversations, getTeacherOpenMesssages } from "store/messagesSlice";
 import { openErrorModal } from "store/fetchSlice";
 import { User } from "types/interfaces";
+import { useRouter } from "next/router";
 
 interface Message {
    id: number;
@@ -19,6 +20,7 @@ interface Message {
 }
 const client = new W3CWebSocket(`wss://sea-lion-app-43ury.ondigitalocean.app/chat/websocket/?Authorization=${getAccessToken()}`);
 const ChatRoom = () => {
+   const router = useRouter();
    const { openedMessageOwner, openedMessage } = useSelector((state: RootState) => state.messages);
 
    const { email } = useSelector((state: RootState) => state.user);
@@ -41,8 +43,11 @@ const ChatRoom = () => {
                   receiver: openedMessageOwner.id,
                })
             );
-            dispatch(getOpenMesssages());
-            dispatch(getConversations());
+            if (router.pathname.includes("parent")) {
+               dispatch(getParentOpenMesssages());
+            } else {
+               dispatch(getTeacherOpenMesssages());
+            }
             setTypingText("");
          }
       } else {
@@ -64,8 +69,9 @@ const ChatRoom = () => {
 
    useEffect(() => {
       if (openedMessageOwner.id) {
-         dispatch(getOpenMesssages());
+         router.pathname.includes("parent") ? dispatch(getParentOpenMesssages()) : dispatch(getTeacherOpenMesssages());
       }
+      console.log("Message Owner", openedMessageOwner);
    }, [openedMessageOwner, dispatch]);
 
    useEffect(() => {
@@ -77,7 +83,7 @@ const ChatRoom = () => {
          <div className={styles.header}>
             <Avatar src="" alt="" />
             <p className="text-sm font-bold capitalize">
-               {openedMessageOwner?.firstName} {openedMessageOwner?.lastName}
+               {openedMessageOwner?.firstName ? openedMessageOwner?.firstName + " " + openedMessageOwner?.lastName : openedMessageOwner?.fullName}
             </p>
          </div>
          <div className={styles.chatContainer}>
