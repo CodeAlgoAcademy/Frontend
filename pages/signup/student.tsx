@@ -40,42 +40,6 @@ export default function Student() {
       }
    };
 
-<<<<<<< HEAD
-  return (
-    <AuthLayout>
-      <form>
-        <div className="">{step}</div>
-        <div>
-          <button
-            className="block  h-[2.5rem] mt-6 text-center w-full text-white bg-[#2073FA] font-bold rounded-xl"
-            type="button"
-            onClick={next}
-          >
-            Continue
-          </button>
-          {!isFirstStep && !isLastStep && (
-            <button className="block text-center w-full mt-4" type="button" onClick={back}>
-              Back
-            </button>
-          )}
-          {isFirstStep && <GoogleBtn />}
-          {isFirstStep && (
-            <button
-              className="block  h-[2.5rem] mt-6 text-center w-full bg-neutral-100/70 font-semibold rounded-xl text-black"
-              type="button"
-              onClick={back}
-            >
-              Sign Up with Facebook
-            </button>
-          )}
-          {isLastStep && (
-            <button className="block text-center underline w-full mt-4">Continue as student</button>
-          )}
-        </div>
-      </form>
-    </AuthLayout>
-  );
-=======
    return (
       <AuthLayout>
          <form>
@@ -108,5 +72,4 @@ export default function Student() {
          </form>
       </AuthLayout>
    );
->>>>>>> fc331e75a2b89c0a947e0ba13ae2dc0ef1cf5179
 }
