@@ -1,29 +1,16 @@
-import { IParentChild } from "types/interfaces";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import http from "axios.config";
 import { getAccessToken } from "utils/getTokens";
-import http from "../axios.config";
 
-const addChild = async (data: any) => {
-   console.log(data);
-   const response = await http.post("/parent/child", data, {
-      headers: {
-         Authorization: `Bearer ${getAccessToken()}`,
-      },
-   });
-
-   return response.data;
-};
-
-const addChildScreentime = async (data: { screentime: any }) => {
-   const response = await http.put("", data, {
-      headers: {
-         Authorization: `Bearer ${getAccessToken()}`,
-      },
-   });
-};
-
-const parentService = {
-   addChild,
-   addChildScreentime,
-};
-
-export default parentService;
+export const getAllParents: any = createAsyncThunk("parents/getAll", async (_, thunkApi) => {
+   try {
+      const { data } = await http.get("/parent", {
+         headers: {
+            Authorization: `Bearer ${getAccessToken()}`,
+         },
+      });
+      return data;
+   } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+   }
+});

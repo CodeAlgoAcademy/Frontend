@@ -1,6 +1,5 @@
 import { Avatar, IconButton } from "@mui/material";
 import React, { FormEvent, useEffect, useState, ChangeEvent } from "react";
-import { chats } from "./chatsData";
 import { IMessage } from "types/interfaces";
 import { GrAttachment } from "react-icons/gr";
 import { BsEmojiSmile } from "react-icons/bs";
@@ -9,10 +8,10 @@ import { w3cwebsocket as W3CWebSocket } from "websocket";
 import { getAccessToken } from "utils/getTokens";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "store/store";
-import { getConversations, getOpenMesssages, open_a_message, setOpenStudent } from "store/messagesSlice";
+import { getParentOpenMesssages, getTeacherConversations, getTeacherOpenMesssages } from "store/messagesSlice";
 import { openErrorModal } from "store/fetchSlice";
-import http from "axios.config";
 import { User } from "types/interfaces";
+import { useRouter } from "next/router";
 
 interface Message {
    id: number;
@@ -21,6 +20,7 @@ interface Message {
 }
 const client = new W3CWebSocket(`wss://sea-lion-app-43ury.ondigitalocean.app/chat/websocket/?Authorization=${getAccessToken()}`);
 const ChatRoom = () => {
+   const router = useRouter();
    const { openedMessageOwner, openedMessage } = useSelector((state: RootState) => state.messages);
 
    const { email } = useSelector((state: RootState) => state.user);
@@ -43,8 +43,11 @@ const ChatRoom = () => {
                   receiver: openedMessageOwner.id,
                })
             );
-            dispatch(getOpenMesssages());
-            dispatch(getConversations());
+            if (router.pathname.includes("parent")) {
+               dispatch(getParentOpenMesssages());
+            } else {
+               dispatch(getTeacherOpenMesssages());
+            }
             setTypingText("");
          }
       } else {
@@ -66,8 +69,9 @@ const ChatRoom = () => {
 
    useEffect(() => {
       if (openedMessageOwner.id) {
-         dispatch(getOpenMesssages());
+         router.pathname.includes("parent") ? dispatch(getParentOpenMesssages()) : dispatch(getTeacherOpenMesssages());
       }
+      console.log("Message Owner", openedMessageOwner);
    }, [openedMessageOwner, dispatch]);
 
    useEffect(() => {
@@ -79,7 +83,7 @@ const ChatRoom = () => {
          <div className={styles.header}>
             <Avatar src="" alt="" />
             <p className="text-sm font-bold capitalize">
-               {openedMessageOwner?.firstName} {openedMessageOwner?.lastName}
+               {openedMessageOwner?.firstName ? openedMessageOwner?.firstName + " " + openedMessageOwner?.lastName : openedMessageOwner?.fullName}
             </p>
          </div>
          <div className={styles.chatContainer}>
@@ -119,7 +123,7 @@ export default ChatRoom;
 
 const styles = {
    header: "flex items-center space-x-2 border-b-2 p-2",
-   chatContainer: "space-y-1 p-5 px-5 overflow-y-auto md:max-h-[564px] pb-[72px]",
+   chatContainer: "space-y-1 p-5 px-5 overflow-y-scroll sm:max-h-[500px] min-h-[500px] max-h-[500px] md:max-h-[564px] sm:min-h-[500px] pb-[72px]",
    chats: "bg-[#fff3cc] p-3 text-xs w-fit rounded-t-lg",
    messageInputContainer: "bg-white w-full border-t p-2 rounded-b-xl absolute left-0 bottom-0",
    inputContainer: "flex items-center space-x-2 text-slate-400",
