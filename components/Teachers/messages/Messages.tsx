@@ -1,5 +1,5 @@
 import React from "react";
-import MessageRoom from "./MessagesLists/MessageRoom";
+import MessageRoom from "../../chat/MessageRoom";
 const Messages = () => {
    return (
       <>
