@@ -13,18 +13,18 @@ const ParentLayout = ({ children }: Props) => {
    const [detachedNavDisplay, setDetachedNavDisplay] = useState(false);
    const [width, setWidth] = useState(window.innerWidth);
 
-   useEffect(() => {
-      const handleResize = () => setWidth(window.innerWidth);
-      window.addEventListener("resize", handleResize);
-      const stringedToken = localStorage.getItem("token");
-      const token = JSON.parse(`${stringedToken}`);
-      if (token?.user_type !== "parent") {
-         router.push("/login");
-      }
-      return () => {
-         window.removeEventListener("resize", handleResize);
-      };
-   }, [router]);
+   // useEffect(() => {
+   //    const handleResize = () => setWidth(window.innerWidth);
+   //    window.addEventListener("resize", handleResize);
+   //    const stringedToken = localStorage.getItem("token");
+   //    const token = JSON.parse(`${stringedToken}`);
+   //    if (token?.user_type !== "parent") {
+   //       router.push("/login");
+   //    }
+   //    return () => {
+   //       window.removeEventListener("resize", handleResize);
+   //    };
+   // }, [router]);
    return (
       <>
          <div className="parent-page min-h-screen">
@@ -79,7 +79,7 @@ const ParentLayout = ({ children }: Props) => {
                      )}
                   </div>
                )}
-               <main className="main place-items-centers relative z-0 mt-12 mr-[1%] grid h-full w-full rounded-2xl bg-[#ECEDF3] py-9 px-0 sm:mt-0 sm:rounded-[30px] sm:px-[3%]">
+               <main className="main place-items-centers relative z-0 mt-12 mr-[1%] grid  w-full rounded-2xl bg-[#ECEDF3] py-9 px-0 sm:mt-0 sm:rounded-[30px] sm:px-[3%]">
                   <div className="absolute right-[4%] top-9 mb-14 hidden w-fit items-center gap-3 sm:flex">
                      <span className="relative top-1">
                         <Image src="/assets/message.svg" alt="messages" width={22} height={22} className="blue-svg" />
