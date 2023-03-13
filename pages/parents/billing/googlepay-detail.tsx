@@ -20,7 +20,7 @@ const GooglepayDetail = () => {
                </div>
             </div>
             <div className="flex w-full items-center gap-10 border-b border-[#C5C5C5] py-4">
-               <Image width={57} height={29} src="/assets/master.png" alt="master" />
+               <Image width={57} height={29} src="/assets/Master.png" alt="master" />
                <div>
                   <h3 className="text-lg font-bold">Mastercard****4322</h3>
                   <p className="mt-2 text-sm text-[#D90429]">Update expiry information</p>
