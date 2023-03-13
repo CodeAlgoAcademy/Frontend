@@ -11,6 +11,7 @@ const initialState: IParentChild = {
    fullname: "",
    password: "",
    username: "",
+   friend: "",
    timeLimits: [
       { dayOfTheWeek: "Monday", timeLimit: "" },
       { dayOfTheWeek: "Tuesday", timeLimit: "" },
@@ -33,8 +34,6 @@ export const addChild: any = createAsyncThunk("parent/child/new", async (_, thun
          timeLimit: timeInfo.timeLimit === "No Limit" ? `24` : timeInfo.timeLimit === "" ? "0" : `${timeInfo.timeLimit}`,
       };
    });
-
-   console.log(timeLimitsFormatted);
    const data = { fullname, password, username, codingExperience, dob, timeLimits: timeLimitsFormatted };
    dispatch(openPreloader({ loadingText: "Adding Child" }));
 
@@ -42,6 +41,49 @@ export const addChild: any = createAsyncThunk("parent/child/new", async (_, thun
       const child = await parentService.addChild(data);
       dispatch(closePreloader());
       return child;
+   } catch (error: any) {
+      dispatch(closePreloader());
+      console.log(error);
+
+      if (error.response.data.non_field_errors) {
+         dispatch(
+            openErrorModal({
+               errorText: [error.response.data.non_field_errors[0]],
+            })
+         );
+      } else if (error.response.data.email) {
+         dispatch(
+            openErrorModal({
+               errorText: [...error.response.data.email],
+            })
+         );
+      } else if (error.response.data.username) {
+         dispatch(
+            openErrorModal({
+               errorText: [...error.response.data.username],
+            })
+         );
+      } else {
+         dispatch(openErrorModal({ errorText: [error.message] }));
+      }
+      return thunkAPI.rejectWithValue(error.message);
+   }
+});
+
+export const addChildFriend: any = createAsyncThunk("parent/child-friend/new", async (_, thunkAPI) => {
+   const state: any = thunkAPI.getState();
+   const dispatch = thunkAPI.dispatch;
+   const { friend, username } = state.parentChild;
+
+   dispatch(openPreloader({ loadingText: "Sending friend request" }));
+
+   try {
+      const newFriend = await parentService.addChildFriends({
+         student_username: username,
+         username_or_email: friend,
+      });
+      dispatch(closePreloader());
+      return newFriend;
    } catch (error: any) {
       dispatch(closePreloader());
       console.log(error);
@@ -105,6 +147,12 @@ export const parentSlice = createSlice({
             console.log("Successful");
          })
          .addCase(addChild.rejected, (_, { payload }: PayloadAction) => {
+            console.error(payload);
+         })
+         .addCase(addChildFriend.fulfilled, () => {
+            console.log("Successful");
+         })
+         .addCase(addChildFriend.rejected, (_, { payload }: PayloadAction) => {
             console.error(payload);
          });
    },

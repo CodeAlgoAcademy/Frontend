@@ -351,5 +351,6 @@ export interface IParentChild {
    dob: string;
    password: string;
    timeLimits: screentimeTypes[];
+   friend: string;
    // }
 }
