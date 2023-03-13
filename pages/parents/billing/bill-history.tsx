@@ -203,8 +203,8 @@ const BillHistory = () => {
                         <p className="flex-1">Status</p>
                     </div>
                   </div>
-                    {History.map((data) => (
-                  <div className="bg-white px-5 py-2 flex items-center border-t border-[#525251]">
+                    {History.map((data, Index) => (
+                  <div key={Index} className="bg-white px-5 py-2 flex items-center border-t border-[#525251]">
                     <div className="flex-1 flex justify-start items-center">
                       <Checkbox />
                       <p className="text-sm">{data.details} - {data.date}</p>
