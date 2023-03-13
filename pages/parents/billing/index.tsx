@@ -114,7 +114,7 @@ const Billing = () => {
          <div className=" pt-6 px-4 overflow-y-scroll scrollbar-hide" style={{height: 'calc(100vh - 250px)'}}>
             <div className="flex gap-8 ">
                {offers.map((offer, Index) => (
-                  <Link key={Index} href="/parents/billing/method"><div  className="border bg-white pb-12 flex-1 rounded-lg rounded-tr-[30px] overflow-hidden group" onClick={() => setActive(Index)}>
+                  <Link key={Index} href="/parents/billing/method"><div  key={Index} className="border bg-white pb-12 flex-1 rounded-lg rounded-tr-[30px] overflow-hidden group" onClick={() => setActive(Index)}>
                      <div className="">
                       <div className={active == Index ? "flex justify-between px-4 text-base py-8 text-white bg-[#2073FA]" : 'flex justify-between px-4 text-base py-8 text-black border-b border-[#C5C5C5] group-hover:text-white group-hover:bg-[#5695fa]'}>
                           <h4 className="ml-3 font-bold">{offer.name}</h4>
@@ -128,8 +128,8 @@ const Billing = () => {
                         </div>
                      </div>
                      <div className="mt-5 px-4">
-                        {offer.perks.map((perk) => (
-                           <div className="flex items-center gap-3 mt-2">
+                        {offer.perks.map((perk, Index) => (
+                           <div key={Index} className="flex items-center gap-3 mt-2">
                               <p className="h-5 w-5 border flex justify-center items-center rounded-full border-black">
                                  <BsCheck />
                               </p>
@@ -151,7 +151,7 @@ const Billing = () => {
                 </div>
                 <button className="flex bg-[#008BF8] rounded-md px-5 py-2  ml-auto items-center text-white gap-1 ">
                   <TbFileDownload  className="text-2xl"/>
-                  <p className="whitespace-nowrap"> Download All</p>
+                  <p className="whitespace-nowrap"> Download All</p>g
                 </button>
               </div>
               {showBill && <div className="mt-4">
