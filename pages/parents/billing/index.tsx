@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { BsCheck } from "react-icons/bs";
 import { TbFileDownload } from "react-icons/tb";
+import Link from "next/link";
 
 const Billing = () => {
   const [showBill, setShowBill] = useState(false)
@@ -113,7 +114,7 @@ const Billing = () => {
          <div className=" pt-6 px-4 overflow-y-scroll scrollbar-hide" style={{height: 'calc(100vh - 250px)'}}>
             <div className="flex gap-8 ">
                {offers.map((offer, Index) => (
-                  <div key={Index} className="border bg-white pb-12 flex-1 rounded-lg rounded-tr-[30px] overflow-hidden group" onClick={() => setActive(Index)}>
+                  <Link key={Index} href="/parents/billing/method"><div  className="border bg-white pb-12 flex-1 rounded-lg rounded-tr-[30px] overflow-hidden group" onClick={() => setActive(Index)}>
                      <div className="">
                       <div className={active == Index ? "flex justify-between px-4 text-base py-8 text-white bg-[#2073FA]" : 'flex justify-between px-4 text-base py-8 text-black border-b border-[#C5C5C5] group-hover:text-white group-hover:bg-[#5695fa]'}>
                           <h4 className="ml-3 font-bold">{offer.name}</h4>
@@ -139,7 +140,7 @@ const Billing = () => {
                            <button className="bg-[#2073FA] w-[100px]   text-xs text-white px-4 py-2 rounded-[4px]">Get Started</button>
                         </div>
                      </div>
-                  </div>
+                  </div></Link>
                ))}
             </div>
             <div>

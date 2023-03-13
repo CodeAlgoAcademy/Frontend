@@ -12,18 +12,18 @@ const Method = () => {
    const [active, setActive] = useState(1);
    return (
       <ParentLayout>
-         <div className=" pt-6 px-8 overflow-y-scroll scrollbar-hide bg-white" style={{ height: "calc(100vh - 250px)" }}>
+         <div className=" pt-6 px-8 overflow-y-scroll scrollbar-hide bg-white hover:bg-" style={{ height: "calc(100vh - 250px)" }}>
             <h4 className="border-b text-lg pb-2 font-[600] border-[#C5C5C5]">Select a Convenient Payment Method</h4>
             <div className="mt-10 flex gap-4">
-               <div className="w-[169px] h-[145px] border-[#C5C5C5] border rounded-md flex gap-6 flex-col items-center justify-center">
+               <div className="w-[169px] h-[145px] border-[#C5C5C5] border rounded-md flex gap-6 flex-col  text-white hover:bg-[#2073FA]  items-center justify-center">
                   <Image height={42} width={80} src="/assets/master.png" alt="master" />
                   <p>Credit Card</p>
                </div>
-               <div className="w-[169px] h-[145px] border-[#C5C5C5] border rounded-md flex gap-6 flex-col items-center justify-center">
+               <div className="w-[169px] h-[145px] border-[#C5C5C5] border rounded-md flex gap-6 flex-col  text-white hover:bg-[#2073FA] items-center justify-center">
                   <Image height={42} width={80} src="/assets/paypal.png" alt="master" />
                   <p>Paypal</p>
                </div>
-               <div className="w-[169px] h-[145px] border-[#C5C5C5] border rounded-md flex gap-6 flex-col items-center justify-center">
+               <div className="w-[169px] h-[145px] border-[#C5C5C5] border rounded-md flex gap-6 flex-col text-white hover:bg-[#2073FA]  items-center justify-center">
                   <Image height={42} width={80} src="/assets/googlep.png" alt="master" />
                   <p>Google Pay</p>
                </div>
