@@ -4,9 +4,15 @@ import RecentInteraction from "@/components/parents/RecentInteraction";
 import ParentLayout from "@/components/parents/ParentLayout";
 import ProgressBar from "@/components/parents/ProgressBar";
 import SkillBox from "@/components/parents/SkillBox";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getChildren } from "store/parentChildSlice";
 
 const Dashboard = () => {
+   const dispatch = useDispatch();
+   useEffect(() => {
+      dispatch(getChildren());
+   }, []);
    return (
       <ParentLayout>
          <div className="relative bottom-14 mb-[-120px] scale-90 overflow-x-auto sm:bottom-0 sm:mb-0 sm:scale-100">

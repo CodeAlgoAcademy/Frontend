@@ -83,7 +83,9 @@ const ChatRoom = () => {
          <div className={styles.header}>
             <Avatar src="" alt="" />
             <p className="text-sm font-bold capitalize">
-               {openedMessageOwner?.firstName ? openedMessageOwner?.firstName + " " + openedMessageOwner?.lastName : openedMessageOwner?.fullName}
+               {openedMessageOwner?.firstName
+                  ? openedMessageOwner?.firstName + " " + openedMessageOwner?.lastName
+                  : openedMessageOwner?.first_name + " " + openedMessageOwner?.last_name}
             </p>
          </div>
          <div className={styles.chatContainer}>

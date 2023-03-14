@@ -1,15 +1,10 @@
 import React, { useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
+import { screentimeTypes } from "types/interfaces";
 
 const hours: Array<number | "No Limit"> = [0, 1, 2, 3, 4, 5, 6, 7, 8, "No Limit"];
 
-const ScreenTimeComponent = ({
-   time,
-   updateTime,
-}: {
-   time: { dayOfTheWeek: string; timeLimit: "" | number | "No Limit" };
-   updateTime: (day: string, hour: number | "No Limit") => void;
-}) => {
+const ScreenTimeComponent = ({ time, updateTime }: { time: screentimeTypes; updateTime: (day: string, hour: number | "No Limit") => void }) => {
    const [hoursListOpen, setHoursListOpen] = useState<boolean>(false);
 
    const toggleHoursList = () => {
@@ -29,8 +24,8 @@ const ScreenTimeComponent = ({
                    time.timeLimit !== "No Limit"
                       ? `repeating-conic-gradient(
                         from 0deg,
-                      #2073FA 0deg calc(3.6deg * ${(time.timeLimit * 100) / 8}),
-                      rgba(145, 151, 238, 0.24) calc(3.6deg * ${(time.timeLimit * 100) / 8}) calc(360deg))`
+                      #2073FA 0deg calc(3.6deg * ${((time.timeLimit as number) * 100) / 8}),
+                      rgba(145, 151, 238, 0.24) calc(3.6deg * ${((time.timeLimit as number) * 100) / 8}) calc(360deg))`
                       : `#2073FA`
                 }
         `
