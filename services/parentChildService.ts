@@ -22,9 +22,30 @@ const addChildFriends = async (data: any) => {
    return response.data;
 };
 
+const getAllChildren = async () => {
+   const response = await http.get("/parent/child/", {
+      headers: {
+         Authorization: `Bearer ${getAccessToken()}`,
+      },
+   });
+   return response.data;
+};
+
+const updateChildScreentime = async (data: any, id: string | number) => {
+   const response = await http.put("/parent/child/" + id, data, {
+      headers: {
+         Authorization: `Bearer ${getAccessToken()}`,
+      },
+   });
+
+   return response.data;
+};
+
 const parentService = {
    addChild,
    addChildFriends,
+   getAllChildren,
+   updateChildScreentime,
 };
 
 export default parentService;

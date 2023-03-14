@@ -76,7 +76,7 @@ const ChatTabs = () => {
                                  : `cursor-pointer border-y border-r p-5 hover:bg-[#e9e2f5]`
                            }
                         >
-                           {parent.fullName}
+                           {parent.first_name + " " + parent.last_name}
                         </p>
                      );
                   })}

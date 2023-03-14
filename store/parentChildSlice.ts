@@ -1,13 +1,35 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import parentService from "services/parentChildService";
-import { IParentChild, screentimeTypes } from "types/interfaces";
+import { IParentChild, IParentChildren, screentimeTypes } from "types/interfaces";
 import { closePreloader, openErrorModal, openPreloader } from "./fetchSlice";
 import { RootState } from "./store";
 
-const initialState: IParentChild = {
+const initialState: IParentChildren = {
    // child: {
+   children: [],
+   currentChild: {
+      id: "",
+      codingExperience: "",
+      dob: "",
+      fullName: "",
+      fullname: "",
+      password: "",
+      username: "",
+      friend: "",
+      timeLimits: [
+         { dayOfTheWeek: "Monday", timeLimit: "" },
+         { dayOfTheWeek: "Tuesday", timeLimit: "" },
+         { dayOfTheWeek: "Wednesday", timeLimit: "" },
+         { dayOfTheWeek: "Thursday", timeLimit: "" },
+         { dayOfTheWeek: "Friday", timeLimit: "" },
+         { dayOfTheWeek: "Saturday", timeLimit: "" },
+         { dayOfTheWeek: "Sunday", timeLimit: "" },
+      ],
+   },
    codingExperience: "experienced",
+   id: "",
    dob: "",
+   fullName: "",
    fullname: "",
    password: "",
    username: "",
@@ -113,12 +135,96 @@ export const addChildFriend: any = createAsyncThunk("parent/child-friend/new", a
    }
 });
 
+export const getChildren: any = createAsyncThunk("parent/children", async (_, thunkAPI) => {
+   const state: any = thunkAPI.getState();
+   const dispatch = thunkAPI.dispatch;
+
+   try {
+      const children = await parentService.getAllChildren();
+      console.log(children);
+      return children;
+   } catch (error: any) {
+      console.log(error);
+
+      if (error.response.data.non_field_errors) {
+         dispatch(
+            openErrorModal({
+               errorText: [error.response.data.non_field_errors[0]],
+            })
+         );
+      } else if (error.response.data.email) {
+         dispatch(
+            openErrorModal({
+               errorText: [...error.response.data.email],
+            })
+         );
+      } else if (error.response.data.username) {
+         dispatch(
+            openErrorModal({
+               errorText: [...error.response.data.username],
+            })
+         );
+      } else {
+         dispatch(openErrorModal({ errorText: [error.message] }));
+      }
+      return thunkAPI.rejectWithValue(error.message);
+   }
+});
+
+export const editChildScreentime: any = createAsyncThunk(
+   "parent/child/edit-screentime",
+   async ({ id, data }: { id: string | number; data: any }, thunkAPI) => {
+      const state: any = thunkAPI.getState();
+      const dispatch = thunkAPI.dispatch;
+
+      const timeLimitsFormatted = data.map((timeInfo: screentimeTypes, index: number) => {
+         return {
+            ...timeInfo,
+            timeLimit: timeInfo.timeLimit === "No Limit" ? `24:00:00` : timeInfo.timeLimit === "" ? "0:00:00" : `${timeInfo.timeLimit}:00:00`,
+         };
+      });
+      dispatch(openPreloader({ loadingText: "Editing Child Screentime" }));
+
+      try {
+         const child = await parentService.updateChildScreentime({ timeLimits: timeLimitsFormatted }, id);
+         dispatch(closePreloader());
+         return child;
+      } catch (error: any) {
+         dispatch(closePreloader());
+         console.log(error);
+
+         if (error.response.data.non_field_errors) {
+            dispatch(
+               openErrorModal({
+                  errorText: [error.response.data.non_field_errors[0]],
+               })
+            );
+         } else if (error.response.data.email) {
+            dispatch(
+               openErrorModal({
+                  errorText: [...error.response.data.email],
+               })
+            );
+         } else if (error.response.data.username) {
+            dispatch(
+               openErrorModal({
+                  errorText: [...error.response.data.username],
+               })
+            );
+         } else {
+            dispatch(openErrorModal({ errorText: [error.message] }));
+         }
+         return thunkAPI.rejectWithValue(error.message);
+      }
+   }
+);
+
 export const parentSlice = createSlice({
    name: "parentChild",
    initialState,
    reducers: {
       updateChild: (
-         state: IParentChild | any,
+         state: IParentChildren | any,
          action: PayloadAction<{
             key: string;
             value: string;
@@ -126,19 +232,22 @@ export const parentSlice = createSlice({
       ) => {
          state[action.payload.key as keyof typeof state] = action.payload.value;
       },
-      resetChild: (state: IParentChild) => {
+      resetChild: (state: IParentChildren) => {
          return initialState;
       },
-      resetScreenTime: (state: IParentChild) => {
+      resetScreenTime: (state: IParentChildren) => {
          return { ...state, timeLimits: initialState.timeLimits };
       },
-      updateScreentime: (state: IParentChild, action: PayloadAction<{ day: string; hour: number | "No Limit" }>) => {
+      updateScreentime: (state: IParentChildren, action: PayloadAction<{ day: string; hour: number | "No Limit" }>) => {
          state.timeLimits = state?.timeLimits?.map((time) => {
             if (time.dayOfTheWeek === action.payload.day) {
                time.timeLimit = action.payload.hour;
             }
             return time;
          });
+      },
+      changeCurrentChild: (state: IParentChildren, action: PayloadAction<IParentChild>) => {
+         state.currentChild = action.payload;
       },
    },
    extraReducers(builder) {
@@ -154,9 +263,19 @@ export const parentSlice = createSlice({
          })
          .addCase(addChildFriend.rejected, (_, { payload }: PayloadAction) => {
             console.error(payload);
+         })
+         .addCase(getChildren.fulfilled, (state, action: PayloadAction<IParentChild[]>) => {
+            state.children = action.payload;
+            // if its another parent child or if it's the first time fetching the students, set them to first parent child else find the student id, (incase of updates!)
+            const child = action.payload.find((student) => student?.id === state.currentChild?.id) as IParentChild;
+            if (child) {
+               state.currentChild = child;
+            } else {
+               state.currentChild = action.payload[0];
+            }
          });
    },
 });
 
-export const { resetChild, updateChild, updateScreentime, resetScreenTime } = parentSlice.actions;
+export const { resetChild, updateChild, updateScreentime, resetScreenTime, changeCurrentChild } = parentSlice.actions;
 export default parentSlice.reducer;
