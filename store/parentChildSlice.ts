@@ -62,6 +62,7 @@ export const addChild: any = createAsyncThunk("parent/child/new", async (_, thun
    try {
       const child = await parentService.addChild(data);
       dispatch(closePreloader());
+      dispatch(resetChild());
       return child;
    } catch (error: any) {
       dispatch(closePreloader());
@@ -92,7 +93,7 @@ export const addChild: any = createAsyncThunk("parent/child/new", async (_, thun
    }
 });
 
-export const addChildFriend: any = createAsyncThunk("parent/child-friend/new", async (_, thunkAPI) => {
+export const addChildFriend: any = createAsyncThunk("parent/child-friend/new", async (child_name: string, thunkAPI) => {
    const state: any = thunkAPI.getState();
    const dispatch = thunkAPI.dispatch;
    const { friend, username } = state.parentChild;
@@ -101,10 +102,11 @@ export const addChildFriend: any = createAsyncThunk("parent/child-friend/new", a
 
    try {
       const newFriend = await parentService.addChildFriends({
-         student_username: username,
+         student_username: child_name || username,
          username_or_email: friend,
       });
       dispatch(closePreloader());
+      dispatch(resetChild());
       return newFriend;
    } catch (error: any) {
       dispatch(closePreloader());
@@ -180,7 +182,7 @@ export const editChildScreentime: any = createAsyncThunk(
       const timeLimitsFormatted = data.map((timeInfo: screentimeTypes, index: number) => {
          return {
             ...timeInfo,
-            timeLimit: timeInfo.timeLimit === "No Limit" ? `24:00:00` : timeInfo.timeLimit === "" ? "0:00:00" : `${timeInfo.timeLimit}:00:00`,
+            timeLimit: timeInfo.timeLimit === "No Limit" ? `24` : timeInfo.timeLimit === "" ? "0" : `${timeInfo.timeLimit}`,
          };
       });
       dispatch(openPreloader({ loadingText: "Editing Child Screentime" }));
