@@ -1,3 +1,4 @@
+import { PaymentConfirmation, PaymentMade } from "@/components/parents/BillingModals";
 import ParentLayout from "@/components/parents/ParentLayout";
 import SideNav from "@/components/parents/ParentSideNav";
 import { countryList } from "@/components/signup/countries";
@@ -8,19 +9,23 @@ import React, { ReactNode, useState } from "react";
 
 const Payment = () => {
    const [active, setActive] = useState(1);
+   const [confirmationModalOpen, setConfirmationModalOpen] = useState<boolean>(false);
+   const [paidModalOpen, setPaidModalOpened] = useState<boolean>(false);
    return (
       <ParentLayout>
-         <div className=" pt-6 pb-10 px-8 overflow-y-scroll scrollbar-hide bg-white" style={{ height: "calc(100vh - 250px)" }}>
-            <h4 className="border-b text-lg pb-2 font-[600] border-[#C5C5C5]">Credit Card Payment</h4>
-            <div className="flex w-full gap-8 items-start">
+         {confirmationModalOpen && <PaymentConfirmation setConfirmationModalOpen={setConfirmationModalOpen} />}
+         {paidModalOpen && <PaymentMade setPaidModalOpened={setPaidModalOpened} />}
+         <div className=" scrollbar-hide overflow-y-scroll bg-white px-8 pt-6 pb-10">
+            <h4 className="border-b border-[#C5C5C5] pb-2 text-lg font-[600]">Credit Card Payment</h4>
+            <div className="flex w-full items-start gap-8">
                <div className="mt-6 flex-1 ">
-                  <div className="flex items-center py-2 px-4  gap-5 border-[#C5C5C5] border rounded-sm">
+                  <div className="flex items-center gap-5 rounded-sm  border border-[#C5C5C5] py-2 px-4">
                      <p>Email</p>
-                     <input type="email" className="outline-none w-full" placeholder="peterobi.codealgo@gmail.com" />
+                     <input type="email" className="w-full outline-none" placeholder="peterobi.codealgo@gmail.com" />
                   </div>
-                  <h4 className="text-lg pb-2 font-[600] mt-8">Card Information</h4>
-                  <div className="flex items-center py-2 px-4  gap-5 border-[#C5C5C5] border rounded-sm">
-                     <input type="email" className="outline-none w-full" placeholder="1234 5678 9123 4567" />
+                  <h4 className="mt-8 pb-2 text-lg font-[600]">Card Information</h4>
+                  <div className="flex items-center gap-5 rounded-sm  border border-[#C5C5C5] py-2 px-4">
+                     <input type="email" className="w-full outline-none" placeholder="1234 5678 9123 4567" />
                      <div className="flex items-center">
                         <Image height={42} width={80} src="/assets/smaster.png" alt="master" />
                         <Image height={42} width={80} src="/assets/visa.png" alt="master" />
@@ -28,20 +33,20 @@ const Payment = () => {
                      </div>
                   </div>
                   <div className="flex ">
-                     <div className="flex items-center py-2 px-4 w-full  gap-5 border-[#C5C5C5] border rounded-sm">
-                        <input type="email" className="outline-none w-full" placeholder="MM/YY" />
+                     <div className="flex w-full items-center gap-5 rounded-sm  border border-[#C5C5C5] py-2 px-4">
+                        <input type="email" className="w-full outline-none" placeholder="MM/YY" />
                      </div>
-                     <div className="flex items-center py-2 px-4 w-full  gap-5 border-[#C5C5C5] border rounded-sm">
-                        <input type="email" className="outline-none w-full" placeholder="CVC" />
+                     <div className="flex w-full items-center gap-5 rounded-sm  border border-[#C5C5C5] py-2 px-4">
+                        <input type="email" className="w-full outline-none" placeholder="CVC" />
                      </div>
                   </div>
-                  <h4 className="text-lg pb-2 font-[600] mt-8">Name on Card</h4>
-                  <div className="flex items-center py-2 px-4  gap-5 w-full border-[#C5C5C5] border rounded-sm">
-                     <input type="email" className="outline-none w-full" placeholder="1234 5678 9123 4567" />
+                  <h4 className="mt-8 pb-2 text-lg font-[600]">Name on Card</h4>
+                  <div className="flex w-full items-center gap-5  rounded-sm border border-[#C5C5C5] py-2 px-4">
+                     <input type="email" className="w-full outline-none" placeholder="1234 5678 9123 4567" />
                   </div>
-                  <h4 className="text-lg pb-2 font-[600] mt-8">Country</h4>
-                  <div className="flex items-center py-2 px-4 h-[44px]  gap-5 border-[#C5C5C5] border rounded-sm">
-                     <select className="outline-none w-full">
+                  <h4 className="mt-8 pb-2 text-lg font-[600]">Country</h4>
+                  <div className="flex h-[44px] items-center gap-5 rounded-sm  border border-[#C5C5C5] py-2 px-4">
+                     <select className="w-full outline-none">
                         <option value="Select School Country">Unites States</option>
                         {countryList.map((countryOption: string, index: number): ReactNode => {
                            return (
@@ -53,7 +58,7 @@ const Payment = () => {
                      </select>
                   </div>
                   <div>
-                     <div className="border border-[#C5C5C5] w-full px-4 pt-4 pb-6 rounded-md mt-8">
+                     <div className="mt-8 w-full rounded-md border border-[#C5C5C5] px-4 pt-4 pb-6">
                         <div className=" flex items-center">
                            <Checkbox />
                            <div>
@@ -65,30 +70,37 @@ const Payment = () => {
                   </div>
                </div>
                <div>
-                  <div className="border mt-6 w-[389px] border-[#C5C5C5] rounded-md">
-                     <h4 className="border-[#C5C5C5] border-b pb-2 pt-3 px-4">Billing Summary</h4>
+                  <div className="mt-6 w-[389px] rounded-md border border-[#C5C5C5]">
+                     <h4 className="border-b border-[#C5C5C5] px-4 pb-2 pt-3">Billing Summary</h4>
                      <div className="pt-4 pb-8">
                         <div className="flex justify-between px-4">
                            <p>Basic price</p>
                            <p>$24.99</p>
                         </div>
-                        <div className="flex justify-between px-4 mt-4 ">
+                        <div className="mt-4 flex justify-between px-4 ">
                            <p>VAT</p>
                            <p>$0.00</p>
                         </div>
-                        <div className="flex justify-between px-4 mt-4 ">
+                        <div className="mt-4 flex justify-between px-4 ">
                            <p>Total billing price</p>
                            <p>$24.99</p>
                         </div>
                      </div>
                   </div>
-                  <div className="flex items-center py-2 px-4 w-full mt-8  gap-5 border-[#C5C5C5] border rounded-sm">
-                     <input type="password" className="outline-none w-full" placeholder="Enter Pasword" />
+                  <div className="mt-8 flex w-full items-center gap-5 rounded-sm  border border-[#C5C5C5] py-2 px-4">
+                     <input type="password" className="w-full outline-none" placeholder="Enter Pasword" />
                   </div>
 
-                  <div className="flex justify-end mt-8 gap-3">
-                     <button className="bg-white border-black border text-black w-[100px]   text-xs px-4 py-2 rounded-[4px]">Cancel</button>
-                     <button className="bg-[#2073FA] w-[100px]   text-xs text-white px-4 py-2 rounded-[4px]">Proceed</button>
+                  <div className="mt-8 flex justify-end gap-3">
+                     <button className="w-[100px] rounded-[4px] border border-black bg-white   px-4 py-2 text-xs text-black">Cancel</button>
+                     <button
+                        className="w-[100px] rounded-[4px]   bg-[#2073FA] px-4 py-2 text-xs text-white"
+                        onClick={() => {
+                           setConfirmationModalOpen(true);
+                        }}
+                     >
+                        Proceed
+                     </button>
                   </div>
                </div>
             </div>

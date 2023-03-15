@@ -19,7 +19,7 @@ import { useRouter } from "next/router";
 import React, { ChangeEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, signUpUser } from "services/authService";
-import { addChild, resetScreenTime } from "store/parentChildSlice";
+import { addChild, addChildFriend, resetScreenTime } from "store/parentChildSlice";
 import { FiCheckCircle } from "react-icons/fi";
 import { RootState } from "store/store";
 export default function Parent() {
@@ -59,7 +59,10 @@ export default function Parent() {
             goTo(10);
          }
       } else if (currentStepIndex === 10) {
-         router.push("/parents");
+         const data = await dispatch(addChildFriend());
+         if (!data?.error) {
+            router.push("/parents");
+         }
       } else {
          next();
       }

@@ -292,6 +292,8 @@ export interface User {
    email: string;
    id: number;
    fullName?: string;
+   first_name?: string;
+   last_name?: string;
 }
 
 export interface IMessage {
@@ -340,16 +342,25 @@ export type days = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | 
 
 export interface screentimeTypes {
    dayOfTheWeek: days;
-   timeLimit: "" | number | "No Limit";
+   timeLimit: "" | string | number | "No Limit";
 }
 
 export interface IParentChild {
    // child: {
    username: string;
+   fullName: string;
    fullname: string;
+
    codingExperience: string;
    dob: string;
    password: string;
    timeLimits: screentimeTypes[];
+   friend?: string;
+   id: string | number;
    // }
+}
+
+export interface IParentChildren extends IParentChild {
+   children: IParentChild[];
+   currentChild: IParentChild;
 }
