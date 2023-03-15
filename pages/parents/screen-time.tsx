@@ -49,10 +49,10 @@ const ScreenTime = () => {
    const changeTimeLimit = (currentChild: IParentChild) => {
       return currentChild?.timeLimits?.map((time) => {
          let currentTime = { ...time };
-         if (time.timeLimit === "24:00:00") {
+         if (time.timeLimit === "24") {
             currentTime.timeLimit = "No Limit";
          } else {
-            currentTime.timeLimit = parseInt((time.timeLimit as string).split(":")[0]);
+            currentTime.timeLimit = parseInt(time.timeLimit as string);
          }
          return currentTime;
       });
