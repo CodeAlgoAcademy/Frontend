@@ -7,27 +7,31 @@ import { BsArrowLeft } from "react-icons/bs";
 const GooglepayDetail = () => {
    return (
       <ParentLayout>
-         <div className=" pt-6 pb-10 px-8 overflow-y-scroll scrollbar-hide bg-white" style={{ height: "calc(100vh - 250px)" }}>
-            <div className="border-b text-lg pb-2 font-[600] border-[#C5C5C5]">
+         <div className=" scrollbar-hide overflow-y-scroll bg-white px-8 pt-6 pb-10">
+            <div className="border-b border-[#C5C5C5] pb-2 text-lg font-[600]">
                <BsArrowLeft />
             </div>
 
-            <div className="flex gap-10 w-full items-center  py-4 border-b border-[#C5C5C5] ">
+            <div className="flex w-full items-center gap-10  border-b border-[#C5C5C5] py-4 ">
                <Image width={44} height={44} src="/assets/obi.png" alt="master" />
                <div>
                   <h3 className="text-lg font-bold">Peter Obi</h3>
                   <p className="mt-2 text-sm">peterobi.codealgo@gmail.com</p>
                </div>
             </div>
-            <div className="flex gap-10 border-b border-[#C5C5C5] w-full items-center py-4">
-               <Image width={57} height={29} src="/assets/master.png" alt="master" />
+            <div className="flex w-full items-center gap-10 border-b border-[#C5C5C5] py-4">
+               <Image width={57} height={29} src="/assets/Master.png" alt="master" />
                <div>
                   <h3 className="text-lg font-bold">Mastercard****4322</h3>
                   <p className="mt-2 text-sm text-[#D90429]">Update expiry information</p>
                </div>
             </div>
-            <h4 className="text-base font-bold mt-8">Password</h4>
-            <input type="text" className="border-[#C5C5C5] w-[419px] py-2 px-4 mt-4 border rounded-sm h-[44px] outline-none " placeholder="Enter Pasword" />
+            <h4 className="mt-8 text-base font-bold">Password</h4>
+            <input
+               type="text"
+               className="mt-4 h-[44px] w-[419px] rounded-sm border border-[#C5C5C5] py-2 px-4 outline-none "
+               placeholder="Enter Pasword"
+            />
          </div>
       </ParentLayout>
    );
