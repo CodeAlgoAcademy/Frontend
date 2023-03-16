@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import NavButton from "@/components/parents/NavButton";
 import Image from "next/image";
+import messageService from "services/messagesService";
 
 const SideNav = () => {
+   const [unreadMessages, setUnreadMessages] = useState(0);
+   // fetch the number of unread messages
+   const getConversations = async () => {
+      const messages = await messageService.getParentConversation();
+      const unreadMessages = await messages?.filter((message: any) => !message?.message?.is_read);
+      setUnreadMessages(unreadMessages.length || 0);
+   };
+
+   React.useEffect(() => {
+      getConversations();
+   }, []);
    return (
       <div className="parent-sidenav sticky top-[-5.5rem] mr-[4%] mt-3 hidden h-full min-w-[240px] flex-auto flex-col gap-4 xl:flex">
          <div className="mx-auto max-w-fit">
@@ -12,7 +24,7 @@ const SideNav = () => {
             <NavButton title="Main Dashboard" image="Dashboard.svg" url="/parents" />
          </div>
          <div className="relative">
-            <NavButton title="Messages" image="message.svg" url="/parents/messages" notification={1} />
+            <NavButton title="Messages" image="message.svg" url="/parents/messages" notification={unreadMessages} />
          </div>
          <div>
             <h2 className="ml-7 mb-3 text-xl font-medium text-[#A8ABB0]">ACCOUNT</h2>
