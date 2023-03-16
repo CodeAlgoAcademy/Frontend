@@ -1,329 +1,306 @@
-import React,{useState,useRef,ChangeEvent} from 'react';
-import {useRouter} from 'next/router';
-import Image from 'next/image';
-import Link from 'next/link';
-import {BiBell,BiHomeAlt,BiLogOut} from 'react-icons/bi';
-import {RiArrowDropDownLine,RiArrowDropUpLine} from 'react-icons/ri';
-import {FaChevronDown,FaChevronUp,FaEdit} from 'react-icons/fa';
-import {RootState} from '../store/store';
-import {useSelector,useDispatch} from 'react-redux';
-import {updateCurrentClass} from '../store/currentClassSlice';
-import {IClass,CurrentClassState} from '../types/interfaces';
-import {motion} from 'framer-motion';
-import {IoSettingsSharp} from 'react-icons/io5';
-import {resetAuthUser,updateUser} from 'store/authSlice';
-import {updateEmail,updateFirstname,updateLastname} from 'services/authService';
-import {AnyAction} from '@reduxjs/toolkit';
+import React, { useState, useRef, ChangeEvent } from "react";
+import { useRouter } from "next/router";
+import Image from "next/image";
+import Link from "next/link";
+import { BiBell, BiHomeAlt, BiLogOut } from "react-icons/bi";
+import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
+import { FaChevronDown, FaChevronUp, FaEdit } from "react-icons/fa";
+import { RootState } from "../store/store";
+import { useSelector, useDispatch } from "react-redux";
+import { updateCurrentClass } from "../store/currentClassSlice";
+import { IClass, CurrentClassState } from "../types/interfaces";
+import { motion } from "framer-motion";
+import { IoSettingsSharp } from "react-icons/io5";
+import { resetAuthUser, updateUser } from "store/authSlice";
+import { updateEmail, updateFirstname, updateLastname } from "services/authService";
+import { AnyAction } from "@reduxjs/toolkit";
 
 const GeneralNav = () => {
-  const [userDropDown,setUserDropDown] = useState<boolean>(false);
-  const [settingsTabOpen,setSettingsTabOpen] = useState<boolean>(false);
-  const dispatch = useDispatch();
-  const router = useRouter();
-  const {
-    firstname: authFirstname,
-    lastname: authLastname,
-    password,
-    email,
-  } = useSelector((state: RootState) => state.user.auth);
-  const classes = useSelector((state: RootState): IClass[] => state.allClasses.classes);
-  const {firstname,lastname} = useSelector((state: RootState) => state.user);
-  const currentClass = useSelector((state: RootState): CurrentClassState => state.currentClass);
+   const [userDropDown, setUserDropDown] = useState<boolean>(false);
+   const [settingsTabOpen, setSettingsTabOpen] = useState<boolean>(false);
+   const dispatch = useDispatch();
+   const router = useRouter();
 
-  const classDetails = classes.map((item: CurrentClassState) => {
-    const {className,color,id} = item;
-    return {className,color,id};
-  });
-  const otherClassDetails = classDetails.filter(
-    (item) => item.className !== currentClass.className,
-  );
-  const [classListView,setClassListView] = useState(false);
+   const classes = useSelector((state: RootState): IClass[] => state.allClasses.classes);
+   const { firstname, lastname } = useSelector((state: RootState) => state.user);
+   const currentClass = useSelector((state: RootState): CurrentClassState => state.currentClass);
 
-  const dropdownStyle = {
-    transform: classListView ? 'rotate(180deg)' : '',
-    transition: 'transform 150ms ease',
-  };
+   const classDetails = classes.map((item: CurrentClassState) => {
+      const { className, color, id } = item;
+      return { className, color, id };
+   });
+   const otherClassDetails = classDetails.filter((item) => item.className !== currentClass.className);
+   const [classListView, setClassListView] = useState(false);
 
-  const classListStyle = {
-    maxHeight: classListView ? '' : '56px',
-    transition: 'max-height 200ms ease',
-    overflowY: classListView ? 'auto' : 'hidden',
-    height: classListView ? '191.9px' : '',
-  } as React.CSSProperties;
+   const dropdownStyle = {
+      transform: classListView ? "rotate(180deg)" : "",
+      transition: "transform 150ms ease",
+   };
 
-  const toggleUserDropDown = () => {
-    setUserDropDown(!userDropDown);
-    setUserDropDown(!userDropDown);
-  };
-  const classBox = useRef<HTMLDivElement>(null);
+   const classListStyle = {
+      maxHeight: classListView ? "" : "56px",
+      transition: "max-height 200ms ease",
+      overflowY: classListView ? "auto" : "hidden",
+      height: classListView ? "191.9px" : "",
+   } as React.CSSProperties;
 
-  const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('token_timestamp');
-    dispatch(resetAuthUser());
-    router.push('/login');
-  };
+   const toggleUserDropDown = () => {
+      setUserDropDown(!userDropDown);
+      setUserDropDown(!userDropDown);
+   };
+   const classBox = useRef<HTMLDivElement>(null);
 
-  const updateUserForm = async (e: ChangeEvent<HTMLFormElement>,func: any) => {
-    e.preventDefault();
-    const data = await dispatch(func());
-    if(!data?.error) {
-      setUserDropDown(false);
-    }
-  };
+   const logout = () => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("token_timestamp");
+      dispatch(resetAuthUser());
+      router.push("/login");
+   };
 
-  return (
-    <div className="pt-6 bg-white flex items-center justify-between">
-      <div className="relative flex items-center gap-40">
-        <div className="flex items-center gap-4">
-          <Link href={`/teachers/addClass`}>
-            <div className="text-[#2073fa] text-[24px]">
-              <BiHomeAlt />
+   return (
+      <div className="flex items-center justify-between bg-white pt-6">
+         <div className="relative flex items-center gap-40">
+            <div className="flex items-center gap-4">
+               <Link href={`/teachers/addClass`}>
+                  <div className="text-[24px] text-[#2073fa]">
+                     <BiHomeAlt />
+                  </div>
+               </Link>
+               <div className="relative h-[52px]">
+                  <div className="absolute left-0 top-0 overflow-hidden rounded-[28px]">
+                     <div
+                        className="small-scroll-thumb z-30 w-[260px] divide-y overflow-hidden rounded-[28px] border border-[#BDBDBD] bg-white"
+                        style={classListStyle}
+                        ref={classBox}
+                     >
+                        <div className="relative flex cursor-pointer items-center justify-between py-2 px-3 hover:bg-gray-100">
+                           <div className="flex items-center gap-3">
+                              <span style={{ backgroundColor: currentClass?.color }} className='content-[" "] h-[24px] w-[24px] rounded-full'></span>
+                              <span className="text-[18px] font-bold">{currentClass.className}</span>
+                           </div>
+                           <div className="hover:b rounded-lg p-1" onClick={() => setClassListView((prev) => !prev)}>
+                              <div className="text-[32px] text-[#838383]" style={dropdownStyle}>
+                                 <RiArrowDropDownLine />
+                              </div>
+                           </div>
+                        </div>
+                        {otherClassDetails?.map((navClass: CurrentClassState, index: number) => (
+                           <div
+                              className="relative z-[50] flex cursor-pointer items-center justify-between py-2 px-3 hover:bg-gray-100"
+                              key={index}
+                              onClick={() => {
+                                 dispatch(
+                                    updateCurrentClass({
+                                       className: navClass.className,
+                                       color: navClass.color,
+                                       id: navClass.id,
+                                    })
+                                 );
+                                 const node = classBox.current;
+                                 if (node) {
+                                    node.scroll({
+                                       top: 0,
+                                       behavior: "smooth",
+                                    });
+                                 }
+                                 setClassListView((prev) => false);
+                              }}
+                           >
+                              <div className="flex items-center gap-3">
+                                 <span style={{ backgroundColor: navClass?.color }} className='content-[" "] h-[24px] w-[24px] rounded-full'></span>
+                                 <span className="text-[18px] font-bold">{navClass.className}</span>
+                              </div>
+                           </div>
+                        ))}
+                     </div>
+                  </div>
+               </div>
             </div>
-          </Link>
-          <div className="relative h-[52px]">
-            <div className="overflow-hidden rounded-[28px] absolute left-0 top-0">
-              <div
-                className="rounded-[28px] z-30 w-[260px] border border-[#BDBDBD] divide-y overflow-hidden bg-white small-scroll-thumb"
-                style={classListStyle}
-                ref={classBox}
-              >
-                <div className="py-2 px-3 relative flex items-center justify-between hover:bg-gray-100 cursor-pointer">
-                  <div className="flex items-center gap-3">
-                    <span
-                      style={{backgroundColor: currentClass?.color}}
-                      className='rounded-full content-[" "] w-[24px] h-[24px]'
-                    ></span>
-                    <span className="font-bold text-[18px]">{currentClass.className}</span>
+         </div>
+         <div className="flex items-center gap-8">
+            <div
+               className={
+                  userDropDown
+                     ? `absolute right-[8rem] top-7 z-[50] w-[16rem] overflow-hidden rounded-[20px] border border-[#BDBDBD] bg-white px-4 py-[6px] ${
+                          settingsTabOpen ? "h-[18rem]" : "h-[10rem]"
+                       } box-border duration-300 ease-in-out`
+                     : `absolute right-[8rem] top-7 box-border h-[3rem] w-[7rem] rounded-[30px] border border-[#BDBDBD] bg-white px-2 py-[6px]  transition-[width]`
+               }
+            >
+               <div className="flex items-center justify-between">
+                  <div className="flex items-center overflow-hidden rounded-full">
+                     <Image src="/assets/no user.png" alt="avatar" className="h-9 md:cursor-pointer" width={35} height={35} />
                   </div>
-                  <div
-                    className="hover:b rounded-lg p-1"
-                    onClick={() => setClassListView((prev) => !prev)}
-                  >
-                    <div className="text-[32px] text-[#838383]" style={dropdownStyle}>
-                      <RiArrowDropDownLine />
-                    </div>
+                  {userDropDown && (
+                     <div>
+                        <motion.h5
+                           className="ml-2 whitespace-nowrap text-sm font-[700] capitalize text-[#2073fa]"
+                           initial={{ display: "none", opacity: 0 }}
+                           animate={{
+                              display: "block",
+                              opacity: 1,
+                              transition: { duration: "1", delay: 0.3 },
+                           }}
+                        >
+                           {firstname + " " + lastname}
+                        </motion.h5>
+                     </div>
+                  )}
+                  <div className="pl-6 text-[32px] text-[#838383] " onClick={toggleUserDropDown}>
+                     {userDropDown ? <RiArrowDropUpLine /> : <RiArrowDropDownLine />}
                   </div>
-                </div>
-                {otherClassDetails?.map((navClass: CurrentClassState,index: number) => (
-                  <div
-                    className="py-2 px-3 relative z-[50] flex items-center justify-between hover:bg-gray-100 cursor-pointer"
-                    key={index}
-                    onClick={() => {
-                      dispatch(
-                        updateCurrentClass({
-                          className: navClass.className,
-                          color: navClass.color,
-                          id: navClass.id,
-                        }),
-                      );
-                      const node = classBox.current;
-                      if(node) {
-                        node.scroll({
-                          top: 0,
-                          behavior: 'smooth',
-                        });
-                      }
-                      setClassListView((prev) => false);
-                    }}
-                  >
-                    <div className="flex items-center gap-3">
-                      <span
-                        style={{backgroundColor: navClass?.color}}
-                        className='rounded-full content-[" "] w-[24px] h-[24px]'
-                      ></span>
-                      <span className="font-bold text-[18px]">{navClass.className}</span>
-                    </div>
+               </div>
+               {userDropDown && (
+                  <div className="relative z-10">
+                     <div>
+                        <motion.header
+                           className="mt-4 flex w-full  items-center justify-between border-t border-black pt-4"
+                           initial={{ opacity: 0, y: "5px" }}
+                           animate={{
+                              opacity: 1,
+                              y: 0,
+                              transition: { duration: "0.5" },
+                           }}
+                           onClick={() => {
+                              setSettingsTabOpen((prev) => !prev);
+                           }}
+                        >
+                           <div className="flex items-center text-[#2073fa]">
+                              <span className="text-xl">
+                                 <IoSettingsSharp />
+                              </span>
+                              <motion.h5 className="ml-2 select-none text-sm font-[700]">Settings</motion.h5>
+                           </div>
+                           <span className="text-sm font-light">{settingsTabOpen ? <FaChevronUp /> : <FaChevronDown />}</span>
+                        </motion.header>
+                        <main
+                           className={`mt-4 flex w-full flex-col gap-2 transition duration-300 ${
+                              settingsTabOpen ? "h-[125px]" : "h-0"
+                           } overflow-hidden`}
+                        >
+                           <UpdateUserForms />
+                        </main>
+                     </div>
+                     <motion.div
+                        className="mt-[1rem] flex cursor-pointer items-center pb-2 text-[#2073fa]"
+                        initial={{ opacity: 0, y: "5px" }}
+                        animate={{
+                           opacity: 1,
+                           y: 0,
+                           transition: { delay: 0.3, duration: "0.5" },
+                        }}
+                        onClick={logout}
+                     >
+                        <span>
+                           <BiLogOut />
+                        </span>
+
+                        <h5 className="ml-2 text-sm font-[500]">Logout</h5>
+                     </motion.div>
                   </div>
-                ))}
-              </div>
+               )}
             </div>
-          </div>
-        </div>
+            <div className="bell-shake relative cursor-pointer text-[24px] text-[#2073fa]">
+               {/* <span className='rounded-full content-[" "] w-[10px] h-[10px] bg-red-600 absolute top-0 right-0'></span> */}
+               <BiBell />
+            </div>
+         </div>
       </div>
-      <div className="flex items-center gap-8">
-        <div
-          className={
-            userDropDown
-              ? `rounded-[20px] px-4 py-[6px] bg-white z-[50] border border-[#BDBDBD] overflow-hidden absolute right-[8rem] top-7 w-[16rem] ${settingsTabOpen ? 'h-[18rem]' : 'h-[10rem]'
-              } box-border duration-300 ease-in-out`
-              : `rounded-[30px] px-2 py-[6px] h-[3rem] w-[7rem] border border-[#BDBDBD] absolute box-border right-[8rem] top-7 bg-white  transition-[width]`
-          }
-        >
-          <div className="flex items-center justify-between">
-            <div className="overflow-hidden rounded-full flex items-center">
-              <Image
-                src="/assets/no user.png"
-                alt="avatar"
-                className="md:cursor-pointer h-9"
-                width={35}
-                height={35}
-              />
-            </div>
-            {userDropDown && (
-              <div>
-                <motion.h5
-                  className="text-sm capitalize ml-2 font-[700] whitespace-nowrap text-[#2073fa]"
-                  initial={{display: 'none',opacity: 0}}
-                  animate={{
-                    display: 'block',
-                    opacity: 1,
-                    transition: {duration: '1',delay: 0.3},
-                  }}
-                >
-                  {firstname + ' ' + lastname}
-                </motion.h5>
-              </div>
-            )}
-            <div className="text-[32px] pl-6 text-[#838383] " onClick={toggleUserDropDown}>
-              {userDropDown ? <RiArrowDropUpLine /> : <RiArrowDropDownLine />}
-            </div>
-          </div>
-          {userDropDown && (
-            <div className="relative z-10">
-              <div>
-                <motion.header
-                  className="flex w-full items-center  mt-4 pt-4 justify-between border-t border-black"
-                  initial={{opacity: 0,y: '5px'}}
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                    transition: {duration: '0.5'},
-                  }}
-                  onClick={() => {
-                    setSettingsTabOpen((prev) => !prev);
-                  }}
-                >
-                  <div className="flex items-center text-[#2073fa]">
-                    <span className="text-xl">
-                      <IoSettingsSharp />
-                    </span>
-                    <motion.h5 className="text-sm ml-2 font-[700] select-none">Settings</motion.h5>
-                  </div>
-                  <span className="text-sm font-light">
-                    {settingsTabOpen ? <FaChevronUp /> : <FaChevronDown />}
-                  </span>
-                </motion.header>
-                <main
-                  className={`w-full flex flex-col mt-4 gap-2 transition duration-300 ${settingsTabOpen ? 'h-[125px]' : 'h-0'
-                    } overflow-hidden`}
-                >
-                  <form
-                    onSubmit={(e: ChangeEvent<HTMLFormElement>) => {
-                      updateUserForm(e,updateFirstname);
-                    }}
-                    className="w-full flex gap-2 h-[35px] items-center border hover:border-[#2073fa] rounded-[4px] px-2"
-                  >
-                    <input
-                      type="text"
-                      className="border-none outline-none w-full h-full text-black text-[15px] tracking-wider placeholder:text-gray-500"
-                      placeholder="Update firstname"
-                      value={authFirstname}
-                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        dispatch(
-                          updateUser({
-                            key: 'firstname',
-                            value: e.target.value,
-                          }),
-                        );
-                      }}
-                    />
-                    <button
-                      type="submit"
-                      className="text-xl cursor-pointer font-bold flex-[0.2] text-gray-900 relative"
-                    >
-                      <FaEdit />
-                    </button>
-                  </form>
-                  <form
-                    onSubmit={(e: ChangeEvent<HTMLFormElement>) => {
-                      updateUserForm(e,updateLastname);
-                    }}
-                    className="w-full flex gap-2 h-[35px] items-center border hover:border-[#2073fa] rounded-[4px] px-2"
-                  >
-                    <input
-                      type="text"
-                      className="border-none outline-none w-full h-full text-black text-[15px] tracking-wider placeholder:text-gray-500"
-                      placeholder="Update lastname"
-                      value={authLastname}
-                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        dispatch(updateUser({key: 'lastname',value: e.target.value}));
-                      }}
-                    />
-                    <button
-                      type="submit"
-                      className="text-xl cursor-pointer font-bold flex-[0.2] text-gray-900 relative"
-                    >
-                      <FaEdit />
-                    </button>
-                  </form>
-                  <form
-                    onSubmit={(e: ChangeEvent<HTMLFormElement>) => {
-                      updateUserForm(e,updateEmail);
-                    }}
-                    className="w-full flex gap-2 h-[35px] items-center border hover:border-[#2073fa] rounded-[4px] px-2"
-                  >
-                    <input
-                      type="text"
-                      className="border-none outline-none w-full h-full text-black text-[15px] tracking-wider placeholder:text-gray-500"
-                      placeholder="Update email"
-                      value={email}
-                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        dispatch(updateUser({key: 'email',value: e.target.value}));
-                      }}
-                    />
-                    <button
-                      type="submit"
-                      className="text-xl cursor-pointer font-bold flex-[0.2] text-gray-900 relative"
-                    >
-                      <FaEdit />
-                    </button>
-                  </form>
-                  <form className="w-full flex gap-2 h-[35px] items-center border hover:border-[#2073fa] rounded-[4px] px-2">
-                    <input
-                      type="text"
-                      className="border-none outline-none w-full h-full text-black text-[15px] tracking-wider placeholder:text-gray-500"
-                      placeholder="Update password"
-                      value={password}
-                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        dispatch(updateUser({key: 'password',value: e.target.value}));
-                      }}
-                    />
-                    <button
-                      type="submit"
-                      className="text-xl cursor-pointer font-bold flex-[0.2] text-gray-900 relative"
-                    >
-                      <FaEdit />
-                    </button>
-                  </form>
-                </main>
-              </div>
-              <motion.div
-                className="cursor-pointer flex items-center mt-[1rem] pb-2 text-[#2073fa]"
-                initial={{opacity: 0,y: '5px'}}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                  transition: {delay: 0.3,duration: '0.5'},
-                }}
-                onClick={logout}
-              >
-                <span>
-                  <BiLogOut />
-                </span>
+   );
+};
 
-                <h5 className="text-sm ml-2 font-[500]">Logout</h5>
-              </motion.div>
-            </div>
-          )}
-        </div>
-        <div className="text-[24px] relative bell-shake cursor-pointer text-[#2073fa]">
-          {/* <span className='rounded-full content-[" "] w-[10px] h-[10px] bg-red-600 absolute top-0 right-0'></span> */}
-          <BiBell />
-        </div>
-      </div>
-    </div>
-  );
+export const UpdateUserForms = ({ setUserDropDown }: { setUserDropDown?: any }) => {
+   const dispatch = useDispatch();
+   const [password, setPassword] = useState<string>("");
+   const updateUserForm = async (e: ChangeEvent<HTMLFormElement>, func: any) => {
+      e.preventDefault();
+      const data = await dispatch(func());
+      if (!data?.error) {
+         setUserDropDown && setUserDropDown(false);
+      }
+   };
+
+   const { firstname: authFirstname, lastname: authLastname, email } = useSelector((state: RootState) => state.user.auth);
+   return (
+      <>
+         <form
+            onSubmit={(e: ChangeEvent<HTMLFormElement>) => {
+               updateUserForm(e, updateFirstname);
+            }}
+            className="flex h-[35px] w-full items-center gap-2 rounded-[4px] border px-2 hover:border-[#2073fa]"
+         >
+            <input
+               type="text"
+               className="h-full w-full border-none text-[15px] tracking-wider text-black outline-none placeholder:text-gray-500"
+               placeholder="Update firstname"
+               value={authFirstname}
+               onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                  dispatch(
+                     updateUser({
+                        key: "firstname",
+                        value: e.target.value,
+                     })
+                  );
+               }}
+            />
+            <button type="submit" className="relative flex-[0.2] cursor-pointer text-xl font-bold text-gray-900">
+               <FaEdit />
+            </button>
+         </form>
+         <form
+            onSubmit={(e: ChangeEvent<HTMLFormElement>) => {
+               updateUserForm(e, updateLastname);
+            }}
+            className="flex h-[35px] w-full items-center gap-2 rounded-[4px] border px-2 hover:border-[#2073fa]"
+         >
+            <input
+               type="text"
+               className="h-full w-full border-none text-[15px] tracking-wider text-black outline-none placeholder:text-gray-500"
+               placeholder="Update lastname"
+               value={authLastname}
+               onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                  dispatch(updateUser({ key: "lastname", value: e.target.value }));
+               }}
+            />
+            <button type="submit" className="relative flex-[0.2] cursor-pointer text-xl font-bold text-gray-900">
+               <FaEdit />
+            </button>
+         </form>
+         <form
+            onSubmit={(e: ChangeEvent<HTMLFormElement>) => {
+               updateUserForm(e, updateEmail);
+            }}
+            className="flex h-[35px] w-full items-center gap-2 rounded-[4px] border px-2 hover:border-[#2073fa]"
+         >
+            <input
+               type="text"
+               className="h-full w-full border-none text-[15px] tracking-wider text-black outline-none placeholder:text-gray-500"
+               placeholder="Update email"
+               value={email}
+               onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                  dispatch(updateUser({ key: "email", value: e.target.value }));
+               }}
+            />
+            <button type="submit" className="relative flex-[0.2] cursor-pointer text-xl font-bold text-gray-900">
+               <FaEdit />
+            </button>
+         </form>
+         <form className="flex h-[35px] w-full items-center gap-2 rounded-[4px] border px-2 hover:border-[#2073fa]">
+            <input
+               type="text"
+               className="h-full w-full border-none text-[15px] tracking-wider text-black outline-none placeholder:text-gray-500"
+               placeholder="Update password"
+               value={password}
+               onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                  setPassword(e.target.value);
+               }}
+            />
+            <button type="submit" className="relative flex-[0.2] cursor-pointer text-xl font-bold text-gray-900">
+               <FaEdit />
+            </button>
+         </form>
+      </>
+   );
 };
 
 export default GeneralNav;
