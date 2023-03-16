@@ -34,10 +34,20 @@ const getParentMessages: any = async (id: number) => {
    return response.data;
 };
 
+const getParentConversation: any = async () => {
+   const response = await http.get("/chat/parent/", {
+      headers: {
+         Authorization: `Bearer ${getAccessToken()}`,
+      },
+   });
+   return response.data;
+};
+
 const messageService = {
    getTeacherConversations,
    getTeacherMessages,
    getParentMessages,
+   getParentConversation,
 };
 
 export default messageService;
