@@ -113,7 +113,7 @@ const Billing = () => {
          <div className=" scrollbar-hide overflow-y-scroll px-4 py-6">
             <div className="flex flex-wrap gap-6">
                {offers.map((offer, Index) => (
-                  <Link key={Index} href="/parents/billing/method">
+                  <Link className="cursor-pointer" key={Index} href="/parents/billing/method">
                      <div
                         key={Index}
                         className="group min-w-fit flex-1 overflow-hidden rounded-lg rounded-tr-[30px] border bg-white pb-12 lg:w-fit lg:min-w-[30%]"
@@ -160,7 +160,7 @@ const Billing = () => {
                   </Link>
                ))}
             </div>
-            <div>
+            {/* <div>
                <div className="mt-8 flex items-end justify-between">
                   <div onClick={() => setShowBill(!showBill)} className="flex items-center gap-3">
                      <h3 className="text-lg  font-[600]">Billing History</h3>
@@ -206,7 +206,7 @@ const Billing = () => {
                      </div>
                   </div>
                )}
-            </div>
+            </div> */}
          </div>
       </ParentLayout>
    );
