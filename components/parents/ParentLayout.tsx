@@ -28,10 +28,10 @@ const ParentLayout = ({ children }: Props) => {
    // console.log(parentChildren);
    const { firstname, username, lastname } = useSelector((state: RootState) => state.user);
    const logout = () => {
-      localStorage.removeItem("token");
-      localStorage.removeItem("token_timestamp");
-      dispatch(resetAuthUser());
-      router.push("/login");
+      // localStorage.removeItem("token");
+      // localStorage.removeItem("token_timestamp");
+      // dispatch(resetAuthUser());
+      // router.push("/login");
    };
    return (
       <>
