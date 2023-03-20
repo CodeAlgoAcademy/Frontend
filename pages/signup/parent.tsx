@@ -16,12 +16,13 @@ import useMultiForm from "@/components/useMultiForm";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, signUpUser } from "services/authService";
 import { addChild, addChildFriend, resetScreenTime } from "store/parentChildSlice";
 import { FiCheckCircle } from "react-icons/fi";
 import { RootState } from "store/store";
+import { updateUser } from "store/authSlice";
 export default function Parent() {
    const dispatch = useDispatch();
    const router = useRouter();
@@ -74,6 +75,10 @@ export default function Parent() {
          router.push("/parents");
       }
    };
+
+   useEffect(() => {
+      dispatch(updateUser({ key: "accountType", value: "Parent" }));
+   }, []);
 
    return (
       <>
