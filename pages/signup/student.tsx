@@ -8,10 +8,10 @@ import useMultiForm from "@/components/useMultiForm";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signUpUser } from "services/authService";
-import { clearFields } from "store/authSlice";
+import { clearFields, updateUser } from "store/authSlice";
 import { RootState } from "store/store";
 
 export default function Student() {
@@ -39,6 +39,10 @@ export default function Student() {
          console.log(data);
       }
    };
+
+   useEffect(() => {
+      dispatch(updateUser({ key: "accountType", value: "Student" }));
+   }, []);
 
    return (
       <AuthLayout>
