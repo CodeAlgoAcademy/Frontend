@@ -36,7 +36,7 @@ const Method = () => {
                </Link>
             </div>
             <p className="mt-4 text-xs">*Please note: Taxes will be charged according to your location</p>
-            <div className="mt-20">
+            <div className="mt-10">
                <div className="mt-4 flex w-[495px] items-center justify-between rounded-md border border-[#C5C5C5] px-4 pt-4 pb-6">
                   <div>
                      <h3 className="text-sm">PARENTAL CONTROLS</h3>
