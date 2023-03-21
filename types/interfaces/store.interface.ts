@@ -358,6 +358,7 @@ export interface IParentChild {
    timeLimits: screentimeTypes[];
    friend?: string;
    id: string | number;
+   pendingRequests?: { id: number; from_user: string; to_user: string }[];
    // }
 }
 
