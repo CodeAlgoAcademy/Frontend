@@ -24,7 +24,7 @@ const SideNav = () => {
             <NavButton title="Main Dashboard" image="Dashboard.svg" url="/parents" />
          </div>
          <div className="relative">
-            <NavButton title="Messages" image="message.svg" url="/parents/messages" notification={unreadMessages} />
+            <NavButton title="Messages" image="message.svg" url="/parents/messages" notification={unreadMessages > 0 ? unreadMessages : ""} />
          </div>
          <div>
             <h2 className="ml-7 mb-3 text-xl font-medium text-[#A8ABB0]">ACCOUNT</h2>
