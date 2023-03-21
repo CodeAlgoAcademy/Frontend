@@ -96,9 +96,10 @@ export const addChild: any = createAsyncThunk("parent/child/new", async (_, thun
 export const addChildFriend: any = createAsyncThunk("parent/child-friend/new", async (child_name: string, thunkAPI) => {
    const state: any = thunkAPI.getState();
    const dispatch = thunkAPI.dispatch;
-   const { friend, username } = state.parentChild;
+   const { friend, username } = state.parentChild.currentChild;
 
    dispatch(openPreloader({ loadingText: "Sending friend request" }));
+   console.log(state.parentChild.currentChild);
 
    try {
       const newFriend = await parentService.addChildFriends({

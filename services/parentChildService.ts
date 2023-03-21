@@ -13,7 +13,7 @@ const addChild = async (data: any) => {
 };
 
 const addChildFriends = async (data: any) => {
-   const response = await http.post("/parent/child/add-friend/", data, {
+   const response = await http.post("/parent/child/friend-request/", data, {
       headers: {
          Authorization: `Bearer ${getAccessToken()}`,
       },
