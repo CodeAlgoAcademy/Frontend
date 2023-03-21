@@ -341,6 +341,7 @@ export interface IFriends {
 export type days = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
 
 export interface screentimeTypes {
+   id?: number | string;
    dayOfTheWeek: days;
    timeLimit: "" | string | number | "No Limit";
 }
