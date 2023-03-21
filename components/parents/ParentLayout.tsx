@@ -91,9 +91,6 @@ const ParentLayout = ({ children }: Props) => {
                   <div className=" mb-6 hidden w-full items-center justify-end gap-3 sm:flex">
                      <span className="relative top-1">
                         <Image src="/assets/message.svg" alt="messages" width={22} height={22} className="blue-svg" />
-                        <span className="absolute top-[-10px] right-[-10px] h-5 w-5 scale-75 rounded-full bg-[#FB4DAB] text-center text-xs leading-5 text-white">
-                           1
-                        </span>
                      </span>
                      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path

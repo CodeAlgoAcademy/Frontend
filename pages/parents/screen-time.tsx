@@ -88,6 +88,7 @@ const ScreenTime = () => {
                </div>
                <button
                   onClick={async () => {
+                     console.log(timeLimitsToBeUpdated);
                      currentChild && (await dispatch(editChildScreentime({ id: currentChild?.id, data: timeLimitsToBeUpdated })));
                      currentChild && (await dispatch(getChildren()));
                   }}

@@ -32,7 +32,8 @@ const getAllChildren = async () => {
 };
 
 const updateChildScreentime = async (data: any, id: string | number) => {
-   const response = await http.put("/parent/child/" + id, data, {
+   console.log(data);
+   const response = await http.put("/parent/child/time-limit/" + id, data, {
       headers: {
          Authorization: `Bearer ${getAccessToken()}`,
       },
