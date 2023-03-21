@@ -173,22 +173,24 @@ export const getChildren: any = createAsyncThunk("parent/children", async (_, th
    }
 });
 
-export const editChildScreentime: any = createAsyncThunk(
+export const editScreentime: any = createAsyncThunk(
    "parent/child/edit-screentime",
    async ({ id, data }: { id: string | number; data: any }, thunkAPI) => {
       const state: any = thunkAPI.getState();
       const dispatch = thunkAPI.dispatch;
 
-      const timeLimitsFormatted = data.map((timeInfo: screentimeTypes, index: number) => {
-         return {
-            ...timeInfo,
-            timeLimit: timeInfo.timeLimit === "No Limit" ? `24:00:00` : timeInfo.timeLimit === "" ? "00:00:00" : `${timeInfo.timeLimit}:00:00`,
-         };
-      });
+      // const timeLimitsFormatted = data.map((timeInfo: screentimeTypes, index: number) => {
+      //    return {
+      //       ...timeInfo,
+      //       timeLimit: timeInfo.timeLimit === "No Limit" ? `24:00:00` : timeInfo.timeLimit === "" ? "00:00:00" : `${timeInfo.timeLimit}:00:00`,
+      //    };
+      // });
+      data.timeLimit = data.timeLimit === "No Limit" ? `12:00:00` : data.timeLimit === "" ? "00:00:00" : `${data.timeLimit}:00:00`;
+      console.log(data);
       dispatch(openPreloader({ loadingText: "Editing Child Screentime" }));
 
       try {
-         const child = await parentService.updateChildScreentime({ timeLimits: timeLimitsFormatted }, id);
+         const child = await parentService.updateChildScreentime({ ...data }, id);
          dispatch(closePreloader());
          return child;
       } catch (error: any) {
@@ -275,6 +277,9 @@ export const parentSlice = createSlice({
             } else {
                state.currentChild = action.payload[0];
             }
+         })
+         .addCase(editScreentime.pending, () => {
+            console.log("Editing Screentime...");
          });
    },
 });
