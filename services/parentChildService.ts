@@ -32,7 +32,6 @@ const getAllChildren = async () => {
 };
 
 const updateChildScreentime = async (data: any, id: string | number) => {
-   console.log(data);
    const response = await http.put(
       "/parent/child/time-limit/" + id + "/",
       { ...data },
@@ -46,11 +45,25 @@ const updateChildScreentime = async (data: any, id: string | number) => {
    return response.data;
 };
 
+const replyFriendRequest = async (data: { accepted: boolean; rejected: boolean }, id: number) => {
+   const response = await http.put(
+      `/parent/child/friend-request/${id}`,
+      { ...data },
+      {
+         headers: {
+            Authorization: `Bearer ${getAccessToken()}`,
+         },
+      }
+   );
+   return response.data;
+};
+
 const parentService = {
    addChild,
    addChildFriends,
    getAllChildren,
    updateChildScreentime,
+   replyFriendRequest,
 };
 
 export default parentService;
