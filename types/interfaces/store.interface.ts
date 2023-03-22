@@ -346,11 +346,16 @@ export interface screentimeTypes {
    timeLimit: "" | string | number | "No Limit";
 }
 
+export interface FriendRequests {
+   id: number;
+   from_user: string;
+   to_user: string;
+}
+
 export interface IParentChild {
    // child: {
    username: string;
    fullName: string;
-   fullname: string;
 
    codingExperience: string;
    dob: string;
@@ -358,7 +363,12 @@ export interface IParentChild {
    timeLimits: screentimeTypes[];
    friend?: string;
    id: string | number;
-   pendingRequests?: { id: number; from_user: string; to_user: string }[];
+   pendingRequests?: FriendRequests[];
+   friendRequests?: FriendRequests[];
+   friends?: {
+      id: number;
+      friend: string;
+   }[];
    // }
 }
 

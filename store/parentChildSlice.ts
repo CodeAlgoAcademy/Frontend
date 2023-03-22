@@ -12,7 +12,6 @@ const initialState: IParentChildren = {
       codingExperience: "",
       dob: "",
       fullName: "",
-      fullname: "",
       password: "",
       username: "",
       friend: "",
@@ -30,7 +29,6 @@ const initialState: IParentChildren = {
    id: "",
    dob: "",
    fullName: "",
-   fullname: "",
    password: "",
    username: "",
    friend: "",
@@ -49,14 +47,14 @@ const initialState: IParentChildren = {
 export const addChild: any = createAsyncThunk("parent/child/new", async (_, thunkAPI) => {
    const state: any = thunkAPI.getState();
    const dispatch = thunkAPI.dispatch;
-   const { fullname, password, username, codingExperience, dob, timeLimits } = state.parentChild;
+   const { fullName, password, username, codingExperience, dob, timeLimits } = state.parentChild;
    const timeLimitsFormatted = timeLimits.map((timeInfo: screentimeTypes, index: number) => {
       return {
          ...timeInfo,
          timeLimit: timeInfo.timeLimit === "No Limit" ? `24:00:00` : timeInfo.timeLimit === "" ? "00:00:00" : `${timeInfo.timeLimit}:00:00`,
       };
    });
-   const data = { fullname, password, username, codingExperience, dob, timeLimits: timeLimitsFormatted };
+   const data = { fullname: fullName, password, username, codingExperience, dob, timeLimits: timeLimitsFormatted };
    dispatch(openPreloader({ loadingText: "Adding Child" }));
 
    try {
@@ -68,27 +66,8 @@ export const addChild: any = createAsyncThunk("parent/child/new", async (_, thun
       dispatch(closePreloader());
       console.log(error);
 
-      if (error.response.data.non_field_errors) {
-         dispatch(
-            openErrorModal({
-               errorText: [error.response.data.non_field_errors[0]],
-            })
-         );
-      } else if (error.response.data.email) {
-         dispatch(
-            openErrorModal({
-               errorText: [...error.response.data.email],
-            })
-         );
-      } else if (error.response.data.username) {
-         dispatch(
-            openErrorModal({
-               errorText: [...error.response.data.username],
-            })
-         );
-      } else {
-         dispatch(openErrorModal({ errorText: [error.message] }));
-      }
+      dispatch(openErrorModal({ errorText: [error.message] }));
+
       return thunkAPI.rejectWithValue(error.message);
    }
 });
@@ -96,14 +75,14 @@ export const addChild: any = createAsyncThunk("parent/child/new", async (_, thun
 export const addChildFriend: any = createAsyncThunk("parent/child-friend/new", async (child_name: string, thunkAPI) => {
    const state: any = thunkAPI.getState();
    const dispatch = thunkAPI.dispatch;
-   const { friend, username } = state.parentChild.currentChild;
+   const { friend } = state.parentChild;
 
    dispatch(openPreloader({ loadingText: "Sending friend request" }));
    console.log(state.parentChild.currentChild);
 
    try {
       const newFriend = await parentService.addChildFriends({
-         student_username: child_name || username,
+         student_username: child_name || state.parentChild.currentChild.username,
          username_or_email: friend,
       });
       dispatch(closePreloader());
@@ -113,27 +92,8 @@ export const addChildFriend: any = createAsyncThunk("parent/child-friend/new", a
       dispatch(closePreloader());
       console.log(error);
 
-      if (error.response.data.non_field_errors) {
-         dispatch(
-            openErrorModal({
-               errorText: [error.response.data.non_field_errors[0]],
-            })
-         );
-      } else if (error.response.data.email) {
-         dispatch(
-            openErrorModal({
-               errorText: [...error.response.data.email],
-            })
-         );
-      } else if (error.response.data.username) {
-         dispatch(
-            openErrorModal({
-               errorText: [...error.response.data.username],
-            })
-         );
-      } else {
-         dispatch(openErrorModal({ errorText: [error.message] }));
-      }
+      dispatch(openErrorModal({ errorText: [error.message] }));
+
       return thunkAPI.rejectWithValue(error.message);
    }
 });
@@ -149,27 +109,8 @@ export const getChildren: any = createAsyncThunk("parent/children", async (_, th
    } catch (error: any) {
       console.log(error);
 
-      if (error.response.data.non_field_errors) {
-         dispatch(
-            openErrorModal({
-               errorText: [error.response.data.non_field_errors[0]],
-            })
-         );
-      } else if (error.response.data.email) {
-         dispatch(
-            openErrorModal({
-               errorText: [...error.response.data.email],
-            })
-         );
-      } else if (error.response.data.username) {
-         dispatch(
-            openErrorModal({
-               errorText: [...error.response.data.username],
-            })
-         );
-      } else {
-         dispatch(openErrorModal({ errorText: [error.message] }));
-      }
+      dispatch(openErrorModal({ errorText: [error.message] }));
+
       return thunkAPI.rejectWithValue(error.message);
    }
 });
@@ -180,12 +121,6 @@ export const editScreentime: any = createAsyncThunk(
       const state: any = thunkAPI.getState();
       const dispatch = thunkAPI.dispatch;
 
-      // const timeLimitsFormatted = data.map((timeInfo: screentimeTypes, index: number) => {
-      //    return {
-      //       ...timeInfo,
-      //       timeLimit: timeInfo.timeLimit === "No Limit" ? `24:00:00` : timeInfo.timeLimit === "" ? "00:00:00" : `${timeInfo.timeLimit}:00:00`,
-      //    };
-      // });
       data.timeLimit = data.timeLimit === "No Limit" ? `12:00:00` : data.timeLimit === "" ? "00:00:00" : `${data.timeLimit}:00:00`;
       console.log(data);
       dispatch(openPreloader({ loadingText: "Editing Child Screentime" }));
@@ -198,31 +133,32 @@ export const editScreentime: any = createAsyncThunk(
          dispatch(closePreloader());
          console.log(error);
 
-         if (error.response.data.non_field_errors) {
-            dispatch(
-               openErrorModal({
-                  errorText: [error.response.data.non_field_errors[0]],
-               })
-            );
-         } else if (error.response.data.email) {
-            dispatch(
-               openErrorModal({
-                  errorText: [...error.response.data.email],
-               })
-            );
-         } else if (error.response.data.username) {
-            dispatch(
-               openErrorModal({
-                  errorText: [...error.response.data.username],
-               })
-            );
-         } else {
-            dispatch(openErrorModal({ errorText: [error.message] }));
-         }
+         dispatch(openErrorModal({ errorText: [error.message] }));
+
          return thunkAPI.rejectWithValue(error.message);
       }
    }
 );
+
+export const acceptFriendRequest: any = createAsyncThunk("friendRequest/reply", async (id: number, thunkAPI) => {
+   const dispatch = thunkAPI.dispatch;
+   try {
+      const data = await parentService.replyFriendRequest({ accepted: true, rejected: false }, id);
+   } catch (error: any) {
+      dispatch(openErrorModal({ errorText: [JSON.stringify(error.response.data)] }));
+      return thunkAPI.rejectWithValue(error);
+   }
+});
+
+export const rejectFriendRequest: any = createAsyncThunk("friendRequest/reply", async (id: number, thunkAPI) => {
+   const dispatch = thunkAPI.dispatch;
+   try {
+      const data = await parentService.replyFriendRequest({ accepted: false, rejected: true }, id);
+   } catch (error: any) {
+      dispatch(openErrorModal({ errorText: [JSON.stringify(error.response.data)] }));
+      return thunkAPI.rejectWithValue(error);
+   }
+});
 
 export const parentSlice = createSlice({
    name: "parentChild",

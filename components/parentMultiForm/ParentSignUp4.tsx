@@ -5,10 +5,10 @@ import { RootState } from "store/store";
 
 export default function ParentSignUp3() {
    const dispatch = useDispatch();
-   const { fullname } = useSelector((state: RootState) => state.parentChild);
+   const { fullName } = useSelector((state: RootState) => state.parentChild);
 
    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-      dispatch(updateChild({ key: "fullname", value: e.target.value }));
+      dispatch(updateChild({ key: "fullName", value: e.target.value }));
    };
 
    return (
@@ -16,7 +16,7 @@ export default function ParentSignUp3() {
          <h1 className="text-[32px] font-bold">Add your student account(s)</h1>
          <div className="mt-6">
             <div className="relative">
-               <input type="text" name="name" id="name" placeholder="Name" className={styles.input} value={fullname} onChange={onChange} required />
+               <input type="text" name="name" id="name" placeholder="Name" className={styles.input} value={fullName} onChange={onChange} required />
                <label htmlFor="name" className={styles.label}>
                   Student{`'`}s Name
                </label>

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
-import { changeCurrentChild } from "store/parentChildSlice";
+import { changeCurrentChild, getChildren } from "store/parentChildSlice";
 import { motion } from "framer-motion";
 import { resetAuthUser } from "store/authSlice";
 import { UpdateUserForms } from "../GeneralNav";
@@ -33,6 +33,23 @@ const ParentLayout = ({ children }: Props) => {
       dispatch(resetAuthUser());
       router.push("/login");
    };
+   useEffect(() => {
+      const stringedToken = localStorage.getItem("token");
+      const token = JSON.parse(`${stringedToken}`);
+      const handleResize = () => setWidth(window.innerWidth);
+      window.addEventListener("resize", handleResize);
+      if (token?.user_type !== "parent") {
+         router.push("/login");
+      }
+      return () => {
+         window.removeEventListener("resize", handleResize);
+      };
+   }, [router]);
+
+   useEffect(() => {
+      dispatch(getChildren());
+   }, []);
+
    return (
       <>
          <div className="parent-page min-h-screen">

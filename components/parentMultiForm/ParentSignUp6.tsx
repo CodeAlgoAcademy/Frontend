@@ -6,7 +6,7 @@ import { generateUsername } from "utils/generateUsername";
 
 export default function ParentSignUp5() {
    const dispatch = useDispatch();
-   const { fullname, password, username } = useSelector((state: RootState) => state.parentChild);
+   const { fullName, password, username } = useSelector((state: RootState) => state.parentChild);
 
    const onChange = (e: any) => {
       dispatch(updateChild({ key: e.target.name, value: e.target.value }));
@@ -15,7 +15,7 @@ export default function ParentSignUp5() {
    return (
       <div key={5}>
          <h1 className="text-[28px] font-bold">
-            It{"’"}s time to create {fullname}
+            It{"’"}s time to create {fullName}
             {"’"}s log in
          </h1>
          <p className="mt-3 block text-[14px] font-[400]">
@@ -35,8 +35,8 @@ export default function ParentSignUp5() {
             type="button"
             className="mt-2  block h-[2.5rem] w-full rounded-xl bg-white text-center font-bold text-[#2073FA] transition duration-300 ease-out hover:bg-[#2073FA] hover:text-white"
             onClick={() => {
-               if (fullname) {
-                  const randomName = generateUsername(fullname, "");
+               if (fullName) {
+                  const randomName = generateUsername(fullName, "");
                   dispatch(updateChild({ key: "username", value: randomName }));
                }
             }}
