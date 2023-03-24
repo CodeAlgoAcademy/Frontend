@@ -5,7 +5,7 @@ import { RootState } from "store/store";
 
 export default function ParentSignUp4() {
    const dispatch = useDispatch();
-   const { fullname, codingExperience, dob } = useSelector((state: RootState) => state.parentChild);
+   const { fullName, codingExperience, dob } = useSelector((state: RootState) => state.parentChild);
 
    const onChange = (e: any) => {
       dispatch(updateChild({ key: e.target.name, value: e.target.value }));
@@ -13,7 +13,7 @@ export default function ParentSignUp4() {
 
    return (
       <div key={4}>
-         <h1 className="text-[32px] font-bold">Tell us more about {fullname}</h1>
+         <h1 className="text-[32px] font-bold">Tell us more about {fullName}</h1>
          <label className="mt-6 block text-xl font-semibold">Birthday</label>
          <input
             className="mt-3 block h-[2.5rem] w-full rounded-xl px-4 py-2 focus:outline-0"

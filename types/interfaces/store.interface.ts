@@ -341,15 +341,21 @@ export interface IFriends {
 export type days = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
 
 export interface screentimeTypes {
+   id?: number | string;
    dayOfTheWeek: days;
    timeLimit: "" | string | number | "No Limit";
+}
+
+export interface FriendRequests {
+   id: number;
+   from_user: string;
+   to_user: string;
 }
 
 export interface IParentChild {
    // child: {
    username: string;
    fullName: string;
-   fullname: string;
 
    codingExperience: string;
    dob: string;
@@ -357,6 +363,12 @@ export interface IParentChild {
    timeLimits: screentimeTypes[];
    friend?: string;
    id: string | number;
+   pendingRequests?: FriendRequests[];
+   friendRequests?: FriendRequests[];
+   friends?: {
+      id: number;
+      friend: string;
+   }[];
    // }
 }
 

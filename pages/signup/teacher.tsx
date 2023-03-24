@@ -40,6 +40,10 @@ export default function Teacher() {
       }
    };
 
+   useEffect(() => {
+      dispatch(updateUser({ key: "accountType", value: "Teacher" }));
+   }, []);
+
    return (
       <AuthLayout>
          <form onSubmit={signup}>

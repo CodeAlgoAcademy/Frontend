@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
-import { changeCurrentChild } from "store/parentChildSlice";
+import { changeCurrentChild, getChildren } from "store/parentChildSlice";
 import { motion } from "framer-motion";
 import { resetAuthUser } from "store/authSlice";
 import { UpdateUserForms } from "../GeneralNav";
@@ -33,6 +33,23 @@ const ParentLayout = ({ children }: Props) => {
       // dispatch(resetAuthUser());
       // router.push("/login");
    };
+   useEffect(() => {
+      const stringedToken = localStorage.getItem("token");
+      const token = JSON.parse(`${stringedToken}`);
+      const handleResize = () => setWidth(window.innerWidth);
+      window.addEventListener("resize", handleResize);
+      if (token?.user_type !== "parent") {
+         router.push("/login");
+      }
+      return () => {
+         window.removeEventListener("resize", handleResize);
+      };
+   }, [router]);
+
+   useEffect(() => {
+      dispatch(getChildren());
+   }, []);
+
    return (
       <>
          <div className="parent-page min-h-screen">
@@ -91,9 +108,6 @@ const ParentLayout = ({ children }: Props) => {
                   <div className=" mb-6 hidden w-full items-center justify-end gap-3 sm:flex">
                      <span className="relative top-1">
                         <Image src="/assets/message.svg" alt="messages" width={22} height={22} className="blue-svg" />
-                        <span className="absolute top-[-10px] right-[-10px] h-5 w-5 scale-75 rounded-full bg-[#FB4DAB] text-center text-xs leading-5 text-white">
-                           1
-                        </span>
                      </span>
                      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path

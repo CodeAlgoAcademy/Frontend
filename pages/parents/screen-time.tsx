@@ -9,47 +9,42 @@ import ScreenTimeComponent from "@/components/parentMultiForm/screenTimeComponen
 import { IParentChild, screentimeTypes } from "types/interfaces";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
-import { editChildScreentime, getChildren } from "store/parentChildSlice";
+import { editScreentime, getChildren } from "store/parentChildSlice";
 
 const ScreenTime = () => {
    const dispatch = useDispatch();
    const [timeLimits, setTimeLimits] = useState<screentimeTypes[]>([
-      { dayOfTheWeek: "Monday", timeLimit: 8 },
-      { dayOfTheWeek: "Tuesday", timeLimit: "No Limit" },
-      { dayOfTheWeek: "Wednesday", timeLimit: 5 },
-      { dayOfTheWeek: "Thursday", timeLimit: 3 },
-      { dayOfTheWeek: "Friday", timeLimit: 7 },
-      { dayOfTheWeek: "Saturday", timeLimit: 0 },
-      { dayOfTheWeek: "Sunday", timeLimit: 2 },
+      { id: 1, dayOfTheWeek: "Monday", timeLimit: 8 },
+      { id: 1, dayOfTheWeek: "Tuesday", timeLimit: "No Limit" },
+      { id: 1, dayOfTheWeek: "Wednesday", timeLimit: 5 },
+      { id: 1, dayOfTheWeek: "Thursday", timeLimit: 3 },
+      { id: 1, dayOfTheWeek: "Friday", timeLimit: 7 },
+      { id: 1, dayOfTheWeek: "Saturday", timeLimit: 0 },
+      { id: 1, dayOfTheWeek: "Sunday", timeLimit: 2 },
    ]);
 
    const [timeLimitsToBeUpdated, setTimeLimitsToBeUpdated] = useState<screentimeTypes[]>([
-      { dayOfTheWeek: "Monday", timeLimit: 8 },
-      { dayOfTheWeek: "Tuesday", timeLimit: "No Limit" },
-      { dayOfTheWeek: "Wednesday", timeLimit: 5 },
-      { dayOfTheWeek: "Thursday", timeLimit: 3 },
-      { dayOfTheWeek: "Friday", timeLimit: 7 },
-      { dayOfTheWeek: "Saturday", timeLimit: 0 },
-      { dayOfTheWeek: "Sunday", timeLimit: 2 },
+      { id: 1, dayOfTheWeek: "Monday", timeLimit: 8 },
+      { id: 1, dayOfTheWeek: "Tuesday", timeLimit: "No Limit" },
+      { id: 1, dayOfTheWeek: "Wednesday", timeLimit: 5 },
+      { id: 1, dayOfTheWeek: "Thursday", timeLimit: 3 },
+      { id: 1, dayOfTheWeek: "Friday", timeLimit: 7 },
+      { id: 1, dayOfTheWeek: "Saturday", timeLimit: 0 },
+      { id: 1, dayOfTheWeek: "Sunday", timeLimit: 2 },
    ]);
 
    const { currentChild } = useSelector((state: RootState) => state.parentChild);
 
-   const updateTime = (day: string, hour: number | "No Limit") => {
-      setTimeLimitsToBeUpdated((times) => {
-         return times.map((time) => {
-            if (time.dayOfTheWeek === day) {
-               time.timeLimit = hour;
-            }
-            return time;
-         });
-      });
+   const updateTime = async (id: string | number, day: string, hour: number | "No Limit") => {
+      const data = { dayOfTheWeek: day, timeLimit: hour };
+      currentChild && (await dispatch(editScreentime({ id, data })));
+      currentChild && (await dispatch(getChildren()));
    };
 
    const changeTimeLimit = (currentChild: IParentChild) => {
       return currentChild?.timeLimits?.map((time) => {
          let currentTime = { ...time };
-         if (time.timeLimit === "24:00:00") {
+         if (time.timeLimit === "12:00:00") {
             currentTime.timeLimit = "No Limit";
          } else {
             currentTime.timeLimit = parseInt((time.timeLimit as string).split(":")[0]);
@@ -83,18 +78,9 @@ const ScreenTime = () => {
                <h2 className="mt-2 mb-10 text-[14px] font-medium">Make edits to screen time restrictions below</h2>
                <div className="mt-4 flex flex-wrap items-center justify-center gap-4 md:justify-start">
                   {timeLimitsToBeUpdated.map((time, index: number) => {
-                     return <ScreenTimeComponent updateTime={updateTime} time={time} key={index} />;
+                     return <ScreenTimeComponent updateScreenTimeForChild={updateTime} time={time} key={index} />;
                   })}
                </div>
-               <button
-                  onClick={async () => {
-                     currentChild && (await dispatch(editChildScreentime({ id: currentChild?.id, data: timeLimitsToBeUpdated })));
-                     currentChild && (await dispatch(getChildren()));
-                  }}
-                  className="mx-auto mt-6 block w-[150px] rounded-md bg-[#2073FA] py-2 px-3 text-white shadow-sm hover:shadow-md md:mx-0"
-               >
-                  Save Changes
-               </button>
             </div>
          </div>
       </ParentLayout>
