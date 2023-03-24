@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addChildFriend, updateChild } from "store/parentChildSlice";
+import { addChildFriend, getChildren, updateChild } from "store/parentChildSlice";
 import { RootState } from "store/store";
 
 const AddAFriend = () => {
@@ -28,16 +28,17 @@ const AddAFriend = () => {
             }}
          />
          <button
-            onClick={() => {
+            onClick={async () => {
                if ((friend?.length as number) > 0) {
-                  dispatch(addChildFriend(currentChild.username));
+                  await dispatch(addChildFriend(currentChild.username));
+                  await dispatch(getChildren());
                }
             }}
             className="mb-4 w-full max-w-[400px] rounded-xl bg-[#2073fa] py-1 px-3 font-light text-white"
          >
             Send Request
          </button>
-         <p className="text-[14px]">Requests will be accepted or denied by the student{"'"}s parent account</p>
+         <p className="text-[14px]">Requests will be accepted or denied by the student{"'"}s parent</p>
       </section>
    );
 };

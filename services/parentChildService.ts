@@ -13,7 +13,7 @@ const addChild = async (data: any) => {
 };
 
 const addChildFriends = async (data: any) => {
-   const response = await http.post("/parent/child/add-friend/", data, {
+   const response = await http.post("/parent/child/friend-request/", data, {
       headers: {
          Authorization: `Bearer ${getAccessToken()}`,
       },
@@ -32,12 +32,29 @@ const getAllChildren = async () => {
 };
 
 const updateChildScreentime = async (data: any, id: string | number) => {
-   const response = await http.put("/parent/child/" + id, data, {
-      headers: {
-         Authorization: `Bearer ${getAccessToken()}`,
-      },
-   });
+   const response = await http.put(
+      "/parent/child/time-limit/" + id + "/",
+      { ...data },
+      {
+         headers: {
+            Authorization: `Bearer ${getAccessToken()}`,
+         },
+      }
+   );
 
+   return response.data;
+};
+
+const replyFriendRequest = async (data: { accepted: boolean; rejected: boolean }, id: number) => {
+   const response = await http.put(
+      `/parent/child/friend-request/${id}`,
+      { ...data },
+      {
+         headers: {
+            Authorization: `Bearer ${getAccessToken()}`,
+         },
+      }
+   );
    return response.data;
 };
 
@@ -46,6 +63,7 @@ const parentService = {
    addChildFriends,
    getAllChildren,
    updateChildScreentime,
+   replyFriendRequest,
 };
 
 export default parentService;

@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 interface Props {
    image?: string | JSX.Element;
    title: string;
-   notification?: number;
+   notification?: number | string;
    url: string;
    isIcon?: boolean;
 }

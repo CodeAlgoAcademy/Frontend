@@ -4,7 +4,15 @@ import { screentimeTypes } from "types/interfaces";
 
 const hours: Array<number | "No Limit"> = [0, 1, 2, 3, 4, 5, 6, 7, 8, "No Limit"];
 
-const ScreenTimeComponent = ({ time, updateTime }: { time: screentimeTypes; updateTime: (day: string, hour: number | "No Limit") => void }) => {
+const ScreenTimeComponent = ({
+   time,
+   updateTime,
+   updateScreenTimeForChild,
+}: {
+   time: screentimeTypes;
+   updateTime?: (day: string, hour: number | "No Limit") => void;
+   updateScreenTimeForChild?: (id: string | number, day: string, hour: number | "No Limit") => void;
+}) => {
    const [hoursListOpen, setHoursListOpen] = useState<boolean>(false);
 
    const toggleHoursList = () => {
@@ -51,7 +59,8 @@ const ScreenTimeComponent = ({ time, updateTime }: { time: screentimeTypes; upda
                         key={index}
                         className="block cursor-pointer px-2 py-1"
                         onClick={() => {
-                           updateTime(time.dayOfTheWeek, hour);
+                           updateTime && updateTime(time.dayOfTheWeek, hour);
+                           updateScreenTimeForChild && updateScreenTimeForChild(time?.id as string, time.dayOfTheWeek, hour);
                            setHoursListOpen(false);
                         }}
                      >
