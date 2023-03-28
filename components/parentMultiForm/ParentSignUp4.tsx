@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateChild } from "store/parentChildSlice";
 import { RootState } from "store/store";
 
-export default function ParentSignUp3() {
+export default function ParentSignUp4() {
    const dispatch = useDispatch();
    const { fullName } = useSelector((state: RootState) => state.parentChild);
 
