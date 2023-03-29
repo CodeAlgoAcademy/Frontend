@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
+import { useSelector } from "react-redux";
+import { RootState } from "store/store";
 import { screentimeTypes } from "types/interfaces";
 
 const hours: Array<number | "No Limit"> = [0, 1, 2, 3, 4, 5, 6, 7, 8, "No Limit"];
@@ -13,6 +15,8 @@ const ScreenTimeComponent = ({
    updateTime?: (day: string, hour: number | "No Limit") => void;
    updateScreenTimeForChild?: (id: string | number, day: string, hour: number | "No Limit") => void;
 }) => {
+   const { currentChild } = useSelector((state: RootState) => state.parentChild);
+
    const [hoursListOpen, setHoursListOpen] = useState<boolean>(false);
 
    const toggleHoursList = () => {
@@ -59,9 +63,11 @@ const ScreenTimeComponent = ({
                         key={index}
                         className="block cursor-pointer px-2 py-1"
                         onClick={() => {
-                           updateTime && updateTime(time.dayOfTheWeek, hour);
-                           updateScreenTimeForChild && updateScreenTimeForChild(time?.id as string, time.dayOfTheWeek, hour);
-                           setHoursListOpen(false);
+                           if (currentChild?.username) {
+                              updateTime && updateTime(time.dayOfTheWeek, hour);
+                              updateScreenTimeForChild && updateScreenTimeForChild(time?.id as string, time.dayOfTheWeek, hour);
+                              setHoursListOpen(false);
+                           }
                         }}
                      >
                         {hour} {typeof hour === "string" ? "" : "hr"}
