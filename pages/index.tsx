@@ -14,7 +14,7 @@ const Home: NextPage = () => {
                      3D games from CodeAlgo academy will bring students to compiter sciences where they can teach themselves as they play.
                   </p>
                   <Link href="/selectUserType">
-                     <button className="w-[120px] rounded-lg bg-blue-400 p-3 font-bold text-white">Sign up</button>
+                     <button className="w-[120px] rounded-md bg-blue-400 p-3 font-bold text-white">Sign up</button>
                   </Link>
                </div>
             </div>

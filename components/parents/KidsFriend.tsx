@@ -6,11 +6,11 @@ import { RootState } from "store/store";
 import { FriendRequests, IFriends } from "types/interfaces";
 
 const KidsFriend = () => {
-   const { pendingRequests, friends } = useSelector((state: RootState) => state.parentChild.currentChild);
+   const currentChild = useSelector((state: RootState) => state.parentChild.currentChild);
 
    return (
       <div className="mt-14 h-[220px] w-full overflow-hidden overflow-y-scroll rounded-xl bg-[#eeeeee] py-2 px-4">
-         {(pendingRequests as FriendRequests[])?.map((friend: FriendRequests, index: number) => {
+         {(currentChild?.pendingRequests as FriendRequests[])?.map((friend: FriendRequests, index: number) => {
             return (
                <article key={index} className="flex items-center justify-between gap-x-2 p-2">
                   <div className="flex items-center gap-x-2 ">
@@ -25,7 +25,7 @@ const KidsFriend = () => {
          })}
 
          {/* create a new map for the friends with bienvelope icon */}
-         {friends?.map((friend, index: number) => {
+         {currentChild?.friends?.map((friend, index: number) => {
             return (
                <article key={index} className="flex items-center justify-between gap-x-2 p-2">
                   <div className="flex items-center gap-x-2 ">

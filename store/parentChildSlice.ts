@@ -174,7 +174,7 @@ export const parentSlice = createSlice({
          state[action.payload.key as keyof typeof state] = action.payload.value;
       },
       resetChild: (state: IParentChildren) => {
-         return initialState;
+         return { ...initialState, children: state.children, currentChild: state.currentChild };
       },
       resetScreenTime: (state: IParentChildren) => {
          return { ...state, timeLimits: initialState.timeLimits };

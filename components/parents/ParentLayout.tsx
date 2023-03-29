@@ -5,11 +5,14 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
-import { changeCurrentChild, getChildren } from "store/parentChildSlice";
+import { changeCurrentChild, getChildren, resetChild } from "store/parentChildSlice";
 import { motion } from "framer-motion";
 import { resetAuthUser } from "store/authSlice";
 import { UpdateUserForms } from "../GeneralNav";
 import { BiChevronDown, BiLogOut } from "react-icons/bi";
+import messageService from "services/messagesService";
+import AddChildModal from "./AddChildModal";
+import { closeAddChildModal } from "store/modalSlice";
 
 interface Props {
    children?: ReactNode;
@@ -22,16 +25,17 @@ const ParentLayout = ({ children }: Props) => {
    const [childrenListOpen, setOpen] = useState<boolean>(false);
    const [width, setWidth] = useState(window.innerWidth);
    const [userDropDown, setUserDropDown] = useState<boolean>(false);
+   const [unreadMessages, setUnreadMessages] = useState(0);
 
    const { currentChild, children: parentChildren } = useSelector((state: RootState) => state.parentChild);
-
+   const { addChildModalOpen } = useSelector((state: RootState) => state.modal);
    // console.log(parentChildren);
    const { firstname, username, lastname } = useSelector((state: RootState) => state.user);
    const logout = () => {
-      // localStorage.removeItem("token");
-      // localStorage.removeItem("token_timestamp");
-      // dispatch(resetAuthUser());
-      // router.push("/login");
+      localStorage.removeItem("token");
+      localStorage.removeItem("token_timestamp");
+      dispatch(resetAuthUser());
+      router.push("/login");
    };
    useEffect(() => {
       const stringedToken = localStorage.getItem("token");
@@ -50,12 +54,32 @@ const ParentLayout = ({ children }: Props) => {
       dispatch(getChildren());
    }, []);
 
+   const { openedMessage } = useSelector((state: RootState) => state.messages);
+
+   // fetch the number of unread messages
+   const getConversations = async () => {
+      const messages = await messageService.getParentConversation();
+      const unreadMessages = await messages?.filter((message: any) => !message?.message?.is_read);
+      setUnreadMessages(unreadMessages.length || 0);
+   };
+
+   React.useEffect(() => {
+      getConversations();
+   }, [openedMessage]);
+
+   React.useEffect(() => {
+      dispatch(resetChild());
+      dispatch(closeAddChildModal());
+   }, []);
+
    return (
       <>
          <div className="parent-page min-h-screen">
+            {/* Modal to be displayed when a prent wants to add a child from any page */}
+            {addChildModalOpen && <AddChildModal />}
             <div className="relative mb-auto flex grow items-stretch bg-white px-4 py-11 sm:pl-0 md:pl-0 xl:px-[4%]">
                <MobileSideNav className="mx-6 hidden sm:flex md:mr-6 xl:ml-0" />
-               <SideNav />
+               <SideNav unread={unreadMessages} />
                {width < 640 && (
                   <div className="relative">
                      <div
@@ -108,6 +132,11 @@ const ParentLayout = ({ children }: Props) => {
                   <div className=" mb-6 hidden w-full items-center justify-end gap-3 sm:flex">
                      <span className="relative top-1">
                         <Image src="/assets/message.svg" alt="messages" width={22} height={22} className="blue-svg" />
+                        {unreadMessages > 0 && (
+                           <span className="absolute top-[-10px] left-[70%] flex h-[20px] w-[20px] items-center justify-center rounded-full bg-red-500 text-[14px] font-bold text-white">
+                              {unreadMessages}
+                           </span>
+                        )}
                      </span>
                      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -211,7 +240,7 @@ const ParentLayout = ({ children }: Props) => {
                   </div>
                   <div className="relative">
                      <div
-                        className=" mt-4 mb-4 ml-4 flex max-w-fit items-center gap-3 sm:mb-9 sm:ml-0"
+                        className=" mt-4 mb-4 ml-4 flex max-w-fit items-center gap-3 sm:ml-0"
                         onClick={() => {
                            setOpen((prev) => !prev);
                         }}

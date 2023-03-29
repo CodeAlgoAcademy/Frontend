@@ -6,8 +6,16 @@ import RecentInteraction from "@/components/parents/RecentInteraction";
 import KidsFriend from "@/components/parents/KidsFriend";
 import AddAFriend from "@/components/parents/AddAFriend";
 import FriendRequests from "@/components/parents/FriendRequests";
+import { useSelector } from "react-redux";
+import { RootState } from "store/store";
+import NoChild from "@/components/parents/NoChild";
 
 const Multiplayer = () => {
+   const { children } = useSelector((state: RootState) => state.parentChild);
+
+   if (!children || children?.length === 0) {
+      return <NoChild />;
+   }
    return (
       <ParentLayout>
          <div className="relative bottom-14 mb-[-120px] scale-90 overflow-x-auto sm:bottom-0 sm:mb-0 sm:scale-100">
