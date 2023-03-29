@@ -6,23 +6,26 @@ import ProgressBar from "@/components/parents/ProgressBar";
 import SkillBox from "@/components/parents/SkillBox";
 import { BiPlusCircle } from "react-icons/bi";
 import AddChildModal from "@/components/parents/AddChildModal";
+import { openAddChildModal } from "store/modalSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "store/store";
+import NoChild from "@/components/parents/NoChild";
 
 const Student = () => {
-   const [modalOpened, setModalOpened] = React.useState<boolean>(false);
-   const openModal = () => {
-      setModalOpened(true);
-   };
-   const closeModal = () => {
-      setModalOpened(false);
-   };
+   const dispatch = useDispatch();
+   const { children } = useSelector((state: RootState) => state.parentChild);
+
+   if (!children || children?.length === 0) {
+      return <NoChild />;
+   }
+
    return (
       <ParentLayout>
-         {modalOpened && <AddChildModal closeModal={closeModal} />}
          <div className="z-[5] mb-8 flex w-full items-center justify-end text-[1.2rem] text-[#2073fa]">
             <div
                className="max-w-fit cursor-pointer p-2"
                onClick={() => {
-                  openModal();
+                  dispatch(openAddChildModal());
                }}
             >
                <span className="mr-2 inline-block align-middle">
@@ -31,7 +34,7 @@ const Student = () => {
                Add Child
             </div>
          </div>
-         <div className="scale-90 overflow-x-auto sm:scale-100">
+         <div className="relative bottom-14 mb-[-120px] scale-90 overflow-x-auto sm:bottom-0 sm:mb-0 sm:scale-100">
             <div className="mx-auto mb-10 flex flex-wrap items-start justify-around gap-x-3 gap-y-10">
                <ContentBox size="large" title="Level" padding="small">
                   <h2 className="mt-14 text-center text-[22px] font-medium">Level 11</h2>

@@ -5,12 +5,14 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
-import { changeCurrentChild, getChildren } from "store/parentChildSlice";
+import { changeCurrentChild, getChildren, resetChild } from "store/parentChildSlice";
 import { motion } from "framer-motion";
 import { resetAuthUser } from "store/authSlice";
 import { UpdateUserForms } from "../GeneralNav";
 import { BiChevronDown, BiLogOut } from "react-icons/bi";
 import messageService from "services/messagesService";
+import AddChildModal from "./AddChildModal";
+import { closeAddChildModal } from "store/modalSlice";
 
 interface Props {
    children?: ReactNode;
@@ -26,7 +28,7 @@ const ParentLayout = ({ children }: Props) => {
    const [unreadMessages, setUnreadMessages] = useState(0);
 
    const { currentChild, children: parentChildren } = useSelector((state: RootState) => state.parentChild);
-
+   const { addChildModalOpen } = useSelector((state: RootState) => state.modal);
    // console.log(parentChildren);
    const { firstname, username, lastname } = useSelector((state: RootState) => state.user);
    const logout = () => {
@@ -65,9 +67,16 @@ const ParentLayout = ({ children }: Props) => {
       getConversations();
    }, [openedMessage]);
 
+   React.useEffect(() => {
+      dispatch(resetChild());
+      dispatch(closeAddChildModal());
+   }, []);
+
    return (
       <>
          <div className="parent-page min-h-screen">
+            {/* Modal to be displayed when a prent wants to add a child from any page */}
+            {addChildModalOpen && <AddChildModal />}
             <div className="relative mb-auto flex grow items-stretch bg-white px-4 py-11 sm:pl-0 md:pl-0 xl:px-[4%]">
                <MobileSideNav className="mx-6 hidden sm:flex md:mr-6 xl:ml-0" />
                <SideNav unread={unreadMessages} />
