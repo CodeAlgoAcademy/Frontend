@@ -26,6 +26,9 @@ export interface IModal {
    showAddStudents: boolean;
    colorsModalOpen: boolean;
    addUnitModalOpen: boolean;
+
+   // Parents dashboard
+   addChildModalOpen: boolean;
 }
 
 export interface IAllTeachers {

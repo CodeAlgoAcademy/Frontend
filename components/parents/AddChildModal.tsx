@@ -1,14 +1,11 @@
 import React, { ChangeEvent } from "react";
 import { MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { addChild, getChildren, resetScreenTime, updateChild } from "store/parentChildSlice";
+import { closeAddChildModal } from "store/modalSlice";
+import { addChild, getChildren, resetChild, resetScreenTime, updateChild } from "store/parentChildSlice";
 import { RootState } from "store/store";
 
-type AddChildModalProps = {
-   closeModal: () => void;
-};
-
-const AddChildModal = (props: AddChildModalProps) => {
+const AddChildModal = () => {
    const { fullName, codingExperience, dob, password, username } = useSelector((state: RootState) => state.parentChild);
 
    const dispatch = useDispatch();
@@ -21,7 +18,7 @@ const AddChildModal = (props: AddChildModalProps) => {
       dispatch(resetScreenTime());
       const data = await dispatch(addChild());
       await dispatch(getChildren());
-      props.closeModal();
+      dispatch(closeAddChildModal());
    };
 
    return (
@@ -29,7 +26,12 @@ const AddChildModal = (props: AddChildModalProps) => {
          <div className="z-20 w-[92vw] max-w-[900px] rounded-md bg-white p-8">
             <header className="flex items-center justify-between">
                <h2 className="text-[1.1rem] font-bold text-[#2073fa]">Add Child</h2>
-               <i className="text-[22px] font-bold text-red-600" onClick={props.closeModal}>
+               <i
+                  className="text-[22px] font-bold text-red-600"
+                  onClick={() => {
+                     dispatch(closeAddChildModal());
+                  }}
+               >
                   <MdClose />
                </i>
             </header>
@@ -104,7 +106,6 @@ const AddChildModal = (props: AddChildModalProps) => {
                         required
                         onChange={(e) => {
                            const value = e.target.selectedOptions[0].value;
-                           console.log(value);
                            dispatch(updateChild({ key: "codingExperience", value }));
                         }}
                      >
