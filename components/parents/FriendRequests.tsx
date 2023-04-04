@@ -33,11 +33,11 @@ const FriendRequests = () => {
       },
    ]);
 
-   const { friendRequests } = useSelector((state: RootState) => state.parentChild.currentChild);
+   const currentChild = useSelector((state: RootState) => state.parentChild.currentChild);
 
    return (
       <div className="mt-14 h-[220px] w-full overflow-hidden overflow-y-scroll rounded-xl bg-[#eeeeee] py-2 px-4">
-         {friendRequests?.map((friend, index: number) => {
+         {currentChild?.friendRequests?.map((friend, index: number) => {
             return (
                <article key={index} className="flex items-center justify-between gap-x-2 p-2">
                   <span className="flex items-center gap-x-2 ">

@@ -43,11 +43,13 @@ const ChatRoom = () => {
                   receiver: openedMessageOwner.id,
                })
             );
-            if (router.pathname.includes("parent")) {
-               dispatch(getParentOpenMesssages());
-            } else {
-               dispatch(getTeacherOpenMesssages());
-            }
+            const message = { user: { email }, date: Date.now(), text: typingText };
+            setMessages([...messages, message] as IMessage[]);
+            // if (router.pathname.includes("parent")) {
+            //    dispatch(getParentOpenMesssages());
+            // } else {
+            //    dispatch(getTeacherOpenMesssages());
+            // }
             setTypingText("");
          }
       } else {
@@ -63,7 +65,9 @@ const ChatRoom = () => {
       client.onmessage = (message: any) => {
          const dataFromServer = JSON.parse(message.data);
          console.log("serverr reply", dataFromServer);
-         setMessages([...messages, dataFromServer]);
+         if (dataFromServer.user.id == openedMessageOwner.id) {
+            setMessages([...messages, dataFromServer]);
+         }
       };
    }, [messages]);
 

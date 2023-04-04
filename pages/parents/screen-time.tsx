@@ -10,30 +10,31 @@ import { IParentChild, screentimeTypes } from "types/interfaces";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { editScreentime, getChildren } from "store/parentChildSlice";
+import NoChild from "@/components/parents/NoChild";
 
 const ScreenTime = () => {
    const dispatch = useDispatch();
    const [timeLimits, setTimeLimits] = useState<screentimeTypes[]>([
-      { id: 1, dayOfTheWeek: "Monday", timeLimit: 8 },
-      { id: 1, dayOfTheWeek: "Tuesday", timeLimit: "No Limit" },
-      { id: 1, dayOfTheWeek: "Wednesday", timeLimit: 5 },
-      { id: 1, dayOfTheWeek: "Thursday", timeLimit: 3 },
-      { id: 1, dayOfTheWeek: "Friday", timeLimit: 7 },
+      { id: 1, dayOfTheWeek: "Monday", timeLimit: 0 },
+      { id: 1, dayOfTheWeek: "Tuesday", timeLimit: 0 },
+      { id: 1, dayOfTheWeek: "Wednesday", timeLimit: 0 },
+      { id: 1, dayOfTheWeek: "Thursday", timeLimit: 0 },
+      { id: 1, dayOfTheWeek: "Friday", timeLimit: 0 },
       { id: 1, dayOfTheWeek: "Saturday", timeLimit: 0 },
-      { id: 1, dayOfTheWeek: "Sunday", timeLimit: 2 },
+      { id: 1, dayOfTheWeek: "Sunday", timeLimit: 0 },
    ]);
 
    const [timeLimitsToBeUpdated, setTimeLimitsToBeUpdated] = useState<screentimeTypes[]>([
-      { id: 1, dayOfTheWeek: "Monday", timeLimit: 8 },
-      { id: 1, dayOfTheWeek: "Tuesday", timeLimit: "No Limit" },
-      { id: 1, dayOfTheWeek: "Wednesday", timeLimit: 5 },
-      { id: 1, dayOfTheWeek: "Thursday", timeLimit: 3 },
-      { id: 1, dayOfTheWeek: "Friday", timeLimit: 7 },
+      { id: 1, dayOfTheWeek: "Monday", timeLimit: 0 },
+      { id: 1, dayOfTheWeek: "Tuesday", timeLimit: 0 },
+      { id: 1, dayOfTheWeek: "Wednesday", timeLimit: 0 },
+      { id: 1, dayOfTheWeek: "Thursday", timeLimit: 0 },
+      { id: 1, dayOfTheWeek: "Friday", timeLimit: 0 },
       { id: 1, dayOfTheWeek: "Saturday", timeLimit: 0 },
-      { id: 1, dayOfTheWeek: "Sunday", timeLimit: 2 },
+      { id: 1, dayOfTheWeek: "Sunday", timeLimit: 0 },
    ]);
 
-   const { currentChild } = useSelector((state: RootState) => state.parentChild);
+   const { currentChild, children } = useSelector((state: RootState) => state.parentChild);
 
    const updateTime = async (id: string | number, day: string, hour: number | "No Limit") => {
       const data = { dayOfTheWeek: day, timeLimit: hour };
@@ -59,6 +60,10 @@ const ScreenTime = () => {
          setTimeLimitsToBeUpdated(changeTimeLimit(currentChild));
       }
    }, [currentChild, currentChild?.timeLimits]);
+
+   if (!children || children?.length === 0) {
+      return <NoChild />;
+   }
 
    return (
       <ParentLayout>
