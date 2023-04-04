@@ -21,7 +21,7 @@ const NavButton = ({ image, title, notification, url, isIcon }: Props) => {
    return (
       <Link href={`${url}`}>
          <button
-            className="relative flex w-full items-center justify-center gap-5 rounded-3xl py-[14px] px-7 text-[26px] text-white hover:bg-slate-50"
+            className="relative flex w-full min-w-[50px] items-center justify-center gap-5 rounded-3xl py-[14px] px-7 text-[26px] text-white hover:bg-slate-50"
             style={{
                backgroundColor: active ? "#2073fa" : "",
                padding: !isIcon ? "14px 28px" : "12px",
