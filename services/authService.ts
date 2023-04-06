@@ -39,7 +39,8 @@ export const loginUser: any = createAsyncThunk("authSlice/loginUser", async (nam
 export const signUpUser: any = createAsyncThunk("authSlice/signUpUser", async (name, thunkApi) => {
    const state: any = thunkApi.getState();
    const dispatch = thunkApi.dispatch;
-   const { email, firstname, lastname, schoolName, grade, is_parent, is_student, is_teacher, schoolCountry, country, username } = state.user.auth;
+   const { email, firstname, lastname, schoolName, grade, is_parent, is_student, is_teacher, dob, schoolCountry, country, username } =
+      state.user.auth;
    const options = {
       email,
       password1: state.user.auth.password,
@@ -54,6 +55,7 @@ export const signUpUser: any = createAsyncThunk("authSlice/signUpUser", async (n
       is_student,
       is_teacher,
       username,
+      dob: is_student ? dob : "",
    };
    dispatch(openPreloader({ loadingText: "Creating Account" }));
    try {

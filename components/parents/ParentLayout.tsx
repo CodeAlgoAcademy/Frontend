@@ -30,7 +30,7 @@ const ParentLayout = ({ children }: Props) => {
    const { currentChild, children: parentChildren } = useSelector((state: RootState) => state.parentChild);
    const { addChildModalOpen } = useSelector((state: RootState) => state.modal);
    // console.log(parentChildren);
-   const { firstname, username, lastname } = useSelector((state: RootState) => state.user);
+   const { firstname, username, lastname, email } = useSelector((state: RootState) => state.user);
    const logout = () => {
       localStorage.removeItem("token");
       localStorage.removeItem("token_timestamp");
@@ -59,7 +59,7 @@ const ParentLayout = ({ children }: Props) => {
    // fetch the number of unread messages
    const getConversations = async () => {
       const messages = await messageService.getParentConversation();
-      const unreadMessages = await messages?.filter((message: any) => !message?.message?.is_read);
+      const unreadMessages = await messages?.filter((message: any) => message?.message?.user?.email !== email && !message?.message?.is_read);
       setUnreadMessages(unreadMessages.length || 0);
    };
 
