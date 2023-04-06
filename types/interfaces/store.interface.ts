@@ -17,6 +17,7 @@ export interface IUser {
    is_parent: boolean;
    is_student: boolean;
    is_teacher: boolean;
+   dob:string;
    auth: IUserData;
 }
 
@@ -129,6 +130,7 @@ export interface IUserData {
    is_parent: boolean;
    is_student: boolean;
    is_teacher: boolean;
+   dob:string
 }
 
 export interface IClass {
