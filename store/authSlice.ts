@@ -36,6 +36,7 @@ const initialState: IUser = {
    is_parent: false,
    is_student: false,
    is_teacher: false,
+   dob: "",
    auth: {
       firstname: "",
       lastname: "",
@@ -51,6 +52,7 @@ const initialState: IUser = {
       is_teacher: false,
       country: countryList[0],
       username: "",
+      dob: "",
    },
 };
 
