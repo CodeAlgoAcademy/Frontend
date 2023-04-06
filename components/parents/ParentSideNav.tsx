@@ -5,12 +5,11 @@ import messageService from "services/messagesService";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 
-const SideNav = ({unread}:{unread:number}) => {
-
+const SideNav = ({ unread }: { unread: number }) => {
    return (
       <div className="parent-sidenav sticky top-[-5.5rem] mr-[4%] mt-3 hidden h-full min-w-[240px] flex-auto flex-col gap-4 xl:flex">
          <div className="mx-auto max-w-fit">
-            <Image src={"/assets/CodeAlgo_Logo.png"} alt="logo" loading="lazy" width={160} height={70} />
+            <Image src={"/assets/CodeAlgo_Logo.png"} className="h-9 md:cursor-pointer" alt="logo" loading="lazy" width={110} height={55} />
          </div>
          <div className="mt-5">
             <NavButton title="Main Dashboard" image="Dashboard.svg" url="/parents" />
