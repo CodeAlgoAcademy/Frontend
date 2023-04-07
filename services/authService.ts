@@ -66,18 +66,13 @@ export const signUpUser: any = createAsyncThunk("authSlice/signUpUser", async (n
       return data;
    } catch (error: any) {
       dispatch(closePreloader());
-      if (error.response.data.non_field_errors) {
-         dispatch(
-            openErrorModal({
-               errorText: [error.response.data.non_field_errors[0]],
-            })
-         );
-      } else if (error.response.data.email) {
-         dispatch(
-            openErrorModal({
-               errorText: [...error.response.data.email],
-            })
-         );
+      console.log(error.response.data.details);
+      if (error.response.data.details) {
+         const errors: any[] = [];
+         Object.entries(error.response.data.details[0]).forEach((res) => {
+            errors.push(res[1]);
+         });
+         dispatch(openErrorModal({ errorText: errors }));
       } else {
          dispatch(openErrorModal({ errorText: [error.message] }));
       }
