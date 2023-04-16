@@ -18,7 +18,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
                   <Image alt="logo" src="/assets/CodeAlgo_Logo.png" className={"h-9 md:cursor-pointer"} width={110} height={55} />
                </Link>
                <div className="flex flex-wrap gap-2">
-                  {router.pathname === "/login" ? (
+                  {router?.pathname === "/login" ? (
                      <>
                         <span className="hidden font-semibold sm:block">New here?</span>
                         <Link href="/selectUserType">
