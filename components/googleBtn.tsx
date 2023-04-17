@@ -1,7 +1,5 @@
 import React, { FC, useCallback, useState } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
-import Image from "next/image";
-import google from "../public/assets/google.png";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { loginWithGoogle, signUpWithGoogle, updateAccountType } from "services/authService";
@@ -27,7 +25,7 @@ const GoogleBtn: FC = () => {
             const data = await dispatch(loginWithGoogle(codeResponse.access_token));
             if (!data?.error?.message) {
                if (data?.payload?.is_teacher) {
-                  router.push("/addClass");
+                  router.push("/teachers/addClass");
                } else if (data?.payload?.is_parent) {
                   router.push("/parents");
                } else {
