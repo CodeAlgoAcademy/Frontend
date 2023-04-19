@@ -13,7 +13,6 @@ import fetchReducer from "./fetchSlice";
 import studentReducer from "./studentSlice";
 import allCurriculumReducer from "./allCurriculumSlice";
 import skillsReducer from "./skillsSlice";
-import newAssignmentReducer from "./newAssignmentSlice";
 import allAssignmentsReducer from "./allAssignments";
 import lessonsReducer from "./lessonsSlice";
 import teacherReducer from "./teacherSlice";
@@ -37,7 +36,6 @@ export const store = configureStore({
       messages: messagesReducer,
       students: studentReducer,
       skills: skillsReducer,
-      addAssignment: newAssignmentReducer,
       allAssignments: allAssignmentsReducer,
       allTeachers: teacherReducer,
       policyCheck: policySliceReducer,

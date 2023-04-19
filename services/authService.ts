@@ -4,6 +4,7 @@ import http from "../axios.config";
 import { closePreloader, openErrorModal, openPreloader } from "store/fetchSlice";
 import { getAccessToken } from "utils/getTokens";
 import { RootState } from "store/store";
+import { errorResolver } from "utils/errorResolver";
 
 export const loginUser: any = createAsyncThunk("authSlice/loginUser", async (name, thunkApi) => {
    const state: any = thunkApi.getState();
@@ -23,16 +24,8 @@ export const loginUser: any = createAsyncThunk("authSlice/loginUser", async (nam
          ...data.user,
       };
    } catch (error: any) {
-      dispatch(closePreloader());
-      if (error.response.data.non_field_errors) {
-         dispatch(
-            openErrorModal({
-               errorText: [error.response.data.non_field_errors[0]],
-            })
-         );
-      }
-
-      return thunkApi.rejectWithValue(error.response.data);
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
    }
 });
 
@@ -65,18 +58,8 @@ export const signUpUser: any = createAsyncThunk("authSlice/signUpUser", async (n
       console.log(data);
       return data;
    } catch (error: any) {
-      dispatch(closePreloader());
-      console.log(error.response.data.details);
-      if (error.response.data.details) {
-         const errors: any[] = [];
-         Object.entries(error.response.data.details[0]).forEach((res) => {
-            errors.push(res[1]);
-         });
-         dispatch(openErrorModal({ errorText: errors }));
-      } else {
-         dispatch(openErrorModal({ errorText: [error.message] }));
-      }
-      return thunkApi.rejectWithValue(error.message);
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
    }
 });
 
@@ -91,7 +74,10 @@ export const loginWithGoogle: any = createAsyncThunk("authSlice/loginWithGoogle"
          refresh_token: data.refresh_token,
          ...data.user,
       };
-   } catch (err) {}
+   } catch (error: any) {
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
+   }
 });
 
 export const signUpWithGoogle: any = createAsyncThunk("authSlice/signUpWithGoogle", async (access_token: string, thunkApi) => {
@@ -106,14 +92,8 @@ export const signUpWithGoogle: any = createAsyncThunk("authSlice/signUpWithGoogl
          ...data.user,
       };
    } catch (error: any) {
-      if (error) {
-         thunkApi.dispatch(
-            openErrorModal({
-               errorText: ["A user already exists with this google account"],
-            })
-         );
-      }
-      return thunkApi.rejectWithValue(error.response.data);
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
    }
 });
 
@@ -146,7 +126,10 @@ export const updateAccountType: any = createAsyncThunk("authSlice/updateAccountT
          }
       );
       return data;
-   } catch (error) {}
+   } catch (error) {
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
+   }
 });
 
 export const updateFirstname: any = createAsyncThunk("authSlice/updateFirstname", async (_, thunkApi) => {
@@ -179,7 +162,8 @@ export const updateFirstname: any = createAsyncThunk("authSlice/updateFirstname"
       dispatch(updateUser({ key: "firstname", value: "" }));
       return data;
    } catch (error: any) {
-      return thunkApi.rejectWithValue(error.message);
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
    }
 });
 
@@ -213,7 +197,8 @@ export const updateLastname: any = createAsyncThunk("authSlice/updateLastname", 
       dispatch(updateUser({ key: "lastname", value: "" }));
       return data;
    } catch (error: any) {
-      return thunkApi.rejectWithValue(error.message);
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
    }
 });
 
@@ -247,6 +232,7 @@ export const updateEmail: any = createAsyncThunk("authSlice/updateEmail", async 
       dispatch(updateUser({ key: "email", value: "" }));
       return data;
    } catch (error: any) {
-      return thunkApi.rejectWithValue(error.message);
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
    }
 });
