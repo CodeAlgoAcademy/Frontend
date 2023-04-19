@@ -13,7 +13,7 @@ import {
    updateAccountType,
 } from "services/authService";
 import { countryList } from "@/components/signup/countries";
-import { setTimeStamp } from "utils/getTokens";
+import { addUserToLocalStorage, setTimeStamp } from "utils/getTokens";
 
 const initialState: IUser = {
    id: 0,
@@ -96,117 +96,44 @@ export const userSlice = createSlice({
       },
    },
    extraReducers: (builder) => {
-      builder.addCase(loginUser.pending, (state: IUser, _) => {
-         console.log("pending");
-      });
       builder.addCase(loginUser.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
-         localStorage.setItem(
-            "token",
-            JSON.stringify({
-               access_token: action.payload.access_token,
-               refresh_token: action.payload.refresh_token,
-               user_type: action.payload.is_student ? "student" : action.payload.is_teacher ? "teacher" : action.payload.is_parent ? "parent" : "",
-            })
-         );
-         setTimeStamp();
+         addUserToLocalStorage(action?.payload);
 
          return {
             ...state,
             ...action.payload,
          };
       });
-      builder.addCase(loginUser.rejected, (state: IUser, { payload }: PayloadAction) => {
-         console.log(payload);
-      });
-      // builder.addCase(signUpUser.pending, (state: IUser) => {
-      //   console.log('pending');
-      // });
-      // builder.addCase(signUpUser.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
-      //   localStorage.setItem(
-      //     'token',
-      //     JSON.stringify({
-      //       access_token: action.payload?.access_token,
-      //       refresh_token: action.payload?.refresh_token,
-      //     }),
-      //   );
-      //   setTimeStamp();
-      //   return {
-      //     ...state,
-      //     ...action.payload,
-      //   };
-      // });
-      // builder.addCase(signUpUser.rejected, (state: IUser, { payload }: PayloadAction) => {});
-      builder.addCase(loginWithGoogle.pending, (state: IUser) => {});
+
       builder.addCase(loginWithGoogle.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
-         localStorage.setItem(
-            "token",
-            JSON.stringify({
-               access_token: action.payload?.access_token,
-               refresh_token: action.payload?.refresh_token,
-            })
-         );
-         setTimeStamp();
+         addUserToLocalStorage(action.payload);
 
          return {
             ...state,
             ...action.payload,
          };
       });
-      builder.addCase(loginWithGoogle.rejected, (state: IUser, { payload }: PayloadAction) => {
-         console.log(payload);
-      });
-      builder.addCase(signUpWithGoogle.pending, (state: IUser) => {
-         console.log("pending");
-      });
+
       builder.addCase(signUpWithGoogle.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
-         console.log(action);
-         localStorage.setItem(
-            "token",
-            JSON.stringify({
-               access_token: action.payload.access_token,
-               refresh_token: action.payload.refresh_token,
-            })
-         );
-         setTimeStamp();
-
+         addUserToLocalStorage(action.payload);
          return {
             ...state,
             ...action.payload,
          };
       });
-      builder.addCase(signUpWithGoogle.rejected, (state: IUser, { payload }) => {
-         console.log(payload);
-      });
-      builder.addCase(updateFirstname.pending, () => {
-         console.log("pending");
-      });
+
       builder.addCase(updateFirstname.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
          return { ...state, ...action.payload };
       });
-      builder.addCase(updateFirstname.rejected, (state: IUser, { payload }: PayloadAction) => {
-         console.log(payload);
-      });
-      builder.addCase(updateLastname.pending, () => {
-         console.log("pending");
-      });
+
       builder.addCase(updateLastname.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
          return { ...state, ...action.payload };
-      });
-      builder.addCase(updateEmail.pending, () => {
-         console.log("pending");
       });
       builder.addCase(updateEmail.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
          return { ...state, ...action.payload };
       });
-      builder.addCase(updateEmail.rejected, (state: IUser, { payload }: PayloadAction) => {
-         console.log(payload);
-      });
-      builder.addCase(updateAccountType.pending, () => {});
       builder.addCase(updateAccountType.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
          return { ...state, ...action.payload };
-      });
-      builder.addCase(updateAccountType.rejected, (state: IUser, { payload }: PayloadAction) => {
-         console.log(payload);
       });
    },
 });
