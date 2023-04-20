@@ -16,7 +16,7 @@ const GoogleBtn: FC = () => {
             const data = await dispatch(loginWithGoogle(codeResponse.access_token));
             if (!data?.error?.message) {
                if (data?.payload?.is_teacher) {
-                  router.push("/addClass");
+                  router.push("/teachers/addClass");
                } else if (data?.payload?.is_parent) {
                   router.push("/parents");
                } else {
