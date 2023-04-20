@@ -12,6 +12,7 @@ export default function Sasfety2() {
    const updateTime = (day: string, hour: number | "No Limit") => {
       dispatch(updateScreentime({ day, hour }));
    };
+
    return (
       <div key={7}>
          <h1 className="text-[30px] font-bold">Would you like to limit Conor&apos;s screentime?</h1>

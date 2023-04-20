@@ -88,3 +88,7 @@ export const addUserToLocalStorage = (user: IUser) => {
    );
    setTimeStamp();
 };
+
+export const getUserFromLocalStorage = () => {
+   return JSON.parse(localStorage.getItem("token") as string).user;
+};
