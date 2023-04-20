@@ -15,18 +15,21 @@ const Layout = ({ children }: Props) => {
    const dispatch = useDispatch();
    const router = useRouter();
 
-   const token = typeof window !== "undefined" && JSON.parse(localStorage.getItem("token") as string);
+   useEffect(() => {
+      const token = typeof window !== "undefined" && JSON.parse(localStorage.getItem("token") as string);
 
-   const unrestricted = ["/", "/404", "/login", "/selectUserType", "/comingSoon", "/signup/teacher", "/signup/student", "/signup/parent"];
+      const unrestricted = ["/", "/404", "/login", "/selectUserType", "/comingSoon", "/signup/teacher", "/signup/student", "/signup/parent"];
 
-   if (
-      !token &&
-      !unrestricted.includes(router.pathname) &&
-      !router.pathname.includes("/verify-email") &&
-      !router.pathname.includes("/change-password")
-   ) {
-      router.push("/login");
-   }
+      if (
+         !token &&
+         !unrestricted.includes(router.pathname) &&
+         !router.pathname.includes("/verify-email") &&
+         !router.pathname.includes("/change-password")
+      ) {
+         router.push("/login");
+      }
+   }, []);
+
    return (
       <GoogleOAuthProvider clientId={"354436342116-6kjbapf9ar5ad4rkho0hen2jndlcagff.apps.googleusercontent.com"}>
          <div>
