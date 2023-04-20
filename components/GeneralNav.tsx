@@ -1,4 +1,4 @@
-import React, { useState, useRef, ChangeEvent } from "react";
+import React, { useState, useRef, ChangeEvent, useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,7 +8,7 @@ import { FaChevronDown, FaChevronUp, FaEdit } from "react-icons/fa";
 import { RootState } from "../store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { updateCurrentClass } from "../store/currentClassSlice";
-import { IClass, CurrentClassState } from "../types/interfaces";
+import { IClass, CurrentClassState, IUser } from "../types/interfaces";
 import { motion } from "framer-motion";
 import { IoSettingsSharp } from "react-icons/io5";
 import { resetAuthUser, updateUser } from "store/authSlice";
@@ -19,6 +19,8 @@ import { getUserFromLocalStorage } from "utils/getTokens";
 const GeneralNav = () => {
    const [userDropDown, setUserDropDown] = useState<boolean>(false);
    const [settingsTabOpen, setSettingsTabOpen] = useState<boolean>(false);
+   const [user, setUser] = useState<IUser | null>(null);
+
    const dispatch = useDispatch();
    const router = useRouter();
 
@@ -58,7 +60,9 @@ const GeneralNav = () => {
       router.push("/login");
    };
 
-   const user = getUserFromLocalStorage();
+   useEffect(() => {
+      setUser(getUserFromLocalStorage());
+   }, []);
 
    return (
       <div className="flex items-center justify-between bg-white pt-6">
@@ -145,7 +149,7 @@ const GeneralNav = () => {
                               transition: { duration: "1", delay: 0.3 },
                            }}
                         >
-                           {user.firstname + " " + user.lastname}
+                           {user?.firstname + " " + user?.lastname}
                         </motion.h5>
                      </div>
                   )}
