@@ -13,6 +13,7 @@ import { BiChevronDown, BiLogOut } from "react-icons/bi";
 import messageService from "services/messagesService";
 import AddChildModal from "./AddChildModal";
 import { closeAddChildModal } from "store/modalSlice";
+import { getUserFromLocalStorage } from "utils/getTokens";
 
 interface Props {
    children?: ReactNode;
@@ -37,6 +38,9 @@ const ParentLayout = ({ children }: Props) => {
       dispatch(resetAuthUser());
       router.push("/login");
    };
+
+   const user = getUserFromLocalStorage();
+
    useEffect(() => {
       const stringedToken = localStorage.getItem("token");
       const token = JSON.parse(`${stringedToken}`);
@@ -168,7 +172,7 @@ const ParentLayout = ({ children }: Props) => {
                            }}
                            className="flex items-center gap-2"
                         >
-                           <span className="text-base text-[#2073FA]">{username || firstname}</span>
+                           <span className="text-base text-[#2073FA]">{user.username || `${user.firstname} ${user.lastname}`}</span>
                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="10" viewBox="0 0 18 10" fill="none">
                               <path
                                  d="M1.7998 1.25L9.2998 8.75L16.7998 1.25"

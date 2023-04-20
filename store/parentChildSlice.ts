@@ -79,7 +79,7 @@ export const addChildFriend: any = createAsyncThunk("parent/child-friend/new", a
 
    try {
       const newFriend = await parentService.addChildFriends({
-         student_username: child_name || state.parentChild.currentChild.username,
+         student_username: child_name || state.parentChild.currentChild.username || state.parentChild.username,
          username_or_email: friend,
       });
       dispatch(closePreloader());

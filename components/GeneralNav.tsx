@@ -14,6 +14,7 @@ import { IoSettingsSharp } from "react-icons/io5";
 import { resetAuthUser, updateUser } from "store/authSlice";
 import { updateEmail, updateFirstname, updateLastname } from "services/authService";
 import { AnyAction } from "@reduxjs/toolkit";
+import { getUserFromLocalStorage } from "utils/getTokens";
 
 const GeneralNav = () => {
    const [userDropDown, setUserDropDown] = useState<boolean>(false);
@@ -56,6 +57,8 @@ const GeneralNav = () => {
       dispatch(resetAuthUser());
       router.push("/login");
    };
+
+   const user = getUserFromLocalStorage();
 
    return (
       <div className="flex items-center justify-between bg-white pt-6">
@@ -142,7 +145,7 @@ const GeneralNav = () => {
                               transition: { duration: "1", delay: 0.3 },
                            }}
                         >
-                           {firstname + " " + lastname}
+                           {user.firstname + " " + user.lastname}
                         </motion.h5>
                      </div>
                   )}

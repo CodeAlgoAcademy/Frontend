@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import TeacherMobileSideNav from "./TeacherMobileSideNav";
 import { BiHomeAlt } from "react-icons/bi";
 import Link from "next/link";
+import { IUser } from "types/interfaces";
+import { getUserFromLocalStorage } from "utils/getTokens";
 
 interface Props {
    children?: ReactNode;

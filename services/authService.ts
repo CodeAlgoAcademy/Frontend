@@ -33,23 +33,33 @@ export const signUpUser: any = createAsyncThunk("authSlice/signUpUser", async (n
    const state: any = thunkApi.getState();
    const dispatch = thunkApi.dispatch;
    const { email, firstname, lastname, schoolName, grade, is_parent, is_student, is_teacher, dob, schoolCountry, country, username } =
-      state.user.auth;
-   const options = {
+      state?.user?.auth;
+
+   // General Options
+   let options: typeof state.user.auth = {
       email,
       password1: state.user.auth.password,
       password2: state.user.auth.password,
       firstname,
       lastname,
-      schoolName,
-      country,
-      schoolCountry,
-      grade: is_student ? grade : "",
       is_parent,
       is_student,
       is_teacher,
       username,
-      dob: is_student ? dob : "",
    };
+
+   if (is_teacher) {
+      options = { ...options, country: schoolCountry, schoolCountry, schoolName, grade: "" };
+   }
+
+   if (is_student) {
+      options = { ...options, country, grade, schoolCountry: "", schoolName: "", dob };
+   }
+
+   if (is_parent) {
+      options = { ...options, country: country, grade: "", schoolCountry: "", schoolName: "" };
+   }
+
    dispatch(openPreloader({ loadingText: "Creating Account" }));
    try {
       const { data } = await http.post("/auth/registration/", { ...options });

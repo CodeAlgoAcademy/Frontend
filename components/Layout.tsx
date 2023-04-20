@@ -17,7 +17,7 @@ const Layout = ({ children }: Props) => {
 
    const token = typeof window !== "undefined" && JSON.parse(localStorage.getItem("token") as string);
 
-   const unrestricted = ["/", "/404", "/login", "/selectUserType", "/comingSoon", "/signup/teacher", "/signup/student", "/signup/parents"];
+   const unrestricted = ["/", "/404", "/login", "/selectUserType", "/comingSoon", "/signup/teacher", "/signup/student", "/signup/parent"];
 
    if (
       !token &&

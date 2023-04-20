@@ -7,12 +7,16 @@ export const errorResolver = (error: any): string[] => {
    let resolvedErrors: string[] = [];
 
    if (error.response.data.details) {
-      // General
-      const errors: string[] = [];
-      Object.entries(error.response.data.details[0]).forEach((res) => {
-         errors.push(res[1] as string);
-      });
-      resolvedErrors = errors;
+      if (typeof error.response.data.details[0] !== "string") {
+         // General
+         const errors: string[] = [];
+         Object.entries(error.response.data.details[0]).forEach((res) => {
+            errors.push(`${res[0]}- ${res[1] as string}`);
+         });
+         resolvedErrors = errors;
+      } else {
+         resolvedErrors = [error.response.data.details[0]];
+      }
    } else if (error.response.data.detail) {
       // For Email Verification
       if (typeof error.response.data.detail === "string") {
