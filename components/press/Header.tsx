@@ -1,0 +1,31 @@
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { IArticle } from "public/data";
+import React, { FC } from "react";
+
+const Header: FC<IArticle> = (props) => {
+   const router = useRouter();
+   return (
+      <header className={"mx-auto max-w-[1100px] px-6 pt-[80px]"}>
+         <div className="flex flex-col flex-wrap items-start gap-x-[2rem] gap-y-[1rem] pt-14 md:flex-row">
+            <div className="h-[400px] flex-1 overflow-hidden rounded-[10px]">
+               <img src={props.image} alt="" className="h-full w-full object-cover object-center" />
+            </div>
+            <div className="flex-1">
+               <h1 className="text-[1.5rem] leading-[1.2] text-[#2073f] md:text-[2.4rem]">{props.title}</h1>
+               <p className="mt-3 text-[1.1rem] text-[#222]">{props.body}</p>
+               <div className="mt-4 flex max-w-[400px] flex-wrap items-center justify-between gap-4">
+                  <p>{props.date}</p>
+                  {router.pathname === "/press" && (
+                     <Link href={"/press/pure-pitch-rally"}>
+                        <button className="min-w-[200px] rounded-[30px] bg-orange-400 px-3 py-2 text-white">Read More</button>
+                     </Link>
+                  )}
+               </div>
+            </div>
+         </div>
+      </header>
+   );
+};
+
+export default Header;

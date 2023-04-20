@@ -13,6 +13,8 @@ import { BiChevronDown, BiLogOut } from "react-icons/bi";
 import messageService from "services/messagesService";
 import AddChildModal from "./AddChildModal";
 import { closeAddChildModal } from "store/modalSlice";
+import { getUserFromLocalStorage } from "utils/getTokens";
+import { IUser } from "types/interfaces";
 
 interface Props {
    children?: ReactNode;
@@ -23,7 +25,8 @@ const ParentLayout = ({ children }: Props) => {
    const router = useRouter();
    const [detachedNavDisplay, setDetachedNavDisplay] = useState(false);
    const [childrenListOpen, setOpen] = useState<boolean>(false);
-   const [width, setWidth] = useState(window.innerWidth);
+   const [width, setWidth] = useState(0);
+   const [user, setUser] = useState<IUser | null>();
    const [userDropDown, setUserDropDown] = useState<boolean>(false);
    const [unreadMessages, setUnreadMessages] = useState(0);
 
@@ -37,6 +40,11 @@ const ParentLayout = ({ children }: Props) => {
       dispatch(resetAuthUser());
       router.push("/login");
    };
+
+   useEffect(() => {
+      setWidth(window.innerWidth);
+   }, []);
+
    useEffect(() => {
       const stringedToken = localStorage.getItem("token");
       const token = JSON.parse(`${stringedToken}`);
@@ -44,6 +52,8 @@ const ParentLayout = ({ children }: Props) => {
       window.addEventListener("resize", handleResize);
       if (token?.user_type !== "parent") {
          router.push("/login");
+      } else {
+         setUser(getUserFromLocalStorage());
       }
       return () => {
          window.removeEventListener("resize", handleResize);
@@ -168,7 +178,7 @@ const ParentLayout = ({ children }: Props) => {
                            }}
                            className="flex items-center gap-2"
                         >
-                           <span className="text-base text-[#2073FA]">{username || firstname}</span>
+                           <span className="text-base text-[#2073FA]">{user?.username || `${user?.firstname} ${user?.lastname}`}</span>
                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="10" viewBox="0 0 18 10" fill="none">
                               <path
                                  d="M1.7998 1.25L9.2998 8.75L16.7998 1.25"

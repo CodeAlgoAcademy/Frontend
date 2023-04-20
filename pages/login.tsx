@@ -69,6 +69,7 @@ const LoginTest = () => {
                      dispatch(updateUser({ key: "password", value: e.target.value }));
                   }}
                   type="password"
+                  placeholder="Enter Password"
                   required
                />
                <button className="mt-6  block h-[2.5rem] w-full rounded-xl bg-[#2073FA] text-center font-bold text-white" type="submit">

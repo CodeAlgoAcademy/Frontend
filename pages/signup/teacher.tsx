@@ -14,6 +14,7 @@ import { clearFields, updateUser } from "store/authSlice";
 import { RootState } from "store/store";
 import AuthLayout from "@/components/parents/AuthLayout";
 import GoogleBtn from "@/components/googleBtn";
+import ParentSignUp3 from "@/components/parentMultiForm/ParentSignUp3";
 
 export default function Teacher() {
    const dispatch = useDispatch();
@@ -22,8 +23,8 @@ export default function Teacher() {
    const { steps, currentStepIndex, step, teacherSignUpStep, isFirstStep, isLastStep, back, next } = useMultiForm([
       <ParentSignUp1 key={1} />,
       <ParentSignUp2 key={2} />,
+      <ParentSignUp3 key={3} />,
       <OtherInfoTeacher key={4} />,
-      <WelcomeForm key={3} />,
    ]);
 
    const signup = async (event: ChangeEvent<HTMLFormElement>) => {

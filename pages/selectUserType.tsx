@@ -16,7 +16,10 @@ export default function SelectUserType() {
                   <div className="mx-auto max-h-[200px] max-w-[200px] md:max-h-fit md:max-w-fit">
                      <Image src="/assets/parents.png" alt="parent" height="225" width="225" />
                   </div>
-                  <h2 className="text-black-500 mt-[.4rem] cursor-pointer text-center text-[1.3rem] font-[500] md:mt-[2rem] md:text-3xl md:font-bold">
+                  <h2
+                     data-testid="accountType"
+                     className="text-black-500 mt-[.4rem] cursor-pointer text-center text-[1.3rem] font-[500] md:mt-[2rem] md:text-3xl md:font-bold"
+                  >
                      Parent
                   </h2>
                </div>
@@ -26,7 +29,10 @@ export default function SelectUserType() {
                   <div className="mx-auto max-h-[200px] max-w-[200px] md:max-h-fit md:max-w-fit">
                      <Image src="/assets/teacher.png" alt="parent" height="225" width="225" />
                   </div>
-                  <h2 className="text-black-500 mt-[.4rem] cursor-pointer text-center text-[1.3rem] font-[500] md:mt-[2rem] md:text-3xl md:font-bold">
+                  <h2
+                     data-testid="accountType"
+                     className="text-black-500 mt-[.4rem] cursor-pointer text-center text-[1.3rem] font-[500] md:mt-[2rem] md:text-3xl md:font-bold"
+                  >
                      Teacher
                   </h2>
                </div>
@@ -36,7 +42,10 @@ export default function SelectUserType() {
                   <div className="mx-auto max-h-[200px] max-w-[200px] md:max-h-fit md:max-w-fit">
                      <Image src="/assets/students.png" alt="parent" height="225" width="225" />
                   </div>
-                  <h2 className="text-black-500 mt-[.4rem] cursor-pointer text-center text-[1.3rem] font-[500] md:mt-[2rem] md:text-3xl md:font-bold">
+                  <h2
+                     data-testid="accountType"
+                     className="text-black-500 mt-[.4rem] cursor-pointer text-center text-[1.3rem] font-[500] md:mt-[2rem] md:text-3xl md:font-bold"
+                  >
                      Student
                   </h2>
                </div>

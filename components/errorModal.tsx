@@ -8,12 +8,16 @@ import { RootState } from "store/store";
 const ErrorModal = () => {
    const { errorModalOpen, errors } = useSelector((state: RootState) => state.fetch);
    const dispatch = useDispatch();
+
    if (!errorModalOpen) {
       return null;
    }
 
    return (
-      <div className="fixed top-0 left-0 z-[70] flex min-h-screen w-[100vw] items-center justify-center bg-[rgba(0,0,0,0.5)]">
+      <div
+         title="error-modal-container"
+         className="fixed top-0 left-0 z-[70] flex min-h-screen w-[100vw] items-center justify-center bg-[rgba(0,0,0,0.5)]"
+      >
          {/* modal */}
          <div className="mx-auto w-[90vw] max-w-[450px] overflow-hidden rounded-md bg-white shadow-md">
             <header className="w-full bg-red-600 p-4 text-white">
