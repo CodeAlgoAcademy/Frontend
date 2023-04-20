@@ -3,11 +3,25 @@
 @tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500&display=swap");
 
+@font-face {
+   font-family: "firasans";
+   src: url(../public/assets/fonts/FiraSans-Regular.ttf);
+}
+
+@font-face {
+   font-family: "press-start";
+   src: url(../public/assets/fonts/PressStart2P-Regular.ttf);
+}
+
+.code-font {
+   font-family: "press-start" !important;
+}
+
 html,
 body {
    padding: 0;
    margin: 0;
-   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+   font-family: "firasans";
 }
 
 a {
@@ -48,6 +62,19 @@ a {
    opacity: 0;
    display: none;
 }
+
+.bg-image {
+   animation: fadein 0.6s;
+}
+@keyframes fadein {
+   0% {
+      opacity: 0;
+   }
+   100% {
+      opacity: 1;
+   }
+}
+
 .shadow-right {
    -webkit-box-shadow: 7px 0px 13px -1px rgba(148, 148, 148, 0.76);
    -moz-box-shadow: 7px 0px 13px -1px rgba(148, 148, 148, 0.76);
@@ -519,10 +546,57 @@ a {
 
 .scrollbar-hide::-webkit-scrollbar {
    display: none;
- }
- 
- /* For IE, Edge and Firefox */
- .scrollbar-hide {
-   -ms-overflow-style: none;  /* IE and Edge */
-   scrollbar-width: none;  /* Firefox */
- }
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+   -ms-overflow-style: none; /* IE and Edge */
+   scrollbar-width: none; /* Firefox */
+}
+
+/* TYPEWRITER EFFECTS */
+
+.typewriter > * {
+   max-width: fit-content;
+   overflow: hidden;
+   border-right: 6px solid #2073fa;
+   white-space: nowrap;
+   animation: typing 4s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+   from {
+      width: 0%;
+   }
+   to {
+      width: 100%;
+   }
+}
+
+@keyframes blink-caret {
+   from,
+   to {
+      border-color: transparent;
+   }
+   50% {
+      border-color: #2073fa;
+   }
+}
+
+/* about us */
+.header-background {
+   background: url(../public//assets/background4.png);
+}
+
+.list {
+   list-style-type: disc;
+}
+
+.list li::marker {
+   unicode-bidi: isolate;
+   font-variant-numeric: tabular-nums;
+   text-transform: none;
+   text-indent: 0px !important;
+   text-align: start !important;
+   text-align-last: start !important;
+}
