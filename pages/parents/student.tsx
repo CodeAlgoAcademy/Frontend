@@ -27,6 +27,7 @@ const Student = () => {
                onClick={() => {
                   dispatch(openAddChildModal());
                }}
+               data-testid="add-child"
             >
                <span className="mr-2 inline-block align-middle">
                   <BiPlusCircle />
