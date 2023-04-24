@@ -1,5 +1,5 @@
 import React from "react";
-import { ScheduleBox } from "../../components";
+import { ScheduleBox } from "../../../components";
 import { describe, expect } from "@jest/globals";
 import { render, cleanup } from "@testing-library/react";
 import { Provider } from "react-redux";
