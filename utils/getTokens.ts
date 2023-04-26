@@ -1,4 +1,5 @@
 import http from "axios.config";
+import { IUser } from "types/interfaces";
 
 const ACCESS_TOKEN_EXPIRATION_TIME = 3600 * 1000; // one hour expiration
 const REFRESH_TOKEN_EXPIRATION_TIME = 3600 * 1000 * 24; // one day expiration
@@ -64,23 +65,6 @@ export const getAccessToken = () => {
             refreshToken();
          }
       }
-      // console.log(window.location.pathname)
-      // if (
-      //   (!localAccessToken || localAccessToken === undefined) &&
-      //   window.location.pathname !== '/login' &&
-      //   window.location.pathname !== '/' &&
-      //   !window.location.pathname.toLowerCase().includes("/signup") &&
-      //   window.location.pathname !== "/selectUserType" &&
-      //   window.location.pathname !== "/comingSoon" &&
-      //   window.location.pathname !== "/404" &&
-      //   !window.location.pathname.includes("/verify-email") &&
-      //   !window.location.pathname.includes("/change-password") &&
-      //   !window.location.pathname.includes("/parents")
-
-      // ) {
-      //   window.location.replace('login');
-      // }
-
       return localAccessToken;
    }
 };
@@ -90,4 +74,21 @@ export const getRefreshToken = () => {
       const token = JSON.parse(`${window.localStorage.getItem("token")}`);
       return token?.refresh_token;
    }
+};
+
+export const addUserToLocalStorage = (user: IUser) => {
+   localStorage.setItem(
+      "token",
+      JSON.stringify({
+         access_token: user.access_token,
+         refresh_token: user.refresh_token,
+         user: user,
+         user_type: user.is_student ? "student" : user.is_teacher ? "teacher" : user.is_parent ? "parent" : "",
+      })
+   );
+   setTimeStamp();
+};
+
+export const getUserFromLocalStorage = () => {
+   return JSON.parse(localStorage.getItem("token") as string).user;
 };

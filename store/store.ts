@@ -1,6 +1,4 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import storage from "./reduxStorage";
-import { persistReducer, persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
 
 import userReducer from "./authSlice";
 import modalReducer from "./modalSlice";
@@ -15,7 +13,6 @@ import fetchReducer from "./fetchSlice";
 import studentReducer from "./studentSlice";
 import allCurriculumReducer from "./allCurriculumSlice";
 import skillsReducer from "./skillsSlice";
-import newAssignmentReducer from "./newAssignmentSlice";
 import allAssignmentsReducer from "./allAssignments";
 import lessonsReducer from "./lessonsSlice";
 import teacherReducer from "./teacherSlice";
@@ -23,46 +20,29 @@ import policySliceReducer from "./policySlice";
 import parentChildSlice from "./parentChildSlice";
 import parentSlice from "./parentSlice";
 
-const persistConfig = {
-   key: "root",
-   storage,
-};
-
-const rootReducer = combineReducers({
-   user: userReducer,
-   modal: modalReducer,
-   addClass: addClassReducer,
-   allClasses: allClassesReducer,
-   currentClass: currentClassReducer,
-   unit: unitsSlice,
-   schedule: scheduleReducer,
-   allCurriculum: allCurriculumReducer,
-   allLessons: lessonsReducer,
-   notes: notesReducer,
-   fetch: fetchReducer,
-   messages: messagesReducer,
-   students: studentReducer,
-   skills: skillsReducer,
-   addAssignment: newAssignmentReducer,
-   allAssignments: allAssignmentsReducer,
-   allTeachers: teacherReducer,
-   policyCheck: policySliceReducer,
-   parentChild: parentChildSlice,
-   parent: parentSlice,
-});
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
 export const store = configureStore({
-   reducer: persistedReducer,
-   middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware({
-         serializableCheck: {
-            ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-         },
-      }),
+   reducer: {
+      user: userReducer,
+      modal: modalReducer,
+      addClass: addClassReducer,
+      allClasses: allClassesReducer,
+      currentClass: currentClassReducer,
+      unit: unitsSlice,
+      schedule: scheduleReducer,
+      allCurriculum: allCurriculumReducer,
+      allLessons: lessonsReducer,
+      notes: notesReducer,
+      fetch: fetchReducer,
+      messages: messagesReducer,
+      students: studentReducer,
+      skills: skillsReducer,
+      allAssignments: allAssignmentsReducer,
+      allTeachers: teacherReducer,
+      policyCheck: policySliceReducer,
+      parentChild: parentChildSlice,
+      parent: parentSlice,
+   },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-export const persistor = persistStore(store);

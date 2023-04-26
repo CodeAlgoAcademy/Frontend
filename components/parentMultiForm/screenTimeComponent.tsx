@@ -15,7 +15,7 @@ const ScreenTimeComponent = ({
    updateTime?: (day: string, hour: number | "No Limit") => void;
    updateScreenTimeForChild?: (id: string | number, day: string, hour: number | "No Limit") => void;
 }) => {
-   const { currentChild } = useSelector((state: RootState) => state.parentChild);
+   const { username, currentChild } = useSelector((state: RootState) => state.parentChild);
 
    const [hoursListOpen, setHoursListOpen] = useState<boolean>(false);
 
@@ -63,7 +63,7 @@ const ScreenTimeComponent = ({
                         key={index}
                         className="block cursor-pointer px-2 py-1"
                         onClick={() => {
-                           if (currentChild?.username) {
+                           if (username || currentChild?.username) {
                               updateTime && updateTime(time.dayOfTheWeek, hour);
                               updateScreenTimeForChild && updateScreenTimeForChild(time?.id as string, time.dayOfTheWeek, hour);
                               setHoursListOpen(false);

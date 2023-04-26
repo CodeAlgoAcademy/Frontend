@@ -3,6 +3,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { IUserConversation, User } from "types/interfaces";
 import messageService from "services/messagesService";
 import { RootState } from "./store";
+import { errorResolver } from "utils/errorResolver";
 
 const initialState: IUserConversation = {
    conversations: [],
@@ -21,8 +22,8 @@ export const getTeacherConversations: any = createAsyncThunk("teacher/conversati
    try {
       return await messageService.getTeacherConversations();
    } catch (error: any) {
-      const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-      return thunkAPI.rejectWithValue(message);
+      const errorMessage = errorResolver(error);
+      return thunkAPI.rejectWithValue(errorMessage);
    }
 });
 
@@ -32,8 +33,8 @@ export const getTeacherOpenMesssages: any = createAsyncThunk("teacher/student/me
       const { openedMessageOwner } = state.messages;
       return await messageService.getTeacherMessages(openedMessageOwner.id);
    } catch (error: any) {
-      const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-      return thunkAPI.rejectWithValue(message);
+      const errorMessage = errorResolver(error);
+      return thunkAPI.rejectWithValue(errorMessage);
    }
 });
 export const getParentOpenMesssages: any = createAsyncThunk("teacher/student/messages", async (_, thunkAPI) => {
@@ -42,8 +43,8 @@ export const getParentOpenMesssages: any = createAsyncThunk("teacher/student/mes
       const { openedMessageOwner } = state.messages;
       return await messageService.getParentMessages(openedMessageOwner.id);
    } catch (error: any) {
-      const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-      return thunkAPI.rejectWithValue(message);
+      const errorMessage = errorResolver(error);
+      return thunkAPI.rejectWithValue(errorMessage);
    }
 });
 
@@ -64,21 +65,8 @@ export const messageSlice = createSlice({
    },
    extraReducers(builder) {
       builder
-         .addCase(getTeacherConversations.pending, () => {
-            console.log("Loading...");
-         })
-         .addCase(getTeacherConversations.rejected, (state: IUserConversation | any) => {
-            state.conversations = initialState.conversations;
-            console.log("Error......");
-         })
          .addCase(getTeacherConversations.fulfilled, (state: IUserConversation | any, action: PayloadAction<IUserConversation>) => {
             state.conversations = action.payload;
-         })
-         .addCase(getTeacherOpenMesssages.pending, () => {
-            console.log("Loading...");
-         })
-         .addCase(getTeacherOpenMesssages.rejected, (_, action) => {
-            console.log(`Error: ${action.payload}`);
          })
          .addCase(getTeacherOpenMesssages.fulfilled, (state, action) => {
             state.openedMessage = action.payload;

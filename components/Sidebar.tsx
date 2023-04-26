@@ -37,7 +37,7 @@ const links = [
 
 const Sidebar = () => {
    const router = useRouter();
-   const [activeLink, setActiveLink] = useState(router.pathname);
+   const [activeLink, setActiveLink] = useState(router?.pathname);
    return (
       <div className="overflow-auto pb-10 md:overflow-hidden md:hover:overflow-auto">
          <div className="relative mx-auto my-8 h-[60px] w-[100px]">

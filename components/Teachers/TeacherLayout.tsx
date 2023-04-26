@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import TeacherMobileSideNav from "./TeacherMobileSideNav";
 import { BiHomeAlt } from "react-icons/bi";
 import Link from "next/link";
+import { IUser } from "types/interfaces";
+import { getUserFromLocalStorage } from "utils/getTokens";
 
 interface Props {
    children?: ReactNode;
@@ -12,8 +14,12 @@ interface Props {
 
 const TeacherLayout = ({ children, className }: Props) => {
    const router = useRouter();
-   const [width, setWidth] = useState(window.innerWidth);
+   const [width, setWidth] = useState(0);
    const [detachedNavDisplay, setDetachedNavDisplay] = useState(false);
+
+   useEffect(() => {
+      setWidth(window.innerWidth);
+   }, []);
 
    useEffect(() => {
       const stringedToken = localStorage.getItem("token");
@@ -21,7 +27,7 @@ const TeacherLayout = ({ children, className }: Props) => {
       const handleResize = () => setWidth(window.innerWidth);
       window.addEventListener("resize", handleResize);
       if (token?.user_type !== "teacher") {
-         router.push("/login");
+         router?.push("/login");
       }
       return () => {
          window.removeEventListener("resize", handleResize);
