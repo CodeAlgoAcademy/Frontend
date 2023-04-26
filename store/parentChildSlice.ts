@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import parentService from "services/parentChildService";
 import { IParentChild, IParentChildren, screentimeTypes } from "types/interfaces";
+import { errorResolver } from "utils/errorResolver";
 import { closePreloader, openErrorModal, openPreloader } from "./fetchSlice";
 import { RootState } from "./store";
 
@@ -63,12 +64,8 @@ export const addChild: any = createAsyncThunk("parent/child/new", async (_, thun
       // dispatch(resetChild());
       return child;
    } catch (error: any) {
-      dispatch(closePreloader());
-      console.log(error);
-
-      dispatch(openErrorModal({ errorText: [error.message] }));
-
-      return thunkAPI.rejectWithValue(error.message);
+      const errorMessage = errorResolver(error);
+      return thunkAPI.rejectWithValue(errorMessage);
    }
 });
 
@@ -82,19 +79,15 @@ export const addChildFriend: any = createAsyncThunk("parent/child-friend/new", a
 
    try {
       const newFriend = await parentService.addChildFriends({
-         student_username: child_name || state.parentChild.currentChild.username,
+         student_username: child_name || state.parentChild.currentChild.username || state.parentChild.username,
          username_or_email: friend,
       });
       dispatch(closePreloader());
       dispatch(resetChild());
       return newFriend;
    } catch (error: any) {
-      dispatch(closePreloader());
-      console.log(error);
-
-      dispatch(openErrorModal({ errorText: [error.message] }));
-
-      return thunkAPI.rejectWithValue(error.message);
+      const errorMessage = errorResolver(error);
+      return thunkAPI.rejectWithValue(errorMessage);
    }
 });
 
@@ -107,11 +100,8 @@ export const getChildren: any = createAsyncThunk("parent/children", async (_, th
       console.log(children);
       return children;
    } catch (error: any) {
-      console.log(error);
-
-      dispatch(openErrorModal({ errorText: [error.message] }));
-
-      return thunkAPI.rejectWithValue(error.message);
+      const errorMessage = errorResolver(error);
+      return thunkAPI.rejectWithValue(errorMessage);
    }
 });
 
@@ -130,12 +120,8 @@ export const editScreentime: any = createAsyncThunk(
          dispatch(closePreloader());
          return child;
       } catch (error: any) {
-         dispatch(closePreloader());
-         console.log(error);
-
-         dispatch(openErrorModal({ errorText: [error.message] }));
-
-         return thunkAPI.rejectWithValue(error.message);
+         const errorMessage = errorResolver(error);
+         return thunkAPI.rejectWithValue(errorMessage);
       }
    }
 );
@@ -155,8 +141,8 @@ export const rejectFriendRequest: any = createAsyncThunk("friendRequest/reply", 
    try {
       const data = await parentService.replyFriendRequest({ accepted: false, rejected: true }, id);
    } catch (error: any) {
-      dispatch(openErrorModal({ errorText: [JSON.stringify(error.response.data)] }));
-      return thunkAPI.rejectWithValue(error);
+      const errorMessage = errorResolver(error);
+      return thunkAPI.rejectWithValue(errorMessage);
    }
 });
 
@@ -192,32 +178,16 @@ export const parentSlice = createSlice({
       },
    },
    extraReducers(builder) {
-      builder
-         .addCase(addChild.fulfilled, () => {
-            console.log("Successful");
-         })
-         .addCase(addChild.rejected, (_, { payload }: PayloadAction) => {
-            console.error(payload);
-         })
-         .addCase(addChildFriend.fulfilled, () => {
-            console.log("Successful");
-         })
-         .addCase(addChildFriend.rejected, (_, { payload }: PayloadAction) => {
-            console.error(payload);
-         })
-         .addCase(getChildren.fulfilled, (state, action: PayloadAction<IParentChild[]>) => {
-            state.children = action.payload;
-            // if its another parent child or if it's the first time fetching the students, set them to first parent child else find the student id, (incase of updates!)
-            const child = action.payload.find((student) => student?.id === state.currentChild?.id) as IParentChild;
-            if (child) {
-               state.currentChild = child;
-            } else {
-               state.currentChild = action.payload[0];
-            }
-         })
-         .addCase(editScreentime.pending, () => {
-            console.log("Editing Screentime...");
-         });
+      builder.addCase(getChildren.fulfilled, (state, action: PayloadAction<IParentChild[]>) => {
+         state.children = action.payload;
+         // if its another parent child or if it's the first time fetching the students, set them to first parent child else find the student id, (incase of updates!)
+         const child = action.payload.find((student) => student?.id === state.currentChild?.id) as IParentChild;
+         if (child) {
+            state.currentChild = child;
+         } else {
+            state.currentChild = action.payload[0];
+         }
+      });
    },
 });
 

@@ -1,33 +1,22 @@
 import React, { FC, useCallback, useState } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
-import Image from "next/image";
-import google from "../public/assets/google.png";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import { loginWithGoogle, signUpWithGoogle, updateAccountType } from "services/authService";
-import GoogleSignUpModal from "./signup/googleSignUpModal";
 import { RootState } from "store/store";
 import { FcGoogle } from "react-icons/fc";
+import { loginWithGoogle, signUpWithGoogle, updateAccountType } from "services/authService";
 const GoogleBtn: FC = () => {
    const { is_parent, is_teacher, is_student } = useSelector((state: RootState) => state.user.auth);
    const dispatch = useDispatch();
    const router = useRouter();
-   const [modalOpen, setModalOpen] = useState<boolean>(false);
-   const [accountType, setAccountType] = useState<string>("");
 
-   const toggleModal = () => {
-      setModalOpen((prev) => !prev);
-   };
-   const closeModal = () => {
-      setModalOpen(false);
-   };
    const handleClick = useGoogleLogin({
       onSuccess: async (codeResponse) => {
-         if (router.pathname === "/login") {
+         if (router?.pathname === "/login") {
             const data = await dispatch(loginWithGoogle(codeResponse.access_token));
             if (!data?.error?.message) {
                if (data?.payload?.is_teacher) {
-                  router.push("/addClass");
+                  router.push("/teachers/addClass");
                } else if (data?.payload?.is_parent) {
                   router.push("/parents");
                } else {
@@ -63,7 +52,7 @@ const GoogleBtn: FC = () => {
             <i className="text-[22px]">
                <FcGoogle />
             </i>
-            <span>{router.pathname === "/login" ? "Sign in" : "Sign up"} with Google</span>
+            <span>{router?.pathname === "/login" ? "Sign in" : "Sign up"} with Google</span>
          </button>
       </div>
    );

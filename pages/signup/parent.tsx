@@ -53,7 +53,7 @@ export default function Parent() {
          if (!data?.error?.message) {
             setModalOpen(true);
          }
-         // next();s
+         // next();
       } else if (currentStepIndex === 9) {
          const data = await dispatch(addChild());
          if (!data?.error?.message) {

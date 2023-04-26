@@ -4,6 +4,7 @@ import http from "../axios.config";
 import { closePreloader, openErrorModal, openPreloader } from "store/fetchSlice";
 import { getAccessToken } from "utils/getTokens";
 import { RootState } from "store/store";
+import { errorResolver } from "utils/errorResolver";
 
 export const loginUser: any = createAsyncThunk("authSlice/loginUser", async (name, thunkApi) => {
    const state: any = thunkApi.getState();
@@ -23,16 +24,8 @@ export const loginUser: any = createAsyncThunk("authSlice/loginUser", async (nam
          ...data.user,
       };
    } catch (error: any) {
-      dispatch(closePreloader());
-      if (error.response.data.non_field_errors) {
-         dispatch(
-            openErrorModal({
-               errorText: [error.response.data.non_field_errors[0]],
-            })
-         );
-      }
-
-      return thunkApi.rejectWithValue(error.response.data);
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
    }
 });
 
@@ -40,23 +33,33 @@ export const signUpUser: any = createAsyncThunk("authSlice/signUpUser", async (n
    const state: any = thunkApi.getState();
    const dispatch = thunkApi.dispatch;
    const { email, firstname, lastname, schoolName, grade, is_parent, is_student, is_teacher, dob, schoolCountry, country, username } =
-      state.user.auth;
-   const options = {
+      state?.user?.auth;
+
+   // General Options
+   let options: typeof state.user.auth = {
       email,
       password1: state.user.auth.password,
       password2: state.user.auth.password,
       firstname,
       lastname,
-      schoolName,
-      country,
-      schoolCountry,
-      grade: is_student ? grade : "",
       is_parent,
       is_student,
       is_teacher,
       username,
-      dob: is_student ? dob : "",
    };
+
+   if (is_teacher) {
+      options = { ...options, country: schoolCountry, schoolCountry, schoolName, grade: "" };
+   }
+
+   if (is_student) {
+      options = { ...options, country, grade, schoolCountry: "", schoolName: "", dob };
+   }
+
+   if (is_parent) {
+      options = { ...options, country: country, grade: "", schoolCountry: "", schoolName: "" };
+   }
+
    dispatch(openPreloader({ loadingText: "Creating Account" }));
    try {
       const { data } = await http.post("/auth/registration/", { ...options });
@@ -65,23 +68,8 @@ export const signUpUser: any = createAsyncThunk("authSlice/signUpUser", async (n
       console.log(data);
       return data;
    } catch (error: any) {
-      dispatch(closePreloader());
-      if (error.response.data.non_field_errors) {
-         dispatch(
-            openErrorModal({
-               errorText: [error.response.data.non_field_errors[0]],
-            })
-         );
-      } else if (error.response.data.email) {
-         dispatch(
-            openErrorModal({
-               errorText: [...error.response.data.email],
-            })
-         );
-      } else {
-         dispatch(openErrorModal({ errorText: [error.message] }));
-      }
-      return thunkApi.rejectWithValue(error.message);
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
    }
 });
 
@@ -96,7 +84,10 @@ export const loginWithGoogle: any = createAsyncThunk("authSlice/loginWithGoogle"
          refresh_token: data.refresh_token,
          ...data.user,
       };
-   } catch (err) {}
+   } catch (error: any) {
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
+   }
 });
 
 export const signUpWithGoogle: any = createAsyncThunk("authSlice/signUpWithGoogle", async (access_token: string, thunkApi) => {
@@ -111,14 +102,8 @@ export const signUpWithGoogle: any = createAsyncThunk("authSlice/signUpWithGoogl
          ...data.user,
       };
    } catch (error: any) {
-      if (error) {
-         thunkApi.dispatch(
-            openErrorModal({
-               errorText: ["A user already exists with this google account"],
-            })
-         );
-      }
-      return thunkApi.rejectWithValue(error.response.data);
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
    }
 });
 
@@ -151,7 +136,10 @@ export const updateAccountType: any = createAsyncThunk("authSlice/updateAccountT
          }
       );
       return data;
-   } catch (error) {}
+   } catch (error) {
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
+   }
 });
 
 export const updateFirstname: any = createAsyncThunk("authSlice/updateFirstname", async (_, thunkApi) => {
@@ -184,7 +172,8 @@ export const updateFirstname: any = createAsyncThunk("authSlice/updateFirstname"
       dispatch(updateUser({ key: "firstname", value: "" }));
       return data;
    } catch (error: any) {
-      return thunkApi.rejectWithValue(error.message);
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
    }
 });
 
@@ -218,7 +207,8 @@ export const updateLastname: any = createAsyncThunk("authSlice/updateLastname", 
       dispatch(updateUser({ key: "lastname", value: "" }));
       return data;
    } catch (error: any) {
-      return thunkApi.rejectWithValue(error.message);
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
    }
 });
 
@@ -252,6 +242,7 @@ export const updateEmail: any = createAsyncThunk("authSlice/updateEmail", async 
       dispatch(updateUser({ key: "email", value: "" }));
       return data;
    } catch (error: any) {
-      return thunkApi.rejectWithValue(error.message);
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
    }
 });
