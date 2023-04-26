@@ -58,6 +58,9 @@ const Testimonials = () => {
             navigation={true}
             pagination={{ clickable: true }}
             // scrollbar={{ draggable: true }}
+            fadeEffect={{
+               crossFade: true,
+            }}
             onSwiper={(swiper) => console.log(swiper)}
             onSlideChange={() => console.log("slide change")}
          >

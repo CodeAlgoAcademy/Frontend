@@ -18,7 +18,18 @@ const Layout = ({ children }: Props) => {
    useEffect(() => {
       const token = typeof window !== "undefined" && JSON.parse(localStorage.getItem("token") as string);
 
-      const unrestricted = ["/", "/404", "/login", "/selectUserType", "/comingSoon", "/signup/teacher", "/signup/student", "/signup/parent"];
+      const unrestricted = [
+         "/",
+         "/404",
+         "/login",
+         "/selectUserType",
+         "/comingSoon",
+         "/signup/teacher",
+         "/signup/student",
+         "/signup/parent",
+         "/about-us",
+         "/contact",
+      ];
 
       if (
          !token &&
