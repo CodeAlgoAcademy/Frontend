@@ -8,6 +8,7 @@ module.exports = {
             home2: "url('../public/assets/background2.png')",
             home3: "url('../public/assets/background1.png')",
             background: "url('../public/assets/background.png')",
+            authLayout: "url('../public/assets/auth-layout-bg.jpg')",
          },
          colors: {
             mainPurple: "#412281",
