@@ -22,8 +22,8 @@ export const getTeacherConversations: any = createAsyncThunk("teacher/conversati
    try {
       return await messageService.getTeacherConversations();
    } catch (error: any) {
-      const errorMessage = errorResolver(error);
-      return thunkAPI.rejectWithValue(errorMessage);
+      // const errorMessage = errorResolver(error);
+      // return thunkAPI.rejectWithValue(errorMessage);
    }
 });
 
@@ -33,8 +33,8 @@ export const getTeacherOpenMesssages: any = createAsyncThunk("teacher/student/me
       const { openedMessageOwner } = state.messages;
       return await messageService.getTeacherMessages(openedMessageOwner.id);
    } catch (error: any) {
-      const errorMessage = errorResolver(error);
-      return thunkAPI.rejectWithValue(errorMessage);
+      // const errorMessage = errorResolver(error);
+      // return thunkAPI.rejectWithValue(errorMessage);
    }
 });
 export const getParentOpenMesssages: any = createAsyncThunk("teacher/student/messages", async (_, thunkAPI) => {
@@ -43,8 +43,8 @@ export const getParentOpenMesssages: any = createAsyncThunk("teacher/student/mes
       const { openedMessageOwner } = state.messages;
       return await messageService.getParentMessages(openedMessageOwner.id);
    } catch (error: any) {
-      const errorMessage = errorResolver(error);
-      return thunkAPI.rejectWithValue(errorMessage);
+      // const errorMessage = errorResolver(error);
+      // return thunkAPI.rejectWithValue(errorMessage);
    }
 });
 

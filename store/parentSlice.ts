@@ -12,7 +12,6 @@ const parentSlice = createSlice({
    extraReducers: (builder) => {
       builder.addCase(getAllParents.fulfilled, (state, action) => {
          state.parents = action.payload;
-         console.log(action.payload);
       });
    },
 });
