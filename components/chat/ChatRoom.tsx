@@ -75,7 +75,6 @@ const ChatRoom = () => {
       if (openedMessageOwner.id) {
          router.pathname.includes("parent") ? dispatch(getParentOpenMesssages()) : dispatch(getTeacherOpenMesssages());
       }
-      console.log("Message Owner", openedMessageOwner);
    }, [openedMessageOwner, dispatch]);
 
    useEffect(() => {
