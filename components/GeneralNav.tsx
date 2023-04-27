@@ -15,6 +15,7 @@ import { resetAuthUser, updateUser } from "store/authSlice";
 import { updateEmail, updateFirstname, updateLastname } from "services/authService";
 import { AnyAction } from "@reduxjs/toolkit";
 import { getUserFromLocalStorage } from "utils/getTokens";
+import { getAllClasses } from "services/classesService";
 
 const GeneralNav = () => {
    const [userDropDown, setUserDropDown] = useState<boolean>(false);
@@ -59,6 +60,17 @@ const GeneralNav = () => {
       dispatch(resetAuthUser());
       router.push("/login");
    };
+
+   // Incase the user refreshes the page
+   const getClass = async () => {
+      const data = await dispatch(getAllClasses());
+   };
+
+   useEffect(() => {
+      if (!currentClass || classes.length === 0) {
+         getClass();
+      }
+   }, [router.pathname]);
 
    useEffect(() => {
       setUser(getUserFromLocalStorage());

@@ -2,11 +2,12 @@ import React, { ReactNode, useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { refreshToken } from "utils/getTokens";
+import { getUserFromLocalStorage, refreshToken } from "utils/getTokens";
 import ErrorModal from "./errorModal";
 import Preloader from "./preloader";
 import { useDispatch } from "react-redux";
 import { closePreloader } from "../store/fetchSlice";
+import { addUserFromLocalStorage } from "store/authSlice";
 
 interface Props {
    children?: ReactNode;
@@ -35,11 +36,17 @@ const Layout = ({ children }: Props) => {
          !token &&
          !unrestricted.includes(router.pathname) &&
          !router.pathname.includes("/verify-email") &&
-         !router.pathname.includes("/change-password")
+         !router.pathname.includes("/change-password") &&
+         !router.pathname.includes("/press")
       ) {
          router.push("/login");
       }
    }, []);
+
+   useEffect(() => {
+      const user = typeof window !== "undefined" && getUserFromLocalStorage();
+      dispatch(addUserFromLocalStorage(user));
+   }, [router.pathname]);
 
    return (
       <GoogleOAuthProvider clientId={"354436342116-6kjbapf9ar5ad4rkho0hen2jndlcagff.apps.googleusercontent.com"}>
