@@ -94,6 +94,9 @@ export const userSlice = createSlice({
       resetAuthUser: (state: IUser) => {
          return initialState;
       },
+      addUserFromLocalStorage: (state: IUser, action: PayloadAction<IUser>) => {
+         return { ...action.payload, auth: state.auth };
+      },
    },
    extraReducers: (builder) => {
       builder.addCase(loginUser.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
@@ -139,6 +142,6 @@ export const userSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { logOut, clearFields, updateUser, resetAuthUser } = userSlice.actions;
+export const { logOut, clearFields, updateUser, resetAuthUser, addUserFromLocalStorage } = userSlice.actions;
 
 export default userSlice.reducer;

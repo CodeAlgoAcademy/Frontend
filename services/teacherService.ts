@@ -15,7 +15,7 @@ export const getTeachers: any = createAsyncThunk("teacherSlice/fetchTeacher", as
       });
       return data;
    } catch (error: any) {
-      const errorMessage = errorResolver(error);
-      return thunkApi.rejectWithValue(errorMessage);
+      // const errorMessage = errorResolver(error);
+      // return thunkApi.rejectWithValue(errorMessage);
    }
 });
