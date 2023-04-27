@@ -75,7 +75,7 @@ export const addChildFriend: any = createAsyncThunk("parent/child-friend/new", a
    const { friend } = state.parentChild;
 
    dispatch(openPreloader({ loadingText: "Sending friend request" }));
-   console.log(state.parentChild.currentChild);
+   // console.log(state.parentChild.currentChild);
 
    try {
       const newFriend = await parentService.addChildFriends({
@@ -100,8 +100,8 @@ export const getChildren: any = createAsyncThunk("parent/children", async (_, th
       console.log(children);
       return children;
    } catch (error: any) {
-      const errorMessage = errorResolver(error);
-      return thunkAPI.rejectWithValue(errorMessage);
+      // const errorMessage = errorResolver(error);
+      // return thunkAPI.rejectWithValue(errorMessage);
    }
 });
 

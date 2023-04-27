@@ -63,8 +63,8 @@ export const getStudents: any = createAsyncThunk("get/students", async (_, thunk
    try {
       return await studentService.getStudents(id);
    } catch (error: any) {
-      const errorMessage = errorResolver(error);
-      return thunkAPI.rejectWithValue(errorMessage);
+      // const errorMessage = errorResolver(error);
+      // return thunkAPI.rejectWithValue(errorMessage);
    }
 });
 
@@ -78,8 +78,8 @@ export const getStudentComment: any = createAsyncThunk("get/student/comment", as
       });
       return data;
    } catch (error: any) {
-      const errorMessage = errorResolver(error);
-      return thunkApi.rejectWithValue(errorMessage);
+      // const errorMessage = errorResolver(error);
+      // return thunkApi.rejectWithValue(errorMessage);
    }
 });
 

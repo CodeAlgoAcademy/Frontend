@@ -11,7 +11,7 @@ const allClassesSlice = createSlice({
    initialState,
    reducers: {},
    extraReducers: (builder) => {
-      builder.addCase(getAllClasses.fulfilled, (state: IAllClasses, action: PayloadAction<IClass[]>) => {
+      builder.addCase(getAllClasses?.fulfilled, (state: IAllClasses, action: PayloadAction<IClass[]>) => {
          state.classes = action.payload;
       });
    },

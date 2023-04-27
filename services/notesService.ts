@@ -15,8 +15,8 @@ export const getNotes: any = createAsyncThunk("notesSlice/getNotes", async (name
       });
       return data;
    } catch (error: any) {
-      const errorMessage = errorResolver(error);
-      return thunkApi.rejectWithValue(errorMessage);
+      // const errorMessage = errorResolver(error);
+      // return thunkApi.rejectWithValue(errorMessage);
    }
 });
 
@@ -38,7 +38,7 @@ export const updateNotes: any = createAsyncThunk("notesSlice/updateNotes", async
       );
       return { ...data };
    } catch (error: any) {
-      const errorMessage = errorResolver(error);
-      return thunkApi.rejectWithValue(errorMessage);
+      // const errorMessage = errorResolver(error);
+      // return thunkApi.rejectWithValue(errorMessage);
    }
 });
