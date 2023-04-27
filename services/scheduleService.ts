@@ -12,8 +12,8 @@ export const getSchedule = createAsyncThunk("scheduleSlice/getSchedule", async (
       });
       return data;
    } catch (error: any) {
-      const errorMessage = errorResolver(error);
-      return thunkApi.rejectWithValue(errorMessage);
+      // const errorMessage = errorResolver(error);
+      // return thunkApi.rejectWithValue(errorMessage);
    }
 });
 
@@ -26,8 +26,8 @@ export const getGoogleCalendar = createAsyncThunk("scheduleSlice/getGoogleCalend
       });
       return data;
    } catch (error: any) {
-      const errorMessage = errorResolver(error);
-      return thunkApi.rejectWithValue(errorMessage);
+      // const errorMessage = errorResolver(error);
+      // return thunkApi.rejectWithValue(errorMessage);
    }
 });
 

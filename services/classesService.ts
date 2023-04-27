@@ -17,8 +17,8 @@ export const getAllClasses: any = createAsyncThunk("allClassesSlice/getAllClasse
       });
       return data;
    } catch (error: any) {
-      const errorMessage = errorResolver(error);
-      return thunkApi.rejectWithValue(errorMessage);
+      // const errorMessage = errorResolver(error);
+      // return thunkApi.rejectWithValue(errorMessage);
    }
 });
 
@@ -66,28 +66,6 @@ export const addClass: any = createAsyncThunk("allClassesSlice/addClass", async 
       formData.append("color", color);
       formData.append("roomNumber", roomNumber);
    }
-   // console.log(firstName, lastName, email, file)
-   // const options =
-   //   firstName && lastName && email
-   //     ? {
-   //         className,
-   //         grade,
-   //         subject,
-   //         roomNumber,
-   //         color,
-   //         student: {
-   //           firstName,
-   //           lastName,
-   //           email,
-   //         },
-   //       }
-   //     : {
-   //         className,
-   //         grade,
-   //         subject,
-   //         roomNumber,
-   //         color,
-   //       };
 
    try {
       const { data } = await http.post("/academics/class/", method === "Class & Student" ? options : formData, {

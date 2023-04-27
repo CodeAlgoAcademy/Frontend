@@ -75,8 +75,8 @@ export const deleteCurriculum: any = createAsyncThunk("curriculumSlice/deleteCur
       dispatch(closePreloader());
       dispatch(getAllCurriculums());
    } catch (error: any) {
-      const errorMessage = errorResolver(error);
-      return thunkApi.rejectWithValue(errorMessage);
+      // const errorMessage = errorResolver(error);
+      // return thunkApi.rejectWithValue(errorMessage);
    }
 });
 
