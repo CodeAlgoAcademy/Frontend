@@ -90,5 +90,5 @@ export const addUserToLocalStorage = (user: IUser) => {
 };
 
 export const getUserFromLocalStorage = () => {
-   return JSON.parse(localStorage.getItem("token") as string).user;
+   return JSON.parse(localStorage.getItem("token") as string)?.user;
 };
