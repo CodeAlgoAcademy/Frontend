@@ -44,8 +44,10 @@ const Layout = ({ children }: Props) => {
    }, []);
 
    useEffect(() => {
-      const user = typeof window !== "undefined" && getUserFromLocalStorage();
-      dispatch(addUserFromLocalStorage(user));
+      if (typeof window !== "undefined") {
+         const user = getUserFromLocalStorage();
+         dispatch(addUserFromLocalStorage(user));
+      }
    }, [router.pathname]);
 
    return (
