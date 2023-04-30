@@ -86,7 +86,7 @@ export default function Parent() {
             <form onSubmit={signUp}>
                <div className="">{step}</div>
                <div>
-                  <button className="mt-6  block h-[2.5rem] w-full rounded-xl bg-[#2073FA] text-center font-bold text-white" type="submit">
+                  <button className="mt-6  block h-[2.5rem] w-full rounded-xl bg-orange-400 text-center font-bold text-white" type="submit">
                      Continue
                   </button>
                   {currentStepIndex === 7 && (
@@ -126,7 +126,7 @@ export default function Parent() {
                      </p>
                   </div>
                   <button
-                     className="mx-auto block max-w-fit rounded-md bg-[#2073fa] px-6 py-3 font-bold text-white"
+                     className="mx-auto block max-w-fit rounded-md bg-orange-400 px-6 py-3 font-bold text-white"
                      onClick={async () => {
                         const isNotVerified = localStorage.getItem("parent-signup");
                         if (!isNotVerified) {

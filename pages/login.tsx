@@ -11,6 +11,7 @@ const LoginTest = () => {
    const router = useRouter();
    const { email, password } = useSelector((state: RootState) => state.user.auth);
    const [recaptchaVerified, setRecaptchaVerified] = useState(false);
+
    const login = async (event: ChangeEvent<HTMLFormElement>) => {
       event.preventDefault();
       const data = await dispatch(loginUser());
@@ -72,7 +73,7 @@ const LoginTest = () => {
                   placeholder="Enter Password"
                   required
                />
-               <button className="mt-6  block h-[2.5rem] w-full rounded-xl bg-[#2073FA] text-center font-bold text-white" type="submit">
+               <button className="mt-6  block h-[2.5rem] w-full rounded-xl bg-orange-400 text-center font-bold text-white" type="submit">
                   Login
                </button>
                <GoogleBtn />
