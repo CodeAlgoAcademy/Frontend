@@ -2,6 +2,7 @@ import React, { FC, ReactElement } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import Footer from "../Footer";
 
 type AuthLayoutProps = {
    children: ReactElement;
@@ -40,10 +41,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
                   {children}
                </div>
             </div>
-            <div className="box-border flex w-full flex-col-reverse flex-wrap items-center justify-center gap-2 bg-[#2073FA] py-3 px-10 text-[16px] font-semibold text-white md:flex-row md:justify-between">
-               <p>© 2023 CodeAlgoAcademy. All rights reserved.</p>
-               <p className="left-0">Get help</p>
-            </div>
+            <Footer />
          </div>
       </>
    );
