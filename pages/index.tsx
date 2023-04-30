@@ -8,13 +8,7 @@ import CharactersArrangement from "@/components/home/charactersArrangement";
 
 type Colors = "blue" | "purple" | "orange" | "";
 
-const colors: Colors[] = ["orange", "purple", "blue"];
-
-// [
-//    `root.configure( bg="${colors[stepToMoveTo]}" )`,
-//    `root.configure(bg = "${colors[stepToMoveTo]}")`,
-//    `root.configure(bg="${colors[stepToMoveTo]}")`,
-// ];
+const colors: Colors[] = ["blue", "purple", "orange"];
 
 const Home: NextPage = () => {
    // auto focus on page load
@@ -70,9 +64,9 @@ const Home: NextPage = () => {
 
    return (
       <div className="relative overflow-x-hidden">
-         <div className="bg-home3 flex min-h-screen w-screen flex-col overflow-x-hidden overflow-y-visible bg-cover bg-left lg:bg-none">
+         <div className="flex min-h-screen w-screen flex-col overflow-x-hidden overflow-y-visible bg-home3 bg-cover bg-left lg:bg-none">
             <img
-               src="/assets/background1.png"
+               src="/assets/background3.png"
                className={`bg-image hidden h-screen w-screen ${currentStep === 0 ? "bg-image lg:block" : "lg:hidden"}`}
                alt=""
             />{" "}
@@ -82,12 +76,12 @@ const Home: NextPage = () => {
                alt=""
             />{" "}
             <img
-               src="/assets/background3.png"
+               src="/assets/background1.png"
                className={`bg-image hidden h-screen w-screen ${currentStep === 2 ? "bg-image lg:block" : "lg:hidden"}`}
                alt=""
             />
             <Navbar />
-            <div className="z-3 bg-home3 absolute top-[80px] left-0 flex w-screen flex-1 flex-col items-center justify-center overflow-hidden bg-cover bg-left lg:flex-row lg:bg-none">
+            <div className="z-3 absolute top-[80px] left-0 flex w-screen flex-1 flex-col items-center justify-center overflow-hidden bg-home3 bg-cover bg-left lg:flex-row lg:bg-none">
                <div className={styles.container}>
                   <div className={styles.textContainer + ` text-gray-900 ${currentStep === 1 && "lg:text-white"}`}>
                      <p className={styles.containerText}>We Believe Every Child is a genius!</p>
