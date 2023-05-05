@@ -3,7 +3,7 @@ import { FiPlus } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { FaSearch } from "react-icons/fa";
-import TeacherLayout from "@/components/Teachers/TeacherLayout";
+import TeacherLayout from "@/components/layouts/TeacherLayout";
 import AddStudentModal from "@/components/Teachers/students/AddStudentModal";
 import Students from "@/components/Teachers/students/Students";
 import { getStudents } from "store/studentSlice";

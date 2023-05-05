@@ -1,7 +1,7 @@
 import React from "react";
 import ChatRoom from "./ChatRoom";
 import TeacherChatTabs from "../Teachers/messages/ChatTabs";
-import ParentChatTabs from "../parents/ChatTabs";
+import ParentChatTabs from "../parents/messaging/ChatTabs";
 import { useRouter } from "next/router";
 
 const MessageRoom = () => {

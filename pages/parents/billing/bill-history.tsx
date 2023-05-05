@@ -1,4 +1,4 @@
-import ParentLayout from "@/components/parents/ParentLayout";
+import ParentLayout from "@/components/layouts/ParentLayout";
 import { AiOutlineMail } from "react-icons/ai";
 import { ImArrowUpRight2 } from "react-icons/im";
 import { BsFillCircleFill } from "react-icons/bs";

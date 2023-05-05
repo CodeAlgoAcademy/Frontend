@@ -1,5 +1,5 @@
 import Messages from "@/components/Teachers/messages/Messages";
-import TeacherLayout from "@/components/Teachers/TeacherLayout";
+import TeacherLayout from "@/components/layouts/TeacherLayout";
 import React from "react";
 const Index = () => {
    return (
