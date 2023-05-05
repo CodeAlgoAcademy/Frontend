@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { useRouter } from "next/router";
 import { loginUser } from "services/authService";
-import AuthLayout from "@/components/parents/AuthLayout";
-import GoogleBtn from "@/components/googleBtn";
+import AuthLayout from "@/components/layouts/AuthLayout";
+import GoogleBtn from "@/components/UI/googleBtn";
 import { updateUser } from "store/authSlice";
 const LoginTest = () => {
    const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const LoginTest = () => {
          } else if (data?.payload?.is_parent) {
             router?.push("/parents");
          } else {
-            router?.push("/comingSoon");
+            router?.push("/coming-soon");
          }
       }
    };
@@ -43,9 +43,6 @@ const LoginTest = () => {
       // }
    };
 
-   useEffect(() => {
-      // dispatch(clearFields());
-   }, []);
    return (
       <AuthLayout>
          <>

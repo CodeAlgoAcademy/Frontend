@@ -1,6 +1,6 @@
 import { Provider } from "react-redux";
 import { store } from "../store/store";
-import { Layout } from "../components";
+import Layout from "@/components/layouts/Layout";
 import type { AppProps } from "next/app";
 import { registerLicense } from "@syncfusion/ej2-base";
 import "../styles/globals.css";

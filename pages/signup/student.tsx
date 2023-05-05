@@ -1,11 +1,10 @@
-import GoogleBtn from "@/components/googleBtn";
-import OtherInfoStudent from "@/components/parentMultiForm/OtherInfoStudent";
-import ParentSignUp1 from "@/components/parentMultiForm/ParentSignUp1";
-import ParentSignUp2 from "@/components/parentMultiForm/ParentSignUp2";
-import ParentSignUp3 from "@/components/parentMultiForm/ParentSignUp3";
-import WelcomeForm from "@/components/parentMultiForm/WelcomeForm";
-import AuthLayout from "@/components/parents/AuthLayout";
-import useMultiForm from "@/components/useMultiForm";
+import GoogleBtn from "@/components/UI/googleBtn";
+import StudentInfo from "@/components/stepForm/students/StudentInfo";
+import Form1 from "@/components/stepForm/general/Form1";
+import Form2 from "@/components/stepForm/general/Form2";
+import Form3 from "@/components/stepForm/general/Form3";
+import AuthLayout from "@/components/layouts/AuthLayout";
+import useMultiForm from "utils/useMultiForm";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -14,17 +13,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { signUpUser } from "services/authService";
 import { clearFields, updateUser } from "store/authSlice";
 import { RootState } from "store/store";
-import Grades from "@/components/grades";
+import Grades from "@/components/Teachers/addClass/grades";
 
 export default function Student() {
    const dispatch = useDispatch();
    const router = useRouter();
    const { auth } = useSelector((state: RootState) => state.user);
    const { steps, currentStepIndex, teacherSignUpStep, step, isFirstStep, isLastStep, back, next } = useMultiForm([
-      <ParentSignUp1 key={1} />,
-      <ParentSignUp2 key={2} />,
-      <ParentSignUp3 key={3} />,
-      <OtherInfoStudent key={4} />,
+      <Form1 key={1} />,
+      <Form2 key={2} />,
+      <Form3 key={3} />,
+      <StudentInfo key={4} />,
    ]);
 
    const signup = async (event: ChangeEvent<HTMLFormElement>) => {

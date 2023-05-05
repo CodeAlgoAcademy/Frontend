@@ -3,7 +3,7 @@ import Section from "@/components/about-us/Section.jsx";
 import Testimonials from "@/components/about-us/Testimonials";
 import AOC from "@/components/about-us/aoc";
 import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar/Navbar";
+import Navbar from "@/components/Navbar/home/Navbar";
 import Link from "next/link";
 import React from "react";
 import { FiTarget } from "react-icons/fi";
@@ -17,12 +17,6 @@ const AboutUs = () => {
             <Navbar />
             <div className="">
                <Header />
-               {/* <Section
-                  order={1}
-                  title="Our Mission"
-                  detail="Our mission is to normalize coding in elementary and middle school, so kids can develop critical thinking and problem-solving skills before reaching high school. We strive to make learning to code a fun and engaging experience that sets our students up for a successful future."
-                  image="/assets/img1.png"
-               /> */}
                <Section
                   hasButton={true}
                   order={1}
