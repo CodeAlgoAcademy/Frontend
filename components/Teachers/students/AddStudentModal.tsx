@@ -10,7 +10,7 @@ import { FaTimes, FaChevronLeft, FaPlus, FaCheckDouble } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { getAllClasses } from "services/classesService";
 import { openErrorModal } from "store/fetchSlice";
-import BulkImportModal from "@/components/bulkImportModal";
+import BulkImportModal from "@/components/Teachers/addClass/bulkImportModal";
 interface State {
    firstName: string;
    lastName: string;

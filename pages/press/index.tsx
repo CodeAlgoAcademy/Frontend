@@ -1,5 +1,5 @@
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar/Navbar";
+import Footer from "@/components/home/Footer";
+import Navbar from "@/components/navbar/home/Navbar";
 import Header from "@/components/press/Header";
 import Link from "next/link";
 import { articles } from "public/data";

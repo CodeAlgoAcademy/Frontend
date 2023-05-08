@@ -1,4 +1,4 @@
-import { availableLevels, availableUnits } from "@/components/curriculum/addUnit";
+import { availableLevels, availableUnits } from "@/components/Teachers/curriculum/addUnit";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IUnitsSlice } from "types/interfaces";
 import { addUnits } from "services/curriculumService";

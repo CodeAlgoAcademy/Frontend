@@ -1,6 +1,6 @@
-import { PaymentConfirmation, PaymentMade } from "@/components/parents/BillingModals";
-import ParentLayout from "@/components/parents/ParentLayout";
-import SideNav from "@/components/parents/ParentSideNav";
+import { PaymentConfirmation, PaymentMade } from "@/components/parents/billing/BillingModals";
+import ParentLayout from "@/components/layouts/ParentLayout";
+import SideNav from "@/components/parents/UI/ParentSideNav";
 import { countryList } from "@/components/signup/countries";
 import { Checkbox } from "@mui/material";
 import { height } from "@mui/system";

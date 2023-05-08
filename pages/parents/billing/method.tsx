@@ -1,7 +1,4 @@
-import ParentLayout from "@/components/parents/ParentLayout";
-import SideNav from "@/components/parents/ParentSideNav";
-import { Checkbox } from "@mui/material";
-import { height } from "@mui/system";
+import ParentLayout from "@/components/layouts/ParentLayout";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
