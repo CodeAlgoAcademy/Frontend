@@ -1,22 +1,23 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { Button } from "components";
+import Button from "@/components/UI/Button";
 import { BsPlusCircle } from "react-icons/bs";
 import { FaChevronLeft, FaTimes } from "react-icons/fa";
 import { IoPersonAddOutline } from "react-icons/io5";
 import { TbMedal } from "react-icons/tb";
-import { StudentModal, SkillModal } from "components/curriculum/assignment";
+import StudentModal from "@/components/Teachers/curriculum/assignment/StudentModal";
+import SkillModal from "@/components/Teachers/curriculum/assignment/SkillModal";
 
 import { RootState } from "store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { getStudents } from "store/studentSlice";
-import SingleAssignment from "@/components/curriculum/assignment/singleAssignment";
+import SingleAssignment from "@/components/Teachers/curriculum/assignment/singleAssignment";
 
 import { SkillDetails, AssignmentDetails, AssignmentSkill, Student, DynamicChechbox, IMainAssignment } from "types/interfaces";
 import { addNewAssignments, getAssignments, updateAssignment } from "services/assignmentService";
 import { getDate } from "utils/getDate";
 import { useRouter } from "next/router";
-import TeacherLayout from "@/components/Teachers/TeacherLayout";
+import TeacherLayout from "@/components/layouts/TeacherLayout";
 
 const Assignments = () => {
    const modalDefaults = {

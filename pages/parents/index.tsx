@@ -1,9 +1,9 @@
-import BarChart from "@/components/parents/BarChart";
-import ContentBox from "@/components/parents/ContentBox";
-import RecentInteraction from "@/components/parents/RecentInteraction";
-import ParentLayout from "@/components/parents/ParentLayout";
-import ProgressBar from "@/components/parents/ProgressBar";
-import SkillBox from "@/components/parents/SkillBox";
+import BarChart from "@/components/parents/UI/BarChart";
+import ContentBox from "@/components/parents/UI/ContentBox";
+import RecentInteraction from "@/components/parents/multiplayer/RecentInteraction";
+import ParentLayout from "@/components/layouts/ParentLayout";
+import ProgressBar from "@/components/parents/UI/ProgressBar";
+import SkillBox from "@/components/parents/student/SkillBox";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getChildren } from "store/parentChildSlice";

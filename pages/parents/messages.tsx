@@ -1,5 +1,5 @@
-import ParentLayout from "@/components/parents/ParentLayout";
-import SideNav from "@/components/parents/ParentSideNav";
+import ParentLayout from "@/components/layouts/ParentLayout";
+import SideNav from "@/components/parents/UI/ParentSideNav";
 import MessageRoom from "@/components/chat/MessageRoom";
 import React from "react";
 

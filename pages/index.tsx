@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import React, { ChangeEvent, LegacyRef, useRef } from "react";
-import Navbar from "@/components/Navbar/Navbar";
+import Navbar from "@/components/navbar/home/Navbar";
 import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
