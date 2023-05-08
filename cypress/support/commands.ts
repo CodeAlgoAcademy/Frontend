@@ -37,6 +37,7 @@
 // }
 
 import React from "react";
+import { randomUUID } from "crypto";
 
 Cypress.Commands.add("getByTestId" as any, (id) => {
    cy.get(`[data-testid="${id}"]`);
@@ -52,7 +53,7 @@ Cypress.Commands.add("interceptPatch" as any, (route, reply) => {
 
 Cypress.Commands.add("login" as any, (email, password, accountType) => {
    cy.intercept("POST", `https://sea-lion-app-43ury.ondigitalocean.app/auth/login`, {
-      access_token: "6789182010",
+      access_token: randomUUID(),
       user: {
          firstname: "Firstname",
          lastname: "Lastname",
@@ -60,5 +61,11 @@ Cypress.Commands.add("login" as any, (email, password, accountType) => {
          is_parent: accountType === "Parent",
          email,
       },
+   });
+});
+
+Cypress.Commands.add("register" as any, (data, accountType) => {
+   cy.intercept("POST", `https://sea-lion-app-43ury.ondigitalocean.app/auth/registration`, {
+      message: "Verification Email Sent",
    });
 });
