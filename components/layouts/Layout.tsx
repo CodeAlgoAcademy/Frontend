@@ -22,8 +22,10 @@ const Layout = ({ children }: Props) => {
       const unrestricted = [
          "/",
          "/404",
-         "/login",
-         "/selectUserType",
+         "/login/teacher",
+         "/login/parent",
+         "/login/select-account-type",
+         "/signup/select-account-type",
          "/coming-soon",
          "/signup/teacher",
          "/signup/student",

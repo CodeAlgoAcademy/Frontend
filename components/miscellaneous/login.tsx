@@ -6,7 +6,9 @@ import { loginUser } from "services/authService";
 import AuthLayout from "@/components/layouts/AuthLayout";
 import GoogleBtn from "@/components/UI/googleBtn";
 import { updateUser } from "store/authSlice";
-const LoginTest = () => {
+import { openErrorModal } from "store/fetchSlice";
+
+const Login = () => {
    const dispatch = useDispatch();
    const router = useRouter();
    const { email, password } = useSelector((state: RootState) => state.user.auth);
@@ -16,12 +18,19 @@ const LoginTest = () => {
       event.preventDefault();
       const data = await dispatch(loginUser());
       if (!data?.error?.message) {
+         // If the account doesn't match the user selected in the select-account-type, display an error
          if (data?.payload?.is_teacher) {
-            router?.push("/teachers/addClass");
+            if (router.pathname.includes("/login/teacher")) {
+               router?.push("/teachers/addClass");
+            } else {
+               dispatch(openErrorModal({ errorText: ["This is not a teacher's account"] }));
+            }
          } else if (data?.payload?.is_parent) {
-            router?.push("/parents");
-         } else {
-            router?.push("/coming-soon");
+            if (router.pathname.includes("/login/parent")) {
+               router?.push("/parents");
+            } else {
+               dispatch(openErrorModal({ errorText: ["This is not a parent's account"] }));
+            }
          }
       }
    };
@@ -80,4 +89,4 @@ const LoginTest = () => {
    );
 };
 
-export default LoginTest;
+export default Login;

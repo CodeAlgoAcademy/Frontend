@@ -4,7 +4,6 @@ import { updateUser } from "store/authSlice";
 import { RootState } from "store/store";
 
 export default function ParentSignUp2() {
-   // const [verifyPassword, setVerifyPassword] = useState<string>('')
    const dispatch = useDispatch();
    const { firstname, lastname } = useSelector((state: RootState) => state.user.auth);
 
@@ -20,6 +19,7 @@ export default function ParentSignUp2() {
             type="text"
             className="mt-3 block h-[2.5rem] w-full rounded-xl px-4 py-2 focus:outline-0"
             required
+            placeholder="Enter your firstname"
          />
          <label className="mt-6 block text-xl font-semibold">Last Name</label>
          <input
@@ -30,6 +30,7 @@ export default function ParentSignUp2() {
             type="text"
             className="mt-3 block h-[2.5rem] w-full rounded-xl px-4 py-2 focus:outline-0"
             required
+            placeholder="Enter your lastname"
          />
       </div>
    );

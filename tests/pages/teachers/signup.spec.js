@@ -1,4 +1,4 @@
-import SignUp from "@/pages/signup";
+import SignUp from "@/pages/signup/parent";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";

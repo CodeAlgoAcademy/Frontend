@@ -24,4 +24,9 @@ test("modal workflow", () => {
    const modalController = screen.getByTestId("open-modal");
    fireEvent.click(modalController);
    expect(addClassModal).toBeVisible();
+
+   // Close Modal
+   const closeButton = screen.getByTestId("close-modal");
+   fireEvent.click(closeButton);
+   expect(addClassModal).not.toBeVisible();
 });

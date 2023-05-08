@@ -9,7 +9,6 @@ const CharactersArrangement = (props: CharactersArrangementProps) => {
    const [x, setX] = useState(0);
    const [y, setY] = useState(0);
    const mouseMove = (e: any) => {
-      console.log(e.clientX);
       setX(e.clientX / 30);
       setY(e.clientY / 30);
    };

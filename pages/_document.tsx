@@ -11,7 +11,6 @@ class MyDocument extends Document {
       return (
          <Html>
             <Head>
-               <title>CodeAlgo Academy</title>
                <meta name="description" content="CodeAlgo Academy" />
                <meta property="og:title" content="CodeAlgo Academy" />
                <meta property="twitter:title" content="CodeAlgo Academy" />

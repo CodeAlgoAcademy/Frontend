@@ -16,7 +16,7 @@ const NavButton = ({ image, title, notification, url, isIcon }: Props) => {
    const router = useRouter();
    useEffect(() => {
       setActive(() => url === router.pathname);
-   }, [router.pathname, url]);
+   }, [router?.pathname, url]);
 
    return (
       <Link href={`${url}`}>

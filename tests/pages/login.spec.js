@@ -1,4 +1,4 @@
-import Login from "@/pages/login";
+import Login from "@/pages/login/parent";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
@@ -13,8 +13,8 @@ it("should have 2 input fields", () => {
          </Provider>
       </GoogleOAuthProvider>
    );
-   const emailInput: HTMLInputElement = screen.getByPlaceholderText(/enter email*/i);
-   const passwordInput: HTMLInputElement = screen.getByPlaceholderText(/Enter Password/i);
+   const emailInput = screen.getByPlaceholderText(/enter email*/i);
+   const passwordInput = screen.getByPlaceholderText(/Enter Password/i);
 
    fireEvent.change(passwordInput, { target: { value: "my-password" } });
    fireEvent.change(emailInput, { target: { value: "codealgo@gmail.com" } });

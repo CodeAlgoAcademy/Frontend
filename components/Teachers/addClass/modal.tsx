@@ -26,6 +26,7 @@ const Modal = () => {
                   dispatch(clearFields());
                }}
                className="absolute top-[30px] right-[30px] z-10 text-[30px] font-thin text-red-600"
+               data-testid="close-modal"
             >
                <FaTimes />
             </span>

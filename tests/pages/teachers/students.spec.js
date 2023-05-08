@@ -10,7 +10,7 @@ it("should have a search box", () => {
          <Students />
       </Provider>
    );
-   const searchBox: HTMLInputElement = screen.getByTestId(/searchbox/i);
+   const searchBox = screen.getByTestId(/searchbox/i);
    fireEvent.change(searchBox, { target: { value: "CodeAlgo" } });
    expect(searchBox.value).toBe("CodeAlgo");
 });
