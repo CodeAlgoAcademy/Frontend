@@ -14,7 +14,7 @@ const ParentSignUp3 = () => {
             type="text"
             value={username}
             className="mt-3 block h-[2.5rem] w-full rounded-xl px-4 py-2 focus:outline-0"
-            placeholder="Enter Username"
+            placeholder="Enter your username"
             onChange={(e) => {
                dispatch(updateUser({ key: "username", value: e.target.value }));
             }}
@@ -30,6 +30,7 @@ const ParentSignUp3 = () => {
             }}
             minLength={10}
             type="password"
+            placeholder="Enter your password"
             required
          />
       </div>

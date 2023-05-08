@@ -36,7 +36,8 @@
       "cypress/support/commands.ts",
       "cypress/e2e/components/navbar/home-nav.cy.ts",
       "cypress/e2e/pages/contact.cy.js",
-      "cypress/e2e/pages/login.cy.js"
+      "cypress/e2e/pages/login.cy.js",
+      "cypress/e2e/pages/signup.cy.js"
    ],
    "exclude": ["node_modules", "**/*.jsx"]
 }
