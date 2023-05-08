@@ -1,4 +1,4 @@
-import Policies from "@/components/privacyPolicy/policies";
+import Policies from "@/components/UI/policies";
 import Image from "next/image";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";

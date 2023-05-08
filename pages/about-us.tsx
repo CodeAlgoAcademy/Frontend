@@ -1,9 +1,9 @@
 import Header from "@/components/about-us/Header";
-import Section from "@/components/about-us/Section.jsx";
+import Section from "@/components/about-us/Section";
 import Testimonials from "@/components/about-us/Testimonials";
 import AOC from "@/components/about-us/aoc";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar/home/Navbar";
+import Footer from "@/components/home/Footer";
+import Navbar from "@/components/navbar/home/Navbar";
 import Link from "next/link";
 import React from "react";
 import { FiTarget } from "react-icons/fi";
@@ -18,6 +18,8 @@ const AboutUs = () => {
             <div className="">
                <Header />
                <Section
+                  extraImage={undefined}
+                  extraImagePosition={undefined}
                   hasButton={true}
                   order={1}
                   title="At CodeAlgo Academy, we teach your kids how to code, and we mean real coding!"
@@ -27,6 +29,7 @@ const AboutUs = () => {
                />
 
                <Section
+                  codeEditor={undefined}
                   hasButton={false}
                   order={2}
                   title="Technology built upon extensive research and development"
@@ -36,6 +39,7 @@ const AboutUs = () => {
                   extraImagePosition="-top-[90px] z-[-1]"
                />
                <Section
+                  codeEditor={undefined}
                   hasButton={false}
                   order={1}
                   title="Learning Problem-Solving Skills"

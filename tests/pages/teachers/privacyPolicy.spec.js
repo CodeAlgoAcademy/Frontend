@@ -1,4 +1,4 @@
-import PrivacyPolicy from "@/pages/privacyPolicy";
+import PrivacyPolicy from "@/pages/privacy-policy";
 import { render, screen } from "@testing-library/react";
 import React from "react";
 import { Provider } from "react-redux";
@@ -11,7 +11,6 @@ it("should have two buttons", () => {
       </Provider>
    );
    const buttons = screen.getAllByRole("button");
-   console.log(buttons[0].textContent);
    expect(buttons[0].textContent).toBe("Accept");
    expect(buttons[1].textContent).toBe("Reject");
 });

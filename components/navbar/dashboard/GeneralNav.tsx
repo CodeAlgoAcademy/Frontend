@@ -70,7 +70,7 @@ const GeneralNav = () => {
       if (!currentClass || classes.length === 0) {
          getClass();
       }
-   }, [router.pathname]);
+   }, [router?.pathname]);
 
    useEffect(() => {
       setUser(getUserFromLocalStorage());
