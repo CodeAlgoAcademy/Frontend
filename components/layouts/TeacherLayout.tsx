@@ -28,7 +28,7 @@ const TeacherLayout = ({ children, className }: Props) => {
       const handleResize = () => setWidth(window.innerWidth);
       window.addEventListener("resize", handleResize);
       if (token?.user_type !== "teacher") {
-         router?.push("/login");
+         router?.push("/login/select-account-type");
       }
       return () => {
          window.removeEventListener("resize", handleResize);

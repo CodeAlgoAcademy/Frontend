@@ -58,7 +58,7 @@ const GeneralNav = () => {
       localStorage.removeItem("token");
       localStorage.removeItem("token_timestamp");
       dispatch(resetAuthUser());
-      router.push("/login");
+      router.push("/login/select-account-type");
    };
 
    // Incase the user refreshes the page
