@@ -19,7 +19,7 @@ export default function Sasfety2() {
          <p className="mt-3 text-[16px] font-[400]">Set your student&apos;s daily CodeAlgo screen time below.</p>
          <div className="mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
             {timeLimits?.map((time, index: number) => {
-               return <ScreenTimeComponent updateTime={updateTime} time={time} key={index} />;
+               return <ScreenTimeComponent updateTime={updateTime} time={time} key={index} index={index} />;
             })}
          </div>
       </div>

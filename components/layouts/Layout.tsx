@@ -41,7 +41,7 @@ const Layout = ({ children }: Props) => {
          !router.pathname.includes("/change-password") &&
          !router.pathname.includes("/press")
       ) {
-         router.push("/login");
+         router.push("/login/select-account-type");
       }
    }, []);
 
