@@ -12,7 +12,10 @@ const SingleClass: FC<IClass> = ({ id, className, grade, subject, color, totalSt
    const dispatch = useDispatch();
    const [isOpen, setIsOpen] = useState<boolean>(false);
    return (
-      <article className="col-span-1 flex min-h-[200px] w-full overflow-hidden rounded-md bg-white shadow-md hover:shadow-lg">
+      <article
+         className="col-span-1 flex min-h-[200px] w-full overflow-hidden rounded-md bg-white shadow-md hover:shadow-lg"
+         data-testid="single-class"
+      >
          <aside className={`h-full flex-[0.15]`} style={{ backgroundColor: color }}></aside>
          <div className="h-full flex-[0.85] px-4 pb-4">
             <header className="border-b-2 py-4">
@@ -42,6 +45,7 @@ const SingleClass: FC<IClass> = ({ id, className, grade, subject, color, totalSt
                      onClick={() => {
                         dispatch(updateCurrentClass({ className, color, id }));
                      }}
+                     data-testid="dashboard-button"
                   >
                      <p className="text-[16px] font-semibold">Dashboard</p>
                      <span className="flex h-[30px] w-[30px] items-center justify-center rounded-full border-2 border-black text-[18px]">

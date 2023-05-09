@@ -51,6 +51,12 @@ Cypress.Commands.add("interceptPatch" as any, (route, reply) => {
    cy.intercept("PATCH", `https://sea-lion-app-43ury.ondigitalocean.app${route}`, reply as any);
 });
 
+Cypress.Commands.add("interceptGet" as any, (route, fixture) => {
+   cy.intercept("GET", `https://sea-lion-app-43ury.ondigitalocean.app${route}`, {
+      fixture,
+   });
+});
+
 Cypress.Commands.add("login" as any, (email, password, accountType) => {
    cy.intercept("POST", `https://sea-lion-app-43ury.ondigitalocean.app/auth/login`, {
       access_token: uuid.v4(),

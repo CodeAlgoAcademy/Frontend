@@ -28,7 +28,7 @@ const notesSlice = createSlice({
    },
    extraReducers: (builder) => {
       builder.addCase(getNotes.fulfilled, (state: INotes, action: PayloadAction<{ text: string }>) => {
-         state.html = action.payload.text;
+         state.html = action.payload?.text;
       });
    },
 });
