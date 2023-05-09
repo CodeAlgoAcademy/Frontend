@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 describe("Email verification", () => {
    it("Should resend an email", () => {
       cy.visit("/verify-email");

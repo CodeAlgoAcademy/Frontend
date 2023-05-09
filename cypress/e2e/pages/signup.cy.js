@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 describe("Registration", () => {
    beforeEach(() => {
       cy.visit("/signup/select-account-type");
