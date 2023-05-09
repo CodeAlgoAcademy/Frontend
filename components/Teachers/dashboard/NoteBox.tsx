@@ -21,8 +21,8 @@ const NoteBox = () => {
       await dispatch(updateNotes());
    };
    useEffect(() => {
-      contentEditableState.html == "" && dispatch(resetNotes());
-   }, [contentEditableState.html, dispatch]);
+      contentEditableState?.html == "" && dispatch(resetNotes());
+   }, [contentEditableState?.html, dispatch]);
    useEffect(() => {
       fetchNotes();
    }, [fetchNotes]);
