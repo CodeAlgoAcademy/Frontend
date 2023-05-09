@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 describe("Change Password", () => {
    it("Should request for a password reset link", () => {
       cy.visit("/change-password");
