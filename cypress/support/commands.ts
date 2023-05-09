@@ -78,3 +78,25 @@ Cypress.Commands.add("register" as any, (data, accountType) => {
       message: "Verification Email Sent",
    });
 });
+
+/**
+ * setStorage is used to store the user token in localStorage
+ */
+
+Cypress.Commands.add("setStorage" as any, (accountType) => {
+   const value = {
+      access_token: uuid.v4(),
+      user: {
+         firstname: "Firstname",
+         lastname: "Lastname",
+         is_teacher: accountType === "Teacher",
+         is_parent: accountType === "Parent",
+         email: "user@email.com",
+      },
+      user_type: (accountType as string).toLowerCase(),
+   };
+   cy.window().then((slug) => {
+      slug.localStorage.setItem("token" as string, JSON.stringify(value));
+      slug.localStorage.setItem("token_timestamp", "" + Date.now());
+   });
+});

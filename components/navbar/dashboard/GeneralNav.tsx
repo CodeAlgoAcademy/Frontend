@@ -29,11 +29,11 @@ const GeneralNav = () => {
    const { firstname, lastname } = useSelector((state: RootState) => state.user);
    const currentClass = useSelector((state: RootState): CurrentClassState => state.currentClass);
 
-   const classDetails = classes.map((item: CurrentClassState) => {
+   const classDetails = classes?.map((item: CurrentClassState) => {
       const { className, color, id } = item;
       return { className, color, id };
    });
-   const otherClassDetails = classDetails.filter((item) => item.className !== currentClass.className);
+   const otherClassDetails = classDetails?.filter((item) => item.className !== currentClass.className);
    const [classListView, setClassListView] = useState(false);
 
    const dropdownStyle = {
@@ -67,7 +67,7 @@ const GeneralNav = () => {
    };
 
    useEffect(() => {
-      if (!currentClass || classes.length === 0) {
+      if (!currentClass || classes?.length === 0) {
          getClass();
       }
    }, [router?.pathname]);
