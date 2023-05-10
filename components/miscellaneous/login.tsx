@@ -23,6 +23,7 @@ const Login = () => {
             if (router.pathname.includes("/login/teacher")) {
                router?.push("/teachers/addClass");
             } else {
+               console.log("not teacher");
                dispatch(openErrorModal({ errorText: ["This is not a teacher's account"] }));
             }
          } else if (data?.payload?.is_parent) {

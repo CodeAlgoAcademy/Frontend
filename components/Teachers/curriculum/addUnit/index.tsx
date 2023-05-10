@@ -17,29 +17,33 @@ export interface Props {
 }
 
 export const standards: string[] = [
-   "CSTA",
-   "Missiouri Learning Standards",
-   "Kansas Computer Science Standards",
-   "New York State Computer Science and Digital Fluency Science",
-   "Advance",
+   // "CSTA",
+   // "Missiouri Learning Standards",
+   // "Kansas Computer Science Standards",
+   // "New York State Computer Science and Digital Fluency Science",
+   // "Advance",
+   "CodeAlgo",
 ];
 
 export const availableLevels: ILevels[] = [
    {
       title: "Green",
-      unitsId: ["1", "2", "3", "4", "5", "6", "7", "8"],
+      // unitsId: ["1", "2", "3", "4", "5", "6", "7", "8"],
+      unitsId: ["15", "16", "3", "4", "5", "17", "9"],
       grades: ["K", "1", "2", "3", "4"],
       hoverText: "I'm new to coding (Grades K - 4)",
    },
    {
       title: "Yellow",
-      unitsId: ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
+      unitsId: ["15", "16", "3", "4", "5", "17", "9"],
+      // unitsId: ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
       grades: ["5", "6", "7"],
       hoverText: "I know some coding (Grades 5 - 8)",
    },
    {
       title: "Orange",
-      unitsId: ["12", "11", "9", "13", "10", "14"],
+      unitsId: ["15", "16", "3", "4", "5", "17", "9"],
+      // unitsId: ["12", "11", "9", "13", "10", "14"],
       grades: ["8+"],
       hoverText: "I have been coding for a long time (Grades 8+)",
    },
@@ -172,6 +176,35 @@ export const availableUnits = [
       endDate: "",
       isChosen: false,
       hoverText: "Program Development are techniques used to create programs",
+   },
+
+   // CodeAlgo Standards
+   {
+      id: "15",
+      title: "Introduction",
+      isCurrent: true,
+      startDate: "",
+      endDate: "",
+      isChosen: false,
+      hoverText: "",
+   },
+   {
+      id: "16",
+      title: "Data Types",
+      isCurrent: true,
+      startDate: "",
+      endDate: "",
+      isChosen: false,
+      hoverText: "",
+   },
+   {
+      id: "17",
+      title: "Lists",
+      isCurrent: true,
+      startDate: "",
+      endDate: "",
+      isChosen: false,
+      hoverText: "",
    },
 ];
 

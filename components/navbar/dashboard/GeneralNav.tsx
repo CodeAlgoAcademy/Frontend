@@ -61,17 +61,6 @@ const GeneralNav = () => {
       router.push("/login/select-account-type");
    };
 
-   // Incase the user refreshes the page
-   const getClass = async () => {
-      const data = await dispatch(getAllClasses());
-   };
-
-   useEffect(() => {
-      if (!currentClass || classes?.length === 0) {
-         getClass();
-      }
-   }, [router?.pathname]);
-
    useEffect(() => {
       setUser(getUserFromLocalStorage());
    }, []);

@@ -100,3 +100,8 @@ Cypress.Commands.add("setStorage" as any, (accountType) => {
       slug.localStorage.setItem("token_timestamp", "" + Date.now());
    });
 });
+
+// General stuffs
+Cypress.Commands.add("getClasses" as any, () => {
+   (cy as any).interceptGet("/academics/class", "teachers/classes.json");
+});

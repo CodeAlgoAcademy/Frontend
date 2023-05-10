@@ -5,8 +5,11 @@ import { useRouter } from "next/router";
 import TeacherMobileSideNav from "../Teachers/UI/TeacherMobileSideNav";
 import { BiHomeAlt } from "react-icons/bi";
 import Link from "next/link";
-import { IUser } from "types/interfaces";
+import { CurrentClassState, IClass, IUser } from "types/interfaces";
 import { getUserFromLocalStorage } from "utils/getTokens";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "store/store";
+import { getAllClasses } from "services/classesService";
 
 interface Props {
    children?: ReactNode;
@@ -17,6 +20,21 @@ const TeacherLayout = ({ children, className }: Props) => {
    const router = useRouter();
    const [width, setWidth] = useState(0);
    const [detachedNavDisplay, setDetachedNavDisplay] = useState(false);
+   const dispatch = useDispatch();
+
+   const currentClass = useSelector((state: RootState): CurrentClassState => state.currentClass);
+   const classes = useSelector((state: RootState): IClass[] => state.allClasses.classes);
+
+   // Incase the user refreshes the page
+   const getClass = async () => {
+      const data = await dispatch(getAllClasses());
+   };
+
+   useEffect(() => {
+      if (!currentClass || classes?.length === 0) {
+         getClass();
+      }
+   }, [router?.pathname]);
 
    useEffect(() => {
       setWidth(window.innerWidth);

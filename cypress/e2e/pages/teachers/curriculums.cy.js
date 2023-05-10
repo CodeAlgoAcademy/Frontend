@@ -5,7 +5,7 @@ describe("Curriculum", () => {
    beforeEach(() => {
       cy.setStorage("Teacher");
       cy.visit("/teachers/curriculum");
-      cy.interceptGet("/academics/class", "teachers/classes.json");
+      cy.getClasses();
    });
    it("Add unit flow", () => {
       // Mock requests
