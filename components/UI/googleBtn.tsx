@@ -12,7 +12,7 @@ const GoogleBtn: FC = () => {
 
    const handleClick = useGoogleLogin({
       onSuccess: async (codeResponse) => {
-         if (router?.pathname === "/login") {
+         if (router?.pathname.includes("/login")) {
             const data = await dispatch(loginWithGoogle(codeResponse.access_token));
             if (!data?.error?.message) {
                if (data?.payload?.is_teacher) {
@@ -52,7 +52,7 @@ const GoogleBtn: FC = () => {
             <i className="text-[22px]">
                <FcGoogle />
             </i>
-            <span>{router?.pathname === "/login" ? "Sign in" : "Sign up"} with Google</span>
+            <span>{router?.pathname.includes("/login") ? "Sign in" : "Sign up"} with Google</span>
          </button>
       </div>
    );
