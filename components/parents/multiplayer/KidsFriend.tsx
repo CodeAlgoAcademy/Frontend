@@ -3,7 +3,7 @@ import { BiEnvelope } from "react-icons/bi";
 import { HiOutlineDotsCircleHorizontal } from "react-icons/hi";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
-import { FriendRequests, IFriends } from "types/interfaces";
+import { FriendRequests } from "types/interfaces";
 
 const KidsFriend = () => {
    const currentChild = useSelector((state: RootState) => state.parentChild.currentChild);

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IFetch } from 'types/interfaces';
+import { IFetch } from 'types/interfaces/modal.interface';
 
 const initialState: IFetch = {
   errorModalOpen: false,
