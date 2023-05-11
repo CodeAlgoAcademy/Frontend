@@ -51,7 +51,10 @@ const ChangePassword = () => {
          </div>
 
          {modalOpened && (
-            <section data-testid="modal" className={"fixed top-0 left-0 flex min-h-screen w-full items-center justify-center bg-[rgba(0,0,0,.6)]"}>
+            <section
+               data-testid="success-modal"
+               className={"fixed top-0 left-0 flex min-h-screen w-full items-center justify-center bg-[rgba(0,0,0,.6)]"}
+            >
                <div className={` relative z-20 mx-auto w-[90vw] max-w-[500px] rounded-md bg-white p-8 shadow-md`}>
                   <div className="flex items-center justify-between">
                      <span className="flex cursor-pointer items-center gap-x-4 text-[17px] font-bold">

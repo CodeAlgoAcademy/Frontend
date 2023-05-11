@@ -6,9 +6,10 @@ import { open_a_message } from "store/messagesSlice";
 import { RootState } from "store/store";
 import { getStudents } from "store/studentSlice";
 import { CurrentClassState } from "types/interfaces";
+
 const ChatTabs = () => {
    const [active, setActive] = useState(0);
-   const { students } = useSelector((state: RootState) => state.students.students);
+   const students = useSelector((state: RootState) => state.students.students);
    const { teachers } = useSelector((state: RootState) => state.allTeachers);
 
    const currentClass = useSelector((state: RootState): CurrentClassState => state.currentClass);
@@ -33,7 +34,7 @@ const ChatTabs = () => {
          <article className={openedStudent ? "max-h-full flex-1 overflow-y-auto bg-gray-100 p-0" : "overflow-y-auto bg-gray-100"}>
             {openedStudent && (
                <div className="overflow-hidden">
-                  {students?.map((student: any) => {
+                  {students?.students?.map((student: any) => {
                      return (
                         <p
                            onClick={() => {

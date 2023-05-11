@@ -1,10 +1,9 @@
 import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import { IoIosAddCircleOutline } from "react-icons/io";
-import AddStudent from "components/modals/AddStudent";
+import AddStudent from "@/components/Teachers/curriculum/assignment/AddStudent";
 import PreviewModal from "components/modals/PreviewModal";
 import Link from "next/link";
-//
 import { editLesson } from "services/lessonService";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -13,10 +12,10 @@ import { addLessons, getAllLessons } from "services/lessonService";
 import { RootState } from "store/store";
 import { newLesson } from "types/interfaces";
 import { getDate } from "utils/getDate";
-import SingleLesson from "@/components/curriculum/unit/singleLesson";
+import SingleLesson from "@/components/Teachers/curriculum/unit/singleLesson";
 import { getStudents } from "store/studentSlice";
 import { BiArrowBack } from "react-icons/bi";
-import TeacherLayout from "@/components/Teachers/TeacherLayout";
+import TeacherLayout from "@/components/layouts/TeacherLayout";
 
 export default function Unit() {
    const [showModal, setShowModal] = useState(false);

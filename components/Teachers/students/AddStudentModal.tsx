@@ -10,7 +10,7 @@ import { FaTimes, FaChevronLeft, FaPlus, FaCheckDouble } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { getAllClasses } from "services/classesService";
 import { openErrorModal } from "store/fetchSlice";
-import BulkImportModal from "@/components/bulkImportModal";
+import BulkImportModal from "@/components/Teachers/addClass/bulkImportModal";
 interface State {
    firstName: string;
    lastName: string;
@@ -107,7 +107,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
    };
 
    return (
-      <section className={`${style.modalOverlay} bg-[rgba(0,0,0,.25)]`}>
+      <section className={`${style.modalOverlay} bg-[rgba(0,0,0,.25)]`} data-testid="add-student-modal">
          {bulkImportModalOpen && <BulkImportModal setBulkImportModalOpen={setBulkImportModalOpen} />}
          {/* modal itself */}
          <main className="relative mx-auto flex h-fit max-h-[95vh] w-[90vw] max-w-[900px] overflow-hidden overflow-y-scroll rounded-md bg-white shadow-lg">
