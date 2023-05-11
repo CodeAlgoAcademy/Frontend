@@ -33,7 +33,7 @@ import { motion, useCycle } from "framer-motion";
 import { FiAlertTriangle } from "react-icons/fi";
 import { Schedule } from "types/interfaces";
 import { useGoogleLogin } from "@react-oauth/google";
-import TeacherLayout from "@/components/Teachers/TeacherLayout";
+import TeacherLayout from "@/components/layouts/TeacherLayout";
 import Head from "next/head";
 
 const PropertyPane = (props: PropsWithChildren) => <div className="mt-5">{props.children}</div>;

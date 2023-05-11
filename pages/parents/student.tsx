@@ -1,15 +1,13 @@
-import ParentLayout from "@/components/parents/ParentLayout";
-import SideNav from "@/components/parents/ParentSideNav";
+import ParentLayout from "@/components/layouts/ParentLayout";
 import React from "react";
-import ContentBox from "@/components/parents/ContentBox";
-import ProgressBar from "@/components/parents/ProgressBar";
-import SkillBox from "@/components/parents/SkillBox";
+import ContentBox from "@/components/parents/UI/ContentBox";
+import ProgressBar from "@/components/parents/UI/ProgressBar";
+import SkillBox from "@/components/parents/student/SkillBox";
 import { BiPlusCircle } from "react-icons/bi";
-import AddChildModal from "@/components/parents/AddChildModal";
 import { openAddChildModal } from "store/modalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
-import NoChild from "@/components/parents/NoChild";
+import NoChild from "@/components/parents/UI/NoChild";
 
 const Student = () => {
    const dispatch = useDispatch();

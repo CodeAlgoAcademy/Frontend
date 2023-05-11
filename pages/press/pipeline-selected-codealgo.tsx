@@ -1,11 +1,11 @@
 import Header from "@/components/press/Header";
-import Navbar from "@/components/Navbar/Navbar";
+import Navbar from "@/components/navbar/home/Navbar";
 import React from "react";
 import RelatedArticles from "@/components/press/RelatedArticles";
 import ImagesContainer from "@/components/press/ImagesContainer";
 import DropCapsParagraph from "@/components/press/DropCapsParagraph";
 import BlogTitle from "@/components/press/BlogTitle";
-import Footer from "@/components/Footer";
+import Footer from "@/components/home/Footer";
 
 const newMembers = [
    {
