@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { IUserConversation, User } from "types/interfaces";
+import { IUserConversation } from "types/interfaces";
 import messageService from "services/messagesService";
 import { RootState } from "./store";
 import { errorResolver } from "utils/errorResolver";
+import { User } from "types/interfaces/auth.interface";
 
 const initialState: IUserConversation = {
    conversations: [],
