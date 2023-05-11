@@ -10,10 +10,12 @@ const ScreenTimeComponent = ({
    time,
    updateTime,
    updateScreenTimeForChild,
+   index,
 }: {
    time: screentimeTypes;
    updateTime?: (day: string, hour: number | "No Limit") => void;
    updateScreenTimeForChild?: (id: string | number, day: string, hour: number | "No Limit") => void;
+   index?: number;
 }) => {
    const { username, currentChild } = useSelector((state: RootState) => state.parentChild);
 
@@ -24,7 +26,7 @@ const ScreenTimeComponent = ({
    };
 
    return (
-      <div className="relative flex flex-col gap-y-2 text-[14px] ">
+      <div className="relative flex flex-col gap-y-2 text-[14px]" data-testid={"screentime-component-" + index}>
          <p className="text-center">{time.dayOfTheWeek}</p>
          <div
             className="mx-auto h-[50px] w-[50px] rounded-[50%]"
@@ -46,6 +48,7 @@ const ScreenTimeComponent = ({
          ></div>
          <div
             className="flex  min-w-[100px] cursor-pointer items-center justify-between rounded-md border border-[royalblue] bg-[#f0f0f0] py-2 px-2 text-[13px] text-[royalblue]"
+            data-testid="toggle-container"
             onClick={() => {
                toggleHoursList();
             }}
@@ -69,6 +72,7 @@ const ScreenTimeComponent = ({
                               setHoursListOpen(false);
                            }
                         }}
+                        data-testid={`hour-${index}`}
                      >
                         {hour} {typeof hour === "string" ? "" : "hr"}
                      </span>

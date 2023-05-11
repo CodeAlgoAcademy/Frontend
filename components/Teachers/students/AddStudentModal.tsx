@@ -107,7 +107,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
    };
 
    return (
-      <section className={`${style.modalOverlay} bg-[rgba(0,0,0,.25)]`}>
+      <section className={`${style.modalOverlay} bg-[rgba(0,0,0,.25)]`} data-testid="add-student-modal">
          {bulkImportModalOpen && <BulkImportModal setBulkImportModalOpen={setBulkImportModalOpen} />}
          {/* modal itself */}
          <main className="relative mx-auto flex h-fit max-h-[95vh] w-[90vw] max-w-[900px] overflow-hidden overflow-y-scroll rounded-md bg-white shadow-lg">

@@ -92,6 +92,7 @@ const CreateClass = () => {
                   onClick={() => {
                      dispatch(toggleColorModal());
                   }}
+                  data-testid="color-modal-controller"
                >
                   <span className={`h-[38px] w-[38px] rounded-full`} style={{ backgroundColor: color }}></span>
                   <i className="pr-1">
@@ -105,6 +106,7 @@ const CreateClass = () => {
                         return (
                            <span
                               key={index}
+                              data-testid={"color-modal-" + index}
                               className={`mx-auto h-[38px] w-[38px] rounded-full`}
                               style={{ backgroundColor: color }}
                               onClick={() => {

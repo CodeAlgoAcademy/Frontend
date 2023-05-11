@@ -19,7 +19,9 @@ const Index = () => {
    });
 
    useEffect(() => {
-      dispatch(getStudents());
+      if (id) {
+         dispatch(getStudents());
+      }
    }, [dispatch, id]);
 
    useEffect(() => {

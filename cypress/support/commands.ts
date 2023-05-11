@@ -37,7 +37,7 @@
 // }
 
 import React from "react";
-import { randomUUID } from "crypto";
+const uuid = require("uuid");
 
 Cypress.Commands.add("getByTestId" as any, (id) => {
    cy.get(`[data-testid="${id}"]`);
@@ -51,9 +51,15 @@ Cypress.Commands.add("interceptPatch" as any, (route, reply) => {
    cy.intercept("PATCH", `https://sea-lion-app-43ury.ondigitalocean.app${route}`, reply as any);
 });
 
+Cypress.Commands.add("interceptGet" as any, (route, fixture) => {
+   cy.intercept("GET", `https://sea-lion-app-43ury.ondigitalocean.app${route}`, {
+      fixture,
+   });
+});
+
 Cypress.Commands.add("login" as any, (email, password, accountType) => {
    cy.intercept("POST", `https://sea-lion-app-43ury.ondigitalocean.app/auth/login`, {
-      access_token: randomUUID(),
+      access_token: uuid.v4(),
       user: {
          firstname: "Firstname",
          lastname: "Lastname",
@@ -62,10 +68,40 @@ Cypress.Commands.add("login" as any, (email, password, accountType) => {
          email,
       },
    });
+
+   cy.get(`[type="email"]`).type("useremail@gmail.com");
+   cy.get(`[type="password"]`).type("123456789");
 });
 
 Cypress.Commands.add("register" as any, (data, accountType) => {
    cy.intercept("POST", `https://sea-lion-app-43ury.ondigitalocean.app/auth/registration`, {
       message: "Verification Email Sent",
    });
+});
+
+/**
+ * setStorage is used to store the user token in localStorage
+ */
+
+Cypress.Commands.add("setStorage" as any, (accountType) => {
+   const value = {
+      access_token: uuid.v4(),
+      user: {
+         firstname: "Firstname",
+         lastname: "Lastname",
+         is_teacher: accountType === "Teacher",
+         is_parent: accountType === "Parent",
+         email: "user@email.com",
+      },
+      user_type: (accountType as string).toLowerCase(),
+   };
+   cy.window().then((slug) => {
+      slug.localStorage.setItem("token" as string, JSON.stringify(value));
+      slug.localStorage.setItem("token_timestamp", "" + Date.now());
+   });
+});
+
+// General stuffs
+Cypress.Commands.add("getClasses" as any, () => {
+   (cy as any).interceptGet("/academics/class", "teachers/classes.json");
 });

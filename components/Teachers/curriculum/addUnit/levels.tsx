@@ -1,80 +1,80 @@
-import React, { FC, ChangeEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'store/store';
-import { Props, styles, availableLevels } from '.';
-import { ILevels } from 'types/interfaces';
-import { updateLevels } from 'store/unitsSlice';
-import { FaChevronDown, FaPlus } from 'react-icons/fa';
+import React, { FC, ChangeEvent } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "store/store";
+import { Props, styles, availableLevels } from ".";
+import { ILevels } from "types/interfaces";
+import { updateLevels } from "store/unitsSlice";
+import { FaChevronDown, FaPlus } from "react-icons/fa";
 
 const Levels: FC<Props> = ({ openedModal, updateOpenedModal }) => {
-  const { levels, standard } = useSelector((state: RootState) => state.unit.addUnit);
-  return (
-    <article className="flex flex-col md:flex-row gap-2 relative">
-      <div
-        className={`${styles.topic} ${
-          openedModal === 'level' ? ' outline-[#2073fa]' : 'outline-transparent'
-        }`}
-        onClick={(event: any) => {
-          if (!event.target.classList.contains('dropdown')) {
-            updateOpenedModal('level');
-          }
-        }}
-      >
-        <h1>Level(s)</h1>
-        <i>
-          <FaChevronDown />
-        </i>
-        {openedModal === 'level' && (
-          <div className={styles.preview}>
-            {standard === 'Advance' &&
-              availableLevels
-                .filter((level: ILevels) => level.title === 'Orange')
-                .map((level: ILevels, index: number) => {
-                  return <LevelsInputContainer level={level} key={index} />;
-                })}
-            {standard !== 'Advance' &&
-              availableLevels.map((level: ILevels, index: number) => (
-                <LevelsInputContainer level={level} key={index} />
-              ))}
-          </div>
-        )}
-      </div>
-      <div className={styles.numbersSelectedContainer}>
-        {levels === '' ? (
-          `0 levels selected`
-        ) : (
-          <span className={styles.selectedItems}>{levels}</span>
-        )}
-      </div>
-    </article>
-  );
+   const { levels, standard } = useSelector((state: RootState) => state.unit.addUnit);
+   return (
+      <article className="relative flex flex-col gap-2 md:flex-row">
+         <div
+            className={`${styles.topic} ${openedModal === "level" ? " outline-[#2073fa]" : "outline-transparent"}`}
+            onClick={(event: any) => {
+               if (!event.target.classList.contains("dropdown")) {
+                  updateOpenedModal("level");
+               }
+            }}
+            data-testid="level"
+         >
+            <h1>Level(s)</h1>
+            <i>
+               <FaChevronDown />
+            </i>
+            {openedModal === "level" && (
+               <div className={styles.preview}>
+                  {standard === "Advance" &&
+                     availableLevels
+                        .filter((level: ILevels) => level.title === "Orange")
+                        .map((level: ILevels, index: number) => {
+                           return <LevelsInputContainer updateOpenedModal={updateOpenedModal} level={level} key={index} index={index} />;
+                        })}
+                  {standard !== "Advance" &&
+                     availableLevels.map((level: ILevels, index: number) => (
+                        <LevelsInputContainer updateOpenedModal={updateOpenedModal} index={index} level={level} key={index} />
+                     ))}
+               </div>
+            )}
+         </div>
+         <div className={styles.numbersSelectedContainer}>
+            {levels === "" ? `0 levels selected` : <span className={styles.selectedItems}>{levels}</span>}
+         </div>
+      </article>
+   );
 };
 
-const LevelsInputContainer = ({ level }: { level: ILevels }) => {
-  const dispatch = useDispatch();
-  const { levels } = useSelector((state: RootState) => state.unit.addUnit);
-  return (
-    <div className={`${styles.inputContainer} relative`}>
-      <input
-        type="radio"
-        name="levels"
-        id={level.title}
-        onChange={() => {
-          dispatch(updateLevels({ value: level.title, type: 'add' }));
-        }}
-        className="hidden dropdown"
-      />
-      <label
-        htmlFor={level.title}
-        className={`hover:text-[#2073fa] dropdown ${levels === level.title && 'text-[#2073fa]'}`}
-      >
-        {level.title}
-      </label>
-      <p className={`hoverText right-[0px] -top-[10px] bg-[#2073fa] after:bg-[#2073fa]`}>
-        {level.hoverText}
-      </p>
-    </div>
-  );
+const LevelsInputContainer = ({
+   level,
+   index,
+   updateOpenedModal,
+}: {
+   level: ILevels;
+   index: number;
+   updateOpenedModal: (modalToOpen: string) => void;
+}) => {
+   const dispatch = useDispatch();
+   const { levels } = useSelector((state: RootState) => state.unit.addUnit);
+   return (
+      <div className={`${styles.inputContainer} relative`}>
+         <input
+            type="radio"
+            name="levels"
+            id={level.title}
+            onChange={() => {
+               dispatch(updateLevels({ value: level.title, type: "add" }));
+               updateOpenedModal("");
+            }}
+            className="dropdown hidden"
+            data-testid={`level-${index}`}
+         />
+         <label htmlFor={level.title} className={`dropdown hover:text-[#2073fa] ${levels === level.title && "text-[#2073fa]"}`}>
+            {level.title}
+         </label>
+         <p className={`hoverText right-[0px] -top-[10px] bg-[#2073fa] after:bg-[#2073fa]`}>{level.hoverText}</p>
+      </div>
+   );
 };
 
 export default Levels;

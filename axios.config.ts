@@ -19,7 +19,7 @@ http.interceptors.response.use(
       const errorConfig = error.config;
 
       if (error.response?.status === 401) {
-         window.location.replace("/login");
+         window.location.replace("/login/select-account-type");
          dispatch(openErrorModal({ errorText: ["Session Expired, log in again"] }));
          return Promise.reject(error);
       }

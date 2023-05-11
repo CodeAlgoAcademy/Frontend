@@ -29,11 +29,11 @@ const GeneralNav = () => {
    const { firstname, lastname } = useSelector((state: RootState) => state.user);
    const currentClass = useSelector((state: RootState): CurrentClassState => state.currentClass);
 
-   const classDetails = classes.map((item: CurrentClassState) => {
+   const classDetails = classes?.map((item: CurrentClassState) => {
       const { className, color, id } = item;
       return { className, color, id };
    });
-   const otherClassDetails = classDetails.filter((item) => item.className !== currentClass.className);
+   const otherClassDetails = classDetails?.filter((item) => item.className !== currentClass.className);
    const [classListView, setClassListView] = useState(false);
 
    const dropdownStyle = {
@@ -58,19 +58,8 @@ const GeneralNav = () => {
       localStorage.removeItem("token");
       localStorage.removeItem("token_timestamp");
       dispatch(resetAuthUser());
-      router.push("/login");
+      router.push("/login/select-account-type");
    };
-
-   // Incase the user refreshes the page
-   const getClass = async () => {
-      const data = await dispatch(getAllClasses());
-   };
-
-   useEffect(() => {
-      if (!currentClass || classes.length === 0) {
-         getClass();
-      }
-   }, [router?.pathname]);
 
    useEffect(() => {
       setUser(getUserFromLocalStorage());

@@ -109,12 +109,14 @@ export default function Parent() {
                         Sign Up with Facebook
                      </button>
                   )}
-                  {isLastStep && <button className="mt-4 block w-full text-center underline">Continue as student</button>}
                </div>
             </form>
          </AuthLayout>
          {modalOpen && (
-            <div className="fixed top-0 left-0 z-[4] flex min-h-screen w-[100vw] items-center justify-center bg-[rgba(0,0,0,.5)]">
+            <div
+               className="fixed top-0 left-0 z-[4] flex min-h-screen w-[100vw] items-center justify-center bg-[rgba(0,0,0,.5)]"
+               data-testid="success-modal"
+            >
                <div className="w-[90vw] max-w-[600px] rounded-md bg-white p-8 shadow-md">
                   <div className="py-6">
                      <span className="mb-2 flex w-full items-center justify-center text-center text-[70px] text-green-600">
