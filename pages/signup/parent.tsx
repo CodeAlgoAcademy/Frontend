@@ -1,20 +1,18 @@
-import GoogleBtn from "@/components/googleBtn";
-import ParentSignUp1 from "@/components/parentMultiForm/ParentSignUp1";
-import ParentSignUp2 from "@/components/parentMultiForm/ParentSignUp2";
-import ParentSignUp3 from "@/components/parentMultiForm/ParentSignUp3";
-import ParentSignUp4 from "@/components/parentMultiForm/ParentSignUp4";
-import ParentSignUp5 from "@/components/parentMultiForm/ParentSignUp5";
-import ParentSignUp6 from "@/components/parentMultiForm/ParentSignUp6";
-import ParentSignUp7 from "@/components/parentMultiForm/ParentSignUp7";
-import Safety1 from "@/components/parentMultiForm/Safety1";
-import Safety2 from "@/components/parentMultiForm/Safety2";
-import Safety3 from "@/components/parentMultiForm/Safety3";
-import ThankyouForm from "@/components/parentMultiForm/ThankyouForm";
-import WelcomeForm from "@/components/parentMultiForm/WelcomeForm";
-import AuthLayout from "@/components/parents/AuthLayout";
-import useMultiForm from "@/components/useMultiForm";
-import Image from "next/image";
-import Link from "next/link";
+import GoogleBtn from "@/components/UI/googleBtn";
+import Form1 from "@/components/stepForm/general/Form1";
+import Form2 from "@/components/stepForm/general/Form2";
+import Form3 from "@/components/stepForm/general/Form3";
+import AddStudent from "@/components/stepForm/parents/AddStudent";
+import AddStudentExperience from "@/components/stepForm/parents/AddStudentExperience";
+import AddStudentDetails from "@/components/stepForm/parents/AddStudentDetails";
+import SuccessForm from "@/components/stepForm/parents/SuccessRes";
+import Safety1 from "@/components/stepForm/parents/Safety1";
+import Safety2 from "@/components/stepForm/parents/Safety2";
+import Safety3 from "@/components/stepForm/parents/Safety3";
+import ThankyouForm from "@/components/stepForm/parents/Thankyou";
+import WelcomeForm from "@/components/stepForm/parents/WelcomeForm";
+import AuthLayout from "@/components/layouts/AuthLayout";
+import useMultiForm from "utils/useMultiForm";
 import { useRouter } from "next/router";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,6 +21,7 @@ import { addChild, addChildFriend, resetScreenTime } from "store/parentChildSlic
 import { FiCheckCircle } from "react-icons/fi";
 import { RootState } from "store/store";
 import { updateUser } from "store/authSlice";
+
 export default function Parent() {
    const dispatch = useDispatch();
    const router = useRouter();
@@ -30,14 +29,14 @@ export default function Parent() {
    const parent = useSelector((state: RootState) => state.parentChild);
    const [modalOpen, setModalOpen] = useState(false);
    const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next, goTo } = useMultiForm([
-      <ParentSignUp1 key={1} />,
-      <ParentSignUp2 key={2} />,
-      <ParentSignUp3 key={3} />,
+      <Form1 key={1} />,
+      <Form2 key={2} />,
+      <Form3 key={3} />,
       <WelcomeForm key={4} />,
-      <ParentSignUp4 key={5} />,
-      <ParentSignUp5 key={7} />,
-      <ParentSignUp6 key={6} />,
-      <ParentSignUp7 key={8} />,
+      <AddStudent key={5} />,
+      <AddStudentExperience key={7} />,
+      <AddStudentDetails key={6} />,
+      <SuccessForm key={8} />,
       <Safety1 key={9} />,
       <Safety2 key={10} />,
       <Safety3 key={11} />,
@@ -49,6 +48,7 @@ export default function Parent() {
       console.log(parent, currentStepIndex);
       if (currentStepIndex === 2) {
          const data = await dispatch(signUpUser());
+         // Set this to the local storage to know whether to auto-close page after verification
          localStorage.setItem("parent-signup", JSON.stringify(true));
          if (!data?.error?.message) {
             setModalOpen(true);
@@ -109,12 +109,14 @@ export default function Parent() {
                         Sign Up with Facebook
                      </button>
                   )}
-                  {isLastStep && <button className="mt-4 block w-full text-center underline">Continue as student</button>}
                </div>
             </form>
          </AuthLayout>
          {modalOpen && (
-            <div className="fixed top-0 left-0 z-[4] flex min-h-screen w-[100vw] items-center justify-center bg-[rgba(0,0,0,.5)]">
+            <div
+               className="fixed top-0 left-0 z-[4] flex min-h-screen w-[100vw] items-center justify-center bg-[rgba(0,0,0,.5)]"
+               data-testid="success-modal"
+            >
                <div className="w-[90vw] max-w-[600px] rounded-md bg-white p-8 shadow-md">
                   <div className="py-6">
                      <span className="mb-2 flex w-full items-center justify-center text-center text-[70px] text-green-600">

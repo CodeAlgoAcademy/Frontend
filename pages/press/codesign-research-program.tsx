@@ -1,5 +1,5 @@
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar/Navbar";
+import Footer from "@/components/home/Footer";
+import Navbar from "@/components/navbar/home/Navbar";
 import BlogTitle from "@/components/press/BlogTitle";
 import Header from "@/components/press/Header";
 import ImagesContainer from "@/components/press/ImagesContainer";

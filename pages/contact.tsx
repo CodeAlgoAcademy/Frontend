@@ -1,5 +1,5 @@
-import Navbar from "@/components/Navbar/Navbar";
-import Footer from "@/components/Footer";
+import Navbar from "@/components/navbar/home/Navbar";
+import Footer from "@/components/home/Footer";
 import React, { ChangeEvent, useState } from "react";
 import { BiEnvelope, BiPhone } from "react-icons/bi";
 import http from "axios.config";
@@ -26,6 +26,7 @@ const Contact = () => {
             name,
          });
          setModalOpened(true);
+         alert(data?.email + data?.subject + data?.message + data?.name);
          dispatch(closePreloader());
       } catch (error: any) {
          console.log(error);
@@ -80,7 +81,7 @@ const Contact = () => {
                      onChange={(e) => {
                         setEmail(e.target.value);
                      }}
-                     type="text"
+                     type="email"
                      placeholder="What's your email?"
                      className="w-full rounded-md border-[1.5px] p-2 outline-none focus:border-orange-400"
                   />

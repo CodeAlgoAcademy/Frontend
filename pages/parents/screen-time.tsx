@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
-import ParentLayout from "@/components/parents/ParentLayout";
-import SideNav from "@/components/parents/ParentSideNav";
+import ParentLayout from "@/components/layouts/ParentLayout";
+import SideNav from "@/components/parents/UI/ParentSideNav";
 // import React from 'react';
-import ContentBox from "@/components/parents/ContentBox";
-import BarChart from "@/components/parents/BarChart";
-import DashboardBox from "@/components/parents/DashboardBox";
-import ScreenTimeComponent from "@/components/parentMultiForm/screenTimeComponent";
+import ContentBox from "@/components/parents/UI/ContentBox";
+import BarChart from "@/components/parents/UI/BarChart";
+import ScreenTimeComponent from "@/components/parents/UI/screenTimeComponent";
 import { IParentChild, screentimeTypes } from "types/interfaces";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { editScreentime, getChildren } from "store/parentChildSlice";
-import NoChild from "@/components/parents/NoChild";
+import NoChild from "@/components/parents/UI/NoChild";
 
 const ScreenTime = () => {
    const dispatch = useDispatch();

@@ -6,15 +6,15 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { openAddUnitModal } from "store/modalSlice";
-import AddUnit from "@/components/curriculum/addUnit";
+import AddUnit from "@/components/Teachers/curriculum/addUnit";
 import { RootState } from "store/store";
 import { SlLoop } from "react-icons/sl";
 import { deleteCurriculum, getAllCurriculums } from "services/curriculumService";
 import { IAllCurriculum, Icurriculum } from "types/interfaces";
 import { BiArrowBack } from "react-icons/bi";
-import SingleCurriculum from "@/components/curriculum/singleCurriculum";
+import SingleCurriculum from "@/components/Teachers/curriculum/singleCurriculum";
 import { getDate } from "utils/getDate";
-import TeacherLayout from "@/components/Teachers/TeacherLayout";
+import TeacherLayout from "@/components/layouts/TeacherLayout";
 
 export default function Index() {
    const [past, setPast] = useState<boolean>(false);

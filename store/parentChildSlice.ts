@@ -181,7 +181,7 @@ export const parentSlice = createSlice({
       builder.addCase(getChildren.fulfilled, (state, action: PayloadAction<IParentChild[]>) => {
          state.children = action.payload;
          // if its another parent child or if it's the first time fetching the students, set them to first parent child else find the student id, (incase of updates!)
-         const child = action.payload.find((student) => student?.id === state.currentChild?.id) as IParentChild;
+         const child = action.payload?.find((student) => student?.id === state.currentChild?.id) as IParentChild;
          if (child) {
             state.currentChild = child;
          } else {

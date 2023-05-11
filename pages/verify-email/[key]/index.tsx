@@ -18,6 +18,7 @@ const VerifyWithKey = () => {
    const dispatch = useDispatch();
    const router = useRouter();
    const key = router?.query?.key;
+
    const verifyEmail = async () => {
       if (key) {
          setLoading(true);
@@ -64,8 +65,13 @@ const VerifyWithKey = () => {
          <div className="mx-auto w-[90vw] max-w-[600px] rounded-md bg-white p-6 shadow-lg">
             {loading && !error && (
                <div className="flex flex-col items-center justify-center gap-y-4">
-                  <div className="h-[50px] w-[50px] animate-spin rounded-full border-[6px] border-[lightblue] border-t-[#2073fa]"></div>
-                  <p className="text-[21px] font-bold">Verifying your email address</p>
+                  <div
+                     className="h-[50px] w-[50px] animate-spin rounded-full border-[6px] border-[lightblue] border-t-[#2073fa]"
+                     data-testid="loader"
+                  ></div>
+                  <p className="text-[21px] font-bold" data-testid="loading-message">
+                     Verifying your email address
+                  </p>
                </div>
             )}
             {!loading && !error && (
@@ -73,7 +79,9 @@ const VerifyWithKey = () => {
                   <span className="mb-2 flex w-full items-center justify-center text-center text-[70px] text-green-600">
                      <FiCheckCircle />
                   </span>
-                  <p className="mt-4 text-center text-[21px] font-bold">Your Account has been verified successfully</p>
+                  <p className="mt-4 text-center text-[21px] font-bold" data-testid="success-message">
+                     Your Account has been verified successfully
+                  </p>
                   <div className="mt-4 border-t-4 pt-4">
                      <Link href={"/login"}>
                         <button className=" mx-auto flex items-center gap-x-2 rounded-md bg-[#2073fe] py-3 px-5 text-white">
