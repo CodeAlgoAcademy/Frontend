@@ -4,21 +4,21 @@ import { IUser } from "types/interfaces";
 const ACCESS_TOKEN_EXPIRATION_TIME = 3600 * 1000; // one hour expiration
 const REFRESH_TOKEN_EXPIRATION_TIME = 3600 * 1000 * 24; // one day expiration
 
-export const setTimeStamp = () => {
+export function setTimeStamp() {
    if (typeof window !== "undefined") {
       window.localStorage.setItem("token_timestamp", "" + Date.now());
    }
-};
+}
 
-const getTimeStamp = () => {
+export function getTimeStamp() {
    if (typeof window !== "undefined") {
       const timestamp: number = Number(window.localStorage.getItem("token_timestamp"));
 
       return timestamp;
    }
-};
+}
 
-export const refreshToken = async () => {
+export async function refreshToken() {
    if (typeof window !== "undefined") {
       if (Date.now() - getTimeStamp()! > REFRESH_TOKEN_EXPIRATION_TIME) {
          window.localStorage.removeItem("token");
@@ -46,16 +46,16 @@ export const refreshToken = async () => {
          }
       }
    }
-};
+}
 
-export const getToken = () => {
+export function getToken() {
    if (typeof window !== "undefined") {
       const token = JSON.parse(`${window.localStorage.getItem("token")}`);
       return token?.access_token;
    }
-};
+}
 
-export const getAccessToken = () => {
+export function getAccessToken() {
    if (typeof window !== "undefined") {
       const localAccessToken = getToken();
 
@@ -65,18 +65,19 @@ export const getAccessToken = () => {
             refreshToken();
          }
       }
+
       return localAccessToken;
    }
-};
+}
 
-export const getRefreshToken = () => {
+export function getRefreshToken() {
    if (typeof window !== "undefined") {
       const token = JSON.parse(`${window.localStorage.getItem("token")}`);
       return token?.refresh_token;
    }
-};
+}
 
-export const addUserToLocalStorage = (user: IUser) => {
+export function addUserToLocalStorage(user: IUser) {
    localStorage.setItem(
       "token",
       JSON.stringify({
@@ -87,8 +88,8 @@ export const addUserToLocalStorage = (user: IUser) => {
       })
    );
    setTimeStamp();
-};
+}
 
-export const getUserFromLocalStorage = () => {
+export function getUserFromLocalStorage() {
    return JSON.parse(localStorage.getItem("token") as string)?.user;
-};
+}

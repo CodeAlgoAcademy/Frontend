@@ -1,14 +1,14 @@
-import ParentLayout from "@/components/parents/ParentLayout";
-import SideNav from "@/components/parents/ParentSideNav";
+import ParentLayout from "@/components/layouts/ParentLayout";
+import SideNav from "@/components/parents/UI/ParentSideNav";
 import React from "react";
-import ContentBox from "@/components/parents/ContentBox";
-import RecentInteraction from "@/components/parents/RecentInteraction";
-import KidsFriend from "@/components/parents/KidsFriend";
-import AddAFriend from "@/components/parents/AddAFriend";
-import FriendRequests from "@/components/parents/FriendRequests";
+import ContentBox from "@/components/parents/UI/ContentBox";
+import RecentInteraction from "@/components/parents/multiplayer/RecentInteraction";
+import KidsFriend from "@/components/parents/multiplayer/KidsFriend";
+import AddAFriend from "@/components/parents/multiplayer/AddAFriend";
+import FriendRequests from "@/components/parents/multiplayer/FriendRequests";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
-import NoChild from "@/components/parents/NoChild";
+import NoChild from "@/components/parents/UI/NoChild";
 
 const Multiplayer = () => {
    const { children } = useSelector((state: RootState) => state.parentChild);

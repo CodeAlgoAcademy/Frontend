@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IAddClass } from "../types/interfaces";
-import { colors } from "../components/addClass/colors";
+import { colors } from "../components/Teachers/addClass/colors";
 import { addClass } from "services/classesService";
 
 const initialState: IAddClass = {

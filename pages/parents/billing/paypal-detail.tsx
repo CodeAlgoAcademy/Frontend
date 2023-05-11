@@ -1,4 +1,4 @@
-import ParentLayout from "@/components/parents/ParentLayout";
+import ParentLayout from "@/components/layouts/ParentLayout";
 import { countryList } from "@/components/signup/countries";
 import Image from "next/image";
 import { ReactNode } from "react";
