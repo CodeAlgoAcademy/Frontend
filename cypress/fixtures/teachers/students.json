@@ -1,0 +1,39 @@
+{
+   "students": [
+      {
+         "firstName": "CodeAlgo",
+         "lastName": "User",
+         "email": "codealgo.user1@academy.com",
+         "username": "codealgo.user1",
+         "id": 1,
+         "assignments": [
+            { "unit": "Grade", "status": "completed", "title": "Variables", "progress": 80, "start_date": "2022-01-13", "end_date": "2022-02-20" },
+            { "unit": "Grade", "status": "completed", "title": "Variables", "progress": 80, "start_date": "2022-01-13", "end_date": "2022-02-20" },
+            { "unit": "Grade", "status": "completed", "title": "Variables", "progress": 80, "start_date": "2022-01-13", "end_date": "2022-02-20" },
+            { "unit": "Grade", "status": "completed", "title": "Variables", "progress": 80, "start_date": "2022-01-13", "end_date": "2022-02-20" },
+            { "unit": "Grade", "status": "completed", "title": "Variables", "progress": 80, "start_date": "2022-01-13", "end_date": "2022-02-20" }
+         ]
+      },
+      {
+         "firstName": "CodeAlgo",
+         "lastName": "User2",
+         "email": "codealgo.user2@academy.com",
+         "username": "codealgo.user2",
+         "id": 2,
+         "assignments": [
+            { "unit": "Grade", "status": "completed", "title": "Variables", "progress": 80, "start_date": "2022-01-13", "end_date": "2022-02-20" },
+            { "unit": "Grade", "status": "completed", "title": "Variables", "progress": 80, "start_date": "2022-01-13", "end_date": "2022-02-20" }
+         ]
+      },
+      {
+         "firstName": "CodeAlgo",
+         "lastName": "Use3",
+         "email": "codealgo.user3@academy.com",
+         "username": "codealgo.user3",
+         "id": 3,
+         "assignments": [
+            { "unit": "Grade", "status": "completed", "title": "Variables", "progress": 80, "start_date": "2022-01-13", "end_date": "2022-02-20" }
+         ]
+      }
+   ]
+}

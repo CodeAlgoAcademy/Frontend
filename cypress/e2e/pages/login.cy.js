@@ -1,4 +1,4 @@
-import React from "react";
+/// <reference types="cypress" />
 
 describe("Login", () => {
    beforeEach(() => {
@@ -38,8 +38,6 @@ describe("Login", () => {
       cy.location("pathname").should("eq", "/login/parent");
 
       // log in user
-      cy.get(`[type="email"]`).type("useremail@gmail.com");
-      cy.get(`[type="password"]`).type("123456789");
       cy.contains("button", /login/i).click();
 
       // route to the add class page if login is successful

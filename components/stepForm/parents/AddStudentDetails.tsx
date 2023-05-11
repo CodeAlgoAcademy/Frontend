@@ -53,7 +53,12 @@ export default function ParentSignUp5() {
             onChange={onChange}
          />
          <label className="mt-6 block text-xl font-semibold">Verify Password</label>
-         <input className="mb-[2.5rem] mt-3 block h-[2.5rem] w-full rounded-xl px-4 py-2 focus:outline-0" type="password" required />
+         <input
+            className="mb-[2.5rem] mt-3 block h-[2.5rem] w-full rounded-xl px-4 py-2 focus:outline-0"
+            type="password"
+            name="confirm-password"
+            required
+         />
       </div>
    );
 }
