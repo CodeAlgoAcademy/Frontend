@@ -1,0 +1,58 @@
+[
+   {
+      "id": 353,
+      "topic": { "title": "What is coding", "description": "" },
+      "students": [],
+      "start_date": "2023-05-12",
+      "end_date": "2023-05-15",
+      "status": "Published"
+   },
+   {
+      "id": 354,
+      "topic": { "title": "programming languages", "description": "" },
+      "students": [],
+      "start_date": "2023-05-12",
+      "end_date": "2023-05-15",
+      "status": "inactive"
+   },
+   {
+      "id": 355,
+      "topic": { "title": "algorithms", "description": "" },
+      "students": [],
+      "start_date": "2023-05-12",
+      "end_date": "2023-05-15",
+      "status": "inactive"
+   },
+   {
+      "id": 356,
+      "topic": { "title": "print commands", "description": "" },
+      "students": [],
+      "start_date": "2023-05-12",
+      "end_date": "2023-05-15",
+      "status": "inactive"
+   },
+   {
+      "id": 357,
+      "topic": { "title": "comments", "description": "" },
+      "students": [],
+      "start_date": "2023-05-12",
+      "end_date": "2023-05-15",
+      "status": "inactive"
+   },
+   {
+      "id": 358,
+      "topic": { "title": "fixing errors", "description": "" },
+      "students": [],
+      "start_date": "2023-05-12",
+      "end_date": "2023-05-15",
+      "status": "inactive"
+   },
+   {
+      "id": 359,
+      "topic": { "title": "print commands in python", "description": "" },
+      "students": [],
+      "start_date": "2023-05-12",
+      "end_date": "2023-05-15",
+      "status": "inactive"
+   }
+]
