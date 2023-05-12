@@ -161,7 +161,10 @@ export default function Index() {
                   {current && (
                      <>
                         <h1 className="mt-10 w-full text-[1.5rem] font-bold text-[#2073fa]">Current Unit</h1>
-                        <div className="box-border flex flex-col flex-wrap justify-center md:flex-row  md:justify-start md:gap-[1rem] lg:gap-[2rem]">
+                        <div
+                           data-testid="current-unit-container"
+                           className="box-border flex flex-col flex-wrap justify-center md:flex-row  md:justify-start md:gap-[1rem] lg:gap-[2rem]"
+                        >
                            {currentCurriculum?.map((curriculum: Icurriculum) => {
                               return <SingleCurriculum active={active} curriculum={curriculum} key={curriculum.id} />;
                            })}
