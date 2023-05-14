@@ -43,7 +43,4 @@ export interface User {
    lastName: string;
    email: string;
    id: number;
-   fullName?: string;
-   first_name?: string;
-   last_name?: string;
 }
