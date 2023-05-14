@@ -1,6 +1,6 @@
 import { Avatar, IconButton } from "@mui/material";
 import React, { FormEvent, useEffect, useState, ChangeEvent } from "react";
-import { IMessage } from "types/interfaces";
+import { IFriendsParent, IMessage } from "types/interfaces";
 import { GrAttachment } from "react-icons/gr";
 import { BsEmojiSmile } from "react-icons/bs";
 import { BiSend } from "react-icons/bi";
@@ -33,6 +33,7 @@ const ChatRoom = () => {
    };
 
    const handleSend: any = (e: ChangeEvent<HTMLInputElement>) => {
+      console.log(openedMessageOwner);
       if (openedMessageOwner.id) {
          if (typingText !== "") {
             e.preventDefault();
@@ -45,11 +46,6 @@ const ChatRoom = () => {
             );
             const message = { user: { email }, date: Date.now(), text: typingText };
             setMessages([...messages, message] as IMessage[]);
-            // if (router.pathname.includes("parent")) {
-            //    dispatch(getParentOpenMesssages());
-            // } else {
-            //    dispatch(getTeacherOpenMesssages());
-            // }
             setTypingText("");
          }
       } else {
@@ -86,10 +82,15 @@ const ChatRoom = () => {
          <div className={styles.header}>
             <Avatar src="" alt="" />
             <p className="text-sm font-bold capitalize">
+               {/* 
+                  If the id exists: 
+                  for teachers, display firstname and lastname,
+                  for parents display ?.friend  
+               */}
                {openedMessageOwner?.id
-                  ? openedMessageOwner?.firstName
-                     ? openedMessageOwner?.firstName + " " + openedMessageOwner?.lastName
-                     : openedMessageOwner?.first_name + " " + openedMessageOwner?.last_name
+                  ? (openedMessageOwner as User)?.firstName
+                     ? (openedMessageOwner as User)?.firstName + " " + (openedMessageOwner as User)?.lastName
+                     : (openedMessageOwner as IFriendsParent).friend
                   : ""}
             </p>
          </div>

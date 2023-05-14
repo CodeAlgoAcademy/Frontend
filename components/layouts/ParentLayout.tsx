@@ -34,6 +34,7 @@ const ParentLayout = ({ children }: Props) => {
    const { addChildModalOpen } = useSelector((state: RootState) => state.modal);
    // console.log(parentChildren);
    const { firstname, username, lastname, email } = useSelector((state: RootState) => state.user);
+
    const logout = () => {
       localStorage.removeItem("token");
       localStorage.removeItem("token_timestamp");
@@ -256,6 +257,7 @@ const ParentLayout = ({ children }: Props) => {
                         onClick={() => {
                            setOpen((prev) => !prev);
                         }}
+                        data-testid="select-child"
                      >
                         <h1 className="text-3xl font-semibold capitalize text-[#2073FA]">{currentChild?.fullName}</h1>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="10" viewBox="0 0 18 10" fill="none">
@@ -279,6 +281,7 @@ const ParentLayout = ({ children }: Props) => {
                                        setOpen(false);
                                     }}
                                     className="w-full cursor-pointer px-3 py-3 capitalize text-black hover:bg-[#ced4e9]"
+                                    data-testid="child"
                                  >
                                     {child.fullName}
                                  </p>

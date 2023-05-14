@@ -12,8 +12,8 @@ describe("Assignments", () => {
       // Get the unit and route to the assignment page for that unit
       cy.interceptGet("/academics/curriculums/units/", "teachers/curriculums.json");
       cy.interceptGet(`/academics/class/1/student`, "teachers/students.json");
-      cy.interceptGet("/academics/curriculums/units/1/assignments/", "teachers/assignments.json");
-      cy.interceptPost("/academics/curriculums/units/1/assignment/", {
+      cy.interceptGet("/academics/curriculums/units/140/assignments/", "teachers/assignments.json");
+      cy.interceptPost("/academics/curriculums/units/140/assignment/", {
          message: "Assignment added successfully",
       });
 
