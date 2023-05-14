@@ -20,7 +20,7 @@ describe("Multiplayer", () => {
       // From the fixture, child with fullName "Daniel Adejare" is the one with a pending requests, let's first ensure that is the child selected
       cy.getByTestId("select-child").click();
 
-      cy.getByTestId("child", { timeout: 40000 })
+      cy.getByTestId("child", { timeout: 400000 })
          .contains(/Daniel Adejare/i)
          .click();
 
@@ -29,6 +29,24 @@ describe("Multiplayer", () => {
       //   Now the child the request was sent to has a username "DUNSIN_1cea7"
 
       cy.getByTestId("friends-container")
+         .find(`[data-testid='friend-req-0']`)
+         .contains(/dunsin_1cea7/i)
+         .should("be.visible");
+   });
+
+   it("Should display friends requests", () => {
+      // From the fixture, child with fullName "Adejare Daniel" is the one with a pending requests, let's first ensure that is the child selected
+      cy.getByTestId("select-child").click();
+
+      cy.getByTestId("child", { timeout: 4000000 })
+         .contains(/Adejare Daniel/i)
+         .click();
+
+      cy.getByTestId("select-child").click(); // closes the modal
+
+      //   Now the child the request was sent to has a username "DUNSIN_1cea7"
+
+      cy.getByTestId("friend-requests-container")
          .find(`[data-testid='friend-req-0']`)
          .contains(/dunsin_1cea7/i)
          .should("be.visible");

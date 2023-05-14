@@ -15,7 +15,7 @@ const FriendRequests = () => {
       >
          {currentChild?.friendRequests?.map((friend, index: number) => {
             return (
-               <article key={index} className="flex items-center justify-between gap-x-2 p-2">
+               <article key={index} className="flex items-center justify-between gap-x-2 p-2" data-testid={`friend-req-${index}`}>
                   <span className="flex items-center gap-x-2 ">
                      <p className="font-lighter text-[12px]">{friend.from_user}</p>
                   </span>
