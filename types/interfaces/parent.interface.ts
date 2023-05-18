@@ -4,7 +4,7 @@ export interface IParentChild {
    progress: [
       {
          unit: string;
-         assignment: number;
+         assignment: [{ title: string; completed: number }];
          lesson: number;
          id: number;
          completed: boolean;
