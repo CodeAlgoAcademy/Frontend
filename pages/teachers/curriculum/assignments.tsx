@@ -43,7 +43,7 @@ const Assignments = () => {
    const [assignmentDetails, setAssignmentDetails] = useState<AssignmentDetails>({
       title: "",
       order: "random",
-      number: 0,
+      number: 1,
       skills: [],
       students: [],
       start_date: getDate(),
@@ -69,7 +69,7 @@ const Assignments = () => {
       setAssignmentDetails({
          title: "",
          order: "random",
-         number: 0,
+         number: 1,
          skills: [],
          students: [],
          start_date: getDate(),
@@ -200,7 +200,7 @@ const Assignments = () => {
       dispatch(getAssignments());
    }, [dispatch]);
    useEffect(() => {
-      setAssignmentDetails((prev) => ({ ...prev, number: 0 }));
+      setAssignmentDetails((prev) => ({ ...prev, number: 1 }));
    }, [assignmentDetails.skills]);
    useEffect(() => {
       fetchAllStudents();
@@ -255,6 +255,7 @@ const Assignments = () => {
                            onClick={() => {
                               showModal("skillsResponse");
                            }}
+                           data-testid="skills-modal-controller"
                         >
                            <TbMedal />{" "}
                         </span>
@@ -275,6 +276,7 @@ const Assignments = () => {
                            onClick={() => {
                               showModal("studentResponse");
                            }}
+                           data-testid="students-modal-controller"
                         >
                            <IoPersonAddOutline />{" "}
                         </span>
@@ -298,13 +300,14 @@ const Assignments = () => {
                                  type="radio"
                                  name="schedule"
                                  value="now"
+                                 id="now-schedule"
                                  checked={assignmentDetails.is_current}
                                  onChange={() => {
                                     updateScheduleDate("start_date", getDate());
                                     updateAssignmentSchedule(true);
                                  }}
                               />
-                              <label className="form-check-label inline-block font-medium text-gray-800" htmlFor="schedule">
+                              <label className="form-check-label inline-block font-medium text-gray-800" htmlFor="now-schedule">
                                  Start Now
                               </label>
                            </div>
@@ -314,10 +317,11 @@ const Assignments = () => {
                                  type="radio"
                                  name="schedule"
                                  value="later"
+                                 id="later-schedule"
                                  checked={!assignmentDetails.is_current}
                                  onChange={() => updateAssignmentSchedule(false)}
                               />
-                              <label className="form-check-label inline-block font-medium text-gray-800" htmlFor="schedule">
+                              <label className="form-check-label inline-block font-medium text-gray-800" htmlFor="later-schedule">
                                  Schedule for later
                               </label>
                            </div>
@@ -365,10 +369,9 @@ const Assignments = () => {
                            <input
                               type="range"
                               name="number"
-                              min={0}
+                              min={1}
                               max={100}
                               value={assignmentDetails?.number}
-                              // step={assignmentDetails?.skills?.length}
                               className="assignment-slider h-[12px] w-[380px] appearance-none rounded-lg bg-gray-200 opacity-90 outline-none transition-all hover:opacity-100"
                               onChange={handleInputChange}
                            />
@@ -386,11 +389,12 @@ const Assignments = () => {
                                  className=""
                                  type="radio"
                                  name="order"
+                                 id="random-order"
                                  value="random"
                                  checked={assignmentDetails.order === "random"}
                                  onChange={handleInputChange}
                               />
-                              <label className="form-check-label inline-block font-medium text-gray-800" htmlFor="order">
+                              <label className="form-check-label inline-block font-medium text-gray-800" htmlFor="random-order">
                                  Random
                               </label>
                            </div>
@@ -400,10 +404,11 @@ const Assignments = () => {
                                  type="radio"
                                  name="order"
                                  value="sequence"
+                                 id="sequence-order"
                                  checked={assignmentDetails.order === "sequence"}
                                  onChange={handleInputChange}
                               />
-                              <label className="form-check-label inline-block font-medium text-gray-800" htmlFor="order">
+                              <label className="form-check-label inline-block font-medium text-gray-800" htmlFor="sequence-order">
                                  Sequence
                               </label>
                            </div>

@@ -5,16 +5,16 @@ import { getTeachers } from "services/teacherService";
 import { open_a_message } from "store/messagesSlice";
 import { RootState } from "store/store";
 import { getStudents } from "store/studentSlice";
-import { CurrentClassState } from "types/interfaces";
+import { CurrentClassState, Student, User } from "types/interfaces";
 
 const ChatTabs = () => {
-   const [active, setActive] = useState(0);
+   const [active, setActive] = useState<number | string>(0);
    const students = useSelector((state: RootState) => state.students.students);
    const { teachers } = useSelector((state: RootState) => state.allTeachers);
 
    const currentClass = useSelector((state: RootState): CurrentClassState => state.currentClass);
 
-   const [userSelected, setUserSelected] = useState<number>();
+   const [userSelected, setUserSelected] = useState<number | string>();
    const { email } = useSelector((state: RootState) => state.user);
    const [openedStudent, setOpenedStudent] = useState<boolean>(false);
    const [openedTeachers, setOpenedTeachers] = useState<boolean>(false);
@@ -34,12 +34,12 @@ const ChatTabs = () => {
          <article className={openedStudent ? "max-h-full flex-1 overflow-y-auto bg-gray-100 p-0" : "overflow-y-auto bg-gray-100"}>
             {openedStudent && (
                <div className="overflow-hidden">
-                  {students?.students?.map((student: any) => {
+                  {students?.students?.map((student: Student) => {
                      return (
                         <p
                            onClick={() => {
                               dispatch(open_a_message(student));
-                              setActive(student.id);
+                              setActive(student?.id as string);
                               setUserSelected(student.id);
                            }}
                            key={student.id}
@@ -69,8 +69,8 @@ const ChatTabs = () => {
             {openedTeachers && (
                <div className="overflow-hidden">
                   {teachers
-                     ?.filter((teacher: any) => teacher.email !== email)
-                     ?.map((teacher: any) => {
+                     ?.filter((teacher: User) => teacher.email !== email)
+                     ?.map((teacher: User) => {
                         return (
                            <p
                               onClick={() => {
