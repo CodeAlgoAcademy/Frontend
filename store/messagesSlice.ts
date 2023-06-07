@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { IUserConversation } from "types/interfaces";
+import { IFriendsParent, IUserConversation, Student } from "types/interfaces";
 import messageService from "services/messagesService";
 import { RootState } from "./store";
 import { errorResolver } from "utils/errorResolver";
@@ -60,7 +60,7 @@ export const messageSlice = createSlice({
       resetOpenStudent: (state: IUserConversation | any) => {
          state.openedMessageStudent = initialState.openedMessageStudent;
       },
-      open_a_message: (state: IUserConversation, action: PayloadAction<User>) => {
+      open_a_message: (state: IUserConversation, action: PayloadAction<User | IFriendsParent | Student>) => {
          state.openedMessageOwner = action.payload;
       },
    },

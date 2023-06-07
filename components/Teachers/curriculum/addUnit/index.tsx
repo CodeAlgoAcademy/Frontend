@@ -186,7 +186,7 @@ export const availableUnits = [
       startDate: "",
       endDate: "",
       isChosen: false,
-      hoverText: "",
+      hoverText: "Welcome to codealgo",
    },
    {
       id: "16",
@@ -195,7 +195,7 @@ export const availableUnits = [
       startDate: "",
       endDate: "",
       isChosen: false,
-      hoverText: "",
+      hoverText: "Data types are types associated to a particular data item and they define the operations that can be performed on it",
    },
    {
       id: "17",
@@ -204,7 +204,7 @@ export const availableUnits = [
       startDate: "",
       endDate: "",
       isChosen: false,
-      hoverText: "",
+      hoverText: "Lists are collections of related data types",
    },
 ];
 

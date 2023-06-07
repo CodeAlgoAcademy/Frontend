@@ -6,6 +6,7 @@ import { RootState } from "store/store";
 import { useSelector } from "react-redux";
 import { open_a_message } from "store/messagesSlice";
 import { getAllParents } from "services/parentService";
+import { IFriendsParent } from "types/interfaces";
 
 const ChatTabs = () => {
    const { email } = useSelector((state: RootState) => state.user);
@@ -23,34 +24,6 @@ const ChatTabs = () => {
    }, []);
    return (
       <>
-         {/* <div className={styles.singleTab} onClick={() => setTeacherTabOpened(!teacherTabOpened)}>
-            <p className="text-[20px]">Teachers</p>
-            <span className="text-[20px]">{teacherTabOpened ? <BiChevronUp /> : <BiChevronDown />}</span>
-         </div> */}
-         {/* <article className={teacherTabOpened ? "max-h-full flex-1 overflow-y-auto bg-gray-100 p-0" : "overflow-y-auto bg-gray-100"}>
-            {teacherTabOpened && (
-               <div className="overflow-hidden">
-                  {teachers?.map((teacher: any) => {
-                     return (
-                        <p
-                           onClick={() => {
-                              dispatch(open_a_message(teacher));
-                              setActive(teacher.id);
-                           }}
-                           key={teacher.id}
-                           className={
-                              active === teacher.id
-                                 ? `cursor-pointer border-y border-r bg-[#efecf5] p-5 hover:bg-[#e9e2f5] `
-                                 : `cursor-pointer border-y border-r p-5 hover:bg-[#e9e2f5]`
-                           }
-                        >
-                           {teacher.firstName} {teacher.lastName}
-                        </p>
-                     );
-                  })}
-               </div>
-            )}
-         </article> */}
          <div
             className={styles.singleTab}
             onClick={() => {
@@ -63,11 +36,11 @@ const ChatTabs = () => {
          <article className="flex-1 overflow-y-auto bg-gray-100">
             {parentTabOpened && (
                <div className="overflow-hidden">
-                  {parents?.map((parent: any) => {
+                  {parents?.map((parent: IFriendsParent) => {
                      return (
                         <p
                            onClick={() => {
-                              dispatch(open_a_message(parent));
+                              dispatch(open_a_message(parent as IFriendsParent));
                               setActive(parent.id);
                            }}
                            key={parent.id}
@@ -77,7 +50,7 @@ const ChatTabs = () => {
                                  : `cursor-pointer border-y border-r p-5 hover:bg-[#e9e2f5]`
                            }
                         >
-                           {parent.first_name + " " + parent.last_name}
+                           {parent.friend}
                         </p>
                      );
                   })}
