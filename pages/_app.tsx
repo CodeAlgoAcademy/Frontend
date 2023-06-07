@@ -7,6 +7,11 @@ import "../styles/globals.css";
 import "../styles/GeneralNav.css";
 import "../styles/Calendar.css";
 import Head from "next/head";
+import "swiper/css";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 // import "../styles/SyncfusionMaterial.min.css";
 
 registerLicense(`${process.env.NEXT_PUBLIC_SYNC_FUSION_LICENSE}`);
