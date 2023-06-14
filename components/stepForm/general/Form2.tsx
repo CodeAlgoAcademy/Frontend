@@ -17,7 +17,7 @@ export default function ParentSignUp2() {
                dispatch(updateUser({ key: "firstname", value: e.target.value }));
             }}
             type="text"
-            className="mt-3 block h-[2.5rem] w-full rounded-xl px-4 py-2 focus:outline-0"
+            className="auth-input"
             required
             placeholder="Enter your firstname"
          />
@@ -28,7 +28,7 @@ export default function ParentSignUp2() {
                dispatch(updateUser({ key: "lastname", value: e.target.value }));
             }}
             type="text"
-            className="mt-3 block h-[2.5rem] w-full rounded-xl px-4 py-2 focus:outline-0"
+            className="auth-input"
             required
             placeholder="Enter your lastname"
          />
