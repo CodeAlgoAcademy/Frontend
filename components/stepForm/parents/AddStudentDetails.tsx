@@ -22,15 +22,7 @@ export default function ParentSignUp5() {
             You and your student will have separate log ins on CodeAlgo. Don{"’"}t worry, you will still have access to your student{"’"}s account.{" "}
          </p>
          <label className="mt-6 block text-xl font-semibold">Username</label>
-         <input
-            className="mt-3 block h-[2.5rem] w-full rounded-xl px-4 py-2 focus:outline-0"
-            name="username"
-            type="text"
-            autoFocus
-            required
-            value={username}
-            onChange={onChange}
-         />
+         <input className="auth-input" name="username" type="text" autoFocus required value={username} onChange={onChange} />
          <button
             type="button"
             className="mt-2  block h-[2.5rem] w-full rounded-xl bg-white text-center font-bold text-[#2073FA] transition duration-300 ease-out hover:bg-[#2073FA] hover:text-white"
@@ -44,21 +36,9 @@ export default function ParentSignUp5() {
             Generate Username
          </button>
          <label className="mt-6 block text-xl font-semibold">Password</label>
-         <input
-            className="mt-3 block h-[2.5rem] w-full rounded-xl px-4 py-2 focus:outline-0"
-            type="password"
-            name="password"
-            required
-            value={password}
-            onChange={onChange}
-         />
+         <input className="auth-input" type="password" name="password" required value={password} onChange={onChange} />
          <label className="mt-6 block text-xl font-semibold">Verify Password</label>
-         <input
-            className="mb-[2.5rem] mt-3 block h-[2.5rem] w-full rounded-xl px-4 py-2 focus:outline-0"
-            type="password"
-            name="confirm-password"
-            required
-         />
+         <input className="auth-input mb-[2.5rem]" type="password" name="confirm-password" required />
       </div>
    );
 }

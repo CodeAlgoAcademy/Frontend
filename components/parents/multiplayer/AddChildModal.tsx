@@ -23,7 +23,7 @@ const AddChildModal = () => {
 
    return (
       <main className="fixed top-0 left-0 z-[6] flex min-h-screen w-full items-center justify-center bg-[rgba(0,0,0,0.5)]">
-         <div className="z-20 w-[92vw] max-w-[900px] rounded-md bg-white p-8">
+         <div className="z-20 w-[92vw] max-w-[900px] rounded-md bg-white p-8" data-testid="add-child-modal">
             <header className="flex items-center justify-between">
                <h2 className="text-[1.1rem] font-bold text-[#2073fa]">Add Child</h2>
                <i

@@ -15,23 +15,9 @@ export default function ParentSignUp4() {
       <div key={4}>
          <h1 className="text-[32px] font-bold">Tell us more about {fullName}</h1>
          <label className="mt-6 block text-xl font-semibold">Birthday</label>
-         <input
-            className="mt-3 block h-[2.5rem] w-full rounded-xl px-4 py-2 focus:outline-0"
-            type="date"
-            name="dob"
-            value={dob}
-            onChange={onChange}
-            required
-         />
+         <input className="auth-input" type="date" name="dob" value={dob} onChange={onChange} required />
          <label className="mt-6 block text-xl font-semibold capitalize">coding experience</label>
-         <select
-            name="codingExperience"
-            value={codingExperience}
-            onChange={onChange}
-            className="mb-[2.5rem] mt-3 block h-[2.5rem] w-full rounded-xl px-4 py-2 focus:outline-0"
-            id=""
-            required
-         >
+         <select name="codingExperience" value={codingExperience} onChange={onChange} className="auth-input mb-[2.5rem]" id="" required>
             <option value="experienced">Experienced</option>
             <option value="standard">Standard</option>
             <option value="beginner">Beginner</option>

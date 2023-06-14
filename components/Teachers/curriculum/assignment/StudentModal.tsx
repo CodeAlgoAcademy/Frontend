@@ -22,14 +22,20 @@ const StudentModal = ({
 }) => {
    const { className, color } = useSelector((state: RootState) => state.currentClass);
    return (
-      <div className="h-[500px] min-w-[800px] py-12">
+      <div className="h-[500px] min-w-[800px] py-12" data-testid="students-modal">
          <h3 className="pl-12 text-2xl font-semibold text-[#2073fa]">Student(s)</h3>
          <div className="flex items-center justify-between border-b px-12 py-4">
             <div className="flex items-center gap-4">
-               <label className="checkbox-container bottom-1">
-                  <input type="checkbox" name="allStudents" checked={allStudentCheckbox.isChecked} onChange={handleAllStudentChechbox} />
-                  <span className="checkmark big-checkmark"></span>
-               </label>
+               <div className="checkbox-container bottom-1">
+                  <input
+                     type="checkbox"
+                     name="allStudents"
+                     id="allStudents"
+                     checked={allStudentCheckbox.isChecked}
+                     onChange={handleAllStudentChechbox}
+                  />
+                  <label htmlFor="allStudents" className="checkmark big-checkmark"></label>
+               </div>
                <p className="font-semibold">{allStudentCheckbox.isChecked ? "Unselect all Students" : "Select all Students"}</p>
             </div>
             <div className="flex items-center gap-4 rounded-md border px-3 py-1">
@@ -38,7 +44,7 @@ const StudentModal = ({
             </div>
          </div>
          <div className="small-scroll-thumb grid h-[250px] grid-cols-3 gap-x-6 gap-y-8 overflow-y-auto scroll-smooth p-12">
-            {students.map(({ email, firstName, lastName }) => (
+            {students?.map(({ email, firstName, lastName }) => (
                <div key={email} className="mx-2 flex items-center gap-4">
                   <label className="checkbox-container bottom-1">
                      <input
