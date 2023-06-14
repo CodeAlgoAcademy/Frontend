@@ -22,10 +22,8 @@ const Header = () => {
                      <p className="mt-2 text-[1.3rem] text-slate-700 md:max-w-[500px]">At CodeAlgo Academy, we believe every child is a genius!</p>
                   </Fade>
                   <Fade triggerOnce={true} direction="up" duration={1000} delay={400}>
-                     <Link href={"/join-waitlist"}>
-                        <button className="mt-8 min-w-fit rounded-lg bg-orange-400 p-3 text-[15px] font-bold text-white shadow-md">
-                           Join Our Waiting List
-                        </button>
+                     <Link href={"/login/select-account-type"}>
+                        <button className="mt-8 min-w-fit rounded-lg bg-orange-400 p-3 text-[15px] font-bold text-white shadow-md">Sign in</button>
                      </Link>
                   </Fade>
                </div>

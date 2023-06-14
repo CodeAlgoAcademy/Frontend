@@ -15,7 +15,7 @@ export default function Safety3() {
          </p>
          <label className="mt-6 block text-xl font-semibold">Friend email or username</label>
          <input
-            className="mt-3 block h-[2.5rem] w-full rounded-xl px-4 py-2 focus:outline-0"
+            className="auth-input"
             type="text"
             required
             value={friend}
