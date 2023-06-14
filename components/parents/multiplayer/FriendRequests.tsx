@@ -5,41 +5,17 @@ import { RootState } from "store/store";
 
 const FriendRequests = () => {
    const dispatch = useDispatch();
-   const [friends, setFriends] = useState([
-      {
-         id: 0,
-         name: "hannah12",
-      },
-      {
-         id: 1,
-         name: "elitrevor",
-      },
-      {
-         id: 2,
-         name: "ilovemydog",
-      },
-      {
-         id: 3,
-         name: "hank45",
-      },
-      { id: 4, name: "codingisgreat10" },
-      {
-         id: 5,
-         name: "daniel_dunsin",
-      },
-      {
-         id: 6,
-         name: "isreal_ayanda",
-      },
-   ]);
 
    const currentChild = useSelector((state: RootState) => state.parentChild.currentChild);
 
    return (
-      <div className="mt-14 h-[220px] w-full overflow-hidden overflow-y-scroll rounded-xl bg-[#eeeeee] py-2 px-4">
+      <div
+         className="mt-14 h-[220px] w-full overflow-hidden overflow-y-scroll rounded-xl bg-[#eeeeee] py-2 px-4"
+         data-testid="friend-requests-container"
+      >
          {currentChild?.friendRequests?.map((friend, index: number) => {
             return (
-               <article key={index} className="flex items-center justify-between gap-x-2 p-2">
+               <article key={index} className="flex items-center justify-between gap-x-2 p-2" data-testid={`friend-req-${index}`}>
                   <span className="flex items-center gap-x-2 ">
                      <p className="font-lighter text-[12px]">{friend.from_user}</p>
                   </span>

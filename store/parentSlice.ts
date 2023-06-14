@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getAllParents } from "services/parentService";
+import { IFriendsParent } from "types/interfaces";
 
-const initialState = {
+const initialState: { parents: IFriendsParent[] } = {
    parents: [],
 };
 

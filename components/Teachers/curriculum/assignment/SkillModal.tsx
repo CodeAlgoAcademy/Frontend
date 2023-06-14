@@ -38,7 +38,7 @@ const SkillModal = ({
       dispatch(updateSkills({ grade, skillType }));
    }, [dispatch, grade, skillType]);
    return (
-      <div className="min-h-[650px] w-fit py-8">
+      <div className="min-h-[650px] w-fit py-8" data-testid="skills-modal">
          <div className="mb-auto flex h-full  grow flex-col items-stretch gap-8 pl-12 md:flex-row">
             <div className="flex w-[180px] flex-col justify-between gap-4">
                <div>
@@ -156,10 +156,16 @@ const SkillModal = ({
                         <div className="divide-y">
                            {tests.map(({ testTitle, testId }) => (
                               <div key={testId} className="flex h-12 items-center gap-4 px-6">
-                                 <label className="checkbox-container">
-                                    <input type="checkbox" name={testId} checked={skillCheckbox[testId]} onChange={handleSkillCheckboxChange} />
-                                    <span className="checkmark small-checkmark"></span>
-                                 </label>
+                                 <div className="checkbox-container">
+                                    <input
+                                       id={`testid-${testId}`}
+                                       type="checkbox"
+                                       name={testId}
+                                       checked={skillCheckbox[testId]}
+                                       onChange={handleSkillCheckboxChange}
+                                    />
+                                    <label htmlFor={`testid-${testId}`} className="checkmark small-checkmark inline-block"></label>
+                                 </div>
                                  <p className="... w-full truncate text-sm font-semibold opacity-60">{testTitle}</p>
                               </div>
                            ))}

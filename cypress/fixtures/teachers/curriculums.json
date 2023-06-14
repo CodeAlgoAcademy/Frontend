@@ -21,8 +21,8 @@
       "teacher": "ADEJAREDaniel_59f98",
       "grades": ["grade 1", "grade 2"],
       "level": "green",
-      "is_current": false,
-      "is_finished": true,
+      "is_current": true,
+      "is_finished": false,
       "start_date": "2023-05-09",
       "end_date": "2023-05-09",
       "description": "Variables are used to stored to be referenced and manipulated in a computer program"

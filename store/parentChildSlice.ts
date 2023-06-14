@@ -185,7 +185,7 @@ export const parentSlice = createSlice({
          if (child) {
             state.currentChild = child;
          } else {
-            state.currentChild = action.payload[0];
+            state.currentChild = action.payload?.[0];
          }
       });
    },

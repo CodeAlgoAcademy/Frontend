@@ -7,6 +7,8 @@ import AuthLayout from "@/components/layouts/AuthLayout";
 import GoogleBtn from "@/components/UI/googleBtn";
 import { updateUser } from "store/authSlice";
 import { openErrorModal } from "store/fetchSlice";
+import { AuthButton } from "../UI/Button";
+import Link from "next/link";
 
 const Login = () => {
    const dispatch = useDispatch();
@@ -65,13 +67,13 @@ const Login = () => {
                      dispatch(updateUser({ key: "email", value: e.target.value }));
                   }}
                   type="email"
-                  className="mt-3 block h-[2.5rem] w-full rounded-xl px-4 py-2 focus:outline-0"
+                  className="auth-input"
                   placeholder="enter email"
                   required
                />
                <label className="mt-6 block text-xl font-semibold">Password</label>
                <input
-                  className="mt-3 block h-[2.5rem] w-full rounded-xl px-4 py-2 focus:outline-0"
+                  className="auth-input"
                   value={password}
                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
                      dispatch(updateUser({ key: "password", value: e.target.value }));
@@ -80,9 +82,10 @@ const Login = () => {
                   placeholder="Enter Password"
                   required
                />
-               <button className="mt-6  block h-[2.5rem] w-full rounded-xl bg-orange-400 text-center font-bold text-white" type="submit">
-                  Login
-               </button>
+               <Link href="/change-password">
+                  <p className="mt-2 cursor-pointer font-bold text-[#222] underline">Forgot password</p>
+               </Link>
+               <AuthButton text="Login" />
                <GoogleBtn />
             </form>
          </>
