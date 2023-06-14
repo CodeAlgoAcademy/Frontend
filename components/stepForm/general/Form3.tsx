@@ -13,7 +13,7 @@ const ParentSignUp3 = () => {
          <input
             type="text"
             value={username}
-            className="mt-3 block h-[2.5rem] w-full rounded-xl px-4 py-2 focus:outline-0"
+            className="auth-input"
             placeholder="Enter your username"
             onChange={(e) => {
                dispatch(updateUser({ key: "username", value: e.target.value }));
@@ -23,7 +23,7 @@ const ParentSignUp3 = () => {
          <UsernameButton2 />
          <label className="mt-6 block text-xl font-semibold">Password</label>
          <input
-            className="mt-3 block h-[2.5rem] w-full rounded-xl px-4 py-2 focus:outline-0"
+            className="auth-input"
             value={password}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
                dispatch(updateUser({ key: "password", value: e.target.value }));
