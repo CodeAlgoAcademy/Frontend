@@ -163,6 +163,10 @@ a {
    }
 }
 
+.auth-input {
+   @apply mt-3 block h-[2.5rem] w-full rounded-xl border-2 px-4 py-2 focus:border-orange-400 focus:outline-0;
+}
+
 .assignment-input::-webkit-outer-spin-button,
 .assignment-input::-webkit-inner-spin-button {
    -webkit-appearance: none;
