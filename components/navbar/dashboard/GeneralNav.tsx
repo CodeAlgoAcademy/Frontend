@@ -26,7 +26,7 @@ const GeneralNav = () => {
    const router = useRouter();
 
    const classes = useSelector((state: RootState): IClass[] => state.allClasses.classes);
-   const { firstname, lastname } = useSelector((state: RootState) => state.user);
+   const { firstname, lastname, email } = useSelector((state: RootState) => state.user);
    const currentClass = useSelector((state: RootState): CurrentClassState => state.currentClass);
 
    const classDetails = classes?.map((item: CurrentClassState) => {
@@ -150,7 +150,7 @@ const GeneralNav = () => {
                               transition: { duration: "1", delay: 0.3 },
                            }}
                         >
-                           {user?.firstname + " " + user?.lastname}
+                           {firstname && lastname ? `${firstname} ${lastname}` : `${user?.firstname} ${user?.lastname}`}
                         </motion.h5>
                      </div>
                   )}
