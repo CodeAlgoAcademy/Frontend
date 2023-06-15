@@ -31,7 +31,6 @@ const EmailVerification = () => {
                </p>
             </div>
             <footer className="w-full border-t-2 pt-4 text-center">
-               <p>If you {"didn't"} receive the link, click on</p>
                <button onClick={resendEmail} className="mt-2 w-[150px] rounded-md bg-orange-400 p-3 text-white shadow-md">
                   Resend link
                </button>
