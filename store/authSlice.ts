@@ -126,6 +126,7 @@ export const userSlice = createSlice({
       });
 
       builder.addCase(updateFirstname.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
+         console.log(action.payload);
          return { ...state, ...action.payload };
       });
 
