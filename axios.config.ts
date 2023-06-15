@@ -14,16 +14,6 @@ const http = axios.create({
 http.interceptors.response.use(
    (res) => res,
    (error: AxiosError) => {
-      const dispatch = store.dispatch;
-
-      const errorConfig = error.config;
-
-      if (error.response?.status === 401) {
-         window.location.replace("/login/select-account-type");
-         dispatch(openErrorModal({ errorText: ["Session Expired, log in again"] }));
-         return Promise.reject(error);
-      }
-
       return Promise.reject(error);
    }
 );
