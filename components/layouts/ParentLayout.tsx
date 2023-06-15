@@ -225,7 +225,7 @@ const ParentLayout = ({ children }: Props) => {
                                        />
                                     </svg>
 
-                                    {firstname + " " + lastname}
+                                    {firstname && lastname ? `${firstname} ${lastname}` : `${user?.firstname} ${user?.lastname}`}
                                  </h1>
                               </div>
                               <main className={`mt-4 flex w-full flex-col gap-2 overflow-hidden transition  duration-300`}>
