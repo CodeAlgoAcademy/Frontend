@@ -40,7 +40,7 @@ export default function SelectAccountType() {
                   </h2>
                </div>
             </Link>
-            <a href="http://www.play.codealgoacademy.com">
+            <a rel="noopener noreferrer" href="http://www.play.codealgoacademy.com">
                <div className="transition duration-300 ease-out hover:scale-110 hover:text-orange-400">
                   <div className="mx-auto max-h-[200px] max-w-[200px] md:max-h-fit md:max-w-fit">
                      <Image src="/assets/students.png" alt="parent" height="225" width="225" />
