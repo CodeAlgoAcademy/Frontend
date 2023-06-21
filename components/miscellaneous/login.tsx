@@ -16,20 +16,22 @@ const Login = () => {
    const { email, password } = useSelector((state: RootState) => state.user.auth);
    const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 
+   const accountType = router.pathname.includes("teacher") ? "teacher" : router.pathname.includes("parent") ? "parent" : "student";
+
    const login = async (event: ChangeEvent<HTMLFormElement>) => {
       event.preventDefault();
       const data = await dispatch(loginUser());
       if (!data?.error?.message) {
          // If the account doesn't match the user selected in the select-account-type, display an error
-         if (data?.payload?.is_teacher) {
-            if (router.pathname.includes("/login/teacher")) {
+         console.log(data?.payload);
+         if (router.pathname.includes("/login/teacher")) {
+            if (data?.payload?.is_teacher) {
                router?.push("/teachers/addClass");
             } else {
-               console.log("not teacher");
                dispatch(openErrorModal({ errorText: ["This is not a teacher's account"] }));
             }
-         } else if (data?.payload?.is_parent) {
-            if (router.pathname.includes("/login/parent")) {
+         } else if (router.pathname.includes("/login/parent")) {
+            if (data?.payload?.is_parent) {
                router?.push("/parents");
             } else {
                dispatch(openErrorModal({ errorText: ["This is not a parent's account"] }));
@@ -58,7 +60,9 @@ const Login = () => {
    return (
       <AuthLayout>
          <>
-            <h1 className="text-center text-[25px] font-bold md:text-left md:text-[32px]">Log in to your account</h1>
+            <h1 className="text-center text-[25px] font-bold md:text-left md:text-[32px]">
+               Log in to your account <span className="capitalize">{`(${accountType})`}</span>
+            </h1>
             <form onSubmit={login}>
                <label className="mt-6 block text-xl font-semibold">Your email</label>
                <input
@@ -68,7 +72,7 @@ const Login = () => {
                   }}
                   type="email"
                   className="auth-input"
-                  placeholder="enter email"
+                  placeholder={`${accountType}@gmail.com`}
                   required
                />
                <label className="mt-6 block text-xl font-semibold">Password</label>
