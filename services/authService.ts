@@ -11,11 +11,17 @@ export const loginUser: any = createAsyncThunk("authSlice/loginUser", async (nam
    const dispatch = thunkApi.dispatch;
    const { email, password } = state.user.auth;
    dispatch(openPreloader({ loadingText: "Logging You in" }));
+
+   const body: { password: string; email?: string; username?: string } = { password };
+
+   // We're using the email property in the state for the input to control both username and email for the login!!!!!!
+   if (email.includes("@")) {
+      body.email = email;
+   } else {
+      body.username = email;
+   }
    try {
-      const { data } = await http.post("/auth/login/", {
-         email: email,
-         password,
-      });
+      const { data } = await http.post("/auth/login/", body);
       dispatch(clearFields());
       dispatch(closePreloader());
       return {
