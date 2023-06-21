@@ -64,15 +64,15 @@ const Login = () => {
                Log in to your account <span className="capitalize">{`(${accountType})`}</span>
             </h1>
             <form onSubmit={login}>
-               <label className="mt-6 block text-xl font-semibold">Your email</label>
+               <label className="mt-6 block text-xl font-semibold">Your email/username</label>
                <input
                   value={email}
                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
                      dispatch(updateUser({ key: "email", value: e.target.value }));
                   }}
-                  type="email"
+                  type="text"
                   className="auth-input"
-                  placeholder={`${accountType}@gmail.com`}
+                  placeholder={`Enter your email or username`}
                   required
                />
                <label className="mt-6 block text-xl font-semibold">Password</label>
