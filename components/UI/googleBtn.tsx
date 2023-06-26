@@ -20,7 +20,7 @@ const GoogleBtn: FC = () => {
                } else if (data?.payload?.is_parent) {
                   router.push("/parents");
                } else {
-                  router.push("/coming-soon");
+                  window.location.href = "http://www.play.codealgoacademy.com";
                }
             }
          } else if (router.pathname.includes("/signup")) {
@@ -33,7 +33,7 @@ const GoogleBtn: FC = () => {
                   } else if (is_parent) {
                      router.push("/parents");
                   } else {
-                     router.push("/coming-soon");
+                     window.location.href = "http://www.play.codealgoacademy.com";
                   }
                }
             }
