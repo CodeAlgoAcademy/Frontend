@@ -10,6 +10,12 @@ const GoogleBtn: FC = () => {
    const dispatch = useDispatch();
    const router = useRouter();
 
+   const account: "Parent" | "Teacher" | "Student" = router.pathname.includes("parent")
+      ? "Parent"
+      : router.pathname.includes("teacher")
+      ? "Teacher"
+      : "Student";
+
    const handleClick = useGoogleLogin({
       onSuccess: async (codeResponse) => {
          if (router?.pathname.includes("/login")) {
@@ -26,7 +32,7 @@ const GoogleBtn: FC = () => {
          } else if (router.pathname.includes("/signup")) {
             const data = await dispatch(signUpWithGoogle(codeResponse.access_token));
             if (!data?.error?.message) {
-               const data = await dispatch(updateAccountType(is_parent ? "Parent" : is_teacher ? "Teacher" : "Student"));
+               const data = await dispatch(updateAccountType(account));
                if (!data?.error?.message) {
                   if (is_teacher) {
                      router.push("/teachers/addClass");
