@@ -32,15 +32,15 @@ export default function Parent() {
       <Form1 key={1} />,
       <Form2 key={2} />,
       <Form3 key={3} />,
-      <WelcomeForm key={4} />,
-      <AddStudent key={5} />,
-      <AddStudentExperience key={7} />,
-      <AddStudentDetails key={6} />,
-      <SuccessForm key={8} />,
-      <Safety1 key={9} />,
-      <Safety2 key={10} />,
-      <Safety3 key={11} />,
-      <ThankyouForm key={12} />,
+      // <WelcomeForm key={4} />,
+      // <AddStudent key={5} />,
+      // <AddStudentExperience key={7} />,
+      // <AddStudentDetails key={6} />,
+      // <SuccessForm key={8} />,
+      // <Safety1 key={9} />,
+      // <Safety2 key={10} />,
+      // <Safety3 key={11} />,
+      // <ThankyouForm key={12} />,
    ]);
 
    const signUp = async (e: ChangeEvent<HTMLFormElement>) => {
@@ -54,17 +54,18 @@ export default function Parent() {
             setModalOpen(true);
          }
          // next();
-      } else if (currentStepIndex === 9) {
-         const data = await dispatch(addChild());
-         if (!data?.error?.message) {
-            goTo(10);
-         }
-      } else if (currentStepIndex === 10) {
-         const data = await dispatch(addChildFriend());
-         if (!data?.error) {
-            router.push("/parents");
-         }
-      } else {
+      } // else if (currentStepIndex === 9) {
+      //    const data = await dispatch(addChild());
+      //    if (!data?.error?.message) {
+      //       goTo(10);
+      //    }
+      // } else if (currentStepIndex === 10) {
+      //    const data = await dispatch(addChildFriend());
+      //    if (!data?.error) {
+      //       router.push("/parents");
+      //    }
+      //}
+      else {
          next();
       }
    };
@@ -136,7 +137,7 @@ export default function Parent() {
                            console.log(data);
                         }
                         setModalOpen(false);
-                        next();
+                        router.push("/login/parent", { query: { redirect: "addStudent" } });
                      }}
                   >
                      Got it!
