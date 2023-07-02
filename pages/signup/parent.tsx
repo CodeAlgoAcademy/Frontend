@@ -2,15 +2,6 @@ import GoogleBtn from "@/components/UI/googleBtn";
 import Form1 from "@/components/stepForm/general/Form1";
 import Form2 from "@/components/stepForm/general/Form2";
 import Form3 from "@/components/stepForm/general/Form3";
-import AddStudent from "@/components/stepForm/parents/AddStudent";
-import AddStudentExperience from "@/components/stepForm/parents/AddStudentExperience";
-import AddStudentDetails from "@/components/stepForm/parents/AddStudentDetails";
-import SuccessForm from "@/components/stepForm/parents/SuccessRes";
-import Safety1 from "@/components/stepForm/parents/Safety1";
-import Safety2 from "@/components/stepForm/parents/Safety2";
-import Safety3 from "@/components/stepForm/parents/Safety3";
-import ThankyouForm from "@/components/stepForm/parents/Thankyou";
-import WelcomeForm from "@/components/stepForm/parents/WelcomeForm";
 import AuthLayout from "@/components/layouts/AuthLayout";
 import useMultiForm from "utils/useMultiForm";
 import { useRouter } from "next/router";
@@ -32,15 +23,6 @@ export default function Parent() {
       <Form1 key={1} />,
       <Form2 key={2} />,
       <Form3 key={3} />,
-      <WelcomeForm key={4} />,
-      <AddStudent key={5} />,
-      <AddStudentExperience key={7} />,
-      <AddStudentDetails key={6} />,
-      <SuccessForm key={8} />,
-      <Safety1 key={9} />,
-      <Safety2 key={10} />,
-      <Safety3 key={11} />,
-      <ThankyouForm key={12} />,
    ]);
 
    const signUp = async (e: ChangeEvent<HTMLFormElement>) => {
@@ -136,7 +118,7 @@ export default function Parent() {
                            console.log(data);
                         }
                         setModalOpen(false);
-                        next();
+                        router.push("/login/parent?redirect=add-student");
                      }}
                   >
                      Got it!
