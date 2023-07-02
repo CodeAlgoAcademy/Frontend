@@ -5,9 +5,7 @@ import React from "react";
 const Parent = () => {
    const router = useRouter();
 
-   console.log("router.query.redirect");
-   return null;
-   // return <Login />;
+   return <Login route={router.query.redirect ? router.query.redirect : null} />;
 };
 
 export default Parent;

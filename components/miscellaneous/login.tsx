@@ -10,7 +10,7 @@ import { openErrorModal } from "store/fetchSlice";
 import { AuthButton } from "../UI/Button";
 import Link from "next/link";
 
-const Login = () => {
+const Login = ({ route }: { route?: any }) => {
    const dispatch = useDispatch();
    const router = useRouter();
    const { email, password } = useSelector((state: RootState) => state.user.auth);
@@ -32,7 +32,11 @@ const Login = () => {
             }
          } else if (router.pathname.includes("/login/parent")) {
             if (data?.payload?.is_parent) {
-               router?.push("/parents");
+               if (route) {
+                  router.push(route);
+               } else {
+                  router?.push("/parents");
+               }
             } else {
                dispatch(openErrorModal({ errorText: ["This is not a parent's account"] }));
             }
