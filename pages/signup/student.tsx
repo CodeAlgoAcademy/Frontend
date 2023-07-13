@@ -61,7 +61,6 @@ export default function Student() {
                         Back
                      </button>
                   )}
-                  {isFirstStep && <GoogleBtn />}
                </div>
             </form>
          </AuthLayout>

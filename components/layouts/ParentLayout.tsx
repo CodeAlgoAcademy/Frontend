@@ -30,7 +30,7 @@ const ParentLayout = ({ children }: Props) => {
    const [userDropDown, setUserDropDown] = useState<boolean>(false);
    const [unreadMessages, setUnreadMessages] = useState(0);
 
-   const { currentChild, children: parentChildren } = useSelector((state: RootState) => state.parentChild);
+   const parent = useSelector((state: RootState) => state.parentChild);
    const { addChildModalOpen } = useSelector((state: RootState) => state.modal);
    // console.log(parentChildren);
    const { firstname, username, lastname, email } = useSelector((state: RootState) => state.user);
@@ -259,7 +259,7 @@ const ParentLayout = ({ children }: Props) => {
                         }}
                         data-testid="select-child"
                      >
-                        <h1 className="text-3xl font-semibold capitalize text-[#2073FA]">{currentChild?.fullName}</h1>
+                        <h1 className="text-3xl font-semibold capitalize text-[#2073FA]">{parent?.currentChild?.fullName}</h1>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="10" viewBox="0 0 18 10" fill="none">
                            <path
                               d="M1.7998 1.25L9.2998 8.75L16.7998 1.25"
@@ -272,7 +272,7 @@ const ParentLayout = ({ children }: Props) => {
                      </div>
                      {childrenListOpen && (
                         <div className="absolute top-[70%] left-0 z-[4] max-h-[200px] min-h-[200px] w-[90vw] max-w-[200px] overflow-y-scroll rounded-md bg-white shadow-md">
-                           {parentChildren?.map((child, index) => {
+                           {parent?.children?.map((child, index) => {
                               return (
                                  <p
                                     key={index}
