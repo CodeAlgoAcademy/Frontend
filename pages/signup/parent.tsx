@@ -106,7 +106,7 @@ export default function Parent() {
                      </span>
                      <p className="text-center text-[20px]">
                         An email verification link has been sent to your email address <span className="font-[800]">{email}</span>
-                        <span className="mt-2 block font-bold">Kindly Verify before proceeding</span>
+                        <span className="mt-2 block font-bold">Please check your email and verify before proceeding</span>
                      </p>
                   </div>
                   <button
