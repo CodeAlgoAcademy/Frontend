@@ -11,7 +11,7 @@ import { RootState } from "store/store";
 
 const Dashboard = () => {
    const dispatch = useDispatch();
-   const { currentChild } = useSelector((state: RootState) => state.parentChild);
+   const parent = useSelector((state: RootState) => state.parentChild);
 
    useEffect(() => {
       dispatch(getChildren());
@@ -23,7 +23,7 @@ const Dashboard = () => {
             <div className="mx-auto mb-6 flex flex-wrap items-start justify-center gap-x-6 gap-y-8">
                <ContentBox size="base" title="Level" padding="small">
                   <h2 className="mt-14 text-center text-[22px] font-medium">Level 11</h2>
-                  {currentChild?.progress?.map((progress, index) => (
+                  {parent?.currentChild?.progress?.map((progress, index) => (
                      <React.Fragment key={index}>
                         <p className="mt-2 text-center text-sm font-light">{progress.unit || ""}</p>
                         <div className="mt-6 ml-4">

@@ -33,7 +33,7 @@ const Login = ({ route }: { route?: any }) => {
          } else if (router.pathname.includes("/login/parent")) {
             if (data?.payload?.is_parent) {
                if (route) {
-                  router.push(route);
+                  router.push("/add-student");
                } else {
                   router?.push("/parents");
                }
