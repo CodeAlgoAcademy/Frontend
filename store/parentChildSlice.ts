@@ -46,7 +46,7 @@ const initialState: IParentChildren = {
 };
 
 export const addChild: any = createAsyncThunk("parent/child/new", async (_, thunkAPI) => {
-   const state: any = thunkAPI.getState();
+   const state = thunkAPI.getState() as RootState;
    const dispatch = thunkAPI.dispatch;
    const { fullName, password, username, codingExperience, dob, timeLimits } = state.parentChild;
    const timeLimitsFormatted = timeLimits.map((timeInfo: screentimeTypes, index: number) => {

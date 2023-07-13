@@ -65,6 +65,7 @@ const AddChildModal = () => {
                         onChange={onChange}
                      />
                   </div>
+
                   <div>
                      <label htmlFor="" className="mb-2 block">
                         Password
