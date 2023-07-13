@@ -11,9 +11,9 @@ import { RootState } from "store/store";
 import NoChild from "@/components/parents/UI/NoChild";
 
 const Multiplayer = () => {
-   const { children } = useSelector((state: RootState) => state.parentChild);
+   const parent = useSelector((state: RootState) => state.parentChild);
 
-   if (!children || children?.length === 0) {
+   if (!parent?.children || parent?.children?.length === 0) {
       return <NoChild />;
    }
    return (
