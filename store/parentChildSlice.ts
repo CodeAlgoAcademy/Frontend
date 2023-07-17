@@ -31,6 +31,7 @@ const initialState: IParentChildren = {
    dob: "",
    fullName: "",
    password: "",
+   confirmPassword: "",
    username: "",
    friend: "",
    timeLimits: [
