@@ -5,14 +5,14 @@ import { RootState } from "store/store";
 
 export default function ParentSignUp2() {
    const dispatch = useDispatch();
-   const { firstname, lastname } = useSelector((state: RootState) => state.user.auth);
+   const auth = useSelector((state: RootState) => state?.user?.auth);
 
    return (
       <div key={2}>
          <h1 className="text-[32px] font-bold">Create Your Account</h1>
          <label className="mt-6 block text-xl font-semibold">First Name</label>
          <input
-            value={firstname}
+            value={auth?.firstname}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
                dispatch(updateUser({ key: "firstname", value: e.target.value }));
             }}
@@ -23,7 +23,7 @@ export default function ParentSignUp2() {
          />
          <label className="mt-6 block text-xl font-semibold">Last Name</label>
          <input
-            value={lastname}
+            value={auth?.lastname}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
                dispatch(updateUser({ key: "lastname", value: e.target.value }));
             }}

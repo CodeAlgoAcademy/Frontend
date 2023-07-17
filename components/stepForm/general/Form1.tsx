@@ -6,7 +6,7 @@ import { RootState } from "store/store";
 
 export default function ParentSignUp1() {
    const dispatch = useDispatch();
-   const { email } = useSelector((state: RootState) => state.user.auth);
+   const auth = useSelector((state: RootState) => state.user.auth);
    const router = useRouter();
 
    const accountType = router.pathname.includes("teacher") ? "teacher" : router.pathname.includes("parent") ? "parent" : "student";
@@ -16,7 +16,7 @@ export default function ParentSignUp1() {
          <h1 className="text-[32px] font-bold">Create Your Account</h1>
          <label className="mt-6 block text-xl font-semibold">Your email</label>
          <input
-            value={email}
+            value={auth?.email}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
                dispatch(updateUser({ key: "email", value: e.target.value }));
             }}
