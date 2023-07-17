@@ -91,7 +91,7 @@ const Login = ({ route }: { route?: any }) => {
                   required
                />
                <Link href="/change-password">
-                  <p className="mt-2 cursor-pointer font-bold text-[#222] underline">Forgot password</p>
+                  <p className="mt-2 max-w-fit cursor-pointer font-bold text-[#222] underline">Forgot password</p>
                </Link>
                <AuthButton text="Login" />
                <GoogleBtn />
