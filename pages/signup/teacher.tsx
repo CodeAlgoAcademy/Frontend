@@ -15,7 +15,6 @@ import Form3 from "@/components/stepForm/general/Form3";
 export default function Teacher() {
    const dispatch = useDispatch();
    const router = useRouter();
-   const { auth } = useSelector((state: RootState) => state.user);
    const { steps, currentStepIndex, step, teacherSignUpStep, isFirstStep, isLastStep, back, next } = useMultiForm([
       <Form1 key={1} />,
       <Form2 key={2} />,

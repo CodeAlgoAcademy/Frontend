@@ -76,10 +76,10 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
          };
 
          dispatch(addStudent(data)).then((data: any) => {
-            if (data.payload?.status === 200) {
+            if (!data?.error) {
                setIsOpen(false);
                dispatch(getStudents());
-               if (router.pathname === "/addClass") {
+               if (router.pathname === "/teachers/addClass") {
                   dispatch(getAllClasses());
                }
             }
