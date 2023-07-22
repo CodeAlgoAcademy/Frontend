@@ -13,7 +13,7 @@ const AddAFriend = () => {
    const dispatch = useDispatch();
    return (
       <section className="small-scroll-thumb blue-scroll-thumb" data-testid="add-a-friend-container">
-         <p className="mt-14 mb-4 text-sm font-light">
+         <p className="mb-4 text-sm font-light">
             CodeAlgo allows parents to limit students multiplayer interactions. Please enter the email or username of your student{"'"}s friend below.
             A request will be sent to the linked parent account. They can accept and decline the request
          </p>

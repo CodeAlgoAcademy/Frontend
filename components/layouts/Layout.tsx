@@ -32,6 +32,10 @@ const Layout = ({ children }: Props) => {
          "/signup/parent",
          "/about-us",
          "/contact",
+
+         // remove later
+         "/organizers",
+         "/organizers/create-organization",
       ];
 
       if (
@@ -50,7 +54,7 @@ const Layout = ({ children }: Props) => {
          const user = getUserFromLocalStorage();
          dispatch(addUserFromLocalStorage(user));
       }
-   }, [router]);
+   }, []);
 
    return (
       <GoogleOAuthProvider clientId={"354436342116-6kjbapf9ar5ad4rkho0hen2jndlcagff.apps.googleusercontent.com"}>
