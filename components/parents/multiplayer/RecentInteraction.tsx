@@ -169,8 +169,8 @@ const RecentInteraction = ({}: Props) => {
    }, [recentIndex]);
    return (
       <>
-         <p className="mt-14 text-sm font-light">Recent interactions (last 30 days)</p>
-         <p className="text-slate-400 text-2xl grid h-40 place-content-center italic">Coming soon...</p>
+         <p className="text-sm font-light">Recent interactions (last 30 days)</p>
+         <p className="grid h-40 place-content-center text-2xl italic text-slate-400">Coming soon...</p>
          {/* UNCOMMENT BLOCK OF CODE WHEN NECESSARY DETAILS ARE READY */}
          {/* <div className="mt-5 w-[320px] overflow-hidden">
             <motion.ul className="flex gap-3" style={{ x: positionX }} transition={{ duration: 2 }}>
@@ -183,7 +183,7 @@ const RecentInteraction = ({}: Props) => {
           ))}
             </motion.ul>
          </div> */}
-         <p className="text-[#A8ABB0] absolute text-sm bottom-5 text-center left-0 opacity-80 w-full select-none">
+         <p className="absolute bottom-5 left-0 w-full select-none text-center text-sm text-[#A8ABB0] opacity-80">
             All mail communication will go to the user’s parent account.{" "}
          </p>
          {/* UNCOMMENT BLOCK OF CODE WHEN NECESSARY DETAILS ARE READY */}

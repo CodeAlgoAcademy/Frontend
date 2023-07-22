@@ -17,6 +17,8 @@ module.exports = {
             xs: "400px",
             lg: "1100px",
             "2xl": "1700px",
+            w840: "840px",
+            w500: "500px",
          },
       },
    },
