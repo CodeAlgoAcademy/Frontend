@@ -27,12 +27,16 @@ export default function Teacher() {
    const signup = async (event: ChangeEvent<HTMLFormElement>) => {
       event.preventDefault();
       if (!teacherSignUpStep) {
-         // if (currentStepIndex === 0) {
-            // const res = await http.post("/auth/check-email", { email });
-            // console.log(res)
-         // } else {
+         if (currentStepIndex === 0) {
+            try {
+               const res = await http.post("/auth/check-email", { email });
+               console.log(res);
+            } catch (error) {
+               console.log(error);
+            }
+         } else {
             next();
-         // }
+         }
       } else {
          const data = await dispatch(signUpUser());
          localStorage.removeItem("parent-signup");
