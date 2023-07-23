@@ -12,7 +12,7 @@ import AuthLayout from "@/components/layouts/AuthLayout";
 import GoogleBtn from "@/components/UI/googleBtn";
 import Form3 from "@/components/stepForm/general/Form3";
 import http from "axios.config";
-import { closePreloader, openPreloader } from "store/fetchSlice";
+import { closePreloader, openErrorModal, openPreloader } from "store/fetchSlice";
 
 export default function Teacher() {
    const dispatch = useDispatch();
@@ -36,8 +36,8 @@ export default function Teacher() {
                if (res?.data?.details?.toLowerCase() === "email not found") {
                   next();
                } else if (res?.data?.details?.toLowerCase() === "email found") {
+                  dispatch(openErrorModal({ errorText: ["Email already exist. Try again!"] }));
                }
-               console.log(res?.data?.details);
             } catch (error) {}
             dispatch(closePreloader());
          } else {
