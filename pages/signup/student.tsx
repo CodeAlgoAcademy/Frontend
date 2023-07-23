@@ -30,7 +30,21 @@ export default function Student() {
       event.preventDefault();
       console.log(auth);
       console.log(currentStepIndex);
-      if (currentStepIndex !== 3) {
+      if (currentStepIndex === 0) {
+         dispatch(openPreloader({ loadingText: "Checking Email availability" }));
+         try {
+            const res = await http.post("/auth/check-email", { email });
+
+            if (res?.data?.details?.toLowerCase() === "email not found") {
+               next();
+            } else if (res?.data?.details?.toLowerCase() === "email found") {
+               dispatch(openErrorModal({ errorText: ["Email already exist. Try again!"] }));
+            }
+         } catch (error) {}
+         dispatch(closePreloader());
+      } else {
+         next();
+      } else if (currentStepIndex !== 3) {
          next();
       } else {
          const data = await dispatch(signUpUser());
