@@ -11,11 +11,13 @@ import { RootState } from "store/store";
 import AuthLayout from "@/components/layouts/AuthLayout";
 import GoogleBtn from "@/components/UI/googleBtn";
 import Form3 from "@/components/stepForm/general/Form3";
+import http from "axios.config";
+import { closePreloader, openErrorModal, openPreloader } from "store/fetchSlice";
 
 export default function Teacher() {
    const dispatch = useDispatch();
    const router = useRouter();
-   const { auth } = useSelector((state: RootState) => state.user);
+   const { email } = useSelector((state: RootState) => state.user.auth);
    const { steps, currentStepIndex, step, teacherSignUpStep, isFirstStep, isLastStep, back, next } = useMultiForm([
       <Form1 key={1} />,
       <Form2 key={2} />,
@@ -26,7 +28,21 @@ export default function Teacher() {
    const signup = async (event: ChangeEvent<HTMLFormElement>) => {
       event.preventDefault();
       if (!teacherSignUpStep) {
-         next();
+         if (currentStepIndex === 0) {
+            dispatch(openPreloader({ loadingText: "Checking Email availability" }));
+            try {
+               const res = await http.post("/auth/check-email", { email });
+
+               if (res?.data?.details?.toLowerCase() === "email not found") {
+                  next();
+               } else if (res?.data?.details?.toLowerCase() === "email found") {
+                  dispatch(openErrorModal({ errorText: ["Email already exist. Try again!"] }));
+               }
+            } catch (error) {}
+            dispatch(closePreloader());
+         } else {
+            next();
+         }
       } else {
          const data = await dispatch(signUpUser());
          localStorage.removeItem("parent-signup");
