@@ -12,6 +12,8 @@ import { addChild, addChildFriend, resetScreenTime } from "store/parentChildSlic
 import { FiCheckCircle } from "react-icons/fi";
 import { RootState } from "store/store";
 import { updateUser } from "store/authSlice";
+import { closePreloader, openErrorModal, openPreloader } from "store/fetchSlice";
+import http from "axios.config";
 
 export default function Parent() {
    const dispatch = useDispatch();
@@ -46,6 +48,18 @@ export default function Parent() {
          if (!data?.error) {
             router.push("/parents");
          }
+      } else if (currentStepIndex === 0) {
+         dispatch(openPreloader({ loadingText: "Checking Email availability" }));
+         try {
+            const res = await http.post("/auth/check-email", { email });
+
+            if (res?.data?.details?.toLowerCase() === "email not found") {
+               next();
+            } else if (res?.data?.details?.toLowerCase() === "email found") {
+               dispatch(openErrorModal({ errorText: ["Email already exist. Try again!"] }));
+            }
+         } catch (error) {}
+         dispatch(closePreloader());
       } else {
          next();
       }
