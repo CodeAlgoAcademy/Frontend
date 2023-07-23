@@ -12,6 +12,8 @@ import { addChild, addChildFriend, resetScreenTime } from "store/parentChildSlic
 import { FiCheckCircle } from "react-icons/fi";
 import { RootState } from "store/store";
 import { updateUser } from "store/authSlice";
+import { closePreloader, openErrorModal, openPreloader } from "store/fetchSlice";
+import http from "axios.config";
 
 export default function Parent() {
    const dispatch = useDispatch();

@@ -14,11 +14,14 @@ import { signUpUser } from "services/authService";
 import { clearFields, updateUser } from "store/authSlice";
 import { RootState } from "store/store";
 import Grades from "@/components/Teachers/addClass/grades";
+import { closePreloader, openErrorModal, openPreloader } from "store/fetchSlice";
+import http from "axios.config";
 
 export default function Student() {
    const dispatch = useDispatch();
    const router = useRouter();
    const { auth } = useSelector((state: RootState) => state.user);
+   const { email } = useSelector((state: RootState) => state.user.auth);
    const { steps, currentStepIndex, teacherSignUpStep, step, isFirstStep, isLastStep, back, next } = useMultiForm([
       <Form1 key={1} />,
       <Form2 key={2} />,
@@ -42,8 +45,6 @@ export default function Student() {
             }
          } catch (error) {}
          dispatch(closePreloader());
-      } else {
-         next();
       } else if (currentStepIndex !== 3) {
          next();
       } else {
