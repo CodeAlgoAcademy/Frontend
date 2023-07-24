@@ -11,8 +11,7 @@ import { RootState } from "store/store";
 import AuthLayout from "@/components/layouts/AuthLayout";
 import GoogleBtn from "@/components/UI/googleBtn";
 import Form3 from "@/components/stepForm/general/Form3";
-import http from "axios.config";
-import { closePreloader, openErrorModal, openPreloader } from "store/fetchSlice";
+import { checkEmail } from "utils/checkmail";
 
 export default function Teacher() {
    const dispatch = useDispatch();
@@ -29,17 +28,7 @@ export default function Teacher() {
       event.preventDefault();
       if (!teacherSignUpStep) {
          if (currentStepIndex === 0) {
-            dispatch(openPreloader({ loadingText: "Checking Email availability" }));
-            try {
-               const res = await http.post("/auth/check-email", { email });
-
-               if (res?.data?.details?.toLowerCase() === "email not found") {
-                  next();
-               } else if (res?.data?.details?.toLowerCase() === "email found") {
-                  dispatch(openErrorModal({ errorText: ["Email already exist. Try again!"] }));
-               }
-            } catch (error) {}
-            dispatch(closePreloader());
+            checkEmail(email, next, dispatch);
          } else {
             next();
          }
