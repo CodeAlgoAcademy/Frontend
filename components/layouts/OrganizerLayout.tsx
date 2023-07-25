@@ -3,7 +3,7 @@ import Sidebar from "../Teachers/UI/Sidebar";
 import GeneralNav from "../navbar/dashboard/GeneralNav";
 import { useRouter } from "next/router";
 import TeacherMobileSideNav from "../Teachers/UI/TeacherMobileSideNav";
-import { BiHomeAlt, BiUser } from "react-icons/bi";
+import { BiHomeAlt, BiUser, BiUserPin } from "react-icons/bi";
 import Link from "next/link";
 import OrganizerMobileNav from "../organizers/OrganizerMobileNav";
 import { TbLayoutDashboard } from "react-icons/tb";
@@ -23,6 +23,11 @@ const links = [
       name: "Add Organization",
       icon: <FcOrganization />,
       url: "/organizers/create-organization",
+   },
+   {
+      name: "Roles",
+      icon: <BiUserPin />,
+      url: "/organizers/roles",
    },
 ];
 
