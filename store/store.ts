@@ -19,6 +19,7 @@ import teacherReducer from "./teacherSlice";
 import policySliceReducer from "./policySlice";
 import parentChildSlice from "./parentChildSlice";
 import parentSlice from "./parentSlice";
+import organizersSlice from "./organizersSlice";
 
 export const store = configureStore({
    reducer: {
@@ -41,6 +42,7 @@ export const store = configureStore({
       policyCheck: policySliceReducer,
       parentChild: parentChildSlice,
       parent: parentSlice,
+      organizer: organizersSlice,
    },
 });
 

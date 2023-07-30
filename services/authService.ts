@@ -38,8 +38,22 @@ export const loginUser: any = createAsyncThunk("authSlice/loginUser", async (nam
 export const signUpUser: any = createAsyncThunk("authSlice/signUpUser", async (name, thunkApi) => {
    const state: any = thunkApi.getState();
    const dispatch = thunkApi.dispatch;
-   const { email, firstname, lastname, schoolName, grade, is_parent, is_student, is_teacher, dob, schoolCountry, country, username } =
-      state?.user?.auth;
+   const {
+      email,
+      organization_code,
+      firstname,
+      lastname,
+      schoolName,
+      grade,
+      is_parent,
+      is_organizer,
+      is_student,
+      is_teacher,
+      dob,
+      schoolCountry,
+      country,
+      username,
+   } = state?.user?.auth;
 
    // General Options
    let options: typeof state.user.auth = {
@@ -49,9 +63,11 @@ export const signUpUser: any = createAsyncThunk("authSlice/signUpUser", async (n
       firstname,
       lastname,
       is_parent,
+      is_organizer,
       is_student,
       is_teacher,
       username,
+      organization_code,
    };
 
    if (is_teacher) {
@@ -64,6 +80,10 @@ export const signUpUser: any = createAsyncThunk("authSlice/signUpUser", async (n
 
    if (is_parent) {
       options = { ...options, country: country, grade: "", schoolCountry: "", schoolName: "" };
+   }
+
+   if (is_organizer) {
+      options = { ...options, country: country, schoolCountry: "", schoolName: "", grade: "" };
    }
 
    dispatch(openPreloader({ loadingText: "Creating Account" }));
@@ -117,6 +137,7 @@ export const updateAccountType: any = createAsyncThunk("authSlice/updateAccountT
    const is_parent: boolean = accountType === "Parent";
    const is_teacher: boolean = accountType === "Teacher";
    const is_student: boolean = accountType === "Student";
+   const is_organizer: boolean = accountType === "Organizer";
    const state: any = thunkApi.getState();
    const { firstname, lastname, email, country, schoolCountry, schoolName, grade, username } = state.user;
    try {
@@ -132,6 +153,7 @@ export const updateAccountType: any = createAsyncThunk("authSlice/updateAccountT
             is_student,
             is_teacher,
             is_parent,
+            is_organizer,
             grade,
             username,
          },
@@ -152,7 +174,7 @@ export const updateFirstname: any = createAsyncThunk("authSlice/updateFirstname"
    const state: any = thunkApi.getState();
    const { firstname } = state.user.auth;
    const dispatch = thunkApi.dispatch;
-   const { lastname, email, country, schoolCountry, schoolName, is_student, is_teacher, is_parent, grade, username } = state.user;
+   const { lastname, email, country, schoolCountry, schoolName, is_student, is_teacher, is_parent, is_organizer, grade, username } = state.user;
    try {
       const { data } = await http.put(
          "/auth/user",
@@ -166,6 +188,7 @@ export const updateFirstname: any = createAsyncThunk("authSlice/updateFirstname"
             is_student,
             is_teacher,
             is_parent,
+            is_organizer,
             grade,
             username,
          },
@@ -187,7 +210,7 @@ export const updateLastname: any = createAsyncThunk("authSlice/updateLastname", 
    const state: any = thunkApi.getState();
    const { lastname } = state.user.auth;
    const dispatch = thunkApi.dispatch;
-   const { firstname, email, country, schoolCountry, schoolName, is_student, is_teacher, is_parent, grade, username } = state.user;
+   const { firstname, email, country, schoolCountry, schoolName, is_student, is_teacher, is_parent, is_organizer, grade, username } = state.user;
    try {
       const { data } = await http.put(
          "/auth/user",
@@ -201,6 +224,7 @@ export const updateLastname: any = createAsyncThunk("authSlice/updateLastname", 
             is_student,
             is_teacher,
             is_parent,
+            is_organizer,
             grade,
             username,
          },
@@ -222,7 +246,7 @@ export const updateEmail: any = createAsyncThunk("authSlice/updateEmail", async 
    const state: any = thunkApi.getState();
    const { email } = state.user.auth;
    const dispatch = thunkApi.dispatch;
-   const { lastname, firstname, country, schoolCountry, schoolName, is_student, is_teacher, is_parent, grade, username } = state.user;
+   const { lastname, firstname, country, schoolCountry, schoolName, is_student, is_teacher, is_parent, is_organizer, grade, username } = state.user;
    try {
       const { data } = await http.put(
          "/auth/user",
@@ -235,6 +259,7 @@ export const updateEmail: any = createAsyncThunk("authSlice/updateEmail", async 
             schoolName,
             is_student,
             is_teacher,
+            is_organizer,
             is_parent,
             grade,
             username,

@@ -34,10 +34,13 @@ const initialState: IUser = {
    schoolCountry: "",
    schoolName: "",
    is_parent: false,
+   is_organizer: false,
    is_student: false,
    is_teacher: false,
    dob: "",
+   organization_code: "",
    auth: {
+      organization_code: "",
       firstname: "",
       lastname: "",
       email: "",
@@ -49,6 +52,7 @@ const initialState: IUser = {
       schoolName: "",
       is_parent: false,
       is_student: true,
+      is_organizer: false,
       is_teacher: false,
       country: countryList[0],
       username: "",
@@ -73,6 +77,7 @@ export const userSlice = createSlice({
                is_student: state.auth.is_student,
                is_parent: state.auth.is_parent,
                is_teacher: state.auth.is_teacher,
+               is_organizer: state.auth.is_organizer,
             },
          };
       },
@@ -87,6 +92,7 @@ export const userSlice = createSlice({
             state.auth.is_parent = action.payload.value === "Parent" ? true : false;
             state.auth.is_teacher = action.payload.value === "Teacher" ? true : false;
             state.auth.is_student = action.payload.value === "Student" ? true : false;
+            state.auth.is_organizer = action.payload.value === "Organizer" ? true : false;
          } else {
             state.auth[action.payload.key as keyof typeof state.auth] = action.payload.value;
          }

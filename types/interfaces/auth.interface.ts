@@ -20,10 +20,12 @@ export interface IUserData {
    // peculiar to teachers
    schoolCountry: string;
    schoolName: string;
+   is_organizer: boolean;
    is_parent: boolean;
    is_student: boolean;
    is_teacher: boolean;
    dob: string;
+   organization_code: "";
 }
 
 export interface User {

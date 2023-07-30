@@ -84,7 +84,7 @@ export function addUserToLocalStorage(user: IUser) {
          access_token: user.access_token,
          refresh_token: user.refresh_token,
          user: user,
-         user_type: user.is_student ? "student" : user.is_teacher ? "teacher" : user.is_parent ? "parent" : "",
+         user_type: user.is_student ? "student" : user.is_teacher ? "teacher" : user.is_parent ? "parent" : user?.is_organizer ? "organizer" : "",
       })
    );
    setTimeStamp();

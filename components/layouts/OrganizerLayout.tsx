@@ -8,6 +8,11 @@ import Link from "next/link";
 import OrganizerMobileNav from "../organizers/OrganizerMobileNav";
 import { TbLayoutDashboard } from "react-icons/tb";
 import { FcOrganization } from "react-icons/fc";
+import { HiUsers } from "react-icons/hi";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "store/store";
+import { selectOrganization } from "store/organizersSlice";
+import { getUserFromLocalStorage } from "utils/getTokens";
 
 interface Props {
    children?: ReactNode;
@@ -29,29 +34,31 @@ const links = [
       icon: <BiUserPin />,
       url: "/organizers/roles",
    },
+   {
+      name: "Users",
+      icon: <HiUsers />,
+      url: "/organizers/users",
+   },
 ];
 
 const OrganizerLayout = ({ children }: Props) => {
    const router = useRouter();
    // const [width, setWidth] = useState(0);
    const [detachedNavDisplay, setDetachedNavDisplay] = useState(false);
+   const [organizationListOpen, setOpen] = useState<boolean>(false);
 
-   // useEffect(() => {
-   //    setWidth(window.innerWidth);
-   // }, []);
+   const dispatch = useDispatch();
 
-   //    useEffect(() => {
-   //       const stringedToken = localStorage.getItem("token");
-   //       const token = JSON.parse(`${stringedToken}`);
-   //       const handleResize = () => setWidth(window.innerWidth);
-   //       window.addEventListener("resize", handleResize);
-   //       if (token?.user_type !== "teacher") {
-   //          router?.push("/login/select-account-type");
-   //       }
-   //       return () => {
-   //          window.removeEventListener("resize", handleResize);
-   //       };
-   //    }, [router]);
+   const organizer = useSelector((state: RootState) => state?.organizer);
+   const user = getUserFromLocalStorage();
+
+   useEffect(() => {
+      const stringedToken = localStorage.getItem("token");
+      const token = JSON.parse(`${stringedToken}`);
+      if (!stringedToken || !token || token?.user_type !== "organizer") {
+         router?.push("/login/select-account-type");
+      }
+   }, [router]);
 
    return (
       <div className="flex min-h-screen flex-col">
@@ -62,11 +69,6 @@ const OrganizerLayout = ({ children }: Props) => {
             </div>
 
             <div className="mt-14 ml-4 hidden w500:block w840:hidden">
-               {/* <Link href={`/teachers/addClass`}>
-                     <div className="flex justify-center text-[28px] text-[#2073fa]">
-                        <BiHomeAlt />
-                     </div>
-                  </Link> */}
                <OrganizerMobileNav />
             </div>
             <div className={`flex-1 pr-[3vw] pb-6 pl-[3vw] w840:pl-0`}>
@@ -134,9 +136,48 @@ const OrganizerLayout = ({ children }: Props) => {
                         <span className="mr-2 inline-block align-middle">
                            <BiUser />
                         </span>
-                        Adejare Daniel
+                        {user?.username}
                      </h2>
                   </header>
+
+                  <div className="relative">
+                     <div
+                        className=" mt-4 mb-4 ml-4 flex max-w-fit items-center gap-3 sm:ml-0"
+                        onClick={() => {
+                           setOpen((prev) => !prev);
+                        }}
+                     >
+                        <h1 className="text-3xl font-semibold capitalize text-[#2073FA]">{organizer?.selectedOrganization?.name}</h1>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="10" viewBox="0 0 18 10" fill="none">
+                           <path
+                              d="M1.7998 1.25L9.2998 8.75L16.7998 1.25"
+                              stroke="#2073FA"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                           />
+                        </svg>
+                     </div>
+                     {organizationListOpen && (
+                        <div className="absolute top-[110%] left-0 z-[4] max-h-[200px] min-h-[200px] w-[90vw] max-w-[200px] overflow-y-scroll rounded-md bg-white shadow-md">
+                           {organizer?.organizations?.map((organization, index) => {
+                              return (
+                                 <p
+                                    key={index}
+                                    onClick={() => {
+                                       setOpen(false);
+                                       dispatch(selectOrganization(organization));
+                                    }}
+                                    className="w-full cursor-pointer px-3 py-3 capitalize text-black hover:bg-[#ced4e9]"
+                                    data-testid="organization"
+                                 >
+                                    {organization.name}
+                                 </p>
+                              );
+                           })}
+                        </div>
+                     )}
+                  </div>
 
                   {children}
                </div>

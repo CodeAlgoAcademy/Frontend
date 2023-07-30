@@ -1,7 +1,7 @@
 import React from "react";
 import { TbLayoutDashboard, TbClipboardText } from "react-icons/tb";
 import { FaUserGraduate } from "react-icons/fa";
-import { HiOutlineCalendar } from "react-icons/hi";
+import { HiOutlineCalendar, HiUsers } from "react-icons/hi";
 import { BiMessageRounded, BiUserPin } from "react-icons/bi";
 import NavButton from "components/parents/UI/NavButton";
 import { FcOrganization } from "react-icons/fc";
@@ -22,6 +22,11 @@ const links = [
       name: "Roles",
       icon: <BiUserPin />,
       url: "/organizers/roles",
+   },
+   {
+      name: "Users",
+      icon: <HiUsers />,
+      url: "/organizers/users",
    },
 ];
 

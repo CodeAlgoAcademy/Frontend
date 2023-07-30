@@ -40,6 +40,12 @@ const Login = ({ route }: { route?: any }) => {
             } else {
                dispatch(openErrorModal({ errorText: ["This is not a parent's account"] }));
             }
+         } else if (router.pathname.includes("/login/organizer")) {
+            if (data?.payload?.is_organizer) {
+               router.push("/organizers");
+            } else {
+               dispatch(openErrorModal({ errorText: ["This is not a parent's account"] }));
+            }
          }
       }
    };
