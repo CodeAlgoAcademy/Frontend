@@ -30,12 +30,9 @@ const Layout = ({ children }: Props) => {
          "/signup/teacher",
          "/signup/student",
          "/signup/parent",
+         "/signup/organizer",
          "/about-us",
          "/contact",
-
-         // remove later
-         "/organizers",
-         "/organizers/create-organization",
       ];
 
       if (

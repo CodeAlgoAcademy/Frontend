@@ -6,14 +6,16 @@ import { RootState } from "store/store";
 import { FcGoogle } from "react-icons/fc";
 import { loginWithGoogle, signUpWithGoogle, updateAccountType } from "services/authService";
 const GoogleBtn: FC = () => {
-   const { is_parent, is_teacher, is_student } = useSelector((state: RootState) => state.user.auth);
+   const { is_parent, is_teacher, is_student, is_organizer } = useSelector((state: RootState) => state.user.auth);
    const dispatch = useDispatch();
    const router = useRouter();
 
-   const account: "Parent" | "Teacher" | "Student" = router.pathname.includes("parent")
+   const account: "Parent" | "Teacher" | "Student" | "Organizer" = router.pathname.includes("parent")
       ? "Parent"
       : router.pathname.includes("teacher")
       ? "Teacher"
+      : router.pathname.includes("organizer")
+      ? "Organizer"
       : "Student";
 
    const handleClick = useGoogleLogin({
@@ -25,6 +27,8 @@ const GoogleBtn: FC = () => {
                   router.push("/teachers/addClass");
                } else if (data?.payload?.is_parent) {
                   router.push("/parents");
+               } else if (data?.payload?.is_organizer) {
+                  router.push("/organizers");
                } else {
                   window.location.href = "http://www.play.codealgoacademy.com";
                }
@@ -38,6 +42,8 @@ const GoogleBtn: FC = () => {
                      router.push("/teachers/addClass");
                   } else if (is_parent) {
                      router.push("/parents");
+                  } else if (is_organizer) {
+                     router.push("/organizers");
                   } else {
                      window.location.href = "http://www.play.codealgoacademy.com";
                   }
