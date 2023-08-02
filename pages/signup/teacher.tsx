@@ -11,10 +11,12 @@ import { RootState } from "store/store";
 import AuthLayout from "@/components/layouts/AuthLayout";
 import GoogleBtn from "@/components/UI/googleBtn";
 import Form3 from "@/components/stepForm/general/Form3";
+import { checkEmail } from "utils/checkmail";
 
 export default function Teacher() {
    const dispatch = useDispatch();
    const router = useRouter();
+   const { email } = useSelector((state: RootState) => state.user.auth);
    const { steps, currentStepIndex, step, teacherSignUpStep, isFirstStep, isLastStep, back, next } = useMultiForm([
       <Form1 key={1} />,
       <Form2 key={2} />,
@@ -25,7 +27,11 @@ export default function Teacher() {
    const signup = async (event: ChangeEvent<HTMLFormElement>) => {
       event.preventDefault();
       if (!teacherSignUpStep) {
-         next();
+         if (currentStepIndex === 0) {
+            checkEmail(email, next, dispatch);
+         } else {
+            next();
+         }
       } else {
          const data = await dispatch(signUpUser());
          localStorage.removeItem("parent-signup");

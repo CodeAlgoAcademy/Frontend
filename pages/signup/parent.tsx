@@ -12,6 +12,7 @@ import { addChild, addChildFriend, resetScreenTime } from "store/parentChildSlic
 import { FiCheckCircle } from "react-icons/fi";
 import { RootState } from "store/store";
 import { updateUser } from "store/authSlice";
+import { checkEmail } from "utils/checkmail";
 
 export default function Parent() {
    const dispatch = useDispatch();
@@ -46,6 +47,8 @@ export default function Parent() {
          if (!data?.error) {
             router.push("/parents");
          }
+      } else if (currentStepIndex === 0) {
+         checkEmail(email, next, dispatch)
       } else {
          next();
       }
