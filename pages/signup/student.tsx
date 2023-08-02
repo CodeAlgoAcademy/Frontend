@@ -14,11 +14,13 @@ import { signUpUser } from "services/authService";
 import { clearFields, updateUser } from "store/authSlice";
 import { RootState } from "store/store";
 import Grades from "@/components/Teachers/addClass/grades";
+import { checkEmail } from "utils/checkmail";
 
 export default function Student() {
    const dispatch = useDispatch();
    const router = useRouter();
    const { auth } = useSelector((state: RootState) => state.user);
+   const { email } = useSelector((state: RootState) => state.user.auth);
    const { steps, currentStepIndex, teacherSignUpStep, step, isFirstStep, isLastStep, back, next } = useMultiForm([
       <Form1 key={1} />,
       <Form2 key={2} />,
@@ -30,7 +32,9 @@ export default function Student() {
       event.preventDefault();
       console.log(auth);
       console.log(currentStepIndex);
-      if (currentStepIndex !== 3) {
+      if (currentStepIndex === 0) {
+         checkEmail(email, next, dispatch);
+      } else if (currentStepIndex !== 3) {
          next();
       } else {
          const data = await dispatch(signUpUser());

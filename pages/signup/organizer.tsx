@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "store/authSlice";
 import GoogleBtn from "@/components/UI/googleBtn";
 import Form1 from "@/components/stepForm/general/Form1";
@@ -9,10 +9,13 @@ import AuthLayout from "@/components/layouts/AuthLayout";
 import useMultiForm from "utils/useMultiForm";
 import { signUpUser } from "services/authService";
 import { useRouter } from "next/router";
+import { RootState } from "store/store";
+import { checkEmail } from "utils/checkmail";
 
 const Organizer = () => {
    const dispatch = useDispatch();
    const router = useRouter();
+   const { email } = useSelector((state: RootState) => state.user.auth);
 
    const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next, goTo } = useMultiForm([
       <Form1 key={1} />,
@@ -22,7 +25,9 @@ const Organizer = () => {
 
    const signUp = async (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
-      console.log(parent, currentStepIndex);
+      if (currentStepIndex === 0) {
+         checkEmail(email, next, dispatch);
+      }
       if (currentStepIndex === 2) {
          const data = await dispatch(signUpUser());
 
