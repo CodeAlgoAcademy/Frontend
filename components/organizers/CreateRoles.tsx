@@ -23,7 +23,7 @@ const CreateRoles = () => {
 
    return (
       <ContentBox title="Create Role" size="base" padding="small">
-         <form action="">
+         <form action="" onSubmit={submit}>
             <div className="flex flex-col gap-[1rem]">
                <div>
                   <p className="font-500 text-[0.98rem]">Name</p>

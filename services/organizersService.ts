@@ -8,7 +8,7 @@ import { getAccessToken } from "utils/getTokens";
 
 export const fetchOrganiztions: any = createAsyncThunk("organzer/fetch-organizations", async (name, thunkApi) => {
    try {
-      const response = await http.get("/organization/admin", { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+      const response = await http.get("/organization/admin/", { headers: { Authorization: `Bearer ${getAccessToken()}` } });
 
       return response?.data;
    } catch (error: any) {
@@ -26,7 +26,7 @@ export const addOrganization: any = createAsyncThunk(
 
       try {
          const response = await http.post(
-            "/organization/admin",
+            "/organization/admin/",
             { name, description, invite_code },
             {
                headers: {
@@ -108,13 +108,34 @@ export const getOrganizationUsers: any = createAsyncThunk("organizer/get-users",
    }
 });
 
-export const addUserToOrganization = createAsyncThunk("organizaer/add-user", async ({ user, role }: { user: number; role: number }, thunkApi) => {
-   const { selectedOrganization } = (thunkApi.getState() as RootState).organizer;
+export const addUserToOrganization: any = createAsyncThunk(
+   "organizaer/add-user",
+   async ({ email, role }: { email: string; role: number }, thunkApi) => {
+      const { selectedOrganization } = (thunkApi.getState() as RootState).organizer;
 
+      const { id } = selectedOrganization as IOrganization;
+
+      try {
+         const response = await http.post(
+            `/organization/${id}/invite/`,
+            { email, role },
+            { headers: { Authorization: `Bearer ${getAccessToken()}` } }
+         );
+
+         return response?.data;
+      } catch (error) {
+         error = errorResolver(error);
+         return thunkApi.rejectWithValue(error);
+      }
+   }
+);
+
+export const getAllInvitations: any = createAsyncThunk("getallinvitations", async (_, thunkApi) => {
+   const { selectedOrganization } = (thunkApi.getState() as RootState).organizer;
    const { id } = selectedOrganization as IOrganization;
 
    try {
-      const response = await http.post(`/organization/${id}/users/`, { user, role }, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+      const response = await http.get(`/organization/${id}/invite`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
 
       return response?.data;
    } catch (error) {

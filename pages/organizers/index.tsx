@@ -9,10 +9,6 @@ import { fetchOrganiztions } from "services/organizersService";
 const Dashboard = () => {
    const dispatch = useDispatch();
 
-   useEffect(() => {
-      dispatch(fetchOrganiztions());
-   }, []);
-
    return (
       <OrganizerLayout>
          <div className="mt-8 flex flex-wrap items-center justify-center gap-[2rem] lg:justify-between">

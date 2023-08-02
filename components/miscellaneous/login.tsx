@@ -16,7 +16,13 @@ const Login = ({ route }: { route?: any }) => {
    const { email, password } = useSelector((state: RootState) => state.user.auth);
    const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 
-   const accountType = router.pathname.includes("teacher") ? "teacher" : router.pathname.includes("parent") ? "parent" : "student";
+   const accountType = router.pathname.includes("teacher")
+      ? "teacher"
+      : router.pathname.includes("parent")
+      ? "parent"
+      : location.pathname.includes("organizer")
+      ? "organizer"
+      : "student";
 
    const login = async (event: ChangeEvent<HTMLFormElement>) => {
       event.preventDefault();
@@ -44,7 +50,7 @@ const Login = ({ route }: { route?: any }) => {
             if (data?.payload?.is_organizer) {
                router.push("/organizers");
             } else {
-               dispatch(openErrorModal({ errorText: ["This is not a parent's account"] }));
+               dispatch(openErrorModal({ errorText: ["This is not an organizer's account"] }));
             }
          }
       }

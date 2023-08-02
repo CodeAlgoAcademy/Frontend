@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { selectOrganization } from "store/organizersSlice";
 import { getUserFromLocalStorage } from "utils/getTokens";
+import { fetchOrganiztions } from "services/organizersService";
 
 interface Props {
    children?: ReactNode;
@@ -50,6 +51,12 @@ const OrganizerLayout = ({ children }: Props) => {
    const dispatch = useDispatch();
 
    const organizer = useSelector((state: RootState) => state?.organizer);
+
+   const organizations = organizer?.organizations;
+   const selectedOrganization = organizer?.selectedOrganization;
+
+   console.log(organizer);
+
    const user = getUserFromLocalStorage();
 
    useEffect(() => {
@@ -59,6 +66,10 @@ const OrganizerLayout = ({ children }: Props) => {
          router?.push("/login/select-account-type");
       }
    }, [router]);
+
+   useEffect(() => {
+      dispatch(fetchOrganiztions());
+   }, []);
 
    return (
       <div className="flex min-h-screen flex-col">
@@ -147,7 +158,7 @@ const OrganizerLayout = ({ children }: Props) => {
                            setOpen((prev) => !prev);
                         }}
                      >
-                        <h1 className="text-3xl font-semibold capitalize text-[#2073FA]">{organizer?.selectedOrganization?.name}</h1>
+                        <h1 className="text-3xl font-semibold capitalize text-[#2073FA]">{selectedOrganization?.name}</h1>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="10" viewBox="0 0 18 10" fill="none">
                            <path
                               d="M1.7998 1.25L9.2998 8.75L16.7998 1.25"
@@ -160,7 +171,7 @@ const OrganizerLayout = ({ children }: Props) => {
                      </div>
                      {organizationListOpen && (
                         <div className="absolute top-[110%] left-0 z-[4] max-h-[200px] min-h-[200px] w-[90vw] max-w-[200px] overflow-y-scroll rounded-md bg-white shadow-md">
-                           {organizer?.organizations?.map((organization, index) => {
+                           {organizations?.map((organization, index) => {
                               return (
                                  <p
                                     key={index}

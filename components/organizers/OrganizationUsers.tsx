@@ -16,7 +16,7 @@ const OrganizationUsers = () => {
    return (
       <ContentBox title="Users" size="base" padding="small">
          <div className="max-h-[250px] overflow-y-scroll">
-            {users.map((user, index: number) => {
+            {users?.map((user, index: number) => {
                return (
                   <div className="mb-1 flex items-center justify-between gap-[1rem]" key={index}>
                      <p className="font-bold capitalize">{user?.user}</p>

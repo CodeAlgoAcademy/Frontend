@@ -21,9 +21,20 @@ export interface IOrganizationUser {
    organization: IOrganization;
 }
 
+export interface IOrganizationInvitations {
+   id: number;
+   organization: IOrganization;
+   created_at: Date;
+   role: IRole;
+   status_text: string;
+   status: number;
+   email: string;
+}
+
 export interface IOrganizationSlice {
    organizations: IOrganization[];
    selectedOrganization: IOrganization | undefined;
    users: IOrganizationUser[];
    roles: IRole[];
+   invitations: IOrganizationInvitations[];
 }

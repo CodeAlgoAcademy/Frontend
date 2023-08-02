@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchOrganiztions, getAllRoles, getOrganizationUsers } from "services/organizersService";
-import { IOrganization, IOrganizationSlice, IOrganizationUser, IRole } from "types/interfaces/organization.interface";
+import { fetchOrganiztions, getAllInvitations, getAllRoles, getOrganizationUsers } from "services/organizersService";
+import { IOrganization, IOrganizationInvitations, IOrganizationSlice, IOrganizationUser, IRole } from "types/interfaces/organization.interface";
 
 const initialState: IOrganizationSlice = {
    organizations: [],
    selectedOrganization: undefined,
    users: [],
    roles: [],
+   invitations: [],
 };
 
 const organizersSlice = createSlice({
@@ -36,6 +37,10 @@ const organizersSlice = createSlice({
 
       builder.addCase(getOrganizationUsers.fulfilled, (state: IOrganizationSlice, action: PayloadAction<IOrganizationUser[]>) => {
          state.users = action.payload;
+      });
+
+      builder.addCase(getAllInvitations.fulfilled, (state: IOrganizationSlice, action: PayloadAction<IOrganizationInvitations[]>) => {
+         state.invitations = action.payload;
       });
    },
 });

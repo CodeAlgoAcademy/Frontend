@@ -1,4 +1,6 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "store/store";
 import ContentBox from "../parents/UI/ContentBox";
 
 const allRoles = [
@@ -38,10 +40,13 @@ const allRoles = [
 ];
 
 const AllRoles = () => {
+   const dispatch = useDispatch();
+   const roles = useSelector((state: RootState) => state?.organizer?.roles);
+
    return (
       <ContentBox title="All Roles" size="base" padding="small">
          <div className="max-h-[250px] overflow-y-scroll">
-            {allRoles.map((role, index) => {
+            {roles?.map((role, index) => {
                return (
                   <div key={index} className="mb-2">
                      <h2 className="text-[1.1rem] font-bold text-[#2073fa]">{role.name}</h2>
