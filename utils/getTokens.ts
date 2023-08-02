@@ -91,5 +91,7 @@ export function addUserToLocalStorage(user: IUser) {
 }
 
 export function getUserFromLocalStorage() {
-   return JSON.parse(localStorage.getItem("token") as string)?.user;
+   if (typeof window !== "undefined") {
+      return JSON.parse(localStorage.getItem("token") as string)?.user;
+   }
 }

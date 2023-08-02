@@ -27,7 +27,7 @@ const Organizer = () => {
          const data = await dispatch(signUpUser());
 
          if (!data?.error) {
-            router.push("/organizers");
+            router.push("/verify-email");
          }
       } else {
          next();
@@ -47,7 +47,7 @@ const Organizer = () => {
                      Continue
                   </button>
 
-                  {!isFirstStep && !isLastStep && (
+                  {!isFirstStep && (
                      <button className="mt-4 block w-full text-center" type="button" onClick={back}>
                         Back
                      </button>

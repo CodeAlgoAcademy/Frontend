@@ -24,6 +24,7 @@ const Layout = ({ children }: Props) => {
          "/404",
          "/login/teacher",
          "/login/parent",
+         "/login/organizer",
          "/login/select-account-type",
          "/signup/select-account-type",
          "/coming-soon",
