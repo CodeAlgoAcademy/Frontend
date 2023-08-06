@@ -141,7 +141,7 @@ const ParentLayout = ({ children }: Props) => {
                      )}
                   </div>
                )}
-               <main className="main place-items-centers relative z-0 mt-12 mr-[1%] grid  w-full rounded-2xl bg-[#ECEDF3] py-9 px-0 sm:mt-0 sm:rounded-[30px] sm:px-[3%]">
+               <main className="main  relative z-0 mt-12 mr-[1%] min-h-[100vh] w-full rounded-2xl bg-[#ECEDF3] py-9 px-0 sm:mt-0 sm:rounded-[30px] sm:px-[3%]">
                   <div className=" mb-6 hidden w-full items-center justify-end gap-3 sm:flex">
                      <span className="relative top-1">
                         <Image src="/assets/message.svg" alt="messages" width={22} height={22} className="blue-svg" />
