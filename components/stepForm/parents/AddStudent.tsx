@@ -5,7 +5,7 @@ import { RootState } from "store/store";
 
 export default function ParentSignUp4() {
    const dispatch = useDispatch();
-   const { fullName } = useSelector((state: RootState) => state.parentChild);
+   const child = useSelector((state: RootState) => state.parentChild);
 
    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
       dispatch(updateChild({ key: "fullName", value: e.target.value }));
@@ -16,7 +16,16 @@ export default function ParentSignUp4() {
          <h1 className="text-[32px] font-bold">Add your student account(s)</h1>
          <div className="mt-6">
             <div className="relative">
-               <input type="text" name="name" id="name" placeholder="Name" className={styles.input} value={fullName} onChange={onChange} required />
+               <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  placeholder="Name"
+                  className={styles.input}
+                  value={child?.fullName}
+                  onChange={onChange}
+                  required
+               />
                <label htmlFor="name" className={styles.label}>
                   Student{`'`}s Name
                </label>

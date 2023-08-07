@@ -4,25 +4,53 @@ import RecentInteraction from "@/components/parents/multiplayer/RecentInteractio
 import ParentLayout from "@/components/layouts/ParentLayout";
 import ProgressBar from "@/components/parents/UI/ProgressBar";
 import SkillBox from "@/components/parents/student/SkillBox";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getChildren } from "store/parentChildSlice";
 import { RootState } from "store/store";
+import { IParentChild, screentimeTypes } from "types/interfaces";
 
 const Dashboard = () => {
    const dispatch = useDispatch();
    const parent = useSelector((state: RootState) => state.parentChild);
 
+   const [timeLimits, setTimeLimits] = useState<screentimeTypes[]>([
+      { id: 1, dayOfTheWeek: "Monday", timeLimit: 0 },
+      { id: 1, dayOfTheWeek: "Tuesday", timeLimit: 0 },
+      { id: 1, dayOfTheWeek: "Wednesday", timeLimit: 0 },
+      { id: 1, dayOfTheWeek: "Thursday", timeLimit: 0 },
+      { id: 1, dayOfTheWeek: "Friday", timeLimit: 0 },
+      { id: 1, dayOfTheWeek: "Saturday", timeLimit: 0 },
+      { id: 1, dayOfTheWeek: "Sunday", timeLimit: 0 },
+   ]);
+
+   const changeTimeLimit = (currentChild: IParentChild) => {
+      return currentChild?.timeLimits?.map((time) => {
+         let currentTime = { ...time };
+         if (time.timeLimit === "12:00:00") {
+            currentTime.timeLimit = "No Limit";
+         } else {
+            currentTime.timeLimit = parseInt((time.timeLimit as string).split(":")[0]);
+         }
+         return currentTime;
+      });
+   };
+
    useEffect(() => {
       dispatch(getChildren());
    }, []);
 
+   useEffect(() => {
+      if (parent?.currentChild) {
+         setTimeLimits(changeTimeLimit(parent?.currentChild));
+      }
+   }, [parent?.currentChild, parent?.currentChild?.timeLimits]);
    return (
       <ParentLayout>
          <div className="relative bottom-14 mb-[-120px] scale-90 overflow-x-auto sm:bottom-0 sm:mb-0 sm:scale-100">
-            <div className="mx-auto mb-6 flex flex-wrap items-start justify-center gap-x-6 gap-y-8">
+            <div className=" mb-6 grid max-w-fit grid-cols-1 justify-center gap-x-6 gap-y-8 lg:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4">
                <ContentBox size="base" title="Level" padding="small">
-                  <h2 className="mt-14 text-center text-[22px] font-medium">Level 11</h2>
+                  <h2 className="mt-14 text-center text-[22px] font-medium"></h2>
                   {parent?.currentChild?.progress?.map((progress, index) => (
                      <React.Fragment key={index}>
                         <p className="mt-2 text-center text-sm font-light">{progress.unit || ""}</p>
@@ -50,10 +78,15 @@ const Dashboard = () => {
                      <SkillBox></SkillBox>
                   </div>
                </ContentBox>
-            </div>
-            <div className="mx-auto mb-6 flex flex-wrap items-start justify-center gap-x-6 gap-y-8">
                <ContentBox size="base" title="Screen Time" padding="large" showSublink={true} link="parents/screen-time">
-                  <BarChart data={[2.4, 3.1, 4, 3.9, 3.5, 2.9, 3]} barSpace={9.6} barWidth={3.3} maxHours={4} />
+                  <BarChart
+                     data={timeLimits?.map((time) => {
+                        return time.timeLimit === "No Limit" ? 8 : (time.timeLimit as number);
+                     })}
+                     barSpace={9.6}
+                     barWidth={3.3}
+                     maxHours={8}
+                  />
                </ContentBox>
                <ContentBox size="base" title="Multiplayer" padding="large" showSublink={true} link="parents/multiplayer">
                   <RecentInteraction />

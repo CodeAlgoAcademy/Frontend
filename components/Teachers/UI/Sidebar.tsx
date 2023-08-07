@@ -1,47 +1,25 @@
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import Link from "next/link";
-import { TbLayoutDashboard, TbClipboardText } from "react-icons/tb";
-import { FaUserGraduate } from "react-icons/fa";
-import { HiOutlineCalendar } from "react-icons/hi";
-import { BiMessageRounded } from "react-icons/bi";
 import { useRouter } from "next/router";
 import Image from "next/image";
 
-const links = [
-   {
-      name: "dashboard",
-      icon: <TbLayoutDashboard />,
-      url: "/teachers",
-   },
-   {
-      name: "curriculum",
-      icon: <TbClipboardText />,
-      url: "/teachers/curriculum",
-   },
-   {
-      name: "students",
-      icon: <FaUserGraduate />,
-      url: "/teachers/students",
-   },
-   {
-      name: "calendar",
-      icon: <HiOutlineCalendar />,
-      url: "/teachers/calendar",
-   },
-   {
-      name: "messages",
-      icon: <BiMessageRounded />,
-      url: "/teachers/messages",
-   },
-];
+interface ILink {
+   name: string;
+   icon: ReactElement;
+   url: string;
+}
 
-const Sidebar = () => {
+interface Props {
+   links: ILink[];
+}
+
+const Sidebar = (props: Props) => {
    const router = useRouter();
    const [activeLink, setActiveLink] = useState(router?.pathname);
    return (
       <div className="overflow-auto pb-10 md:overflow-hidden md:hover:overflow-auto">
          <div className="relative mx-auto my-8 h-[60px] w-[100px]">
-            <Link href="/teachers/addClass">
+            <Link href={router?.pathname?.includes("/teacher") ? "/teachers/addClass" : "/organizers"}>
                <a>
                   <Image src="/assets/CodeAlgo_Logo.png" alt="logo" loading="lazy" className="md:cursor-pointer" layout="fill" objectFit="contain" />
                </a>
@@ -49,12 +27,13 @@ const Sidebar = () => {
          </div>
          <>
             <div className="">
-               {links.map((link) => (
+               {props?.links.map((link) => (
                   <div key={link.name} className="mx-auto mb-5 w-[228px]">
                      <Link href={`${link.url}`}>
                         <div
                            className={
-                              activeLink === link.url || (router?.pathname.includes(link.url) && link.url !== "/teachers")
+                              activeLink === link.url ||
+                              (router?.pathname.includes(link.url) && link.url !== "/teachers" && link.url !== "/organizers")
                                  ? "flex cursor-pointer items-center gap-6 rounded-[28px] bg-[#2073fa] px-[30px] py-[14px] text-white"
                                  : "flex cursor-pointer items-center gap-6 rounded-[28px] px-[30px]  py-[14px] text-gray-600 hover:bg-slate-50 "
                            }
@@ -64,7 +43,8 @@ const Sidebar = () => {
                         >
                            <span
                               className={`text-lg ${
-                                 activeLink === link.url || (router?.pathname.includes(link.url) && link.url !== "/teachers")
+                                 activeLink === link.url ||
+                                 (router?.pathname.includes(link.url) && link.url !== "/teachers" && link.url !== "/organizers")
                                     ? "text-white"
                                     : "text-[#2073fa]"
                               }`}

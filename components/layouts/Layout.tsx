@@ -24,12 +24,14 @@ const Layout = ({ children }: Props) => {
          "/404",
          "/login/teacher",
          "/login/parent",
+         "/login/organizer",
          "/login/select-account-type",
          "/signup/select-account-type",
          "/coming-soon",
          "/signup/teacher",
          "/signup/student",
          "/signup/parent",
+         "/signup/organizer",
          "/about-us",
          "/contact",
       ];
@@ -50,7 +52,7 @@ const Layout = ({ children }: Props) => {
          const user = getUserFromLocalStorage();
          dispatch(addUserFromLocalStorage(user));
       }
-   }, [router]);
+   }, []);
 
    return (
       <GoogleOAuthProvider clientId={"354436342116-6kjbapf9ar5ad4rkho0hen2jndlcagff.apps.googleusercontent.com"}>
