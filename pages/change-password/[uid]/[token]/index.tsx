@@ -6,7 +6,8 @@ import { useRouter } from "next/router";
 import React, { useState, ChangeEvent } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { openErrorModal } from "store/fetchSlice";
+import { closePreloader, openErrorModal, openPreloader } from "store/fetchSlice";
+import { errorResolver } from "utils/errorResolver";
 
 const ResetPassword = () => {
    const dispatch = useDispatch();
@@ -14,19 +15,27 @@ const ResetPassword = () => {
    const [password, setPassword] = useState<string>("");
    const [confirmPassword, setConfirmPassword] = useState<string>("");
    const [modalOpened, setModalOpened] = useState<boolean>(false);
+
    const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
       if (password !== confirmPassword) {
          dispatch(openErrorModal({ errorText: ["Passwords do not match"] }));
       } else {
-         const { data } = await http.patch("/auth/password-reset/change/", {
-            password: password,
-            token: router.query.token,
-            uidb64: router.query.uid,
-         });
-         setModalOpened(true);
+         dispatch(openPreloader({ loadingText: "Changing Password" }));
+         try {
+            await http.patch("/auth/password-reset/change/", {
+               password: password,
+               token: router.query.token,
+               uidb64: router.query.uid,
+            });
+            dispatch(closePreloader());
+            setModalOpened(true);
+         } catch (error) {
+            errorResolver(error);
+         }
       }
    };
+
    return (
       <>
          <AuthLayout>

@@ -19,7 +19,7 @@ const Multiplayer = () => {
    return (
       <ParentLayout>
          <div className="relative bottom-14 mb-[-120px] scale-90 overflow-x-auto sm:bottom-0 sm:mb-0 sm:scale-100">
-            <div className="mx-auto mb-6 flex flex-wrap items-start justify-around gap-x-3 gap-y-10">
+            <div className=" mb-6 grid max-w-fit grid-cols-1 justify-center gap-x-6 gap-y-8 lg:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4">
                <ContentBox size="base" title="Multiplayer" padding="large" link="parents/multiplayer">
                   <RecentInteraction />
                </ContentBox>
@@ -29,10 +29,10 @@ const Multiplayer = () => {
                <ContentBox size="base" title="Friend Requests" padding="large" link="parents/multiplayer">
                   <FriendRequests />
                </ContentBox>
-               <ContentBox size="large" title="Add a friend" padding="large">
-                  <AddAFriend />
-               </ContentBox>
             </div>
+            <ContentBox size="large" title="Add a friend" padding="large">
+               <AddAFriend />
+            </ContentBox>
          </div>
       </ParentLayout>
    );

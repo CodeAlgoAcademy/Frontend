@@ -5,10 +5,10 @@ import { RootState } from "store/store";
 
 export default function Safety3() {
    const dispatch = useDispatch();
-   const { friend } = useSelector((state: RootState) => state.parentChild);
+   const child = useSelector((state: RootState) => state.parentChild);
    return (
       <div key={8}>
-         <h1 className="text-[30px] font-bold">Who can Connor play with?</h1>
+         <h1 className="text-[30px] font-bold">Who can {child?.fullName} play with?</h1>
          <p className="text-[14px] font-[400]">
             CodeAlgo allows parents to limit students multiplayer interactions. Please enter the email or username of your student’s friends below. A
             request will be sent to the linked parent account. They can then accept or decline the request.
@@ -18,7 +18,7 @@ export default function Safety3() {
             className="auth-input"
             type="text"
             required
-            value={friend}
+            value={child?.friend}
             onChange={(e) => {
                dispatch(updateChild({ key: "friend", value: e.target.value }));
             }}

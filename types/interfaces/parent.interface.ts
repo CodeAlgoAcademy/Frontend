@@ -17,6 +17,7 @@ export interface IParentChild {
    codingExperience: string;
    dob: string;
    password: string;
+   confirmPassword?: string;
    timeLimits: screentimeTypes[];
    friend?: string;
    id: string | number;

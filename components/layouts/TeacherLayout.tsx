@@ -10,11 +10,43 @@ import { getUserFromLocalStorage } from "utils/getTokens";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { getAllClasses } from "services/classesService";
+import { TbLayoutDashboard, TbClipboardText } from "react-icons/tb";
+import { FaUserGraduate } from "react-icons/fa";
+import { HiOutlineCalendar } from "react-icons/hi";
+import { BiMessageRounded } from "react-icons/bi";
 
 interface Props {
    children?: ReactNode;
    className?: string;
 }
+
+const links = [
+   {
+      name: "dashboard",
+      icon: <TbLayoutDashboard />,
+      url: "/teachers",
+   },
+   {
+      name: "curriculum",
+      icon: <TbClipboardText />,
+      url: "/teachers/curriculum",
+   },
+   {
+      name: "students",
+      icon: <FaUserGraduate />,
+      url: "/teachers/students",
+   },
+   {
+      name: "calendar",
+      icon: <HiOutlineCalendar />,
+      url: "/teachers/calendar",
+   },
+   {
+      name: "messages",
+      icon: <BiMessageRounded />,
+      url: "/teachers/messages",
+   },
+];
 
 const TeacherLayout = ({ children, className }: Props) => {
    const router = useRouter();
@@ -58,7 +90,7 @@ const TeacherLayout = ({ children, className }: Props) => {
          <div className="mb-auto flex grow items-stretch">
             {width > 840 && (
                <div className="sidebar w-[280px] bg-white">
-                  <Sidebar />
+                  <Sidebar links={links} />
                </div>
             )}
             {width < 840 && width > 500 && (

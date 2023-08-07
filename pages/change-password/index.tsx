@@ -4,18 +4,30 @@ import { FaChevronLeft, FaPaperPlane, FaTimes } from "react-icons/fa";
 import http from "axios.config";
 import AuthLayout from "@/components/layouts/AuthLayout";
 import { AuthButton } from "@/components/UI/Button";
+import { useDispatch } from "react-redux";
+import { closePreloader, openPreloader } from "store/fetchSlice";
+import { errorResolver } from "utils/errorResolver";
 
 const ChangePassword = () => {
    const [modalOpened, setModalOpened] = useState<boolean>(false);
    const [email, setEmail] = useState<string>("");
 
+   const dispatch = useDispatch();
+
    const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
-      await http.post("/auth/password-reset/", {
-         email,
-      });
-      setEmail("");
-      setModalOpened(true);
+      dispatch(openPreloader({ loadingText: "Please wait" }));
+      try {
+         await http.post("/auth/password-reset/", {
+            email,
+         });
+
+         dispatch(closePreloader());
+         setEmail("");
+         setModalOpened(true);
+      } catch (error) {
+         errorResolver(error);
+      }
    };
 
    return (

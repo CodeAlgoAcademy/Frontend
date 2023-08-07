@@ -16,7 +16,13 @@ const Login = ({ route }: { route?: any }) => {
    const { email, password } = useSelector((state: RootState) => state.user.auth);
    const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 
-   const accountType = router.pathname.includes("teacher") ? "teacher" : router.pathname.includes("parent") ? "parent" : "student";
+   const accountType = router.pathname.includes("teacher")
+      ? "teacher"
+      : router.pathname.includes("parent")
+      ? "parent"
+      : router.pathname.includes("organizer")
+      ? "organizer"
+      : "student";
 
    const login = async (event: ChangeEvent<HTMLFormElement>) => {
       event.preventDefault();
@@ -39,6 +45,12 @@ const Login = ({ route }: { route?: any }) => {
                }
             } else {
                dispatch(openErrorModal({ errorText: ["This is not a parent's account"] }));
+            }
+         } else if (router.pathname.includes("/login/organizer")) {
+            if (data?.payload?.is_organizer) {
+               router.push("/organizers");
+            } else {
+               dispatch(openErrorModal({ errorText: ["This is not an organizer's account"] }));
             }
          }
       }
@@ -91,7 +103,7 @@ const Login = ({ route }: { route?: any }) => {
                   required
                />
                <Link href="/change-password">
-                  <p className="mt-2 cursor-pointer font-bold text-[#222] underline">Forgot password</p>
+                  <p className="mt-2 max-w-fit cursor-pointer font-bold text-[#222] underline">Forgot password</p>
                </Link>
                <AuthButton text="Login" />
                <GoogleBtn />
