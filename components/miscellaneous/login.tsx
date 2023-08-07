@@ -20,7 +20,7 @@ const Login = ({ route }: { route?: any }) => {
       ? "teacher"
       : router.pathname.includes("parent")
       ? "parent"
-      : location.pathname.includes("organizer")
+      : router.pathname.includes("organizer")
       ? "organizer"
       : "student";
 
