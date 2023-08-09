@@ -13,7 +13,10 @@ interface Props {
 // Note: The title parameter should alao be the same name as the path of the sublink & spacing is replaced with '-' for the link href
 const ContentBox = ({ children, title, showSublink, padding, size, link, style }: Props) => {
    return (
-      <div className="short-scroll-thumb relative self-center overflow-x-auto overflow-y-clip " style={{ width: size === "large" ? "100%" : "auto" }}>
+      <div
+         className="short-scroll-thumb relative max-w-full self-center overflow-x-auto overflow-y-clip xl:overflow-x-hidden"
+         style={{ width: size === "large" ? "100%" : "auto" }}
+      >
          <div
             className="relative min-h-[340px] w-full min-w-[390px] max-w-fit rounded-2xl bg-white py-6 xl:min-w-[390px]"
             style={{

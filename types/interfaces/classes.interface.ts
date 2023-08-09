@@ -36,10 +36,11 @@ export interface ISingleClass {
    coTeachers: string;
    grade: string;
    color: string;
+   organization: string | number;
 }
 
 export interface CurrentClassState {
-    className: string;
-    color: string;
-    id: string | number;
- }
+   className: string;
+   color: string;
+   id: string | number;
+}

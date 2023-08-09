@@ -7,6 +7,7 @@ const initialState: IModal = {
    showAddStudents: false,
    colorsModalOpen: false,
    addUnitModalOpen: false,
+   selectOrganizationOpen: false,
    // parent dashboard
    addChildModalOpen: false,
 };
@@ -51,6 +52,12 @@ const modalSlice = createSlice({
       closeAddChildModal: (state: IModal) => {
          state.addChildModalOpen = false;
       },
+      toggleSelectOrg: (state: IModal) => {
+         state.selectOrganizationOpen = !state.selectOrganizationOpen;
+      },
+      closeSelectOrg: (state: IModal) => {
+         state.selectOrganizationOpen = false;
+      },
    },
 });
 
@@ -67,6 +74,8 @@ export const {
    closeAddUnitModal,
    openAddChildModal,
    closeAddChildModal,
+   toggleSelectOrg,
+   closeSelectOrg,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;
