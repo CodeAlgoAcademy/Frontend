@@ -17,6 +17,7 @@ const initialState: IAddClass = {
       coTeachers: "",
       roomNumber: "",
       color: colors[0],
+      organization: "",
    },
    file: "",
 };
@@ -29,14 +30,14 @@ const addClassSlice = createSlice({
          state: IAddClass,
          action: PayloadAction<{
             key: string;
-            value: string;
+            value: string | number;
             typeofState?: string;
          }>
       ) => {
          if (action.payload.typeofState === "student") {
-            state.student[action.payload.key as keyof typeof state.student] = action.payload.value;
+            state.student[action.payload.key as keyof typeof state.student] = action.payload.value as string;
          } else {
-            state.class[action.payload.key as keyof typeof state.class] = action.payload.value;
+            state.class[action.payload.key as keyof typeof state.class] = action.payload.value as string;
          }
       },
       addFile: (state: IAddClass, action: PayloadAction<any>) => {

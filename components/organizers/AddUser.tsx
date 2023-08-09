@@ -22,6 +22,7 @@ const AddUser = () => {
       const data = await dispatch(addUserToOrganization({ email, role: role?.id }));
       if (!data?.error) {
          setMessage("Invite sent!");
+         setEmail("");
          dispatch(getAllInvitations());
       }
    };

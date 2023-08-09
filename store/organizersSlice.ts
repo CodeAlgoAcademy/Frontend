@@ -1,6 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchOrganiztions, getAllInvitations, getAllRoles, getOrganizationUsers } from "services/organizersService";
-import { IOrganization, IOrganizationInvitations, IOrganizationSlice, IOrganizationUser, IRole } from "types/interfaces/organization.interface";
+import {
+   fetchOrganiztions,
+   getAllInvitations,
+   getAllRoles,
+   getMyInvitations,
+   getOrganizationUsers,
+   getOrgIBelongTo,
+} from "services/organizersService";
+import {
+   IOrganization,
+   IOrganizationInvitations,
+   IOrganizationSlice,
+   IOrganizationUser,
+   IRole,
+   IUserOrganization,
+} from "types/interfaces/organization.interface";
 
 const initialState: IOrganizationSlice = {
    organizations: [],
@@ -8,6 +22,8 @@ const initialState: IOrganizationSlice = {
    users: [],
    roles: [],
    invitations: [],
+   userInvitation: [],
+   userOrganizations: [],
 };
 
 const organizersSlice = createSlice({
@@ -41,6 +57,14 @@ const organizersSlice = createSlice({
 
       builder.addCase(getAllInvitations.fulfilled, (state: IOrganizationSlice, action: PayloadAction<IOrganizationInvitations[]>) => {
          state.invitations = action.payload;
+      });
+
+      builder.addCase(getMyInvitations.fulfilled, (state: IOrganizationSlice, action: PayloadAction<IUserOrganization[]>) => {
+         state.userInvitation = action.payload;
+      });
+
+      builder.addCase(getOrgIBelongTo.fulfilled, (state: IOrganizationSlice, action: PayloadAction<IOrganization[]>) => {
+         state.userOrganizations = action.payload;
       });
    },
 });

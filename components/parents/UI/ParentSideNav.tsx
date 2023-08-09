@@ -4,6 +4,8 @@ import Image from "next/image";
 import messageService from "services/messagesService";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
+import { GrOrganization } from "react-icons/gr";
+import { SlOrganization } from "react-icons/sl";
 
 const SideNav = ({ unread }: { unread: number }) => {
    return (
@@ -21,6 +23,7 @@ const SideNav = ({ unread }: { unread: number }) => {
             <h2 className="ml-7 mb-3 text-xl font-medium text-[#A8ABB0]">ACCOUNT</h2>
             <NavButton title="Billing" image="Billing.svg" url="/parents/billing" />
             <NavButton title="Student Accounts" image="people.svg" url="/parents/student" />
+            <NavButton title="Organization" image={<SlOrganization />} url="/parents/organization" />
          </div>
          <div>
             <h2 className="ml-7 mb-3 text-xl font-medium text-[#A8ABB0]">SAFETY</h2>

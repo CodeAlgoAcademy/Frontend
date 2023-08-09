@@ -6,6 +6,7 @@ import { BiMessageRounded, BiUserPin } from "react-icons/bi";
 import NavButton from "components/parents/UI/NavButton";
 import { FcOrganization } from "react-icons/fc";
 import { GrOrganization } from "react-icons/gr";
+import { SlOrganization } from "react-icons/sl";
 
 const links = [
    {
@@ -15,7 +16,7 @@ const links = [
    },
    {
       name: "Create Organization",
-      icon: <GrOrganization />,
+      icon: <SlOrganization />,
       url: "/organizers/create-organization",
    },
    {

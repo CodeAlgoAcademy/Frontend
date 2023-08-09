@@ -1,5 +1,7 @@
 import React from "react";
 import NavButton from "./NavButton";
+import { GrOrganization } from "react-icons/gr";
+import { SlOrganization } from "react-icons/sl";
 
 const linkDetails = [
    [{ title: "Main Dashboard", image: "Dashboard.svg", url: "/parents" }],
@@ -7,6 +9,7 @@ const linkDetails = [
    [
       { title: "Billing", image: "Billing.svg", url: "/parents/billing" },
       { title: "Student Accounts", image: "people.svg", url: "/parents/student" },
+      { title: "Organization", image: <SlOrganization />, url: "/parents/organization" },
    ],
    [
       { title: "Screen Time", image: "screen-time.svg", url: "/parents/screen-time" },
