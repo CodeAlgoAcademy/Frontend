@@ -17,11 +17,11 @@ class MyDocument extends Document {
                <meta property="twitter:title" content="CodeAlgo Academy" />
                <meta
                   property="og:description"
-                  content="3D games from CodeAlgo academy will bring students to computer sciences where they can teach themselves as they play. CodeAlgo Academy"
+                  content="3D games from CodeAlgo academy will bring students to computer sciences where they can teach themselves as they play."
                />
                <meta
                   property="twitter:description"
-                  content="3D games from CodeAlgo academy will bring students to computer sciences where they can teach themselves as they play. CodeAlgo Academy"
+                  content="3D games from CodeAlgo academy will bring students to computer sciences where they can teach themselves as they play."
                />
                <meta property="image" content="https://gcdnb.pbrd.co/images/9lHbIun6obws.jpg?o=1" />
 

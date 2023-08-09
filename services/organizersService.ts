@@ -117,7 +117,7 @@ export const addUserToOrganization: any = createAsyncThunk(
 
       try {
          const response = await http.post(
-            `/organization/${id}/invite/`,
+            `/organization/${id}/invite`,
             { email, role },
             { headers: { Authorization: `Bearer ${getAccessToken()}` } }
          );
@@ -141,5 +141,54 @@ export const getAllInvitations: any = createAsyncThunk("getallinvitations", asyn
    } catch (error) {
       error = errorResolver(error);
       return thunkApi.rejectWithValue(error);
+   }
+});
+
+// for other accounts
+export const getMyInvitations: any = createAsyncThunk("getMyInvitations", async (_, thunkApi) => {
+   try {
+      const response = await http.get("/organization/invitations", { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+
+      return response?.data;
+   } catch (error: any) {
+      return thunkApi.rejectWithValue(error.response.data);
+   }
+});
+
+export const acceptOrgRequest: any = createAsyncThunk("Accept Org Request", async (id: number, thunkApi) => {
+   thunkApi.dispatch(openPreloader({ loadingText: "Accepting Orgnization Request" }));
+   try {
+      const response = await http.put(`/organization/invitations/${id}`, { status: 1 }, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+
+      thunkApi.dispatch(closePreloader());
+
+      return response?.data;
+   } catch (error) {
+      error = errorResolver(error);
+      return thunkApi.rejectWithValue(error);
+   }
+});
+
+export const declineOrgRequest: any = createAsyncThunk("decline org request", async (id: number, thunkApi) => {
+   thunkApi.dispatch(openPreloader({ loadingText: "Declining Orgnization Request" }));
+   try {
+      const response = await http.put(`/organization/invitations/${id}`, { status: 2 }, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+
+      thunkApi.dispatch(closePreloader());
+
+      return response?.data;
+   } catch (error) {
+      error = errorResolver(error);
+      return thunkApi.rejectWithValue(error);
+   }
+});
+
+export const getOrgIBelongTo: any = createAsyncThunk("get organization i belong to", async (_, thunkApi) => {
+   try {
+      const response = await http.get("/organization", { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+
+      return response?.data;
+   } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
    }
 });

@@ -23,12 +23,12 @@ export const getAllClasses: any = createAsyncThunk("allClassesSlice/getAllClasse
 });
 
 export const addClass: any = createAsyncThunk("allClassesSlice/addClass", async (name, thunkApi) => {
-   const state: any = thunkApi.getState();
+   const state = thunkApi.getState() as RootState;
    const dispatch = thunkApi.dispatch;
    dispatch(openPreloader({ loadingText: "Adding Class" }));
    const {
       student,
-      class: { className, grade, subject, coTeachers, roomNumber, color },
+      class: { className, grade, subject, coTeachers, roomNumber, color, organization },
       file,
    } = state.addClass;
    const { firstName, lastName, email } = state.addClass.student;
@@ -44,6 +44,7 @@ export const addClass: any = createAsyncThunk("allClassesSlice/addClass", async 
          subject,
          roomNumber,
          color,
+         organization,
          student: {
             firstName,
             lastName,
@@ -56,15 +57,17 @@ export const addClass: any = createAsyncThunk("allClassesSlice/addClass", async 
       formData.append("grade", grade);
       formData.append("subject", subject);
       formData.append("color", color);
-      formData.append("roomNumber", roomNumber);
+      formData.append("roomNumber", roomNumber as string);
       formData.append("file", file, "student file");
+      formData.append("organization", organization as string);
    } else {
       method = "Class Only";
       formData.append("className", className);
       formData.append("grade", grade);
       formData.append("subject", subject);
       formData.append("color", color);
-      formData.append("roomNumber", roomNumber);
+      formData.append("roomNumber", roomNumber as string);
+      formData.append("organization", organization as string);
    }
 
    try {

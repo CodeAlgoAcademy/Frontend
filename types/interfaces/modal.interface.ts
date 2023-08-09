@@ -4,7 +4,7 @@ export interface IModal {
    showAddStudents: boolean;
    colorsModalOpen: boolean;
    addUnitModalOpen: boolean;
-
+   selectOrganizationOpen: boolean;
    // Parents dashboard
    addChildModalOpen: boolean;
 }

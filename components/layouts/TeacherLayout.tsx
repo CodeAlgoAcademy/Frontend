@@ -14,6 +14,8 @@ import { TbLayoutDashboard, TbClipboardText } from "react-icons/tb";
 import { FaUserGraduate } from "react-icons/fa";
 import { HiOutlineCalendar } from "react-icons/hi";
 import { BiMessageRounded } from "react-icons/bi";
+import { GrOrganization } from "react-icons/gr";
+import { SlOrganization } from "react-icons/sl";
 
 interface Props {
    children?: ReactNode;
@@ -35,6 +37,11 @@ const links = [
       name: "students",
       icon: <FaUserGraduate />,
       url: "/teachers/students",
+   },
+   {
+      name: "organizations",
+      icon: <SlOrganization />,
+      url: "/teachers/organization",
    },
    {
       name: "calendar",

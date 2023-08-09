@@ -4,6 +4,8 @@ import { FaUserGraduate } from "react-icons/fa";
 import { HiOutlineCalendar } from "react-icons/hi";
 import { BiMessageRounded } from "react-icons/bi";
 import NavButton from "components/parents/UI/NavButton";
+import { GrOrganization } from "react-icons/gr";
+import { SlOrganization } from "react-icons/sl";
 
 const links = [
    {
@@ -20,6 +22,11 @@ const links = [
       name: "students",
       icon: <FaUserGraduate />,
       url: "/teachers/students",
+   },
+   {
+      name: "organizations",
+      icon: <SlOrganization />,
+      url: "/teachers/organization",
    },
    {
       name: "calendar",
