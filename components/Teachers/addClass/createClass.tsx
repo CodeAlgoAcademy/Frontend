@@ -1,18 +1,27 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useEffect } from "react";
 import { FaChevronDown, FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { closeColorModal, openAddStudentsModal, toggleColorModal, openGradesModal, closeAddClassModal } from "../../../store/modalSlice";
+import {
+   closeColorModal,
+   openAddStudentsModal,
+   toggleColorModal,
+   openGradesModal,
+   closeAddClassModal,
+   toggleSelectOrg,
+} from "../../../store/modalSlice";
 import { colors } from "./colors";
 import { RootState } from "../../../store/store";
 import { IInputFields } from "../../../types/interfaces";
 import { updateClassDetails, clearFields } from "../../../store/addClassSlice";
 import styles from "../../../styles/styles";
 import { addClass, getAllClasses } from "services/classesService";
+import SelectOrganization from "./organizations";
+import { getOrgIBelongTo } from "services/organizersService";
 
 const CreateClass = () => {
    const dispatch = useDispatch();
-   const { colorsModalOpen } = useSelector((state: RootState) => state.modal);
-   const { className, subject, roomNumber, coTeachers, grade, color } = useSelector((state: RootState) => state.addClass.class);
+   const { colorsModalOpen, selectOrganizationOpen } = useSelector((state: RootState) => state.modal);
+   const { className, subject, roomNumber, coTeachers, grade, color, organization } = useSelector((state: RootState) => state.addClass.class);
 
    const inputFields: IInputFields[] = [
       {
@@ -33,12 +42,6 @@ const CreateClass = () => {
          placeholder: "Enter Room Number*",
          value: roomNumber,
       },
-      {
-         type: "text",
-         name: "coTeachers",
-         placeholder: "Add co-teachers",
-         value: coTeachers,
-      },
    ];
 
    const handleSubmit = async (event: ChangeEvent<HTMLFormElement>) => {
@@ -50,6 +53,11 @@ const CreateClass = () => {
          dispatch(getAllClasses());
       }
    };
+
+   // fetch all organizations
+   useEffect(() => {
+      dispatch(getOrgIBelongTo());
+   }, []);
 
    return (
       <form className="h-full flex-[0.9] p-8" onSubmit={handleSubmit}>
@@ -75,8 +83,9 @@ const CreateClass = () => {
                   />
                );
             })}
+
             <div
-               className="flex w-full cursor-pointer items-center justify-between rounded-md border-2 border-gray-400 px-4 py-3 text-[16px] font-bold text-black outline-none placeholder:text-black focus:border-[#2073fa]"
+               className={styles.select}
                onClick={() => {
                   dispatch(openGradesModal());
                }}
@@ -85,6 +94,21 @@ const CreateClass = () => {
                <span>
                   <FaChevronDown />
                </span>
+            </div>
+
+            <div className="relative">
+               <div
+                  className={styles.select}
+                  onClick={() => {
+                     dispatch(toggleSelectOrg());
+                  }}
+               >
+                  <p>{organization || "Select Organization"}</p>
+                  <span>
+                     <FaChevronDown />
+                  </span>
+               </div>
+               <SelectOrganization />
             </div>
             <div className="relative ml-auto h-[50px] w-[150px] rounded-full border-2">
                <div

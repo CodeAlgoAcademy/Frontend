@@ -15,11 +15,11 @@ const availableGrades: Array<string> = ["K", "1", "2", "3", "4", "5", "6", "7", 
 const Grades: FC<gradesType> = ({ addStudents }) => {
    const [chosenGrade, setChosenGrade] = useState<string>("");
    const { gradesModalOpen } = useSelector((state: RootState) => state.modal);
-   const { grade } = useSelector((state: RootState) => {
+   const grade = useSelector((state: RootState) => {
       if (addStudents) {
-         return state.user.auth;
+         return state.user?.auth?.grade;
       } else {
-         return state.addClass.class;
+         return state.addClass?.class?.grade;
       }
    });
 

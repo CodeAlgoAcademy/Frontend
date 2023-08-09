@@ -14,6 +14,7 @@ const NavButton = ({ image, title, notification, url, isIcon }: Props) => {
    const [active, setActive] = useState(false);
    const [detailsDisplay, setDetailsDisplay] = useState(false);
    const router = useRouter();
+
    useEffect(() => {
       setActive(() => url === router.pathname);
    }, [router?.pathname, url]);
@@ -34,7 +35,7 @@ const NavButton = ({ image, title, notification, url, isIcon }: Props) => {
             {image && typeof image === "string" ? (
                <Image src={`/assets/${image}`} alt={title} width={20} height={20} className={active ? "" : "blue-svg"} />
             ) : (
-               <span className={active ? "" : "blue-svg" + ""}>{image}</span>
+               <span className={`${active ? "!text-white" : "blue-svg" + ""} text-[1rem] text-white`}>{image}</span>
             )}
             {!isIcon && (
                <>

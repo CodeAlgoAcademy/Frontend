@@ -31,10 +31,21 @@ export interface IOrganizationInvitations {
    email: string;
 }
 
+export interface IUserOrganization {
+   id: number;
+   organization: IOrganization;
+   created_at: Date;
+   role: IRole;
+   status_text: string;
+   status: number;
+}
+
 export interface IOrganizationSlice {
    organizations: IOrganization[];
    selectedOrganization: IOrganization | undefined;
    users: IOrganizationUser[];
    roles: IRole[];
    invitations: IOrganizationInvitations[];
+   userInvitation: IUserOrganization[];
+   userOrganizations: IOrganization[];
 }
