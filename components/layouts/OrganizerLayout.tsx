@@ -36,6 +36,11 @@ const links = [
       url: "/organizers/roles",
    },
    {
+      name: "Licenses",
+      icon: <BiUserPin />,
+      url: "/organizers/licenses",
+   },
+   {
       name: "Users",
       icon: <HiUsers />,
       url: "/organizers/users",
