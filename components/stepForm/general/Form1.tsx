@@ -9,7 +9,13 @@ export default function ParentSignUp1() {
    const auth = useSelector((state: RootState) => state.user.auth);
    const router = useRouter();
 
-   const accountType = router.pathname.includes("teacher") ? "teacher" : router.pathname.includes("parent") ? "parent" : "student";
+   const accountType = router.pathname.includes("teacher")
+      ? "teacher"
+      : router.pathname.includes("parent")
+      ? "parent"
+      : router.pathname.includes("student")
+      ? "student"
+      : "organizer";
 
    return (
       <div key={1}>

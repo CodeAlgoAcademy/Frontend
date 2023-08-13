@@ -12,6 +12,12 @@ export interface IRole {
    id?: number;
 }
 
+export interface ILicense {
+   name: string;
+   description: string;
+   id?: number;
+}
+
 export interface IOrganizationUser {
    id?: number;
    role: IRole;
@@ -48,4 +54,5 @@ export interface IOrganizationSlice {
    invitations: IOrganizationInvitations[];
    userInvitation: IUserOrganization[];
    userOrganizations: IOrganization[];
+   licenses: ILicense[];
 }

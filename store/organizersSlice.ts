@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
    fetchOrganiztions,
    getAllInvitations,
+   getAllLicenses,
    getAllRoles,
    getMyInvitations,
    getOrganizationUsers,
@@ -21,6 +22,7 @@ const initialState: IOrganizationSlice = {
    selectedOrganization: undefined,
    users: [],
    roles: [],
+   licenses: [],
    invitations: [],
    userInvitation: [],
    userOrganizations: [],
@@ -49,6 +51,10 @@ const organizersSlice = createSlice({
 
       builder.addCase(getAllRoles.fulfilled, (state: IOrganizationSlice, action: PayloadAction<IRole[]>) => {
          state.roles = action.payload;
+      });
+
+      builder.addCase(getAllLicenses.fulfilled, (state: IOrganizationSlice, action: PayloadAction<IRole[]>) => {
+         state.licenses = action.payload;
       });
 
       builder.addCase(getOrganizationUsers.fulfilled, (state: IOrganizationSlice, action: PayloadAction<IOrganizationUser[]>) => {

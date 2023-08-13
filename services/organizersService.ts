@@ -93,6 +93,58 @@ export const deleteRole = createAsyncThunk("organizer/update-role", async (id: n
    }
 });
 
+// ============ LICENSE
+
+export const createLicense: any = createAsyncThunk(
+   "organizer/create-license",
+   async ({ name, description, price, duration }: { name: string; description: string; price: string; duration: string }, thunkApi) => {
+      const dispatch = thunkApi.dispatch;
+      dispatch(openPreloader({ loadingText: "Creating License" }));
+
+      try {
+         const response = await http.post(
+            "/organization/license/admin/",
+            { name, description, price, duration },
+            { headers: { Authorization: `Bearer ${getAccessToken()}` } }
+         );
+
+         dispatch(closePreloader());
+
+         return response?.data;
+      } catch (error) {
+         error = errorResolver(error);
+         return thunkApi.rejectWithValue(error);
+      }
+   }
+);
+
+export const getAllLicenses: any = createAsyncThunk("organizer/get-all-licenses", async (_, thunkApi) => {
+   try {
+      const response = await http.get("/organization/license/", { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+
+      return response?.data;
+   } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+   }
+});
+
+export const deleteLicense = createAsyncThunk("organizer/delete-license", async (id: number, thunkApi) => {
+   const dispatch = thunkApi.dispatch;
+
+   dispatch(openPreloader({ loadingText: "Deleting license" }));
+
+   try {
+      const response = await http.delete(`/organization/license/admin/${id}`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+
+      dispatch(closePreloader());
+
+      return response?.data;
+   } catch (error) {
+      error = errorResolver(error);
+      return thunkApi.rejectWithValue(error);
+   }
+});
+
 // ================== USERS
 export const getOrganizationUsers: any = createAsyncThunk("organizer/get-users", async (_, thunkApi) => {
    const { selectedOrganization } = (thunkApi.getState() as RootState).organizer;
