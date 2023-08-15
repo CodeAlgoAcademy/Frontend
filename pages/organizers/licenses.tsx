@@ -6,7 +6,7 @@ import React from "react";
 const License = () => {
    return (
       <OrganizerLayout>
-         <div className="mt-8 flex flex-wrap items-start gap-[2rem]">
+         <div className="mt-8 flex items-start gap-[2rem]">
             <CreateLicense />
             <AllLicenses />
          </div>
