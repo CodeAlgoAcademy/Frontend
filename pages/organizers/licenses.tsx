@@ -7,7 +7,7 @@ const License = () => {
    return (
       <OrganizerLayout>
          <div className="mt-8 flex items-start gap-[2rem]">
-            <CreateLicense />
+            
             <AllLicenses />
          </div>
       </OrganizerLayout>
