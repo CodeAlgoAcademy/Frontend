@@ -145,6 +145,33 @@ export const deleteLicense = createAsyncThunk("organizer/delete-license", async 
    }
 });
 
+export const sendLicenseRequest: any = createAsyncThunk("sendLicenseReq", async (id: number, thunkApi) => {
+   const dispatch = thunkApi.dispatch;
+
+   const organization = (thunkApi.getState() as RootState)?.organizer?.selectedOrganization;
+
+   dispatch(openPreloader({ loadingText: "Sending request" }));
+
+   try {
+      const response = await http.post(
+         `/organization/license/requests/${organization?.id}`,
+         { license: id },
+         {
+            headers: {
+               Authorization: `Bearer ${getAccessToken()}`,
+            },
+         }
+      );
+
+      dispatch(closePreloader());
+
+      return response.data;
+   } catch (error) {
+      error = errorResolver(error);
+      return thunkApi.rejectWithValue(error);
+   }
+});
+
 // ================== USERS
 export const getOrganizationUsers: any = createAsyncThunk("organizer/get-users", async (_, thunkApi) => {
    const { selectedOrganization } = (thunkApi.getState() as RootState).organizer;
