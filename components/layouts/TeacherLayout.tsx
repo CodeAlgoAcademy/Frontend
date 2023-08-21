@@ -92,7 +92,7 @@ const TeacherLayout = ({ children, className }: Props) => {
       };
    }, [router]);
    return (
-      <div className="flex min-h-screen flex-col">
+      <div className="flex min-h-[90dvh] flex-col">
          {/* <Header /> */}
          <div className="mb-auto flex grow items-stretch">
             {width > 840 && (
@@ -170,7 +170,7 @@ const TeacherLayout = ({ children, className }: Props) => {
                <div
                   className={`rounded-3xl bg-[#ECEDF3] px-[1rem] py-8 md:px-[6%] ${
                      width > 500 ? "mt-[45px]" : "mt-[100px]"
-                  } mx-auto min-h-[620px] w-full max-w-[96vw] ${className}`}
+                  } mx-auto min-h-[80dvh] w-full max-w-[96vw] ${className} overflow-auto`}
                >
                   {children}
                </div>
