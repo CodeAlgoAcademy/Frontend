@@ -43,16 +43,16 @@ const links = [
       icon: <SlOrganization />,
       url: "/teachers/organization",
    },
-   {
-      name: "calendar",
-      icon: <HiOutlineCalendar />,
-      url: "/teachers/calendar",
-   },
-   {
-      name: "messages",
-      icon: <BiMessageRounded />,
-      url: "/teachers/messages",
-   },
+   // {
+   //    name: "calendar",
+   //    icon: <HiOutlineCalendar />,
+   //    url: "/teachers/calendar",
+   // },
+   // {
+   //    name: "messages",
+   //    icon: <BiMessageRounded />,
+   //    url: "/teachers/messages",
+   // },
 ];
 
 const TeacherLayout = ({ children, className }: Props) => {

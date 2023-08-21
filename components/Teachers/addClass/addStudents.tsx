@@ -23,24 +23,28 @@ const AddStudents = () => {
          name: "firstName",
          placeholder: "Enter Student First Name",
          value: firstName,
+         required: true,
       },
       {
          type: "text",
          name: "lastName",
          placeholder: "Enter Student Last Name",
          value: lastName,
+         required: true,
       },
       {
          type: "email",
          name: "email",
          placeholder: "Enter Student Email",
          value: email,
+         required: false,
       },
       {
          type: "text",
          name: "username",
          placeholder: "Enter Username",
          value: username,
+         required: true,
       },
    ];
    const handleFileInputChange = (e: any) => {
@@ -72,7 +76,7 @@ const AddStudents = () => {
          </header>
          <section className="grid gap-[1rem] px-8 md:grid-cols-2">
             {inputFields?.map((inputField: IInputFields, index: number) => {
-               const { name, type, placeholder, value } = inputField;
+               const { name, type, placeholder, value, required } = inputField;
                return (
                   <input
                      key={index}
@@ -89,6 +93,7 @@ const AddStudents = () => {
                            })
                         );
                      }}
+                     // required={required}
                      className={styles.input}
                   />
                );
