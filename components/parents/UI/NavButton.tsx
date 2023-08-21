@@ -9,8 +9,9 @@ interface Props {
    notification?: number | string;
    url: string;
    isIcon?: boolean;
+   onClick?(): void;
 }
-const NavButton = ({ image, title, notification, url, isIcon }: Props) => {
+const NavButton = ({ image, title, notification, url, isIcon, onClick }: Props) => {
    const [active, setActive] = useState(false);
    const [detailsDisplay, setDetailsDisplay] = useState(false);
    const router = useRouter();
@@ -31,6 +32,7 @@ const NavButton = ({ image, title, notification, url, isIcon }: Props) => {
             }}
             onMouseEnter={() => setDetailsDisplay(() => true)}
             onMouseLeave={() => setDetailsDisplay(() => false)}
+            onClick={onClick}
          >
             {image && typeof image === "string" ? (
                <Image src={`/assets/${image}`} alt={title} width={20} height={20} className={active ? "" : "blue-svg"} />

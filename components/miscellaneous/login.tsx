@@ -21,7 +21,7 @@ const Login = ({ route }: { route?: any }) => {
       : router.pathname.includes("parent")
       ? "parent"
       : router.pathname.includes("organizer")
-      ? "organizer"
+      ? "admin"
       : "student";
 
    const login = async (event: ChangeEvent<HTMLFormElement>) => {

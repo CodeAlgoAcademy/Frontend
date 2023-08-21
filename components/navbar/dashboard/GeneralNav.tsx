@@ -132,13 +132,18 @@ const GeneralNav = () => {
                      ? `absolute right-[8rem] top-7 z-[50] w-[16rem] overflow-hidden rounded-[20px] border border-[#BDBDBD] bg-white px-4 py-[6px] ${
                           settingsTabOpen ? "h-[18rem]" : "h-[10rem]"
                        } box-border duration-300 ease-in-out`
-                     : `absolute right-[8rem] top-7 box-border h-[3rem] w-[7rem] rounded-[30px] border border-[#BDBDBD] bg-white px-2 py-[6px]  transition-[width]`
+                     : `absolute right-[8rem] top-7 box-border h-[3rem] min-w-fit rounded-[30px] border border-[#BDBDBD] bg-white px-2 py-[6px]  transition-[width]`
                }
             >
                <div className="flex items-center justify-between">
                   <div className="flex items-center overflow-hidden rounded-full">
                      <Image src="/assets/no user.png" alt="avatar" className="h-9 md:cursor-pointer" width={35} height={35} />
                   </div>
+                  {!userDropDown && (
+                     <p className="ml-2 text-sm font-[700] capitalize text-[#2073fa]">
+                        {user?.firstname} {user?.lastname}
+                     </p>
+                  )}
                   {userDropDown && (
                      <div>
                         <motion.h5
@@ -150,11 +155,11 @@ const GeneralNav = () => {
                               transition: { duration: "1", delay: 0.3 },
                            }}
                         >
-                           {firstname && lastname ? `${firstname} ${lastname}` : `${user?.firstname} ${user?.lastname}`}
+                           {`${user?.firstname} ${user?.lastname}`}
                         </motion.h5>
                      </div>
                   )}
-                  <div className="pl-6 text-[32px] text-[#838383] " onClick={toggleUserDropDown}>
+                  <div className="cursor-pointer pl-6 text-[32px] text-[#838383]" onClick={toggleUserDropDown}>
                      {userDropDown ? <RiArrowDropUpLine /> : <RiArrowDropDownLine />}
                   </div>
                </div>
@@ -208,10 +213,10 @@ const GeneralNav = () => {
                   </div>
                )}
             </div>
-            <div className="bell-shake relative cursor-pointer text-[24px] text-[#2073fa]">
-               {/* <span className='rounded-full content-[" "] w-[10px] h-[10px] bg-red-600 absolute top-0 right-0'></span> */}
+            {/* <div className="bell-shake relative cursor-pointer text-[24px] text-[#2073fa]">
+               
                <BiBell />
-            </div>
+            </div> */}
          </div>
       </div>
    );

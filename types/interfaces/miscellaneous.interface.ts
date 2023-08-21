@@ -8,6 +8,7 @@ export interface IInputFields {
    placeholder: string;
    name: string;
    value: string | number;
+   required?: boolean;
 }
 
 export interface DynamicChechbox {

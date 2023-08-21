@@ -27,7 +27,7 @@ const CreateLicense = () => {
 
    return (
       <ContentBox title="Create License" size="base" padding="small">
-         <form action="" onSubmit={submit}>
+         <form action="" onSubmit={submit} className="max-h-[250px] overflow-y-scroll">
             <div className="flex flex-col gap-[1rem] text-slate-700">
                <div>
                   <p className="font-500 text-[0.98rem]">Name</p>
@@ -66,9 +66,10 @@ const CreateLicense = () => {
                </div>
 
                <div>
-                  <p className="font-500 text-[0.98rem]">Duration</p>
+                  <p className="font-500 text-[0.98rem]">Duration (months)</p>
                   <input
-                     type="text"
+                     type="number"
+                     min={1}
                      placeholder="Enter License Duration"
                      className={style.input}
                      value={duration}
