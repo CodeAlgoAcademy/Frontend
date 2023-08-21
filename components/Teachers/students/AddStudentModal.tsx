@@ -67,7 +67,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
 
    const onSubmit = (e: any) => {
       e.preventDefault();
-      if (email && firstName && lastName) {
+      if (firstName && lastName) {
          const data: Student = {
             firstName,
             lastName,
@@ -150,7 +150,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
                               onChange(e);
                            }}
                            className={style.input}
-                           required={!file && true}
+                           required={!file && type !== "email" && true}
                         />
                      );
                   })}

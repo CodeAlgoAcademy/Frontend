@@ -11,7 +11,13 @@ export const errorResolver = (error: any): string[] => {
          // General
          const errors: string[] = [];
          Object.entries(error.response.data.details[0]).forEach((res) => {
-            errors.push(`${res[0]}- ${res[1] as string}`);
+            if (typeof res[1] === "string") {
+               errors.push(`${res[0]}- ${res[1] as string}`);
+            } else if (typeof res[1] === "object") {
+               Object.entries(res[1] as Object).forEach((res2) => {
+                  errors.push(`${res2[0]}- ${res2[1]}`);
+               });
+            }
          });
          resolvedErrors = errors;
       } else {

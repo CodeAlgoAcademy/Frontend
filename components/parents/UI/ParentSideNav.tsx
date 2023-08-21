@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { GrOrganization } from "react-icons/gr";
 import { SlOrganization } from "react-icons/sl";
+import { BiLogOut } from "react-icons/bi";
 
 const SideNav = ({ unread }: { unread: number }) => {
    return (
@@ -17,7 +18,7 @@ const SideNav = ({ unread }: { unread: number }) => {
             <NavButton title="Main Dashboard" image="Dashboard.svg" url="/parents" />
          </div>
          <div className="relative">
-            <NavButton title="Messages" image="message.svg" url="/parents/messages" notification={unread > 0 ? unread : ""} />
+            {/* <NavButton title="Messages" image="message.svg" url="/parents/messages" notification={unread > 0 ? unread : ""} /> */}
          </div>
          <div>
             <h2 className="ml-7 mb-3 text-xl font-medium text-[#A8ABB0]">ACCOUNT</h2>

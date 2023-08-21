@@ -23,7 +23,7 @@ export default function SelectAccountType() {
                      data-testid="accountType"
                      className="text-black-500 mt-[.4rem] cursor-pointer text-center text-[1.3rem] font-[500] md:mt-[2rem] md:text-3xl md:font-bold"
                   >
-                     Organizer
+                     Admin
                   </h2>
                </div>
             </Link>

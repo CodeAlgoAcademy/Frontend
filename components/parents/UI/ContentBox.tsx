@@ -4,6 +4,7 @@ import React, { CSSProperties, ReactNode } from "react";
 interface Props {
    children?: ReactNode;
    title: string;
+   subtitle?: string;
    showSublink?: boolean;
    padding: "small" | "large";
    size: "base" | "large";
@@ -11,7 +12,7 @@ interface Props {
    style?: CSSProperties;
 }
 // Note: The title parameter should alao be the same name as the path of the sublink & spacing is replaced with '-' for the link href
-const ContentBox = ({ children, title, showSublink, padding, size, link, style }: Props) => {
+const ContentBox = ({ children, title, subtitle, showSublink, padding, size, link, style }: Props) => {
    return (
       <div
          className="short-scroll-thumb relative max-w-full self-center overflow-x-auto overflow-y-clip xl:overflow-x-hidden"
@@ -28,6 +29,7 @@ const ContentBox = ({ children, title, showSublink, padding, size, link, style }
          >
             <div className="mb-[1rem]">
                <h1 className="text-2xl font-semibold text-[#2073FA]">{title}</h1>
+               {subtitle && <p className="text-[14px]">{subtitle}</p>}
             </div>
             {children}
          </div>
