@@ -13,7 +13,7 @@ import Link from "next/link";
 const Login = ({ route }: { route?: any }) => {
    const dispatch = useDispatch();
    const router = useRouter();
-   const { email, password } = useSelector((state: RootState) => state.user.auth);
+   const credentials = useSelector((state: RootState) => state.user?.auth);
    const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 
    const accountType = router.pathname.includes("teacher")
@@ -82,7 +82,7 @@ const Login = ({ route }: { route?: any }) => {
             <form onSubmit={login}>
                <label className="mt-6 block text-xl font-semibold">Your email/username</label>
                <input
-                  value={email}
+                  value={credentials?.email}
                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
                      dispatch(updateUser({ key: "email", value: e.target.value }));
                   }}
@@ -94,7 +94,7 @@ const Login = ({ route }: { route?: any }) => {
                <label className="mt-6 block text-xl font-semibold">Password</label>
                <input
                   className="auth-input"
-                  value={password}
+                  value={credentials?.password}
                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
                      dispatch(updateUser({ key: "password", value: e.target.value }));
                   }}
