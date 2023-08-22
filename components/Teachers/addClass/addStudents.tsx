@@ -12,7 +12,7 @@ import { openErrorModal } from "store/fetchSlice";
 
 const AddStudents = () => {
    const dispatch = useDispatch();
-   const { firstName, lastName, email, username } = useSelector((state: RootState) => state.addClass.student);
+   const { firstName, lastName, email, username, dob } = useSelector((state: RootState) => state.addClass.student);
 
    const [file, setFile] = useState<any>(null);
    const [bulkImportModalOpen, setBulkImportModalOpen] = useState<boolean>(false);
@@ -44,6 +44,13 @@ const AddStudents = () => {
          name: "username",
          placeholder: "Enter Username",
          value: username,
+         required: true,
+      },
+      {
+         type: "date",
+         name: "dob",
+         placeholder: "Enter date of birth",
+         value: dob,
          required: true,
       },
    ];

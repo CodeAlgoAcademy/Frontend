@@ -6,15 +6,17 @@ import style from "styles/styles";
 const bulkImportData: string[] = [
    "Kindly check the above image for the structure of the file",
    "Make sure all paramaters (id, email, firstName, lastName and username) are filled",
+   "Ensure that the date of birth field (dob) is structured as YYYY-MM-DD (hyphen separated)",
    "Ensure the headers are recorded exactly like in the image above (take not of capitalized letters)",
    "Ensure paramters are comma seperated",
    "Ensure the file is saved in a csv format (i.e the file extension is .csv)",
+   "The csv files can be edited with notepad",
 ];
 
 const BulkImportModal = ({ setBulkImportModalOpen }: { setBulkImportModalOpen: Dispatch<SetStateAction<boolean>> }) => {
    return (
-      <section className={`${style.modalOverlay} z-[40] bg-[rgba(0,0,0,.60)]`}>
-         <main className="mx-auto w-[90vw] max-w-[900px] rounded-md bg-white px-8 py-6 shadow-lg">
+      <section className={`${style.modalOverlay} !z-[40] bg-[rgba(0,0,0,.60)]`}>
+         <main className="z-[10] mx-auto w-[90vw] max-w-[900px] rounded-md bg-white px-8 py-6 shadow-lg">
             <header className="mb-6 flex items-center justify-between">
                <h1 className="w-full text-[26px] font-bold">Bulk Import Instructions</h1>
                <span
@@ -26,7 +28,7 @@ const BulkImportModal = ({ setBulkImportModalOpen }: { setBulkImportModalOpen: D
                   <FaTimes />
                </span>
             </header>
-            <div className="w-full">
+            <div className="z-[10] w-full">
                <Image src={"/assets/csv file structure.png"} width={"1750px"} height={"250px"} objectFit={"cover"} objectPosition={"center"} alt="" />
             </div>
             <div className="my-4">

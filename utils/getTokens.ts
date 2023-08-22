@@ -90,6 +90,22 @@ export function addUserToLocalStorage(user: IUser) {
    setTimeStamp();
 }
 
+export function updateUserInLocalStorage(user: IUser) {
+   if (typeof window !== "undefined") {
+      const { access_token, refresh_token } = JSON.parse(localStorage.getItem("token") as string);
+
+      localStorage.setItem(
+         "token",
+         JSON.stringify({
+            access_token: access_token,
+            refresh_token: refresh_token,
+            user: user,
+            user_type: user.is_student ? "student" : user.is_teacher ? "teacher" : user.is_parent ? "parent" : user?.is_organizer ? "organizer" : "",
+         })
+      );
+   }
+}
+
 export function getUserFromLocalStorage() {
    if (typeof window !== "undefined") {
       return JSON.parse(localStorage.getItem("token") as string)?.user;

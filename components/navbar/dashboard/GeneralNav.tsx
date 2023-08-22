@@ -224,7 +224,7 @@ const GeneralNav = () => {
 
 export const UpdateUserForms = ({ setUserDropDown }: { setUserDropDown?: any }) => {
    const dispatch = useDispatch();
-   const [password, setPassword] = useState<string>("");
+   // const [password, setPassword] = useState<string>("");
    const updateUserForm = async (e: ChangeEvent<HTMLFormElement>, func: any) => {
       e.preventDefault();
       const data = await dispatch(func());
@@ -298,7 +298,7 @@ export const UpdateUserForms = ({ setUserDropDown }: { setUserDropDown?: any }) 
                <FaEdit />
             </button>
          </form>
-         <form className="flex h-[35px] w-full items-center gap-2 rounded-[4px] border px-2 hover:border-[#2073fa]">
+         {/* <form className="flex h-[35px] w-full items-center gap-2 rounded-[4px] border px-2 hover:border-[#2073fa]">
             <input
                type="text"
                className="h-full w-full border-none text-[15px] tracking-wider text-black outline-none placeholder:text-gray-500"
@@ -311,7 +311,7 @@ export const UpdateUserForms = ({ setUserDropDown }: { setUserDropDown?: any }) 
             <button type="submit" className="relative flex-[0.2] cursor-pointer text-xl font-bold text-gray-900">
                <FaEdit />
             </button>
-         </form>
+         </form> */}
       </>
    );
 };
