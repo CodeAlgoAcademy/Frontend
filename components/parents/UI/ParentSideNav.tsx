@@ -7,6 +7,7 @@ import { RootState } from "store/store";
 import { GrOrganization } from "react-icons/gr";
 import { SlOrganization } from "react-icons/sl";
 import { BiLogOut } from "react-icons/bi";
+import Link from "next/link";
 
 const SideNav = ({ unread }: { unread: number }) => {
    return (
@@ -22,16 +23,18 @@ const SideNav = ({ unread }: { unread: number }) => {
          </div>
          <div>
             <h2 className="ml-7 mb-3 text-xl font-medium text-[#A8ABB0]">ACCOUNT</h2>
-            <NavButton title="Billing" image="Billing.svg" url="/parents/billing" />
+            {/* <NavButton title="Billing" image="Billing.svg" url="/parents/billing" /> */}
             <NavButton title="Student Accounts" image="people.svg" url="/parents/student" />
             <NavButton title="Organization" image={<SlOrganization />} url="/parents/organization" />
          </div>
          <div>
             <h2 className="ml-7 mb-3 text-xl font-medium text-[#A8ABB0]">SAFETY</h2>
             <NavButton title="Screen Time" image="screen-time.svg" url="/parents/screen-time" />
-            <NavButton title="Multiplayer" image="game.svg" url="/parents/multiplayer" />
+            {/* <NavButton title="Multiplayer" image="game.svg" url="/parents/multiplayer" /> */}
          </div>
-         <span className="justify-self-end text-center text-[#2073FA]">Get Help</span>
+         <Link href={"/contact"}>
+            <span className="justify-self-end text-center text-[#2073FA]">Get Help</span>
+         </Link>
       </div>
    );
 };

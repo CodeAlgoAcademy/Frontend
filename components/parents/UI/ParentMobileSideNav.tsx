@@ -11,13 +11,13 @@ const linkDetails = [
    [{ title: "Main Dashboard", image: "Dashboard.svg", url: "/parents" }],
    // [{ title: "Messages", image: "message.svg", url: "/parents/messages" }],
    [
-      { title: "Billing", image: "Billing.svg", url: "/parents/billing" },
+      // { title: "Billing", image: "Billing.svg", url: "/parents/billing" },
       { title: "Student Accounts", image: "people.svg", url: "/parents/student" },
       { title: "Organization", image: <SlOrganization />, url: "/parents/organization" },
    ],
    [
       { title: "Screen Time", image: "screen-time.svg", url: "/parents/screen-time" },
-      { title: "Multiplayer", image: "game.svg", url: "/parents/multiplayer" },
+      // { title: "Multiplayer", image: "game.svg", url: "/parents/multiplayer" },
    ],
 ];
 
