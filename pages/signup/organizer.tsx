@@ -58,15 +58,6 @@ const Organizer = () => {
                      </button>
                   )}
                   {isFirstStep && <GoogleBtn />}
-                  {isFirstStep && (
-                     <button
-                        className="mt-6  block h-[2.5rem] w-full rounded-xl bg-neutral-100/70 text-center font-semibold text-black"
-                        type="button"
-                        onClick={back}
-                     >
-                        Sign Up with Facebook
-                     </button>
-                  )}
                </div>
             </form>
          </AuthLayout>
