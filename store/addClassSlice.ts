@@ -9,6 +9,7 @@ const initialState: IAddClass = {
       lastName: "",
       email: "",
       username: "",
+      dob: "",
    },
    class: {
       className: "",

@@ -13,7 +13,7 @@ import {
    updateAccountType,
 } from "services/authService";
 import { countryList } from "@/components/signup/countries";
-import { addUserToLocalStorage, setTimeStamp } from "utils/getTokens";
+import { addUserToLocalStorage, setTimeStamp, updateUserInLocalStorage } from "utils/getTokens";
 
 const initialState: IUser = {
    id: 0,
@@ -132,17 +132,24 @@ export const userSlice = createSlice({
       });
 
       builder.addCase(updateFirstname.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
-         console.log(action.payload);
+         updateUserInLocalStorage(action.payload);
+
          return { ...state, ...action.payload };
       });
 
       builder.addCase(updateLastname.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
+         updateUserInLocalStorage(action.payload);
+
          return { ...state, ...action.payload };
       });
       builder.addCase(updateEmail.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
+         updateUserInLocalStorage(action.payload);
+
          return { ...state, ...action.payload };
       });
       builder.addCase(updateAccountType.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
+         updateUserInLocalStorage(action.payload);
+
          return { ...state, ...action.payload };
       });
    },

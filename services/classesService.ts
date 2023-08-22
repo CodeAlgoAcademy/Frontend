@@ -31,7 +31,7 @@ export const addClass: any = createAsyncThunk("allClassesSlice/addClass", async 
       class: { className, grade, subject, coTeachers, roomNumber, color, organization },
       file,
    } = state.addClass;
-   const { firstName, lastName, email } = state.addClass.student;
+   const { firstName, lastName, email, username, dob } = state.addClass.student;
    let method: "Class Only" | "Class & Student" | "Class & File" | "Class & Student & File" = "Class Only";
 
    const formData = new FormData();
@@ -44,11 +44,13 @@ export const addClass: any = createAsyncThunk("allClassesSlice/addClass", async 
          subject,
          roomNumber,
          color,
-         organization,
+         organization: organization || "",
          student: {
             firstName,
             lastName,
             email,
+            username,
+            dob,
          },
       };
    } else if (file?.name) {
@@ -59,7 +61,7 @@ export const addClass: any = createAsyncThunk("allClassesSlice/addClass", async 
       formData.append("color", color);
       formData.append("roomNumber", roomNumber as string);
       formData.append("file", file, "student file");
-      formData.append("organization", organization as string);
+      formData.append("organization", (organization || "") as string);
    } else {
       method = "Class Only";
       formData.append("className", className);
@@ -67,7 +69,7 @@ export const addClass: any = createAsyncThunk("allClassesSlice/addClass", async 
       formData.append("subject", subject);
       formData.append("color", color);
       formData.append("roomNumber", roomNumber as string);
-      formData.append("organization", organization as string);
+      formData.append("organization", (organization || "") as string);
    }
 
    try {

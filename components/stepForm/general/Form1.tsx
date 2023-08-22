@@ -6,7 +6,7 @@ import { RootState } from "store/store";
 
 export default function ParentSignUp1() {
    const dispatch = useDispatch();
-   const auth = useSelector((state: RootState) => state.user.auth);
+   const auth = useSelector((state: RootState) => state.user?.auth);
    const router = useRouter();
 
    const accountType = router.pathname.includes("teacher")

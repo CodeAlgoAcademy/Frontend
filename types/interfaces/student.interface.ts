@@ -3,6 +3,7 @@ export interface Student {
    lastName: string;
    email: string;
    username: string;
+   dob: string;
    id?: string;
 }
 
@@ -11,6 +12,7 @@ export interface ISingleStudent {
    lastName: string;
    email: string;
    username: string;
+   dob: string;
 }
 
 export interface IUserStudent {
