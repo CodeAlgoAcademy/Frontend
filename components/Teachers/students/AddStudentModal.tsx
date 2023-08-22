@@ -16,6 +16,7 @@ interface State {
    lastName: string;
    email: string;
    username: string;
+   dob: string;
 }
 
 const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
@@ -26,10 +27,11 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
       lastName: "",
       email: "",
       username: "",
+      dob: "",
    });
    const [file, setFile] = useState<any>(null);
    const [bulkImportModalOpen, setBulkImportModalOpen] = useState<boolean>(false);
-   const { email, firstName, lastName, username } = formData;
+   const { email, firstName, lastName, username, dob } = formData;
 
    const onChange = (e: any) => {
       setFormData((prevState) => ({
@@ -58,6 +60,12 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
          value: email,
       },
       {
+         type: "date",
+         name: "dob",
+         placeholder: "Enter date of birth",
+         value: dob,
+      },
+      {
          type: "text",
          name: "username",
          placeholder: "Enter Username",
@@ -73,6 +81,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
             lastName,
             email,
             username,
+            dob,
          };
 
          dispatch(addStudent(data)).then((data: any) => {

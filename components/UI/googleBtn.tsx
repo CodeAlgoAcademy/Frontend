@@ -6,7 +6,7 @@ import { RootState } from "store/store";
 import { FcGoogle } from "react-icons/fc";
 import { loginWithGoogle, signUpWithGoogle, updateAccountType } from "services/authService";
 const GoogleBtn: FC = () => {
-   const { is_parent, is_teacher, is_student, is_organizer } = useSelector((state: RootState) => state.user.auth);
+   const credentials = useSelector((state: RootState) => state.user?.auth);
    const dispatch = useDispatch();
    const router = useRouter();
 
@@ -38,11 +38,11 @@ const GoogleBtn: FC = () => {
             if (!data?.error?.message) {
                const data = await dispatch(updateAccountType(account));
                if (!data?.error?.message) {
-                  if (is_teacher) {
+                  if (credentials?.is_teacher) {
                      router.push("/teachers/addClass");
-                  } else if (is_parent) {
+                  } else if (credentials?.is_parent) {
                      router.push("/parents");
-                  } else if (is_organizer) {
+                  } else if (credentials?.is_organizer) {
                      router.push("/organizers");
                   } else {
                      window.location.href = "http://www.play.codealgoacademy.com";

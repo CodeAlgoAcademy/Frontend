@@ -13,6 +13,11 @@
    src: url(../public/assets/fonts/PressStart2P-Regular.ttf);
 }
 
+@font-face {
+   font-family: "worksans";
+   src: url(../public/assets/fonts/WorkSans-VariableFont_wght.ttf);
+}
+
 .code-font {
    font-family: "press-start" !important;
 }
@@ -21,7 +26,7 @@ html,
 body {
    padding: 0;
    margin: 0;
-   font-family: "firasans";
+   font-family: "worksans";
 }
 
 a {

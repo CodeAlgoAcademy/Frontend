@@ -17,7 +17,7 @@ import { checkEmail } from "utils/checkmail";
 export default function Parent() {
    const dispatch = useDispatch();
    const router = useRouter();
-   const { email, password } = useSelector((state: RootState) => state.user.auth);
+   const credentials = useSelector((state: RootState) => state?.user?.auth);
    const parent = useSelector((state: RootState) => state.parentChild);
    const [modalOpen, setModalOpen] = useState(false);
    const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next, goTo } = useMultiForm([
@@ -40,15 +40,17 @@ export default function Parent() {
       } else if (currentStepIndex === 9) {
          const data = await dispatch(addChild());
          if (!data?.error?.message) {
-            goTo(10);
-         }
-      } else if (currentStepIndex === 10) {
-         const data = await dispatch(addChildFriend());
-         if (!data?.error) {
             router.push("/parents");
          }
-      } else if (currentStepIndex === 0) {
-         checkEmail(email, next, dispatch)
+      }
+      // else if (currentStepIndex === 10) {
+      //    const data = await dispatch(addChildFriend());
+      //    if (!data?.error) {
+      //       router.push("/parents");
+      //    }
+      // }
+      else if (currentStepIndex === 0) {
+         checkEmail(credentials?.email, next, dispatch);
       } else {
          next();
       }
@@ -79,21 +81,12 @@ export default function Parent() {
                         I do not want to set parental controls
                      </p>
                   )}
-                  {!isFirstStep && !isLastStep && (
+                  {!isFirstStep && (
                      <button className="mt-4 block w-full text-center" type="button" onClick={back}>
                         Back
                      </button>
                   )}
                   {isFirstStep && <GoogleBtn />}
-                  {isFirstStep && (
-                     <button
-                        className="mt-6  block h-[2.5rem] w-full rounded-xl bg-neutral-100/70 text-center font-semibold text-black"
-                        type="button"
-                        onClick={back}
-                     >
-                        Sign Up with Facebook
-                     </button>
-                  )}
                </div>
             </form>
          </AuthLayout>
@@ -108,7 +101,7 @@ export default function Parent() {
                         <FiCheckCircle />
                      </span>
                      <p className="text-center text-[20px]">
-                        An email verification link has been sent to your email address <span className="font-[800]">{email}</span>
+                        An email verification link has been sent to your email address <span className="font-[800]">{credentials?.email}</span>
                         <span className="mt-2 block font-bold">Please check your email and verify before proceeding</span>
                      </p>
                   </div>

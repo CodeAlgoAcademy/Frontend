@@ -7,13 +7,14 @@ import TeacherLayout from "@/components/layouts/TeacherLayout";
 import AddStudentModal from "@/components/Teachers/students/AddStudentModal";
 import Students from "@/components/Teachers/students/Students";
 import { getStudents } from "store/studentSlice";
+import NoItem from "@/components/UI/NoItem";
 
 const Index = () => {
    const dispatch = useDispatch();
    const [isOpen, setIsOpen] = useState<boolean>(false);
    const { id } = useSelector((state: RootState) => state.currentClass);
    const [commentTabsOpened, setCommentTabsOpened] = useState<boolean>(false);
-   const { students } = useSelector((state: RootState) => state.students);
+   const students = useSelector((state: RootState) => state?.students?.students);
    const [filteredStudents, setFilteredStudents] = useState({
       students: students?.students,
    });
@@ -76,7 +77,11 @@ const Index = () => {
                   <button type="submit" hidden></button>
                </form>
             </div>
-            <Students commentTabsOpened={commentTabsOpened} students={filteredStudents} />
+            {!students?.students || students?.students?.length === 0 ? (
+               <NoItem text="You have not added any student" />
+            ) : (
+               <Students commentTabsOpened={commentTabsOpened} students={filteredStudents} />
+            )}
             {isOpen && <AddStudentModal setIsOpen={setIsOpen} />}
          </TeacherLayout>
       </div>

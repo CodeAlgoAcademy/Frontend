@@ -91,7 +91,7 @@ const VerifyWithKey = () => {
                   </div>
                </div>
             )}
-            {error && (
+            {!loading && error && (
                <div>
                   <span className="mb-2 flex w-full items-center justify-center text-center text-[70px] text-red-600">
                      <BsExclamationTriangle />
