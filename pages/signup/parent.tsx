@@ -28,7 +28,6 @@ export default function Parent() {
 
    const signUp = async (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
-      console.log(parent, currentStepIndex);
       if (currentStepIndex === 2) {
          const data = await dispatch(signUpUser());
          // Set this to the local storage to know whether to auto-close page after verification
@@ -111,7 +110,6 @@ export default function Parent() {
                         const isNotVerified = localStorage.getItem("parent-signup");
                         if (!isNotVerified) {
                            const { data } = await dispatch(loginUser());
-                           console.log(data);
                         }
                         setModalOpen(false);
                         router.push("/login/parent?redirect=add-student");

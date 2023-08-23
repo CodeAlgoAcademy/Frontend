@@ -5,12 +5,12 @@ import style from "styles/styles";
 
 const bulkImportData: string[] = [
    "Kindly check the above image for the structure of the file",
-   "Make sure all paramaters (id, email, firstName, lastName and username) are filled",
+   "You can use notepad to complete these steps",
+   "Make sure all paramaters (id, email, firstName, lastName and username, dob) are filled",
    "Ensure that the date of birth field (dob) is structured as YYYY-MM-DD (hyphen separated)",
    "Ensure the headers are recorded exactly like in the image above (take not of capitalized letters)",
    "Ensure paramters are comma seperated",
    "Ensure the file is saved in a csv format (i.e the file extension is .csv)",
-   "The csv files can be edited with notepad",
 ];
 
 const BulkImportModal = ({ setBulkImportModalOpen }: { setBulkImportModalOpen: Dispatch<SetStateAction<boolean>> }) => {
