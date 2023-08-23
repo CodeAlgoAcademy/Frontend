@@ -37,7 +37,6 @@ const VerifyWithKey = () => {
                window.close();
             }
          } catch (error: any) {
-            console.log(error.message);
             dispatch(openErrorModal({ errorText: [error.message] }));
             setLoading(false);
             setError(true);

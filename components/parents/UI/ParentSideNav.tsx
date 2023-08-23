@@ -8,6 +8,7 @@ import { GrOrganization } from "react-icons/gr";
 import { SlOrganization } from "react-icons/sl";
 import { BiLogOut } from "react-icons/bi";
 import Link from "next/link";
+import { GiHelp } from "react-icons/gi";
 
 const SideNav = ({ unread }: { unread: number }) => {
    return (
@@ -32,9 +33,7 @@ const SideNav = ({ unread }: { unread: number }) => {
             <NavButton title="Screen Time" image="screen-time.svg" url="/parents/screen-time" />
             {/* <NavButton title="Multiplayer" image="game.svg" url="/parents/multiplayer" /> */}
          </div>
-         <Link href={"/contact"}>
-            <span className="justify-self-end text-center text-[#2073FA]">Get Help</span>
-         </Link>
+         <NavButton image={<GiHelp />} url="/contact" title="Get Help"></NavButton>
       </div>
    );
 };

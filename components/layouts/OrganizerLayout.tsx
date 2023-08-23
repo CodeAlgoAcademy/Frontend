@@ -60,8 +60,6 @@ const OrganizerLayout = ({ children }: Props) => {
    const organizations = organizer?.organizations;
    const selectedOrganization = organizer?.selectedOrganization;
 
-   console.log(organizer);
-
    const user = getUserFromLocalStorage();
 
    useEffect(() => {

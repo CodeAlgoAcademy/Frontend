@@ -34,7 +34,6 @@ const Home: NextPage = () => {
       e.preventDefault();
       // split to remove all emtpy spaces
       const newCode = code.split("\n").join("").split(" ").join("").trimEnd().trimStart();
-      console.log(correctCode + " and " + newCode);
       // check if the value is among the correct codes
       if (correctCode === newCode) {
          setStatus("correct");

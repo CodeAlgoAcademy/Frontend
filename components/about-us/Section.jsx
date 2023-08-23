@@ -65,7 +65,6 @@ const Section = ({ title, detail, image, order, hasButton, codeEditor, extraImag
                               return setCode(code);
                            }}
                            highlight={(code) => {
-                              console.log(code);
                               return highlight(code, languages[currentLanguage]);
                            }}
                            padding={10}

@@ -233,7 +233,7 @@ export const UpdateUserForms = ({ setUserDropDown }: { setUserDropDown?: any }) 
       }
    };
 
-   const { firstname: authFirstname, lastname: authLastname, email } = useSelector((state: RootState) => state.user.auth);
+   const { firstname: authFirstname, lastname: authLastname } = useSelector((state: RootState) => state.user.auth);
    return (
       <>
          <form
@@ -279,7 +279,7 @@ export const UpdateUserForms = ({ setUserDropDown }: { setUserDropDown?: any }) 
                <FaEdit />
             </button>
          </form>
-         <form
+         {/* <form
             onSubmit={(e: ChangeEvent<HTMLFormElement>) => {
                updateUserForm(e, updateEmail);
             }}
@@ -297,7 +297,7 @@ export const UpdateUserForms = ({ setUserDropDown }: { setUserDropDown?: any }) 
             <button type="submit" className="relative flex-[0.2] cursor-pointer text-xl font-bold text-gray-900">
                <FaEdit />
             </button>
-         </form>
+         </form> */}
          {/* <form className="flex h-[35px] w-full items-center gap-2 rounded-[4px] border px-2 hover:border-[#2073fa]">
             <input
                type="text"
