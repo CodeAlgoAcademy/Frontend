@@ -61,8 +61,8 @@ const Testimonials = () => {
             fadeEffect={{
                crossFade: true,
             }}
-            onSwiper={(swiper) => console.log(swiper)}
-            onSlideChange={() => console.log("slide change")}
+            onSwiper={(swiper) => {}}
+            onSlideChange={() => {}}
          >
             {testimonials.map((testimonial) => (
                <SwiperSlide key={testimonial.name}>

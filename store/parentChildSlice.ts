@@ -76,7 +76,6 @@ export const addChildFriend: any = createAsyncThunk("parent/child-friend/new", a
    const { friend } = state.parentChild;
 
    dispatch(openPreloader({ loadingText: "Sending friend request" }));
-   // console.log(state.parentChild.currentChild);
 
    try {
       const newFriend = await parentService.addChildFriends({
@@ -98,7 +97,7 @@ export const getChildren: any = createAsyncThunk("parent/children", async (_, th
 
    try {
       const children = await parentService.getAllChildren();
-      console.log(children);
+
       return children;
    } catch (error: any) {
       // const errorMessage = errorResolver(error);
@@ -113,7 +112,7 @@ export const editScreentime: any = createAsyncThunk(
       const dispatch = thunkAPI.dispatch;
 
       data.timeLimit = data.timeLimit === "No Limit" ? `12:00:00` : data.timeLimit === "" ? "00:00:00" : `${data.timeLimit}:00:00`;
-      console.log(data);
+
       dispatch(openPreloader({ loadingText: "Editing Child Screentime" }));
 
       try {

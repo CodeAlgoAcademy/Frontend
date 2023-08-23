@@ -33,7 +33,6 @@ export default function ParentStudent() {
 
    const signUp = async (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
-      console.log(parent, currentStepIndex);
       if (currentStepIndex === 6) {
          const data = await dispatch(addChild());
          if (!data?.error?.message) {

@@ -29,7 +29,7 @@ const Login = ({ route }: { route?: any }) => {
       const data = await dispatch(loginUser());
       if (!data?.error?.message) {
          // If the account doesn't match the user selected in the select-account-type, display an error
-         console.log(data?.payload);
+
          if (router.pathname.includes("/login/teacher")) {
             if (data?.payload?.is_teacher) {
                router?.push("/teachers/addClass");

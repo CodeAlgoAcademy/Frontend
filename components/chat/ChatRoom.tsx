@@ -33,7 +33,6 @@ const ChatRoom = () => {
    };
 
    const handleSend: any = (e: ChangeEvent<HTMLInputElement>) => {
-      console.log(openedMessageOwner);
       if (openedMessageOwner.id) {
          if (typingText !== "") {
             e.preventDefault();
@@ -60,7 +59,6 @@ const ChatRoom = () => {
 
       client.onmessage = (message: any) => {
          const dataFromServer = JSON.parse(message.data);
-         console.log("serverr reply", dataFromServer);
          if (dataFromServer.user.id == openedMessageOwner.id) {
             setMessages([...messages, dataFromServer]);
          }
