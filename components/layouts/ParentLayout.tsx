@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState, MouseEvent } from "react";
 import SideNav from "@/components/parents/UI/ParentSideNav";
 import MobileSideNav from "@/components/parents/UI/ParentMobileSideNav";
 import Image from "next/image";
@@ -32,8 +32,13 @@ const ParentLayout = ({ children }: Props) => {
 
    const parent = useSelector((state: RootState) => state.parentChild);
    const { addChildModalOpen } = useSelector((state: RootState) => state.modal);
-   // console.log(parentChildren);
    const { firstname, username, lastname, email } = useSelector((state: RootState) => state.user);
+
+   const closeChildrenList = (e: any) => {
+      if (!e.target.classList.contains("do-not-select") && childrenListOpen) {
+         setOpen(false);
+      }
+   };
 
    const logout = () => {
       localStorage.removeItem("token");
@@ -41,10 +46,6 @@ const ParentLayout = ({ children }: Props) => {
       dispatch(resetAuthUser());
       router.push("/login/select-account-type");
    };
-
-   useEffect(() => {
-      setWidth(window.innerWidth);
-   }, []);
 
    useEffect(() => {
       if (typeof window !== "undefined") {
@@ -63,10 +64,6 @@ const ParentLayout = ({ children }: Props) => {
       }
    }, [router]);
 
-   useEffect(() => {
-      dispatch(getChildren());
-   }, []);
-
    const { openedMessage } = useSelector((state: RootState) => state.messages);
 
    // fetch the number of unread messages
@@ -82,12 +79,14 @@ const ParentLayout = ({ children }: Props) => {
 
    React.useEffect(() => {
       dispatch(resetChild());
+      dispatch(getChildren());
       dispatch(closeAddChildModal());
+      setWidth(window.innerWidth);
    }, []);
 
    return (
       <>
-         <div className="parent-page min-h-screen">
+         <div className="parent-page min-h-screen" onClick={closeChildrenList}>
             {/* Modal to be displayed when a prent wants to add a child from any page */}
             {addChildModalOpen && <AddChildModal />}
             <div className="relative mb-auto flex grow items-stretch bg-white px-4 py-11 sm:pl-0 md:pl-0 xl:px-[4%]">
@@ -143,14 +142,6 @@ const ParentLayout = ({ children }: Props) => {
                )}
                <main className="main  relative z-0 mt-12 mr-[1%] min-h-[100vh] w-full rounded-2xl bg-[#ECEDF3] py-9 px-0 sm:mt-0 sm:rounded-[30px] sm:px-[3%]">
                   <div className=" mb-6 hidden w-full items-center justify-end gap-3 sm:flex">
-                     <span className="relative top-1">
-                        <Image src="/assets/message.svg" alt="messages" width={22} height={22} className="blue-svg" />
-                        {unreadMessages > 0 && (
-                           <span className="absolute top-[-10px] left-[70%] flex h-[20px] w-[20px] items-center justify-center rounded-full bg-red-500 text-[14px] font-bold text-white">
-                              {unreadMessages}
-                           </span>
-                        )}
-                     </span>
                      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                            d="M10.7998 1C5.27695 1 0.799805 5.47715 0.799805 11C0.799805 16.5228 5.27695 21 10.7998 21C16.3226 21 20.7998 16.5228 20.7998 11C20.7998 5.47715 16.3226 1 10.7998 1Z"
@@ -193,74 +184,76 @@ const ParentLayout = ({ children }: Props) => {
                            </svg>
                         </div>
 
-                        <div
-                           className={`absolute transition duration-500 ${
-                              userDropDown ? " opacity-100" : "opacity-0"
-                           } top-[140%] right-0 z-[5] w-[90vw] max-w-[300px] rounded-md bg-white px-4 py-4`}
-                        >
-                           <div className="relative z-10">
-                              <div className="flex items-center justify-between text-[18px] font-bold text-[#2073fa]">
-                                 <h1 className="flex items-center gap-x-3 ">
-                                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                       <path
-                                          d="M10.7998 1C5.27695 1 0.799805 5.47715 0.799805 11C0.799805 16.5228 5.27695 21 10.7998 21C16.3226 21 20.7998 16.5228 20.7998 11C20.7998 5.47715 16.3226 1 10.7998 1Z"
-                                          stroke="#2073FA"
-                                          strokeWidth="1.5"
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                       />
-                                       <path
-                                          d="M3.0708 17.3457C3.0708 17.3457 5.29982 14.5 10.7998 14.5C16.2998 14.5 18.5289 17.3457 18.5289 17.3457"
-                                          stroke="#2073FA"
-                                          strokeWidth="1.5"
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                       />
-                                       <path
-                                          d="M10.7998 11C12.4567 11 13.7998 9.6569 13.7998 8C13.7998 6.34315 12.4567 5 10.7998 5C9.1429 5 7.7998 6.34315 7.7998 8C7.7998 9.6569 9.1429 11 10.7998 11Z"
-                                          stroke="#2073FA"
-                                          strokeWidth="1.5"
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                       />
-                                    </svg>
+                        {userDropDown && (
+                           <div
+                              className={`absolute transition duration-500 ${
+                                 userDropDown ? " opacity-100" : "opacity-0"
+                              } top-[140%] right-0 z-[6] w-[90vw] max-w-[300px] rounded-md bg-white px-4 py-4`}
+                           >
+                              <div className="relative z-10">
+                                 <div className="flex items-center justify-between text-[18px] font-bold text-[#2073fa]">
+                                    <h1 className="flex items-center gap-x-3 ">
+                                       <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <path
+                                             d="M10.7998 1C5.27695 1 0.799805 5.47715 0.799805 11C0.799805 16.5228 5.27695 21 10.7998 21C16.3226 21 20.7998 16.5228 20.7998 11C20.7998 5.47715 16.3226 1 10.7998 1Z"
+                                             stroke="#2073FA"
+                                             strokeWidth="1.5"
+                                             strokeLinecap="round"
+                                             strokeLinejoin="round"
+                                          />
+                                          <path
+                                             d="M3.0708 17.3457C3.0708 17.3457 5.29982 14.5 10.7998 14.5C16.2998 14.5 18.5289 17.3457 18.5289 17.3457"
+                                             stroke="#2073FA"
+                                             strokeWidth="1.5"
+                                             strokeLinecap="round"
+                                             strokeLinejoin="round"
+                                          />
+                                          <path
+                                             d="M10.7998 11C12.4567 11 13.7998 9.6569 13.7998 8C13.7998 6.34315 12.4567 5 10.7998 5C9.1429 5 7.7998 6.34315 7.7998 8C7.7998 9.6569 9.1429 11 10.7998 11Z"
+                                             stroke="#2073FA"
+                                             strokeWidth="1.5"
+                                             strokeLinecap="round"
+                                             strokeLinejoin="round"
+                                          />
+                                       </svg>
 
-                                    {firstname && lastname ? `${firstname} ${lastname}` : `${user?.firstname} ${user?.lastname}`}
-                                 </h1>
+                                       {firstname && lastname ? `${firstname} ${lastname}` : `${user?.firstname} ${user?.lastname}`}
+                                    </h1>
+                                 </div>
+                                 <main className={`mt-4 flex w-full flex-col gap-2 overflow-hidden transition  duration-300`}>
+                                    <UpdateUserForms />
+                                 </main>
+                                 <motion.div
+                                    className="mt-[1rem] flex cursor-pointer items-center pb-2 text-[#2073fa]"
+                                    initial={{ opacity: 0, y: "5px" }}
+                                    animate={{
+                                       opacity: 1,
+                                       y: 0,
+                                       transition: { delay: 0.3, duration: "0.5" },
+                                    }}
+                                    onClick={logout}
+                                 >
+                                    <span>
+                                       <BiLogOut />
+                                    </span>
+
+                                    <h5 className="ml-2 text-[1rem] font-bold">Logout</h5>
+                                 </motion.div>
                               </div>
-                              <main className={`mt-4 flex w-full flex-col gap-2 overflow-hidden transition  duration-300`}>
-                                 <UpdateUserForms />
-                              </main>
-                              <motion.div
-                                 className="mt-[1rem] flex cursor-pointer items-center pb-2 text-[#2073fa]"
-                                 initial={{ opacity: 0, y: "5px" }}
-                                 animate={{
-                                    opacity: 1,
-                                    y: 0,
-                                    transition: { delay: 0.3, duration: "0.5" },
-                                 }}
-                                 onClick={logout}
-                              >
-                                 <span>
-                                    <BiLogOut />
-                                 </span>
-
-                                 <h5 className="ml-2 text-[1rem] font-bold">Logout</h5>
-                              </motion.div>
                            </div>
-                        </div>
+                        )}
                      </div>
                   </div>
                   <div className="relative">
                      <div
-                        className=" mt-4 mb-4 ml-4 flex max-w-fit items-center gap-3 sm:ml-0"
+                        className="do-not-select mt-4 mb-4 ml-4 flex max-w-fit items-center gap-3 sm:ml-0"
                         onClick={() => {
                            setOpen((prev) => !prev);
                         }}
                         data-testid="select-child"
                      >
-                        <h1 className="text-3xl font-semibold capitalize text-[#2073FA]">{parent?.currentChild?.fullName}</h1>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="10" viewBox="0 0 18 10" fill="none">
+                        <h1 className="do-not-select text-3xl font-semibold capitalize text-[#2073FA]">{parent?.currentChild?.fullName}</h1>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="do-not-select" width="18" height="10" viewBox="0 0 18 10" fill="none">
                            <path
                               d="M1.7998 1.25L9.2998 8.75L16.7998 1.25"
                               stroke="#2073FA"
@@ -271,7 +264,7 @@ const ParentLayout = ({ children }: Props) => {
                         </svg>
                      </div>
                      {childrenListOpen && (
-                        <div className="absolute top-[70%] left-0 z-[4] max-h-[200px] min-h-[200px] w-[90vw] max-w-[200px] overflow-y-scroll rounded-md bg-white shadow-md">
+                        <div className="do-not-select absolute top-[70%] left-0 z-[4] max-h-[200px] min-h-[200px] w-[90vw] max-w-[200px] overflow-y-scroll rounded-md bg-white shadow-md">
                            {parent?.children?.map((child, index) => {
                               return (
                                  <p
@@ -280,7 +273,7 @@ const ParentLayout = ({ children }: Props) => {
                                        dispatch(changeCurrentChild(child));
                                        setOpen(false);
                                     }}
-                                    className="w-full cursor-pointer px-3 py-3 capitalize text-black hover:bg-[#ced4e9]"
+                                    className="do-not-select w-full cursor-pointer px-3 py-3 capitalize text-black hover:bg-[#ced4e9]"
                                     data-testid="child"
                                  >
                                     {child.fullName}

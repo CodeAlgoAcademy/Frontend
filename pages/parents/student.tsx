@@ -21,9 +21,10 @@ const Student = () => {
       <ParentLayout>
          <div className="z-[5] mb-8 flex w-full items-center justify-end text-[1.2rem] text-[#2073fa]">
             <div
-               className="max-w-fit cursor-pointer p-2"
+               className="z-[5] max-w-fit cursor-pointer p-2"
                onClick={() => {
                   dispatch(openAddChildModal());
+                  console.log("add child modal");
                }}
                data-testid="add-child"
             >

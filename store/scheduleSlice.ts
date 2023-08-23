@@ -31,9 +31,7 @@ const scheduleSlice = createSlice({
          state.googleConnect = false;
       }),
          builder.addCase(getGoogleCalendar.fulfilled, (state: any, { payload }: PayloadAction) => {
-            console.log("Successful");
             state.googleConnect = true;
-            console.log(payload);
             state.allSchedule = payload;
          });
    },

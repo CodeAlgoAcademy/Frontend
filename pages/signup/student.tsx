@@ -30,8 +30,6 @@ export default function Student() {
 
    const signup = async (event: ChangeEvent<HTMLFormElement>) => {
       event.preventDefault();
-      console.log(auth);
-      console.log(currentStepIndex);
       if (currentStepIndex === 0) {
          checkEmail(email, next, dispatch);
       } else if (currentStepIndex !== 3) {
@@ -42,7 +40,6 @@ export default function Student() {
             dispatch(clearFields());
             router.push("/verify-email");
          }
-         console.log(data);
       }
    };
 

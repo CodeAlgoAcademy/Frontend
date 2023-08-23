@@ -1,12 +1,12 @@
 import { v4 } from "uuid";
 
 export const generateUsername = (firstName: string, lastName: string): string => {
-   lastName = lastName.trimEnd().trimStart();
-   firstName = firstName.trimEnd().trimStart();
+   lastName = lastName.split(" ").join("").trimEnd().trimStart();
+   firstName = firstName.split(" ").join("").trimEnd().trimStart();
 
    const numberOfCount = Math.floor(Math.random() * 10);
    const usernameSuggestions: string[] = [
-      `${firstName}@${lastName}${Array(numberOfCount)
+      `${firstName}${lastName}${Array(numberOfCount)
          .fill(null)
          .map((number, index: number) => {
             return Math.round(Math.random() * 10);
