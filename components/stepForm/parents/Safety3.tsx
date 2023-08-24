@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateChild } from "store/parentChildSlice";
@@ -10,8 +11,9 @@ export default function Safety3() {
       <div key={8}>
          <h1 className="text-[30px] font-bold">Who can {child?.fullName} play with?</h1>
          <p className="text-[14px] font-[400]">
-            CodeAlgo allows parents to limit students multiplayer interactions. Please enter the email or username of your student’s friends below. A
-            request will be sent to the linked parent account. They can then accept or decline the request.
+            {/* CodeAlgo allows parents to limit students multiplayer interactions. Please enter the email or username of your student’s friends below. A
+            request will be sent to the linked parent account. They can then accept or decline the request. */}
+            Multiplayer functionality coming soon! in the meantime, you can add who your child can play with when this functionality becomes available
          </p>
          <label className="mt-6 block text-xl font-semibold">Friend email or username</label>
          <input
@@ -24,6 +26,10 @@ export default function Safety3() {
             }}
          />
          <p className="mt-4 text-center text-[14px] font-semibold">You can update or add to this list at any time in your settings</p>
+         <Link href={"/parents"}>
+            {" "}
+            <p className="mt-4 text-center text-[14px] font-semibold underline">Skip</p>
+         </Link>
       </div>
    );
 }
