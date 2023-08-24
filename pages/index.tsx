@@ -5,10 +5,19 @@ import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
 import CharactersArrangement from "@/components/home/charactersArrangement";
+import HomeVideo from "@/components/home/video";
+import MobileView from "@/components/home/mobile-view";
+import CorrectCodeModal from "@/components/modals/correctCodeModal";
 
 type Colors = "blue" | "purple" | "orange" | "";
 
-const colors: Colors[] = ["blue", "purple", "orange"];
+const colors: Colors[] = ["orange", "purple", "blue"];
+
+// [
+//    `root.configure( bg="${colors[stepToMoveTo]}" )`,
+//    `root.configure(bg = "${colors[stepToMoveTo]}")`,
+//    `root.configure(bg="${colors[stepToMoveTo]}")`,
+// ];
 
 const Home: NextPage = () => {
    // auto focus on page load
@@ -20,11 +29,13 @@ const Home: NextPage = () => {
 
    // open the join waitlist modal once their code is correct the first time
    const [correctFirstTime, setCorrectFirstTime] = useState<boolean>(false);
+   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
    // to avoid repetition of code,
    const stepToMoveTo = currentStep === 2 ? 0 : currentStep + 1;
 
-   const correctCode = `root.configure(bg="${colors[stepToMoveTo]}")`;
+   // const correctCode = `root.configure(bg="${colors[stepToMoveTo]}")`;
+   const correctCode = `print("ilovecodealgo")`;
 
    const [code, setCode] = useState<string>("");
 
@@ -33,7 +44,8 @@ const Home: NextPage = () => {
    const isCodeCorrect = (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
       // split to remove all emtpy spaces
-      const newCode = code.split("\n").join("").split(" ").join("").trimEnd().trimStart();
+      const newCode = code.split("\n").join("").toLowerCase().split(" ").join("").trimEnd().trimStart();
+
       // check if the value is among the correct codes
       if (correctCode === newCode) {
          setStatus("correct");
@@ -43,10 +55,25 @@ const Home: NextPage = () => {
          // Modal Functionality
          if (!correctFirstTime && currentStep === 0) {
             setCorrectFirstTime(true);
+            setModalOpen(true);
          }
       } else {
          setStatus("incorrect");
       }
+   };
+
+   // Video Logic
+   const [isPlaying, setIsPlaying] = useState<boolean>(true);
+   const [width, setWidth] = useState<number>(0);
+
+   const stopVideo = () => {
+      setTimeout(() => {
+         setIsPlaying(false);
+      }, 500);
+   };
+
+   const resizeWindow = () => {
+      setWidth(window?.innerWidth);
    };
 
    React.useEffect(() => {
@@ -59,32 +86,27 @@ const Home: NextPage = () => {
    React.useEffect(() => {
       // autofocus mini-compiler on page load
       ref?.current?.focus();
+      setWidth(window?.innerWidth);
+      window.addEventListener("resize", resizeWindow);
+
+      return () => window.removeEventListener("resize", resizeWindow);
    }, []);
+
+   if (width < 1100) {
+      return <MobileView />;
+   }
 
    return (
       <div className="relative overflow-x-hidden">
+         {modalOpen && <CorrectCodeModal setModalOpen={setModalOpen} />}
          <div className="flex min-h-screen w-screen flex-col overflow-x-hidden overflow-y-visible bg-home3 bg-cover bg-left lg:bg-none">
-            <img
-               src="/assets/background3.png"
-               className={`bg-image hidden h-screen w-screen ${currentStep === 0 ? "bg-image lg:block" : "lg:hidden"}`}
-               alt=""
-            />{" "}
-            <img
-               src="/assets/background2.png"
-               className={`bg-image hidden h-screen w-screen ${currentStep === 1 ? "bg-image lg:block" : "lg:hidden"}`}
-               alt=""
-            />{" "}
-            <img
-               src="/assets/background1.png"
-               className={`bg-image hidden h-screen w-screen ${currentStep === 2 ? "bg-image lg:block" : "lg:hidden"}`}
-               alt=""
-            />
+            <HomeVideo stopVideo={() => {}} />
             <Navbar />
-            <div className="z-3 absolute top-[80px] left-0 flex w-screen flex-1 flex-col items-center justify-center overflow-hidden bg-home3 bg-cover bg-left lg:flex-row lg:bg-none">
+            <div className="z-3 absolute top-[80px] left-0 flex max-h-[88vh] w-screen flex-1 flex-col items-center justify-center overflow-hidden bg-home3 bg-cover bg-left lg:max-h-screen  lg:flex-row lg:bg-none">
                <div className={styles.container}>
-                  <div className={styles.textContainer + ` text-gray-900 ${currentStep === 1 && "lg:text-white"}`}>
+                  <div className={styles.textContainer + ` text-gray-900  ${currentStep === 1 && "lg:text-white"}`}>
                      <p className={styles.containerText}>We Believe Every Child is a genius!</p>
-                     <p className="text-sm md:w-[550px]">
+                     <p className="text-[1.2rem] font-bold text-[#333] md:w-[500px]">
                         3D games from CodeAlgo academy will bring students to computer sciences where they can teach themselves coding as they play.
                      </p>
                      {/* Mini Compiler */}
@@ -94,10 +116,12 @@ const Home: NextPage = () => {
                            style={{ textShadow: "0" }}
                         >
                            <p className="mb-1 text-[0.97rem] font-bold">Type the following:</p>
+
                            <p className="">
-                              root.<span className="text-red-600">configure</span>
-                              {"("}bg=<span className="text-blue-600">{`"${colors[stepToMoveTo]}"`}</span>
-                              {")"}
+                              <span className="text-red-600">print</span>
+                              {'("'}
+                              <span className="text-blue-600">I love CodeAlgo</span>
+                              {'")'}
                            </p>
                         </div>
                         <form action="" onSubmit={isCodeCorrect} className="hidden w-full max-w-[400px] lg:block">
@@ -130,5 +154,5 @@ export default Home;
 const styles = {
    container: "flex-1 flex bg-center h-full",
    textContainer: "py-16 relative px-2 md:px-[3rem] space-y-5 z-10",
-   containerText: "capitalize text-5xl font-extrabold leading-[60px] md:w-[600px]",
+   containerText: "capitalize text-5xl font-extrabold leading-[60px] md:w-[500px] text-[#333]",
 };
