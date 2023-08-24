@@ -7,7 +7,7 @@ import Image from "next/image";
 import CharactersArrangement from "@/components/home/charactersArrangement";
 import HomeVideo from "@/components/home/video";
 import MobileView from "@/components/home/mobile-view";
-import CorrectCodeModal from "@/components/modals/correctCodeModal";
+import CorrectCodeModal from "@/components/modals/CorrectCodeModal";
 
 type Colors = "blue" | "purple" | "orange" | "";
 
