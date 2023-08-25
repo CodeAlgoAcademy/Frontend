@@ -33,6 +33,7 @@ export default function ParentStudent() {
 
    const signUp = async (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
+      console.log(currentStepIndex);
       if (currentStepIndex === 6) {
          const data = await dispatch(addChild());
          if (!data?.error?.message) {
@@ -64,7 +65,7 @@ export default function ParentStudent() {
                   <button className="mt-6  block h-[2.5rem] w-full rounded-xl bg-orange-400 text-center font-bold text-white" type="submit">
                      Continue
                   </button>
-                  {currentStepIndex === 3 && (
+                  {currentStepIndex === 5 && (
                      <p onClick={addChildWithoutParentalControls} className="my-3 cursor-pointer text-center text-[14px] font-bold underline">
                         I do not want to set parental controls
                      </p>
