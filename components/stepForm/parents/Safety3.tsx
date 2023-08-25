@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateChild } from "store/parentChildSlice";
@@ -7,6 +8,7 @@ import { RootState } from "store/store";
 export default function Safety3() {
    const dispatch = useDispatch();
    const child = useSelector((state: RootState) => state.parentChild);
+   const router = useRouter();
    return (
       <div key={8}>
          <h1 className="text-[30px] font-bold">Who can {child?.fullName} play with?</h1>
@@ -25,11 +27,15 @@ export default function Safety3() {
                dispatch(updateChild({ key: "friend", value: e.target.value }));
             }}
          />
-         <p className="mt-4 text-center text-[14px] font-semibold">You can update or add to this list at any time in your settings</p>
-         <Link href={"/parents"}>
-            {" "}
-            <p className="mt-4 text-center text-[14px] font-semibold underline">Skip</p>
-         </Link>
+         <p className="mt-4 text-center text-[14px] font-semibold">You can update or add to this list at any time in your settings</p>{" "}
+         <p
+            className="mt-4 text-center text-[14px] font-semibold underline"
+            onClick={() => {
+               router.push("/parents");
+            }}
+         >
+            Skip
+         </p>
       </div>
    );
 }
