@@ -34,6 +34,7 @@ const Layout = ({ children }: Props) => {
          "/signup/organizer",
          "/about-us",
          "/contact",
+         "/privacy-policy",
       ];
 
       if (
