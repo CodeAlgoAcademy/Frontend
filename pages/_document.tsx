@@ -23,11 +23,11 @@ class MyDocument extends Document {
                   property="twitter:description"
                   content="3D games from CodeAlgo academy will bring students to computer sciences where they can teach themselves as they play."
                />
-               <meta property="image" content="https://gcdnb.pbrd.co/images/9lHbIun6obws.jpg?o=1" />
+               <meta property="image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8QefXQKCgVvSMakQ7GI5NWvcoyrCm49_yMRwvihd8&s" />
 
-               <meta property="og:image" content="https://gcdnb.pbrd.co/images/9lHbIun6obws.jpg?o=1" />
-               <meta property="twitter:image" content="https://gcdnb.pbrd.co/images/9lHbIun6obws.jpg?o=1" />
-               <meta property="image" content="https://gcdnb.pbrd.co/images/9lHbIun6obws.jpg?o=1" />
+               <meta property="og:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8QefXQKCgVvSMakQ7GI5NWvcoyrCm49_yMRwvihd8&s" />
+               <meta property="twitter:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8QefXQKCgVvSMakQ7GI5NWvcoyrCm49_yMRwvihd8&s" />
+               <meta property="image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8QefXQKCgVvSMakQ7GI5NWvcoyrCm49_yMRwvihd8&s" />
             </Head>
             <body>
                <Main />
