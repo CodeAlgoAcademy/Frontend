@@ -38,64 +38,73 @@ export const loginUser: any = createAsyncThunk("authSlice/loginUser", async (nam
 export const signUpUser: any = createAsyncThunk("authSlice/signUpUser", async (name, thunkApi) => {
    const state: any = thunkApi.getState();
    const dispatch = thunkApi.dispatch;
-   const {
-      email,
-      organization_code,
-      firstname,
-      lastname,
-      schoolName,
-      grade,
-      is_parent,
-      is_organizer,
-      is_student,
-      is_teacher,
-      dob,
-      schoolCountry,
-      country,
-      username,
-   } = state?.user?.auth;
 
-   // General Options
-   let options: typeof state.user.auth = {
-      email,
-      password1: state.user.auth.password,
-      password2: state.user.auth.password,
-      firstname,
-      lastname,
-      is_parent,
-      is_organizer,
-      is_student,
-      is_teacher,
-      username,
-      organization_code,
-   };
+   const policyChecked = state.policyCheck.checked;
 
-   if (is_teacher) {
-      options = { ...options, country: schoolCountry, schoolCountry, schoolName, grade: "" };
-   }
+   if (!policyChecked) {
+      dispatch(openErrorModal({ errorText: ["You have not accepted the terms and conditions"] }));
 
-   if (is_student) {
-      options = { ...options, country, grade, schoolCountry: "", schoolName: "", dob };
-   }
+      return thunkApi.rejectWithValue("Accept privacy policy");
+   } else {
+      const {
+         email,
+         organization_code,
+         firstname,
+         lastname,
+         schoolName,
+         grade,
+         is_parent,
+         is_organizer,
+         is_student,
+         is_teacher,
+         dob,
+         schoolCountry,
+         country,
+         username,
+      } = state?.user?.auth;
 
-   if (is_parent) {
-      options = { ...options, country: country, grade: "", schoolCountry: "", schoolName: "" };
-   }
+      // General Options
+      let options: typeof state.user.auth = {
+         email,
+         password1: state.user.auth.password,
+         password2: state.user.auth.password,
+         firstname,
+         lastname,
+         is_parent,
+         is_organizer,
+         is_student,
+         is_teacher,
+         username,
+         organization_code,
+      };
 
-   if (is_organizer) {
-      options = { ...options, country: country, schoolCountry: "", schoolName: "", grade: "" };
-   }
+      if (is_teacher) {
+         options = { ...options, country: schoolCountry, schoolCountry, schoolName, grade: "" };
+      }
 
-   dispatch(openPreloader({ loadingText: "Creating Account" }));
-   try {
-      const { data } = await http.post("/auth/registration/", { ...options });
-      dispatch(clearFields());
-      dispatch(closePreloader());
-      console.log(data);
-      return data;
-   } catch (error: any) {
-      const errorMessage = errorResolver(error);
-      return thunkApi.rejectWithValue(errorMessage);
+      if (is_student) {
+         options = { ...options, country, grade, schoolCountry: "", schoolName: "", dob };
+      }
+
+      if (is_parent) {
+         options = { ...options, country: country, grade: "", schoolCountry: "", schoolName: "" };
+      }
+
+      if (is_organizer) {
+         options = { ...options, country: country, schoolCountry: "", schoolName: "", grade: "" };
+      }
+
+      dispatch(openPreloader({ loadingText: "Creating Account" }));
+      try {
+         const { data } = await http.post("/auth/registration/", { ...options });
+         dispatch(clearFields());
+         dispatch(closePreloader());
+
+         return data;
+      } catch (error: any) {
+         const errorMessage = errorResolver(error);
+         return thunkApi.rejectWithValue(errorMessage);
+      }
    }
 });
 
