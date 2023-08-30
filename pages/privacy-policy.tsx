@@ -10,11 +10,11 @@ const PrivacyPolicy = () => {
 
    const handleAccept = () => {
       dispatch(checkPolicy());
-      router.push("/signup");
+      router.back();
    };
    const handleReject = () => {
       dispatch(unCheckPolicy());
-      router.push("/signup");
+      router.back();
    };
 
    const router = useRouter();
