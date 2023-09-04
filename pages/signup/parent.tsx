@@ -13,11 +13,13 @@ import { FiCheckCircle } from "react-icons/fi";
 import { RootState } from "store/store";
 import { updateUser } from "store/authSlice";
 import { checkEmail } from "utils/checkmail";
+import Link from "next/link";
 
 export default function Parent() {
    const dispatch = useDispatch();
    const router = useRouter();
    const credentials = useSelector((state: RootState) => state?.user?.auth);
+   const policyChecked = useSelector((state: RootState) => state.policyCheck.checked);
    const parent = useSelector((state: RootState) => state.parentChild);
    const [modalOpen, setModalOpen] = useState(false);
    const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next, goTo } = useMultiForm([
@@ -72,6 +74,12 @@ export default function Parent() {
             <form onSubmit={signUp}>
                <div className="">{step}</div>
                <div>
+                  <div className="mt-4">
+                     <input type="checkbox" checked={policyChecked} name="" className="inline-block scale-[120%] accent-[#2073fa]" id="privacy" />
+                     <label htmlFor="privacy" className="ml-2 inline-block cursor-pointer hover:underline">
+                        <Link href={"/privacy-policy"}> I accept the terms and condition</Link>
+                     </label>
+                  </div>
                   <button className="mt-6  block h-[2.5rem] w-full rounded-xl bg-orange-400 text-center font-bold text-white" type="submit">
                      Continue
                   </button>

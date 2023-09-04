@@ -21,6 +21,8 @@ export default function Student() {
    const router = useRouter();
    const { auth } = useSelector((state: RootState) => state.user);
    const { email } = useSelector((state: RootState) => state.user.auth);
+   const policyChecked = useSelector((state: RootState) => state.policyCheck.checked);
+
    const { steps, currentStepIndex, teacherSignUpStep, step, isFirstStep, isLastStep, back, next } = useMultiForm([
       <Form1 key={1} />,
       <Form2 key={2} />,
@@ -54,6 +56,12 @@ export default function Student() {
             <form onSubmit={signup}>
                <div className="">{step}</div>
                <div>
+                  <div className="mt-4">
+                     <input type="checkbox" checked={policyChecked} name="" className="inline-block scale-[120%] accent-[#2073fa]" id="privacy" />
+                     <label htmlFor="privacy" className="ml-2 inline-block cursor-pointer hover:underline">
+                        <Link href={"/privacy-policy"}> I accept the terms and condition</Link>
+                     </label>
+                  </div>
                   <button className="mt-6  block h-[2.5rem] w-full rounded-xl bg-orange-400 text-center font-bold text-white" type="submit">
                      Continue
                   </button>
