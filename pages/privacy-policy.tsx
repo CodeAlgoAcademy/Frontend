@@ -5,16 +5,38 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { checkPolicy, unCheckPolicy } from "store/policySlice";
 
+interface BetaDisclaimerProps {
+   title: string;
+   body: string[];
+}
+
+const betaDisclaimers: BetaDisclaimerProps[] = [
+   {
+      title: "Disability, Capability and Security Compliance",
+      body: [
+         "We are actively working on enhancing the disability of CodeAlgo Academy to ensure a more inclusive experience for all users. Compliance with standards such as Web Content Accessibility Guidelines(WCAG) is a prority for us.",
+         " Security compliance standards, including SOC II (Security Operations for Compliance) and ISO 10007 (International Security Operations), are being pursued as part of our commitment to providing a secure platform",
+      ],
+   },
+   {
+      title: "Limited Availability",
+      body: [
+         "During the beta testing phase, certain features, functionalities, and security measures may not be fully operational or compliant with the standards mentioned above",
+         "We acknowledge that the full suite of features and compliance measures may not be available during this initial trial period",
+      ],
+   },
+];
+
 const PrivacyPolicy = () => {
    const dispatch = useDispatch();
 
    const handleAccept = () => {
       dispatch(checkPolicy());
-      router.push("/signup");
+      router.back();
    };
    const handleReject = () => {
       dispatch(unCheckPolicy());
-      router.push("/signup");
+      router.back();
    };
 
    const router = useRouter();
@@ -236,15 +258,72 @@ You will be able to access premium features for your child’s account for the p
 `}
                />
             </div>
+
+            <div className="mt-[20px]">
+               <Policies
+                  title="Beta Testing Disclaimer"
+                  body={`
+               CodeAlgo Academy is currently in a beta testing phase, which means that certain features, functionalities, and standards are still under development and may not be fully available or implemented at this time. Please be aware of the following:
+               `}
+               />
+
+               {betaDisclaimers.map((disclaimer, index) => {
+                  return (
+                     <div key={index} className="mb-3">
+                        <p className="font-bold">
+                           {index + 1}. {disclaimer.title}:
+                        </p>
+
+                        <ul className="pl-2">
+                           {disclaimer.body.map((text, index) => {
+                              return (
+                                 <li key={index} className="mb-1">
+                                    •{"  "}
+                                    {text}
+                                 </li>
+                              );
+                           })}
+                        </ul>
+                     </div>
+                  );
+               })}
+
+               <p>Participating in the beta testing phase of CodeAlgo Academy, you acknowledge the following: </p>
+
+               <ul className="pl-2">
+                  <li className="mb-1">
+                     • CodeAlgo Academy is an ongoing project and is subject to further development, adjustments and enhancements.
+                  </li>
+
+                  <li className="mb-1">
+                     • Certain features, disability, capabilities and security compliance standards, including but not limited to SOC II and ISO
+                     10007, may not be fully implemented or functional during the beta testing phase.
+                  </li>
+
+                  <li className="mb-1">
+                     • The current version of CodeAlgo Academy is intended for trial and testing purposes only and is not representative of the final
+                     fully-featured application
+                  </li>
+               </ul>
+
+               <p>
+                  We appreciate your understanding and participation in this beta testing phase. Your feedback and insights are valuable in helping us
+                  improve and refine CodeAlgo Academy to meet the standards of usability, accessibility and security. <br /> For any questions,
+                  concerns or feedback, please reach out to us{" "}
+                  <a href="mailto:info@codealgoacademy.com" className="hover:underline">
+                     <b>info@codealgoacademy.com</b>
+                  </a>
+               </p>
+               <p className="font-[500]">Thank you for being part of our beta community!</p>
+            </div>
+
             <div className="mt-[20px]">
                <Policies
                   title="Changes"
-                  body={`We reserve the right to change, modify, add, or remove portions of this ToS at any time without prior notice. We will notify you of any changes to this ToS by sending you a communication through CodeAlgo. Changes will become effective immediately but will not apply retroactively. If you do not agree to the ToS you should immediately discontinue your use of CodeAlgo. 
-
-`}
+                  body={`We reserve the right to change, modify, add, or remove portions of this ToS at any time without prior notice. We will notify you of any changes to this ToS by sending you a communication through CodeAlgo. Changes will become effective immediately but will not apply retroactively. If you do not agree to the ToS you should immediately discontinue your use of CodeAlgo.`}
                />
             </div>
-            <p>CodeAlgo is designed and operated by CodeAlgo, Inc. All inquiries may be directed to:</p>
+            <p className="mt-6">CodeAlgo is designed and operated by CodeAlgo, Inc. All inquiries may be directed to:</p>
             <p>CodeAlgo, LLC</p>
             <p>720 Main St, Kansas City, MO 64105</p>
 
