@@ -45,7 +45,7 @@ const Section = ({ title, detail, image, order, hasButton, codeEditor, extraImag
                      </ul>
                   )}
                   {hasButton && (
-                     <Link href={"/login/select-account-type"}>
+                     <Link href={"/login"}>
                         <button className="mt-2 min-w-[150px] rounded-lg bg-orange-400 p-3 text-[15px] font-bold text-white shadow-md">
                            Sign in
                         </button>

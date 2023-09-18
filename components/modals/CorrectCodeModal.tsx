@@ -27,7 +27,7 @@ const CorrectCodeModal = (props: CorrectCodeModalProps) => {
                   learning
                </p>
                <div className="flex justify-center">
-                  <Link href="/signup/select-account-type">
+                  <Link href="/signup">
                      <button
                         className={styles.button}
                         onClick={() => {
