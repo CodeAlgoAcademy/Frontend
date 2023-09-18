@@ -22,14 +22,14 @@ const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
                   {router?.pathname.includes("/login") ? (
                      <>
                         <span className="hidden font-semibold sm:block">New here?</span>
-                        <Link href="/signup/select-account-type">
+                        <Link href="/signup">
                            <span className="ml-3 cursor-pointer font-semibold text-[#2073FA]">Register</span>
                         </Link>
                      </>
                   ) : (
                      <>
                         <span className="hidden font-semibold sm:block">Already have an account?</span>
-                        <Link href="/login/select-account-type">
+                        <Link href="/login">
                            <span className="ml-3 cursor-pointer font-semibold text-[#2073FA]">Log in</span>
                         </Link>
                      </>
