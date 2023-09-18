@@ -66,7 +66,7 @@ const OrganizerLayout = ({ children }: Props) => {
       const stringedToken = localStorage.getItem("token");
       const token = JSON.parse(`${stringedToken}`);
       if (!stringedToken || !token || token?.user_type !== "organizer") {
-         router?.push("/login/select-account-type");
+         router?.push("/login");
       }
    }, [router]);
 

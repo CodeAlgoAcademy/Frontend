@@ -9,20 +9,20 @@ const Buttons = () => {
    return (
       <>
          <div className="hidden space-x-2 md:flex">
-            <Link href="/login/select-account-type">
+            <Link href="/login">
                <button className={`bg-orange-500 ${styles.lgBtn}`}>Log in</button>
             </Link>
-            <Link href="/signup/select-account-type">
+            <Link href="/signup">
                <button className={`bg-amber-500 ${styles.lgBtn}`}>Register</button>
             </Link>
          </div>
 
          {/* mobile devices */}
          <div className="grid gap-3 md:hidden">
-            <Link href="/login/select-account-type">
+            <Link href="/login">
                <button className={`bg-orange-500 ${styles.lgBtn}`}>Log in</button>
             </Link>
-            <Link href="/signup/select-account-type">
+            <Link href="/signup">
                <button className={`bg-amber-500 ${styles.lgBtn}`}>Register</button>
             </Link>
          </div>

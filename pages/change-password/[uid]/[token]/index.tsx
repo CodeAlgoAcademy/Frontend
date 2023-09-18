@@ -87,7 +87,7 @@ const ResetPassword = () => {
                   <div className="text-center text-[22px] font-bold">
                      <h1>Password reset was successful!</h1>
                   </div>
-                  <Link href="/login/select-account-type">
+                  <Link href="/login">
                      <button className="mt-6 flex w-full items-center justify-center gap-x-4 rounded-md bg-orange-400 py-3 font-bold text-white shadow-md">
                         <i>
                            <FaArrowLeft />

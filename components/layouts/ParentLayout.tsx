@@ -44,7 +44,7 @@ const ParentLayout = ({ children }: Props) => {
       localStorage.removeItem("token");
       localStorage.removeItem("token_timestamp");
       dispatch(resetAuthUser());
-      router.push("/login/select-account-type");
+      router.push("/login");
    };
 
    useEffect(() => {
@@ -54,7 +54,7 @@ const ParentLayout = ({ children }: Props) => {
          const handleResize = () => setWidth(window.innerWidth);
          window.addEventListener("resize", handleResize);
          if (token?.user_type !== "parent") {
-            router.push("/login/select-account-type");
+            router.push("/login");
          } else {
             setUser(getUserFromLocalStorage());
          }

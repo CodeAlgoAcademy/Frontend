@@ -25,8 +25,8 @@ const Layout = ({ children }: Props) => {
          "/login/teacher",
          "/login/parent",
          "/login/organizer",
-         "/login/select-account-type",
-         "/signup/select-account-type",
+         "/login",
+         "/signup",
          "/coming-soon",
          "/signup/teacher",
          "/signup/student",
@@ -44,7 +44,7 @@ const Layout = ({ children }: Props) => {
          !router.pathname.includes("/change-password") &&
          !router.pathname.includes("/press")
       ) {
-         router.push("/login/select-account-type");
+         router.push("/login");
       }
    }, []);
 

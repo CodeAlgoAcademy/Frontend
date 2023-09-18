@@ -17,7 +17,7 @@ export default function SelectAccountType() {
             <Link href={slug.pathname.includes("/signup") ? "/signup/organizer" : "/login/organizer"}>
                <div className="transition duration-300 ease-out hover:scale-110 hover:text-orange-400">
                   <div className="mx-auto max-h-[200px] max-w-[200px] md:max-h-fit md:max-w-fit">
-                     <Image src="/assets/parents.png" alt="organizer" height="225" width="225" />
+                     <Image src="/assets/admin_illustration.png" alt="organizer" height="225" width="225" />
                   </div>
                   <h2
                      data-testid="accountType"
