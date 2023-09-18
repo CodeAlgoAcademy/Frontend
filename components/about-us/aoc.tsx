@@ -6,7 +6,7 @@ const Footer = () => {
       <footer className="relative min-h-[260px] py-10">
          <div className="text-center">
             <p className="text-3xl font-bold text-slate-600">Getting started with CodeAlgo is easy</p>
-            <Link href={"/login/select-account-type"}>
+            <Link href={"/login"}>
                <button className="mt-8 w-[200px] rounded-lg bg-orange-400 p-3 font-bold text-white">Sign in</button>
             </Link>
          </div>

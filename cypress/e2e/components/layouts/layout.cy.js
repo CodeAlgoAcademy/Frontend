@@ -12,7 +12,7 @@ describe("Layout", () => {
    it("Should redirect restricted pages when there's no token", () => {
       cy.visit("/teachers/addClass");
 
-      cy.location("pathname", { timeout: 10000 }).should("eq", "/login/select-account-type");
+      cy.location("pathname", { timeout: 10000 }).should("eq", "/login");
    });
 
    it("Should not redirect if the user is already logged in", () => {
