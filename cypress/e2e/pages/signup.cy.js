@@ -2,7 +2,7 @@
 
 describe("Registration", () => {
    beforeEach(() => {
-      cy.visit("/signup/select-account-type");
+      cy.visit("/signup");
    });
 
    it("Select Account Type Rendering", () => {

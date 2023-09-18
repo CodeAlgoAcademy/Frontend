@@ -82,7 +82,7 @@ const VerifyWithKey = () => {
                      Your Account has been verified successfully
                   </p>
                   <div className="mt-4 border-t-4 pt-4">
-                     <Link href={"/login/select-account-type"}>
+                     <Link href={"/login"}>
                         <button className=" mx-auto flex items-center gap-x-2 rounded-md bg-[#2073fe] py-3 px-5 text-white">
                            <BiArrowBack /> Back to login
                         </button>
