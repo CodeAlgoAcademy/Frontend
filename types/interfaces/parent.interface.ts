@@ -1,11 +1,11 @@
 export type days = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
 
 export interface IParentChild {
-   progress: {
-      title: string,
-      level: 0,
-      progress: string
-    };
+   progress?: {
+      title: string;
+      level: 0;
+      progress: number;
+   };
    // child: {
    username: string;
    fullName: string;

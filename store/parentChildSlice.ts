@@ -26,9 +26,9 @@ const initialState: IParentChildren = {
          { dayOfTheWeek: "Sunday", timeLimit: "" },
       ],
       progress: {
-         title: '',
+         title: "",
          level: 0,
-         progress: ''
+         progress: ""
       }
    },
    codingExperience: "experienced",
@@ -47,8 +47,7 @@ const initialState: IParentChildren = {
       { dayOfTheWeek: "Friday", timeLimit: "" },
       { dayOfTheWeek: "Saturday", timeLimit: "" },
       { dayOfTheWeek: "Sunday", timeLimit: "" },
-   ],
-   // }
+   ]
 };
 
 export const addChild: any = createAsyncThunk("parent/child/new", async (_, thunkAPI) => {
@@ -208,7 +207,7 @@ export const parentSlice = createSlice({
          }
       });
       builder.addCase(getChildProgress.fulfilled, (state, action) => {
-         state.parentSlice.currentChild.progress = action.payload;
+         state.currentChild.progress = action.payload;
       })
    },
 });

@@ -55,17 +55,17 @@ const Dashboard = () => {
                <ContentBox size="base" title="Level" padding="small">
                   <h2 className="mt-14 text-center text-[22px] font-medium"></h2>
                   {/* {parent?.currentChild?.progress?.map((progress, index) => ( */}
-                     <React.Fragment key={index}>
+                     <React.Fragment>
                         <p className="mt-2 text-center text-sm font-light">{parent?.currentChild?.progress?.title || ""}</p>
                         <div className="mt-6 ml-4">
                            <ProgressBar color="red" percentage={parent?.currentChild?.progress?.progress || 0} title="Progress" titleSize="base" />
                            <div className="mt-8">
                               <h3 className="font-semibold">Comprehension Tracking</h3>
-                              <div className="small-scroll-thumb blue-scroll-thumb mt-3 flex h-[70px] flex-col gap-5 overflow-y-auto pr-4">
+                              {/* <div className="small-scroll-thumb blue-scroll-thumb mt-3 flex h-[70px] flex-col gap-5 overflow-y-auto pr-4">
                                  {progress.assignment?.map(({ completed, title }) => (
                                     <ProgressBar color="green" percentage={completed} title={title} titleSize="small" />
                                  ))}
-                              </div>
+                              </div> */}
                            </div>
                         </div>
                      </React.Fragment>
