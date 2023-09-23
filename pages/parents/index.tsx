@@ -37,8 +37,7 @@ const Dashboard = () => {
    };
 
    useEffect(() => {
-      // dispatch(getChildren());
-      dispatch(getChildProgress());
+      dispatch(getChildren());
    }, []);
 
    useEffect(() => {
@@ -47,14 +46,18 @@ const Dashboard = () => {
       }
    }, [parent?.currentChild, parent?.currentChild?.timeLimits]);
 
-   // console.log(parent?.currentChild?.progress);
+   useEffect(() => {
+      if (parent?.currentChild?.id) {
+         dispatch(getChildProgress());
+      }
+   }, [parent?.currentChild?.id]);
+
    return (
       <ParentLayout>
          <div className="relative bottom-14 mb-[-120px] scale-90 overflow-x-auto sm:bottom-0 sm:mb-0 sm:scale-100">
             <div className=" mb-6 grid max-w-fit grid-cols-1 justify-center gap-x-6 gap-y-8 lg:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4">
                <ContentBox size="base" title="Level" padding="small">
                   <h2 className="mt-14 text-center text-[22px] font-medium"></h2>
-                  {/* {parent?.currentChild?.progress?.map((progress, index) => ( */}
                   <React.Fragment>
                      <p className="mt-2 text-center text-sm font-light">{parent?.currentChild?.progress?.title || ""}</p>
                      <div className="mt-6 ml-4">

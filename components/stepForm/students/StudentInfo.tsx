@@ -46,7 +46,7 @@ export default function OtherInfoStudent() {
             <option value="Select School Country" disabled>
                Select Country
             </option>
-            {countryList.map((countryOption: string, index: number): ReactNode => {
+            {countryList?.map((countryOption: string, index: number): ReactNode => {
                return (
                   <option value={countryOption} key={index}>
                      {countryOption}
