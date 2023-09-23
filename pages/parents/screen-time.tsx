@@ -69,7 +69,7 @@ const ScreenTime = () => {
          <div className="mx-4 flex flex-col gap-9 overflow-x-auto sm:mx-0">
             <ContentBox size="large" title="Screen Time" padding="large">
                <BarChart
-                  data={timeLimits.map((time) => {
+                  data={timeLimits?.map((time) => {
                      return time.timeLimit === "No Limit" ? 8 : (time.timeLimit as number);
                   })}
                   barSpace={9.6}
@@ -81,7 +81,7 @@ const ScreenTime = () => {
                <h1 className="text-[1.3rem] font-semibold text-[#2073FA]">Current screen time restrictions</h1>
                <h2 className="mt-2 mb-10 text-[14px] font-medium">Make edits to screen time restrictions below</h2>
                <div className="mt-4 flex flex-wrap items-center justify-center gap-4 md:justify-start">
-                  {timeLimitsToBeUpdated.map((time, index: number) => {
+                  {timeLimitsToBeUpdated?.map((time, index: number) => {
                      return <ScreenTimeComponent updateScreenTimeForChild={updateTime} time={time} key={index} />;
                   })}
                </div>

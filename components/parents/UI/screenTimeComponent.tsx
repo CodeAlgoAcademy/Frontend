@@ -60,7 +60,7 @@ const ScreenTimeComponent = ({
          </div>
          {hoursListOpen && (
             <div className="absolute top-[105%] left-0 z-[2]  w-[100%] rounded-md bg-white text-gray-800 shadow-md">
-               {hours.map((hour, index: number) => {
+               {hours?.map((hour, index: number) => {
                   return (
                      <span
                         key={index}
