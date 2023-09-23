@@ -31,6 +31,15 @@ const getAllChildren = async () => {
    return response.data;
 };
 
+const getChildProgress = async (id: string | number) => {
+   const response = await http.get(`/parent/child/${id}/progress/`, {
+      headers: {
+         Authorization: `Bearer ${getAccessToken()}`,
+      },
+   });
+   return response.data;
+};
+
 const updateChildScreentime = async (data: any, id: string | number) => {
    const response = await http.put(
       "/parent/child/time-limit/" + id + "/",
