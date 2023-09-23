@@ -25,6 +25,11 @@ const initialState: IParentChildren = {
          { dayOfTheWeek: "Saturday", timeLimit: "" },
          { dayOfTheWeek: "Sunday", timeLimit: "" },
       ],
+      progress: {
+         title: "",
+         level: 0,
+         progress: 0,
+      },
    },
    codingExperience: "experienced",
    id: "",
@@ -43,7 +48,6 @@ const initialState: IParentChildren = {
       { dayOfTheWeek: "Saturday", timeLimit: "" },
       { dayOfTheWeek: "Sunday", timeLimit: "" },
    ],
-   // }
 };
 
 export const addChild: any = createAsyncThunk("parent/child/new", async (_, thunkAPI) => {
@@ -97,11 +101,28 @@ export const getChildren: any = createAsyncThunk("parent/children", async (_, th
 
    try {
       const children = await parentService.getAllChildren();
+      console.log(children);
 
       return children;
    } catch (error: any) {
-      // const errorMessage = errorResolver(error);
-      // return thunkAPI.rejectWithValue(errorMessage);
+      const errorMessage = errorResolver(error);
+      return thunkAPI.rejectWithValue(errorMessage);
+   }
+});
+
+export const getChildProgress: any = createAsyncThunk("parent/child/progress", async (_, thunkAPI) => {
+   const state: any = thunkAPI.getState();
+   const dispatch = thunkAPI.dispatch;
+
+   console.log(state.parentSlice.currentChild.id);
+
+   try {
+      const childProgress = await parentService.getChildProgress(state.parentSlice.currentChild.id);
+
+      return childProgress;
+   } catch (error: any) {
+      const errorMessage = errorResolver(error);
+      return thunkAPI.rejectWithValue(errorMessage);
    }
 });
 
@@ -187,6 +208,10 @@ export const parentSlice = createSlice({
          } else {
             state.currentChild = action.payload?.[0];
          }
+      });
+      builder.addCase(getChildProgress.fulfilled, (state, action) => {
+         console.log(action.payload);
+         state.currentChild.progress = action.payload;
       });
    },
 });
