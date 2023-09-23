@@ -4,6 +4,8 @@ import { IParentChild, IParentChildren, screentimeTypes } from "types/interfaces
 import { errorResolver } from "utils/errorResolver";
 import { closePreloader, openErrorModal, openPreloader } from "./fetchSlice";
 import { RootState } from "./store";
+import http from "axios.config";
+import { getAccessToken } from "utils/getTokens";
 
 const initialState: IParentChildren = {
    // child: {
@@ -25,6 +27,11 @@ const initialState: IParentChildren = {
          { dayOfTheWeek: "Saturday", timeLimit: "" },
          { dayOfTheWeek: "Sunday", timeLimit: "" },
       ],
+      progress: {
+         title: "",
+         level: 0,
+         progress: 0,
+      },
    },
    codingExperience: "experienced",
    id: "",
@@ -43,7 +50,6 @@ const initialState: IParentChildren = {
       { dayOfTheWeek: "Saturday", timeLimit: "" },
       { dayOfTheWeek: "Sunday", timeLimit: "" },
    ],
-   // }
 };
 
 export const addChild: any = createAsyncThunk("parent/child/new", async (_, thunkAPI) => {
@@ -100,8 +106,19 @@ export const getChildren: any = createAsyncThunk("parent/children", async (_, th
 
       return children;
    } catch (error: any) {
-      // const errorMessage = errorResolver(error);
-      // return thunkAPI.rejectWithValue(errorMessage);
+      const errorMessage = errorResolver(error);
+      return thunkAPI.rejectWithValue(errorMessage);
+   }
+});
+
+export const getChildProgress: any = createAsyncThunk("parent/child/progress", async (_, thunkAPI) => {
+   const state = thunkAPI.getState() as RootState;
+   const dispatch = thunkAPI.dispatch;
+   try {
+      return await parentService.getChildProgress(state.parentChild.currentChild.id);
+   } catch (error: any) {
+      const errorMessage = errorResolver(error);
+      return thunkAPI.rejectWithValue(errorMessage);
    }
 });
 
@@ -187,6 +204,9 @@ export const parentSlice = createSlice({
          } else {
             state.currentChild = action.payload?.[0];
          }
+      });
+      builder.addCase(getChildProgress.fulfilled, (state, action) => {
+         state.currentChild.progress = action.payload;
       });
    },
 });
