@@ -15,7 +15,9 @@ const ProgressBar = ({ title, titleSize, percentage, color }: Props) => {
    const smallTitle = "min-w-[84px] max-w-[84px] text-sm font-medium text-[#A8ABB0]";
    return (
       <div className="flex h-5 items-center">
-         <p className={titleSize === "base" ? baseTitle : smallTitle}>{title}</p>
+         <p title={title} className={`w-full overflow-hidden truncate whitespace-nowrap ${titleSize === "base" ? baseTitle : smallTitle}`}>
+            {title}
+         </p>
          <span className="progress-indicator-bar relative h-full w-full rounded-r-xl bg-[#ECEDF3]">
             <span
                className={`top-0 left-0 block h-full rounded-r-xl pr-[10px] text-right text-sm text-black ${
