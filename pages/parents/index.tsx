@@ -47,7 +47,7 @@ const Dashboard = () => {
       }
    }, [parent?.currentChild, parent?.currentChild?.timeLimits]);
 
-   console.log(parent?.currentChild?.progress);
+   // console.log(parent?.currentChild?.progress);
    return (
       <ParentLayout>
          <div className="relative bottom-14 mb-[-120px] scale-90 overflow-x-auto sm:bottom-0 sm:mb-0 sm:scale-100">

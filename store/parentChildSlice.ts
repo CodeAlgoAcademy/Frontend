@@ -101,6 +101,7 @@ export const getChildren: any = createAsyncThunk("parent/children", async (_, th
 
    try {
       const children = await parentService.getAllChildren();
+      console.log(children);
 
       return children;
    } catch (error: any) {
@@ -112,6 +113,8 @@ export const getChildren: any = createAsyncThunk("parent/children", async (_, th
 export const getChildProgress: any = createAsyncThunk("parent/child/progress", async (_, thunkAPI) => {
    const state: any = thunkAPI.getState();
    const dispatch = thunkAPI.dispatch;
+
+   console.log(state.parentSlice.currentChild.id);
 
    try {
       const childProgress = await parentService.getChildProgress(state.parentSlice.currentChild.id);
