@@ -37,7 +37,7 @@ const Dashboard = () => {
    };
 
    useEffect(() => {
-      dispatch(getChildren());
+      // dispatch(getChildren());
       dispatch(getChildProgress());
    }, []);
 
