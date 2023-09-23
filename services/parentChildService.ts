@@ -31,7 +31,7 @@ const getAllChildren = async () => {
    return response.data;
 };
 
-const getProgress = async (id: string | number) => {
+const getChildProgress = async (id: string | number) => {
    const response = await http.get(`/parent/child/${id}/progress/`, {
       headers: {
          Authorization: `Bearer ${getAccessToken()}`,
@@ -73,7 +73,7 @@ const parentService = {
    getAllChildren,
    updateChildScreentime,
    replyFriendRequest,
-   getProgress,
+   getChildProgress,
 };
 
 export default parentService;

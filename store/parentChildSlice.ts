@@ -4,6 +4,8 @@ import { IParentChild, IParentChildren, screentimeTypes } from "types/interfaces
 import { errorResolver } from "utils/errorResolver";
 import { closePreloader, openErrorModal, openPreloader } from "./fetchSlice";
 import { RootState } from "./store";
+import http from "axios.config";
+import { getAccessToken } from "utils/getTokens";
 
 const initialState: IParentChildren = {
    // child: {
@@ -109,16 +111,11 @@ export const getChildren: any = createAsyncThunk("parent/children", async (_, th
    }
 });
 
-export const getChildProgress: any = createAsyncThunk("child/progress", async (_, thunkAPI) => {
-   const state: any = thunkAPI.getState();
+export const getChildProgress: any = createAsyncThunk("parent/child/progress", async (_, thunkAPI) => {
+   const state = thunkAPI.getState() as RootState;
    const dispatch = thunkAPI.dispatch;
-
-   console.log(state.parentSlice.currentChild.id);
-
    try {
-      const childProgress = await parentService.getProgress(state.parentSlice.currentChild.id);
-
-      return childProgress;
+      return await parentService.getChildProgress(state.parentChild.currentChild.id);
    } catch (error: any) {
       const errorMessage = errorResolver(error);
       return thunkAPI.rejectWithValue(errorMessage);
@@ -209,7 +206,6 @@ export const parentSlice = createSlice({
          }
       });
       builder.addCase(getChildProgress.fulfilled, (state, action) => {
-         console.log(action.payload);
          state.currentChild.progress = action.payload;
       });
    },
