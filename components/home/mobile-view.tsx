@@ -36,8 +36,8 @@ const MobileView = () => {
                   3D games from CodeAlgo academy will bring students to computer sciences where they can teach themselves coding as they play.
                </p>
                <p className="mb-2 font-bold text-gray-800">Join our waitlist: </p>
-               <Link href="/join-waitlist">
-                  <button className="rounded-md bg-orange-400 px-5 py-3 font-bold text-white">Join Waitlist</button>
+               <Link href="/signup">
+                  <button className="rounded-md bg-orange-400 px-5 py-3 font-bold text-white">Sign Up</button>
                </Link>
             </div>
          </section>
