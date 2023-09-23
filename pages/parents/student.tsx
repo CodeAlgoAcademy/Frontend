@@ -24,7 +24,6 @@ const Student = () => {
                className="z-[5] max-w-fit cursor-pointer p-2"
                onClick={() => {
                   dispatch(openAddChildModal());
-                  console.log("add child modal");
                }}
                data-testid="add-child"
             >

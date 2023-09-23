@@ -73,7 +73,7 @@ const parentService = {
    getAllChildren,
    updateChildScreentime,
    replyFriendRequest,
-   getChildProgress
+   getChildProgress,
 };
 
 export default parentService;
