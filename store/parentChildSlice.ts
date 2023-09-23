@@ -27,11 +27,6 @@ const initialState: IParentChildren = {
          { dayOfTheWeek: "Saturday", timeLimit: "" },
          { dayOfTheWeek: "Sunday", timeLimit: "" },
       ],
-      progress: {
-         title: "",
-         level: 0,
-         progress: 0,
-      },
    },
    codingExperience: "experienced",
    id: "",
