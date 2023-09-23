@@ -25,6 +25,11 @@ const initialState: IParentChildren = {
          { dayOfTheWeek: "Saturday", timeLimit: "" },
          { dayOfTheWeek: "Sunday", timeLimit: "" },
       ],
+      progress: {
+         title: '',
+         level: 0,
+         progress: ''
+      }
    },
    codingExperience: "experienced",
    id: "",
@@ -100,8 +105,22 @@ export const getChildren: any = createAsyncThunk("parent/children", async (_, th
 
       return children;
    } catch (error: any) {
-      // const errorMessage = errorResolver(error);
-      // return thunkAPI.rejectWithValue(errorMessage);
+      const errorMessage = errorResolver(error);
+      return thunkAPI.rejectWithValue(errorMessage);
+   }
+});
+
+export const getChildProgress: any = createAsyncThunk("parent/child/progress", async (_, thunkAPI) => {
+   const state: any = thunkAPI.getState();
+   const dispatch = thunkAPI.dispatch;
+
+   try {
+      const childProgress = await parentService.getChildProgress(state.parentSlice.currentChild.id);
+
+      return childProgress;
+   } catch (error: any) {
+      const errorMessage = errorResolver(error);
+      return thunkAPI.rejectWithValue(errorMessage);
    }
 });
 
@@ -188,6 +207,9 @@ export const parentSlice = createSlice({
             state.currentChild = action.payload?.[0];
          }
       });
+      builder.addCase(getChildProgress.fulfilled, (state, action) => {
+         state.parentSlice.currentChild.progress = action.payload;
+      })
    },
 });
 
