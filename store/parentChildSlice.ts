@@ -28,7 +28,7 @@ const initialState: IParentChildren = {
       progress: {
          title: "",
          level: 0,
-         progress: ""
+         progress: 0
       }
    },
    codingExperience: "experienced",
