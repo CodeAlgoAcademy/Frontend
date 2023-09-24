@@ -8,6 +8,7 @@ import { openAddChildModal } from "store/modalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
 import NoChild from "@/components/parents/UI/NoChild";
+import Skills from "@/components/parents/student/Skills";
 
 const Student = () => {
    const dispatch = useDispatch();
@@ -50,16 +51,7 @@ const Student = () => {
                      </div>
                   </div>
                </ContentBox>
-               <ContentBox size="large" title="Skills" padding="small" style={{ minWidth: "100%", maxWidth: "100%" }}>
-                  <div className="mt-14 grid grid-cols-2">
-                     <p className="text-center">Completed Skills</p>
-                     <p className="text-center">Currently Learning</p>
-                  </div>
-                  <div className="mt-2 grid h-full grid-cols-2 gap-5">
-                     <SkillBox></SkillBox>
-                     <SkillBox></SkillBox>
-                  </div>
-               </ContentBox>
+               <Skills size="large" />
             </div>
          </div>
       </ParentLayout>
