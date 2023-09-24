@@ -51,7 +51,7 @@ const Dashboard = () => {
       if (parent?.currentChild?.id) {
          dispatch(getChildProgress());
       }
-   }, [parent?.currentChild?.id]);
+   }, [parent.currentChild.id]);
 
    return (
       <ParentLayout>
@@ -60,21 +60,20 @@ const Dashboard = () => {
                <ContentBox size="base" title="Level" padding="small">
                   <h2 className="mt-14 text-center text-[22px] font-medium"></h2>
                   <React.Fragment>
-                     <p className="mt-2 text-center text-sm font-light">{parent?.currentChild?.progress?.title || ""}</p>
                      <div className="mt-6 ml-4">
                         <ProgressBar
                            color="red"
-                           percentage={Number(parent?.currentChild?.progress?.progress) || 0}
-                           title="Progress"
+                           percentage={Number(parent?.currentChild?.progress?.current?.progress) || 0}
+                           title={parent?.currentChild?.progress?.current?.title}
                            titleSize="base"
                         />
                         <div className="mt-8">
                            <h3 className="font-semibold">Comprehension Tracking</h3>
-                           {/* <div className="small-scroll-thumb blue-scroll-thumb mt-3 flex h-[70px] flex-col gap-5 overflow-y-auto pr-4">
-                                 {progress.assignment?.map(({ completed, title }) => (
-                                    <ProgressBar color="green" percentage={completed} title={title} titleSize="small" />
-                                 ))}
-                              </div> */}
+                           <div className="small-scroll-thumb blue-scroll-thumb mt-3 flex h-[70px] flex-col gap-5 overflow-y-auto pr-4">
+                              {parent.currentChild.progress?.topic?.map((lesson: any, index: number) => (
+                                 <ProgressBar key={index} color="green" percentage={lesson?.progress} title={lesson?.title} titleSize="small" />
+                              ))}
+                           </div>
                         </div>
                      </div>
                   </React.Fragment>
