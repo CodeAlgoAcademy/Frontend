@@ -67,6 +67,12 @@ const replyFriendRequest = async (data: { accepted: boolean; rejected: boolean }
    return response.data;
 };
 
+const getChildSkills = async (id: number) => {
+   const response = await http.get(`/parent/child/${id}/skills`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+
+   return response?.data;
+};
+
 const parentService = {
    addChild,
    addChildFriends,
@@ -74,6 +80,7 @@ const parentService = {
    updateChildScreentime,
    replyFriendRequest,
    getChildProgress,
+   getChildSkills,
 };
 
 export default parentService;

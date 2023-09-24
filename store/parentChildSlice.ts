@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import parentService from "services/parentChildService";
-import { IParentChild, IParentChildren, screentimeTypes } from "types/interfaces";
+import { IChildSkill, IParentChild, IParentChildren, screentimeTypes } from "types/interfaces";
 import { errorResolver } from "utils/errorResolver";
 import { closePreloader, openErrorModal, openPreloader } from "./fetchSlice";
 import { RootState } from "./store";
@@ -32,6 +32,7 @@ const initialState: IParentChildren = {
          level: 0,
          progress: 0,
       },
+      skills: [],
    },
    codingExperience: "experienced",
    id: "",
@@ -122,6 +123,20 @@ export const getChildProgress: any = createAsyncThunk("parent/child/progress", a
    }
 });
 
+export const getChildSkills: any = createAsyncThunk("/parent/child/skills", async (_, thunkApi) => {
+   const state = <RootState>thunkApi.getState();
+   const dispatch = thunkApi.dispatch;
+   const childId = <number>state.parentChild.currentChild.id;
+
+   try {
+      return await parentService.getChildSkills(childId);
+   } catch (error) {
+      error = errorResolver(error);
+
+      return thunkApi.rejectWithValue(error);
+   }
+});
+
 export const editScreentime: any = createAsyncThunk(
    "parent/child/edit-screentime",
    async ({ id, data }: { id: string | number; data: any }, thunkAPI) => {
@@ -207,6 +222,9 @@ export const parentSlice = createSlice({
       });
       builder.addCase(getChildProgress.fulfilled, (state, action) => {
          state.currentChild.progress = action.payload;
+      });
+      builder.addCase(getChildSkills.fulfilled, (state, action: PayloadAction<IChildSkill[]>) => {
+         state.currentChild.skills = action.payload;
       });
    },
 });
