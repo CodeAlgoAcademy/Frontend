@@ -1,11 +1,18 @@
 export type days = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
 
+export interface IChildSkill {
+   id: number;
+   title: string;
+   level: number;
+}
+
 export interface IParentChild {
    progress?: {
       title: string;
       level: 0;
       progress: number;
    };
+   skills?: IChildSkill[];
    // child: {
    username: string;
    fullName: string;

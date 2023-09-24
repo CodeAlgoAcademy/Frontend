@@ -6,9 +6,10 @@ import ProgressBar from "@/components/parents/UI/ProgressBar";
 import SkillBox from "@/components/parents/student/SkillBox";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getChildren, getChildProgress } from "store/parentChildSlice";
+import { getChildren, getChildProgress, getChildSkills } from "store/parentChildSlice";
 import { RootState } from "store/store";
 import { IParentChild, screentimeTypes } from "types/interfaces";
+import Skills from "@/components/parents/student/Skills";
 
 const Dashboard = () => {
    const dispatch = useDispatch();
@@ -79,16 +80,7 @@ const Dashboard = () => {
                   </React.Fragment>
                   {/* ))} */}
                </ContentBox>
-               <ContentBox size="base" title="Skills" padding="small">
-                  <div className="mt-14 grid grid-cols-2">
-                     <p className="text-center">Completed Skills</p>
-                     <p className="text-center">Currently Learning</p>
-                  </div>
-                  <div className="mt-2 grid h-full grid-cols-2 gap-5">
-                     <SkillBox></SkillBox>
-                     <SkillBox></SkillBox>
-                  </div>
-               </ContentBox>
+               <Skills size="base" />
                <ContentBox size="base" title="Screen Time" padding="large" showSublink={true} link="parents/screen-time">
                   <BarChart
                      data={timeLimits?.map((time) => {
