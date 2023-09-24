@@ -7,12 +7,8 @@ export interface IChildSkill {
 }
 
 export interface IParentChild {
-   progress?: {
-      title: string;
-      level: 0;
-      progress: number;
-   };
    skills?: IChildSkill[];
+   progress?: any;
    // child: {
    username: string;
    fullName: string;
