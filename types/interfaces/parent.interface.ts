@@ -13,6 +13,7 @@ export interface IChildProgress {
 }
 
 export interface IParentChild {
+   question_level?: number;
    skills?: IChildSkill[];
    progress?: {
       current: IChildProgress;
