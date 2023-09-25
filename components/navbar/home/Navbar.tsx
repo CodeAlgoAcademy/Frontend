@@ -14,9 +14,7 @@ const Navbar = () => {
          <div className={styles.container}>
             <div className={styles.mobilleHeader}>
                <Link href="/">
-                  <a>
-                     <Image alt="logo" src="/assets/CodeAlgo_Logo.png" className={styles.headerImage} width={110} height={55} />
-                  </a>
+                  <Image alt="logo" src="/assets/CodeAlgo_Logo.png" className={styles.headerImage} width={110} height={55} />
                </Link>
                <div className={styles.hamburgerContainer} onClick={() => setOpen(!open)}>
                   {open ? <IoCloseOutline /> : <GiHamburgerMenu />}

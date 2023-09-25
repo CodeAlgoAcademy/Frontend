@@ -66,7 +66,7 @@ const GeneralNav = () => {
    }, []);
 
    return (
-      <div className="flex items-center justify-between bg-white pt-6">
+      <div className="hidden items-center justify-between bg-white pt-6 w840:flex ">
          <div className="relative flex items-center gap-40">
             <div className="flex items-center gap-4">
                <Link href={`/teachers/addClass`}>
@@ -129,10 +129,11 @@ const GeneralNav = () => {
             <div
                className={
                   userDropDown
-                     ? `absolute right-[8rem] top-7 z-[50] w-[16rem] overflow-hidden rounded-[20px] border border-[#BDBDBD] bg-white px-4 py-[6px] ${
+                     ? `absolute top-[1.9rem] right-[2rem] z-[50] w-[16rem] overflow-hidden rounded-[20px] border border-[#BDBDBD] bg-white px-4 py-[6px] ${
                           settingsTabOpen ? "h-[18rem]" : "h-[10rem]"
                        } box-border duration-300 ease-in-out`
-                     : `absolute right-[8rem] top-7 box-border h-[3rem] min-w-fit rounded-[30px] border border-[#BDBDBD] bg-white px-2 py-[6px]  transition-[width]`
+                     : `box-border h-[3rem] min-w-fit rounded-[30px] border border-[#BDBDBD] bg-white px-2 py-[6px]  transition-[width]` +
+                       " mr-[2rem]"
                }
             >
                <div className="flex items-center justify-between">
