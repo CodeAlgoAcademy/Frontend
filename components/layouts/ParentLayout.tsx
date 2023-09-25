@@ -252,8 +252,17 @@ const ParentLayout = ({ children }: Props) => {
                         }}
                         data-testid="select-child"
                      >
-                        <h1 className="do-not-select text-3xl font-semibold capitalize text-[#2073FA]">{parent?.currentChild?.fullName}</h1>
-                        <svg xmlns="http://www.w3.org/2000/svg" className="do-not-select" width="18" height="10" viewBox="0 0 18 10" fill="none">
+                        <h1 className="do-not-select cursor-pointer text-3xl font-semibold capitalize text-[#2073FA]">
+                           {parent?.currentChild?.fullName}
+                        </h1>
+                        <svg
+                           xmlns="http://www.w3.org/2000/svg"
+                           className="do-not-select cursor-pointer"
+                           width="18"
+                           height="10"
+                           viewBox="0 0 18 10"
+                           fill="none"
+                        >
                            <path
                               d="M1.7998 1.25L9.2998 8.75L16.7998 1.25"
                               stroke="#2073FA"

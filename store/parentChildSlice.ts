@@ -27,10 +27,14 @@ const initialState: IParentChildren = {
          { dayOfTheWeek: "Saturday", timeLimit: "" },
          { dayOfTheWeek: "Sunday", timeLimit: "" },
       ],
+      level: 0,
       progress: {
-         title: "",
-         level: 0,
-         progress: 0,
+         current: {
+            title: "",
+            level: 0,
+            progress: 0,
+         },
+         topic: [],
       },
       skills: [],
    },
@@ -213,9 +217,13 @@ export const parentSlice = createSlice({
       builder.addCase(getChildren.fulfilled, (state, action: PayloadAction<IParentChild[]>) => {
          state.children = action.payload;
          // if its another parent child or if it's the first time fetching the students, set them to first parent child else find the student id, (incase of updates!)
-         const child = action.payload?.find((student) => student?.id === state.currentChild?.id) as IParentChild;
+         let child = action.payload?.find((student) => student?.id === state.currentChild?.id) as IParentChild;
+
          if (child) {
-            state.currentChild = child;
+            // do not update skills and progress since they're fetched seperately
+            const { progress, skills, ...rest } = child;
+            child = rest;
+            state.currentChild = { ...state.currentChild, ...child };
          } else {
             state.currentChild = action.payload?.[0];
          }
