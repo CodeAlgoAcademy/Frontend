@@ -42,7 +42,7 @@ const Screentime = ({ size }: ScreentimeProps) => {
       >
          <BarChart
             data={timeLimits?.map((time) => {
-               return  "No Limit" ? 8 : (time.timeLimit as number);
+               return "No Limit" ? 8 : (time.timeLimit as number);
             })}
             barSpace={9.6}
             barWidth={3.3}
