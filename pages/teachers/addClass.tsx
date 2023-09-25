@@ -10,13 +10,11 @@ import { RootState } from "store/store";
 
 const AddClass = () => {
    const dispatch = useDispatch();
-   const { allClasses } = useSelector((state: RootState) => state);
 
    const getClass = async () => {
-      const data = await dispatch(getAllClasses());
-      if (!data?.error?.message) {
-      }
+      await dispatch(getAllClasses());
    };
+
    useEffect(() => {
       getClass();
       dispatch(closeAddClassModal());

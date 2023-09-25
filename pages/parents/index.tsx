@@ -52,7 +52,7 @@ const Dashboard = () => {
    return (
       <ParentLayout>
          <div className="relative bottom-14 mb-[-120px] scale-90 overflow-x-auto sm:bottom-0 sm:mb-0 sm:scale-100">
-            <div className=" mb-6 grid max-w-fit grid-cols-1 justify-center gap-x-6 gap-y-8 lg:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4">
+            <div className=" mb-6 grid max-w-fit grid-cols-1 justify-start gap-x-6 gap-y-8 lg:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4">
                <Level size="base" />
                <Skills size="base" />
                <Screentime size="base" />

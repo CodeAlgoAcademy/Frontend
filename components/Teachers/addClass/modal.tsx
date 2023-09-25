@@ -12,6 +12,7 @@ const Modal = () => {
    const { addClassModalOpen, showAddStudents } = useSelector((state: RootState) => state.modal);
    const { color } = useSelector((state: RootState) => state.addClass.class);
    const dispatch = useDispatch();
+
    useEffect(() => {
       dispatch(addFile({}));
    }, [dispatch]);

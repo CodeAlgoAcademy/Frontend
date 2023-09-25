@@ -18,31 +18,28 @@ import { addClass, getAllClasses } from "services/classesService";
 import SelectOrganization from "./organizations";
 import { getOrgIBelongTo } from "services/organizersService";
 
+const inputFields: IInputFields[] = [
+   {
+      type: "text",
+      name: "className",
+      placeholder: "Enter Class Name*",
+   },
+   {
+      type: "text",
+      name: "subject",
+      placeholder: "Enter Subject*",
+   },
+   {
+      type: "text",
+      name: "roomNumber",
+      placeholder: "Enter Room Number*",
+   },
+];
+
 const CreateClass = () => {
    const dispatch = useDispatch();
    const { colorsModalOpen, selectOrganizationOpen } = useSelector((state: RootState) => state.modal);
-   const { className, subject, roomNumber, coTeachers, grade, color, organization } = useSelector((state: RootState) => state.addClass.class);
-
-   const inputFields: IInputFields[] = [
-      {
-         type: "text",
-         name: "className",
-         placeholder: "Enter Class Name*",
-         value: className,
-      },
-      {
-         type: "text",
-         name: "subject",
-         placeholder: "Enter Subject*",
-         value: subject,
-      },
-      {
-         type: "text",
-         name: "roomNumber",
-         placeholder: "Enter Room Number*",
-         value: roomNumber,
-      },
-   ];
+   const classInfo = useSelector((state: RootState) => state.addClass.class);
 
    const handleSubmit = async (event: ChangeEvent<HTMLFormElement>) => {
       event.preventDefault();
@@ -74,7 +71,7 @@ const CreateClass = () => {
                      name={name}
                      type={type}
                      placeholder={placeholder}
-                     value={value}
+                     value={classInfo[name as keyof typeof classInfo]}
                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
                         dispatch(updateClassDetails({ key: name, value: e.target.value }));
                      }}
@@ -90,7 +87,7 @@ const CreateClass = () => {
                   dispatch(openGradesModal());
                }}
             >
-               <p>{grade}</p>
+               <p>{classInfo?.grade}</p>
                <span>
                   <FaChevronDown />
                </span>
@@ -103,7 +100,7 @@ const CreateClass = () => {
                      dispatch(toggleSelectOrg());
                   }}
                >
-                  <p>{organization || "Select Organization"}</p>
+                  <p>{classInfo?.organization || "Select Organization"}</p>
                   <span>
                      <FaChevronDown />
                   </span>
@@ -118,7 +115,7 @@ const CreateClass = () => {
                   }}
                   data-testid="color-modal-controller"
                >
-                  <span className={`h-[38px] w-[38px] rounded-full`} style={{ backgroundColor: color }}></span>
+                  <span className={`h-[38px] w-[38px] rounded-full`} style={{ backgroundColor: classInfo?.color }}></span>
                   <i className="pr-1">
                      <FaChevronDown />
                   </i>
