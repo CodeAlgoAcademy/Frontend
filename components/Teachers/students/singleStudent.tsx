@@ -143,15 +143,7 @@ const SingleStudent = ({
                         placeholder="Enter Lastname*"
                         onChange={updateEditingDetails}
                      />
-                     <input
-                        value={editingStudentDetails.email}
-                        type="email"
-                        className={styles.input}
-                        name="email"
-                        required
-                        placeholder="Enter email*"
-                        onChange={updateEditingDetails}
-                     />
+
                      <button type="submit" className="mt-3 w-full rounded-md bg-[#2073fa] p-3 text-white active:scale-[0.98]">
                         Edit Student Details
                      </button>

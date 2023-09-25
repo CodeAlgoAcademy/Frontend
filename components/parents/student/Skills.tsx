@@ -41,12 +41,11 @@ const Skills = ({ size }: ISkillProps) => {
                   );
                })}
 
-               {!parent?.currentChild?.skills ||
-                  (parent?.currentChild?.skills?.length == 0 && (
-                     <div className="flex h-full items-center justify-center text-center text-[1.2rem]">
-                        <p>{parent?.currentChild?.fullName} has not completed any skill</p>
-                     </div>
-                  ))}
+               {(!parent?.currentChild?.skills || parent?.currentChild?.skills?.length == 0) && (
+                  <div className="flex h-full items-center justify-center text-center text-[1.2rem]">
+                     <p>{parent?.currentChild?.fullName} has not completed any skill</p>
+                  </div>
+               )}
             </SkillBox>
             <SkillBox>{/* for currently learning */}</SkillBox>
          </div>

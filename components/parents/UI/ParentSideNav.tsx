@@ -12,7 +12,7 @@ import { GiHelp } from "react-icons/gi";
 
 const SideNav = ({ unread }: { unread: number }) => {
    return (
-      <div className="parent-sidenav sticky top-[-5.5rem] mr-[4%] mt-3 hidden h-full min-w-[240px] flex-auto flex-col gap-4 xl:flex">
+      <div className="parent-sidenav fixed left-0 top-0 mr-[4%] mt-3 hidden h-screen w-[250px] flex-auto flex-col gap-4 p-[1rem] xl:flex">
          <div className="mx-auto max-w-fit">
             <Image src={"/assets/CodeAlgo_Logo.png"} className="h-9 md:cursor-pointer" alt="logo" loading="lazy" width={110} height={55} />
          </div>
