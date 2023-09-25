@@ -7,7 +7,7 @@ export interface IInputFields {
    type: string;
    placeholder: string;
    name: string;
-   value: string | number;
+   value?: string | number;
    required?: boolean;
 }
 

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { motion, useMotionValue, animate } from "framer-motion";
+import ContentBox from "../UI/ContentBox";
 
 interface Props {}
 
@@ -168,7 +169,7 @@ const RecentInteraction = ({}: Props) => {
       setSliceEnd(() => recentIndex * 3 + 3);
    }, [recentIndex]);
    return (
-      <>
+      <ContentBox size="base" title="Multiplayer" padding="large" showSublink={true} link="parents/multiplayer">
          <p className="text-sm font-light">Recent interactions (last 30 days)</p>
          <p className="grid h-40 place-content-center text-2xl italic text-slate-400">Coming soon...</p>
          {/* UNCOMMENT BLOCK OF CODE WHEN NECESSARY DETAILS ARE READY */}
@@ -226,7 +227,7 @@ const RecentInteraction = ({}: Props) => {
                />
             </svg>
          )} */}
-      </>
+      </ContentBox>
    );
 };
 
