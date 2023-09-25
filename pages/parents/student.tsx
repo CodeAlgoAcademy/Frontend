@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
 import NoChild from "@/components/parents/UI/NoChild";
 import Skills from "@/components/parents/student/Skills";
+import Level from "@/components/parents/student/Level";
+import StudentProfile from "@/components/parents/student/StudentProfile";
 
 const Student = () => {
    const dispatch = useDispatch();
@@ -35,22 +37,9 @@ const Student = () => {
             </div>
          </div>
          <div className="relative bottom-14 mb-[-120px] scale-90 overflow-x-auto sm:bottom-0 sm:mb-0 sm:scale-100">
+            <StudentProfile />
             <div className=" mb-6 flex w-full flex-col gap-y-8">
-               <ContentBox size="large" title="Level" padding="small" style={{ minWidth: "100%", maxWidth: "100%" }}>
-                  <h2 className="mt-14 text-center text-[22px] font-medium">Level </h2>
-                  <p className="mt-2 text-center text-sm font-light"></p>
-                  <div className="mt-6 ml-4">
-                     <ProgressBar color="red" percentage={0} title="Progress" titleSize="base" />
-                     <div className="mt-8">
-                        <h3 className="font-semibold">Comprehension Tracking</h3>
-                        <div className="small-scroll-thumb blue-scroll-thumb mt-3 flex h-[70px] flex-col gap-5 overflow-y-auto pr-4">
-                           <ProgressBar color="green" percentage={0} title="Syntax" titleSize="small" />
-                           <ProgressBar color="green" percentage={0} title="Variables" titleSize="small" />
-                           <ProgressBar color="green" percentage={0} title="Variables" titleSize="small" />
-                        </div>
-                     </div>
-                  </div>
-               </ContentBox>
+               <Level size="large" />
                <Skills size="large" />
             </div>
          </div>

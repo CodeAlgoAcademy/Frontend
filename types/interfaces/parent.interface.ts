@@ -6,13 +6,21 @@ export interface IChildSkill {
    level: number;
 }
 
+export interface IChildProgress {
+   title: string;
+   level: number;
+   progress: number;
+}
+
 export interface IParentChild {
    skills?: IChildSkill[];
-   progress?: any;
-   // child: {
+   progress?: {
+      current: IChildProgress;
+      topic: IChildProgress[];
+   };
+   level?: number;
    username: string;
    fullName: string;
-
    codingExperience: string;
    dob: string;
    password: string;
