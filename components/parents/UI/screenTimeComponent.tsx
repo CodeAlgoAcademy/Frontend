@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { screentimeTypes } from "types/interfaces";
 
-const hours: Array<number | "No Limit"> = [0, 1, 2, 3, 4, 5, 6, 7, 8, "No Limit"];
+const hours: Array<number | "No Limit"> = ["No Limit", 0, 1, 2, 3, 4, 5, 6, 7, 8];
 
 const ScreenTimeComponent = ({
    time,
