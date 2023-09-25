@@ -5,6 +5,7 @@ import { screentimeTypes } from "types/interfaces";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { changeTimeLimit } from "utils/timelimit";
+import { useRouter } from "next/router";
 
 interface ScreentimeProps {
    size: "large" | "base";
@@ -12,6 +13,7 @@ interface ScreentimeProps {
 
 const Screentime = ({ size }: ScreentimeProps) => {
    const { currentChild } = useSelector((state: RootState) => state.parentChild);
+   const router = useRouter();
 
    const [timeLimits, setTimeLimits] = useState<screentimeTypes[]>([
       { id: 1, dayOfTheWeek: "Monday", timeLimit: 0 },
@@ -30,7 +32,14 @@ const Screentime = ({ size }: ScreentimeProps) => {
    }, [currentChild, currentChild?.timeLimits]);
 
    return (
-      <ContentBox size={size} title="Screen Time" padding="large" style={{ minWidth: "100%", maxWidth: "100%" }}>
+      <ContentBox
+         size={size}
+         title="Screen Time"
+         padding="large"
+         showSublink={router.pathname === "/parents"}
+         link={"/parents/multiplayer"}
+         style={{ minWidth: "100%", maxWidth: "100%" }}
+      >
          <BarChart
             data={timeLimits?.map((time) => {
                return time.timeLimit === "No Limit" ? 8 : (time.timeLimit as number);

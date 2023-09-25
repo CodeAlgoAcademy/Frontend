@@ -19,11 +19,10 @@ const ContentBox = ({ children, title, subtitle, showSublink, padding, size, lin
          style={{ width: size === "large" ? "100%" : "auto" }}
       >
          <div
-            className="relative min-h-[340px] w-full min-w-[390px] max-w-fit rounded-2xl bg-white py-6 xl:min-w-[390px]"
+            className="relative min-h-[340px] w-full min-w-full  max-w-fit rounded-2xl bg-white py-6 xl:min-w-full"
             style={{
                paddingLeft: padding === "small" ? "24px" : "44px",
                paddingRight: padding === "small" ? "24px" : "44px",
-               width: size === "large" ? "100%" : "416px",
                ...style,
             }}
          >
