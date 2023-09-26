@@ -25,7 +25,7 @@ const AddChildModal = () => {
       <main className="fixed top-0 left-0 z-[6] flex min-h-screen w-full items-center justify-center bg-[rgba(0,0,0,0.5)]">
          <div className="z-20 w-[92vw] max-w-[900px] rounded-md bg-white p-8" data-testid="add-child-modal">
             <header className="flex items-center justify-between">
-               <h2 className="text-[1.1rem] font-bold text-[#2073fa]">Add Child</h2>
+               <h2 className="text-mainColor text-[1.1rem] font-bold">Add Child</h2>
                <i
                   className="text-[22px] font-bold text-red-600"
                   onClick={() => {
@@ -120,7 +120,7 @@ const AddChildModal = () => {
                      </select>
                   </div>
                </div>
-               <button className={`${styles.input} mt-4 block w-full bg-[#2073fa] text-white`}>Add Child</button>
+               <button className={`${styles.input} bg-mainColor mt-4 block w-full text-white`}>Add Child</button>
             </form>
          </div>
       </main>
@@ -128,7 +128,7 @@ const AddChildModal = () => {
 };
 
 const styles = {
-   input: "w-full rounded-md border-[1.5px] px-4 py-2 placeholder:text-gray-800 outline-0 focus:border-[#2073fa]",
+   input: "w-full rounded-md border-[1.5px] px-4 py-2 placeholder:text-gray-800 outline-0 focus:border-mainColor",
 };
 
 export default AddChildModal;

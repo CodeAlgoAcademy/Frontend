@@ -20,7 +20,7 @@ const OrganizationUsers = () => {
                return (
                   <div className="mb-1 flex items-center justify-between gap-[1rem]" key={index}>
                      <p className="font-bold capitalize">{user?.user}</p>
-                     <p className="text-[#2073fa]">Parent</p>
+                     <p className="text-mainColor">Parent</p>
                   </div>
                );
             })}

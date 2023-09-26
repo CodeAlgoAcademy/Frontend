@@ -94,7 +94,7 @@ const Payment = () => {
                   <div className="mt-8 flex justify-end gap-3">
                      <button className="w-[100px] rounded-[4px] border border-black bg-white   px-4 py-2 text-xs text-black">Cancel</button>
                      <button
-                        className="w-[100px] rounded-[4px]   bg-[#2073FA] px-4 py-2 text-xs text-white"
+                        className="bg-mainColor w-[100px]   rounded-[4px] px-4 py-2 text-xs text-white"
                         onClick={() => {
                            setConfirmationModalOpen(true);
                         }}

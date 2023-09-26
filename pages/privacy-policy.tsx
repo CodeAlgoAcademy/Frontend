@@ -47,7 +47,7 @@ const PrivacyPolicy = () => {
                <div className="h-[60px] w-[60px]">
                   <Image src="/assets/Coffee cup.png" width={"60px"} height={"60px"} alt="" />
                </div>
-               <h1 className="text-[28px] font-bold text-[#2073fa]">CodeAlgo Academy Privacy Policy</h1>
+               <h1 className="text-mainColor text-[28px] font-bold">CodeAlgo Academy Privacy Policy</h1>
             </header>
             <div className="mt-[25px]">
                <p>
@@ -328,10 +328,10 @@ You will be able to access premium features for your child’s account for the p
             <p>720 Main St, Kansas City, MO 64105</p>
 
             <div className="mt-10 flex space-x-10">
-               <button className="bg-[#2073fa] py-4 px-12 text-white" onClick={handleAccept}>
+               <button className="bg-mainColor py-4 px-12 text-white" onClick={handleAccept}>
                   Accept
                </button>
-               <button className="bg-[#2073fa] py-4 px-12 text-white" onClick={handleReject}>
+               <button className="bg-mainColor py-4 px-12 text-white" onClick={handleReject}>
                   Reject
                </button>
             </div>

@@ -59,7 +59,7 @@ const CreateClass = () => {
    return (
       <form className="h-full flex-[0.9] p-8" onSubmit={handleSubmit}>
          <header className="mb-6 w-full">
-            <h1 className="text-[20px] font-bold text-[#2073fa] md:text-[30px]">Create New Class</h1>
+            <h1 className="text-mainColor text-[20px] font-bold md:text-[30px]">Create New Class</h1>
          </header>
          <section className="grid items-start gap-[1rem] md:grid-cols-2">
             {inputFields?.map((inputField: IInputFields, index: number) => {
@@ -153,7 +153,7 @@ const CreateClass = () => {
                </span>
                <h3 className="text-[16px] font-bold">Add New Student</h3>
             </div>
-            <button type="submit" className="w-[150px] rounded-[30px] bg-[#2073fa] py-3 text-[16px] text-white hover:shadow-md">
+            <button type="submit" className="bg-mainColor w-[150px] rounded-[30px] py-3 text-[16px] text-white hover:shadow-md">
                Create
             </button>
          </section>

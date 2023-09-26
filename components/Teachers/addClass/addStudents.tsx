@@ -107,7 +107,7 @@ const AddStudents = () => {
             })}
             <button
                type="button"
-               className=" rounded-md bg-[#2073fa] px-2 py-3 text-white shadow-md active:scale-[0.91]"
+               className=" bg-mainColor rounded-md px-2 py-3 text-white shadow-md active:scale-[0.91]"
                onClick={() => {
                   if (firstName || lastName) {
                      const randomName = generateUsername(firstName, lastName);
@@ -152,7 +152,7 @@ const AddStudents = () => {
                   <h3 className="text-[16px] font-bold">{file ? "File Added, click add student button to finish class upload" : "Bulk Import"}</h3>
                </label>
             </div>
-            <button className="min-w-[150px] rounded-[30px] bg-[#2073fa] py-3 px-4 text-[16px] text-white hover:shadow-md">Add Student(s)</button>
+            <button className="bg-mainColor min-w-[150px] rounded-[30px] py-3 px-4 text-[16px] text-white hover:shadow-md">Add Student(s)</button>
          </section>
          {file && (
             <div className="mt-2 w-full px-8">

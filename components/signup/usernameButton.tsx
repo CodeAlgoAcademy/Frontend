@@ -9,7 +9,7 @@ const UsernameButton = () => {
    return (
       <button
          type="button"
-         className="mt-3 w-full rounded-md bg-[#2073fa] p-2 text-white shadow-md active:scale-[0.91]"
+         className="bg-mainColor mt-3 w-full rounded-md p-2 text-white shadow-md active:scale-[0.91]"
          onClick={() => {
             if (firstname || lastname) {
                const randomName = generateUsername(firstname, lastname);

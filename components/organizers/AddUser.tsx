@@ -55,7 +55,7 @@ const AddUser = () => {
                      onClick={() => {
                         setDropdownOpen((prev) => !prev);
                      }}
-                     className="flex cursor-pointer items-center justify-between gap-[0.8rem] rounded-md border-2 border-[#2073fa] px-3 py-2"
+                     className="border-mainColor flex cursor-pointer items-center justify-between gap-[0.8rem] rounded-md border-2 px-3 py-2"
                   >
                      <p>{role?.name}</p>
                      <i className="text-[1.5rem]">{dropdownOpen ? <BiChevronUp /> : <BiChevronDown />}</i>
@@ -92,8 +92,8 @@ const AddUser = () => {
 };
 
 const style = {
-   input: `px-3 py-[10px] border-b-[2px] outline-none w-full bg-transparent border-b-[#333] text-[#333] placeholder:text-[#333] focus:border-b-[#2073fa] transition-all duration-300`,
-   button: "mt-8 ml-auto block min-w-[150px] max-w-[150px] rounded-md bg-[#2073fa] p-2 text-white",
+   input: `px-3 py-[10px] border-b-[2px] outline-none w-full bg-transparent border-b-[#333] text-[#333] placeholder:text-[#333] focus:border-b-mainColor transition-all duration-300`,
+   button: "mt-8 ml-auto block min-w-[150px] max-w-[150px] rounded-md bg-mainColor p-2 text-white",
    dropdownHeader: "",
 };
 

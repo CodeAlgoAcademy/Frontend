@@ -122,8 +122,7 @@ export const getChildProgress: any = createAsyncThunk("parent/child/progress", a
    try {
       return await parentService.getChildProgress(state.parentChild.currentChild.id);
    } catch (error: any) {
-      const errorMessage = errorResolver(error);
-      return thunkAPI.rejectWithValue(errorMessage);
+      return thunkAPI.rejectWithValue(error.response.data);
    }
 });
 
@@ -134,10 +133,8 @@ export const getChildSkills: any = createAsyncThunk("/parent/child/skills", asyn
 
    try {
       return await parentService.getChildSkills(childId);
-   } catch (error) {
-      error = errorResolver(error);
-
-      return thunkApi.rejectWithValue(error);
+   } catch (error: any) {
+      return thunkApi.rejectWithValue(error.response.data);
    }
 });
 

@@ -15,7 +15,7 @@ const MyOrganizations = () => {
                return (
                   <article key={index} className="flex items-center justify-between gap-x-2 p-2">
                      <div className="flex items-center gap-x-2 ">
-                        <span className="text-[0.8rem] text-[#2073FA]">
+                        <span className="text-mainColor text-[0.8rem]">
                            <SlOrganization />
                         </span>
                         <p className="font-lighter text-[12px]">{org.name}</p>

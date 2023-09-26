@@ -17,7 +17,7 @@ const AddAFriend = () => {
             <h2 className="text-[15px] font-bold">Friend email or username</h2>
             <input
                type="text"
-               className="mb-5 w-full max-w-[400px] rounded-xl border-2 px-3 py-1 text-[15px] outline-none placeholder:text-gray-500 focus:border-[#2073FA]"
+               className="focus:border-mainColor mb-5 w-full max-w-[400px] rounded-xl border-2 px-3 py-1 text-[15px] outline-none placeholder:text-gray-500"
                placeholder="hank45"
                value={friend}
                onChange={(e) => {
@@ -31,7 +31,7 @@ const AddAFriend = () => {
                      await dispatch(getChildren());
                   }
                }}
-               className="mb-4 w-full max-w-[400px] rounded-xl bg-[#2073fa] py-1 px-3 font-light text-white"
+               className="bg-mainColor mb-4 w-full max-w-[400px] rounded-xl py-1 px-3 font-light text-white"
             >
                Send Request
             </button>
