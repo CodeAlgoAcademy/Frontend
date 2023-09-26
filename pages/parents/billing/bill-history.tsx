@@ -174,7 +174,7 @@ const BillHistory = () => {
                      </div>
                      <div>
                         <p className="flex w-fit items-center gap-2 rounded-xl border border-[#111111] px-2 py-[2px]  text-[8px] ">Default</p>
-                        <button className="mt-4 rounded-[4px] bg-[#2073FA] px-4 py-1 text-[10px] text-white">Edit</button>
+                        <button className="bg-mainColor mt-4 rounded-[4px] px-4 py-1 text-[10px] text-white">Edit</button>
                      </div>
                   </div>
                </div>

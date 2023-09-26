@@ -18,14 +18,14 @@ const DashboardBox = ({ children, title, showSublink, padding }: Props) => {
             }}
          >
             <div className="absolute top-9 left-11">
-               <h1 className="text-[1.3rem] font-semibold text-[#2073FA]" data-testid={title}>
+               <h1 className="text-mainColor text-[1.3rem] font-semibold" data-testid={title}>
                   {title}
                </h1>
             </div>
             {children}
          </div>
          {showSublink && (
-            <span className="mt-3 ml-auto block w-fit cursor-pointer text-sm font-light underline hover:text-[#2073FA]">Edit {title} Settings</span>
+            <span className="hover:text-mainColor mt-3 ml-auto block w-fit cursor-pointer text-sm font-light underline">Edit {title} Settings</span>
          )}
       </div>
    );

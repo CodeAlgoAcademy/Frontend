@@ -46,7 +46,7 @@ const BulkImportModal = ({ setBulkImportModalOpen }: { setBulkImportModalOpen: D
                   onClick={() => {
                      setBulkImportModalOpen(false);
                   }}
-                  className="mt-4 min-w-[150px] rounded-full bg-[#2073fa] p-3 text-white"
+                  className="bg-mainColor mt-4 min-w-[150px] rounded-full p-3 text-white"
                >
                   Got it!
                </button>

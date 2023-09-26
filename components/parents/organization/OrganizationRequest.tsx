@@ -31,7 +31,7 @@ const OrganizationRequest = () => {
                         </span>
                         <div className="flex items-center gap-x-2">
                            <i
-                              className="cursor-pointer text-[12px] text-[#2073FA] underline"
+                              className="text-mainColor cursor-pointer text-[12px] underline"
                               onClick={async () => {
                                  submit(acceptOrgRequest(invite.id));
                               }}
@@ -39,7 +39,7 @@ const OrganizationRequest = () => {
                               Accept
                            </i>
                            <i
-                              className="cursor-pointer text-[12px] text-[#2073FA] underline"
+                              className="text-mainColor cursor-pointer text-[12px] underline"
                               onClick={async () => {
                                  submit(declineOrgRequest(invite.id));
                               }}

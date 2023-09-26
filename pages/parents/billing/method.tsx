@@ -14,19 +14,19 @@ const Method = () => {
             <h4 className="border-b border-[#C5C5C5] pb-2 text-lg font-[600]">Select a Convenient Payment Method</h4>
             <div className="mt-10 flex flex-wrap items-center gap-4">
                <Link href="/parents/billing/payment">
-                  <div className="flex h-[145px] w-[169px] flex-col items-center justify-center gap-6 rounded-md  border border-[#C5C5C5]  text-black hover:bg-[#2073FA] hover:text-white">
+                  <div className="hover:bg-mainColor flex h-[145px] w-[169px] flex-col items-center justify-center gap-6  rounded-md border  border-[#C5C5C5] text-black hover:text-white">
                      <Image height={42} width={80} src="/assets/Master.png" alt="master" />
                      <p>Credit Card</p>
                   </div>
                </Link>
                <Link href={"/parents/billing/paypal-detail"}>
-                  <div className="flex h-[145px] w-[169px] flex-col items-center justify-center gap-6 rounded-md  border border-[#C5C5C5] text-black hover:bg-[#2073FA] hover:text-white">
+                  <div className="hover:bg-mainColor flex h-[145px] w-[169px] flex-col items-center justify-center gap-6  rounded-md border border-[#C5C5C5] text-black hover:text-white">
                      <Image height={42} width={80} src="/assets/Paypal.png" alt="master" />
                      <p>Paypal</p>
                   </div>
                </Link>
                <Link href="/parents/billing/googlepay-detail">
-                  <div className="flex h-[145px] w-[169px] flex-col items-center justify-center gap-6 rounded-md border border-[#C5C5C5]  text-black hover:bg-[#2073FA] hover:text-white">
+                  <div className="hover:bg-mainColor flex h-[145px] w-[169px] flex-col items-center justify-center gap-6 rounded-md border  border-[#C5C5C5] text-black hover:text-white">
                      <Image height={42} width={80} src="/assets/Googlep.png" alt="master" />
                      <p>Google Pay</p>
                   </div>
