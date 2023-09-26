@@ -136,7 +136,7 @@ export default function Unit() {
                <section className="fixed top-0 left-0 z-20 flex min-h-screen w-full items-center justify-center bg-[rgba(0,0,0,0.6)]">
                   <div className="max-h-[90vh] w-[90vw] max-w-[700px] overflow-hidden overflow-y-scroll rounded-md bg-white p-8 shadow-md">
                      <header className="mb-6 flex w-full items-center justify-between">
-                        <h1 className="text-[26px] font-bold text-[#2073fa]">Add Lesson</h1>
+                        <h1 className="text-mainColor text-[26px] font-bold">Add Lesson</h1>
                         <span
                            className="text-[22px] text-[darkRed]"
                            onClick={() => {
@@ -150,7 +150,7 @@ export default function Unit() {
                         <div className="mb-4 w-full">
                            <input
                               type="text"
-                              className="w-full rounded-md border-2 p-3 outline-none focus:border-[#2073fa]"
+                              className="focus:border-mainColor w-full rounded-md border-2 p-3 outline-none"
                               placeholder="Enter Lesson Title*"
                               required
                               value={lessonDetails.topic.title}
@@ -161,7 +161,7 @@ export default function Unit() {
                         </div>
                         <div className="mb-4 w-full">
                            <textarea
-                              className="h-[200px] w-full resize-none rounded-md border-2 p-3 outline-none focus:border-[#2073fa]"
+                              className="focus:border-mainColor h-[200px] w-full resize-none rounded-md border-2 p-3 outline-none"
                               required
                               placeholder="Enter Lesson Description*"
                               value={lessonDetails.topic.description}
@@ -171,7 +171,7 @@ export default function Unit() {
                            ></textarea>
                         </div>
                         <div className="mb-2 w-full gap-4 text-center">
-                           <h1 className="text-center font-bold text-[#2073fa]">Status</h1>
+                           <h1 className="text-mainColor text-center font-bold">Status</h1>
                         </div>
                         <div className="mb-4 flex gap-5">
                            <div className="w-full">
@@ -201,13 +201,13 @@ export default function Unit() {
                         </div>
                         <div className="flex flex-col gap-4 md:flex-row">
                            <div className="flex w-full flex-col gap-y-2">
-                              <label htmlFor="start_date" className="font-bold text-[#2073fa]">
+                              <label htmlFor="start_date" className="text-mainColor font-bold">
                                  Start Date*
                               </label>
                               <input
                                  type="date"
                                  id="start_date"
-                                 className="w-full rounded-md border-2 p-3 outline-none focus:border-[#2073fa]"
+                                 className="focus:border-mainColor w-full rounded-md border-2 p-3 outline-none"
                                  value={lessonDetails.start_date}
                                  onChange={(e) => {
                                     updateStartDate(e.target.value);
@@ -216,13 +216,13 @@ export default function Unit() {
                               />
                            </div>
                            <div className="flex w-full flex-col gap-y-2">
-                              <label htmlFor="end_date" className="font-bold text-[#2073fa]">
+                              <label htmlFor="end_date" className="text-mainColor font-bold">
                                  End Date*
                               </label>
                               <input
                                  type="date"
                                  id="end_date"
-                                 className="w-full rounded-md border-2 p-3 outline-none focus:border-[#2073fa]"
+                                 className="focus:border-mainColor w-full rounded-md border-2 p-3 outline-none"
                                  value={lessonDetails.end_date}
                                  onChange={(e) => {
                                     updateEndDate(e.target.value);
@@ -231,7 +231,7 @@ export default function Unit() {
                               />
                            </div>
                         </div>
-                        <button type="submit" className="mt-4 w-full rounded-md bg-[#2073fa] p-3 text-center text-white">
+                        <button type="submit" className="bg-mainColor mt-4 w-full rounded-md p-3 text-center text-white">
                            Add Lesson
                         </button>
                      </form>
@@ -241,17 +241,17 @@ export default function Unit() {
             <div className="flex flex-1 flex-col justify-between gap-2 sm:flex-row sm:items-center">
                <div className="flex flex-row items-center gap-x-2">
                   <Link href="/teachers/curriculum">
-                     <div className="cursor-pointer text-[1.2rem] text-[#2073fa] md:text-[1.4rem]">
+                     <div className="text-mainColor cursor-pointer text-[1.2rem] md:text-[1.4rem]">
                         <i>
                            <BiArrowBack />
                         </i>
                      </div>
                   </Link>
-                  <h1 className="text-[22px] font-bold text-[#2073fa] md:text-3xl">{topics}</h1>
+                  <h1 className="text-mainColor text-[22px] font-bold md:text-3xl">{topics}</h1>
                </div>
                <div className="flex flex-wrap items-center gap-2 md:flex-nowrap">
                   <div
-                     className="flex cursor-pointer items-center gap-2 rounded-lg px-2 text-[#2073fa] hover:bg-gray-50"
+                     className="text-mainColor flex cursor-pointer items-center gap-2 rounded-lg px-2 hover:bg-gray-50"
                      onClick={() => {
                         setAddLessonModalOpen(true);
                      }}
@@ -260,7 +260,7 @@ export default function Unit() {
                      <h1 className="text-[1.2rem]">Add Lesson</h1>
                   </div>
                   <Link href="/teachers/curriculum/assignments">
-                     <div className="flex cursor-pointer items-center gap-2 rounded-lg px-2 text-[#2073fa] hover:bg-gray-50">
+                     <div className="text-mainColor flex cursor-pointer items-center gap-2 rounded-lg px-2 hover:bg-gray-50">
                         <IoIosAddCircleOutline className="text-4xl " />
                         <h1 className="text-[1.2rem]">Add Assignment</h1>
                      </div>
@@ -269,7 +269,7 @@ export default function Unit() {
             </div>
          </div>
          <div className="mb-[1.5rem] mt-7 border-b-[1.3px] border-[#BDBDBD] pl-[1.5rem] pb-3 md:mb-[3rem]">
-            <h2 className="text-[1.2rem] font-bold text-[#2073fa] md:text-[1.4rem]">Unit Control</h2>
+            <h2 className="text-mainColor text-[1.2rem] font-bold md:text-[1.4rem]">Unit Control</h2>
          </div>
          {/* curriculumn topic section */}
 

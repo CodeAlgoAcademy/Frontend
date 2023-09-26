@@ -27,7 +27,7 @@ const ContentBox = ({ children, title, subtitle, showSublink, padding, size, lin
             }}
          >
             <div className="mb-[1rem]">
-               <h1 className="text-2xl font-semibold text-[#2073FA]">{title}</h1>
+               <h1 className="text-mainColor text-2xl font-semibold">{title}</h1>
                {subtitle && <p className="text-[14px]">{subtitle}</p>}
             </div>
             {children}
@@ -35,7 +35,7 @@ const ContentBox = ({ children, title, subtitle, showSublink, padding, size, lin
          <div className="mb-3 sm:mb-0">
             {showSublink && (
                <Link href={`${link}`}>
-                  <span className="mt-3 ml-auto block w-fit cursor-pointer text-sm font-light underline hover:text-[#2073FA]">
+                  <span className="hover:text-mainColor mt-3 ml-auto block w-fit cursor-pointer text-sm font-light underline">
                      Edit {title} Settings
                   </span>
                </Link>
