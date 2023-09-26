@@ -83,7 +83,7 @@ const PaypalDetail = () => {
                </div>
             </div>
             <div className="mt-10 flex justify-center">
-               <button className="mx-auto w-[292px] rounded-[4px] bg-[#2073FA] py-3 text-xs text-white">Proceed to Paypal</button>
+               <button className="bg-mainColor mx-auto w-[292px] rounded-[4px] py-3 text-xs text-white">Proceed to Paypal</button>
             </div>
          </div>
       </ParentLayout>

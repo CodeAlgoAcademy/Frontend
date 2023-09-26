@@ -49,7 +49,7 @@ const AllRoles = () => {
             {roles?.map((role, index) => {
                return (
                   <div key={index} className="mb-2">
-                     <h2 className="text-[1.1rem] font-bold text-[#2073fa]">{role.name}</h2>
+                     <h2 className="text-mainColor text-[1.1rem] font-bold">{role.name}</h2>
                      <p className="font-500 text-[.95rem] text-[#333]">{role.description}</p>
                   </div>
                );

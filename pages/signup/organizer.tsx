@@ -51,7 +51,7 @@ const Organizer = () => {
                <div className="">{step}</div>
                <div>
                   <div className="mt-4">
-                     <input type="checkbox" checked={policyChecked} name="" className="inline-block scale-[120%] accent-[#2073fa]" id="privacy" />
+                     <input type="checkbox" checked={policyChecked} name="" className="accent-mainColor inline-block scale-[120%]" id="privacy" />
                      <label htmlFor="privacy" className="ml-2 inline-block cursor-pointer hover:underline">
                         <Link href={"/privacy-policy"}> I accept the terms and condition</Link>
                      </label>

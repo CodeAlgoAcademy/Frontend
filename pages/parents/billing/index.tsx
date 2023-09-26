@@ -120,7 +120,7 @@ const Billing = () => {
                            <div
                               className={
                                  active == Index
-                                    ? "flex justify-between bg-[#2073FA] px-4 py-8 text-base text-white"
+                                    ? "bg-mainColor flex justify-between px-4 py-8 text-base text-white"
                                     : "flex justify-between border-b border-[#C5C5C5] px-4 py-8 text-base text-black group-hover:bg-[#5695fa] group-hover:text-white"
                               }
                            >
@@ -150,7 +150,7 @@ const Billing = () => {
                               </div>
                            ))}
                            <div className="mt-8 flex justify-center">
-                              <button className="w-[100px] rounded-[4px]   bg-[#2073FA] px-4 py-2 text-xs text-white">Get Started</button>
+                              <button className="bg-mainColor w-[100px]   rounded-[4px] px-4 py-2 text-xs text-white">Get Started</button>
                            </div>
                         </div>
                      </div>

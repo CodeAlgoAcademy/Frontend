@@ -12,6 +12,7 @@ module.exports = {
          },
          colors: {
             mainPurple: "#412281",
+            mainColor: "#2073fa",
          },
          screens: {
             xs: "400px",

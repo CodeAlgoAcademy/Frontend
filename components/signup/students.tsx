@@ -78,7 +78,7 @@ const Students = () => {
          </select>
 
          <div
-            className="flex w-full cursor-pointer items-center justify-between rounded-md border-2 border-gray-400 px-4 py-3 text-[16px] font-bold text-black outline-none placeholder:text-black focus:border-[#2073fa]"
+            className="focus:border-mainColor flex w-full cursor-pointer items-center justify-between rounded-md border-2 border-gray-400 px-4 py-3 text-[16px] font-bold text-black outline-none placeholder:text-black"
             onClick={() => {
                dispatch(openGradesModal());
             }}
