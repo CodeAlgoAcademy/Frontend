@@ -93,7 +93,7 @@ const TeacherLayout = ({ children, className }: Props) => {
             {/* Mobile Nav */}
             <div className="mt-14 ml-4 hidden w500:block w840:hidden">
                <Link href={`/teachers/addClass`}>
-                  <div className="flex justify-center text-[28px] text-[#2073fa]">
+                  <div className="text-mainColor flex justify-center text-[28px]">
                      <BiHomeAlt />
                   </div>
                </Link>
@@ -150,7 +150,7 @@ const TeacherLayout = ({ children, className }: Props) => {
                      <div className="absolute right-[1rem] top-[60px] z-20 rounded-md border border-gray-300 bg-white px-2">
                         <div className="mt-4">
                            <Link href={`/teachers/addClass`}>
-                              <div className="flex justify-center text-[28px] text-[#2073fa]">
+                              <div className="text-mainColor flex justify-center text-[28px]">
                                  <BiHomeAlt />
                               </div>
                            </Link>

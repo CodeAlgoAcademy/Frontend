@@ -11,7 +11,7 @@ const Standard: FC<Props> = ({ openedModal, updateOpenedModal }) => {
    return (
       <article className="relative flex flex-col gap-2 md:flex-row">
          <div
-            className={`${styles.topic} ${openedModal === "standard" ? " outline-[#2073fa]" : "outline-transparent"}`}
+            className={`${styles.topic} ${openedModal === "standard" ? " outline-mainColor" : "outline-transparent"}`}
             onClick={(event: any) => {
                if (!event.target.classList.contains("dropdown")) {
                   updateOpenedModal("standard");
@@ -40,7 +40,7 @@ const Standard: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                         />
                         <label
                            htmlFor={availableStandard}
-                           className={`dropdown hover:text-[#2073fa] ${standard === availableStandard && "text-[#2073fa]"}`}
+                           className={`dropdown hover:text-mainColor ${standard === availableStandard && "text-mainColor"}`}
                         >
                            {availableStandard}
                         </label>

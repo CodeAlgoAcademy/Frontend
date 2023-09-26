@@ -23,7 +23,7 @@ const StudentModal = ({
    const { className, color } = useSelector((state: RootState) => state.currentClass);
    return (
       <div className="h-[500px] min-w-[800px] py-12" data-testid="students-modal">
-         <h3 className="pl-12 text-2xl font-semibold text-[#2073fa]">Student(s)</h3>
+         <h3 className="text-mainColor pl-12 text-2xl font-semibold">Student(s)</h3>
          <div className="flex items-center justify-between border-b px-12 py-4">
             <div className="flex items-center gap-4">
                <div className="checkbox-container bottom-1">

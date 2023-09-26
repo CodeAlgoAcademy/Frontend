@@ -34,7 +34,7 @@ const ScreentimeRestrictions = () => {
 
    return (
       <div className="relative min-h-[340px] max-w-fit rounded-2xl bg-white px-8 py-10 md:w-full md:min-w-[420px]">
-         <h1 className="text-[1.3rem] font-semibold text-[#2073FA]">Current screen time restrictions</h1>
+         <h1 className="text-mainColor text-[1.3rem] font-semibold">Current screen time restrictions</h1>
          <h2 className="mt-2 mb-10 text-[14px] font-medium">Make edits to screen time restrictions below</h2>
          <div className="mt-4 flex flex-wrap items-center justify-center gap-4 md:justify-start">
             {timeLimits?.map((time, index: number) => {

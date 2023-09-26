@@ -34,7 +34,7 @@ const Sidebar = (props: Props) => {
                            className={
                               activeLink === link.url ||
                               (router?.pathname.includes(link.url) && link.url !== "/teachers" && link.url !== "/organizers")
-                                 ? "flex cursor-pointer items-center gap-6 rounded-[28px] bg-[#2073fa] px-[30px] py-[14px] text-white"
+                                 ? "bg-mainColor flex cursor-pointer items-center gap-6 rounded-[28px] px-[30px] py-[14px] text-white"
                                  : "flex cursor-pointer items-center gap-6 rounded-[28px] px-[30px]  py-[14px] text-gray-600 hover:bg-slate-50 "
                            }
                            onClick={() => {
@@ -46,7 +46,7 @@ const Sidebar = (props: Props) => {
                                  activeLink === link.url ||
                                  (router?.pathname.includes(link.url) && link.url !== "/teachers" && link.url !== "/organizers")
                                     ? "text-white"
-                                    : "text-[#2073fa]"
+                                    : "text-mainColor"
                               }`}
                            >
                               {link.icon}

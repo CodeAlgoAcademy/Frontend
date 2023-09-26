@@ -23,10 +23,10 @@ const OrganizationInvitations = () => {
                         <p className="font-lighter text-[12px]">{invite?.email}</p>
                      </span>
                      <div className="flex items-center gap-x-2">
-                        <i className="cursor-pointer text-[12px] text-[#2073FA] underline" onClick={async () => {}}>
+                        <i className="text-mainColor cursor-pointer text-[12px] underline" onClick={async () => {}}>
                            Accept
                         </i>
-                        <i className="cursor-pointer text-[12px] text-[#2073FA] underline" onClick={async () => {}}>
+                        <i className="text-mainColor cursor-pointer text-[12px] underline" onClick={async () => {}}>
                            Decline
                         </i>
                      </div>

@@ -23,7 +23,7 @@ const FriendRequests = () => {
                      </span>
                      <div className="flex items-center gap-x-2">
                         <i
-                           className="cursor-pointer text-[12px] text-[#2073FA] underline"
+                           className="text-mainColor cursor-pointer text-[12px] underline"
                            onClick={async () => {
                               await dispatch(acceptFriendRequest(friend?.id));
                               await dispatch(getChildren());
@@ -32,7 +32,7 @@ const FriendRequests = () => {
                            Accept
                         </i>
                         <i
-                           className="cursor-pointer text-[12px] text-[#2073FA] underline"
+                           className="text-mainColor cursor-pointer text-[12px] underline"
                            onClick={async () => {
                               await dispatch(rejectFriendRequest(friend?.id));
                               await dispatch(getChildren());

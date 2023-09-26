@@ -40,14 +40,14 @@ const AllLicenses = () => {
                         setSelectedLicense(license.id);
                      }}
                   >
-                     <h2 className="text-[1.1rem] font-bold text-[#2073fa]">{license.name}</h2>
+                     <h2 className="text-mainColor text-[1.1rem] font-bold">{license.name}</h2>
                      <p className="font-500 text-[.95rem] text-[#333]">{license.description}</p>
                   </div>
                );
             })}
          </div>
          {licenses?.length > 0 && selectedLicense && (
-            <button className="rounded-md bg-[#2073fa] p-2 text-white" onClick={sendRequest}>
+            <button className="bg-mainColor rounded-md p-2 text-white" onClick={sendRequest}>
                Send Request
             </button>
          )}
