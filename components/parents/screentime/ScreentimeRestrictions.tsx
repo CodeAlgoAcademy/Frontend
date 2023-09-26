@@ -11,13 +11,13 @@ const ScreentimeRestrictions = () => {
    const dispatch = useDispatch();
 
    const [timeLimits, setTimeLimits] = useState<screentimeTypes[]>([
-      { id: 1, dayOfTheWeek: "Monday", timeLimit: 0 },
-      { id: 1, dayOfTheWeek: "Tuesday", timeLimit: 0 },
-      { id: 1, dayOfTheWeek: "Wednesday", timeLimit: 0 },
-      { id: 1, dayOfTheWeek: "Thursday", timeLimit: 0 },
-      { id: 1, dayOfTheWeek: "Friday", timeLimit: 0 },
-      { id: 1, dayOfTheWeek: "Saturday", timeLimit: 0 },
-      { id: 1, dayOfTheWeek: "Sunday", timeLimit: 0 },
+      { id: 1, dayOfTheWeek: "Monday", timeLimit: 'No Limit' },
+      { id: 1, dayOfTheWeek: "Tuesday", timeLimit: 'No Limit' },
+      { id: 1, dayOfTheWeek: "Wednesday", timeLimit: 'No Limit' },
+      { id: 1, dayOfTheWeek: "Thursday", timeLimit: 'No Limit' },
+      { id: 1, dayOfTheWeek: "Friday", timeLimit: 'No Limit' },
+      { id: 1, dayOfTheWeek: "Saturday", timeLimit: 'No Limit' },
+      { id: 1, dayOfTheWeek: "Sunday", timeLimit: 'No Limit' },
    ]);
 
    const updateTime = async (id: string | number, day: string, hour: number | "No Limit") => {
