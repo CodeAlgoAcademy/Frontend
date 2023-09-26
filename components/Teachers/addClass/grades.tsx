@@ -37,7 +37,7 @@ const Grades: FC<gradesType> = ({ addStudents }) => {
                   return (
                      <article
                         className={`w-full cursor-pointer rounded-md border-2 p-4 text-center font-bold ${
-                           availableGrade === chosenGrade ? "border-[#2073fa] text-[#2073fa]" : "border-gray-700 text-black"
+                           availableGrade === chosenGrade ? "border-mainColor text-mainColor" : "border-gray-700 text-black"
                         }`}
                         key={index}
                         onClick={() => {
@@ -64,7 +64,7 @@ const Grades: FC<gradesType> = ({ addStudents }) => {
             {/* buttons container */}
             <div className="mt-3">
                <button
-                  className="w-full rounded-md bg-[#2073fa] px-4 py-[10px] text-center font-bold text-white"
+                  className="bg-mainColor w-full rounded-md px-4 py-[10px] text-center font-bold text-white"
                   onClick={() => {
                      dispatch(closeGradesModal());
                   }}

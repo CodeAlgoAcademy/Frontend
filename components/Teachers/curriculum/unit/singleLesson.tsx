@@ -127,7 +127,7 @@ const SingleLesson = ({
             <div className="flex w-full flex-1 items-center justify-between border-r-2 border-[#E6E6E6] py-5 pr-[4rem] sm:gap-5 sm:py-2  sm:pr-[1rem] md:pr-[1.5rem] lg:gap-0">
                <div className="flex w-full flex-1 items-center gap-2 sm:gap-3 lg:gap-7">
                   <FaGripLinesVertical className="hidden text-[1.1rem] font-thin text-[#A0A0A0] xs:block" />
-                  <p className="min-w-fit flex-1 font-bold text-[#2073fa] sm:text-[15px] lg:text-[20px]">{data.topic.title}</p>
+                  <p className="text-mainColor min-w-fit flex-1 font-bold sm:text-[15px] lg:text-[20px]">{data.topic.title}</p>
                   {active.includes(data.id) && (
                      <p
                         onClick={() => setShowPreview(true)}
@@ -160,11 +160,11 @@ const SingleLesson = ({
                   {/* first division */}
                   <div className="flex-[.60] border-[#E6E6E6] py-[1rem] sm:border-r-2 sm:pr-[1rem]">
                      <div className="gap-[3rem] md:flex-col lg:flex-row">
-                        <p className=" font-bold  text-[#2073fa] md:text-[12px] lg:text-[18px]">Description</p>
+                        <p className=" text-mainColor  font-bold md:text-[12px] lg:text-[18px]">Description</p>
                         <p className="md:text-[12px] lg:text-[16px] ">{data.topic.description}</p>
                      </div>
                      <div className="mt-4 flex items-center gap-[1rem]">
-                        <p className="font-bold  text-[#2073fa] md:text-[12px] lg:text-[18px]">Date Range</p>
+                        <p className="text-mainColor  font-bold md:text-[12px] lg:text-[18px]">Date Range</p>
                         <div className="flex items-center gap-[1rem]">
                            <p className="sm:text-[12px] lg:text-[16px] ">
                               {getLessonDate(data.start_date)} - {getLessonDate(data.end_date)}
@@ -188,23 +188,23 @@ const SingleLesson = ({
                               <input
                                  type="date"
                                  value={editDateDetails.start_date}
-                                 className="hoverElement max-w-[130px] rounded-md border border-[#2073fa] px-3 py-1 text-[15px] outline-none"
+                                 className="hoverElement border-mainColor max-w-[130px] rounded-md border px-3 py-1 text-[15px] outline-none"
                                  onChange={(e) => {
                                     updateScheduleDate("start_date", e.target.value);
                                  }}
                               />
-                              <div className="hoverText right-[0] -top-[56px] bg-[#2073fa] after:bg-[#2073fa]">Start date</div>
+                              <div className="hoverText bg-mainColor after:bg-mainColor right-[0] -top-[56px]">Start date</div>
                            </div>
                            <div className="relative max-w-fit">
                               <input
                                  type="date"
                                  value={editDateDetails.end_date}
-                                 className="hoverElement max-w-[130px] rounded-md border border-[#2073fa] px-3 py-1 text-[15px] outline-none"
+                                 className="hoverElement border-mainColor max-w-[130px] rounded-md border px-3 py-1 text-[15px] outline-none"
                                  onChange={(e) => {
                                     updateScheduleDate("end_date", e.target.value);
                                  }}
                               />
-                              <div className="hoverText right-[0] -top-[56px] bg-[#2073fa] after:bg-[#2073fa]">End date</div>
+                              <div className="hoverText bg-mainColor after:bg-mainColor right-[0] -top-[56px]">End date</div>
                            </div>
                         </div>
                      )}
@@ -213,7 +213,7 @@ const SingleLesson = ({
                   {/* second division */}
                   <div className=" flex  flex-[.40] flex-col justify-between sm:py-5 sm:pl-[1rem]">
                      <div className="flex  items-center gap-[4rem]">
-                        <p className="font-bold  text-[#2073fa] md:text-[12px] lg:text-[18px]">Status</p>
+                        <p className="text-mainColor  font-bold md:text-[12px] lg:text-[18px]">Status</p>
                         {!statusContainerOpened && (
                            <div
                               className="flex items-center gap-[6px] border-2 border-[#E6E6E6] px-3 py-1"
@@ -269,9 +269,9 @@ const SingleLesson = ({
                         )}
                      </div>
                      <div className="mt-4  flex items-center gap-[3rem]">
-                        <p className="font-bold  text-[#2073fa] md:text-[12px] lg:text-[18px]">Assign To</p>
+                        <p className="text-mainColor  font-bold md:text-[12px] lg:text-[18px]">Assign To</p>
                         <div
-                           className="flex cursor-pointer items-center gap-[1rem] text-[#2073fa]"
+                           className="text-mainColor flex cursor-pointer items-center gap-[1rem]"
                            onClick={() => {
                               addAllStudentsForEachLesson(data.students);
                               setShowModal(true);

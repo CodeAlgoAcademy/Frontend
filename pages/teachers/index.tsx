@@ -7,7 +7,7 @@ import ScheduleBox from "@/components/Teachers/dashboard/ScheduleBox";
 const Dashboard = () => {
    return (
       <TeacherLayout>
-         <h2 className="mb-6 text-[28px] font-bold text-[#2073fa]" data-testid="dashboard-heading">
+         <h2 className="text-mainColor mb-6 text-[28px] font-bold" data-testid="dashboard-heading">
             Today at a Glance
          </h2>
          <div className="flex flex-col flex-wrap items-center justify-center gap-10 md:flex-row md:items-start md:justify-start">

@@ -29,7 +29,7 @@ const NoteBox = () => {
    return (
       <div className="max-h-[212px] max-w-[380px] overflow-y-auto rounded-md bg-white p-6 shadow-lg">
          <div className="min-h-[114px]">
-            <div className="align-center flex justify-between text-[#2073fa]">
+            <div className="align-center text-mainColor flex justify-between">
                <h3 className="mb-3 text-[20px] font-bold">Notes</h3>
                <span className="animate-pulse cursor-pointer text-lg">
                   <FaSyncAlt />

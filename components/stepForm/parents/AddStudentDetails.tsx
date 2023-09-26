@@ -25,7 +25,7 @@ export default function ParentSignUp5() {
          <input className="auth-input" name="username" type="text" autoFocus required value={child?.username} onChange={onChange} />
          <button
             type="button"
-            className="mt-2  block h-[2.5rem] w-full rounded-xl bg-white text-center font-bold text-[#2073FA] transition duration-300 ease-out hover:bg-[#2073FA] hover:text-white"
+            className="text-mainColor  hover:bg-mainColor mt-2 block h-[2.5rem] w-full rounded-xl bg-white text-center font-bold transition duration-300 ease-out hover:text-white"
             onClick={() => {
                if (child?.fullName) {
                   const randomName = generateUsername(child?.fullName, "");

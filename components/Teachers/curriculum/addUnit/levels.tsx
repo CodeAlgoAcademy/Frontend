@@ -11,7 +11,7 @@ const Levels: FC<Props> = ({ openedModal, updateOpenedModal }) => {
    return (
       <article className="relative flex flex-col gap-2 md:flex-row">
          <div
-            className={`${styles.topic} ${openedModal === "level" ? " outline-[#2073fa]" : "outline-transparent"}`}
+            className={`${styles.topic} ${openedModal === "level" ? " outline-mainColor" : "outline-transparent"}`}
             onClick={(event: any) => {
                if (!event.target.classList.contains("dropdown")) {
                   updateOpenedModal("level");
@@ -69,10 +69,10 @@ const LevelsInputContainer = ({
             className="dropdown hidden"
             data-testid={`level-${index}`}
          />
-         <label htmlFor={level.title} className={`dropdown hover:text-[#2073fa] ${levels === level.title && "text-[#2073fa]"}`}>
+         <label htmlFor={level.title} className={`dropdown hover:text-mainColor ${levels === level.title && "text-mainColor"}`}>
             {level.title}
          </label>
-         <p className={`hoverText right-[0px] -top-[10px] bg-[#2073fa] after:bg-[#2073fa]`}>{level.hoverText}</p>
+         <p className={`hoverText bg-mainColor after:bg-mainColor right-[0px] -top-[10px]`}>{level.hoverText}</p>
       </div>
    );
 };

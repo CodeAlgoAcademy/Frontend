@@ -88,8 +88,8 @@ const CreateLicense = () => {
 };
 
 const style = {
-   input: `px-3 py-[10px] border-b-[2px] outline-none w-full bg-transparent border-b-[#333] text-[#333] placeholder:text-[#333] focus:border-b-[#2073fa] transition-all duration-300`,
-   button: "mt-8 ml-auto block min-w-[150px] max-w-[150px] rounded-md bg-[#2073fa] p-2 text-white",
+   input: `px-3 py-[10px] border-b-[2px] outline-none w-full bg-transparent border-b-[#333] text-[#333] placeholder:text-[#333] focus:border-b-mainColor transition-all duration-300`,
+   button: "mt-8 ml-auto block min-w-[150px] max-w-[150px] rounded-md bg-mainColor p-2 text-white",
 };
 
 export default CreateLicense;

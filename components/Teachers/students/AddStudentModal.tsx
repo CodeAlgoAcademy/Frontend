@@ -134,7 +134,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
             <aside className={`min-h-full flex-[0.075] rounded-tl-md rounded-bl-md`} style={{ backgroundColor: "#FFE977" }}></aside>
 
             <form className="h-full flex-[0.9] py-8" onSubmit={onSubmit}>
-               <header className="mb-6 flex w-full items-center gap-x-2 px-8 text-[#2073fa]">
+               <header className="text-mainColor mb-6 flex w-full items-center gap-x-2 px-8">
                   <span
                      className="text-[20px] font-bold"
                      onClick={() => {
@@ -165,7 +165,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
                   })}
                   <button
                      type="button"
-                     className=" rounded-md bg-[#2073fa] px-2 py-3 text-white shadow-md active:scale-[0.91]"
+                     className=" bg-mainColor rounded-md px-2 py-3 text-white shadow-md active:scale-[0.91]"
                      onClick={() => {
                         if (firstName || lastName) {
                            const randomName = generateUsername(firstName, lastName);
@@ -208,7 +208,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
                   </div>
                   <button
                      type="submit"
-                     className="min-w-[150px] rounded-[30px] bg-[#2073fa] py-3 px-4 text-[16px] text-white hover:shadow-md"
+                     className="bg-mainColor min-w-[150px] rounded-[30px] py-3 px-4 text-[16px] text-white hover:shadow-md"
                      onClick={() => {
                         if (file) {
                            handleFileSubmit();
