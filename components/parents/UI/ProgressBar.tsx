@@ -8,7 +8,7 @@ interface Props {
 }
 
 const ProgressBar = ({ title, titleSize, percentage, color }: Props) => {
-   percentage = percentage * 100
+   percentage = parseFloat((percentage * 100).toFixed(1));
    const progressBarStyle = {
       width: `${percentage <= 100 ? percentage : ""}%`,
    };
