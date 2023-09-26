@@ -82,8 +82,8 @@ export default function Settings() {
                   <TextField id="outlined-basic" fullWidth label="New Password" variant="outlined" />
                </div>
                <div className="mt-5 flex flex-col items-center gap-4 sm:flex-row">
-                  <button className="w-full rounded-lg bg-[#c6c4c8] px-8 py-4 font-bold text-[#2073fa]">Cancel</button>
-                  <button className="w-full rounded-lg bg-[#2073fa] px-8 py-4 font-bold text-white">Update password</button>
+                  <button className="text-mainColor w-full rounded-lg bg-[#c6c4c8] px-8 py-4 font-bold">Cancel</button>
+                  <button className="bg-mainColor w-full rounded-lg px-8 py-4 font-bold text-white">Update password</button>
                </div>
             </div>
          </TabPanel>
@@ -99,8 +99,8 @@ export default function Settings() {
                   <TextField id="outlined-basic" fullWidth label="New Email" variant="outlined" />
                </div>
                <div className="mt-5 flex flex-col items-center gap-4 sm:flex-row">
-                  <button className="w-full rounded-lg bg-[#c6c4c8]  px-8 py-4 font-bold text-[#2073fa]">Cancel</button>
-                  <button className="w-full rounded-lg bg-[#2073fa]  px-8 py-4 font-bold text-white">Update Email</button>
+                  <button className="text-mainColor w-full rounded-lg  bg-[#c6c4c8] px-8 py-4 font-bold">Cancel</button>
+                  <button className="bg-mainColor w-full rounded-lg  px-8 py-4 font-bold text-white">Update Email</button>
                </div>
             </div>
          </TabPanel>

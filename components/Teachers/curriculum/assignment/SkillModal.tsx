@@ -136,7 +136,7 @@ const SkillModal = ({
                      <div key={categoryId} className="h-fit max-w-[550px] rounded-xl border bg-white drop-shadow-md">
                         <div className="relative flex h-14 items-center justify-between gap-8 border-b pl-4 pr-[84px]">
                            <div className="flex items-center gap-4">
-                              <div className="text-3xl text-[#2073fa]">
+                              <div className="text-mainColor text-3xl">
                                  <TbMedal />
                               </div>
                               <div className="flex items-center gap-2">
@@ -149,7 +149,7 @@ const SkillModal = ({
                                  </p>
                               </div>
                            </div>
-                           <span className="... absolute right-5 top-4 truncate rounded-2xl bg-[#2073fa]/70 py-1 px-4 text-xs font-bold opacity-70">
+                           <span className="... bg-mainColor/70 absolute right-5 top-4 truncate rounded-2xl py-1 px-4 text-xs font-bold opacity-70">
                               {tests.length} {tests.length > 1 ? "skills" : "skill"}
                            </span>
                         </div>

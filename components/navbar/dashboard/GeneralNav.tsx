@@ -70,7 +70,7 @@ const GeneralNav = () => {
          <div className="relative flex items-center gap-40">
             <div className="flex items-center gap-4">
                <Link href={`/teachers/addClass`}>
-                  <div className="text-[24px] text-[#2073fa]">
+                  <div className="text-mainColor text-[24px]">
                      <BiHomeAlt />
                   </div>
                </Link>
@@ -141,14 +141,14 @@ const GeneralNav = () => {
                      <Image src="/assets/no user.png" alt="avatar" className="h-9 md:cursor-pointer" width={35} height={35} />
                   </div>
                   {!userDropDown && (
-                     <p className="ml-2 text-sm font-[700] capitalize text-[#2073fa]">
+                     <p className="text-mainColor ml-2 text-sm font-[700] capitalize">
                         {user?.firstname} {user?.lastname}
                      </p>
                   )}
                   {userDropDown && (
                      <div>
                         <motion.h5
-                           className="ml-2 whitespace-nowrap text-sm font-[700] capitalize text-[#2073fa]"
+                           className="text-mainColor ml-2 whitespace-nowrap text-sm font-[700] capitalize"
                            initial={{ display: "none", opacity: 0 }}
                            animate={{
                               display: "block",
@@ -179,7 +179,7 @@ const GeneralNav = () => {
                               setSettingsTabOpen((prev) => !prev);
                            }}
                         >
-                           <div className="flex items-center text-[#2073fa]">
+                           <div className="text-mainColor flex items-center">
                               <span className="text-xl">
                                  <IoSettingsSharp />
                               </span>
@@ -196,7 +196,7 @@ const GeneralNav = () => {
                         </main>
                      </div>
                      <motion.div
-                        className="mt-[1rem] flex cursor-pointer items-center pb-2 text-[#2073fa]"
+                        className="text-mainColor mt-[1rem] flex cursor-pointer items-center pb-2"
                         initial={{ opacity: 0, y: "5px" }}
                         animate={{
                            opacity: 1,
@@ -214,7 +214,7 @@ const GeneralNav = () => {
                   </div>
                )}
             </div>
-            {/* <div className="bell-shake relative cursor-pointer text-[24px] text-[#2073fa]">
+            {/* <div className="bell-shake relative cursor-pointer text-[24px] text-mainColor">
                
                <BiBell />
             </div> */}
@@ -241,7 +241,7 @@ export const UpdateUserForms = ({ setUserDropDown }: { setUserDropDown?: any }) 
             onSubmit={(e: ChangeEvent<HTMLFormElement>) => {
                updateUserForm(e, updateFirstname);
             }}
-            className="flex h-[35px] w-full items-center gap-2 rounded-[4px] border px-2 hover:border-[#2073fa]"
+            className="hover:border-mainColor flex h-[35px] w-full items-center gap-2 rounded-[4px] border px-2"
          >
             <input
                type="text"
@@ -265,7 +265,7 @@ export const UpdateUserForms = ({ setUserDropDown }: { setUserDropDown?: any }) 
             onSubmit={(e: ChangeEvent<HTMLFormElement>) => {
                updateUserForm(e, updateLastname);
             }}
-            className="flex h-[35px] w-full items-center gap-2 rounded-[4px] border px-2 hover:border-[#2073fa]"
+            className="hover:border-mainColor flex h-[35px] w-full items-center gap-2 rounded-[4px] border px-2"
          >
             <input
                type="text"
@@ -284,7 +284,7 @@ export const UpdateUserForms = ({ setUserDropDown }: { setUserDropDown?: any }) 
             onSubmit={(e: ChangeEvent<HTMLFormElement>) => {
                updateUserForm(e, updateEmail);
             }}
-            className="flex h-[35px] w-full items-center gap-2 rounded-[4px] border px-2 hover:border-[#2073fa]"
+            className="flex h-[35px] w-full items-center gap-2 rounded-[4px] border px-2 hover:border-mainColor"
          >
             <input
                type="text"
@@ -299,7 +299,7 @@ export const UpdateUserForms = ({ setUserDropDown }: { setUserDropDown?: any }) 
                <FaEdit />
             </button>
          </form> */}
-         {/* <form className="flex h-[35px] w-full items-center gap-2 rounded-[4px] border px-2 hover:border-[#2073fa]">
+         {/* <form className="flex h-[35px] w-full items-center gap-2 rounded-[4px] border px-2 hover:border-mainColor">
             <input
                type="text"
                className="h-full w-full border-none text-[15px] tracking-wider text-black outline-none placeholder:text-gray-500"

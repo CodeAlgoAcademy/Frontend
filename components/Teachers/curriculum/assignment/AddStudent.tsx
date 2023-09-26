@@ -58,7 +58,7 @@ export default function AddStudent(props: modalProps) {
                            <input
                               type="checkbox"
                               id="select-all-students"
-                              className="checkbox-container h-[20px] w-[20px] rounded-md border-2 border-black accent-[#2073fa]"
+                              className="checkbox-container accent-mainColor h-[20px] w-[20px] rounded-md border-2 border-black"
                               onChange={(e) => {
                                  if (e.target.checked) {
                                     props.addAllStudentsForEachLesson(students?.students);
@@ -84,7 +84,7 @@ export default function AddStudent(props: modalProps) {
                                     type="checkbox"
                                     name={email}
                                     checked={checked}
-                                    className="accent-[#2073fa]"
+                                    className="accent-mainColor"
                                     onChange={(e) => {
                                        if (e.target.checked) {
                                           props.updateStudentsAddedForEachLesson({
@@ -115,7 +115,7 @@ export default function AddStudent(props: modalProps) {
 
                   <div className="mt-[2rem] flex justify-end">
                      <button
-                        className="rounded-full bg-[#2073fa]  px-8 py-4 font-bold text-white"
+                        className="bg-mainColor rounded-full  px-8 py-4 font-bold text-white"
                         onClick={() => {
                            if (props.studentsAdded.length > 0) {
                               props.setAboutToEditStudent((prev) => !prev);

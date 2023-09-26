@@ -108,9 +108,9 @@ import NoItem from "@/components/UI/NoItem";
 //          ) : (
 //             <>
 //                <div className="flex flex-wrap justify-between">
-//                   <h1 className="text-3xl font-bold text-[#2073fa]">Curriculum</h1>
+//                   <h1 className="text-3xl font-bold text-mainColor">Curriculum</h1>
 //                   <div
-//                      className="flex cursor-pointer items-center gap-2 text-[#2073fa]"
+//                      className="flex cursor-pointer items-center gap-2 text-mainColor"
 //                      onClick={() => {
 //                         dispatch(openAddUnitModal());
 //                      }}
@@ -123,8 +123,8 @@ import NoItem from "@/components/UI/NoItem";
 //                   <h1
 //                      className={
 //                         active === "past"
-//                            ? "mr-8  box-border  border-b-[3px] border-b-[#2073fa] text-[1.2rem] text-[#2073fa] transition duration-300 ease-out hover:border-b-[#2073fa] hover:font-bold"
-//                            : "mr-8 box-border  text-[1.2rem] text-[#2073fa]  transition duration-300 ease-out  hover:border-b-[3px] hover:border-b-[#2073fa] hover:font-bold"
+//                            ? "mr-8  box-border  border-b-[3px] border-b-mainColor text-[1.2rem] text-mainColor transition duration-300 ease-out hover:border-b-mainColor hover:font-bold"
+//                            : "mr-8 box-border  text-[1.2rem] text-mainColor  transition duration-300 ease-out  hover:border-b-[3px] hover:border-b-mainColor hover:font-bold"
 //                      }
 //                      data-testid="curriculum-tabs"
 //                      onClick={handlePast}
@@ -135,8 +135,8 @@ import NoItem from "@/components/UI/NoItem";
 //                      <h1
 //                         className={
 //                            active === "current"
-//                               ? "box-border   border-b-[3px] border-b-[#2073fa] text-[1.2rem] text-[#2073fa] transition duration-300 ease-out hover:border-b-[#2073fa] hover:font-bold"
-//                               : "box-border text-[1.2rem]  text-[#2073fa]  transition duration-300 ease-out  hover:border-b-[3px] hover:border-b-[#2073fa] hover:font-bold"
+//                               ? "box-border   border-b-[3px] border-b-mainColor text-[1.2rem] text-mainColor transition duration-300 ease-out hover:border-b-mainColor hover:font-bold"
+//                               : "box-border text-[1.2rem]  text-mainColor  transition duration-300 ease-out  hover:border-b-[3px] hover:border-b-mainColor hover:font-bold"
 //                         }
 //                         data-testid="curriculum-tabs"
 //                         onClick={handleCurrent}
@@ -147,8 +147,8 @@ import NoItem from "@/components/UI/NoItem";
 //                   <h1
 //                      className={
 //                         active === "upcoming"
-//                            ? "ml-8  box-border  border-b-[3px] border-b-[#2073fa] text-[1.2rem] text-[#2073fa] transition duration-300 ease-out hover:border-b-[#2073fa] hover:font-bold"
-//                            : "ml-8 box-border  text-[1.2rem]  text-[#2073fa] transition duration-300 ease-out  hover:border-b-[3px] hover:border-b-[#2073fa] hover:font-bold"
+//                            ? "ml-8  box-border  border-b-[3px] border-b-mainColor text-[1.2rem] text-mainColor transition duration-300 ease-out hover:border-b-mainColor hover:font-bold"
+//                            : "ml-8 box-border  text-[1.2rem]  text-mainColor transition duration-300 ease-out  hover:border-b-[3px] hover:border-b-mainColor hover:font-bold"
 //                      }
 //                      data-testid="curriculum-tabs"
 //                      onClick={handleUpcoming}
@@ -161,7 +161,7 @@ import NoItem from "@/components/UI/NoItem";
 //                   {/* current curriculum */}
 //                   {current && (
 //                      <>
-//                         <h1 className="mt-10 w-full text-[1.5rem] font-bold text-[#2073fa]">Current Unit</h1>
+//                         <h1 className="mt-10 w-full text-[1.5rem] font-bold text-mainColor">Current Unit</h1>
 //                         <div
 //                            data-testid="current-unit-container"
 //                            className="box-border flex flex-col flex-wrap justify-center md:flex-row  md:justify-start md:gap-[1rem] lg:gap-[2rem]"
@@ -177,7 +177,7 @@ import NoItem from "@/components/UI/NoItem";
 
 //                   {past && (
 //                      <div>
-//                         <h1 className="mt-10 text-[1.5rem] font-bold text-[#2073fa]">Past Units</h1>
+//                         <h1 className="mt-10 text-[1.5rem] font-bold text-mainColor">Past Units</h1>
 //                         <div className="box-border flex flex-col flex-wrap justify-center md:flex-row  md:justify-start md:gap-[1rem] lg:gap-[2rem]">
 //                            {pastCurriculum.map((curriculum: Icurriculum) => {
 //                               return <SingleCurriculum active={active} key={curriculum.id} curriculum={curriculum} />;
@@ -190,7 +190,7 @@ import NoItem from "@/components/UI/NoItem";
 
 //                   {upcoming && (
 //                      <div>
-//                         <h1 className="mt-10 text-[1.5rem] font-bold text-[#2073fa]">Upcoming Units</h1>
+//                         <h1 className="mt-10 text-[1.5rem] font-bold text-mainColor">Upcoming Units</h1>
 //                         <div className="box-border flex flex-col flex-wrap justify-center md:flex-row  md:justify-start md:gap-[1rem] lg:gap-[2rem]">
 //                            {upcomingCurriculum.map((curriculum: Icurriculum) => {
 //                               return <SingleCurriculum active={active} key={curriculum.id} curriculum={curriculum} />;

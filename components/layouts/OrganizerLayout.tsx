@@ -130,7 +130,7 @@ const OrganizerLayout = ({ children }: Props) => {
                      <div className="absolute left-0 top-[48px] z-20 rounded-md border border-gray-300 bg-white px-2">
                         <div className="mt-4">
                            {/* <Link href={`/teachers/addClass`}>
-                                 <div className="flex justify-center text-[28px] text-[#2073fa]">
+                                 <div className="flex justify-center text-[28px] text-mainColor">
                                     <BiHomeAlt />
                                  </div>
                               </Link> */}
@@ -146,7 +146,7 @@ const OrganizerLayout = ({ children }: Props) => {
                   <header className="flex w-full items-center justify-between gap-[1rem]">
                      <div></div>
 
-                     <h2 className="cursor-pointer text-[1.2rem] font-bold text-[#2073fa]">
+                     <h2 className="text-mainColor cursor-pointer text-[1.2rem] font-bold">
                         <span className="mr-2 inline-block align-middle">
                            <BiUser />
                         </span>
@@ -161,7 +161,7 @@ const OrganizerLayout = ({ children }: Props) => {
                            setOpen((prev) => !prev);
                         }}
                      >
-                        <h1 className="text-3xl font-semibold capitalize text-[#2073FA]">{selectedOrganization?.name}</h1>
+                        <h1 className="text-mainColor text-3xl font-semibold capitalize">{selectedOrganization?.name}</h1>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="10" viewBox="0 0 18 10" fill="none">
                            <path
                               d="M1.7998 1.25L9.2998 8.75L16.7998 1.25"

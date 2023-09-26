@@ -114,7 +114,7 @@ const SingleStudent = ({
             <section className="fixed top-0 left-0 z-20 flex h-screen w-full items-center justify-center bg-[rgba(0,0,0,0.4)]">
                <div className="mx-auto w-[90vw] max-w-[350px] rounded-md bg-white p-6 shadow-md">
                   <header className="mb-3 flex items-center justify-between">
-                     <h1 className="font-bold text-[#2073fa]">Edit {"Student's"} Details</h1>
+                     <h1 className="text-mainColor font-bold">Edit {"Student's"} Details</h1>
                      <span
                         className="text-[18px] font-bold text-[darkRed]"
                         onClick={() => {
@@ -144,7 +144,7 @@ const SingleStudent = ({
                         onChange={updateEditingDetails}
                      />
 
-                     <button type="submit" className="mt-3 w-full rounded-md bg-[#2073fa] p-3 text-white active:scale-[0.98]">
+                     <button type="submit" className="bg-mainColor mt-3 w-full rounded-md p-3 text-white active:scale-[0.98]">
                         Edit Student Details
                      </button>
                   </form>
@@ -161,12 +161,12 @@ const SingleStudent = ({
                >
                   <input
                      type="text"
-                     className="flex-[0.8] rounded-l-md border-2 border-[#2073fa] px-2 py-2 text-black outline-none"
+                     className="border-mainColor flex-[0.8] rounded-l-md border-2 px-2 py-2 text-black outline-none"
                      placeholder={`Max. of 100 characters`}
                      value={comment}
                      onChange={(e: ChangeEvent<HTMLInputElement>) => updateComment(e.target.value)}
                   />
-                  <button type="submit" className="flex flex-[0.2] items-center justify-center rounded-r-md bg-[#2073fa] text-[20px] text-white">
+                  <button type="submit" className="bg-mainColor flex flex-[0.2] items-center justify-center rounded-r-md text-[20px] text-white">
                      <BiEdit />
                   </button>
                </form>
@@ -194,7 +194,7 @@ const SingleStudent = ({
                                        onChange={(e: ChangeEvent<HTMLInputElement>) => updateEditingComment(e.target.value)}
                                        type="text"
                                        placeholder="Max. of 100 characters"
-                                       className="flex-1 rounded-md border-2 border-[#2073fa] px-4 py-2 outline-none"
+                                       className="border-mainColor flex-1 rounded-md border-2 px-4 py-2 outline-none"
                                     />
                                  ) : (
                                     <h1 className="px-4 py-2">{comment.text.length > 28 ? `${comment.text.slice(0, 28)}...` : comment.text}</h1>
@@ -240,7 +240,7 @@ const SingleStudent = ({
 
                      <div className="my-4 flex justify-end">
                         <button
-                           className="w-[150px] rounded-full bg-[#2073fa] py-3 text-white"
+                           className="bg-mainColor w-[150px] rounded-full py-3 text-white"
                            onClick={() => {
                               setStudentCommentsTabOpen("");
                            }}
@@ -320,7 +320,7 @@ const styles = {
    actions: "flex text-[20px] text-slate-500 space-x-5",
    pointer: "cursor-pointer",
    commentIcons: "w-[28px] h-[28px] rounded-md text-white flex justify-center items-center text-[15px] cursor-pointer",
-   input: "w-full border focus:border-[#2073fa] p-3 rounded-md outline-none",
+   input: "w-full border focus:border-mainColor p-3 rounded-md outline-none",
 };
 
 export default SingleStudent;

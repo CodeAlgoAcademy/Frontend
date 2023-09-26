@@ -29,7 +29,7 @@ const CreateOrganization = () => {
       <OrganizerLayout>
          <form action="" onSubmit={submit}>
             <div className="mt-8">
-               <h2 className="text-[1.6rem] font-bold text-[#2073fa]">Create Organization</h2>
+               <h2 className="text-mainColor text-[1.6rem] font-bold">Create Organization</h2>
 
                <div className="mt-8 grid grid-cols-2 gap-x-[1rem] gap-y-[1.5rem]">
                   <div>
@@ -70,7 +70,7 @@ const CreateOrganization = () => {
             </div>
 
             <div className="mt-8">
-               <button type="submit" className="ml-auto block w-full max-w-[170px] rounded-md bg-[#2073fa] py-2 text-white active:scale-95">
+               <button type="submit" className="bg-mainColor ml-auto block w-full max-w-[170px] rounded-md py-2 text-white active:scale-95">
                   Submit
                </button>
             </div>
@@ -80,7 +80,7 @@ const CreateOrganization = () => {
 };
 
 const style = {
-   input: `px-3 py-[10px] border-b-[2px] outline-none w-full bg-transparent border-b-[#333] text-[#333] placeholder:text-[#333] focus:border-b-[#2073fa] transition-all duration-300`,
+   input: `px-3 py-[10px] border-b-[2px] outline-none w-full bg-transparent border-b-[#333] text-[#333] placeholder:text-[#333] focus:border-b-mainColor transition-all duration-300`,
 };
 
 export default CreateOrganization;
