@@ -26,7 +26,7 @@ const styles = {
    title: "text-[19px] font-bold pl-5 pb-5",
    tabsOpener: "cursor-pointer border-b-2 flex justify-between gap-x-2 px-3 py-3 items-center hover:bg-gray-50",
    container: "flex min-w-[200px] flex-col border-b-2 bg-gray-100 md:min-w-[330px] md:border-r-2",
-   singleTab: "flex items-center justify-between bg-[#2073fa] px-5 py-4 font-bold text-white",
+   singleTab: "flex items-center justify-between bg-mainColor px-5 py-4 font-bold text-white",
 };
 
 export default MessageRoom;

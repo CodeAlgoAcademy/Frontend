@@ -209,7 +209,7 @@ const Assignments = () => {
       <>
          <TeacherLayout>
             <div className="flex items-center justify-between">
-               <div className="mb-6 flex items-center gap-x-2 text-[#2073fa]">
+               <div className="text-mainColor mb-6 flex items-center gap-x-2">
                   <span
                      className="cursor-pointer text-[22px] font-bold"
                      onClick={() => {
@@ -222,7 +222,7 @@ const Assignments = () => {
                      New Assignment
                   </h2>
                </div>
-               <span className="flex cursor-pointer items-center gap-3 text-[#2073fa] hover:opacity-80">
+               <span className="text-mainColor flex cursor-pointer items-center gap-3 hover:opacity-80">
                   <span className="text-lg">
                      <BsPlusCircle />
                   </span>
@@ -331,24 +331,24 @@ const Assignments = () => {
                                  <input
                                     type="date"
                                     value={assignmentDetails.start_date}
-                                    className="hoverElement max-w-[130px] rounded-md border border-[#2073fa] px-3 py-1 text-[15px] outline-none"
+                                    className="hoverElement border-mainColor max-w-[130px] rounded-md border px-3 py-1 text-[15px] outline-none"
                                     onChange={(e) => {
                                        updateScheduleDate("start_date", e.target.value);
                                     }}
                                  />
-                                 <div className="hoverText right-[0] -top-[56px] bg-[#2073fa] after:bg-[#2073fa]">Start date</div>
+                                 <div className="hoverText bg-mainColor after:bg-mainColor right-[0] -top-[56px]">Start date</div>
                               </div>
                            )}
                            <div className="relative max-w-fit">
                               <input
                                  type="date"
                                  value={assignmentDetails.end_date}
-                                 className="hoverElement max-w-[130px] rounded-md border border-[#2073fa] px-3 py-1 text-[15px] outline-none"
+                                 className="hoverElement border-mainColor max-w-[130px] rounded-md border px-3 py-1 text-[15px] outline-none"
                                  onChange={(e) => {
                                     updateScheduleDate("end_date", e.target.value);
                                  }}
                               />
-                              <div className="hoverText right-[0] -top-[56px] bg-[#2073fa] after:bg-[#2073fa]">End date</div>
+                              <div className="hoverText bg-mainColor after:bg-mainColor right-[0] -top-[56px]">End date</div>
                            </div>
                         </div>
                      </div>
@@ -505,7 +505,7 @@ const Assignments = () => {
                            <p>
                               Click on{" "}
                               <span
-                                 className="cursor-pointer font-bold text-[#2073fa]"
+                                 className="text-mainColor cursor-pointer font-bold"
                                  onClick={() => {
                                     switchModal("historyResponse");
                                  }}
@@ -522,7 +522,7 @@ const Assignments = () => {
                            <p>
                               Click on{" "}
                               <span
-                                 className="cursor-pointer font-bold text-[#2073fa]"
+                                 className="text-mainColor cursor-pointer font-bold"
                                  onClick={() => {
                                     switchModal("historyResponse");
                                  }}

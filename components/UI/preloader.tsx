@@ -9,7 +9,7 @@ const Preloader = () => {
    }
    return (
       <section className="fixed top-0 left-0 z-[90] flex h-screen w-[100vw] flex-col items-center justify-center gap-y-4 bg-[rgba(0,0,0,0.5)]">
-         <span className="h-[45px] w-[45px] animate-spin rounded-full border-[6px] border-white border-t-[#2073fa] text-[35px] font-bold"></span>
+         <span className="border-t-mainColor h-[45px] w-[45px] animate-spin rounded-full border-[6px] border-white text-[35px] font-bold"></span>
          <h1 className="text-[20px] font-bold text-white">
             {loadingText} <span className="dots-animation">...</span>
          </h1>

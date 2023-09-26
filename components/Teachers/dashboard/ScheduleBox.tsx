@@ -53,7 +53,7 @@ const ScheduleBox = () => {
    return (
       <div className="max-h-[212px] max-w-[380px] overflow-y-auto rounded-md bg-white p-6 shadow-lg">
          <div className="min-h-[114px]">
-            <h3 className="mb-3 text-[20px] font-bold text-[#2073fa]" data-testid="schedule-box-heading">
+            <h3 className="text-mainColor mb-3 text-[20px] font-bold" data-testid="schedule-box-heading">
                Schedule - <span>{`${months[month]} ${date}, ${year}`}</span>
             </h3>
             <div className="grid grid-cols-1 divide-y">

@@ -178,7 +178,7 @@ const RecentInteraction = ({}: Props) => {
                {recents.map(({image,name,id}) => (
             <li className='min-w-[100px] flex flex-col gap-1 text-center items-center' key={id}>
               <Image src={`/assets/${image}`} alt={image} height={100} width={100} className="select-none" />
-              <p className='text-[#2073FA] text-sm'>{name}</p>
+              <p className='text-mainColor text-sm'>{name}</p>
               <Image src="/assets/message.svg" alt="messages" width={18} height={18} className="blue-svg" />
             </li>
           ))}

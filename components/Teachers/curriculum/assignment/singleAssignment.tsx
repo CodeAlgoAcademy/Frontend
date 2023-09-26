@@ -36,12 +36,12 @@ const SingleAssignment = ({
                <div className="mb-2">
                   <div className="my-2 flex flex-wrap items-center justify-between gap-2">
                      <div className="flex items-center justify-start gap-2">
-                        <p className="text-[17px] font-bold text-[#2073fa]">Due Date:</p>
+                        <p className="text-mainColor text-[17px] font-bold">Due Date:</p>
                         <p className="text-[17px]">{assignment.end_date}</p>
                      </div>
                      {assignment.status === "draft" && (
                         <button
-                           className="rounded-md bg-[#2073fa] px-2 py-2 text-white transition hover:shadow-md"
+                           className="bg-mainColor rounded-md px-2 py-2 text-white transition hover:shadow-md"
                            onClick={() => {
                               setEditAssignment(assignment, assignment.id as string);
                            }}
@@ -56,7 +56,7 @@ const SingleAssignment = ({
                      {skills.map((skill, index: number) => {
                         return (
                            <article key={index} className="flex items-start gap-2">
-                              <span className="pt-1 text-[15px] text-[#2073fa]">
+                              <span className="text-mainColor pt-1 text-[15px]">
                                  <FaChevronRight />
                               </span>
                               <div>
@@ -73,7 +73,7 @@ const SingleAssignment = ({
                   {assignment.students.map((student, index: number) => {
                      return (
                         <article key={index} className="flex items-start gap-2">
-                           <span className="pt-1 text-[15px] text-[#2073fa]">
+                           <span className="text-mainColor pt-1 text-[15px]">
                               <FaChevronRight />
                            </span>
                            <div>

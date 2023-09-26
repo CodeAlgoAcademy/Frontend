@@ -16,7 +16,7 @@ const KidsFriend = () => {
                return (
                   <article key={index} className="flex items-center justify-between gap-x-2 p-2">
                      <div className="flex items-center gap-x-2 " data-testid={`friend-req-${index}`}>
-                        <span className="text-[#2073FA]">
+                        <span className="text-mainColor">
                            <HiOutlineDotsCircleHorizontal />
                         </span>
                         <p className="font-lighter text-[12px]">{friend.to_user}</p>
@@ -31,7 +31,7 @@ const KidsFriend = () => {
                return (
                   <article key={index} className="flex items-center justify-between gap-x-2 p-2">
                      <div className="flex items-center gap-x-2 ">
-                        <span className="text-[#2073FA]">
+                        <span className="text-mainColor">
                            <BiEnvelope />
                         </span>
                         <p className="font-lighter text-[12px]">{friend.friend}</p>

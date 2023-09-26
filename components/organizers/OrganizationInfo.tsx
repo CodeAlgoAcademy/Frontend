@@ -16,7 +16,7 @@ const OrganizationInfo = () => {
             <header className="mt-2 mb-4 flex justify-between text-[0.9rem] leading-[1.2]">
                <p>{organization?.invite_code}</p>
 
-               <p className="cursor-pointer text-[#2073fa]">
+               <p className="text-mainColor cursor-pointer">
                   Copy Code{" "}
                   <span className="ml-[6px] inline-block">
                      <BiCopy />
