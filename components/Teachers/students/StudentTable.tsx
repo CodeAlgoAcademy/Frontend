@@ -15,11 +15,9 @@ const StudentTable = ({ details, student }: { details: object[]; student: any })
          <table className={styles.table}>
             <thead>
                <tr className={styles.headingRow}>
+                  <th className={styles.headingColumn}>Level</th>
                   <th className={styles.headingColumn}>Lesson</th>
                   <th className={styles.headingColumn}>Progress</th>
-                  <th className={styles.headingColumn}>Assignment</th>
-                  <th className={styles.headingColumn}>Status</th>
-                  <th className={styles.headingColumn}>Due Date</th>
                </tr>
             </thead>
             <tbody className="p-3">

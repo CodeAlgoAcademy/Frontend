@@ -14,6 +14,7 @@ import {
    editStudent,
 } from "store/studentSlice";
 import { FaEdit, FaSave, FaTimes, FaTrash } from "react-icons/fa";
+import Link from "next/link";
 
 const SingleStudent = ({
    student,
@@ -114,7 +115,7 @@ const SingleStudent = ({
             <section className="fixed top-0 left-0 z-20 flex h-screen w-full items-center justify-center bg-[rgba(0,0,0,0.4)]">
                <div className="mx-auto w-[90vw] max-w-[350px] rounded-md bg-white p-6 shadow-md">
                   <header className="mb-3 flex items-center justify-between">
-                     <h1 className="text-mainColor font-bold">Edit {"Student's"} Details</h1>
+                     <h1 className="font-bold text-mainColor">Edit {"Student's"} Details</h1>
                      <span
                         className="text-[18px] font-bold text-[darkRed]"
                         onClick={() => {
@@ -144,7 +145,7 @@ const SingleStudent = ({
                         onChange={updateEditingDetails}
                      />
 
-                     <button type="submit" className="bg-mainColor mt-3 w-full rounded-md p-3 text-white active:scale-[0.98]">
+                     <button type="submit" className="mt-3 w-full rounded-md bg-mainColor p-3 text-white active:scale-[0.98]">
                         Edit Student Details
                      </button>
                   </form>
@@ -161,12 +162,12 @@ const SingleStudent = ({
                >
                   <input
                      type="text"
-                     className="border-mainColor flex-[0.8] rounded-l-md border-2 px-2 py-2 text-black outline-none"
+                     className="flex-[0.8] rounded-l-md border-2 border-mainColor px-2 py-2 text-black outline-none"
                      placeholder={`Max. of 100 characters`}
                      value={comment}
                      onChange={(e: ChangeEvent<HTMLInputElement>) => updateComment(e.target.value)}
                   />
-                  <button type="submit" className="bg-mainColor flex flex-[0.2] items-center justify-center rounded-r-md text-[20px] text-white">
+                  <button type="submit" className="flex flex-[0.2] items-center justify-center rounded-r-md bg-mainColor text-[20px] text-white">
                      <BiEdit />
                   </button>
                </form>
@@ -194,7 +195,7 @@ const SingleStudent = ({
                                        onChange={(e: ChangeEvent<HTMLInputElement>) => updateEditingComment(e.target.value)}
                                        type="text"
                                        placeholder="Max. of 100 characters"
-                                       className="border-mainColor flex-1 rounded-md border-2 px-4 py-2 outline-none"
+                                       className="flex-1 rounded-md border-2 border-mainColor px-4 py-2 outline-none"
                                     />
                                  ) : (
                                     <h1 className="px-4 py-2">{comment.text.length > 28 ? `${comment.text.slice(0, 28)}...` : comment.text}</h1>
@@ -240,7 +241,7 @@ const SingleStudent = ({
 
                      <div className="my-4 flex justify-end">
                         <button
-                           className="bg-mainColor w-[150px] rounded-full py-3 text-white"
+                           className="w-[150px] rounded-full bg-mainColor py-3 text-white"
                            onClick={() => {
                               setStudentCommentsTabOpen("");
                            }}
@@ -254,7 +255,9 @@ const SingleStudent = ({
             <div className="flex items-center">
                <div className={styles.cardHeaderName} onClick={() => handleStudents(student.id)}>
                   <div className="flex w-[128px] flex-col gap-y-2 overflow-hidden text-ellipsis">
-                     <p className={styles.studentName}>{`${student.firstName} ${student.lastName}`}</p>
+                     <Link href={`/teachers/students/${student.id}`}>
+                        <p className={styles.studentName + " max-w-fit hover:underline"}>{`${student.firstName} ${student.lastName}`}</p>
+                     </Link>
                   </div>
                   <span className="text-[17px]" data-testid="chevron">
                      {headings.includes(student.id) ? <IoIosArrowUp /> : <IoIosArrowDown />}
