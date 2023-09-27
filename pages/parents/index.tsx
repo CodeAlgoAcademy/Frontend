@@ -15,39 +15,10 @@ import Screentime from "@/components/parents/screentime/Screentime";
 
 const Dashboard = () => {
    const dispatch = useDispatch();
-   const parent = useSelector((state: RootState) => state.parentChild);
-
-   const [timeLimits, setTimeLimits] = useState<screentimeTypes[]>([
-      { id: 1, dayOfTheWeek: "Monday", timeLimit: 0 },
-      { id: 1, dayOfTheWeek: "Tuesday", timeLimit: 0 },
-      { id: 1, dayOfTheWeek: "Wednesday", timeLimit: 0 },
-      { id: 1, dayOfTheWeek: "Thursday", timeLimit: 0 },
-      { id: 1, dayOfTheWeek: "Friday", timeLimit: 0 },
-      { id: 1, dayOfTheWeek: "Saturday", timeLimit: 0 },
-      { id: 1, dayOfTheWeek: "Sunday", timeLimit: 0 },
-   ]);
-
-   const changeTimeLimit = (currentChild: IParentChild) => {
-      return currentChild?.timeLimits?.map((time) => {
-         let currentTime = { ...time };
-         if (time.timeLimit === "12:00:00") {
-            currentTime.timeLimit = "No Limit";
-         } else {
-            currentTime.timeLimit = parseInt((time.timeLimit as string).split(":")[0]);
-         }
-         return currentTime;
-      });
-   };
 
    useEffect(() => {
       dispatch(getChildren());
    }, []);
-
-   useEffect(() => {
-      if (parent?.currentChild) {
-         setTimeLimits(changeTimeLimit(parent?.currentChild));
-      }
-   }, [parent?.currentChild, parent?.currentChild?.timeLimits]);
 
    return (
       <ParentLayout>
