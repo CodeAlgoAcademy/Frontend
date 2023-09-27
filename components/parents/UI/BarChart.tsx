@@ -11,7 +11,7 @@ const BarChart = ({ data, barSpace, barWidth, maxHours }: Props) => {
    const [weekIndex, setWeekIndex] = useState(0);
    return (
       <>
-         <div className="relative mt-14 flex h-[170px] w-full flex-1 flex-col pl-6">
+         <div className="relative mt-6 flex h-[200px] w-full flex-1 flex-col pl-6">
             <div className="h-full border-l pt-5">
                <ul className="relative flex h-full flex-col justify-between">
                   <>
