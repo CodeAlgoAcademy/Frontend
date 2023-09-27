@@ -2,21 +2,22 @@ import React, { StyleHTMLAttributes } from "react";
 
 interface Props {
    title: string;
-   titleSize: "small" | "base";
+   titleSize: "large" | "base";
    percentage: number;
    color: "red" | "green";
+   containerSize: "large" | "base";
 }
 
-const ProgressBar = ({ title, titleSize, percentage, color }: Props) => {
-   percentage = percentage * 100
+const ProgressBar = ({ title, titleSize, percentage, color, containerSize }: Props) => {
+   percentage = parseFloat((percentage * 100).toFixed(1));
    const progressBarStyle = {
       width: `${percentage <= 100 ? percentage : ""}%`,
    };
-   const baseTitle = "min-w-[84px] max-w-[84px] text-base font-semibold";
-   const smallTitle = "min-w-[84px] max-w-[84px] text-sm font-medium text-[#A8ABB0]";
+   const largeTitle = `min-w-[150px] max-w-[150px] text-base font-semibold`;
+   const baseTitle = `${containerSize == "base" ? "min-w-[84px] max-w-[84px]" : "min-w-[190px] max-w-[190px]"} text-sm font-medium text-[#A8ABB0]`;
    return (
       <div className="flex h-5 items-center">
-         <p title={title} className={`w-full overflow-hidden truncate whitespace-nowrap ${titleSize === "base" ? baseTitle : smallTitle}`}>
+         <p title={title} className={`w-full overflow-hidden truncate whitespace-nowrap ${titleSize === "large" ? largeTitle : baseTitle}`}>
             {title}
          </p>
          <span className="progress-indicator-bar relative h-full w-full rounded-r-xl bg-[#ECEDF3]">

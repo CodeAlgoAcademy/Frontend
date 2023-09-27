@@ -37,12 +37,12 @@ const Screentime = ({ size }: ScreentimeProps) => {
          title="Screen Time"
          padding="large"
          showSublink={router.pathname === "/parents"}
-         link={"/parents/multiplayer"}
+         link={"/parents/screen-time"}
          style={{ minWidth: "100%", maxWidth: "100%" }}
       >
          <BarChart
             data={timeLimits?.map((time) => {
-               return "No Limit" ? 8 : (time.timeLimit as number);
+               return time.timeLimit === "No Limit" ? 8 : (time.timeLimit as number);
             })}
             barSpace={9.6}
             barWidth={3.3}
