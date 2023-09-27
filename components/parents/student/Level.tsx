@@ -21,7 +21,7 @@ const Level = ({ size }: ILevelProps) => {
    }, [parent.currentChild.id]);
    return (
       <ContentBox size="large" title="Progress" padding="small" style={{ minWidth: "100%", maxWidth: "100%" }}>
-         <h2 className="font-medium\ text-center text-[22px]">Level {(parent?.currentChild?.question_level as number) + 1} ⚡</h2>
+         <h2 className="font-medium\ text-center text-[22px]">Level {(parent?.currentChild?.level as number) + 1} ⚡</h2>
          <React.Fragment>
             <div className="mt-6 ml-4">
                <ProgressBar
