@@ -47,13 +47,13 @@ const initialState: IParentChildren = {
    username: "",
    friend: "",
    timeLimits: [
-      { dayOfTheWeek: "Monday", timeLimit: "" },
-      { dayOfTheWeek: "Tuesday", timeLimit: "" },
-      { dayOfTheWeek: "Wednesday", timeLimit: "" },
-      { dayOfTheWeek: "Thursday", timeLimit: "" },
-      { dayOfTheWeek: "Friday", timeLimit: "" },
-      { dayOfTheWeek: "Saturday", timeLimit: "" },
-      { dayOfTheWeek: "Sunday", timeLimit: "" },
+      { dayOfTheWeek: "Monday", timeLimit: "No Limit" },
+      { dayOfTheWeek: "Tuesday", timeLimit: "No Limit" },
+      { dayOfTheWeek: "Wednesday", timeLimit: "No Limit" },
+      { dayOfTheWeek: "Thursday", timeLimit: "No Limit" },
+      { dayOfTheWeek: "Friday", timeLimit: "No Limit" },
+      { dayOfTheWeek: "Saturday", timeLimit: "No Limit" },
+      { dayOfTheWeek: "Sunday", timeLimit: "No Limit" },
    ],
 };
 
@@ -64,7 +64,7 @@ export const addChild: any = createAsyncThunk("parent/child/new", async (_, thun
    const timeLimitsFormatted = timeLimits.map((timeInfo: screentimeTypes, index: number) => {
       return {
          ...timeInfo,
-         timeLimit: timeInfo.timeLimit === "No Limit" ? `24:00:00` : timeInfo.timeLimit === "" ? "00:00:00" : `${timeInfo.timeLimit}:00:00`,
+         timeLimit: timeInfo.timeLimit === "No Limit" ? `23:00:00` : timeInfo.timeLimit === "" ? "00:00:00" : `${timeInfo.timeLimit}:00:00`,
       };
    });
    const data = { fullname: fullName, password, username, codingExperience, dob, timeLimits: timeLimitsFormatted };
@@ -144,7 +144,9 @@ export const editScreentime: any = createAsyncThunk(
       const state: any = thunkAPI.getState();
       const dispatch = thunkAPI.dispatch;
 
-      data.timeLimit = data.timeLimit === "No Limit" ? `12:00:00` : data.timeLimit === "" ? "00:00:00" : `${data.timeLimit}:00:00`;
+      console.log(data.timeLimit);
+
+      data.timeLimit = data.timeLimit === "No Limit" ? `23:00:00` : data.timeLimit === "" ? "00:00:00" : `${data.timeLimit}:00:00`;
 
       dispatch(openPreloader({ loadingText: "Editing Child Screentime" }));
 
