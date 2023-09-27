@@ -170,7 +170,7 @@ const ParentLayout = ({ children }: Props) => {
                               }}
                               className="flex items-center gap-2"
                            >
-                              <span className="text-mainColor text-base">{user?.username || `${user?.firstname} ${user?.lastname}`}</span>
+                              <span className="text-base text-mainColor">{user?.username || `${user?.firstname} ${user?.lastname}`}</span>
                               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="10" viewBox="0 0 18 10" fill="none">
                                  <path
                                     d="M1.7998 1.25L9.2998 8.75L16.7998 1.25"
@@ -189,7 +189,7 @@ const ParentLayout = ({ children }: Props) => {
                                  } top-[140%] right-0 z-[6] w-[90vw] max-w-[300px] rounded-md bg-white px-4 py-4`}
                               >
                                  <div className="relative z-10">
-                                    <div className="text-mainColor flex items-center justify-between text-[18px] font-bold">
+                                    <div className="flex items-center justify-between text-[18px] font-bold text-mainColor">
                                        <h1 className="flex items-center gap-x-3 ">
                                           <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                              <path
@@ -222,7 +222,7 @@ const ParentLayout = ({ children }: Props) => {
                                        <UpdateUserForms />
                                     </main>
                                     <motion.div
-                                       className="text-mainColor mt-[1rem] flex cursor-pointer items-center pb-2"
+                                       className="mt-[1rem] flex cursor-pointer items-center pb-2 text-mainColor"
                                        initial={{ opacity: 0, y: "5px" }}
                                        animate={{
                                           opacity: 1,
@@ -250,7 +250,7 @@ const ParentLayout = ({ children }: Props) => {
                            }}
                            data-testid="select-child"
                         >
-                           <h1 className="do-not-select text-mainColor cursor-pointer text-3xl font-semibold capitalize">
+                           <h1 className="do-not-select cursor-pointer text-2xl font-semibold capitalize text-mainColor md:text-3xl ">
                               {parent?.currentChild?.fullName}
                            </h1>
                            <svg
