@@ -69,7 +69,6 @@ export const signUpUser: any = createAsyncThunk("authSlice/signUpUser", async (n
          password1: state.user.auth.password,
          password2: state.user.auth.password,
          firstname,
-         lastname,
          is_parent,
          is_organizer,
          is_student,
@@ -77,6 +76,10 @@ export const signUpUser: any = createAsyncThunk("authSlice/signUpUser", async (n
          username,
          organization_code,
       };
+      // some google accounts do not have lastname
+      if (lastname) {
+         options.lastname = lastname;
+      }
 
       if (is_teacher) {
          options = { ...options, country: schoolCountry, schoolCountry, schoolName, grade: "" };
