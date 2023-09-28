@@ -14,6 +14,7 @@ import { RootState } from "store/store";
 import { updateUser } from "store/authSlice";
 import { checkEmail } from "utils/checkmail";
 import Link from "next/link";
+import { checkPolicy, unCheckPolicy } from "store/policySlice";
 
 export default function Parent() {
    const dispatch = useDispatch();
@@ -27,6 +28,11 @@ export default function Parent() {
       <Form2 key={2} />,
       <Form3 key={3} />,
    ]);
+
+   const toggleCheck = (e: ChangeEvent<HTMLInputElement>) => {
+      if (e.target.checked) dispatch(checkPolicy());
+      else dispatch(unCheckPolicy());
+   };
 
    const signUp = async (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -68,7 +74,15 @@ export default function Parent() {
                <div className="">{step}</div>
                <div>
                   <div className="mt-4">
-                     <input type="checkbox" checked={policyChecked} name="" className="inline-block scale-[120%] accent-mainColor" id="privacy" />
+                     <input
+                        type="checkbox"
+                        onChange={toggleCheck}
+                        checked={policyChecked}
+                        name=""
+                        className="inline-block scale-[120%] accent-mainColor"
+                        id="privacy"
+                        required={true}
+                     />
                      <label htmlFor="privacy" className="ml-2 inline-block cursor-pointer hover:underline">
                         <Link href={"/privacy-policy"}> I accept the terms and condition</Link>
                      </label>
