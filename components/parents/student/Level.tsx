@@ -18,7 +18,7 @@ const Level = ({ size }: ILevelProps) => {
       if (parent?.currentChild?.id) {
          dispatch(getChildProgress());
       }
-   }, [parent.currentChild.id]);
+   }, [parent.currentChild?.id]);
    return (
       <ContentBox size="large" title="Progress" padding="small" style={{ minWidth: "100%", maxWidth: "100%" }}>
          <h2 className="font-medium\ text-center text-[22px]">Level {(parent?.currentChild?.level as number) + 1} ⚡</h2>

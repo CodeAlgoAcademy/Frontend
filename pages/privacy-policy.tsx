@@ -161,6 +161,24 @@ const PrivacyPolicy = () => {
         • all factual information contained in the Feedback is true and accurate.
 `}
                />
+               <div className="mt-[20px] pl-4">
+                  <Policies
+                     isSubtitle={true}
+                     title="Patent Protection Alert"
+                     body="Please be aware that certain cutting-edge features and breakthrough innovations within CodeAlgo are currently safeguarded by pending patents, not only within the United States but also in other jurisdictions worldwide. Any unauthorized utilization or replication of these patented elements could potentially expose you to rigorous legal repercussions.
+"
+                  />
+               </div>
+
+               <div className="mt-[20px] pl-4">
+                  <Policies
+                     isSubtitle={true}
+                     title="Non-Compete Covenant
+"
+                     body="By engaging with CodeAlgo, you explicitly affirm that you are not engaged in competitive ventures with CodeAlgo, and you pledge not to exploit the platform in any way that may confer a competitive edge or facilitate the misappropriation of intellectual property, trade secrets, or confidential information disclosed on this platform. Contravening this non-compete commitment may result in stringent legal action.
+"
+                  />
+               </div>
             </div>
             <div className="mt-[20px]">
                <Policies
@@ -315,23 +333,6 @@ You will be able to access premium features for your child’s account for the p
                   </a>
                </p>
                <p className="font-[500]">Thank you for being part of our beta community!</p>
-            </div>
-
-            <div className="mt-[20px]">
-               <Policies
-                  title="Patent Protection Alert"
-                  body="Please be aware that certain cutting-edge features and breakthrough innovations within CodeAlgo are currently safeguarded by pending patents, not only within the United States but also in other jurisdictions worldwide. Any unauthorized utilization or replication of these patented elements could potentially expose you to rigorous legal repercussions.
-"
-               />
-            </div>
-
-            <div className="mt-[20px]">
-               <Policies
-                  title="Non-Compete Covenant
-"
-                  body="By engaging with CodeAlgo, you explicitly affirm that you are not engaged in competitive ventures with CodeAlgo, and you pledge not to exploit the platform in any way that may confer a competitive edge or facilitate the misappropriation of intellectual property, trade secrets, or confidential information disclosed on this platform. Contravening this non-compete commitment may result in stringent legal action.
-"
-               />
             </div>
 
             <div className="mt-[20px]">
