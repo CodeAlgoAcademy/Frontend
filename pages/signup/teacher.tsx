@@ -13,6 +13,7 @@ import GoogleBtn from "@/components/UI/googleBtn";
 import Form3 from "@/components/stepForm/general/Form3";
 import { checkEmail } from "utils/checkmail";
 import Link from "next/link";
+import { checkPolicy, unCheckPolicy } from "store/policySlice";
 
 export default function Teacher() {
    const dispatch = useDispatch();
@@ -25,6 +26,11 @@ export default function Teacher() {
       <Form3 key={3} />,
       <TeacherInfo key={4} />,
    ]);
+
+   const toggleCheck = (e: ChangeEvent<HTMLInputElement>) => {
+      if (e.target.checked) dispatch(checkPolicy());
+      else dispatch(unCheckPolicy());
+   };
 
    const signup = async (event: ChangeEvent<HTMLFormElement>) => {
       event.preventDefault();
@@ -54,7 +60,15 @@ export default function Teacher() {
             <div className="">{step}</div>
             <div>
                <div className="mt-4">
-                  <input type="checkbox" checked={policyChecked} name="" className="accent-mainColor inline-block scale-[120%]" id="privacy" />
+                  <input
+                     type="checkbox"
+                     checked={policyChecked}
+                     onChange={toggleCheck}
+                     name=""
+                     className="inline-block scale-[120%] accent-mainColor"
+                     id="privacy"
+                     required={true}
+                  />
                   <label htmlFor="privacy" className="ml-2 inline-block cursor-pointer hover:underline">
                      <Link href={"/privacy-policy"}> I accept the terms and condition</Link>
                   </label>
