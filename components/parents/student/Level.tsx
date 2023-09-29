@@ -34,7 +34,7 @@ const Level = ({ size }: ILevelProps) => {
                <div className="mt-8">
                   <h3 className="font-semibold">Comprehension Tracking</h3>
                   <div className="small-scroll-thumb blue-scroll-thumb mt-3 flex h-[100px] flex-col gap-5 overflow-y-auto pr-4">
-                     {[...(parent.currentChild.progress?.topic || [])]
+                     {[...(parent.currentChild?.progress?.topic || [])]
                         ?.sort((lessonA, lessonB) => lessonA?.level - lessonB?.level)
                         ?.map((lesson: IChildProgress, index: number) => (
                            <ProgressBar
