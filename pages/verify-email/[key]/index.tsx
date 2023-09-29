@@ -14,7 +14,6 @@ const VerifyWithKey = () => {
    const { email } = useSelector((state: RootState) => state.user.auth);
    const [loading, setLoading] = useState<boolean>(true);
    const [error, setError] = useState<boolean>(true);
-   const [mounted, setMounted] = useState<boolean>(false);
    const dispatch = useDispatch();
    const router = useRouter();
    const key = router?.query?.key;
@@ -41,7 +40,6 @@ const VerifyWithKey = () => {
             setLoading(false);
             setError(true);
          }
-         setMounted(true);
       }
    };
 
@@ -54,10 +52,10 @@ const VerifyWithKey = () => {
    };
 
    useEffect(() => {
-      if (!mounted) {
+      if (key) {
          verifyEmail();
       }
-   });
+   }, [key]);
 
    return (
       <section className="flex min-h-screen w-full items-center justify-center bg-[#ECEDF3]">
