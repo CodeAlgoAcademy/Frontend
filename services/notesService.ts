@@ -3,9 +3,10 @@ import http from "axios.config";
 import { getAccessToken } from "utils/getTokens";
 import { closePreloader, openErrorModal } from "store/fetchSlice";
 import { errorResolver } from "utils/errorResolver";
+import { RootState } from "store/store";
 
 export const getNotes: any = createAsyncThunk("notesSlice/getNotes", async (name, thunkApi) => {
-   const state: any = thunkApi.getState();
+   const state = <RootState>thunkApi.getState();
    const dispatch = thunkApi.dispatch;
    try {
       const { data } = await http.get("/academics/notes", {
@@ -21,7 +22,7 @@ export const getNotes: any = createAsyncThunk("notesSlice/getNotes", async (name
 });
 
 export const updateNotes: any = createAsyncThunk("notesSlice/updateNotes", async (name, thunkApi) => {
-   const state: any = thunkApi.getState();
+   const state = <RootState>thunkApi.getState();
    const dispatch = thunkApi.dispatch;
    const { html } = state.notes;
    try {

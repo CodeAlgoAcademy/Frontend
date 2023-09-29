@@ -1,7 +1,7 @@
 import React, { ChangeEventHandler, MouseEventHandler, useState } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import Button from "@/components/UI/Button";
-import { Student, DynamicChechbox } from "types/interfaces";
+import { ISingleStudent, DynamicChechbox } from "types/interfaces";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 
@@ -13,7 +13,7 @@ const StudentModal = ({
    allStudentCheckbox,
    studentCheckbox,
 }: {
-   students: Student[];
+   students: ISingleStudent[];
    hideModal: MouseEventHandler;
    handleStudentCheckboxChange: Function;
    handleAllStudentChechbox: ChangeEventHandler;
@@ -23,7 +23,7 @@ const StudentModal = ({
    const { className, color } = useSelector((state: RootState) => state.currentClass);
    return (
       <div className="h-[500px] min-w-[800px] py-12" data-testid="students-modal">
-         <h3 className="text-mainColor pl-12 text-2xl font-semibold">Student(s)</h3>
+         <h3 className="pl-12 text-2xl font-semibold text-mainColor">Student(s)</h3>
          <div className="flex items-center justify-between border-b px-12 py-4">
             <div className="flex items-center gap-4">
                <div className="checkbox-container bottom-1">
