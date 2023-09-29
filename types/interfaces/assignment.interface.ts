@@ -1,4 +1,4 @@
-import { Student } from "./student.interface";
+import { ISingleStudent } from "./student.interface";
 
 export interface IMainAssignment {
    id?: string | number;
@@ -7,7 +7,7 @@ export interface IMainAssignment {
    date: string;
    number: number;
    skills: AssignmentSkill[];
-   students: Student[];
+   students: ISingleStudent[];
    is_current: boolean;
    status: string;
    start_date: string;
@@ -21,7 +21,7 @@ export interface AssignmentDetails {
    end_date: string;
    number: number;
    skills: AssignmentSkill[];
-   students: Student[];
+   students: ISingleStudent[];
    is_current: boolean;
 }
 
