@@ -1,3 +1,4 @@
+import { defaultTimeLimits } from "@/components/Teachers/students/AddStudentModal";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import http from "axios.config";
 import { closePreloader, openErrorModal, openPreloader } from "store/fetchSlice";
@@ -6,7 +7,7 @@ import { errorResolver } from "utils/errorResolver";
 import { getAccessToken } from "utils/getTokens";
 
 export const getAllClasses: any = createAsyncThunk("allClassesSlice/getAllClasses", async (name, thunkApi) => {
-   const state: any = thunkApi.getState();
+   const state = <RootState>thunkApi.getState();
    const dispatch = thunkApi.dispatch;
 
    try {
@@ -35,7 +36,7 @@ export const addClass: any = createAsyncThunk("allClassesSlice/addClass", async 
    let method: "Class Only" | "Class & Student" | "Class & File" | "Class & Student & File" = "Class Only";
 
    const formData = new FormData();
-   let options = {};
+   let options: any = {};
    if (firstName && lastName && email) {
       method = "Class & Student";
       options = {
@@ -44,15 +45,19 @@ export const addClass: any = createAsyncThunk("allClassesSlice/addClass", async 
          subject,
          roomNumber,
          color,
-         organization: organization || "",
          student: {
             firstName,
             lastName,
             email,
             username,
             dob,
+            timeLimits: defaultTimeLimits,
          },
       };
+
+      if (organization) {
+         options.organization = organization;
+      }
    } else if (file?.name) {
       method = "Class & File";
       formData.append("className", className);
@@ -61,7 +66,9 @@ export const addClass: any = createAsyncThunk("allClassesSlice/addClass", async 
       formData.append("color", color);
       formData.append("roomNumber", roomNumber as string);
       formData.append("file", file, "student file");
-      formData.append("organization", (organization || "") as string);
+      if (organization) {
+         formData.append("organization", (organization || "") as string);
+      }
    } else {
       method = "Class Only";
       formData.append("className", className);
@@ -69,7 +76,9 @@ export const addClass: any = createAsyncThunk("allClassesSlice/addClass", async 
       formData.append("subject", subject);
       formData.append("color", color);
       formData.append("roomNumber", roomNumber as string);
-      formData.append("organization", (organization || "") as string);
+      if (organization) {
+         formData.append("organization", (organization || "") as string);
+      }
    }
 
    try {

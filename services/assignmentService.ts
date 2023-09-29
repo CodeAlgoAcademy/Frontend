@@ -51,7 +51,7 @@ export const addNewAssignments: any = createAsyncThunk(
       },
       thunkApi
    ) => {
-      const state: any = thunkApi.getState();
+      const state = <RootState>thunkApi.getState();
       const { id, is_current, is_finished, start_date } = state.unit.currentUnitInView;
       const dispatch = thunkApi.dispatch;
       const errors: string[] = checkAssignmentErrors(assignment);
@@ -114,7 +114,7 @@ export const updateAssignment: any = createAsyncThunk(
       },
       thunkApi
    ) => {
-      const state: any = thunkApi.getState();
+      const state = <RootState>thunkApi.getState();
       const { id, is_current, is_finished, start_date } = state.unit.currentUnitInView;
       const dispatch = thunkApi.dispatch;
       const errors: string[] = checkAssignmentErrors(assignment);
@@ -158,7 +158,7 @@ export const updateAssignment: any = createAsyncThunk(
 );
 
 export const getAssignments: any = createAsyncThunk("newAssignmentSlice/getAssignments", async (_, thunkApi) => {
-   const state: any = thunkApi.getState();
+   const state = <RootState>thunkApi.getState();
    const { id } = state.unit.currentUnitInView;
    const dispatch = thunkApi.dispatch;
    try {
