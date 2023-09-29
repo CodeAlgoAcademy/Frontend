@@ -5,7 +5,7 @@ import { getTeachers } from "services/teacherService";
 import { open_a_message } from "store/messagesSlice";
 import { RootState } from "store/store";
 import { getStudents } from "store/studentSlice";
-import { CurrentClassState, Student, User } from "types/interfaces";
+import { CurrentClassState, ISingleStudent, User } from "types/interfaces";
 
 const ChatTabs = () => {
    const [active, setActive] = useState<number | string>(0);
@@ -34,7 +34,7 @@ const ChatTabs = () => {
          <article className={openedStudent ? "max-h-full flex-1 overflow-y-auto bg-gray-100 p-0" : "overflow-y-auto bg-gray-100"}>
             {openedStudent && (
                <div className="overflow-hidden">
-                  {students?.students?.map((student: Student) => {
+                  {students?.students?.map((student: ISingleStudent) => {
                      return (
                         <p
                            onClick={() => {

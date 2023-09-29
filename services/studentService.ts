@@ -1,8 +1,8 @@
-import { Student } from "types/interfaces";
+import { ISingleStudent } from "types/interfaces";
 import { getAccessToken } from "utils/getTokens";
 import http from "../axios.config";
 
-const addStudent = async (data: Student, id: string) => {
+const addStudent = async (data: ISingleStudent, id: string) => {
    const finalData = {
       student: data,
    };

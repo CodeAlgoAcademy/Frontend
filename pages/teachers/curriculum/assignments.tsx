@@ -13,7 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getStudents } from "store/studentSlice";
 import SingleAssignment from "@/components/Teachers/curriculum/assignment/singleAssignment";
 
-import { SkillDetails, AssignmentDetails, AssignmentSkill, Student, DynamicChechbox, IMainAssignment } from "types/interfaces";
+import { SkillDetails, AssignmentDetails, AssignmentSkill, ISingleStudent, DynamicChechbox, IMainAssignment } from "types/interfaces";
 import { addNewAssignments, getAssignments, updateAssignment } from "services/assignmentService";
 import { getDate } from "utils/getDate";
 import { useRouter } from "next/router";
@@ -90,13 +90,13 @@ const Assignments = () => {
          return { ...prev, skills: newSkills };
       });
    };
-   const addStudent = (newStudent: Student) => {
+   const addStudent = (newStudent: ISingleStudent) => {
       setAssignmentDetails((prev) => {
          const prevStudents = prev.students;
          return { ...prev, students: [...prevStudents, newStudent] };
       });
    };
-   const removeStudent = (newStudent: Student) => {
+   const removeStudent = (newStudent: ISingleStudent) => {
       setAssignmentDetails((prev) => {
          const prevStudents = prev.students;
          const newStudents = prevStudents.filter((student) => student.email !== newStudent.email);
@@ -131,7 +131,7 @@ const Assignments = () => {
          removeSkill({ skillId: e.target.name });
       }
    };
-   const handleStudentCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>, studentDetails: Student) => {
+   const handleStudentCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>, studentDetails: ISingleStudent) => {
       setStudentCheckbox((prev) => ({
          ...prev,
          [e.target.name]: e.target.checked,
@@ -209,7 +209,7 @@ const Assignments = () => {
       <>
          <TeacherLayout>
             <div className="flex items-center justify-between">
-               <div className="text-mainColor mb-6 flex items-center gap-x-2">
+               <div className="mb-6 flex items-center gap-x-2 text-mainColor">
                   <span
                      className="cursor-pointer text-[22px] font-bold"
                      onClick={() => {
@@ -222,7 +222,7 @@ const Assignments = () => {
                      New Assignment
                   </h2>
                </div>
-               <span className="text-mainColor flex cursor-pointer items-center gap-3 hover:opacity-80">
+               <span className="flex cursor-pointer items-center gap-3 text-mainColor hover:opacity-80">
                   <span className="text-lg">
                      <BsPlusCircle />
                   </span>
@@ -331,24 +331,24 @@ const Assignments = () => {
                                  <input
                                     type="date"
                                     value={assignmentDetails.start_date}
-                                    className="hoverElement border-mainColor max-w-[130px] rounded-md border px-3 py-1 text-[15px] outline-none"
+                                    className="hoverElement max-w-[130px] rounded-md border border-mainColor px-3 py-1 text-[15px] outline-none"
                                     onChange={(e) => {
                                        updateScheduleDate("start_date", e.target.value);
                                     }}
                                  />
-                                 <div className="hoverText bg-mainColor after:bg-mainColor right-[0] -top-[56px]">Start date</div>
+                                 <div className="hoverText right-[0] -top-[56px] bg-mainColor after:bg-mainColor">Start date</div>
                               </div>
                            )}
                            <div className="relative max-w-fit">
                               <input
                                  type="date"
                                  value={assignmentDetails.end_date}
-                                 className="hoverElement border-mainColor max-w-[130px] rounded-md border px-3 py-1 text-[15px] outline-none"
+                                 className="hoverElement max-w-[130px] rounded-md border border-mainColor px-3 py-1 text-[15px] outline-none"
                                  onChange={(e) => {
                                     updateScheduleDate("end_date", e.target.value);
                                  }}
                               />
-                              <div className="hoverText bg-mainColor after:bg-mainColor right-[0] -top-[56px]">End date</div>
+                              <div className="hoverText right-[0] -top-[56px] bg-mainColor after:bg-mainColor">End date</div>
                            </div>
                         </div>
                      </div>
@@ -505,7 +505,7 @@ const Assignments = () => {
                            <p>
                               Click on{" "}
                               <span
-                                 className="text-mainColor cursor-pointer font-bold"
+                                 className="cursor-pointer font-bold text-mainColor"
                                  onClick={() => {
                                     switchModal("historyResponse");
                                  }}
@@ -522,7 +522,7 @@ const Assignments = () => {
                            <p>
                               Click on{" "}
                               <span
-                                 className="text-mainColor cursor-pointer font-bold"
+                                 className="cursor-pointer font-bold text-mainColor"
                                  onClick={() => {
                                     switchModal("historyResponse");
                                  }}
