@@ -1,11 +1,11 @@
-import { Student } from "./student.interface";
+import { ISingleStudent } from "./student.interface";
 
 export interface newLesson {
    topic: {
       title: string;
       description: string;
    };
-   students: Student[];
+   students: ISingleStudent[];
    start_date: string;
    end_date: string;
    status: "published" | "unpublished";

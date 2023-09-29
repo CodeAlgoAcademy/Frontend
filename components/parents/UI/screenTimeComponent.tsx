@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
-import { screentimeTypes } from "types/interfaces";
+import { days, screentimeTypes } from "types/interfaces";
 
 const hours: Array<number | "No Limit"> = ["No Limit", 0, 1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -13,8 +13,8 @@ const ScreenTimeComponent = ({
    index,
 }: {
    time: screentimeTypes;
-   updateTime?: (day: string, hour: number | "No Limit") => void;
-   updateScreenTimeForChild?: (id: string | number, day: string, hour: number | "No Limit") => void;
+   updateTime?: (day: days, hour: number | "No Limit") => void;
+   updateScreenTimeForChild?: (id: string | number, day: days, hour: number | "No Limit") => void;
    index?: number;
 }) => {
    const { username, currentChild } = useSelector((state: RootState) => state.parentChild);

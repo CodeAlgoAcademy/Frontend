@@ -4,25 +4,28 @@ import { generateUsername } from "utils/generateUsername";
 import { RiCloseLine } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { addStudent, getStudents, studentsBulkImport } from "store/studentSlice";
-import { Student, IInputFields } from "types/interfaces";
+import { IInputFields, ISingleStudent, screentimeTypes } from "types/interfaces";
 import style from "styles/styles";
 import { FaTimes, FaChevronLeft, FaPlus, FaCheckDouble } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { getAllClasses } from "services/classesService";
 import { openErrorModal } from "store/fetchSlice";
 import BulkImportModal from "@/components/Teachers/addClass/bulkImportModal";
-interface State {
-   firstName: string;
-   lastName: string;
-   email: string;
-   username: string;
-   dob: string;
-}
+
+export const defaultTimeLimits: screentimeTypes[] = [
+   { dayOfTheWeek: "Monday", timeLimit: "No Limit" },
+   { dayOfTheWeek: "Tuesday", timeLimit: "No Limit" },
+   { dayOfTheWeek: "Wednesday", timeLimit: "No Limit" },
+   { dayOfTheWeek: "Thursday", timeLimit: "No Limit" },
+   { dayOfTheWeek: "Friday", timeLimit: "No Limit" },
+   { dayOfTheWeek: "Saturday", timeLimit: "No Limit" },
+   { dayOfTheWeek: "Sunday", timeLimit: "No Limit" },
+];
 
 const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
    const dispatch = useDispatch();
    const router = useRouter();
-   const [formData, setFormData] = useState<State>({
+   const [formData, setFormData] = useState<ISingleStudent>({
       firstName: "",
       lastName: "",
       email: "",
@@ -76,12 +79,13 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
    const onSubmit = (e: any) => {
       e.preventDefault();
       if (firstName && lastName) {
-         const data: Student = {
+         const data: ISingleStudent = {
             firstName,
             lastName,
             email,
             username,
             dob,
+            timeLimits: defaultTimeLimits,
          };
 
          dispatch(addStudent(data)).then((data: any) => {
@@ -134,7 +138,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
             <aside className={`min-h-full flex-[0.075] rounded-tl-md rounded-bl-md`} style={{ backgroundColor: "#FFE977" }}></aside>
 
             <form className="h-full flex-[0.9] py-8" onSubmit={onSubmit}>
-               <header className="text-mainColor mb-6 flex w-full items-center gap-x-2 px-8">
+               <header className="mb-6 flex w-full items-center gap-x-2 px-8 text-mainColor">
                   <span
                      className="text-[20px] font-bold"
                      onClick={() => {
@@ -165,7 +169,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
                   })}
                   <button
                      type="button"
-                     className=" bg-mainColor rounded-md px-2 py-3 text-white shadow-md active:scale-[0.91]"
+                     className=" rounded-md bg-mainColor px-2 py-3 text-white shadow-md active:scale-[0.91]"
                      onClick={() => {
                         if (firstName || lastName) {
                            const randomName = generateUsername(firstName, lastName);
@@ -208,7 +212,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
                   </div>
                   <button
                      type="submit"
-                     className="bg-mainColor min-w-[150px] rounded-[30px] py-3 px-4 text-[16px] text-white hover:shadow-md"
+                     className="min-w-[150px] rounded-[30px] bg-mainColor py-3 px-4 text-[16px] text-white hover:shadow-md"
                      onClick={() => {
                         if (file) {
                            handleFileSubmit();

@@ -6,6 +6,7 @@ import { closePreloader, openErrorModal, openPreloader } from "./fetchSlice";
 import { RootState } from "./store";
 import http from "axios.config";
 import { getAccessToken } from "utils/getTokens";
+import { setTimeLimit } from "utils/useMultiForm";
 
 const initialState: IParentChildren = {
    // child: {
@@ -47,13 +48,13 @@ const initialState: IParentChildren = {
    username: "",
    friend: "",
    timeLimits: [
-      { dayOfTheWeek: "Monday", timeLimit: "" },
-      { dayOfTheWeek: "Tuesday", timeLimit: "" },
-      { dayOfTheWeek: "Wednesday", timeLimit: "" },
-      { dayOfTheWeek: "Thursday", timeLimit: "" },
-      { dayOfTheWeek: "Friday", timeLimit: "" },
-      { dayOfTheWeek: "Saturday", timeLimit: "" },
-      { dayOfTheWeek: "Sunday", timeLimit: "" },
+      { dayOfTheWeek: "Monday", timeLimit: "No Limit" },
+      { dayOfTheWeek: "Tuesday", timeLimit: "No Limit" },
+      { dayOfTheWeek: "Wednesday", timeLimit: "No Limit" },
+      { dayOfTheWeek: "Thursday", timeLimit: "No Limit" },
+      { dayOfTheWeek: "Friday", timeLimit: "No Limit" },
+      { dayOfTheWeek: "Saturday", timeLimit: "No Limit" },
+      { dayOfTheWeek: "Sunday", timeLimit: "No Limit" },
    ],
 };
 
@@ -64,7 +65,7 @@ export const addChild: any = createAsyncThunk("parent/child/new", async (_, thun
    const timeLimitsFormatted = timeLimits.map((timeInfo: screentimeTypes, index: number) => {
       return {
          ...timeInfo,
-         timeLimit: timeInfo.timeLimit === "No Limit" ? `24:00:00` : timeInfo.timeLimit === "" ? "00:00:00" : `${timeInfo.timeLimit}:00:00`,
+         timeLimit: setTimeLimit(timeInfo.timeLimit as string),
       };
    });
    const data = { fullname: fullName, password, username, codingExperience, dob, timeLimits: timeLimitsFormatted };
@@ -82,7 +83,7 @@ export const addChild: any = createAsyncThunk("parent/child/new", async (_, thun
 });
 
 export const addChildFriend: any = createAsyncThunk("parent/child-friend/new", async (child_name: string, thunkAPI) => {
-   const state: any = thunkAPI.getState();
+   const state = <RootState>thunkAPI.getState();
    const dispatch = thunkAPI.dispatch;
    const { friend } = state.parentChild;
 
@@ -103,7 +104,7 @@ export const addChildFriend: any = createAsyncThunk("parent/child-friend/new", a
 });
 
 export const getChildren: any = createAsyncThunk("parent/children", async (_, thunkAPI) => {
-   const state: any = thunkAPI.getState();
+   const state = <RootState>thunkAPI.getState();
    const dispatch = thunkAPI.dispatch;
 
    try {
@@ -140,11 +141,10 @@ export const getChildSkills: any = createAsyncThunk("/parent/child/skills", asyn
 
 export const editScreentime: any = createAsyncThunk(
    "parent/child/edit-screentime",
-   async ({ id, data }: { id: string | number; data: any }, thunkAPI) => {
-      const state: any = thunkAPI.getState();
+   async ({ id, data }: { id: string | number; data: screentimeTypes }, thunkAPI) => {
       const dispatch = thunkAPI.dispatch;
 
-      data.timeLimit = data.timeLimit === "No Limit" ? `12:00:00` : data.timeLimit === "" ? "00:00:00" : `${data.timeLimit}:00:00`;
+      data.timeLimit = setTimeLimit(data.timeLimit as string);
 
       dispatch(openPreloader({ loadingText: "Editing Child Screentime" }));
 

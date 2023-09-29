@@ -48,7 +48,7 @@ const NavButton = ({ image, title, notification, url, isIcon, onClick }: Props) 
                </>
             )}
             {isIcon && detailsDisplay && (
-               <div className=" detail-card absolute top-0 left-[120%] float-right min-w-[80px] rounded-xl border border-slate-200 bg-white py-2 px-4 text-xs font-medium">
+               <div className=" detail-card absolute top-0 right-[120%] float-right min-w-[80px] rounded-xl border border-slate-200 bg-white py-2 px-4 text-xs font-medium">
                   {title}
                </div>
             )}
