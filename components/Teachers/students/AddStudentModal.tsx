@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { getAllClasses } from "services/classesService";
 import { openErrorModal } from "store/fetchSlice";
 import BulkImportModal from "@/components/Teachers/addClass/bulkImportModal";
+import { openSuccessModal } from "store/modalSlice";
 
 export const defaultTimeLimits: screentimeTypes[] = [
    { dayOfTheWeek: "Monday", timeLimit: "No Limit" },
@@ -91,6 +92,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
          dispatch(addStudent(data)).then((data: any) => {
             if (!data?.error) {
                setIsOpen(false);
+               dispatch(openSuccessModal("Your student's login credentials has been sent to the email address you provided!"));
                dispatch(getStudents());
                if (router.pathname === "/teachers/addClass") {
                   dispatch(getAllClasses());
