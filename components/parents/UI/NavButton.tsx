@@ -21,7 +21,7 @@ const NavButton = ({ image, title, notification, url, isIcon, onClick }: Props) 
    }, [router?.pathname, url]);
 
    return (
-      <Link href={`${url}`}>
+      <a href={`${url}`} target={url.includes("https") ? "_blank" : "_self"}>
          <button
             className="relative flex w-full min-w-[50px] items-center justify-center gap-5 rounded-3xl py-[14px] px-7 text-[26px] text-white hover:bg-slate-50"
             style={{
@@ -53,7 +53,7 @@ const NavButton = ({ image, title, notification, url, isIcon, onClick }: Props) 
                </div>
             )}
          </button>
-      </Link>
+      </a>
    );
 };
 
