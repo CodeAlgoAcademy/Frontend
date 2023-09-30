@@ -1,7 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { IModal } from "../types/interfaces";
 
 const initialState: IModal = {
+   successModal: {
+      message: "",
+      isOpen: false,
+   },
    addClassModalOpen: false,
    gradesModalOpen: false,
    showAddStudents: false,
@@ -58,6 +62,16 @@ const modalSlice = createSlice({
       closeSelectOrg: (state: IModal) => {
          state.selectOrganizationOpen = false;
       },
+
+      openSuccessModal: (state: IModal, action: PayloadAction<string>) => {
+         state.successModal.isOpen = true;
+         state.successModal.message = action.payload;
+      },
+
+      closeSuccessModal: (state: IModal) => {
+         state.successModal.isOpen = false;
+         state.successModal.message = "";
+      },
    },
 });
 
@@ -76,6 +90,8 @@ export const {
    closeAddChildModal,
    toggleSelectOrg,
    closeSelectOrg,
+   openSuccessModal,
+   closeSuccessModal,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;
