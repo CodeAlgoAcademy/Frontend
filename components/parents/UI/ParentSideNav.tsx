@@ -33,7 +33,7 @@ const SideNav = ({ unread }: { unread: number }) => {
             <NavButton title="Screen Time" image="screen-time.svg" url="/parents/screen-time" />
             {/* <NavButton title="Multiplayer" image="game.svg" url="/parents/multiplayer" /> */}
          </div>
-         <NavButton image={<GiHelp />} url="/contact" title="Get Help"></NavButton>
+         <NavButton image={<GiHelp />} url="https://discord.gg/rnWnhFr2" title="Get Help"></NavButton>
       </div>
    );
 };

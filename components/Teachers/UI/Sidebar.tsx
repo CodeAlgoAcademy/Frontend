@@ -2,6 +2,9 @@ import React, { ReactElement, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import NavButton from "@/components/parents/UI/NavButton";
+import { BsQuestion } from "react-icons/bs";
+import { GiHelp } from "react-icons/gi";
 
 interface ILink {
    name: string;
@@ -34,7 +37,7 @@ const Sidebar = (props: Props) => {
                            className={
                               activeLink === link.url ||
                               (router?.pathname.includes(link.url) && link.url !== "/teachers" && link.url !== "/organizers")
-                                 ? "bg-mainColor flex cursor-pointer items-center gap-6 rounded-[28px] px-[30px] py-[14px] text-white"
+                                 ? "flex cursor-pointer items-center gap-6 rounded-[28px] bg-mainColor px-[30px] py-[14px] text-white"
                                  : "flex cursor-pointer items-center gap-6 rounded-[28px] px-[30px]  py-[14px] text-gray-600 hover:bg-slate-50 "
                            }
                            onClick={() => {
@@ -56,6 +59,8 @@ const Sidebar = (props: Props) => {
                      </Link>
                   </div>
                ))}
+
+               <NavButton url="https://discord.gg/rnWnhFr2" title="Get Help" image={<GiHelp />} className="!justify-center" />
             </div>
          </>
       </div>

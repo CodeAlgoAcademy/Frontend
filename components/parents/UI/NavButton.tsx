@@ -10,8 +10,9 @@ interface Props {
    url: string;
    isIcon?: boolean;
    onClick?(): void;
+   className?: string;
 }
-const NavButton = ({ image, title, notification, url, isIcon, onClick }: Props) => {
+const NavButton = ({ image, title, notification, url, isIcon, onClick, className }: Props) => {
    const [active, setActive] = useState(false);
    const [detailsDisplay, setDetailsDisplay] = useState(false);
    const router = useRouter();
@@ -21,9 +22,9 @@ const NavButton = ({ image, title, notification, url, isIcon, onClick }: Props) 
    }, [router?.pathname, url]);
 
    return (
-      <Link href={`${url}`}>
+      <a href={`${url}`} target={url.includes("https") ? "_blank" : "_self"}>
          <button
-            className="relative flex w-full min-w-[50px] items-center justify-center gap-5 rounded-3xl py-[14px] px-7 text-[26px] text-white hover:bg-slate-50"
+            className={`relative flex w-full min-w-[50px] items-center justify-center gap-5 rounded-3xl py-[14px] px-7 text-[26px] text-white hover:bg-slate-50 ${className}`}
             style={{
                backgroundColor: active ? "#2073fa" : "",
                padding: !isIcon ? "14px 28px" : "12px",
@@ -48,12 +49,12 @@ const NavButton = ({ image, title, notification, url, isIcon, onClick }: Props) 
                </>
             )}
             {isIcon && detailsDisplay && (
-               <div className=" detail-card absolute top-0 left-[120%] float-right min-w-[80px] rounded-xl border border-slate-200 bg-white py-2 px-4 text-xs font-medium">
+               <div className=" detail-card absolute top-0 right-[120%] float-right min-w-[80px] rounded-xl border border-slate-200 bg-white py-2 px-4 text-xs font-medium">
                   {title}
                </div>
             )}
          </button>
-      </Link>
+      </a>
    );
 };
 
