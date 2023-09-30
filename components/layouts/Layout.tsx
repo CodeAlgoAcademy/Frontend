@@ -8,6 +8,7 @@ import Preloader from "../UI/preloader";
 import { useDispatch } from "react-redux";
 import { closePreloader } from "../../store/fetchSlice";
 import { addUserFromLocalStorage } from "store/authSlice";
+import SuccessModal from "../modals/SuccessModal";
 
 interface Props {
    children?: ReactNode;
@@ -62,6 +63,7 @@ const Layout = ({ children }: Props) => {
                <title>CodeAlgo Academy</title>
             </Head>
             <main>{children}</main>
+            <SuccessModal />
             <ErrorModal />
             <Preloader />
          </div>

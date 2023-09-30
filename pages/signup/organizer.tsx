@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { RootState } from "store/store";
 import { checkEmail } from "utils/checkmail";
 import Link from "next/link";
+import { checkPolicy, unCheckPolicy } from "store/policySlice";
 
 const Organizer = () => {
    const dispatch = useDispatch();
@@ -24,6 +25,11 @@ const Organizer = () => {
       <Form2 key={2} />,
       <Form3 key={3} />,
    ]);
+
+   const toggleCheck = (e: ChangeEvent<HTMLInputElement>) => {
+      if (e.target.checked) dispatch(checkPolicy());
+      else dispatch(unCheckPolicy());
+   };
 
    const signUp = async (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -51,7 +57,15 @@ const Organizer = () => {
                <div className="">{step}</div>
                <div>
                   <div className="mt-4">
-                     <input type="checkbox" checked={policyChecked} name="" className="accent-mainColor inline-block scale-[120%]" id="privacy" />
+                     <input
+                        type="checkbox"
+                        checked={policyChecked}
+                        onChange={toggleCheck}
+                        name=""
+                        className="inline-block scale-[120%] accent-mainColor"
+                        id="privacy"
+                        required={true}
+                     />
                      <label htmlFor="privacy" className="ml-2 inline-block cursor-pointer hover:underline">
                         <Link href={"/privacy-policy"}> I accept the terms and condition</Link>
                      </label>

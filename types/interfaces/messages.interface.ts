@@ -1,11 +1,11 @@
 import { User } from "./auth.interface";
-import { Student } from "./student.interface";
+import { ISingleStudent } from "./student.interface";
 
 export interface IUserConversation {
    conversations: Conversations[];
    openedMessageStudent: number | null;
    openedStudentMessages: string[];
-   openedMessageOwner: User | IFriendsParent | Student;
+   openedMessageOwner: User | IFriendsParent | ISingleStudent;
    openedMessage: IMessage[];
 }
 

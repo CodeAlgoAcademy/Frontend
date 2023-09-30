@@ -47,7 +47,7 @@ const PrivacyPolicy = () => {
                <div className="h-[60px] w-[60px]">
                   <Image src="/assets/Coffee cup.png" width={"60px"} height={"60px"} alt="" />
                </div>
-               <h1 className="text-mainColor text-[28px] font-bold">CodeAlgo Academy Privacy Policy</h1>
+               <h1 className="text-[28px] font-bold text-mainColor">CodeAlgo Academy Privacy Policy</h1>
             </header>
             <div className="mt-[25px]">
                <p>
@@ -161,6 +161,24 @@ const PrivacyPolicy = () => {
         • all factual information contained in the Feedback is true and accurate.
 `}
                />
+               <div className="mt-[20px] pl-4">
+                  <Policies
+                     isSubtitle={true}
+                     title="Patent Protection Alert"
+                     body="Please be aware that certain cutting-edge features and breakthrough innovations within CodeAlgo are currently safeguarded by pending patents, not only within the United States but also in other jurisdictions worldwide. Any unauthorized utilization or replication of these patented elements could potentially expose you to rigorous legal repercussions.
+"
+                  />
+               </div>
+
+               <div className="mt-[20px] pl-4">
+                  <Policies
+                     isSubtitle={true}
+                     title="Non-Compete Covenant
+"
+                     body="By engaging with CodeAlgo, you explicitly affirm that you are not engaged in competitive ventures with CodeAlgo, and you pledge not to exploit the platform in any way that may confer a competitive edge or facilitate the misappropriation of intellectual property, trade secrets, or confidential information disclosed on this platform. Contravening this non-compete commitment may result in stringent legal action.
+"
+                  />
+               </div>
             </div>
             <div className="mt-[20px]">
                <Policies
@@ -323,18 +341,15 @@ You will be able to access premium features for your child’s account for the p
                   body={`We reserve the right to change, modify, add, or remove portions of this ToS at any time without prior notice. We will notify you of any changes to this ToS by sending you a communication through CodeAlgo. Changes will become effective immediately but will not apply retroactively. If you do not agree to the ToS you should immediately discontinue your use of CodeAlgo.`}
                />
             </div>
+            <div className="mt-[20px]">
+               <Policies
+                  title=""
+                  body="These Terms of Service take effect from the moment of your acceptance and are subject to potential modifications by CodeAlgo at its discretion. It is your responsibility to routinely scrutinize these Terms of Service to remain apprised of any alterations. Your continued use of CodeAlgo subsequent to any adjustments signifies your unequivocal acceptance of the updated Terms of Service."
+               />
+            </div>
             <p className="mt-6">CodeAlgo is designed and operated by CodeAlgo, Inc. All inquiries may be directed to:</p>
             <p>CodeAlgo, LLC</p>
             <p>720 Main St, Kansas City, MO 64105</p>
-
-            <div className="mt-10 flex space-x-10">
-               <button className="bg-mainColor py-4 px-12 text-white" onClick={handleAccept}>
-                  Accept
-               </button>
-               <button className="bg-mainColor py-4 px-12 text-white" onClick={handleReject}>
-                  Reject
-               </button>
-            </div>
          </div>
       </section>
    );
