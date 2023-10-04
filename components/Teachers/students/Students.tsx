@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import SingleStudent from "./singleStudent";
+import { useSelector } from "react-redux";
+import { RootState } from "store/store";
+import { ISingleStudent } from "types/interfaces";
 
-const Students = ({ commentTabsOpened, students }: { commentTabsOpened: boolean; students: any }) => {
+const Students = ({ commentTabsOpened, students }: { commentTabsOpened: boolean; students: ISingleStudent[] }) => {
    const [studentCommentOpen, setStudentCommentOpen] = useState<string>("");
    const [comment, setComment] = useState<string>("");
    const [studentCommentsTabOpen, setStudentCommentsTabOpen] = useState<string>("");
    const [editStudentModalOpened, setEditStudentModalOpened] = useState<string>("");
+
    useEffect(() => {
       if (!commentTabsOpened) {
          setStudentCommentOpen("");
@@ -15,7 +19,7 @@ const Students = ({ commentTabsOpened, students }: { commentTabsOpened: boolean;
 
    return (
       <div className={styles.container}>
-         {students?.students?.map((student: any, index: number) => (
+         {students?.map((student: ISingleStudent, index: number) => (
             <SingleStudent
                studentCommentOpen={studentCommentOpen}
                setStudentCommentOpen={setStudentCommentOpen}

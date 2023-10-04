@@ -21,12 +21,19 @@ const getStudents = async (id: string) => {
          Authorization: `Bearer ${getAccessToken()}`,
       },
    });
-   return response.data;
+   return response.data?.students;
+};
+
+const getSingleStudent = async (classId: number, studentId: number) => {
+   const response = await http.get(`/academics/class/${classId}/student/${studentId}`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+
+   return response.data?.student;
 };
 
 const studentService = {
    addStudent,
    getStudents,
+   getSingleStudent,
 };
 
 export default studentService;
