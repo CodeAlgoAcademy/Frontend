@@ -15,6 +15,8 @@ import {
 } from "store/studentSlice";
 import { FaEdit, FaSave, FaTimes, FaTrash } from "react-icons/fa";
 import Link from "next/link";
+import { ISingleStudent } from "types/interfaces";
+import { RootState } from "store/store";
 
 const SingleStudent = ({
    student,
@@ -28,7 +30,7 @@ const SingleStudent = ({
    setEditStudentModalOpened,
    index,
 }: {
-   student: any;
+   student: ISingleStudent;
    studentCommentOpen: string;
    setStudentCommentOpen: Dispatch<SetStateAction<string>>;
    comment: string;
@@ -40,6 +42,7 @@ const SingleStudent = ({
    index: number;
 }) => {
    const dispatch = useDispatch();
+   const { id: classId } = useSelector((state: RootState) => state.currentClass);
    const [headings, setHeadings] = useState<number[]>([]);
    const { students, studentComments } = useSelector((state: any) => state.students);
    const [editingComment, setEditingComment] = useState<string>("");
@@ -156,7 +159,7 @@ const SingleStudent = ({
             {!studentCommentsTabOpen && studentCommentOpen === student.firstName + student.email && (
                <form
                   onSubmit={(event: ChangeEvent<HTMLFormElement>) => {
-                     addStudentComment(event, student.id);
+                     addStudentComment(event, student.id as string);
                   }}
                   className="z-2 scale-up absolute right-[100px] bottom-[20%] flex w-[90vw] max-w-[250px] cursor-pointer rounded-md bg-white shadow-md"
                >
@@ -208,7 +211,7 @@ const SingleStudent = ({
                                              if (editingComment === comment.text && editingComment === "") {
                                                 setIsEditingComment("");
                                              } else {
-                                                updateStudentComment(comment.id as string, editingComment, student.id);
+                                                updateStudentComment(comment.id as string, editingComment, student.id as string);
                                              }
                                           }}
                                        >
@@ -228,7 +231,7 @@ const SingleStudent = ({
                                     <span
                                        className={`${styles.commentIcons} bg-red-600`}
                                        onClick={() => {
-                                          deleteStudentComment(comment.id as string, student.id);
+                                          deleteStudentComment(comment.id as string, student.id as string);
                                        }}
                                     >
                                        <FaTrash />
@@ -253,14 +256,14 @@ const SingleStudent = ({
                </section>
             )}
             <div className="flex items-center">
-               <div className={styles.cardHeaderName} onClick={() => handleStudents(student.id)}>
+               <div className={styles.cardHeaderName} onClick={() => handleStudents(parseInt(student.id as string))}>
                   <div className="flex w-[128px] flex-col gap-y-2 overflow-hidden text-ellipsis">
-                     <Link href={`/teachers/students/${student.id}`}>
+                     <Link href={`/teachers/students/${classId}/${student.id}`}>
                         <p className={styles.studentName + " max-w-fit hover:underline"}>{`${student.firstName} ${student.lastName}`}</p>
                      </Link>
                   </div>
                   <span className="text-[17px]" data-testid="chevron">
-                     {headings.includes(student.id) ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                     {headings.includes(parseInt(student.id as string)) ? <IoIosArrowUp /> : <IoIosArrowDown />}
                   </span>
                </div>
                <div className="hidden px-2 text-[12px] md:block">
@@ -271,7 +274,7 @@ const SingleStudent = ({
             <span
                className="ml-4 flex-1 cursor-pointer underline"
                onClick={() => {
-                  setEditStudentModalOpened(student.id);
+                  setEditStudentModalOpened(student.id as string);
                }}
             >
                <span className="hidden md:block">Edit {"student's"} details</span>
@@ -296,7 +299,7 @@ const SingleStudent = ({
                         setStudentCommentsTabOpen("");
                      } else {
                         setStudentCommentsTabOpen(student.firstName + student.email);
-                        getStudentComment(student.id);
+                        getStudentComment(student.id as string);
                      }
                   }}
                >
@@ -309,7 +312,7 @@ const SingleStudent = ({
                <span>No lesson available</span>
             </p>
          ) : (
-            <>{headings.includes(student?.id) && <StudentTable student={student} details={student?.assignments} />}</>
+            <>{headings.includes(parseInt(student?.id as string)) && <StudentTable student={student} details={student?.assignments as any[]} />}</>
          )}
       </div>
    );

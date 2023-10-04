@@ -10,8 +10,9 @@ import { setTimeLimit } from "utils/useMultiForm";
 
 const initialState: IUserStudent = {
    newStudent: null,
-   students: { students: [] },
+   students: [],
    studentComments: [],
+   currentStudent: undefined,
 };
 
 export const addStudent: any = createAsyncThunk("new/student", async (data: ISingleStudent, thunkAPI) => {
@@ -71,6 +72,21 @@ export const getStudents: any = createAsyncThunk("get/students", async (_, thunk
       // return thunkAPI.rejectWithValue(errorMessage);
    }
 });
+
+export const getSingleStudent: any = createAsyncThunk(
+   "get/single-student",
+   async ({ classId, studentId }: { classId: number; studentId: number }, thunkApi) => {
+      const state = <RootState>thunkApi.getState();
+
+      try {
+         const data = await studentService.getSingleStudent(classId, studentId);
+
+         return data;
+      } catch (error: any) {
+         return thunkApi.rejectWithValue(error.message);
+      }
+   }
+);
 
 export const getStudentComment: any = createAsyncThunk("get/student/comment", async (params: { id: string; comment: string }, thunkApi) => {
    const dispatch = thunkApi.dispatch;
@@ -166,6 +182,9 @@ export const studentSlice = createSlice({
          })
          .addCase(getStudentComment.fulfilled, (state, action) => {
             state.studentComments = action.payload;
+         })
+         .addCase(getSingleStudent.fulfilled, (state, action: PayloadAction<ISingleStudent>) => {
+            state.currentStudent = action.payload;
          });
    },
 });

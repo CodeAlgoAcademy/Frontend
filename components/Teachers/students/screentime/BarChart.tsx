@@ -11,8 +11,8 @@ const StudentBarChart = () => {
          <div className="mt-12 w-full overflow-y-auto rounded-md bg-white p-6 ">
             <BarChart data={[0, 0, 0, 0, 8, 1]} barSpace={9.6} barWidth={4.3} maxHours={8} />
          </div>
-         {slug.asPath === `/teachers/students/${slug?.query?.id}` && (
-            <Link href={`/teachers/students/${slug.query.id}/screen-time`}>
+         {slug.asPath === `/teachers/students/${slug?.query?.classId}/${slug?.query?.studentId}` && (
+            <Link href={`/teachers/students/${slug?.query?.classId}/${slug.query.studentId}/screen-time`}>
                <p className="mt-4 ml-auto max-w-fit cursor-pointer text-[.9rem] font-medium underline">Edit Screentime Settings</p>
             </Link>
          )}

@@ -5,11 +5,20 @@ import StudentProfileInfo from "@/components/parents/UI/StudentProfileInfo";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "store/store";
+import { getSingleStudent } from "store/studentSlice";
 
 export default function StudentProfile() {
    const dispatch = useDispatch();
+   const slug = useRouter();
+
+   const student = useSelector((state: RootState) => state.students?.currentStudent);
+
+   useEffect(() => {
+      dispatch(getSingleStudent({ classId: slug?.query?.classId, studentId: slug?.query?.studentId }));
+   }, []);
 
    return (
       <TeacherLayout className={styles.container}>
@@ -22,9 +31,9 @@ export default function StudentProfile() {
                <Image width={200} height={200} src={"/assets/no user.png"} />
             </div>
             <div className="grid min-w-[200px] flex-1 grid-cols-2 gap-[1rem]">
-               <StudentProfileInfo header="Name" body="Daniel Adejare 👻" />
-               <StudentProfileInfo header="Username" body="daniel-dunsin" />
-               <StudentProfileInfo header="Email" body="adejaredaniel12@gmail.com" />
+               <StudentProfileInfo header="Name" body={student?.firstName + " " + student?.lastName} />
+               <StudentProfileInfo header="Username" body={student?.username} />
+               <StudentProfileInfo header="Email" body={student?.email} />
             </div>
          </header>
 
