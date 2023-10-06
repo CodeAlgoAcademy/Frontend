@@ -23,9 +23,7 @@ const Sidebar = (props: Props) => {
       <div className="overflow-auto pb-10 md:overflow-hidden md:hover:overflow-auto">
          <div className="relative mx-auto my-8 h-[60px] w-[100px]">
             <Link href={router?.pathname?.includes("/teacher") ? "/teachers/addClass" : "/organizers"}>
-               <a>
-                  <Image src="/assets/CodeAlgo_Logo.png" alt="logo" loading="lazy" className="md:cursor-pointer" layout="fill" objectFit="contain" />
-               </a>
+               <Image src="/assets/CodeAlgo_Logo.png" alt="logo" loading="lazy" className="md:cursor-pointer" width={200} height={100} />
             </Link>
          </div>
          <>

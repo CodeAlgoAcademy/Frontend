@@ -25,6 +25,7 @@ const getStudents = async (id: string) => {
 };
 
 const getSingleStudent = async (classId: number, studentId: number) => {
+   console.log(classId, studentId);
    const response = await http.get(`/academics/class/${classId}/student/${studentId}`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
 
    return response.data?.student;

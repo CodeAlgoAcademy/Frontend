@@ -55,7 +55,7 @@ const updateChildScreentime = async (data: any, id: string | number) => {
 };
 
 const getChildScreentime = async (childId: number) => {
-   const response = await http.get("/parent/child/" + childId + "/time-limit", { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+   const response = await http.get(`/users/student/${childId}/screen-time/`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
 
    return response?.data;
 };
