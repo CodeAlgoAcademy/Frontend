@@ -36,3 +36,7 @@ export default function useMultiForm(steps: ReactElement[]) {
       back,
    };
 }
+
+export const setTimeLimit = (timeLimit: string): string => {
+   return (timeLimit = timeLimit === "No Limit" ? `23:00:00` : timeLimit === "" ? "00:00:00" : `${timeLimit}:00:00`);
+};

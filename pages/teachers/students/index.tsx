@@ -8,6 +8,7 @@ import AddStudentModal from "@/components/Teachers/students/AddStudentModal";
 import Students from "@/components/Teachers/students/Students";
 import { getStudents } from "store/studentSlice";
 import NoItem from "@/components/UI/NoItem";
+import { ISingleStudent } from "types/interfaces";
 
 const Index = () => {
    const dispatch = useDispatch();
@@ -15,9 +16,7 @@ const Index = () => {
    const { id } = useSelector((state: RootState) => state.currentClass);
    const [commentTabsOpened, setCommentTabsOpened] = useState<boolean>(false);
    const students = useSelector((state: RootState) => state?.students?.students);
-   const [filteredStudents, setFilteredStudents] = useState({
-      students: students?.students,
-   });
+   const [filteredStudents, setFilteredStudents] = useState<ISingleStudent[]>([]);
 
    useEffect(() => {
       if (id) {
@@ -26,8 +25,8 @@ const Index = () => {
    }, [dispatch, id]);
 
    useEffect(() => {
-      setFilteredStudents(() => ({ students: students?.students }));
-   }, [students?.students]);
+      setFilteredStudents(students);
+   }, [students]);
 
    const closeCommentTabs = (event: any) => {
       if (event.target.classList.contains("students-container")) {
@@ -37,13 +36,11 @@ const Index = () => {
 
    const filterStudents = (value: string) => {
       setFilteredStudents((prev) => {
-         return {
-            students: students?.students?.filter((student: any) => {
-               if ((student.firstName + " " + student.lastName).toLowerCase().includes(value.toLowerCase())) {
-                  return student;
-               }
-            }),
-         };
+         return students?.filter((student: any) => {
+            if ((student.firstName + " " + student.lastName).toLowerCase().includes(value.toLowerCase())) {
+               return student;
+            }
+         });
       });
    };
 
@@ -77,7 +74,7 @@ const Index = () => {
                   <button type="submit" hidden></button>
                </form>
             </div>
-            {!students?.students || students?.students?.length === 0 ? (
+            {!students || students?.length === 0 ? (
                <NoItem text="You have not added any student" />
             ) : (
                <Students commentTabsOpened={commentTabsOpened} students={filteredStudents} />

@@ -2,7 +2,7 @@ import React from "react";
 
 interface IProps {
    header: string;
-   body: string;
+   body?: string;
 }
 
 const StudentProfileInfo = ({ header, body }: IProps) => {

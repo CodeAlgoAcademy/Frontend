@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IAddClass } from "../types/interfaces";
+import { IAddClass, screentimeTypes } from "../types/interfaces";
 import { colors } from "../components/Teachers/addClass/colors";
 import { addClass } from "services/classesService";
 
@@ -36,7 +36,7 @@ const addClassSlice = createSlice({
          }>
       ) => {
          if (action.payload.typeofState === "student") {
-            state.student[action.payload.key as keyof typeof state.student] = action.payload.value as string;
+            return { ...state, student: { ...state.student, [action.payload.key]: action.payload.value } };
          } else {
             state.class[action.payload.key as keyof typeof state.class] = action.payload.value as string;
          }
