@@ -8,7 +8,7 @@ import { getDate } from "utils/getDate";
 import { errorResolver } from "utils/errorResolver";
 
 export const addUnits: any = createAsyncThunk("unitsSlice/addUnits", async (name, thunkApi) => {
-   const state: any = thunkApi.getState();
+   const state = <RootState>thunkApi.getState();
    const dispatch = thunkApi.dispatch;
    const { levels, standard, chosenGrades, unitsWithError } = state.unit.addUnit;
    let { rearrangedUnits } = state.unit.addUnit;

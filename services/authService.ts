@@ -5,14 +5,15 @@ import { closePreloader, openErrorModal, openPreloader } from "store/fetchSlice"
 import { getAccessToken } from "utils/getTokens";
 import { RootState } from "store/store";
 import { errorResolver } from "utils/errorResolver";
+import { IUser } from "types/interfaces";
 
 export const loginUser: any = createAsyncThunk("authSlice/loginUser", async (name, thunkApi) => {
-   const state: any = thunkApi.getState();
+   const state = <RootState>thunkApi.getState();
    const dispatch = thunkApi.dispatch;
    const { email, password } = state.user.auth;
    dispatch(openPreloader({ loadingText: "Logging You in" }));
 
-   const body: { password: string; email?: string; username?: string } = { password };
+   const body: Partial<IUser> = { password };
 
    // We're using the email property in the state for the input to control both username and email for the login!!!!!!
    if (email.includes("@")) {
@@ -69,7 +70,6 @@ export const signUpUser: any = createAsyncThunk("authSlice/signUpUser", async (n
          password1: state.user.auth.password,
          password2: state.user.auth.password,
          firstname,
-         lastname,
          is_parent,
          is_organizer,
          is_student,
@@ -77,6 +77,10 @@ export const signUpUser: any = createAsyncThunk("authSlice/signUpUser", async (n
          username,
          organization_code,
       };
+      // some google accounts do not have lastname
+      if (lastname) {
+         options.lastname = lastname;
+      }
 
       if (is_teacher) {
          options = { ...options, country: schoolCountry, schoolCountry, schoolName, grade: "" };
@@ -147,7 +151,7 @@ export const updateAccountType: any = createAsyncThunk("authSlice/updateAccountT
    const is_teacher: boolean = accountType === "Teacher";
    const is_student: boolean = accountType === "Student";
    const is_organizer: boolean = accountType === "Organizer";
-   const state: any = thunkApi.getState();
+   const state = <RootState>thunkApi.getState();
    const { firstname, lastname, email, country, schoolCountry, schoolName, grade, username } = state.user;
    try {
       const { data } = await http.put(
@@ -180,7 +184,7 @@ export const updateAccountType: any = createAsyncThunk("authSlice/updateAccountT
 });
 
 export const updateFirstname: any = createAsyncThunk("authSlice/updateFirstname", async (_, thunkApi) => {
-   const state: any = thunkApi.getState();
+   const state = <RootState>thunkApi.getState();
    const { firstname } = state.user.auth;
    const dispatch = thunkApi.dispatch;
    const { lastname, email, country, schoolCountry, schoolName, is_student, is_teacher, is_parent, is_organizer, grade, username } = state.user;
@@ -216,7 +220,7 @@ export const updateFirstname: any = createAsyncThunk("authSlice/updateFirstname"
 });
 
 export const updateLastname: any = createAsyncThunk("authSlice/updateLastname", async (_, thunkApi) => {
-   const state: any = thunkApi.getState();
+   const state = <RootState>thunkApi.getState();
    const { lastname } = state.user.auth;
    const dispatch = thunkApi.dispatch;
    const { firstname, email, country, schoolCountry, schoolName, is_student, is_teacher, is_parent, is_organizer, grade, username } = state.user;
@@ -252,7 +256,7 @@ export const updateLastname: any = createAsyncThunk("authSlice/updateLastname", 
 });
 
 export const updateEmail: any = createAsyncThunk("authSlice/updateEmail", async (_, thunkApi) => {
-   const state: any = thunkApi.getState();
+   const state = <RootState>thunkApi.getState();
    const { email } = state.user.auth;
    const dispatch = thunkApi.dispatch;
    const { lastname, firstname, country, schoolCountry, schoolName, is_student, is_teacher, is_parent, is_organizer, grade, username } = state.user;

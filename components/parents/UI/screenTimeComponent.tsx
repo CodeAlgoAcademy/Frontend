@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
-import { screentimeTypes } from "types/interfaces";
+import { days, screentimeTypes } from "types/interfaces";
 
 const hours: Array<number | "No Limit"> = ["No Limit", 0, 1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -13,11 +13,12 @@ const ScreenTimeComponent = ({
    index,
 }: {
    time: screentimeTypes;
-   updateTime?: (day: string, hour: number | "No Limit") => void;
-   updateScreenTimeForChild?: (id: string | number, day: string, hour: number | "No Limit") => void;
+   updateTime?: (day: days, hour: number | "No Limit") => void;
+   updateScreenTimeForChild?: (id: string | number, day: days, hour: number | "No Limit") => void;
    index?: number;
 }) => {
    const { username, currentChild } = useSelector((state: RootState) => state.parentChild);
+   const student = useSelector((state: RootState) => state.students?.currentStudent);
 
    const [hoursListOpen, setHoursListOpen] = useState<boolean>(false);
 
@@ -66,7 +67,7 @@ const ScreenTimeComponent = ({
                         key={index}
                         className="block cursor-pointer px-2 py-1"
                         onClick={() => {
-                           if (username || currentChild?.username) {
+                           if (username || currentChild?.username || student) {
                               updateTime && updateTime(time.dayOfTheWeek, hour);
                               updateScreenTimeForChild && updateScreenTimeForChild(time?.id as string, time.dayOfTheWeek, hour);
                               setHoursListOpen(false);

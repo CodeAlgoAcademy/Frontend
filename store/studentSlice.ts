@@ -1,25 +1,31 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import http from "axios.config";
 import studentService from "services/studentService";
-import { IUserStudent, Student } from "types/interfaces";
+import { IUserStudent, ISingleStudent, screentimeTypes } from "types/interfaces";
 import { errorResolver } from "utils/errorResolver";
 import { getAccessToken } from "utils/getTokens";
 import { closePreloader, openErrorModal, openPreloader } from "./fetchSlice";
 import { RootState } from "./store";
+import { setTimeLimit } from "utils/useMultiForm";
+import parentService from "services/parentChildService";
 
 const initialState: IUserStudent = {
    newStudent: null,
-   students: { students: [] },
+   students: [],
    studentComments: [],
+   currentStudent: undefined,
 };
 
-export const addStudent: any = createAsyncThunk("new/student", async (data: Student, thunkAPI) => {
-   const state: any = thunkAPI.getState();
+export const addStudent: any = createAsyncThunk("new/student", async (data: ISingleStudent, thunkAPI) => {
+   const state = <RootState>thunkAPI.getState();
    const { id } = state.currentClass;
    const dispatch = thunkAPI.dispatch;
    dispatch(openPreloader({ loadingText: "Adding Student(s)" }));
+
+   data.timeLimits = data.timeLimits?.map((timeInfo) => ({ ...timeInfo, timeLimit: setTimeLimit(timeInfo.timeLimit as string) }));
+
    try {
-      const student = await studentService.addStudent(data, id);
+      const student = await studentService.addStudent(data, id as string);
       dispatch(closePreloader());
       return student;
    } catch (error: any) {
@@ -29,7 +35,7 @@ export const addStudent: any = createAsyncThunk("new/student", async (data: Stud
 });
 
 export const editStudent: any = createAsyncThunk("edit/student", async (student: any, thunkApi) => {
-   const state: any = thunkApi.getState();
+   const state = <RootState>thunkApi.getState();
    const { id } = state.currentClass;
    const dispatch = thunkApi.dispatch;
    dispatch(openPreloader({ loadingText: "Editing Student's Details" }));
@@ -58,13 +64,42 @@ export const editStudent: any = createAsyncThunk("edit/student", async (student:
 });
 
 export const getStudents: any = createAsyncThunk("get/students", async (_, thunkAPI) => {
-   const state: any = thunkAPI.getState();
+   const state = <RootState>thunkAPI.getState();
    const { id } = state.currentClass;
    try {
-      return await studentService.getStudents(id);
+      return await studentService.getStudents(id as string);
    } catch (error: any) {
       // const errorMessage = errorResolver(error);
       // return thunkAPI.rejectWithValue(errorMessage);
+   }
+});
+
+export const getSingleStudent: any = createAsyncThunk(
+   "get/single-student",
+   async ({ classId, studentId }: { classId: number; studentId: number }, thunkApi) => {
+      const state = <RootState>thunkApi.getState();
+
+      try {
+         const data = await studentService.getSingleStudent(classId, studentId);
+
+         return data;
+      } catch (error: any) {
+         return thunkApi.rejectWithValue(error.message);
+      }
+   }
+);
+
+export const getStudentScreentime: any = createAsyncThunk("get/student/screentime", async (childId: number, thunkApi) => {
+   const state = <RootState>thunkApi.getState();
+
+   const dispatch = thunkApi.dispatch;
+
+   try {
+      const data = await parentService.getChildScreentime(childId);
+
+      return data;
+   } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
    }
 });
 
@@ -133,7 +168,7 @@ export const deleteStudentComment: any = createAsyncThunk("add/student/comment",
    }
 });
 export const studentsBulkImport: any = createAsyncThunk("newStudents/bulkImport", async (formData, thunkApi) => {
-   const state: any = thunkApi.getState();
+   const state = <RootState>thunkApi.getState();
    const dispatch = thunkApi.dispatch;
    const { id } = state.currentClass;
    dispatch(openPreloader({ loadingText: "Adding Student" }));
@@ -162,6 +197,12 @@ export const studentSlice = createSlice({
          })
          .addCase(getStudentComment.fulfilled, (state, action) => {
             state.studentComments = action.payload;
+         })
+         .addCase(getSingleStudent.fulfilled, (state, action: PayloadAction<ISingleStudent>) => {
+            state.currentStudent = action.payload;
+         })
+         .addCase(getStudentScreentime.fulfilled, (state, action: PayloadAction<screentimeTypes[]>) => {
+            (state.currentStudent as ISingleStudent).timeLimits = action.payload;
          });
    },
 });

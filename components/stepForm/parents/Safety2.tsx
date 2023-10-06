@@ -9,7 +9,7 @@ export default function Sasfety2() {
    const child = useSelector((state: RootState) => state.parentChild);
    const dispatch = useDispatch();
 
-   const updateTime = (day: string, hour: number | "No Limit") => {
+   const updateTime = (day: days, hour: number | "No Limit") => {
       dispatch(updateScreentime({ day, hour }));
    };
 

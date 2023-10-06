@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { IFriendsParent, IUserConversation, Student } from "types/interfaces";
+import { IFriendsParent, IUserConversation, ISingleStudent } from "types/interfaces";
 import messageService from "services/messagesService";
 import { RootState } from "./store";
 import { errorResolver } from "utils/errorResolver";
@@ -30,7 +30,7 @@ export const getTeacherConversations: any = createAsyncThunk("teacher/conversati
 
 export const getTeacherOpenMesssages: any = createAsyncThunk("teacher/student/messages", async (_, thunkAPI) => {
    try {
-      const state: any = thunkAPI.getState();
+      const state = <RootState>thunkAPI.getState();
       const { openedMessageOwner } = state.messages;
       return await messageService.getTeacherMessages(openedMessageOwner.id);
    } catch (error: any) {
@@ -40,7 +40,7 @@ export const getTeacherOpenMesssages: any = createAsyncThunk("teacher/student/me
 });
 export const getParentOpenMesssages: any = createAsyncThunk("teacher/student/messages", async (_, thunkAPI) => {
    try {
-      const state: any = thunkAPI.getState();
+      const state = <RootState>thunkAPI.getState();
       const { openedMessageOwner } = state.messages;
       return await messageService.getParentMessages(openedMessageOwner.id);
    } catch (error: any) {
@@ -60,7 +60,7 @@ export const messageSlice = createSlice({
       resetOpenStudent: (state: IUserConversation | any) => {
          state.openedMessageStudent = initialState.openedMessageStudent;
       },
-      open_a_message: (state: IUserConversation, action: PayloadAction<User | IFriendsParent | Student>) => {
+      open_a_message: (state: IUserConversation, action: PayloadAction<User | IFriendsParent | ISingleStudent>) => {
          state.openedMessageOwner = action.payload;
       },
    },

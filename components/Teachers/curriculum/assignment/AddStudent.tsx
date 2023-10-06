@@ -58,10 +58,10 @@ export default function AddStudent(props: modalProps) {
                            <input
                               type="checkbox"
                               id="select-all-students"
-                              className="checkbox-container accent-mainColor h-[20px] w-[20px] rounded-md border-2 border-black"
+                              className="checkbox-container h-[20px] w-[20px] rounded-md border-2 border-black accent-mainColor"
                               onChange={(e) => {
                                  if (e.target.checked) {
-                                    props.addAllStudentsForEachLesson(students?.students);
+                                    props.addAllStudentsForEachLesson(students);
                                  } else {
                                     props.removeAllStudentsAddedForEachLesson();
                                  }
@@ -75,7 +75,7 @@ export default function AddStudent(props: modalProps) {
                   </div>
 
                   <div className="small-scroll-thumb grid h-[250px] grid-cols-1 gap-y-8 overflow-y-auto scroll-smooth p-6 sm:grid-cols-2 sm:gap-x-4 sm:py-12 sm:px-8 md:grid-cols-3 md:gap-x-6 md:p-12">
-                     {students?.students?.map(({ email, firstName, lastName, id }) => {
+                     {students?.map(({ email, firstName, lastName, id }) => {
                         const checked = props.studentsAdded.find((student) => student.id == id);
                         return (
                            <div key={email} className="mx-2 flex items-center gap-4">
@@ -115,7 +115,7 @@ export default function AddStudent(props: modalProps) {
 
                   <div className="mt-[2rem] flex justify-end">
                      <button
-                        className="bg-mainColor rounded-full  px-8 py-4 font-bold text-white"
+                        className="rounded-full bg-mainColor  px-8 py-4 font-bold text-white"
                         onClick={() => {
                            if (props.studentsAdded.length > 0) {
                               props.setAboutToEditStudent((prev) => !prev);

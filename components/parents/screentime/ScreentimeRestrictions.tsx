@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { screentimeTypes } from "types/interfaces";
+import { days, screentimeTypes } from "types/interfaces";
 import ScreenTimeComponent from "../UI/screenTimeComponent";
 import { changeTimeLimit } from "utils/timelimit";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,15 +20,15 @@ const ScreentimeRestrictions = () => {
       { id: 1, dayOfTheWeek: "Sunday", timeLimit: 0 },
    ]);
 
-   const updateTime = async (id: string | number, day: string, hour: number | "No Limit") => {
-      const data = { dayOfTheWeek: day, timeLimit: hour };
+   const updateTime = async (id: string | number, day: days, hour: number | "No Limit") => {
+      const data: screentimeTypes = { dayOfTheWeek: day, timeLimit: hour };
       currentChild && (await dispatch(editScreentime({ id, data })));
       currentChild && (await dispatch(getChildren()));
    };
 
    useEffect(() => {
       if (currentChild) {
-         setTimeLimits(changeTimeLimit(currentChild));
+         setTimeLimits(changeTimeLimit(currentChild?.timeLimits));
       }
    }, [currentChild, currentChild?.timeLimits]);
 

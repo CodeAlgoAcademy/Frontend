@@ -2,6 +2,9 @@ import React, { ReactElement, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import NavButton from "@/components/parents/UI/NavButton";
+import { BsQuestion } from "react-icons/bs";
+import { GiHelp } from "react-icons/gi";
 
 interface ILink {
    name: string;
@@ -20,9 +23,7 @@ const Sidebar = (props: Props) => {
       <div className="overflow-auto pb-10 md:overflow-hidden md:hover:overflow-auto">
          <div className="relative mx-auto my-8 h-[60px] w-[100px]">
             <Link href={router?.pathname?.includes("/teacher") ? "/teachers/addClass" : "/organizers"}>
-               <a>
-                  <Image src="/assets/CodeAlgo_Logo.png" alt="logo" loading="lazy" className="md:cursor-pointer" layout="fill" objectFit="contain" />
-               </a>
+               <Image src="/assets/CodeAlgo_Logo.png" alt="logo" loading="lazy" className="md:cursor-pointer" width={200} height={100} />
             </Link>
          </div>
          <>
@@ -34,7 +35,7 @@ const Sidebar = (props: Props) => {
                            className={
                               activeLink === link.url ||
                               (router?.pathname.includes(link.url) && link.url !== "/teachers" && link.url !== "/organizers")
-                                 ? "bg-mainColor flex cursor-pointer items-center gap-6 rounded-[28px] px-[30px] py-[14px] text-white"
+                                 ? "flex cursor-pointer items-center gap-6 rounded-[28px] bg-mainColor px-[30px] py-[14px] text-white"
                                  : "flex cursor-pointer items-center gap-6 rounded-[28px] px-[30px]  py-[14px] text-gray-600 hover:bg-slate-50 "
                            }
                            onClick={() => {
@@ -56,6 +57,8 @@ const Sidebar = (props: Props) => {
                      </Link>
                   </div>
                ))}
+
+               <NavButton url="https://discord.gg/rnWnhFr2" title="Get Help" image={<GiHelp />} className="!justify-center" />
             </div>
          </>
       </div>
