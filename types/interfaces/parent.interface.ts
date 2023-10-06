@@ -12,13 +12,15 @@ export interface IChildProgress {
    progress: number;
 }
 
+export interface IChildTopics {
+   current: IChildProgress;
+   topic: IChildProgress[];
+}
+
 export interface IParentChild {
    question_level?: number;
    skills?: IChildSkill[];
-   progress?: {
-      current: IChildProgress;
-      topic: IChildProgress[];
-   };
+   progress?: IChildTopics;
    level?: number;
    username: string;
    fullName: string;

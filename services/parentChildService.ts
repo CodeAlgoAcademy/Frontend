@@ -54,6 +54,12 @@ const updateChildScreentime = async (data: any, id: string | number) => {
    return response.data;
 };
 
+const getChildScreentime = async (childId: number) => {
+   const response = await http.get("/parent/child/" + childId + "/time-limit", { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+
+   return response?.data;
+};
+
 const replyFriendRequest = async (data: { accepted: boolean; rejected: boolean }, id: number) => {
    const response = await http.put(
       `/parent/child/friend-request/${id}`,
@@ -79,6 +85,7 @@ const parentService = {
    getAllChildren,
    updateChildScreentime,
    replyFriendRequest,
+   getChildScreentime,
    getChildProgress,
    getChildSkills,
 };

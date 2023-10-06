@@ -7,6 +7,7 @@ import { getAccessToken } from "utils/getTokens";
 import { closePreloader, openErrorModal, openPreloader } from "./fetchSlice";
 import { RootState } from "./store";
 import { setTimeLimit } from "utils/useMultiForm";
+import parentService from "services/parentChildService";
 
 const initialState: IUserStudent = {
    newStudent: null,
@@ -87,6 +88,21 @@ export const getSingleStudent: any = createAsyncThunk(
       }
    }
 );
+
+export const getStudentScreentime: any = createAsyncThunk("get/student/screentime", async (childId: number, thunkApi) => {
+   const state = <RootState>thunkApi.getState();
+
+   const dispatch = thunkApi.dispatch;
+
+   try {
+      const data = await parentService.getChildScreentime(childId);
+
+      console.log(data);
+      return data;
+   } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+   }
+});
 
 export const getStudentComment: any = createAsyncThunk("get/student/comment", async (params: { id: string; comment: string }, thunkApi) => {
    const dispatch = thunkApi.dispatch;
@@ -185,7 +201,7 @@ export const studentSlice = createSlice({
          })
          .addCase(getSingleStudent.fulfilled, (state, action: PayloadAction<ISingleStudent>) => {
             state.currentStudent = action.payload;
-         });
+         }).addCase;
    },
 });
 
