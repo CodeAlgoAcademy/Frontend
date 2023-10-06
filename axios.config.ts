@@ -4,7 +4,7 @@ import { store } from "store/store";
 import { getRefreshToken } from "utils/getTokens";
 
 const http = axios.create({
-   baseURL: `https://sea-lion-app-43ury.ondigitalocean.app`,
+   baseURL: `https://shark-app-rqcpv.ondigitalocean.app/`,
    headers: {
       Accept: "application/json",
       "Content-Type": "application/json",

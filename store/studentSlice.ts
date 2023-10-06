@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import http from "axios.config";
 import studentService from "services/studentService";
-import { IUserStudent, ISingleStudent } from "types/interfaces";
+import { IUserStudent, ISingleStudent, screentimeTypes } from "types/interfaces";
 import { errorResolver } from "utils/errorResolver";
 import { getAccessToken } from "utils/getTokens";
 import { closePreloader, openErrorModal, openPreloader } from "./fetchSlice";
@@ -97,7 +97,6 @@ export const getStudentScreentime: any = createAsyncThunk("get/student/screentim
    try {
       const data = await parentService.getChildScreentime(childId);
 
-      console.log(data);
       return data;
    } catch (error: any) {
       return thunkApi.rejectWithValue(error.message);
@@ -201,7 +200,10 @@ export const studentSlice = createSlice({
          })
          .addCase(getSingleStudent.fulfilled, (state, action: PayloadAction<ISingleStudent>) => {
             state.currentStudent = action.payload;
-         }).addCase;
+         })
+         .addCase(getStudentScreentime.fulfilled, (state, action: PayloadAction<screentimeTypes[]>) => {
+            (state.currentStudent as ISingleStudent).timeLimits = action.payload;
+         });
    },
 });
 

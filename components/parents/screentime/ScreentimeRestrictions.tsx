@@ -28,7 +28,7 @@ const ScreentimeRestrictions = () => {
 
    useEffect(() => {
       if (currentChild) {
-         setTimeLimits(changeTimeLimit(currentChild));
+         setTimeLimits(changeTimeLimit(currentChild?.timeLimits));
       }
    }, [currentChild, currentChild?.timeLimits]);
 
