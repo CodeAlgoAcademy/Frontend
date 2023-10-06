@@ -15,8 +15,9 @@ import {
 } from "store/studentSlice";
 import { FaEdit, FaSave, FaTimes, FaTrash } from "react-icons/fa";
 import Link from "next/link";
-import { ISingleStudent } from "types/interfaces";
+import { AssignmentDetails, IChildProgress, IChildTopics, ISingleStudent } from "types/interfaces";
 import { RootState } from "store/store";
+import studentService from "services/studentService";
 
 const SingleStudent = ({
    student,
@@ -52,6 +53,14 @@ const SingleStudent = ({
       lastName: student?.lastName,
       email: student?.email,
    });
+   const [studentProgress, setStudentProgress] = useState<IChildTopics>({ current: { title: "", level: 0, progress: 0 }, topic: [] });
+
+   const getStudentProgress = async () => {
+      const data = await studentService.getStudentProgressByTeacher(student?.student_id as string);
+
+      if (data) setStudentProgress(data);
+   };
+
    const updateComment = (text: string): void => {
       if (comment.length < 100) {
          setComment(text);
@@ -111,6 +120,10 @@ const SingleStudent = ({
       await dispatch(getStudents());
       setEditStudentModalOpened("");
    };
+
+   useEffect(() => {
+      getStudentProgress();
+   }, []);
 
    return (
       <div className="bg-[#fff] shadow-lg" data-testid={`single-student`}>
@@ -312,7 +325,11 @@ const SingleStudent = ({
                <span>No lesson available</span>
             </p>
          ) : (
-            <>{headings.includes(parseInt(student?.id as string)) && <StudentTable student={student} details={student?.assignments as any[]} />}</>
+            <>
+               {headings.includes(parseInt(student?.id as string)) && (
+                  <StudentTable student={student} details={student?.assignments as AssignmentDetails[]} progress={studentProgress} />
+               )}
+            </>
          )}
       </div>
    );

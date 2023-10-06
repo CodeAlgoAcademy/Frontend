@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
-import { getSingleStudent } from "store/studentSlice";
+import { getSingleStudent, getStudentScreentime } from "store/studentSlice";
 
 export default function StudentProfile() {
    const dispatch = useDispatch();
@@ -19,6 +19,10 @@ export default function StudentProfile() {
    useEffect(() => {
       dispatch(getSingleStudent({ classId: slug?.query?.classId, studentId: slug?.query?.studentId }));
    }, []);
+
+   useEffect(() => {
+      if (student?.id) dispatch(getStudentScreentime(student?.id));
+   }, [student?.id]);
 
    return (
       <TeacherLayout className={styles.container}>

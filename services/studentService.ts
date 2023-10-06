@@ -1,4 +1,4 @@
-import { ISingleStudent } from "types/interfaces";
+import { IChildProgress, IChildTopics, ISingleStudent } from "types/interfaces";
 import { getAccessToken } from "utils/getTokens";
 import http from "../axios.config";
 
@@ -30,10 +30,26 @@ const getSingleStudent = async (classId: number, studentId: number) => {
    return response.data?.student;
 };
 
+const getStudentProgressByTeacher = async (studentId: string) => {
+   try {
+      const response = await http.get<IChildTopics>(`/academics/class/student/${studentId}/progress`, {
+         headers: {
+            Authorization: `Bearer ${getAccessToken()}`,
+         },
+      });
+
+      console.log(response?.data);
+      return response?.data;
+   } catch (error) {
+      // throw error;
+   }
+};
+
 const studentService = {
    addStudent,
    getStudents,
    getSingleStudent,
+   getStudentProgressByTeacher,
 };
 
 export default studentService;

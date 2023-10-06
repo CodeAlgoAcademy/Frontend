@@ -1,4 +1,4 @@
-import { IAllAssignments } from "./assignment.interface";
+import { AssignmentDetails, IAllAssignments } from "./assignment.interface";
 import { screentimeTypes } from "./parent.interface";
 
 export interface ISingleStudent {
@@ -10,7 +10,13 @@ export interface ISingleStudent {
    id?: string;
    timeLimits?: screentimeTypes[];
    active?: boolean;
-   assignments?: any[];
+   assignments?: AssignmentDetails[];
+   student_id?: string;
+}
+
+// add the timelimit to it
+export interface IStudentWithScreentime extends ISingleStudent {
+   timeLimits?: screentimeTypes[];
 }
 
 export interface IUserStudent {
@@ -21,5 +27,5 @@ export interface IUserStudent {
       id: number | string;
       date: string;
    }>;
-   currentStudent?: ISingleStudent;
+   currentStudent?: IStudentWithScreentime;
 }
