@@ -1,17 +1,19 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import http from "axios.config";
 import studentService from "services/studentService";
-import { IUserStudent, ISingleStudent } from "types/interfaces";
+import { IUserStudent, ISingleStudent, screentimeTypes } from "types/interfaces";
 import { errorResolver } from "utils/errorResolver";
 import { getAccessToken } from "utils/getTokens";
 import { closePreloader, openErrorModal, openPreloader } from "./fetchSlice";
 import { RootState } from "./store";
 import { setTimeLimit } from "utils/useMultiForm";
+import parentService from "services/parentChildService";
 
 const initialState: IUserStudent = {
    newStudent: null,
-   students: { students: [] },
+   students: [],
    studentComments: [],
+   currentStudent: undefined,
 };
 
 export const addStudent: any = createAsyncThunk("new/student", async (data: ISingleStudent, thunkAPI) => {
@@ -69,6 +71,35 @@ export const getStudents: any = createAsyncThunk("get/students", async (_, thunk
    } catch (error: any) {
       // const errorMessage = errorResolver(error);
       // return thunkAPI.rejectWithValue(errorMessage);
+   }
+});
+
+export const getSingleStudent: any = createAsyncThunk(
+   "get/single-student",
+   async ({ classId, studentId }: { classId: number; studentId: number }, thunkApi) => {
+      const state = <RootState>thunkApi.getState();
+
+      try {
+         const data = await studentService.getSingleStudent(classId, studentId);
+
+         return data;
+      } catch (error: any) {
+         return thunkApi.rejectWithValue(error.message);
+      }
+   }
+);
+
+export const getStudentScreentime: any = createAsyncThunk("get/student/screentime", async (childId: number, thunkApi) => {
+   const state = <RootState>thunkApi.getState();
+
+   const dispatch = thunkApi.dispatch;
+
+   try {
+      const data = await parentService.getChildScreentime(childId);
+
+      return data;
+   } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
    }
 });
 
@@ -166,6 +197,12 @@ export const studentSlice = createSlice({
          })
          .addCase(getStudentComment.fulfilled, (state, action) => {
             state.studentComments = action.payload;
+         })
+         .addCase(getSingleStudent.fulfilled, (state, action: PayloadAction<ISingleStudent>) => {
+            state.currentStudent = action.payload;
+         })
+         .addCase(getStudentScreentime.fulfilled, (state, action: PayloadAction<screentimeTypes[]>) => {
+            (state.currentStudent as ISingleStudent).timeLimits = action.payload;
          });
    },
 });

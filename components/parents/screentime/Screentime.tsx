@@ -27,7 +27,7 @@ const Screentime = ({ size }: ScreentimeProps) => {
 
    useEffect(() => {
       if (currentChild) {
-         setTimeLimits(changeTimeLimit(currentChild));
+         setTimeLimits(changeTimeLimit(currentChild?.timeLimits));
       }
    }, [currentChild, currentChild?.timeLimits]);
 

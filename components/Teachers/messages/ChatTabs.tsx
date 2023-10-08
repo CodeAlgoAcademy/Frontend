@@ -34,7 +34,7 @@ const ChatTabs = () => {
          <article className={openedStudent ? "max-h-full flex-1 overflow-y-auto bg-gray-100 p-0" : "overflow-y-auto bg-gray-100"}>
             {openedStudent && (
                <div className="overflow-hidden">
-                  {students?.students?.map((student: ISingleStudent) => {
+                  {students?.map((student: ISingleStudent) => {
                      return (
                         <p
                            onClick={() => {

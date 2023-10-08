@@ -1,7 +1,7 @@
-import { IParentChild } from "types/interfaces";
+import { IParentChild, screentimeTypes } from "types/interfaces";
 
-export const changeTimeLimit = (currentChild: IParentChild) => {
-   return currentChild?.timeLimits?.map((time) => {
+export const changeTimeLimit = (timeLimits: screentimeTypes[]) => {
+   return timeLimits?.map((time) => {
       let currentTime = { ...time };
       if (time.timeLimit === "23:00:00") {
          currentTime.timeLimit = "No Limit";

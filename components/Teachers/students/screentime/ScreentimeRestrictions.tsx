@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { days, screentimeTypes } from "types/interfaces";
-import ScreenTimeComponent from "../UI/screenTimeComponent";
-import { changeTimeLimit } from "utils/timelimit";
+import ScreenTimeComponent from "@/components/parents/UI/screenTimeComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
-import { editScreentime, getChildren } from "store/parentChildSlice";
+import { changeTimeLimit } from "utils/timelimit";
+import { editScreentime, updateScreentime } from "store/parentChildSlice";
+import { getStudentScreentime } from "store/studentSlice";
 
 const ScreentimeRestrictions = () => {
-   const { currentChild } = useSelector((state: RootState) => state.parentChild);
    const dispatch = useDispatch();
-
    const [timeLimits, setTimeLimits] = useState<screentimeTypes[]>([
       { id: 1, dayOfTheWeek: "Monday", timeLimit: 0 },
       { id: 1, dayOfTheWeek: "Tuesday", timeLimit: 0 },
@@ -20,25 +19,28 @@ const ScreentimeRestrictions = () => {
       { id: 1, dayOfTheWeek: "Sunday", timeLimit: 0 },
    ]);
 
-   const updateTime = async (id: string | number, day: days, hour: number | "No Limit") => {
+   const student = useSelector((state: RootState) => state.students?.currentStudent);
+
+   const updateTime = async (id: number | string, day: days, hour: number | "No Limit") => {
       const data: screentimeTypes = { dayOfTheWeek: day, timeLimit: hour };
-      currentChild && (await dispatch(editScreentime({ id, data })));
-      currentChild && (await dispatch(getChildren()));
+
+      student && (await dispatch(editScreentime({ id, data })));
+      student && (await dispatch(getStudentScreentime(student?.id)));
    };
 
    useEffect(() => {
-      if (currentChild) {
-         setTimeLimits(changeTimeLimit(currentChild?.timeLimits));
+      if (student?.timeLimits) {
+         setTimeLimits(changeTimeLimit(student?.timeLimits));
       }
-   }, [currentChild, currentChild?.timeLimits]);
+   }, [student?.id, student?.timeLimits]);
 
    return (
-      <div className="relative min-h-[340px] max-w-fit rounded-2xl bg-white px-8 py-10 md:w-full md:min-w-[420px]">
+      <div className="relative mt-[3rem] min-h-[340px] max-w-fit rounded-md bg-white px-8 py-10 md:w-full md:min-w-[420px]">
          <h1 className="text-[1.3rem] font-semibold text-mainColor">Current screen time restrictions</h1>
          <h2 className="mt-2 mb-10 text-[14px] font-medium">Make edits to screen time restrictions below</h2>
          <div className="mt-4 flex flex-wrap items-center justify-center gap-4 md:justify-start">
             {timeLimits?.map((time, index: number) => {
-               return <ScreenTimeComponent updateScreenTimeForChild={updateTime} time={time} key={index} />;
+               return <ScreenTimeComponent time={time} updateScreenTimeForChild={updateTime} key={index} />;
             })}
          </div>
       </div>
