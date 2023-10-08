@@ -36,7 +36,7 @@ const addClassSlice = createSlice({
          }>
       ) => {
          if (action.payload.typeofState === "student") {
-            state.student[action.payload.key as keyof typeof state.student] = action.payload.value as string & screentimeTypes[];
+            return { ...state, student: { ...state.student, [action.payload.key]: action.payload.value } };
          } else {
             state.class[action.payload.key as keyof typeof state.class] = action.payload.value as string;
          }

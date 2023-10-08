@@ -150,7 +150,7 @@ const Assignments = () => {
       const value = e.target.checked;
       if (value) {
          setAssignmentDetails((prev) => {
-            return { ...prev, students: students?.students };
+            return { ...prev, students: students };
          });
          const newCheckboxes = Object.keys(studentCheckbox).reduce((prev, student) => {
             return { ...prev, [student]: true };
@@ -186,13 +186,13 @@ const Assignments = () => {
             }));
          });
       });
-      students?.students?.forEach((student) => {
+      students?.forEach((student) => {
          setStudentCheckbox((prev) => ({
             ...prev,
             [student.email]: false,
          }));
       });
-   }, [students?.students, assingmentSkills]);
+   }, [students, assingmentSkills]);
    const fetchAllStudents = useCallback(async () => {
       await dispatch(getStudents());
    }, [dispatch]);
@@ -610,7 +610,7 @@ const Assignments = () => {
                      )}
                      {modalItemsDisplay.studentResponse && (
                         <StudentModal
-                           students={students?.students}
+                           students={students}
                            hideModal={hideModal}
                            handleStudentCheckboxChange={handleStudentCheckboxChange}
                            handleAllStudentChechbox={handleAllStudentChechbox}

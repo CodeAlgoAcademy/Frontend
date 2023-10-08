@@ -93,14 +93,14 @@ const TeacherLayout = ({ children, className }: Props) => {
             {/* Mobile Nav */}
             <div className="mt-14 ml-4 hidden w500:block w840:hidden">
                <Link href={`/teachers/addClass`}>
-                  <div className="text-mainColor flex justify-center text-[28px]">
+                  <div className="flex justify-center text-[28px] text-mainColor">
                      <BiHomeAlt />
                   </div>
                </Link>
                <TeacherMobileSideNav />
             </div>
 
-            <div className={`flex max-h-[100vh] flex-1 flex-col overflow-scroll  w500:ml-[280px] w840:pl-[3vw]`}>
+            <div className={`flex max-h-[100vh] flex-1 flex-col overflow-scroll  w840:ml-[280px]`}>
                <div className="relative mt-10 flex items-center justify-between px-[1rem] w500:hidden">
                   <div className="">
                      <Link href={"/teachers/addClass"} className="max-w-[100px]">
@@ -150,7 +150,7 @@ const TeacherLayout = ({ children, className }: Props) => {
                      <div className="absolute right-[1rem] top-[60px] z-20 rounded-md border border-gray-300 bg-white px-2">
                         <div className="mt-4">
                            <Link href={`/teachers/addClass`}>
-                              <div className="text-mainColor flex justify-center text-[28px]">
+                              <div className="flex justify-center text-[28px] text-mainColor">
                                  <BiHomeAlt />
                               </div>
                            </Link>
