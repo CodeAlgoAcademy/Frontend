@@ -7,54 +7,49 @@ import { BiArrowBack, BiLoaderCircle } from "react-icons/bi";
 import { BsExclamationTriangle } from "react-icons/bs";
 import { FiCheckCircle } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
+import { resendEmail, verifyEmail } from "services/authService";
 import { openErrorModal, openPreloader, closePreloader } from "store/fetchSlice";
 import { RootState } from "store/store";
+import { errorResolver } from "utils/errorResolver";
 
 const VerifyWithKey = () => {
-   const { email } = useSelector((state: RootState) => state.user.auth);
+   const [email, setEmail] = useState<string>("");
    const [loading, setLoading] = useState<boolean>(true);
    const [error, setError] = useState<boolean>(true);
    const dispatch = useDispatch();
    const router = useRouter();
    const key = router?.query?.key;
 
-   const verifyEmail = async () => {
+   const verify = async () => {
       if (key) {
          setLoading(true);
          setError(false);
-         try {
-            const { data } = await http.post("/auth/confirm-email/", {
-               key: router.query.key,
-            });
-            const signUpType = JSON.parse(localStorage.getItem("parent-signup") as string);
+         const data = await dispatch(verifyEmail(router.query?.key));
 
-            localStorage.removeItem("parent-signup");
-            setLoading(false);
-            setError(false);
-            if (signUpType) {
-               window.open("", "_self");
-               window.close();
-            }
-         } catch (error: any) {
-            dispatch(openErrorModal({ errorText: [error.message] }));
+         if (data?.error) {
             setLoading(false);
             setError(true);
+            return;
+         }
+         // check if it's a parent signup
+         const signUpType = JSON.parse(localStorage.getItem("parent-signup") as string);
+
+         localStorage.removeItem("parent-signup");
+         localStorage.removeItem("emailToBeVerified");
+         setLoading(false);
+         setError(false);
+         if (signUpType) {
+            window.open("", "_self");
+            window.close();
          }
       }
    };
 
-   const resendEmail = async () => {
-      dispatch(openPreloader({ loadingText: "Resending Email" }));
-      const { data } = await http.post("/auth/registration/resend-email/", {
-         email,
-      });
-      dispatch(closePreloader());
-   };
-
    useEffect(() => {
       if (key) {
-         verifyEmail();
+         verify();
       }
+      setEmail(localStorage.getItem("emailToBeVerified") as string);
    }, [key]);
 
    return (
@@ -95,7 +90,10 @@ const VerifyWithKey = () => {
                   </span>
                   <p className="mt-4 text-center text-[21px] font-bold">Unable to verify account</p>
                   <div className="mt-4 border-t-4 pt-4">
-                     <button className=" mx-auto flex items-center gap-x-2 rounded-md bg-orange-400 py-3 px-5 text-white" onClick={resendEmail}>
+                     <button
+                        className=" mx-auto flex items-center gap-x-2 rounded-md bg-orange-400 py-3 px-5 text-white"
+                        onClick={() => dispatch(resendEmail(email))}
+                     >
                         <BiLoaderCircle /> Resend Link
                      </button>
                   </div>

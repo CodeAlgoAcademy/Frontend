@@ -19,7 +19,7 @@ const SuccessModal = () => {
       <main className={styles.modalOverlay}>
          <div className={styles.modal}>
             <header className="mb-6 flex items-center justify-between gap-3">
-               <p className="cursor-pointer text-[1.2rem] font-bold text-orange-400">Good Job!</p>
+               <p className="cursor-pointer text-[1.2rem] font-bold text-orange-400">Success!</p>
                <i className="cursor-pointer text-[1.5rem] text-red-600" onClick={closeModal}>
                   <MdClose />
                </i>
