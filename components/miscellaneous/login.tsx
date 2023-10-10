@@ -9,12 +9,14 @@ import { updateUser } from "store/authSlice";
 import { openErrorModal } from "store/fetchSlice";
 import { AuthButton } from "../UI/Button";
 import Link from "next/link";
+import ResendVerificationEmailModal from "../modals/ResendVerificationEmailModal";
 
 const Login = ({ route }: { route?: any }) => {
    const dispatch = useDispatch();
    const router = useRouter();
    const credentials = useSelector((state: RootState) => state.user?.auth);
    const [recaptchaVerified, setRecaptchaVerified] = useState(false);
+   const [verificationModalOpened, setVerificationModalOpened] = useState<boolean>(false);
 
    const accountType = router.pathname.includes("teacher")
       ? "teacher"
@@ -74,42 +76,57 @@ const Login = ({ route }: { route?: any }) => {
    };
 
    return (
-      <AuthLayout>
-         <>
-            <h1 className="text-center text-[25px] font-bold md:text-left md:text-[32px]">
-               Log in to your account <span className="capitalize">{`(${accountType})`}</span>
-            </h1>
-            <form onSubmit={login}>
-               <label className="mt-6 block text-xl font-semibold">Your email/username</label>
-               <input
-                  value={credentials?.email}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                     dispatch(updateUser({ key: "email", value: e.target.value }));
-                  }}
-                  type="text"
-                  className="auth-input"
-                  placeholder={`Enter your email or username`}
-                  required
-               />
-               <label className="mt-6 block text-xl font-semibold">Password</label>
-               <input
-                  className="auth-input"
-                  value={credentials?.password}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                     dispatch(updateUser({ key: "password", value: e.target.value }));
-                  }}
-                  type="password"
-                  placeholder="Enter Password"
-                  required
-               />
-               <Link href="/change-password">
-                  <p className="mt-2 max-w-fit cursor-pointer font-bold text-[#222] underline">Forgot password</p>
-               </Link>
-               <AuthButton text="Login" />
-               <GoogleBtn />
-            </form>
-         </>
-      </AuthLayout>
+      <>
+         {verificationModalOpened && (
+            <ResendVerificationEmailModal
+               closeModal={() => {
+                  setVerificationModalOpened(false);
+               }}
+            />
+         )}
+         <AuthLayout>
+            <>
+               <h1 className="text-center text-[25px] font-bold md:text-left md:text-[32px]">
+                  Log in to your account <span className="capitalize">{`(${accountType})`}</span>
+               </h1>
+               <form onSubmit={login}>
+                  <label className="mt-6 block text-xl font-semibold">Your email/username</label>
+                  <input
+                     value={credentials?.email}
+                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                        dispatch(updateUser({ key: "email", value: e.target.value }));
+                     }}
+                     type="text"
+                     className="auth-input"
+                     placeholder={`Enter your email or username`}
+                     required
+                  />
+                  <label className="mt-6 block text-xl font-semibold">Password</label>
+                  <input
+                     className="auth-input"
+                     value={credentials?.password}
+                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                        dispatch(updateUser({ key: "password", value: e.target.value }));
+                     }}
+                     type="password"
+                     placeholder="Enter Password"
+                     required
+                  />
+                  <div className="mt-2 flex items-center justify-between">
+                     <Link href="/change-password">
+                        <p className="max-w-fit cursor-pointer font-bold text-[#222] underline">Forgot password</p>
+                     </Link>
+
+                     <p className="max-w-fit cursor-pointer font-bold text-[#222] underline" onClick={() => setVerificationModalOpened(true)}>
+                        Verify Account
+                     </p>
+                  </div>
+                  <AuthButton text="Login" />
+                  <GoogleBtn />
+               </form>
+            </>
+         </AuthLayout>
+      </>
    );
 };
 
