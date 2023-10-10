@@ -83,7 +83,7 @@ export default function Teacher() {
                      Sign up
                   </button>
                )}
-               {!isFirstStep && !isLastStep && (
+               {!isFirstStep && (
                   <button className="mt-4 block w-full text-center" type="button" onClick={back}>
                      Back
                   </button>
