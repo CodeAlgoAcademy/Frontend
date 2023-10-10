@@ -290,3 +290,31 @@ export const updateEmail: any = createAsyncThunk("authSlice/updateEmail", async 
       return thunkApi.rejectWithValue(errorMessage);
    }
 });
+
+export const verifyEmail: any = createAsyncThunk("/auth/confirm=email", async (key: string, thunkApi) => {
+   try {
+      const resp = await http.post("/auth/confirm-email/", { key });
+
+      return resp.data;
+   } catch (error) {
+      error = errorResolver(error);
+      return thunkApi.rejectWithValue(error);
+   }
+});
+
+export const resendEmail: any = createAsyncThunk("/auth/resend-email", async (email: string, thunkApi) => {
+   const dispatch = thunkApi.dispatch;
+
+   dispatch(openPreloader({ loadingText: "Resending Email" }));
+
+   try {
+      const resp = await http.post("/auth/registration/resend-email/", { email });
+
+      dispatch(closePreloader());
+
+      return resp.data;
+   } catch (error) {
+      error = errorResolver(error);
+      return thunkApi.rejectWithValue(error);
+   }
+});
