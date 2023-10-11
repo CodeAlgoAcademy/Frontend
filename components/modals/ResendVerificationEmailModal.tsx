@@ -45,7 +45,7 @@ const ResendVerificationEmailModal = ({ closeModal }: Props) => {
                </div>
                <div className="flex justify-center">
                   <button className={styles.button} type="submit">
-                     Resend Email 📨
+                     Send Verification Link 📨
                   </button>
                </div>
             </div>
