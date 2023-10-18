@@ -14,6 +14,7 @@ import { RootState } from "store/store";
 import { selectOrganization } from "store/organizersSlice";
 import { getUserFromLocalStorage } from "utils/getTokens";
 import { fetchOrganiztions } from "services/organizersService";
+import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
 
 interface Props {
    children?: ReactNode;
@@ -63,7 +64,7 @@ const OrganizerLayout = ({ children }: Props) => {
    const user = getUserFromLocalStorage();
 
    useEffect(() => {
-      const stringedToken = localStorage.getItem("token");
+      const stringedToken = localStorage.getItem(ILocalStorageItems.token);
       const token = JSON.parse(`${stringedToken}`);
       if (!stringedToken || !token || token?.user_type !== "organizer") {
          router?.push("/login");
@@ -146,7 +147,7 @@ const OrganizerLayout = ({ children }: Props) => {
                   <header className="flex w-full items-center justify-between gap-[1rem]">
                      <div></div>
 
-                     <h2 className="text-mainColor cursor-pointer text-[1.2rem] font-bold">
+                     <h2 className="cursor-pointer text-[1.2rem] font-bold text-mainColor">
                         <span className="mr-2 inline-block align-middle">
                            <BiUser />
                         </span>
@@ -161,7 +162,7 @@ const OrganizerLayout = ({ children }: Props) => {
                            setOpen((prev) => !prev);
                         }}
                      >
-                        <h1 className="text-mainColor text-3xl font-semibold capitalize">{selectedOrganization?.name}</h1>
+                        <h1 className="text-3xl font-semibold capitalize text-mainColor">{selectedOrganization?.name}</h1>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="10" viewBox="0 0 18 10" fill="none">
                            <path
                               d="M1.7998 1.25L9.2998 8.75L16.7998 1.25"
