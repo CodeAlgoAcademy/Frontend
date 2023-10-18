@@ -4,7 +4,7 @@ import { store } from "store/store";
 import { getRefreshToken } from "utils/getTokens";
 
 const http = axios.create({
-   baseURL: `https://shark-app-rqcpv.ondigitalocean.app/`,
+   baseURL: process.env.NEXT_PUBLIC_API_URL,
    headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
