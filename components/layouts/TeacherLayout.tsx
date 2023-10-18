@@ -17,6 +17,7 @@ import { BiMessageRounded } from "react-icons/bi";
 import { GrOrganization } from "react-icons/gr";
 import { SlOrganization } from "react-icons/sl";
 import Image from "next/image";
+import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
 
 interface Props {
    children?: ReactNode;
@@ -76,7 +77,7 @@ const TeacherLayout = ({ children, className }: Props) => {
    }, [router?.pathname]);
 
    useEffect(() => {
-      const stringedToken = localStorage.getItem("token");
+      const stringedToken = localStorage.getItem(ILocalStorageItems.token);
       const token = JSON.parse(`${stringedToken}`);
       if (token?.user_type !== "teacher") {
          router?.push("/login");
