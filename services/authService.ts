@@ -6,6 +6,7 @@ import { getAccessToken } from "utils/getTokens";
 import { RootState } from "store/store";
 import { errorResolver } from "utils/errorResolver";
 import { IUser } from "types/interfaces";
+import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
 
 export const loginUser: any = createAsyncThunk("authSlice/loginUser", async (name, thunkApi) => {
    const state = <RootState>thunkApi.getState();
@@ -99,6 +100,8 @@ export const signUpUser: any = createAsyncThunk("authSlice/signUpUser", async (n
       }
 
       dispatch(openPreloader({ loadingText: "Creating Account" }));
+
+      localStorage.setItem(ILocalStorageItems.signupAccountType, is_teacher ? "teacher" : is_parent ? "parent" : "student");
       try {
          const { data } = await http.post("/auth/registration/", { ...options });
          dispatch(clearFields());
@@ -296,9 +299,23 @@ export const verifyEmail: any = createAsyncThunk("/auth/confirm=email", async (k
       const resp = await http.post("/auth/confirm-email/", { key });
 
       return resp.data;
-   } catch (error) {
-      error = errorResolver(error);
-      return thunkApi.rejectWithValue(error);
+   } catch (error: any) {
+      if (error?.response?.status == 404) {
+         // check if it's a parent signup
+         const signUpType = JSON.parse(localStorage.getItem(ILocalStorageItems.parent_signup) as string);
+
+         localStorage.removeItem("parent-signup");
+         if (signUpType) {
+            window.open("", "_self");
+            window.close();
+         } else {
+            const accountSigningup = localStorage.getItem(ILocalStorageItems?.signupAccountType);
+
+            window.location.href = `/login/${accountSigningup}`;
+         }
+      }
+
+      return thunkApi.rejectWithValue(error?.response?.data);
    }
 });
 

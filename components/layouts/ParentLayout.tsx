@@ -16,6 +16,7 @@ import { closeAddChildModal } from "store/modalSlice";
 import { getUserFromLocalStorage } from "utils/getTokens";
 import { IUser } from "types/interfaces";
 import Link from "next/link";
+import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
 
 interface Props {
    children?: ReactNode;
@@ -49,7 +50,7 @@ const ParentLayout = ({ children }: Props) => {
 
    useEffect(() => {
       if (typeof window !== "undefined") {
-         const stringedToken = localStorage.getItem("token");
+         const stringedToken = localStorage.getItem(ILocalStorageItems.token);
          const token = JSON.parse(`${stringedToken}`);
          if (token?.user_type !== "parent") {
             router.push("/login");
