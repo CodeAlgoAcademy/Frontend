@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
+import { BiHome } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { updateUser } from "store/authSlice";
 
@@ -10,7 +11,13 @@ export default function SelectAccountType() {
 
    return (
       <div className="">
-         <h1 className="mt-[2rem] text-center text-3xl font-bold text-orange-400">
+         <div className="px-[1rem] pt-[1rem]  text-[1.8rem] text-orange-400 md:absolute md:top-[2.4rem] md:left-[2rem] md:px-0 md:py-0">
+            <Link href={"/"}>
+               <BiHome className="cursor-pointer" />
+            </Link>
+         </div>
+
+         <h1 className="mt-[2rem] text-center text-xl font-bold text-orange-400 md:mt-[2rem] md:text-3xl">
             Who are you {slug.pathname.includes("/login") ? "logging in" : "signing up"} as?
          </h1>
          <div className="mx-6 mt-[2rem] grid flex-col items-center justify-center gap-y-6 sm:grid-cols-2 md:mt-[7rem] md:grid-cols-3 md:flex-row md:gap-x-[5rem] lg:grid-cols-4">

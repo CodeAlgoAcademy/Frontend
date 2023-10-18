@@ -58,8 +58,7 @@ export const getAllCurriculums: any = createAsyncThunk("curriculumSlice/fetchCur
       });
       return data;
    } catch (error: any) {
-      const errorMessage = errorResolver(error);
-      return thunkApi.rejectWithValue(errorMessage);
+      return thunkApi.rejectWithValue(error.response?.data);
    }
 });
 
