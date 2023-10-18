@@ -112,8 +112,7 @@ export const getChildren: any = createAsyncThunk("parent/children", async (_, th
 
       return children;
    } catch (error: any) {
-      const errorMessage = errorResolver(error);
-      return thunkAPI.rejectWithValue(errorMessage);
+      return thunkAPI.rejectWithValue(error.response?.data);
    }
 });
 
