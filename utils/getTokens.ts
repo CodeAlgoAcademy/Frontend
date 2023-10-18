@@ -1,18 +1,19 @@
 import http from "axios.config";
 import { IUser } from "types/interfaces";
+import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
 
 const ACCESS_TOKEN_EXPIRATION_TIME = 3600 * 1000; // one hour expiration
 const REFRESH_TOKEN_EXPIRATION_TIME = 3600 * 1000 * 24; // one day expiration
 
 export function setTimeStamp() {
    if (typeof window !== "undefined") {
-      window.localStorage.setItem("token_timestamp", "" + Date.now());
+      window.localStorage.setItem(ILocalStorageItems.token_timestamp, "" + Date.now());
    }
 }
 
 export function getTimeStamp() {
    if (typeof window !== "undefined") {
-      const timestamp: number = Number(window.localStorage.getItem("token_timestamp"));
+      const timestamp: number = Number(window.localStorage.getItem(ILocalStorageItems.token_timestamp));
 
       return timestamp;
    }
@@ -21,7 +22,7 @@ export function getTimeStamp() {
 export async function refreshToken() {
    if (typeof window !== "undefined") {
       if (Date.now() - getTimeStamp()! > REFRESH_TOKEN_EXPIRATION_TIME) {
-         window.localStorage.removeItem("token");
+         window.localStorage.removeItem(ILocalStorageItems.token);
          window.localStorage.removeItem("token_timestamp");
          console.error("Refresh token expired. Redirecting to Login page....");
          window.location.replace("login");
@@ -32,7 +33,7 @@ export async function refreshToken() {
             });
             const { access } = data;
             localStorage.setItem(
-               "token",
+               ILocalStorageItems.token,
                JSON.stringify({
                   access_token: access,
                   refresh_token: getRefreshToken(),
@@ -50,7 +51,7 @@ export async function refreshToken() {
 
 export function getToken() {
    if (typeof window !== "undefined") {
-      const token = JSON.parse(`${window.localStorage.getItem("token")}`);
+      const token = JSON.parse(`${window.localStorage.getItem(ILocalStorageItems.token)}`);
       return token?.access_token;
    }
 }
@@ -72,14 +73,14 @@ export function getAccessToken() {
 
 export function getRefreshToken() {
    if (typeof window !== "undefined") {
-      const token = JSON.parse(`${window.localStorage.getItem("token")}`);
+      const token = JSON.parse(`${window.localStorage.getItem(ILocalStorageItems.token)}`);
       return token?.refresh_token;
    }
 }
 
 export function addUserToLocalStorage(user: IUser) {
    localStorage.setItem(
-      "token",
+      ILocalStorageItems.token,
       JSON.stringify({
          access_token: user.access_token,
          refresh_token: user.refresh_token,
@@ -92,10 +93,10 @@ export function addUserToLocalStorage(user: IUser) {
 
 export function updateUserInLocalStorage(user: IUser) {
    if (typeof window !== "undefined") {
-      const { access_token, refresh_token } = JSON.parse(localStorage.getItem("token") as string);
+      const { access_token, refresh_token } = JSON.parse(localStorage.getItem(ILocalStorageItems.token) as string);
 
       localStorage.setItem(
-         "token",
+         ILocalStorageItems.token,
          JSON.stringify({
             access_token: access_token,
             refresh_token: refresh_token,
@@ -108,6 +109,6 @@ export function updateUserInLocalStorage(user: IUser) {
 
 export function getUserFromLocalStorage() {
    if (typeof window !== "undefined") {
-      return JSON.parse(localStorage.getItem("token") as string)?.user;
+      return JSON.parse(localStorage.getItem(ILocalStorageItems.token) as string)?.user;
    }
 }
