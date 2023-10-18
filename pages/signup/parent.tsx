@@ -15,6 +15,7 @@ import { updateUser } from "store/authSlice";
 import { checkEmail } from "utils/checkmail";
 import Link from "next/link";
 import { checkPolicy, unCheckPolicy } from "store/policySlice";
+import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
 
 export default function Parent() {
    const dispatch = useDispatch();
@@ -39,7 +40,7 @@ export default function Parent() {
       if (currentStepIndex === 2) {
          const data = await dispatch(signUpUser());
          // Set this to the local storage to know whether to auto-close page after verification
-         localStorage.setItem("parent-signup", JSON.stringify(true));
+         localStorage.setItem(ILocalStorageItems.parent_signup, JSON.stringify(true));
          if (!data?.error?.message) {
             setModalOpen(true);
          }
@@ -117,7 +118,7 @@ export default function Parent() {
                   <button
                      className="mx-auto block max-w-fit rounded-md bg-orange-400 px-6 py-3 font-bold text-white"
                      onClick={async () => {
-                        const isNotVerified = localStorage.getItem("parent-signup");
+                        const isNotVerified = localStorage.getItem(ILocalStorageItems.parent_signup);
                         if (!isNotVerified) {
                            const { data } = await dispatch(loginUser());
                         }

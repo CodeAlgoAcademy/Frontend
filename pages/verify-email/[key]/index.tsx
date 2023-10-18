@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { resendEmail, verifyEmail } from "services/authService";
 import { openErrorModal, openPreloader, closePreloader } from "store/fetchSlice";
 import { RootState } from "store/store";
+import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
 import { errorResolver } from "utils/errorResolver";
 
 const VerifyWithKey = () => {
@@ -32,9 +33,9 @@ const VerifyWithKey = () => {
             return;
          }
          // check if it's a parent signup
-         const signUpType = JSON.parse(localStorage.getItem("parent-signup") as string);
+         const signUpType = JSON.parse(localStorage.getItem(ILocalStorageItems.parent_signup) as string);
 
-         localStorage.removeItem("parent-signup");
+         localStorage.removeItem(ILocalStorageItems.parent_signup);
          localStorage.removeItem("emailToBeVerified");
          setLoading(false);
          setError(false);
@@ -49,7 +50,7 @@ const VerifyWithKey = () => {
       if (key) {
          verify();
       }
-      setEmail(localStorage.getItem("emailToBeVerified") as string);
+      setEmail(localStorage.getItem(ILocalStorageItems.emailToBeVerified) as string);
    }, [key]);
 
    return (
