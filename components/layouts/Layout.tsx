@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { closePreloader } from "../../store/fetchSlice";
 import { addUserFromLocalStorage } from "store/authSlice";
 import SuccessModal from "../modals/SuccessModal";
+import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
 
 interface Props {
    children?: ReactNode;
@@ -18,7 +19,7 @@ const Layout = ({ children }: Props) => {
    const router = useRouter();
 
    useEffect(() => {
-      const token = typeof window !== "undefined" && JSON.parse(localStorage.getItem("token") as string);
+      const token = typeof window !== "undefined" && JSON.parse(localStorage.getItem(ILocalStorageItems.token) as string);
 
       const unrestricted = [
          "/",

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { resendEmail } from "services/authService";
 import { closePreloader, openPreloader } from "store/fetchSlice";
 import { RootState } from "store/store";
+import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
 
 const EmailVerification = () => {
    const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const EmailVerification = () => {
 
    // store the email temporarily in locastorage
    useEffect(() => {
-      localStorage.setItem("emailToBeVerified", email);
+      localStorage.setItem(ILocalStorageItems.emailToBeVerified, email);
    }, []);
 
    return (
