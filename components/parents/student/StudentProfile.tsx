@@ -27,12 +27,14 @@ const StudentProfile = () => {
                <StudentProfileInfo header="Date of birth" body={currentChild?.dob} />
             </div>
          </div>
-         <div className="relative ml-auto max-w-fit">
-            <p className="cursor-pointer font-medium underline" onClick={() => setResetPasswordOpen(!resetPasswordOpen)}>
-               Reset Password
-            </p>
-            {resetPasswordOpen && <ResetPassword />}
-         </div>
+         {currentChild && (
+            <div className="relative ml-auto max-w-fit">
+               <p className="cursor-pointer font-medium underline" onClick={() => setResetPasswordOpen(!resetPasswordOpen)}>
+                  Reset Password
+               </p>
+               {resetPasswordOpen && <ResetPassword closeModal={() => setResetPasswordOpen(false)} />}
+            </div>
+         )}
       </ContentBox>
    );
 };
