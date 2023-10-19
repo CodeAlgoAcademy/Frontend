@@ -178,6 +178,32 @@ export const rejectFriendRequest: any = createAsyncThunk("friendRequest/reply", 
    }
 });
 
+export const updateChildPassword: any = createAsyncThunk(
+   "parent/update-child-password",
+   async (
+      data: {
+         child_id: number;
+         password: string;
+      },
+      thunkApi
+   ) => {
+      const dispatch = thunkApi.dispatch;
+      dispatch(openPreloader({ loadingText: "Updating Child's Password" }));
+
+      try {
+         const response = await parentService.updateChildPassword(data.child_id, data.password);
+
+         dispatch(closePreloader());
+
+         return response;
+      } catch (error) {
+         const errorMessage = errorResolver(error);
+
+         return thunkApi.rejectWithValue(errorMessage);
+      }
+   }
+);
+
 export const parentSlice = createSlice({
    name: "parentChild",
    initialState,
