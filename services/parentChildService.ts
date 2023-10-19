@@ -79,6 +79,16 @@ const getChildSkills = async (id: number) => {
    return response?.data;
 };
 
+const updateChildPassword = async (child_id: number, password: string) => {
+   const response = await http.put(
+      `/parent/child/${child_id}/update-password`,
+      { password },
+      { headers: { Authorization: `Bearer ${getAccessToken()}` } }
+   );
+
+   return response?.data;
+};
+
 const parentService = {
    addChild,
    addChildFriends,
@@ -88,6 +98,7 @@ const parentService = {
    getChildScreentime,
    getChildProgress,
    getChildSkills,
+   updateChildPassword,
 };
 
 export default parentService;

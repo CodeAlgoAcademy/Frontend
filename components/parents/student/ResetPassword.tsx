@@ -1,15 +1,38 @@
 import { Button } from "@mui/material";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { ChangeEvent, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { openSuccessModal } from "store/modalSlice";
+import { updateChildPassword } from "store/parentChildSlice";
 import { RootState } from "store/store";
 
-const ResetPassword = () => {
+interface Props {
+   closeModal(): void;
+}
+
+const ResetPassword = ({ closeModal }: Props) => {
    const currentChild = useSelector((state: RootState) => state?.parentChild?.currentChild);
+
+   const dispatch = useDispatch();
 
    const [password, setPassword] = useState<string>("");
 
+   const submit = async (e: ChangeEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      const data = await dispatch(updateChildPassword({ child_id: currentChild?.id, password }));
+
+      if (!data?.error) {
+         closeModal();
+
+         dispatch(openSuccessModal("Child's password has been changed successfully"));
+      }
+   };
+
    return (
-      <article className="max-w-screen scale-up absolute bottom-[105%] right-0 z-[4] w-[300px] rounded-md bg-gray-100  p-6 shadow-md hover:shadow-lg">
+      <form
+         onSubmit={submit}
+         className="max-w-screen scale-up absolute bottom-[105%] right-0 z-[4] w-[300px] rounded-md bg-gray-100  p-6 shadow-md hover:shadow-lg"
+      >
          <h4 className="text-[.9rem] font-medium">Reset {currentChild?.fullName}'s password</h4>
          <input
             className={styles?.input}
@@ -18,10 +41,13 @@ const ResetPassword = () => {
             type="password"
             onChange={(e) => setPassword(e.target.value)}
             name="password"
+            required={true}
          />
 
-         <button className="mt-2 ml-auto block rounded-md border-none bg-mainColor px-6 py-[5px] text-white outline-none">Submit</button>
-      </article>
+         <button type="submit" className="mt-2 ml-auto block rounded-md border-none bg-mainColor px-6 py-[5px] text-white outline-none">
+            Submit
+         </button>
+      </form>
    );
 };
 
