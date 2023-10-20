@@ -37,6 +37,7 @@ export interface IParentChild {
       id: number;
       friend: string;
    }[];
+   student_id?:number;
    // }
 }
 
