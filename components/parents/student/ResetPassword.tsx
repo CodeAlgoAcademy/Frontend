@@ -19,7 +19,7 @@ const ResetPassword = ({ closeModal }: Props) => {
    const submit = async (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      const data = await dispatch(updateChildPassword({ child_id: currentChild?.student_id, password }));
+      const data = await dispatch(updateChildPassword({ child_id: currentChild?.id, password }));
 
       if (!data?.error) {
          closeModal();
