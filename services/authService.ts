@@ -116,11 +116,18 @@ export const signUpUser: any = createAsyncThunk("authSlice/signUpUser", async (n
 });
 
 export const loginWithGoogle: any = createAsyncThunk("authSlice/loginWithGoogle", async (access_token: string, thunkApi) => {
+   const dispatch = thunkApi.dispatch;
+
+   dispatch(openPreloader({ loadingText: "Signing in your google account" }));
+
    try {
       const { data } = await http.post("/auth/google/", {
          access_token,
          action: "signin",
       });
+
+      dispatch(closePreloader());
+
       return {
          access_token: data.access_token,
          refresh_token: data.refresh_token,
@@ -133,11 +140,17 @@ export const loginWithGoogle: any = createAsyncThunk("authSlice/loginWithGoogle"
 });
 
 export const signUpWithGoogle: any = createAsyncThunk("authSlice/signUpWithGoogle", async (access_token: string, thunkApi) => {
+   const dispatch = thunkApi.dispatch;
+
+   dispatch(openPreloader({ loadingText: "Registering your google account" }));
+
    try {
       const { data } = await http.post("/auth/google/", {
          access_token,
          action: "signup",
       });
+
+      dispatch(closePreloader());
       return {
          access_token: data.access_token,
          refresh_token: data.refresh_token,
