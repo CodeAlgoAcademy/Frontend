@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { IUser, IUserData } from "../types/interfaces";
+import { ILoginReducerArg, IUser, IUserData } from "../types/interfaces";
 import { RootState } from "./store";
 import {
    loginUser,
@@ -103,33 +103,48 @@ export const userSlice = createSlice({
       addUserFromLocalStorage: (state: IUser, action: PayloadAction<IUser>) => {
          return { ...action.payload, auth: state.auth };
       },
+      // i'm using this in place of extra reducers because of page restrictions
+      storeUserLogin: (state: IUser, action: PayloadAction<ILoginReducerArg>) => {
+         const user: Partial<IUser> = {
+            access_token: action.payload.access_token,
+            refresh_token: action.payload.refresh_token,
+            ...action.payload.user,
+         };
+
+         addUserToLocalStorage(user);
+
+         return {
+            ...state,
+            ...action.payload,
+         };
+      },
    },
    extraReducers: (builder) => {
-      builder.addCase(loginUser.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
-         addUserToLocalStorage(action?.payload);
+      // builder.addCase(loginUser.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
+      //    addUserToLocalStorage(action?.payload);
 
-         return {
-            ...state,
-            ...action.payload,
-         };
-      });
+      //    return {
+      //       ...state,
+      //       ...action.payload,
+      //    };
+      // });
 
-      builder.addCase(loginWithGoogle.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
-         addUserToLocalStorage(action.payload);
+      // builder.addCase(loginWithGoogle.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
+      //    addUserToLocalStorage(action.payload);
 
-         return {
-            ...state,
-            ...action.payload,
-         };
-      });
+      //    return {
+      //       ...state,
+      //       ...action.payload,
+      //    };
+      // });
 
-      builder.addCase(signUpWithGoogle.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
-         addUserToLocalStorage(action.payload);
-         return {
-            ...state,
-            ...action.payload,
-         };
-      });
+      // builder.addCase(signUpWithGoogle.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
+      //    addUserToLocalStorage(action.payload);
+      //    return {
+      //       ...state,
+      //       ...action.payload,
+      //    };
+      // });
 
       builder.addCase(updateFirstname.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
          updateUserInLocalStorage(action.payload);
@@ -156,6 +171,6 @@ export const userSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { logOut, clearFields, updateUser, resetAuthUser, addUserFromLocalStorage } = userSlice.actions;
+export const { logOut, clearFields, updateUser, resetAuthUser, addUserFromLocalStorage, storeUserLogin } = userSlice.actions;
 
 export default userSlice.reducer;
