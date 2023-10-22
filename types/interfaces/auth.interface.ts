@@ -34,3 +34,9 @@ export interface User {
    email: string;
    id: number;
 }
+
+export interface ILoginReducerArg {
+   access_token: string;
+   refresh_token: string;
+   user: IUserData;
+}
