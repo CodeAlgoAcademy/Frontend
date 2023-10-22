@@ -78,7 +78,7 @@ export function getRefreshToken() {
    }
 }
 
-export function addUserToLocalStorage(user: IUser) {
+export function addUserToLocalStorage(user: Partial<IUser>) {
    localStorage.setItem(
       ILocalStorageItems.token,
       JSON.stringify({
