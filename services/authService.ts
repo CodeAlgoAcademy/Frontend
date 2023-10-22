@@ -5,10 +5,10 @@ import { closePreloader, openErrorModal, openPreloader } from "store/fetchSlice"
 import { getAccessToken } from "utils/getTokens";
 import { RootState } from "store/store";
 import { errorResolver } from "utils/errorResolver";
-import { IUser } from "types/interfaces";
+import { ILoginReducerArg, IUser } from "types/interfaces";
 import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
 
-export const loginUser: any = createAsyncThunk("authSlice/loginUser", async (name, thunkApi) => {
+export const loginUser: any = createAsyncThunk("authSlice/loginUser", async (name, thunkApi): Promise<ILoginReducerArg | any> => {
    const state = <RootState>thunkApi.getState();
    const dispatch = thunkApi.dispatch;
    const { email, password } = state.user.auth;
@@ -23,14 +23,10 @@ export const loginUser: any = createAsyncThunk("authSlice/loginUser", async (nam
       body.username = email;
    }
    try {
-      const { data } = await http.post("/auth/login/", body);
+      const { data } = await http.post<ILoginReducerArg>("/auth/login/", body);
       dispatch(clearFields());
       dispatch(closePreloader());
-      return {
-         access_token: data.access_token,
-         refresh_token: data.refresh_token,
-         ...data.user,
-      };
+      return data;
    } catch (error: any) {
       const errorMessage = errorResolver(error);
       return thunkApi.rejectWithValue(errorMessage);
@@ -121,18 +117,14 @@ export const loginWithGoogle: any = createAsyncThunk("authSlice/loginWithGoogle"
    dispatch(openPreloader({ loadingText: "Signing in your google account" }));
 
    try {
-      const { data } = await http.post("/auth/google/", {
+      const { data } = await http.post<ILoginReducerArg>("/auth/google/", {
          access_token,
          action: "signin",
       });
 
       dispatch(closePreloader());
 
-      return {
-         access_token: data.access_token,
-         refresh_token: data.refresh_token,
-         ...data.user,
-      };
+      return data;
    } catch (error: any) {
       const errorMessage = errorResolver(error);
       return thunkApi.rejectWithValue(errorMessage);
@@ -145,17 +137,13 @@ export const signUpWithGoogle: any = createAsyncThunk("authSlice/signUpWithGoogl
    dispatch(openPreloader({ loadingText: "Registering your google account" }));
 
    try {
-      const { data } = await http.post("/auth/google/", {
+      const { data } = await http.post<ILoginReducerArg>("/auth/google/", {
          access_token,
          action: "signup",
       });
 
       dispatch(closePreloader());
-      return {
-         access_token: data.access_token,
-         refresh_token: data.refresh_token,
-         ...data.user,
-      };
+      return data;
    } catch (error: any) {
       const errorMessage = errorResolver(error);
       return thunkApi.rejectWithValue(errorMessage);

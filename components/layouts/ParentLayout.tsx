@@ -243,52 +243,62 @@ const ParentLayout = ({ children }: Props) => {
                            )}
                         </div>
                      </div>
-                     <div className="relative">
-                        <div
-                           className="do-not-select mt-4 mb-4 ml-4 flex max-w-fit items-center gap-3 w500:ml-0"
-                           onClick={() => {
-                              setOpen((prev) => !prev);
-                           }}
-                           data-testid="select-child"
-                        >
-                           <h1 className="do-not-select cursor-pointer text-2xl font-semibold capitalize text-mainColor md:text-3xl ">
-                              {parent?.currentChild?.fullName}
-                           </h1>
-                           <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="do-not-select cursor-pointer"
-                              width="18"
-                              height="10"
-                              viewBox="0 0 18 10"
-                              fill="none"
+                     <div className="flex flex-wrap items-center justify-between">
+                        <div className="relative">
+                           <div
+                              className="do-not-select mt-4 mb-4 ml-4 flex max-w-fit items-center gap-3 w500:ml-0"
+                              onClick={() => {
+                                 setOpen((prev) => !prev);
+                              }}
+                              data-testid="select-child"
                            >
-                              <path
-                                 d="M1.7998 1.25L9.2998 8.75L16.7998 1.25"
-                                 stroke="#2073FA"
-                                 strokeWidth="2"
-                                 strokeLinecap="round"
-                                 strokeLinejoin="round"
-                              />
-                           </svg>
-                        </div>
-                        {childrenListOpen && (
-                           <div className="do-not-select absolute top-[70%] left-0 z-[4] max-h-[200px] min-h-[200px] w-[90vw] max-w-[200px] overflow-y-scroll rounded-md bg-white shadow-md">
-                              {parent?.children?.map((child, index) => {
-                                 return (
-                                    <p
-                                       key={index}
-                                       onClick={() => {
-                                          dispatch(changeCurrentChild(child));
-                                          setOpen(false);
-                                       }}
-                                       className="do-not-select w-full cursor-pointer px-3 py-3 capitalize text-black hover:bg-[#ced4e9]"
-                                       data-testid="child"
-                                    >
-                                       {child.fullName}
-                                    </p>
-                                 );
-                              })}
+                              <h1 className="do-not-select cursor-pointer text-2xl font-semibold capitalize text-mainColor md:text-3xl ">
+                                 {parent?.currentChild?.fullName}
+                              </h1>
+                              <svg
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 className="do-not-select cursor-pointer"
+                                 width="18"
+                                 height="10"
+                                 viewBox="0 0 18 10"
+                                 fill="none"
+                              >
+                                 <path
+                                    d="M1.7998 1.25L9.2998 8.75L16.7998 1.25"
+                                    stroke="#2073FA"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                 />
+                              </svg>
                            </div>
+                           {childrenListOpen && (
+                              <div className="do-not-select absolute top-[70%] left-0 z-[4] max-h-[200px] min-h-[200px] w-[90vw] max-w-[200px] overflow-y-scroll rounded-md bg-white shadow-md">
+                                 {parent?.children?.map((child, index) => {
+                                    return (
+                                       <p
+                                          key={index}
+                                          onClick={() => {
+                                             dispatch(changeCurrentChild(child));
+                                             setOpen(false);
+                                          }}
+                                          className="do-not-select w-full cursor-pointer px-3 py-3 capitalize text-black hover:bg-[#ced4e9]"
+                                          data-testid="child"
+                                       >
+                                          {child.fullName}
+                                       </p>
+                                    );
+                                 })}
+                              </div>
+                           )}
+                        </div>
+
+                        {parent?.currentChild && (
+                           <Link href={"http://www.play.codealgoacademy.com"} target="_blank">
+                              <button className="min-w-fit rounded-md border-none bg-mainColor px-[.8rem] py-[5px] text-white outline-none">
+                                 Log in to game
+                              </button>
+                           </Link>
                         )}
                      </div>
                      {children}
