@@ -1,15 +1,15 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IFetch } from "types/interfaces";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IFetch } from 'types/interfaces/modal.interface';
 
 const initialState: IFetch = {
   errorModalOpen: false,
   errors: [],
   loading: false,
-  loadingText: "",
+  loadingText: '',
 };
 
 const fetchSlice = createSlice({
-  name: "fetch",
+  name: 'fetch',
   initialState,
   reducers: {
     closeErrorModal: (state: IFetch) => {
@@ -20,7 +20,7 @@ const fetchSlice = createSlice({
       state: IFetch,
       action: PayloadAction<{
         errorText: string[];
-      }>
+      }>,
     ) => {
       state.errorModalOpen = true;
       state.errors = action.payload.errorText;
@@ -29,22 +29,18 @@ const fetchSlice = createSlice({
       state: IFetch,
       action: PayloadAction<{
         loadingText: string;
-      }>
+      }>,
     ) => {
       state.loading = true;
       state.loadingText = action.payload.loadingText;
     },
     closePreloader: (state: IFetch) => {
-      state.loadingText = "";
+      state.loadingText = '';
       state.loading = false;
     },
   },
 });
 
-export const {
-  closeErrorModal,
-  openErrorModal,
-  openPreloader,
-  closePreloader,
-} = fetchSlice.actions;
+export const { closeErrorModal, openErrorModal, openPreloader, closePreloader } =
+  fetchSlice.actions;
 export default fetchSlice.reducer;

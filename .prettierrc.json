@@ -1,0 +1,10 @@
+{
+   "printWidth": 150,
+   "tabWidth": 3,
+   "ignore": [
+      "node_modules/**",
+      "dist/**",
+      ".next/**",
+      ".swc/**"
+   ]
+}
