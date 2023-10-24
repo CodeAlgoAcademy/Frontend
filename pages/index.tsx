@@ -1,42 +1,158 @@
 import type { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
-import Navbar from "@/components/Navbar/Navbar";
+import React, { ChangeEvent, LegacyRef, useRef } from "react";
+import Navbar from "@/components/navbar/home/Navbar";
 import Link from "next/link";
+import { useState } from "react";
+import Image from "next/image";
+import CharactersArrangement from "@/components/home/charactersArrangement";
+import HomeVideo from "@/components/home/video";
+import MobileView from "@/components/home/mobile-view";
+import CorrectCodeModal from "@/components/modals/CorrectCodeModal";
+
+type Colors = "blue" | "purple" | "orange" | "";
+
+const colors: Colors[] = ["orange", "purple", "blue"];
+
+// [
+//    `root.configure( bg="${colors[stepToMoveTo]}" )`,
+//    `root.configure(bg = "${colors[stepToMoveTo]}")`,
+//    `root.configure(bg="${colors[stepToMoveTo]}")`,
+// ];
+
 const Home: NextPage = () => {
-  return (
-    <div className="">
-      <div className="h-screen w-screen overflow-hidden">
-        <Navbar />
-        <div className={styles.container}>
-          <div className={styles.gradientContainer}></div>
-          <div className={styles.textContainer}>
-            <p className={styles.containerText}>
-              Coding for kids and Teens made easy
-            </p>
-            <p className="md:w-[550px] text-sm">
-              3D games from CodeAlgo academy will bring students to compiter sciences where they can teach themselves as they play.
-            </p>
-           <Link href="/signup">
-            <button className="bg-blue-400 p-3 rounded-lg">
-              Sign up            
-            </button>
-            </Link>
-          </div>
-        </div>
+   // auto focus on page load
+   const ref = useRef<HTMLTextAreaElement>();
+
+   const [currentStep, setCurrentStep] = useState(0);
+
+   const [selectedColor, setSelectedColor] = useState<Colors>(colors[currentStep]);
+
+   // open the join waitlist modal once their code is correct the first time
+   const [correctFirstTime, setCorrectFirstTime] = useState<boolean>(false);
+   const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+   // to avoid repetition of code,
+   const stepToMoveTo = currentStep === 2 ? 0 : currentStep + 1;
+
+   // const correctCode = `root.configure(bg="${colors[stepToMoveTo]}")`;
+   const correctCode = `print("ilovecodealgo")`;
+
+   const [code, setCode] = useState<string>("");
+
+   const [status, setStatus] = useState<"correct" | "incorrect" | "">("");
+
+   const isCodeCorrect = (e: ChangeEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      // split to remove all emtpy spaces
+      const newCode = code.split("\n").join("").toLowerCase().split(" ").join("").trimEnd().trimStart();
+
+      // check if the value is among the correct codes
+      if (correctCode === newCode) {
+         setStatus("correct");
+         setCurrentStep(stepToMoveTo);
+         setSelectedColor(colors[stepToMoveTo]);
+         setCode("");
+         // Modal Functionality
+         if (!correctFirstTime && currentStep === 0) {
+            setCorrectFirstTime(true);
+            setModalOpen(true);
+         }
+      } else {
+         setStatus("incorrect");
+      }
+   };
+
+   // Video Logic
+   const [isPlaying, setIsPlaying] = useState<boolean>(true);
+   const [width, setWidth] = useState<number>(0);
+
+   const stopVideo = () => {
+      setTimeout(() => {
+         setIsPlaying(false);
+      }, 500);
+   };
+
+   const resizeWindow = () => {
+      setWidth(window?.innerWidth);
+   };
+
+   React.useEffect(() => {
+      const timeout = setTimeout(() => {
+         setStatus("");
+      }, 1500);
+      return () => clearTimeout(timeout);
+   }, [status]);
+
+   React.useEffect(() => {
+      // autofocus mini-compiler on page load
+      ref?.current?.focus();
+      setWidth(window?.innerWidth);
+      window.addEventListener("resize", resizeWindow);
+
+      return () => window.removeEventListener("resize", resizeWindow);
+   }, []);
+
+   if (width < 1100) {
+      return <MobileView />;
+   }
+
+   return (
+      <div className="relative overflow-x-hidden">
+         {modalOpen && <CorrectCodeModal setModalOpen={setModalOpen} />}
+         <div className="flex min-h-screen w-screen flex-col overflow-x-hidden overflow-y-visible bg-home3 bg-cover bg-left lg:bg-none">
+            <HomeVideo stopVideo={() => {}} />
+            <Navbar />
+            <div className="z-3 absolute top-[80px] left-0 flex max-h-[88vh] w-screen flex-1 flex-col items-center justify-center overflow-hidden bg-home3 bg-cover bg-left lg:max-h-screen  lg:flex-row lg:bg-none">
+               <div className={styles.container}>
+                  <div className={styles.textContainer + ` text-gray-900  ${currentStep === 1 && "lg:text-white"}`}>
+                     <p className={styles.containerText}>We Believe Every Child is a genius!</p>
+                     <p className="text-[1.2rem] font-bold text-[#333] md:w-[500px]">
+                        3D games from CodeAlgo academy will bring students to computer sciences where they can teach themselves coding as they play.
+                     </p>
+                     {/* Mini Compiler */}
+                     <div className="relative">
+                        <div
+                           className="absolute top-[50px] left-[0] z-[2] hidden max-w-fit translate-x-[50%] bg-white p-2 text-gray-800 shadow-md after:absolute after:top-[0] after:left-[5px] after:h-[15px] after:w-[15px] after:-translate-y-[50%] after:rotate-45 after:bg-white lg:block"
+                           style={{ textShadow: "0" }}
+                        >
+                           <p className="mb-1 text-[0.97rem] font-bold">Type the following:</p>
+
+                           <p className="">
+                              <span className="text-red-600">print</span>
+                              {'("'}
+                              <span className="text-blue-600">I love CodeAlgo</span>
+                              {'")'}
+                           </p>
+                        </div>
+                        <form action="" onSubmit={isCodeCorrect} className="hidden w-full max-w-[400px] lg:block">
+                           <textarea
+                              className="mt-2 block h-[100px] w-full  resize-none rounded-md bg-black p-2 text-white caret-white"
+                              value={code}
+                              onChange={(e) => setCode(e.target.value)}
+                              ref={ref as LegacyRef<HTMLTextAreaElement>}
+                           ></textarea>
+                           <button type={"submit"} className="ml-auto mt-2 block max-w-fit rounded-md bg-black py-2 px-3 text-white shadow-md">
+                              RUN
+                           </button>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+               <CharactersArrangement displayOtherChars={true}>
+                  <img src={"/assets/bg3.png"} alt="" className={`w-full object-cover ${currentStep === 2 ? "bg-image block" : "hidden"}`} />
+                  <img src={"/assets/bg2.png"} alt="" className={`w-full object-cover ${currentStep === 1 ? "bg-image block" : "hidden"}`} />
+                  <img src={"/assets/bg1.png"} alt="" className={`w-full object-cover ${currentStep === 0 ? "bg-image block" : "hidden"}`} />
+               </CharactersArrangement>
+            </div>
+         </div>
       </div>
-    </div>
-  );
+   );
 };
 
 export default Home;
 
 const styles = {
-  container:
-    "relative bg-home bg-center h-full md:bg-right bg-cover bg-no-repeat",
-  gradientContainer:
-    "absolute top-0 right-0 bottom-0 left-0 *bg-gradient-to-tl md:bg-gradient-to-r from-orange-400*",
-  textContainer: "py-20 md:py-32 relative px-2 md:px-20 text-white space-y-5",
-  containerText:
-    "capitalize text-5xl font-extrabold leading-[60px] md:w-[600px]",
+   container: "flex-1 flex bg-center h-full",
+   textContainer: "py-16 relative px-2 md:px-[3rem] space-y-5 z-10",
+   containerText: "capitalize text-5xl font-extrabold leading-[60px] md:w-[500px] text-[#333]",
 };

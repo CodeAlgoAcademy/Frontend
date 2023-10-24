@@ -1,0 +1,43 @@
+[
+   {
+      "className": "JSS 1",
+      "roomNumber": "ACDF12",
+      "subject": "English",
+      "coTeachers": null,
+      "grade": "K",
+      "color": "royalblue",
+      "totalStudent": 5,
+      "id": 1
+   },
+
+   {
+      "className": "JSS 2",
+      "roomNumber": "ACD2",
+      "subject": "Maths",
+      "coTeachers": null,
+      "grade": "1",
+      "color": "purple",
+      "totalStudent": 5,
+      "id": 2
+   },
+   {
+      "className": "SSS 1",
+      "roomNumber": "ACDF12",
+      "subject": "Coding",
+      "coTeachers": null,
+      "grade": "K",
+      "color": "green",
+      "totalStudent": 5,
+      "id": 3
+   },
+   {
+      "className": "JSS 1",
+      "roomNumber": "ACDF12",
+      "subject": "Yoruba",
+      "coTeachers": null,
+      "grade": "1",
+      "color": "darkred",
+      "totalStudent": 2,
+      "id": 4
+   }
+]
