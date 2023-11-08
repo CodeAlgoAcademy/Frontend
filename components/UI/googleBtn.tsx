@@ -54,7 +54,7 @@ const GoogleBtn: FC = () => {
                   }
                } else {
                   // students
-                  window.location.href = "http://www.play.codealgoacademy.com";
+                  window.location.href = "https://play.codealgoacademy.com";
                   return;
                }
 
@@ -73,7 +73,7 @@ const GoogleBtn: FC = () => {
                   } else if (credentials?.is_organizer) {
                      router.push("/organizers");
                   } else {
-                     window.location.href = "http://www.play.codealgoacademy.com";
+                     window.location.href = "https://play.codealgoacademy.com";
                   }
                }
             }
