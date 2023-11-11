@@ -12,22 +12,38 @@ class MyDocument extends Document {
       return (
          <Html>
             <Head>
-               <meta name="description" content="CodeAlgo Academy" />
+               <title>CodeAlgo Academy</title>
+               <meta
+                  name="description"
+                  content="3D games from CodeAlgo academy will bring students to computer sciences where they can teach themselves as they play."
+               />
+
+               {/* <!-- Facebook Meta Tags --> */}
+               <meta property="og:url" content="https://www.codealgoacademy.com" />
+               <meta property="og:type" content="website" />
                <meta property="og:title" content="CodeAlgo Academy" />
-               <meta property="twitter:title" content="CodeAlgo Academy" />
                <meta
                   property="og:description"
                   content="3D games from CodeAlgo academy will bring students to computer sciences where they can teach themselves as they play."
                />
+               <meta property="og:image" content="https://res.cloudinary.com/dtori4rq2/image/upload/v1693174037/background2_1_rxj5w3.jpg" />
+               <meta property="og:image:alt" content="CodeAlgo Home Page" />
+
+               {/* <!-- Twitter Meta Tags --> */}
+               <meta name="twitter:card" content="summary_large_image" />
+               <meta property="twitter:domain" content="codealgoacademy.com" />
+               <meta property="twitter:url" content="https://www.codealgoacademy.com" />
+               <meta name="twitter:title" content="CodeAlgo Academy" />
                <meta
-                  property="twitter:description"
+                  name="twitter:description"
                   content="3D games from CodeAlgo academy will bring students to computer sciences where they can teach themselves as they play."
                />
-               <meta property="image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8QefXQKCgVvSMakQ7GI5NWvcoyrCm49_yMRwvihd8&s" />
-
-               <meta property="og:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8QefXQKCgVvSMakQ7GI5NWvcoyrCm49_yMRwvihd8&s" />
-               <meta property="twitter:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8QefXQKCgVvSMakQ7GI5NWvcoyrCm49_yMRwvihd8&s" />
-               <meta property="image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8QefXQKCgVvSMakQ7GI5NWvcoyrCm49_yMRwvihd8&s" />
+               <meta name="twitter:image" content="https://res.cloudinary.com/dtori4rq2/image/upload/v1693174037/background2_1_rxj5w3.jpg" />
+               <meta name="title" content="CodeAlgo Academy" />
+               <meta
+                  name="description"
+                  content="3D games from CodeAlgo academy will bring students to computer sciences where they can teach themselves as they play."
+               />
             </Head>
             <body>
                <Main />
