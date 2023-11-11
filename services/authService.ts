@@ -26,7 +26,12 @@ export const loginUser: any = createAsyncThunk("authSlice/loginUser", async (nam
       const { data } = await http.post<ILoginReducerArg>("/auth/login/", body);
       dispatch(clearFields());
       dispatch(closePreloader());
-      return data;
+
+      return {
+         access_token: data.access_token,
+         refresh_token: data.refresh_token,
+         ...data.user,
+      };
    } catch (error: any) {
       const errorMessage = errorResolver(error);
       return thunkApi.rejectWithValue(errorMessage);
@@ -124,7 +129,11 @@ export const loginWithGoogle: any = createAsyncThunk("authSlice/loginWithGoogle"
 
       dispatch(closePreloader());
 
-      return data;
+      return {
+         access_token: data.access_token,
+         refresh_token: data.refresh_token,
+         ...data.user,
+      };
    } catch (error: any) {
       const errorMessage = errorResolver(error);
       return thunkApi.rejectWithValue(errorMessage);
@@ -143,7 +152,12 @@ export const signUpWithGoogle: any = createAsyncThunk("authSlice/signUpWithGoogl
       });
 
       dispatch(closePreloader());
-      return data;
+
+      return {
+         access_token: data.access_token,
+         refresh_token: data.refresh_token,
+         ...data.user,
+      };
    } catch (error: any) {
       const errorMessage = errorResolver(error);
       return thunkApi.rejectWithValue(errorMessage);
@@ -157,29 +171,28 @@ export const updateAccountType: any = createAsyncThunk("authSlice/updateAccountT
    const is_organizer: boolean = accountType === "Organizer";
    const state = <RootState>thunkApi.getState();
    const { firstname, lastname, email, country, schoolCountry, schoolName, grade, username } = state.user;
+
+   const requestBody = {
+      firstname,
+      lastname,
+      email,
+      country: country ? country : "Canada",
+      schoolCountry,
+      schoolName,
+      is_student,
+      is_teacher,
+      is_parent,
+      is_organizer,
+      grade,
+      username,
+   };
+   console.log(requestBody);
    try {
-      const { data } = await http.put(
-         "/auth/user",
-         {
-            firstname,
-            lastname,
-            email,
-            country: country ? country : "Canada",
-            schoolCountry,
-            schoolName,
-            is_student,
-            is_teacher,
-            is_parent,
-            is_organizer,
-            grade,
-            username,
+      const { data } = await http.put("/auth/user", requestBody, {
+         headers: {
+            Authorization: `Bearer ${getAccessToken()}`,
          },
-         {
-            headers: {
-               Authorization: `Bearer ${getAccessToken()}`,
-            },
-         }
-      );
+      });
       return data;
    } catch (error) {
       const errorMessage = errorResolver(error);
