@@ -23,12 +23,12 @@ import organizersSlice from "./organizersSlice";
 
 export const store = configureStore({
    reducer: {
-      user: userReducer,
       modal: modalReducer,
       addClass: addClassReducer,
       allClasses: allClassesReducer,
       currentClass: currentClassReducer,
       unit: unitsSlice,
+      user: userReducer,
       schedule: scheduleReducer,
       allCurriculum: allCurriculumReducer,
       allLessons: lessonsReducer,
