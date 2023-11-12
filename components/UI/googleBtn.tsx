@@ -6,7 +6,6 @@ import { RootState } from "store/store";
 import { FcGoogle } from "react-icons/fc";
 import { loginWithGoogle, signUpWithGoogle, updateAccountType } from "services/authService";
 import { openErrorModal } from "store/fetchSlice";
-import { storeUserLogin } from "store/authSlice";
 import { ILoginReducerArg } from "types/interfaces";
 const GoogleBtn: FC = () => {
    const credentials = useSelector((state: RootState) => state.user?.auth);
@@ -32,21 +31,21 @@ const GoogleBtn: FC = () => {
                 */
 
                if (router.pathname === "/login/teacher") {
-                  if (!data?.payload?.user?.is_teacher) {
+                  if (!data?.payload?.is_teacher) {
                      dispatch(openErrorModal({ errorText: ["This is not a teacher's account"] }));
                      return;
                   } else {
                      router.push("/teachers/addClass");
                   }
                } else if (router.pathname === "/login/parent") {
-                  if (!data?.payload?.user?.is_parent) {
+                  if (!data?.payload?.is_parent) {
                      dispatch(openErrorModal({ errorText: ["This is not a parent's account"] }));
                      return;
                   } else {
                      router.push("/parents");
                   }
                } else if (router.pathname === "/login/organizer") {
-                  if (!data?.payload?.user?.is_organizer) {
+                  if (!data?.payload?.is_organizer) {
                      dispatch(openErrorModal({ errorText: ["This is not an admin account"] }));
                      return;
                   } else {
@@ -57,13 +56,10 @@ const GoogleBtn: FC = () => {
                   window.location.href = "https://play.codealgoacademy.com";
                   return;
                }
-
-               dispatch(storeUserLogin(data?.payload as ILoginReducerArg));
             }
          } else if (router.pathname.includes("/signup")) {
             const signUpData = await dispatch(signUpWithGoogle(codeResponse.access_token));
             if (!signUpData?.error?.message) {
-               await dispatch(storeUserLogin(signUpData?.payload));
                const data = await dispatch(updateAccountType(account));
                if (!data?.error?.message) {
                   if (credentials?.is_teacher) {

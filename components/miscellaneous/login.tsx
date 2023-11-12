@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { loginUser } from "services/authService";
 import AuthLayout from "@/components/layouts/AuthLayout";
 import GoogleBtn from "@/components/UI/googleBtn";
-import { storeUserLogin, updateUser } from "store/authSlice";
+import { updateUser } from "store/authSlice";
 import { openErrorModal } from "store/fetchSlice";
 import { AuthButton } from "../UI/Button";
 import Link from "next/link";
@@ -34,14 +34,14 @@ const Login = ({ route }: { route?: any }) => {
          // If the account doesn't match the user selected in the select-account-type, display an error
 
          if (router.pathname.includes("/login/teacher")) {
-            if (data?.payload?.user?.is_teacher) {
+            if (data?.payload?.is_teacher) {
                router?.push("/teachers/addClass");
             } else {
                dispatch(openErrorModal({ errorText: ["This is not a teacher's account"] }));
                return;
             }
          } else if (router.pathname.includes("/login/parent")) {
-            if (data?.payload?.user?.is_parent) {
+            if (data?.payload?.is_parent) {
                if (route) {
                   router.push("/add-student");
                } else {
@@ -52,15 +52,13 @@ const Login = ({ route }: { route?: any }) => {
                return;
             }
          } else if (router.pathname.includes("/login/organizer")) {
-            if (data?.payload?.user?.is_organizer) {
+            if (data?.payload?.is_organizer) {
                router.push("/organizers");
             } else {
                dispatch(openErrorModal({ errorText: ["This is not an organizer's account"] }));
                return;
             }
          }
-
-         dispatch(storeUserLogin(data?.payload as ILoginReducerArg));
       }
    };
 
