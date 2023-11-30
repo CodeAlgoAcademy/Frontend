@@ -35,8 +35,7 @@ const Organizer = () => {
       e.preventDefault();
       if (currentStepIndex === 0) {
          checkEmail(email, next, dispatch);
-      }
-      if (currentStepIndex === 2) {
+      } else if (currentStepIndex === 2) {
          const data = await dispatch(signUpUser());
 
          if (!data?.error) {
