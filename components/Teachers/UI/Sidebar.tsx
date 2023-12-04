@@ -58,7 +58,7 @@ const Sidebar = (props: Props) => {
                   </div>
                ))}
 
-               <NavButton url="https://discord.gg/FmQbpJGF" title="Get Help" image={<GiHelp />} className="!justify-center" />
+               <NavButton url="https://discord.gg/FmQbpJGF" title="Get Help" image={<GiHelp />} className="mx-auto max-w-[230px]" />
             </div>
          </>
       </div>
