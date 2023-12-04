@@ -99,10 +99,10 @@ const Home: NextPage = () => {
    return (
       <div className="relative overflow-x-hidden">
          {modalOpen && <CorrectCodeModal setModalOpen={setModalOpen} />}
-         <div className="flex min-h-screen w-screen flex-col overflow-x-hidden overflow-y-visible bg-home3 bg-cover bg-left lg:bg-none">
+         <Navbar />
+         <div className="relative flex min-h-screen w-screen flex-col overflow-x-hidden overflow-y-visible bg-home3 bg-cover bg-left lg:bg-none">
             <HomeVideo stopVideo={() => {}} />
-            <Navbar />
-            <div className="z-3 absolute top-[80px] left-0 flex max-h-[88vh] w-screen flex-1 flex-col items-center justify-center overflow-hidden bg-home3 bg-cover bg-left lg:max-h-screen  lg:flex-row lg:bg-none">
+            <div className="z-3 absolute top-[0] left-0 flex w-screen flex-1 flex-col items-center justify-center overflow-hidden bg-home3 bg-cover bg-left lg:max-h-screen  lg:flex-row lg:bg-none">
                <div className={styles.container}>
                   <div className={styles.textContainer + ` text-gray-900  ${currentStep === 1 && "lg:text-white"}`}>
                      <p className={styles.containerText}>We Believe Every Child is a genius!</p>
@@ -138,11 +138,6 @@ const Home: NextPage = () => {
                      </div>
                   </div>
                </div>
-               <CharactersArrangement displayOtherChars={true}>
-                  <img src={"/assets/bg3.png"} alt="" className={`w-full object-cover ${currentStep === 2 ? "bg-image block" : "hidden"}`} />
-                  <img src={"/assets/bg2.png"} alt="" className={`w-full object-cover ${currentStep === 1 ? "bg-image block" : "hidden"}`} />
-                  <img src={"/assets/bg1.png"} alt="" className={`w-full object-cover ${currentStep === 0 ? "bg-image block" : "hidden"}`} />
-               </CharactersArrangement>
             </div>
          </div>
       </div>

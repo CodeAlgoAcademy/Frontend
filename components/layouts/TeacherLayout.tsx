@@ -84,11 +84,11 @@ const TeacherLayout = ({ children, className }: Props) => {
       }
    }, [router]);
    return (
-      <div className="flex min-h-[90dvh] flex-col">
+      <div className="flex min-h-[90vh] flex-col">
          {/* <Header /> */}
-         <div className="mb-auto flex grow items-stretch">
+         <div className="relative mb-auto flex grow items-stretch">
             {/* Side nav */}
-            <div className="sidebar fixed top-0 left-0 hidden h-screen w-[280px] bg-white w840:block">
+            <div className="sidebar absolute top-0 left-0 hidden h-screen w-[280px] bg-white w840:block">
                <Sidebar links={links} />
             </div>
             {/* Mobile Nav */}
