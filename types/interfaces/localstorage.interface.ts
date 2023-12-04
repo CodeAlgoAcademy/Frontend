@@ -4,4 +4,5 @@ export enum ILocalStorageItems {
    token_timestamp = "token_timestamp",
    emailToBeVerified = "emailToBeVerified",
    parent_signup = "parent-signup",
+   announcement = "announcement",
 }
