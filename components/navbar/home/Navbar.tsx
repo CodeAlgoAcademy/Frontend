@@ -40,7 +40,7 @@ const Navbar = () => {
 export default Navbar;
 
 const styles = {
-   container: "flex items-center font-medium justify-between px-2 md:px-10 fixed top-0 left-0 z-[50] w-full bg-white",
+   container: "flex items-center font-medium justify-between px-2 md:px-10  z-[50] w-full bg-white",
    mobilleHeader: "md:w-auto w-full px-5 md:px-0 flex justify-between md:justify-around items-center",
    headerImage: "md:cursor-pointer h-9",
    hamburgerContainer: "text-3xl md:hidden",

@@ -10,6 +10,8 @@ import { closePreloader } from "../../store/fetchSlice";
 import { addUserFromLocalStorage } from "store/authSlice";
 import SuccessModal from "../modals/SuccessModal";
 import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
+import Announcements from "../UI/announcements";
+import { addAnnouncementSession, getAnnouncementSession } from "utils/announcement";
 
 interface Props {
    children?: ReactNode;
@@ -63,6 +65,7 @@ const Layout = ({ children }: Props) => {
             <Head>
                <title>CodeAlgo Academy</title>
             </Head>
+            <Announcements />
             <main>{children}</main>
             <SuccessModal />
             <ErrorModal />
