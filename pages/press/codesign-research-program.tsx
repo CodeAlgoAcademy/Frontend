@@ -7,7 +7,7 @@ import React from "react";
 
 const CoDesigResearchProgram = () => {
    return (
-      <section className="min-h-screen w-full bg-[#f7f8ff]">
+      <section className="press-page min-h-screen w-full bg-[#f7f8ff]">
          <Navbar />
          <Header
             body="CodeAlgo Academy was selected to participate in a Co-design research program with LeanLab"

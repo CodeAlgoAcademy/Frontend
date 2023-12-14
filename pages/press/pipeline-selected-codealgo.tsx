@@ -219,7 +219,7 @@ const cohortMembers = [
 
 const PipelineSelectedCodeAlgo = () => {
    return (
-      <section className="min-h-screen w-full bg-[#f7f8ff]">
+      <section className="press-page min-h-screen w-full bg-[#f7f8ff]">
          <Navbar />
          <Header
             body="Pipeline has extended an exclusive invitation to CodeAlgo Academy to join their Pathfinder program, marking a significant milestone in our journey toward excellence!"

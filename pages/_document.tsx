@@ -12,7 +12,6 @@ class MyDocument extends Document {
       return (
          <Html>
             <Head>
-               <title>CodeAlgo Academy</title>
                <meta
                   name="description"
                   content="3D games from CodeAlgo academy will bring students to computer sciences where they can teach themselves as they play."
