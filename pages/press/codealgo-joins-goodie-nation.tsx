@@ -7,7 +7,7 @@ import React from "react";
 
 const CodeAlgoJoinsGoodieNation = () => {
    return (
-      <section className="min-h-screen w-full bg-[#f7f8ff]">
+      <section className="press-page min-h-screen w-full bg-[#f7f8ff]">
          <Navbar />
          <Header
             body="Goodie Nation has chosen CodeAlgo Academy as one of the eight founders to be a part of their community, recognizing their exceptional potential for growth and impact in the industry."

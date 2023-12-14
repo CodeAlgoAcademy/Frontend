@@ -16,14 +16,13 @@ export default function Announcements() {
    if (!isOpen) return <></>;
 
    return (
-      <div className={`text-white ${isDashboardPage ? "bg-[#2073fa]" : "bg-orange-400"}  z-[50] flex w-full items-center justify-between p-2`}>
-         <div></div>
+      <div className={`text-white ${isDashboardPage ? "bg-[#2073fa]" : "bg-orange-400"}  z-[50] flex w-full items-center justify-center p-2`}>
          <p className="flex cursor-pointer items-center gap-2">
             <IoInformationCircle /> This is a beta
          </p>
-         <span>
+         {/* <span>
             <MdClose cursor="pointer" size={26} onClick={() => setIsOpen(false)} />
-         </span>
+         </span> */}
       </div>
    );
 }
