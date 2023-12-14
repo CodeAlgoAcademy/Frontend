@@ -1,4 +1,5 @@
 import React, { ReactElement } from "react";
+import styles from "./ImageContainer.module.css";
 
 const ImagesContainer = ({
    title,
@@ -7,6 +8,7 @@ const ImagesContainer = ({
    image,
    imageDetail,
    imageHeight,
+   className,
 }: {
    title?: string;
    subtitle?: string;
@@ -14,6 +16,7 @@ const ImagesContainer = ({
    image: string;
    imageDetail: string | ReactElement;
    imageHeight?: number;
+   className?: string;
 }) => {
    return (
       <article className="mt-2 py-2">
@@ -35,8 +38,10 @@ const ImagesContainer = ({
             <img
                src={image}
                alt={typeof imageDetail}
-               className="object-t w-full rounded-md object-contain"
-               style={{ height: imageHeight ? imageHeight : 500 }}
+               className={`object-t  w-full rounded-md object-contain ${styles.press_image} ${className}`}
+               style={{
+                  height: imageHeight ? imageHeight : 500,
+               }}
             />
             <p className="mt-4  mb-2 text-center text-[16px]">{imageDetail}</p>
          </div>

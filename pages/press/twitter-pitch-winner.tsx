@@ -7,7 +7,7 @@ import React from "react";
 
 const TwitterPitchWinners = () => {
    return (
-      <section className="min-h-screen w-full bg-[#f7f8ff]">
+      <section className="press-page min-h-screen w-full bg-[#f7f8ff]">
          <Navbar />
          <Header
             body="CodeAlgo Academy selected as 1 of the winners"
