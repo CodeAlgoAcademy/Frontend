@@ -9,7 +9,7 @@ import Footer from "@/components/home/Footer";
 
 const PurePitchRally = () => {
    return (
-      <section className="min-h-screen w-full bg-[#f7f8ff]">
+      <section className="press-page min-h-screen w-full bg-[#f7f8ff]">
          <Navbar />
          <Header
             body="CodeAlgo Academy wins $13,000 from land sharks!"
@@ -18,8 +18,6 @@ const PurePitchRally = () => {
             date="October 2022"
          />
          <div className="mx-auto mb-14 mt-8 max-w-[1100px] rounded-md bg-white p-3 px-6 shadow-md">
-            {/* <RelatedArticles title="Just funded: Big ‘Pure Pitch’ winners swim with the sharks, earn thousands in cash on the spot" link="https://www.startlandnews.com/author/gwinoverfeltsteinmetz/" /> */}
-
             <BlogTitle
                title="Just Funded Big ‘Pure Pitch’ winners swim with the sharks, earn thousands in cash on the spot"
                link="https://www.startlandnews.com/author/gwinoverfeltsteinmetz"

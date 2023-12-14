@@ -609,3 +609,9 @@ a {
    text-align: start !important;
    text-align-last: start !important;
 }
+
+.press-page p,
+.press-page a,
+.press-page i {
+   font-size: 0.9rem;
+}
