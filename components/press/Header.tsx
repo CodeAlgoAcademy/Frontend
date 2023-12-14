@@ -6,7 +6,7 @@ import React, { FC } from "react";
 const Header: FC<IArticle> = (props) => {
    const router = useRouter();
    return (
-      <header className={"mx-auto max-w-[1100px] px-6 pt-[80px]"}>
+      <header className={"mx-auto max-w-[1100px] px-6"}>
          <div className="flex flex-col flex-wrap items-start gap-x-[2rem] gap-y-[1rem] pt-14 md:flex-row">
             <div className="h-[400px] flex-1 overflow-hidden rounded-[10px]">
                <img src={props.image} alt="" className="h-full w-full object-cover object-center" />
@@ -17,7 +17,7 @@ const Header: FC<IArticle> = (props) => {
                <div className="mt-4 flex max-w-[400px] flex-wrap items-center justify-between gap-4">
                   <p>{props.date}</p>
                   {router.pathname === "/press" && (
-                     <Link href={"/press/pure-pitch-rally"}>
+                     <Link href={"/press/launch-kc-awards"}>
                         <button className="min-w-[200px] rounded-[30px] bg-orange-400 px-3 py-2 text-white">Read More</button>
                      </Link>
                   )}

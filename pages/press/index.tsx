@@ -10,10 +10,10 @@ const Press = () => {
       <section className="min-h-screen w-full bg-[#ffffff]">
          <Navbar />
          <Header
-            body="CodeAlgo Academy wins $13,000 from land sharks!"
-            title={`CodeAlgo Academy wins $13,000 from the PurePitch Rally`}
-            image="/assets/blog/article1.jpg"
-            date="October 2022"
+            body=""
+            title={`LaunchKC awards $300K: Six new startups enter the winners’ circle with KC investments`}
+            image="/assets/blog/launch-kc-award.jpg"
+            date="November 2023"
          />
 
          <section className="mx-auto mt-12 w-full max-w-[1100px] px-6">
@@ -22,7 +22,7 @@ const Press = () => {
                   return (
                      <article
                         key={index}
-                        className="mx-auto h-[400px] w-full max-w-[350px] rounded-[10px] border-[1.5px] bg-white p-4 shadow-sm transition-all hover:shadow-md"
+                        className="mx-auto h-[400px] w-full max-w-[350px] rounded-[10px] border-[1.5px] bg-white p-4 shadow-sm transition-all hover:shadow-md md:h-[450px]"
                      >
                         {/* image container */}
                         <div className="h-[50%] w-full">
