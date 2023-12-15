@@ -9,6 +9,7 @@ import React from "react";
 import { FiTarget } from "react-icons/fi";
 import { GiTargetArrows } from "react-icons/gi";
 import { CodeBlock, CopyBlock, dracula, androidstudio } from "react-code-blocks";
+import Leadership from "../components/about-us/leadership";
 
 const AboutUs = () => {
    return (
@@ -53,6 +54,7 @@ const AboutUs = () => {
                   extraImage="/assets/0013_2.png"
                   extraImagePosition="top-[15%] right-[100%] translate-x-[30%] z-[-1]"
                />
+               <Leadership />
                <Testimonials />
                <AOC />
             </div>
