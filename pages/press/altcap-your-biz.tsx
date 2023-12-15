@@ -106,9 +106,9 @@ export default function Index() {
                <section className="mt-3">
                   <ImagesContainer
                      imageHeight={500}
-                     image="/assets/blog/altcap-your-biz3.jpg"
+                     image="/assets/blog/altcap-your-biz6.jpg"
                      imageDetail={"CodeAlgo Academy; photo by Tommy Felts, Startland News"}
-                     className="lg:!object-cover"
+                     className="lg:!object-top"
                   />
                   <p className="mt-3">
                      The fan favorite of the night, Triumfia Houmbie Fulks was awarded $2,500 for her startup,{" "}
