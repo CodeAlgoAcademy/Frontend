@@ -36,9 +36,15 @@ const Header = () => {
             <Fade triggerOnce={true} cascade duration={1000} direction={"up"}>
                <p className="text-4xl font-semibold">Our Mission</p>
                <p className="">
-                  Our mission is to normalize coding in elementary and middle school, so kids can develop critical thinking and problem-solving skills
-                  before reaching high school. We strive to make learning to code a fun and engaging experience that sets our students up for a
-                  successful future.
+                  To revolutionize coding education for elementary and middle school students, with a strong focus on underrepresented communities and
+                  homeschooling networks, we aim to bridge the gap in technology literacy. We are on a mission to equip the next generation with the
+                  essential skills they need to thrive in the workforce.
+               </p>
+
+               <p className="text-4xl font-semibold">Our Vision</p>
+               <p className="">
+                  To create an inclusive, innovative, and globally accessible educational ecosystem where every student, regardless of their
+                  background, can thrive in the digital age.
                </p>
             </Fade>
          </div>

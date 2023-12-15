@@ -18,7 +18,7 @@ export const articles: IArticle[] = [
       title: "Big winner at GEWKC",
       body: "AltCap Your Biz turns The Next Paige with $42K+ in prizes",
       date: "November 2023",
-      image: "/assets/blog/altcap-your-biz.jpg",
+      image: "/assets/blog/altcap-your-biz6.jpg",
       detailPage: "/altcap-your-biz",
    },
    {
