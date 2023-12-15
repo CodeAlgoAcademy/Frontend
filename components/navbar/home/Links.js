@@ -23,6 +23,7 @@ export const links = [
       sublinks: [
          { name: "About Us", link: "/about-us" },
          { name: "Press", link: "/press" },
+         { name: "Blog", link: "/blog" },
          { name: "Contact Us", link: "/contact" },
       ],
    },
