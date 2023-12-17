@@ -5,7 +5,7 @@ import React from "react";
 
 const Message = () => {
    return (
-      <ParentLayout>
+      <ParentLayout title="Messages">
          <MessageRoom />
       </ParentLayout>
    );
