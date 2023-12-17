@@ -1,9 +1,8 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import Sidebar from "../Teachers/UI/Sidebar";
-import GeneralNav from "../navbar/dashboard/GeneralNav";
 import { useRouter } from "next/router";
 import TeacherMobileSideNav from "../Teachers/UI/TeacherMobileSideNav";
-import { BiHomeAlt, BiUser, BiUserPin } from "react-icons/bi";
+import { BiHomeAlt, BiMenu, BiUser, BiUserCircle, BiUserPin } from "react-icons/bi";
 import Link from "next/link";
 import OrganizerMobileNav from "../organizers/OrganizerMobileNav";
 import { TbLayoutDashboard } from "react-icons/tb";
@@ -15,53 +14,39 @@ import { selectOrganization } from "store/organizersSlice";
 import { getUserFromLocalStorage } from "utils/getTokens";
 import { fetchOrganiztions } from "services/organizersService";
 import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
+import Image from "next/image";
+import { MdMenu } from "react-icons/md";
+import OrganizerSidebar from "../organizers/UI/Sidebar";
+import BetaButton from "../UI/beta-button";
+import { GoChevronDown } from "react-icons/go";
+import UserDropDown from "../parents/UI/UserDropDown";
+import OrganizationsList from "../organizers/UI/OrganizationsList";
 
+interface OrganizerTabs {
+   user: boolean;
+   organizations: boolean;
+   sidebar: boolean;
+}
 interface Props {
    children?: ReactNode;
 }
 
-const links = [
-   {
-      name: "dashboard",
-      icon: <TbLayoutDashboard />,
-      url: "/organizers",
-   },
-   {
-      name: "Add Organization",
-      icon: <FcOrganization />,
-      url: "/organizers/create-organization",
-   },
-   {
-      name: "Roles",
-      icon: <BiUserPin />,
-      url: "/organizers/roles",
-   },
-   {
-      name: "Licenses",
-      icon: <BiUserPin />,
-      url: "/organizers/licenses",
-   },
-   {
-      name: "Users",
-      icon: <HiUsers />,
-      url: "/organizers/users",
-   },
-];
-
 const OrganizerLayout = ({ children }: Props) => {
    const router = useRouter();
-   // const [width, setWidth] = useState(0);
+
    const [detachedNavDisplay, setDetachedNavDisplay] = useState(false);
    const [organizationListOpen, setOpen] = useState<boolean>(false);
-
+   const [tabs, setTabs] = useState<OrganizerTabs>({
+      user: false,
+      organizations: false,
+      sidebar: false,
+   });
    const dispatch = useDispatch();
 
-   const organizer = useSelector((state: RootState) => state?.organizer);
-
-   const organizations = organizer?.organizations;
-   const selectedOrganization = organizer?.selectedOrganization;
-
    const user = getUserFromLocalStorage();
+   const toggleTab = async (key: keyof OrganizerTabs, open: boolean) => {
+      setTabs({ ...tabs, [key]: open });
+   };
 
    useEffect(() => {
       const stringedToken = localStorage.getItem(ILocalStorageItems.token);
@@ -76,129 +61,38 @@ const OrganizerLayout = ({ children }: Props) => {
    }, []);
 
    return (
-      <div className="flex min-h-screen flex-col">
-         {/* <Header /> */}
-         <div className="mb-auto flex grow items-stretch">
-            <div className="sidebar hidden min-w-[280px] bg-white w840:block">
-               <Sidebar links={links} />
-            </div>
-
-            <div className="mt-14 ml-4 hidden w500:block w840:hidden">
-               <OrganizerMobileNav />
-            </div>
-            <div className={`flex-1 pr-[3vw] pb-6 pl-[3vw] w840:pl-0`}>
-               <div className="relative my-10 block pr-8 w500:hidden">
-                  <div
-                     className="absolute left-0 h-12 w-12 cursor-pointer rounded-lg"
-                     onClick={() => {
-                        setDetachedNavDisplay((prev) => !prev);
-                     }}
-                  >
-                     <svg
-                        viewBox="0 0 24 24"
-                        version="1.1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlnsXlink="http://www.w3.org/1999/xlink"
-                        fill="#000000"
-                     >
-                        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                        <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-                        <g id="SVGRepo_iconCarrier">
-                           {" "}
-                           <title>Menu</title>{" "}
-                           <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-                              {" "}
-                              <g id="Menu">
-                                 {" "}
-                                 <rect id="Rectangle" fillRule="nonzero" x="0" y="0" width="24" height="24">
-                                    {" "}
-                                 </rect>{" "}
-                                 <line x1="5" y1="7" x2="19" y2="7" id="Path" stroke="#d9dadd" strokeWidth="2" strokeLinecap="round">
-                                    {" "}
-                                 </line>{" "}
-                                 <line x1="5" y1="17" x2="19" y2="17" id="Path" stroke="#d9dadd" strokeWidth="2" strokeLinecap="round">
-                                    {" "}
-                                 </line>{" "}
-                                 <line x1="5" y1="12" x2="19" y2="12" id="Path" stroke="#d9dadd" strokeWidth="2" strokeLinecap="round">
-                                    {" "}
-                                 </line>{" "}
-                              </g>{" "}
-                           </g>{" "}
-                        </g>
-                     </svg>
-                  </div>
-                  {detachedNavDisplay && (
-                     <div className="absolute left-0 top-[48px] z-20 rounded-md border border-gray-300 bg-white px-2">
-                        <div className="mt-4">
-                           {/* <Link href={`/teachers/addClass`}>
-                                 <div className="flex justify-center text-[28px] text-mainColor">
-                                    <BiHomeAlt />
-                                 </div>
-                              </Link> */}
-                           <OrganizerMobileNav />
-                        </div>
-                     </div>
-                  )}
-               </div>
-
-               <div
-                  className={`mx-auto mt-[100px] min-h-[620px]  max-w-[96vw] overflow-y-scroll rounded-3xl bg-[#ECEDF3] px-[1rem] py-8 w500:mt-[45px] w500:max-h-screen md:px-[6%]`}
-               >
-                  <header className="flex w-full items-center justify-between gap-[1rem]">
-                     <div></div>
-
-                     <h2 className="cursor-pointer text-[1.2rem] font-bold text-mainColor">
-                        <span className="mr-2 inline-block align-middle">
-                           <BiUser />
-                        </span>
-                        {user?.username}
-                     </h2>
-                  </header>
-
+      <section className="h-screen w-full bg-white md:flex md:p-2">
+         <OrganizerSidebar isOpen={tabs.sidebar} onClose={() => toggleTab("sidebar", false)} />
+         {/* Mobile Only */}
+         <nav className="flex items-center justify-between gap-2 bg-white p-2 md:hidden">
+            <Image src={"/assets/CodeAlgo_Logo.png"} className="h-9 md:cursor-pointer" alt="logo" loading="lazy" width={90} height={45} />
+            <MdMenu size={26} cursor={"pointer"} onClick={() => toggleTab("sidebar", true)} />
+         </nav>
+         {/* Main */}
+         <div className="min-h-full w-full flex-1 bg-[#ecedf3] p-[1rem] md:ml-[300px] md:h-full md:overflow-y-scroll md:rounded-[30px] md:p-[2rem]">
+            <header className="mb-8 flex items-center justify-end gap-2">
+               <div className="flex items-center gap-2">
+                  <BetaButton />
                   <div className="relative">
-                     <div
-                        className=" mt-4 mb-4 ml-4 flex max-w-fit items-center gap-3 sm:ml-0"
-                        onClick={() => {
-                           setOpen((prev) => !prev);
-                        }}
-                     >
-                        <h1 className="text-3xl font-semibold capitalize text-mainColor">{selectedOrganization?.name}</h1>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="10" viewBox="0 0 18 10" fill="none">
-                           <path
-                              d="M1.7998 1.25L9.2998 8.75L16.7998 1.25"
-                              stroke="#2073FA"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                           />
-                        </svg>
+                     <div className="flex cursor-pointer items-center gap-1 text-mainColor" onClick={() => toggleTab("user", !tabs.user)}>
+                        <BiUserCircle size={24} />
+                        <p className="hidden text-[1rem] md:block">{user?.username}</p>
+                        <GoChevronDown size={24} />
                      </div>
-                     {organizationListOpen && (
-                        <div className="absolute top-[110%] left-0 z-[4] max-h-[200px] min-h-[200px] w-[90vw] max-w-[200px] overflow-y-scroll rounded-md bg-white shadow-md">
-                           {organizations?.map((organization, index) => {
-                              return (
-                                 <p
-                                    key={index}
-                                    onClick={() => {
-                                       setOpen(false);
-                                       dispatch(selectOrganization(organization));
-                                    }}
-                                    className="w-full cursor-pointer px-3 py-3 capitalize text-black hover:bg-[#ced4e9]"
-                                    data-testid="organization"
-                                 >
-                                    {organization.name}
-                                 </p>
-                              );
-                           })}
-                        </div>
-                     )}
-                  </div>
 
-                  {children}
+                     <UserDropDown isOpen={tabs.user} />
+                  </div>
                </div>
-            </div>
+            </header>
+            <OrganizationsList
+               isOpen={tabs.organizations}
+               close={() => toggleTab("organizations", false)}
+               open={() => toggleTab("organizations", true)}
+            />
+
+            {children}
          </div>
-      </div>
+      </section>
    );
 };
 

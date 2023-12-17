@@ -14,7 +14,7 @@ const ScreenTime = () => {
    }
 
    return (
-      <ParentLayout>
+      <ParentLayout title="Screentime">
          <div className="mx-4 flex flex-col gap-9 overflow-x-auto sm:mx-0">
             <Screentime size="large" />
             <ScreentimeRestrictions />

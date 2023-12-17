@@ -36,7 +36,7 @@ const OrganizerMobileNav = ({ className }: { className?: string }) => {
       <div className={`sticky top-0 z-20 mr-[3%] flex h-full min-w-[50px] flex-col gap-4 divide-y py-2 first:pt-0 xl:hidden ${className}`}>
          <div className="flex flex-col justify-between gap-3 pt-4">
             {links.map(({ name, icon, url }) => {
-               return <NavButton {...{ image: icon, url, title: name }} key={name} isIcon={true} />;
+               return <NavButton {...{ image: icon, url, title: name }} key={name} />;
             })}
          </div>
       </div>
