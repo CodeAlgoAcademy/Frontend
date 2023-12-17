@@ -68,9 +68,29 @@ a {
    display: none;
 }
 
+.fade-scale-up {
+   animation: fade-scale-up 600ms;
+}
+
+@keyframes fade-scale-up {
+   0% {
+      transform: scale(0);
+      opacity: 0;
+   }
+   100% {
+      transform: scale(1);
+      opacity: 1;
+   }
+}
+
 .bg-image {
    animation: fadein 0.6s;
 }
+
+.fade-in {
+   animation: fadein 0.6s;
+}
+
 @keyframes fadein {
    0% {
       opacity: 0;
