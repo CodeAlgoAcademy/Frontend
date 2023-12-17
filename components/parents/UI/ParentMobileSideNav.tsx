@@ -40,13 +40,13 @@ const ParentMobileSideNav = ({ className }: { className?: string }) => {
             return (
                <div className="flex flex-col justify-between gap-3 pt-4" key={`${index}`}>
                   {links.map(({ title, url, image }) => {
-                     return <NavButton {...{ image, url, title, isIcon: true }} key={title} />;
+                     return <NavButton {...{ image, url, title }} key={title} />;
                   })}
                </div>
             );
          })}
 
-         <NavButton title="Log out" image={<BiLogOut />} url="" onClick={logout} isIcon={true} />
+         <NavButton title="Log out" image={<BiLogOut />} url="" onClick={logout} />
       </div>
    );
 };
