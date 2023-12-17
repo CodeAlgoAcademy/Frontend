@@ -25,7 +25,7 @@ export default function UserDropDown({ isOpen }: Props) {
    return (
       <div
          className={`absolute transition duration-500 ${
-            isOpen ? " opacity-100" : "opacity-0"
+            isOpen ? "block" : "hidden"
          } top-[140%] right-0 z-[3] w-[90vw] max-w-[300px] rounded-md bg-white px-4 py-4`}
       >
          <div className="relative z-10">
