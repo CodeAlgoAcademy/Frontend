@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { clearFields, updateUser } from "store/authSlice";
+import { clearFields, resetAuthUser, updateUser } from "store/authSlice";
 import http from "../axios.config";
 import { closePreloader, openErrorModal, openPreloader } from "store/fetchSlice";
 import { getAccessToken } from "utils/getTokens";
@@ -348,4 +348,11 @@ export const resendEmail: any = createAsyncThunk("/auth/resend-email", async (em
       error = errorResolver(error);
       return thunkApi.rejectWithValue(error);
    }
+});
+
+export const logout: any = createAsyncThunk("/auth/logout", async (_, thunkApi) => {
+   localStorage.removeItem("token");
+   localStorage.removeItem("token_timestamp");
+   thunkApi.dispatch(resetAuthUser());
+   window.location.href = "/login";
 });

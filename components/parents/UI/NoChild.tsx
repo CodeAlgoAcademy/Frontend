@@ -7,12 +7,12 @@ import ParentLayout from "../../layouts/ParentLayout";
 const NoChild = () => {
    const dispatch = useDispatch();
    return (
-      <ParentLayout>
+      <ParentLayout title="">
          <div className="relative bottom-14 mb-[-120px] h-[500px] scale-90 overflow-x-auto sm:bottom-0 sm:mb-0 sm:scale-100">
             <div className="flex h-[300px] w-full flex-col items-center justify-center gap-4">
                <h2 className="text-[1.3rem] leading-[1.1] text-gray-900">You do not have a child!</h2>
                <button
-                  className="text-mainColor p-2 text-[1rem] hover:bg-blue-100"
+                  className="p-2 text-[1rem] text-mainColor hover:bg-blue-100"
                   onClick={() => {
                      dispatch(openAddChildModal());
                   }}

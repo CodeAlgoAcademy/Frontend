@@ -6,7 +6,7 @@ import { BsArrowLeft } from "react-icons/bs";
 
 const GooglepayDetail = () => {
    return (
-      <ParentLayout>
+      <ParentLayout title="Google Play">
          <div className=" scrollbar-hide overflow-y-scroll bg-white px-8 pt-6 pb-10">
             <div className="border-b border-[#C5C5C5] pb-2 text-lg font-[600]">
                <BsArrowLeft />
