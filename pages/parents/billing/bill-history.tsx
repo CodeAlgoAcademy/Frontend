@@ -124,7 +124,7 @@ const BillHistory = () => {
    ];
 
    return (
-      <ParentLayout>
+      <ParentLayout title="Bill History">
          <div className=" scrollbar-hide overflow-y-scroll bg-white px-6 pt-6 pb-10">
             <div className="border-b border-[#C5C5C5] pb-2 text-lg font-[600]">
                <h2 className="text-lg">Billing History</h2>
@@ -174,7 +174,7 @@ const BillHistory = () => {
                      </div>
                      <div>
                         <p className="flex w-fit items-center gap-2 rounded-xl border border-[#111111] px-2 py-[2px]  text-[8px] ">Default</p>
-                        <button className="bg-mainColor mt-4 rounded-[4px] px-4 py-1 text-[10px] text-white">Edit</button>
+                        <button className="mt-4 rounded-[4px] bg-mainColor px-4 py-1 text-[10px] text-white">Edit</button>
                      </div>
                   </div>
                </div>

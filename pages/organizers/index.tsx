@@ -11,7 +11,7 @@ const Dashboard = () => {
 
    return (
       <OrganizerLayout>
-         <div className="mt-8 flex flex-wrap items-center justify-center gap-[2rem] lg:justify-between">
+         <div className="mt-8 flex w-full flex-col flex-wrap items-center justify-center gap-[2rem] w840:flex-row">
             <OrganizationInfo />
             <OrganizationUsers />
          </div>

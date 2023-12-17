@@ -1,23 +1,18 @@
 import React, { ReactNode, useEffect, useState } from "react";
-import Sidebar from "../Teachers/UI/Sidebar";
-import GeneralNav from "../navbar/dashboard/GeneralNav";
 import { useRouter } from "next/router";
-import TeacherMobileSideNav from "../Teachers/UI/TeacherMobileSideNav";
-import { BiHomeAlt } from "react-icons/bi";
+import { BiHome, BiHomeAlt, BiMenu } from "react-icons/bi";
 import Link from "next/link";
-import { CurrentClassState, IClass, IUser } from "types/interfaces";
-import { getUserFromLocalStorage } from "utils/getTokens";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "store/store";
-import { getAllClasses } from "services/classesService";
 import { TbLayoutDashboard, TbClipboardText } from "react-icons/tb";
-import { FaUserGraduate } from "react-icons/fa";
-import { HiOutlineCalendar } from "react-icons/hi";
-import { BiMessageRounded } from "react-icons/bi";
-import { GrOrganization } from "react-icons/gr";
 import { SlOrganization } from "react-icons/sl";
 import Image from "next/image";
-import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
+import BetaButton from "../UI/beta-button";
+import TeacherSidebar from "../Teachers/UI/Sidebar";
+import UserInfo from "../Teachers/UI/UserInfo";
+import { MdClass, MdMenu } from "react-icons/md";
+import ClassSelector from "../Teachers/UI/ClassSelector";
+import { FaUserGraduate } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { getAllClasses } from "services/classesService";
 
 interface Props {
    children?: ReactNode;
@@ -25,6 +20,11 @@ interface Props {
 }
 
 const links = [
+   // {
+   //    name: "Classes",
+   //    icon: <MdClass />,
+   //    url: "/teachers/addClass",
+   // },
    {
       name: "dashboard",
       icon: <TbLayoutDashboard />,
@@ -58,117 +58,55 @@ const links = [
 ];
 
 const TeacherLayout = ({ children, className }: Props) => {
+   const [sidebarOpened, setSidebarOpened] = useState<boolean>(false);
    const router = useRouter();
-   const [detachedNavDisplay, setDetachedNavDisplay] = useState(false);
    const dispatch = useDispatch();
 
-   const currentClass = useSelector((state: RootState): CurrentClassState => state.currentClass);
-   const classes = useSelector((state: RootState): IClass[] => state.allClasses.classes);
-
-   // Incase the user refreshes the page
-   const getClass = async () => {
-      const data = await dispatch(getAllClasses());
-   };
-
    useEffect(() => {
-      if (!currentClass || classes?.length === 0) {
-         getClass();
-      }
-   }, [router?.pathname]);
-
-   useEffect(() => {
-      const stringedToken = localStorage.getItem(ILocalStorageItems.token);
-      const token = JSON.parse(`${stringedToken}`);
-      if (token?.user_type !== "teacher") {
-         router?.push("/login");
-      }
+      // const stringedToken = localStorage.getItem(ILocalStorageItems.token);
+      // const token = JSON.parse(`${stringedToken}`);
+      // if (token?.user_type !== "teacher") {
+      //    router?.push("/login");
+      // }
    }, [router]);
-   return (
-      <div className="flex min-h-[90vh] flex-col">
-         {/* <Header /> */}
-         <div className="relative mb-auto flex grow items-stretch">
-            {/* Side nav */}
-            <div className="sidebar absolute top-0 left-0 hidden h-screen w-[280px] bg-white w840:block">
-               <Sidebar links={links} />
-            </div>
-            {/* Mobile Nav */}
-            <div className="mt-14 ml-4 hidden w500:block w840:hidden">
-               <Link href={`/teachers/addClass`}>
-                  <div className="flex justify-center text-[28px] text-mainColor">
-                     <BiHomeAlt />
-                  </div>
-               </Link>
-               <TeacherMobileSideNav />
-            </div>
 
-            <div className={`flex max-h-[100vh] flex-1 flex-col overflow-scroll  w840:ml-[280px]`}>
-               <div className="relative mt-10 flex items-center justify-between px-[1rem] w500:hidden">
-                  <div className="">
-                     <Link href={"/teachers/addClass"} className="max-w-[100px]">
-                        <Image src="/assets/CodeAlgo_Logo.png" alt="logo" loading="lazy" className="md:cursor-pointer" height={60} width={120} />
-                     </Link>
+   useEffect(() => {
+      dispatch(getAllClasses());
+   }, [router.pathname]);
+
+   return (
+      <section className="h-screen w-full bg-white md:flex md:px-4">
+         <TeacherSidebar links={links} isOpen={sidebarOpened} close={() => setSidebarOpened(false)} />
+
+         <section className="ml-[0px] flex h-screen max-h-screen w-full flex-col items-center overflow-hidden md:ml-[300px]">
+            <nav className="flex w-full items-center justify-between gap-2 py-2 px-4 md:py-6 md:px-0">
+               <div className="flex items-center gap-2">
+                  <div className="md:hidden">
+                     <Image src="/assets/CodeAlgo_Logo.png" alt="logo" loading="lazy" className="md:cursor-pointer" width={90} height={45} />
                   </div>
-                  <div
-                     className="ml-4  h-12 w-12 cursor-pointer rounded-lg"
-                     onClick={() => {
-                        setDetachedNavDisplay((prev) => !prev);
-                     }}
-                  >
-                     <svg
-                        viewBox="0 0 24 24"
-                        version="1.1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlnsXlink="http://www.w3.org/1999/xlink"
-                        fill="#000000"
-                     >
-                        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                        <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-                        <g id="SVGRepo_iconCarrier">
-                           {" "}
-                           <title>Menu</title>{" "}
-                           <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-                              {" "}
-                              <g id="Menu">
-                                 {" "}
-                                 <rect id="Rectangle" fillRule="nonzero" x="0" y="0" width="24" height="24">
-                                    {" "}
-                                 </rect>{" "}
-                                 <line x1="5" y1="7" x2="19" y2="7" id="Path" stroke="#d9dadd" strokeWidth="2" strokeLinecap="round">
-                                    {" "}
-                                 </line>{" "}
-                                 <line x1="5" y1="17" x2="19" y2="17" id="Path" stroke="#d9dadd" strokeWidth="2" strokeLinecap="round">
-                                    {" "}
-                                 </line>{" "}
-                                 <line x1="5" y1="12" x2="19" y2="12" id="Path" stroke="#d9dadd" strokeWidth="2" strokeLinecap="round">
-                                    {" "}
-                                 </line>{" "}
-                              </g>{" "}
-                           </g>{" "}
-                        </g>
-                     </svg>
+                  <Link href={`/teachers/addClass`}>
+                     <BiHomeAlt size={24} color="#2073fa" title="Back to classes" cursor="pointer" />
+                  </Link>
+                  <div className="hidden md:block">
+                     <ClassSelector />
                   </div>
-                  {detachedNavDisplay && (
-                     <div className="absolute right-[1rem] top-[60px] z-20 rounded-md border border-gray-300 bg-white px-2">
-                        <div className="mt-4">
-                           <Link href={`/teachers/addClass`}>
-                              <div className="flex justify-center text-[28px] text-mainColor">
-                                 <BiHomeAlt />
-                              </div>
-                           </Link>
-                           <TeacherMobileSideNav />
-                        </div>
-                     </div>
-                  )}
                </div>
-               <GeneralNav />
-               <div
-                  className={`mx-auto mt-[20px] max-h-full w-full max-w-[96%] flex-1 overflow-y-scroll rounded-3xl bg-[#ECEDF3] px-[1rem] py-8 w500:mt-[45px] md:px-[6%] ${className}`}
-               >
-                  {children}
+
+               <div className="flex items-center gap-2">
+                  <BetaButton />
+                  <UserInfo />
+                  <MdMenu cursor={"pointer"} size={26} className="md:hidden" onClick={() => setSidebarOpened(true)} />
                </div>
+            </nav>
+
+            <div className={`w-full flex-1 bg-[#ecedf3] p-[1rem] md:h-full md:overflow-y-scroll md:rounded-[30px] md:p-[2rem] ${className}`}>
+               <div className="flex items-center justify-end md:hidden">
+                  <ClassSelector />
+               </div>
+               {children}
             </div>
-         </div>
-      </div>
+         </section>
+      </section>
    );
 };
 
