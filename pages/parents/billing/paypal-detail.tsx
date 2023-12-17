@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 
 const PaypalDetail = () => {
    return (
-      <ParentLayout>
+      <ParentLayout title="Paypal">
          <div className=" scrollbar-hide overflow-y-scroll bg-white px-8 pt-6 pb-10">
             <div className="border-b border-[#C5C5C5] pb-2 text-lg font-[600]">
                <Image width={150} height={94} src="/assets/paypalLogo.png" alt="paypal" />
@@ -83,7 +83,7 @@ const PaypalDetail = () => {
                </div>
             </div>
             <div className="mt-10 flex justify-center">
-               <button className="bg-mainColor mx-auto w-[292px] rounded-[4px] py-3 text-xs text-white">Proceed to Paypal</button>
+               <button className="mx-auto w-[292px] rounded-[4px] bg-mainColor py-3 text-xs text-white">Proceed to Paypal</button>
             </div>
          </div>
       </ParentLayout>

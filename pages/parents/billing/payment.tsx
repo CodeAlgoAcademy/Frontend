@@ -12,7 +12,7 @@ const Payment = () => {
    const [confirmationModalOpen, setConfirmationModalOpen] = useState<boolean>(false);
    const [paidModalOpen, setPaidModalOpened] = useState<boolean>(false);
    return (
-      <ParentLayout>
+      <ParentLayout title="Payment">
          {confirmationModalOpen && <PaymentConfirmation setConfirmationModalOpen={setConfirmationModalOpen} />}
          {paidModalOpen && <PaymentMade setPaidModalOpened={setPaidModalOpened} />}
          <div className=" scrollbar-hide overflow-y-scroll bg-white px-8 pt-6 pb-10">
@@ -94,7 +94,7 @@ const Payment = () => {
                   <div className="mt-8 flex justify-end gap-3">
                      <button className="w-[100px] rounded-[4px] border border-black bg-white   px-4 py-2 text-xs text-black">Cancel</button>
                      <button
-                        className="bg-mainColor w-[100px]   rounded-[4px] px-4 py-2 text-xs text-white"
+                        className="w-[100px] rounded-[4px]   bg-mainColor px-4 py-2 text-xs text-white"
                         onClick={() => {
                            setConfirmationModalOpen(true);
                         }}

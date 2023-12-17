@@ -15,8 +15,8 @@ interface Props {
 const ContentBox = ({ children, title, subtitle, showSublink, padding, size, link, style }: Props) => {
    return (
       <div
-         className="short-scroll-thumb relative max-w-full self-center overflow-x-auto overflow-y-clip xl:overflow-x-hidden"
-         style={{ width: size === "large" ? "100%" : "auto" }}
+         className="short-scroll-thumb relative max-w-full  flex-1 self-center overflow-x-auto overflow-y-clip xl:overflow-x-hidden"
+         style={{ width: "100%" }}
       >
          <div
             className="relative min-h-[340px] w-full min-w-full  max-w-fit rounded-2xl bg-white py-6 xl:min-w-full"
@@ -27,7 +27,7 @@ const ContentBox = ({ children, title, subtitle, showSublink, padding, size, lin
             }}
          >
             <div className="mb-[1rem]">
-               <h1 className="text-mainColor text-2xl font-semibold">{title}</h1>
+               <h1 className="text-2xl font-semibold text-mainColor">{title}</h1>
                {subtitle && <p className="text-[14px]">{subtitle}</p>}
             </div>
             {children}
@@ -35,7 +35,7 @@ const ContentBox = ({ children, title, subtitle, showSublink, padding, size, lin
          <div className="mb-3 sm:mb-0">
             {showSublink && (
                <Link href={`${link}`}>
-                  <span className="hover:text-mainColor mt-3 ml-auto block w-fit cursor-pointer text-sm font-light underline">
+                  <span className="mt-3 ml-auto block w-fit cursor-pointer text-sm font-light underline hover:text-mainColor">
                      Edit {title} Settings
                   </span>
                </Link>

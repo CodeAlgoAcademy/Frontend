@@ -106,7 +106,7 @@ const Billing = () => {
 
    const [active, setActive] = useState(1);
    return (
-      <ParentLayout>
+      <ParentLayout title="Billing">
          <div className=" scrollbar-hide overflow-y-scroll px-4 py-6">
             <div className="flex flex-wrap gap-6">
                {offers.map((offer, Index) => (
@@ -120,7 +120,7 @@ const Billing = () => {
                            <div
                               className={
                                  active == Index
-                                    ? "bg-mainColor flex justify-between px-4 py-8 text-base text-white"
+                                    ? "flex justify-between bg-mainColor px-4 py-8 text-base text-white"
                                     : "flex justify-between border-b border-[#C5C5C5] px-4 py-8 text-base text-black group-hover:bg-[#5695fa] group-hover:text-white"
                               }
                            >
@@ -150,7 +150,7 @@ const Billing = () => {
                               </div>
                            ))}
                            <div className="mt-8 flex justify-center">
-                              <button className="bg-mainColor w-[100px]   rounded-[4px] px-4 py-2 text-xs text-white">Get Started</button>
+                              <button className="w-[100px] rounded-[4px]   bg-mainColor px-4 py-2 text-xs text-white">Get Started</button>
                            </div>
                         </div>
                      </div>

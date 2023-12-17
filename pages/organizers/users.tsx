@@ -9,7 +9,7 @@ const Users = () => {
       <OrganizerLayout>
          {" "}
          <section>
-            <div className="mb-8 flex gap-[1rem]">
+            <div className="mt-8 mb-[2rem] flex w-full flex-col flex-wrap items-center justify-center gap-[2rem] w840:flex-row">
                <OrganizationInvitations />
                <SentOutInvitation />
             </div>
