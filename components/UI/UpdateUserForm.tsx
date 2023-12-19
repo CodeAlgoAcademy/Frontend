@@ -1,22 +1,9 @@
-import React, { useState, useRef, ChangeEvent, useEffect } from "react";
-import { useRouter } from "next/router";
-import Image from "next/image";
-import Link from "next/link";
-import { BiBell, BiEdit, BiHomeAlt, BiLogOut } from "react-icons/bi";
-import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
-import { FaChevronDown, FaChevronUp, FaEdit } from "react-icons/fa";
-import { RootState } from "../../../store/store";
+import React, { ChangeEvent } from "react";
+import { BiEdit } from "react-icons/bi";
+import { RootState } from "../../store/store";
 import { useSelector, useDispatch } from "react-redux";
-import { updateCurrentClass } from "../../../store/currentClassSlice";
-import { IClass, CurrentClassState, IUser } from "../../../types/interfaces";
-import { motion } from "framer-motion";
-import { IoSettingsSharp } from "react-icons/io5";
-import { resetAuthUser, updateUser } from "store/authSlice";
+import { updateUser } from "store/authSlice";
 import { updateEmail, updateFirstname, updateLastname } from "services/authService";
-import { AnyAction } from "@reduxjs/toolkit";
-import { getUserFromLocalStorage } from "utils/getTokens";
-import { getAllClasses } from "services/classesService";
-import BetaButton from "@/components/UI/beta-button";
 
 export const UpdateUserForms = ({ setUserDropDown }: { setUserDropDown?: any }) => {
    const dispatch = useDispatch();
@@ -29,7 +16,7 @@ export const UpdateUserForms = ({ setUserDropDown }: { setUserDropDown?: any }) 
       }
    };
 
-   const { firstname: authFirstname, lastname: authLastname } = useSelector((state: RootState) => state.user.auth);
+   const auth = useSelector((state: RootState) => state.user?.auth);
    return (
       <>
          <form
@@ -42,7 +29,7 @@ export const UpdateUserForms = ({ setUserDropDown }: { setUserDropDown?: any }) 
                type="text"
                className="h-full w-full border-none text-[14px] tracking-wider text-black outline-none placeholder:text-gray-500"
                placeholder="Update firstname"
-               value={authFirstname}
+               value={auth?.firstname}
                onChange={(e: ChangeEvent<HTMLInputElement>) => {
                   dispatch(
                      updateUser({
@@ -66,7 +53,7 @@ export const UpdateUserForms = ({ setUserDropDown }: { setUserDropDown?: any }) 
                type="text"
                className="h-full w-full border-none text-[14px] tracking-wider text-black outline-none placeholder:text-gray-500"
                placeholder="Update lastname"
-               value={authLastname}
+               value={auth?.lastname}
                onChange={(e: ChangeEvent<HTMLInputElement>) => {
                   dispatch(updateUser({ key: "lastname", value: e.target.value }));
                }}

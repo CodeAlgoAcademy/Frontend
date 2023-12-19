@@ -67,8 +67,8 @@ export default function ClassSelector() {
                               setIsOpen(false);
                            }}
                         >
-                           <span style={{ background: "#999" }} className="h-[24px] w-[24px] rounded-full" />
-                           <p className="text-[.9rem] font-medium">asak</p>
+                           <span style={{ background: singleClass.color }} className="h-[24px] w-[24px] rounded-full" />
+                           <p className="text-[.9rem] font-medium">{singleClass.className}</p>
                         </div>
                      );
                   })
