@@ -17,6 +17,7 @@ import styles from "../../../styles/styles";
 import { addClass, getAllClasses } from "services/classesService";
 import SelectOrganization from "./organizations";
 import { getOrgIBelongTo } from "services/organizersService";
+import { openErrorModal } from "store/fetchSlice";
 
 const inputFields: IInputFields[] = [
    {
@@ -43,6 +44,9 @@ const CreateClass = () => {
 
    const handleSubmit = async (event: ChangeEvent<HTMLFormElement>) => {
       event.preventDefault();
+      if (!classInfo?.grade) {
+         return dispatch(openErrorModal({ errorText: ["Select Grade"] }));
+      }
       const data = await dispatch(addClass());
       if (!data?.error?.message) {
          dispatch(clearFields());
@@ -59,7 +63,7 @@ const CreateClass = () => {
    return (
       <form className="h-full flex-[0.9] p-8" onSubmit={handleSubmit}>
          <header className="mb-6 w-full">
-            <h1 className="text-mainColor text-[20px] font-bold md:text-[30px]">Create New Class</h1>
+            <h1 className="text-[20px] font-bold text-mainColor md:text-[30px]">Create New Class</h1>
          </header>
          <section className="grid items-start gap-[1rem] md:grid-cols-2">
             {inputFields?.map((inputField: IInputFields, index: number) => {
@@ -87,7 +91,7 @@ const CreateClass = () => {
                   dispatch(openGradesModal());
                }}
             >
-               <p>{classInfo?.grade}</p>
+               <p>{classInfo?.grade || "Select Grade"}</p>
                <span>
                   <FaChevronDown />
                </span>
@@ -153,7 +157,7 @@ const CreateClass = () => {
                </span>
                <h3 className="text-[16px] font-bold">Add New Student</h3>
             </div>
-            <button type="submit" className="bg-mainColor w-[150px] rounded-[30px] py-3 text-[16px] text-white hover:shadow-md">
+            <button type="submit" className="w-[150px] rounded-[30px] bg-mainColor py-3 text-[16px] text-white hover:shadow-md">
                Create
             </button>
          </section>

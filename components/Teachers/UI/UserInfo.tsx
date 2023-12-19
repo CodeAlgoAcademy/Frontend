@@ -7,7 +7,7 @@ import { IoChevronDown, IoChevronUp } from "react-icons/io5";
 import { IoSettingsSharp } from "react-icons/io5";
 import { logout } from "services/authService";
 import { useDispatch } from "react-redux";
-import { UpdateUserForms } from "@/components/navbar/dashboard/GeneralNav";
+import { UpdateUserForms } from "@/components/UI/UpdateUserForm";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
 import { BsGear } from "react-icons/bs";
@@ -47,8 +47,7 @@ export default function UserInfo() {
             <div className="small-scroll-thumb fade-in absolute top-[110%] right-0 z-[5] flex min-h-[100px] w-[90vw] max-w-[200px] flex-col justify-between overflow-y-scroll rounded-[20px] border border-[#bdbdbd] bg-white px-2 py-4 shadow-md">
                <p className="mb-2 flex items-center gap-2 font-medium text-mainColor">
                   <img src="/assets/no user.png" alt="avatar" className="h-[24px] w-[24px] rounded-full object-cover object-center" />{" "}
-                  {user?.firstname}
-                  {user?.lastname}
+                  {user?.firstname} {user?.lastname}
                </p>
                <div className="flex cursor-pointer items-center justify-between gap-2" onClick={() => setSettingsOpen((prev) => !prev)}>
                   <div className="flex items-center gap-2">
