@@ -13,7 +13,7 @@ const initialState: IAddClass = {
    },
    class: {
       className: "",
-      grade: "Select Grade",
+      grade: "",
       subject: "",
       coTeachers: "",
       roomNumber: "",

@@ -1,26 +1,18 @@
 import React, { ReactNode, useEffect, useState } from "react";
-import Sidebar from "../Teachers/UI/Sidebar";
 import { useRouter } from "next/router";
-import TeacherMobileSideNav from "../Teachers/UI/TeacherMobileSideNav";
-import { BiHomeAlt, BiMenu, BiUser, BiUserCircle, BiUserPin } from "react-icons/bi";
-import Link from "next/link";
-import OrganizerMobileNav from "../organizers/OrganizerMobileNav";
-import { TbLayoutDashboard } from "react-icons/tb";
-import { FcOrganization } from "react-icons/fc";
-import { HiUsers } from "react-icons/hi";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "store/store";
-import { selectOrganization } from "store/organizersSlice";
+import { BiUserCircle } from "react-icons/bi";
+import { useDispatch } from "react-redux";
 import { getUserFromLocalStorage } from "utils/getTokens";
 import { fetchOrganiztions } from "services/organizersService";
-import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
 import Image from "next/image";
 import { MdMenu } from "react-icons/md";
 import OrganizerSidebar from "../organizers/UI/Sidebar";
 import BetaButton from "../UI/beta-button";
-import { GoChevronDown } from "react-icons/go";
 import UserDropDown from "../parents/UI/UserDropDown";
 import OrganizationsList from "../organizers/UI/OrganizationsList";
+import { BsChevronDown } from "react-icons/bs";
+import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
+import { IUser } from "types/interfaces";
 
 interface OrganizerTabs {
    user: boolean;
@@ -41,9 +33,9 @@ const OrganizerLayout = ({ children }: Props) => {
       organizations: false,
       sidebar: false,
    });
+   const [user, setUser] = useState<IUser | null>(null);
    const dispatch = useDispatch();
 
-   const user = getUserFromLocalStorage();
    const toggleTab = async (key: keyof OrganizerTabs, open: boolean) => {
       setTabs({ ...tabs, [key]: open });
    };
@@ -53,6 +45,9 @@ const OrganizerLayout = ({ children }: Props) => {
       const token = JSON.parse(`${stringedToken}`);
       if (!stringedToken || !token || token?.user_type !== "organizer") {
          router?.push("/login");
+      } else {
+         const user = getUserFromLocalStorage();
+         setUser(user);
       }
    }, [router]);
 
@@ -77,7 +72,7 @@ const OrganizerLayout = ({ children }: Props) => {
                      <div className="flex cursor-pointer items-center gap-1 text-mainColor" onClick={() => toggleTab("user", !tabs.user)}>
                         <BiUserCircle size={24} />
                         <p className="hidden text-[1rem] md:block">{user?.username}</p>
-                        <GoChevronDown size={24} />
+                        <BsChevronDown size={24} />
                      </div>
 
                      <UserDropDown isOpen={tabs.user} />

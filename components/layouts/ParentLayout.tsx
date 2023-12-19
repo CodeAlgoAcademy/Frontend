@@ -11,10 +11,11 @@ import UserDropDown from "../parents/UI/UserDropDown";
 import { MdClose, MdMenu } from "react-icons/md";
 import ChildrenList from "../parents/UI/ChildrenList";
 import ParentSidebar from "../parents/UI/Sidebar";
-import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
 import { IUser } from "types/interfaces";
-import { getUserFromLocalStorage } from "utils/getTokens";
 import { getChildProgress, getChildSkills, getChildren } from "store/parentChildSlice";
+import { BsChevronDown } from "react-icons/bs";
+import { getUserFromLocalStorage } from "utils/getTokens";
+import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
 
 interface ParentTabs {
    user: boolean;
@@ -48,15 +49,15 @@ const ParentLayout = ({ children, title }: Props) => {
    }, [currentChild]);
 
    useEffect(() => {
-      // if (typeof window !== "undefined") {
-      //    const stringedToken = localStorage.getItem(ILocalStorageItems.token);
-      //    const token = JSON.parse(`${stringedToken}`);
-      //    if (token?.user_type !== "parent") {
-      //       router.push("/login");
-      //    } else {
-      //       setUser(getUserFromLocalStorage());
-      //    }
-      // }
+      if (typeof window !== "undefined") {
+         const stringedToken = localStorage.getItem(ILocalStorageItems.token);
+         const token = JSON.parse(`${stringedToken}`);
+         if (token?.user_type !== "parent") {
+            router.push("/login");
+         } else {
+            setUser(getUserFromLocalStorage());
+         }
+      }
    }, [router]);
 
    useEffect(() => {
@@ -82,7 +83,7 @@ const ParentLayout = ({ children, title }: Props) => {
                      <div className="flex cursor-pointer items-center gap-1 text-mainColor" onClick={() => toggleTab("user", !tabs.user)}>
                         <BiUserCircle size={24} />
                         <p className="hidden text-[1rem] md:block">{user?.username}</p>
-                        <GoChevronDown size={24} />
+                        <BsChevronDown size={24} />
                      </div>
 
                      <UserDropDown isOpen={tabs.user} />
