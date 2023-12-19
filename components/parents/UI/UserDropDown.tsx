@@ -6,7 +6,7 @@ import { getUserFromLocalStorage } from "utils/getTokens";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
-import { UpdateUserForms } from "@/components/navbar/dashboard/GeneralNav";
+import { UpdateUserForms } from "@/components/UI/UpdateUserForm";
 import { logout } from "services/authService";
 
 interface Props {
