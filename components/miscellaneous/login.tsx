@@ -22,7 +22,7 @@ const Login = ({ route }: { route?: any }) => {
    const accountType = router.pathname.includes("teacher")
       ? "teacher"
       : router.pathname.includes("parent")
-      ? "parent"
+      ? "guardian"
       : router.pathname.includes("organizer")
       ? "admin"
       : "student";
