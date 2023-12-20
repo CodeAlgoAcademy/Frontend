@@ -7,6 +7,7 @@ import { FcOrganization } from "react-icons/fc";
 import { BiUserPin } from "react-icons/bi";
 import { HiUsers } from "react-icons/hi";
 import { GoOrganization } from "react-icons/go";
+import { DEFAULT_SUPPORT } from "constants/support.const";
 
 interface Props {
    onClose(): void;
@@ -35,7 +36,7 @@ export default function OrganizerSidebar({ onClose, isOpen }: Props) {
 
             <NavButton title="Users" image={<HiUsers size={22} />} url="/organizers/users" />
 
-            <NavButton image={<GiHelp size={22} />} url="https://discord.gg/FmQbpJGF" title="Get Help"></NavButton>
+            <NavButton image={<GiHelp size={22} />} url={DEFAULT_SUPPORT.discord} title="Get Help"></NavButton>
          </div>
       </aside>
    );

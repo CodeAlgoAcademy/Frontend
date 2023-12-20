@@ -3,6 +3,7 @@ import NavButton from "./NavButton";
 import { GiHelp } from "react-icons/gi";
 import { MdClose } from "react-icons/md";
 import Image from "next/image";
+import { DEFAULT_SUPPORT } from "constants/support.const";
 
 interface Props {
    onClose(): void;
@@ -37,7 +38,7 @@ export default function ParentSidebar({ onClose, isOpen }: Props) {
             <NavButton title="Screen Time" image="screen-time.svg" url="/parents/screen-time" />
             {/* <NavButton title="Multiplayer" image="game.svg" url="/parents/multiplayer" /> */}
          </div>
-         <NavButton image={<GiHelp size={22} />} url="https://discord.gg/FmQbpJGF" title="Get Help"></NavButton>
+         <NavButton image={<GiHelp size={22} />} url={DEFAULT_SUPPORT.discord} title="Get Help"></NavButton>
       </aside>
    );
 }
