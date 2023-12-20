@@ -12,7 +12,7 @@ export default function ParentSignUp1() {
    const accountType = router.pathname.includes("teacher")
       ? "teacher"
       : router.pathname.includes("parent")
-      ? "parent"
+      ? "guardian"
       : router.pathname.includes("student")
       ? "student"
       : "organizer";
