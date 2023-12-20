@@ -6,6 +6,7 @@ import http from "axios.config";
 import { useDispatch } from "react-redux";
 import { closePreloader, openErrorModal, openPreloader } from "store/fetchSlice";
 import ContactModal from "@/components/modals/contactUsModal";
+import { DEFAULT_SUPPORT } from "constants/support.const";
 
 const Contact = () => {
    const [email, setEmail] = useState("");
@@ -48,8 +49,8 @@ const Contact = () => {
                      <span className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-orange-400 text-white">
                         <BiEnvelope />
                      </span>
-                     <a href="mailto:info@codealgoacademy.com" className="text-[0.9rem] font-bold hover:underline">
-                        info@codealgoacademy.com
+                     <a href={`mailto:${DEFAULT_SUPPORT.email}`} className="text-[0.9rem] font-bold hover:underline">
+                        {DEFAULT_SUPPORT.email}
                      </a>
                   </header>
                </article>

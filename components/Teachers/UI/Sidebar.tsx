@@ -6,6 +6,7 @@ import NavButton from "@/components/parents/UI/NavButton";
 import { BsQuestion } from "react-icons/bs";
 import { GiHelp } from "react-icons/gi";
 import { MdClose } from "react-icons/md";
+import { DEFAULT_SUPPORT } from "constants/support.const";
 
 interface ILink {
    name: string;
@@ -70,7 +71,7 @@ const TeacherSidebar = (props: Props) => {
                   </div>
                ))}
 
-               <NavButton url="https://discord.gg/FmQbpJGF" title="Get Help" image={<GiHelp size={22} />} className="mx-auto max-w-[230px]" />
+               <NavButton url={DEFAULT_SUPPORT.discord} title="Get Help" image={<GiHelp size={22} />} className="mx-auto max-w-[230px]" />
             </div>
          </>
       </div>
