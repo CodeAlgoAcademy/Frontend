@@ -48,8 +48,8 @@ export default function ChildrenList({ close, open, isOpen }: Props) {
          </div>
 
          {parent?.currentChild && (
-            <a href={"https://play.codeamdoacademy.com"} target="_blank">
-               <button className="min-w-fit rounded-md border-none bg-mainColor px-[.8rem] py-[5px] text-white outline-none">Log in to game</button>
+            <a href={"https://play.codealgoacademy.com"} target="_blank">
+               <button className="min-w-fit rounded-md border-none bg-mainColor px-[.8rem] py-[5px] text-white outline-none">Play</button>
             </a>
          )}
       </div>
