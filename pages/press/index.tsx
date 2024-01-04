@@ -14,6 +14,7 @@ const Press = () => {
             title={`LaunchKC awards $300K: Six new startups enter the winners’ circle with KC investments`}
             image="/assets/blog/launch-kc-award.jpg"
             date="November 2023"
+            detailPage="/press/launch-kc-awards"
          />
 
          <section className="mx-auto mt-12 w-full max-w-[1100px] px-6">

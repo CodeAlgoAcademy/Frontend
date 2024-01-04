@@ -11,7 +11,7 @@ const Navbar = () => {
    const [open, setOpen] = useState(false);
 
    return (
-      <nav className="bg-white">
+      <nav className="border-b bg-white">
          <div className={styles.container}>
             <div className={styles.mobilleHeader}>
                <Link href="/">

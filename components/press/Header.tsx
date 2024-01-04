@@ -14,10 +14,10 @@ const Header: FC<IArticle> = (props) => {
             <div className="flex-1">
                <h1 className="text-[1.5rem] leading-[1.2] text-[#2073f] md:text-[2.4rem]">{props.title}</h1>
                <p className="mt-3 text-[1.1rem] text-[#222]">{props.body}</p>
-               <div className="mt-4 flex max-w-[400px] flex-wrap items-center justify-between gap-4">
+               <div className="mt-8 flex max-w-[400px] flex-wrap items-center justify-between gap-4">
                   <p>{props.date}</p>
-                  {router.pathname === "/press" && (
-                     <Link href={"/press/launch-kc-awards"}>
+                  {(router.pathname === "/press" || router.pathname === "/blog") && props.detailPage && (
+                     <Link href={props.detailPage as string}>
                         <button className="min-w-[200px] rounded-[30px] bg-orange-400 px-3 py-2 text-white">Read More</button>
                      </Link>
                   )}

@@ -1,10 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import Navbar from "../navbar/home/Navbar";
 
 const MobileView = () => {
+   const [mounted, setMounted] = useState(false);
+
+   useEffect(() => {
+      setMounted(true);
+   }, []);
+
    return (
       <>
          <Navbar />
@@ -18,16 +24,18 @@ const MobileView = () => {
                </div>
 
                <div className="z-[3] h-[50vh] w-full overflow-hidden">
-                  <ReactPlayer
-                     width={"100%"}
-                     height={"100%"}
-                     url="https://youtu.be/cijtWZ1I2i4"
-                     playing={true}
-                     muted={true}
-                     controls={false}
-                     loop={true}
-                     style={{ objectFit: "cover", objectPosition: "center" }}
-                  />
+                  {mounted && (
+                     <ReactPlayer
+                        width={"100%"}
+                        height={"100%"}
+                        url="https://youtu.be/cijtWZ1I2i4"
+                        playing={true}
+                        muted={true}
+                        controls={false}
+                        loop={true}
+                        style={{ objectFit: "cover", objectPosition: "center" }}
+                     />
+                  )}
                </div>
             </header>
 
