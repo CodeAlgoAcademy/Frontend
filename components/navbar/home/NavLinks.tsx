@@ -31,9 +31,9 @@ const NavLinks = () => {
                      <div>
                         <div className="absolute top-20 z-50 hidden hover:md:block group-hover:md:block">
                            <div className="py-3">
-                              <div className="absolute left-3 mt-1 h-4 w-4 rotate-45 bg-white"></div>
+                              <div className="absolute left-3 mt-1 h-4 w-4 rotate-45 bg-[#f8f8f8]"></div>
                            </div>
-                           <div className="grid grid-cols-1 gap-1 bg-white p-1">
+                           <div className="grid grid-cols-1 gap-1 bg-[#f8f8f8] p-1">
                               {link.sublinks.map((slink, index) => (
                                  <li className="p-3 text-sm text-gray-600 hover:bg-slate-100" key={index}>
                                     <Link href={slink.link} className="hover:text-primary">
