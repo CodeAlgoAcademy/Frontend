@@ -44,8 +44,10 @@ const ParentLayout = ({ children, title }: Props) => {
    };
 
    useEffect(() => {
-      dispatch(getChildProgress());
-      dispatch(getChildSkills());
+      if (currentChild?.id) {
+         dispatch(getChildProgress());
+         dispatch(getChildSkills());
+      }
    }, [currentChild?.id]);
 
    useEffect(() => {
