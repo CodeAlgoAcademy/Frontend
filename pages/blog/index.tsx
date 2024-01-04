@@ -2,7 +2,7 @@ import Footer from "@/components/home/Footer";
 import Navbar from "@/components/navbar/home/Navbar";
 import Header from "@/components/press/Header";
 import Link from "next/link";
-import { posts } from "public/blogdata";
+import { posts } from "public/blog.data";
 import React from "react";
 
 const Press = () => {
@@ -10,10 +10,11 @@ const Press = () => {
       <section className="min-h-screen w-full bg-[#ffffff]">
          <Navbar />
          <Header
-            body="The Power of Gamification at CodeAlgo Academy"
-            title={`Code and Play`}
-            image="/assets/blog/learining.JPG"
-            date="December 2023"
+            body=""
+            title={`2024 Startups to Watch: CodeAlgo Academy gamifies coding to build equity into new wave of software engineers`}
+            image="/assets/blog/2024-startups-to-watch.JPG"
+            date="January 2024"
+            detailPage="/blog/2024-startups-to-watch"
          />
 
          <section className="mx-auto mt-12 w-full max-w-[1100px] px-6">

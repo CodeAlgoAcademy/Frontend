@@ -8,6 +8,13 @@ export interface Post {
 
 export const posts: Post[] = [
    {
+      title: "2024 Startups to Watch",
+      body: "CodeAlgo Academy gamifies coding to build equity into new wave of software engineers",
+      image: "/assets/blog/2024-startups-to-watch.jpg",
+      date: "January 2024",
+      detailPage: "/2024-startups-to-watch",
+   },
+   {
       title: "Code and Play",
       body: "The Power of Gamification at CodeAlgo Academy",
       date: "December 2023",
