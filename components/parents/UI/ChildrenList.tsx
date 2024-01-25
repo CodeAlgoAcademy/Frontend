@@ -23,7 +23,7 @@ export default function ChildrenList({ close, open, isOpen }: Props) {
       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
          <div className="relative">
             <header className="flex cursor-pointer items-center gap-2" onClick={() => (isOpen ? close() : open())}>
-               <h2 className="text-lg font-medium text-mainColor">{parent?.currentChild?.username}</h2>
+               <h2 className="text-lg font-medium text-mainColor">{parent?.currentChild?.fullName}</h2>
                <BsChevronDown size={24} color="#2073fa" />
             </header>
             {isOpen && (
