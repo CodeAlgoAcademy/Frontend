@@ -8,6 +8,14 @@ import CharactersArrangement from "@/components/home/charactersArrangement";
 import HomeVideo from "@/components/home/video";
 import MobileView from "@/components/home/mobile-view";
 import CorrectCodeModal from "@/components/modals/CorrectCodeModal";
+import Hero from "@/components/home/new-home/hero";
+import WhatWeBuilt from "@/components/home/new-home/what-we-built";
+import LetsLearnTogether from "@/components/home/new-home/lets-learn-together";
+import VoiceOfOurCommunity from "@/components/home/new-home/voice-of-our-community";
+import GetStarted from "@/components/home/new-home/get-started";
+import CodeToSuccess from "@/components/home/new-home/code-to-success";
+import AsSeenIs from "@/components/home/new-home/as-seen-in";
+import Footer from "@/components/home/new-home/footer";
 
 type Colors = "blue" | "purple" | "orange" | "";
 
@@ -100,46 +108,14 @@ const Home: NextPage = () => {
       <div className="relative overflow-x-hidden">
          {modalOpen && <CorrectCodeModal setModalOpen={setModalOpen} />}
          <Navbar />
-         <div className="relative flex min-h-screen w-screen flex-col overflow-x-hidden overflow-y-visible bg-home3 bg-cover bg-left lg:bg-none">
-            <HomeVideo stopVideo={() => {}} />
-            <div className="z-3 absolute top-[0] left-0 flex w-screen flex-1 flex-col items-center justify-center overflow-hidden bg-home3 bg-cover bg-left lg:max-h-screen  lg:flex-row lg:bg-none">
-               <div className={styles.container}>
-                  <div className={styles.textContainer + ` text-gray-900  ${currentStep === 1 && "lg:text-white"}`}>
-                     <p className={styles.containerText}>We Believe Every Child is a genius!</p>
-                     <p className="text-[1.2rem] font-bold text-[#333] md:w-[500px]">
-                        3D games from CodeAlgo academy will bring students to computer sciences where they can teach themselves coding as they play.
-                     </p>
-                     {/* Mini Compiler */}
-                     <div className="relative">
-                        <div
-                           className="absolute top-[50px] left-[0] z-[2] hidden max-w-fit translate-x-[50%] bg-white p-2 text-gray-800 shadow-md after:absolute after:top-[0] after:left-[5px] after:h-[15px] after:w-[15px] after:-translate-y-[50%] after:rotate-45 after:bg-white lg:block"
-                           style={{ textShadow: "0" }}
-                        >
-                           <p className="mb-1 text-[0.97rem] font-bold">Type the following:</p>
-
-                           <p className="">
-                              <span className="text-red-600">print</span>
-                              {'("'}
-                              <span className="text-blue-600">I love CodeAlgo</span>
-                              {'")'}
-                           </p>
-                        </div>
-                        <form action="" onSubmit={isCodeCorrect} className="hidden w-full max-w-[400px] lg:block">
-                           <textarea
-                              className="mt-2 block h-[100px] w-full  resize-none rounded-md bg-black p-2 text-white caret-white"
-                              value={code}
-                              onChange={(e) => setCode(e.target.value)}
-                              ref={ref as LegacyRef<HTMLTextAreaElement>}
-                           ></textarea>
-                           <button type={"submit"} className="ml-auto mt-2 block max-w-fit rounded-md bg-black py-2 px-3 text-white shadow-md">
-                              RUN
-                           </button>
-                        </form>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
+         <Hero />
+         <WhatWeBuilt />
+         <LetsLearnTogether />
+         <VoiceOfOurCommunity />
+         <GetStarted />
+         <CodeToSuccess />
+         <AsSeenIs />
+         <Footer />
       </div>
    );
 };

@@ -1,129 +1,98 @@
-import Navbar from "@/components/navbar/home/Navbar";
-import Footer from "@/components/home/Footer";
-import React, { ChangeEvent, useState } from "react";
-import { BiEnvelope, BiPhone } from "react-icons/bi";
-import http from "axios.config";
-import { useDispatch } from "react-redux";
-import { closePreloader, openErrorModal, openPreloader } from "store/fetchSlice";
-import ContactModal from "@/components/modals/contactUsModal";
-import { DEFAULT_SUPPORT } from "constants/support.const";
+import Footer from "@/components/home/new-home/footer";
+import { CustomButton } from "@/components/UI/Button";
+import Image from "next/image";
+import { BiEnvelopeOpen, BiMapPin } from "react-icons/bi";
+import { BsFacebook, BsInstagram, BsLinkedin, BsTwitter, BsYoutube } from "react-icons/bs";
+import { TbThumbUp } from "react-icons/tb";
 
 const Contact = () => {
-   const [email, setEmail] = useState("");
-   const [subject, setSubject] = useState("");
-   const [message, setMessage] = useState("");
-   const [name, setName] = useState("");
-   const [modalOpened, setModalOpened] = useState(false);
-   const dispatch = useDispatch();
-
-   const sendAMessage = async (e: ChangeEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      dispatch(openPreloader({ loadingText: "Sending message" }));
-      try {
-         const { data } = await http.post("/contact/message/", {
-            email,
-            subject,
-            message,
-            name,
-         });
-         setModalOpened(true);
-         alert(data?.email + data?.subject + data?.message + data?.name);
-         dispatch(closePreloader());
-      } catch (error: any) {
-         console.log(error);
-         dispatch(openErrorModal({ errorText: [error.message] }));
-         dispatch(closePreloader());
-      }
-   };
-
    return (
-      <section className="min-h-screen w-full bg-[#ffffff]">
-         <Navbar />
-         <div className="mx-auto w-full max-w-[1100px] px-6 pt-24">
-            {modalOpened && <ContactModal />}
-            <h1 className="text-[1.8rem] font-bold text-orange-400">Contact Us</h1>
+      <div className="relative overflow-x-hidden font-thabit">
+         <Image src={"/assets/home-banner.png"} width={1500} height={400} />
 
-            <div className="mt-6 flex flex-wrap items-center justify-start gap-4">
-               <article className="w-full max-w-[300px] rounded-md bg-white p-4 shadow-md">
-                  <header className="flex items-center gap-4">
-                     <span className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-orange-400 text-white">
-                        <BiEnvelope />
-                     </span>
-                     <a href={`mailto:${DEFAULT_SUPPORT.email}`} className="text-[0.9rem] font-bold hover:underline">
-                        {DEFAULT_SUPPORT.email}
-                     </a>
-                  </header>
-               </article>
+         <div className="mx-auto max-w-[1200px] p-6">
+            <h1 className="text-center text-[2.1rem]">We are here to help!</h1>
+
+            <div className="mt-28 flex items-start gap-5">
+               <div className="flex-1">
+                  <ul className="space-y-8">
+                     <li className="flex items-center gap-3">
+                        <span>
+                           <BiMapPin className="text-mainBlack" size={30} />
+                        </span>
+                        Kansas City, MO, USA
+                     </li>
+
+                     <li className="flex items-center gap-3">
+                        <span>
+                           <BiEnvelopeOpen className="text-mainBlack" size={30} />
+                        </span>
+                        <a className="underline" href="mailto:info@codealgoacademy.com">
+                           info@codealgoacademy.com
+                        </a>
+                     </li>
+
+                     <li className="flex items-center gap-5">
+                        <span>
+                           <TbThumbUp className="text-mainBlack" size={30} />
+                        </span>
+                        <div className="flex items-end gap-2">
+                           <BsYoutube className="text-black" size={15} />
+                           <BsLinkedin className="text-black" size={15} />
+                           <BsFacebook className="text-black" size={15} />
+                           <BsInstagram className="text-black" size={15} />
+                           <BsTwitter className="text-black" size={15} />
+                        </div>
+                     </li>
+                  </ul>
+               </div>
+
+               <div className="relative flex-1">
+                  <img src={"/assets/0013_1.png"} className="absolute -top-[100px] left-[30px] z-[-1] w-[150px]" />
+
+                  <form className="z-[2]">
+                     <div className="flex items-center gap-2">
+                        <div className="mb-2 flex-1">
+                           <label htmlFor="" className="mb-1 block text-[.85rem]">
+                              First Name
+                           </label>
+                           <input required type="text" className="w-full rounded-md border-[1.5px] p-2 outline-none focus:border-mainPink" />
+                        </div>
+
+                        <div className="mb-2 flex-1">
+                           <label htmlFor="" className="mb-1 block text-[.85rem]">
+                              Last Name
+                           </label>
+                           <input required type="text" className="w-full rounded-md border-[1.5px] p-2 outline-none focus:border-mainPink" />
+                        </div>
+                     </div>
+
+                     <div className="mb-2">
+                        <label htmlFor="" className="mb-1 block text-[.85rem]">
+                           Email
+                        </label>
+                        <input required type="email" className="w-full rounded-md border-[1.5px] p-2 outline-none focus:border-mainPink" />
+                     </div>
+
+                     <div className="mb-2">
+                        <label htmlFor="" className="mb-1 block text-[.85rem]">
+                           Message
+                        </label>
+                        <textarea
+                           required
+                           className="h-[150px] w-full resize-none rounded-md border-[1.5px] p-2 outline-none focus:border-mainPink"
+                        />{" "}
+                     </div>
+                     <CustomButton variant="filled" className="ml-auto min-w-[120px] justify-center text-center">
+                        Send
+                     </CustomButton>
+                  </form>
+               </div>
             </div>
-
-            <form action="" onSubmit={sendAMessage} className="my-8 w-full max-w-[600px] rounded-md border-2 bg-white p-6">
-               <div className="mb-2">
-                  <label htmlFor="" className="mb-1 block">
-                     Name *
-                  </label>
-                  <input
-                     required
-                     value={name}
-                     onChange={(e) => {
-                        setName(e.target.value);
-                     }}
-                     type="text"
-                     placeholder="What's your name?"
-                     className="w-full rounded-md border-[1.5px] p-2 outline-none focus:border-orange-400"
-                  />
-               </div>
-               <div className="mb-2">
-                  <label htmlFor="" className="mb-1 block">
-                     Email *
-                  </label>
-                  <input
-                     required
-                     value={email}
-                     onChange={(e) => {
-                        setEmail(e.target.value);
-                     }}
-                     type="email"
-                     placeholder="What's your email?"
-                     className="w-full rounded-md border-[1.5px] p-2 outline-none focus:border-orange-400"
-                  />
-               </div>
-               <div className="mb-2">
-                  <label htmlFor="" className="mb-1 block">
-                     Subject *
-                  </label>
-                  <input
-                     required
-                     value={subject}
-                     onChange={(e) => {
-                        setSubject(e.target.value);
-                     }}
-                     type="text"
-                     placeholder="How can we help you?"
-                     className="w-full rounded-md border-[1.5px] p-2 outline-none focus:border-orange-400"
-                  />
-               </div>
-               <div className="mb-2">
-                  <label htmlFor="" className="mb-1 block">
-                     Message *
-                  </label>
-                  <textarea
-                     required
-                     value={message}
-                     onChange={(e) => {
-                        setMessage(e.target.value);
-                     }}
-                     placeholder="Message..."
-                     className="h-[150px] w-full resize-none rounded-md border-[1.5px] p-2 outline-none focus:border-orange-400"
-                  />
-               </div>
-
-               <button type="submit" className="w-full rounded-[20px] bg-orange-400 p-2 text-center font-bold text-white">
-                  Submit
-               </button>
-            </form>
          </div>
+
          <Footer />
-      </section>
+      </div>
    );
 };
 

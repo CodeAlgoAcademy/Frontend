@@ -13,6 +13,8 @@ module.exports = {
          colors: {
             mainPurple: "#412281",
             mainColor: "#2073fa",
+            mainPink: "#FF88AF",
+            mainBlack: "#191919",
          },
          screens: {
             xs: "400px",
@@ -22,7 +24,14 @@ module.exports = {
             w840: "840px",
             w500: "500px",
          },
+         clipPath: {
+            wave: 'path("M0,0 Q50,100 100,0 T200,0")',
+         },
+         fontFamily: {
+            tiltWarp: ["TiltWarp"],
+            thabit: ["Thabit"],
+         },
       },
    },
-   plugins: [],
+   plugins: [require("tailwind-clip-path")],
 };

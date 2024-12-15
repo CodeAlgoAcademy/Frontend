@@ -1,5 +1,16 @@
 export const links = [
    {
+      name: "About",
+      subMenu: true,
+      sublinks: [
+         { name: "About Us", link: "/about-us" },
+         { name: "Press", link: "/press" },
+         { name: "Blog", link: "/blog" },
+         { name: "Contact Us", link: "/contact" },
+      ],
+   },
+
+   {
       name: "Parents",
       subMenu: true,
       sublinks: [
@@ -18,13 +29,6 @@ export const links = [
       ],
    },
    {
-      name: "About",
-      subMenu: true,
-      sublinks: [
-         { name: "About Us", link: "/about-us" },
-         { name: "Press", link: "/press" },
-         { name: "Blog", link: "/blog" },
-         { name: "Contact Us", link: "/contact" },
-      ],
+      name: "Pricing",
    },
 ];

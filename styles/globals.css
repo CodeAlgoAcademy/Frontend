@@ -18,6 +18,21 @@
    src: url(../public/assets/fonts/WorkSans-VariableFont_wght.ttf);
 }
 
+@layer base {
+   @font-face {
+      font-family: "TiltWarp";
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url(../public/assets/fonts/TiltWarp.ttf);
+   }
+
+   @font-face {
+      font-family: "Thabit";
+      src: url(../public/assets/fonts/Thabit.ttf);
+   }
+}
+
 .code-font {
    font-family: "press-start" !important;
 }
@@ -634,4 +649,11 @@ a {
 .press-page a,
 .press-page i {
    font-size: 0.85rem;
+}
+
+.lets-learn-together-bg {
+   background-image: url("../public/assets/landing/lets-learn-together-bg.png");
+   background-position: center;
+   background-size: cover;
+   background-repeat: no-repeat;
 }
