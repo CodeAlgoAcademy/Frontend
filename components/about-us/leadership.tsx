@@ -32,7 +32,7 @@ export default function Leadership() {
                      key={index}
                      src={img}
                      className={`h-[40px] w-[40px] cursor-pointer rounded-full border-2 object-cover object-center hover:border-orange-400 ${
-                        leaders?.[index]?.name === leader.name && "border-orange-400"
+                        leaders?.[index]?.name === leader.name && "border-mainPink"
                      }`}
                      onClick={() => changeLeader(index)}
                      title={name}

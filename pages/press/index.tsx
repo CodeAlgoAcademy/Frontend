@@ -1,4 +1,4 @@
-import Footer from "@/components/home/Footer";
+import Footer from "@/components/home/new-home/footer";
 import Navbar from "@/components/navbar/home/Navbar";
 import Header from "@/components/press/Header";
 import Link from "next/link";
@@ -39,7 +39,7 @@ const Press = () => {
                            <div className="flex items-center justify-between">
                               <p className="text-[14px] text-[#444]">{article.date}</p>
                               <Link href={`/press${article.detailPage}`}>
-                                 <button className="min-w-[100px] rounded-[20px] bg-orange-400 py-1 px-4 text-white">Press</button>
+                                 <button className="min-w-[100px] rounded-[20px] bg-mainPink py-1 px-4 text-white">Press</button>
                               </Link>
                            </div>
                         </div>

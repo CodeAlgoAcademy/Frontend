@@ -5,7 +5,7 @@ import RelatedArticles from "@/components/press/RelatedArticles";
 import ImagesContainer from "@/components/press/ImagesContainer";
 import DropCapsParagraph from "@/components/press/DropCapsParagraph";
 import BlogTitle from "@/components/press/BlogTitle";
-import Footer from "@/components/home/Footer";
+import Footer from "@/components/home/new-home/footer";
 
 const PurePitchRally = () => {
    return (
@@ -49,7 +49,7 @@ const PurePitchRally = () => {
                            target={"_blank"}
                            rel="noopener noreferrer"
                            href="https://www.startlandnews.com/2022/07/asksamie/"
-                           className="text-orange-400 underline"
+                           className="text-mainPink underline"
                         >
                            impressive year of fundraising
                         </a>{" "}

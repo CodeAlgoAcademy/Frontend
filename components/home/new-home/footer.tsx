@@ -20,7 +20,7 @@ const links = [
          },
          {
             title: "Professional Development",
-            href: "",
+            href: "/dev-forum",
          },
          {
             title: "Pricing",
@@ -52,15 +52,15 @@ const links = [
       sublinks: [
          {
             title: "Terms",
-            href: "",
+            href: "/privacy-policy",
          },
          {
             title: "Privacy",
-            href: "",
+            href: "/privacy-policy",
          },
          {
             title: "Kids & Online Safety",
-            href: "",
+            href: "/privacy-policy",
          },
       ],
    },
@@ -90,12 +90,12 @@ const links = [
 
 const Footer = () => {
    return (
-      <footer className="mt-10 min-h-[150px] bg-mainBlack p-12 font-thabit text-white">
-         <div className="grid grid-cols-4 gap-3">
+      <footer className="mt-10 min-h-[150px] bg-mainBlack p-12 font-thabit text-white max-md:px-6">
+         <div className="grid grid-cols-1 gap-8 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {links.map((link, index) => {
                return (
                   <div key={index}>
-                     <p className="mb-8 text-[.9rem]">{link.header}</p>
+                     <p className="mb-2 font-tiltWarp text-[.9rem] md:mb-8">{link.header}</p>
 
                      <ul className="space-y-2">
                         {link.sublinks.map((sublink, index) => {
@@ -111,7 +111,7 @@ const Footer = () => {
             })}
          </div>
 
-         <div className="mt-20 flex items-center justify-between">
+         <div className="mt-20 flex items-center justify-between gap-4 max-md:flex-col-reverse max-md:items-start">
             <div className="flex items-end gap-2">
                <span className="grid h-[30px] w-[30px] place-content-center rounded-full bg-white">
                   <BsYoutube className="text-black" size={17} />

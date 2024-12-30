@@ -34,7 +34,7 @@ const NavLinks = () => {
                               <div className="absolute left-3 mt-1 h-4 w-4 rotate-45 bg-[#f8f8f8]"></div>
                            </div>
                            <div className="grid grid-cols-1 gap-1 bg-[#f8f8f8] p-1">
-                              {link.sublinks.map((slink, index) => (
+                              {link?.sublinks?.map((slink, index) => (
                                  <li className="p-3 text-sm text-gray-600 hover:bg-slate-100" key={index}>
                                     <Link href={slink.link} className="hover:text-primary">
                                        {slink.name}
@@ -53,7 +53,7 @@ const NavLinks = () => {
                     `}
                >
                   {/* sublinks */}
-                  {link.sublinks.map((slinks, index) => (
+                  {link?.sublinks?.map((slinks, index) => (
                      <li key={index} className="py-3 pl-14 hover:bg-slate-100">
                         <Link href={slinks.link}>{slinks.name}</Link>
                      </li>

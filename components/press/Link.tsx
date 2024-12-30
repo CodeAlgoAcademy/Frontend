@@ -7,7 +7,7 @@ interface Props {
 
 export default function Link({ link, text }: Props) {
    return (
-      <a href={link} className="font-bold text-orange-400">
+      <a href={link} className="font-bold text-mainPink">
          {text}
       </a>
    );

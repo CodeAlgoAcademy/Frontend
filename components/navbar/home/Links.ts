@@ -1,4 +1,11 @@
-export const links = [
+export interface NavbarLink {
+   name: string;
+   subMenu?: boolean;
+   sublinks?: { name: string; link: string }[];
+   route?: string;
+}
+
+export const links: NavbarLink[] = [
    {
       name: "About",
       subMenu: true,
@@ -30,5 +37,6 @@ export const links = [
    },
    {
       name: "Pricing",
+      route: "/pricing",
    },
 ];

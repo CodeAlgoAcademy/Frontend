@@ -84,10 +84,10 @@ const SingleAccordion: FC<AccordionProps> = ({ question, answer }) => {
    return (
       <article>
          <header className="mb-5 flex items-center justify-between gap-3">
-            <h1 className="font-bold">{question}</h1>
+            <h1 className="flex-1 font-bold">{question}</h1>
             <span
                onClick={() => setIsOpen(!isOpen)}
-               className="flex h-[30px] w-[30px] cursor-pointer items-center justify-center rounded-full bg-mainPink text-white"
+               className="flex h-[30px] w-[30px] max-w-[30px] flex-1 cursor-pointer items-center justify-center rounded-full bg-mainPink text-white"
             >
                {isOpen ? <BiMinus size={25} /> : <BiPlus size={25} />}
             </span>

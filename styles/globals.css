@@ -44,6 +44,35 @@ body {
    font-family: "worksans";
 }
 
+.highlight-links a {
+   text-decoration: underline !important;
+   @apply !bg-mainPink !text-mainBlack;
+}
+
+.invert-colors,
+.invert-colors * {
+   filter: invert(100) !important;
+}
+
+.dark-contrast,
+.dark-contrast * {
+   filter: contrast(100) !important;
+}
+
+.bigger-text {
+   font-size: 125% !important;
+}
+
+.legible-fonts,
+.legible-fonts {
+   font-weight: bold !important;
+}
+
+.big-cursor,
+.big-cursor * {
+   cursor: url("../public/assets/big-cursor.svg"), default;
+}
+
 a {
    color: inherit;
    text-decoration: none;
@@ -652,7 +681,7 @@ a {
 }
 
 .lets-learn-together-bg {
-   background-image: url("../public/assets/landing/lets-learn-together-bg.png");
+   background-image: url("../public/assets/landing/learn-together-bg.webp");
    background-position: center;
    background-size: cover;
    background-repeat: no-repeat;

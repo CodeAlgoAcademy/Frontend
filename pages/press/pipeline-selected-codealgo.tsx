@@ -5,7 +5,7 @@ import RelatedArticles from "@/components/press/RelatedArticles";
 import ImagesContainer from "@/components/press/ImagesContainer";
 import DropCapsParagraph from "@/components/press/DropCapsParagraph";
 import BlogTitle from "@/components/press/BlogTitle";
-import Footer from "@/components/home/Footer";
+import Footer from "@/components/home/new-home/footer";
 
 const newMembers = [
    {
@@ -263,7 +263,7 @@ const PipelineSelectedCodeAlgo = () => {
                      <i>
                         Click{" "}
                         <a
-                           className="text-orange-400 underline"
+                           className="text-mainPink underline"
                            href="https://www.pipelineentrepreneurs.com/about"
                            target="_blank"
                            rel="noopener noreferrer"
@@ -301,14 +301,14 @@ const PipelineSelectedCodeAlgo = () => {
                                        {index + 1}.{"  "}
                                        <a
                                           href={member.linkedin}
-                                          className="font-bold text-orange-400 underline"
+                                          className="font-bold text-mainPink underline"
                                           target="_blank"
                                           rel="noopener noreferrer"
                                        >
                                           {member.name}
                                        </a>
                                        ,{" "}
-                                       <a href={member.link} className="text-orange-400 underline" target="_blank" rel="noopener noreferrer">
+                                       <a href={member.link} className="text-mainPink underline" target="_blank" rel="noopener noreferrer">
                                           {member.company}
                                        </a>{" "}
                                        {member.location && `(${member.location})`}
@@ -348,7 +348,7 @@ const PipelineSelectedCodeAlgo = () => {
                                           <>
                                              <a
                                                 href={member.linkedin as string}
-                                                className="font-bold text-orange-400 underline"
+                                                className="font-bold text-mainPink underline"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                              >
@@ -357,7 +357,7 @@ const PipelineSelectedCodeAlgo = () => {
                                              ,{" "}
                                              <a
                                                 href={member.link as string}
-                                                className="text-orange-400 underline"
+                                                className="text-mainPink underline"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                              >
@@ -369,7 +369,7 @@ const PipelineSelectedCodeAlgo = () => {
                                           <>
                                              <a
                                                 href={member.linkedin[0]}
-                                                className="font-bold text-orange-400 underline"
+                                                className="font-bold text-mainPink underline"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                              >
@@ -378,7 +378,7 @@ const PipelineSelectedCodeAlgo = () => {
                                              and{" "}
                                              <a
                                                 href={member.linkedin[1]}
-                                                className="font-bold text-orange-400 underline"
+                                                className="font-bold text-mainPink underline"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                              >
@@ -387,7 +387,7 @@ const PipelineSelectedCodeAlgo = () => {
                                              ,{" "}
                                              <a
                                                 href={member.link as string}
-                                                className="text-orange-400 underline"
+                                                className="text-mainPink underline"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                              >
@@ -402,7 +402,7 @@ const PipelineSelectedCodeAlgo = () => {
                                              {'"'}
                                              <a
                                                 href={member.hyper.link}
-                                                className="text-orange-400 underline"
+                                                className="text-mainPink underline"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                              >
