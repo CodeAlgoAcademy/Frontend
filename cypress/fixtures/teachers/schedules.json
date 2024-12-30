@@ -1,0 +1,22 @@
+[
+   {
+      "id": 1,
+      "StartTime": "2023-05-08T08:30:00Z",
+      "Subject": "Read"
+   },
+   {
+      "id": 2,
+      "StartTime": "2023-05-09T08:30:00Z",
+      "Subject": "Go to school"
+   },
+   {
+      "id": 3,
+      "StartTime": "2023-05-11T08:30:00Z",
+      "Subject": "Code"
+   },
+   {
+      "id": 4,
+      "StartTime": "2023-05-12T08:30:00Z",
+      "Subject": "Sleep"
+   }
+]

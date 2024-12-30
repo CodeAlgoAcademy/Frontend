@@ -1,39 +1,29 @@
-import type { NextPage } from 'next';
-import Head from 'next/head';
-import Image from 'next/image';
-import Navbar from '@/components/Navbar/Navbar';
-import Link from 'next/link';
+import type { NextPage } from "next";
+import React from "react";
+import Navbar from "@/components/navbar/home/Navbar";
+import Hero from "@/components/home/new-home/hero";
+import WhatWeBuilt from "@/components/home/new-home/what-we-built";
+import LetsLearnTogether from "@/components/home/new-home/lets-learn-together";
+import VoiceOfOurCommunity from "@/components/home/new-home/voice-of-our-community";
+import GetStarted from "@/components/home/new-home/get-started";
+import CodeToSuccess from "@/components/home/new-home/code-to-success";
+import AsSeenIs from "@/components/home/new-home/as-seen-in";
+import Footer from "@/components/home/new-home/footer";
+
 const Home: NextPage = () => {
-  return (
-    <div className="">
-      <div className="h-screen w-screen overflow-hidden">
-        <Navbar />
-        <div className={styles.container} style={{ textShadow: '0px 2px 2px rgba(0,0,0,0.3)' }}>
-          <div className={styles.gradientContainer}></div>
-          <div className={styles.textContainer}>
-            <p className={styles.containerText}>Coding for kids and Teens made easy</p>
-            <p className="md:w-[550px] text-sm">
-              3D games from CodeAlgo academy will bring students to compiter sciences where they can
-              teach themselves as they play.
-            </p>
-            <Link href="/signup">
-              <button className="bg-blue-400 p-3 rounded-lg w-[120px] font-bold text-white">
-                Sign up
-              </button>
-            </Link>
-          </div>
-        </div>
+   return (
+      <div className="relative overflow-x-hidden" suppressHydrationWarning>
+         <Navbar />
+         <Hero />
+         <WhatWeBuilt />
+         <LetsLearnTogether />
+         <VoiceOfOurCommunity />
+         <GetStarted />
+         <CodeToSuccess />
+         <AsSeenIs />
+         <Footer />
       </div>
-    </div>
-  );
+   );
 };
 
 export default Home;
-
-const styles = {
-  container: 'relative bg-home bg-center h-full md:bg-right bg-cover bg-no-repeat',
-  gradientContainer:
-    'absolute top-0 right-0 bottom-0 left-0 *bg-gradient-to-tl md:bg-gradient-to-r from-orange-400*',
-  textContainer: 'py-20 md:py-32 relative px-2 md:px-20 text-gray-800 space-y-5',
-  containerText: 'capitalize text-5xl font-extrabold leading-[60px] md:w-[600px]',
-};

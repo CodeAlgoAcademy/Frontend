@@ -1,107 +1,96 @@
-import ParentSignUp1 from '@/components/parentMultiForm/ParentSignUp1';
-import ParentSignUp2 from '@/components/parentMultiForm/ParentSignUp2';
-import ThankyouForm from '@/components/parentMultiForm/ThankyouForm';
-import WelcomeForm from '@/components/parentMultiForm/WelcomeForm';
-import OtherInfoTeacher from '@/components/parentMultiForm/OtherInfoTeacher';
-import useMultiForm from '@/components/useMultiForm';
-import Image from 'next/image';
-import Link from 'next/link';
-import { ChangeEvent, useEffect } from 'react';
-import { signUpUser } from 'services/authService';
-import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
-import { clearFields, updateUser } from 'store/authSlice';
-import { RootState } from 'store/store';
+import Form1 from "@/components/stepForm/general/Form1";
+import Form2 from "@/components/stepForm/general/Form2";
+import TeacherInfo from "@/components/stepForm/teachers/TeacherInfo";
+import useMultiForm from "utils/useMultiForm";
+import { ChangeEvent, useEffect } from "react";
+import { signUpUser } from "services/authService";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import { clearFields, updateUser } from "store/authSlice";
+import { RootState } from "store/store";
+import AuthLayout from "@/components/layouts/AuthLayout";
+import GoogleBtn from "@/components/UI/googleBtn";
+import Form3 from "@/components/stepForm/general/Form3";
+import { checkEmail } from "utils/checkmail";
+import Link from "next/link";
+import { checkPolicy, unCheckPolicy } from "store/policySlice";
 
 export default function Teacher() {
-  const dispatch = useDispatch();
-  const router = useRouter();
-  const { auth } = useSelector((state: RootState) => state.user);
-  const { steps, currentStepIndex, step, teacherSignUpStep, isFirstStep, isLastStep, back, next } =
-    useMultiForm([
-      <ParentSignUp1 key={1} />,
-      <ParentSignUp2 key={2} />,
-      <OtherInfoTeacher key={4} />,
-      <WelcomeForm key={3} />,
-    ]);
+   const dispatch = useDispatch();
+   const router = useRouter();
+   const { email } = useSelector((state: RootState) => state.user.auth);
+   const policyChecked = useSelector((state: RootState) => state.policyCheck.checked);
+   const { steps, currentStepIndex, step, teacherSignUpStep, isFirstStep, isLastStep, back, next } = useMultiForm([
+      <Form1 key={1} />,
+      <Form2 key={2} />,
+      <Form3 key={3} />,
+      <TeacherInfo key={4} />,
+   ]);
 
-  const signup = async (event: ChangeEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log(auth);
-    if (!teacherSignUpStep) {
-      next();
-    } else {
-      const data = await dispatch(signUpUser());
-      if (!data?.error?.message) {
-        dispatch(clearFields());
-        router.push('/verify-email');
+   const toggleCheck = (e: ChangeEvent<HTMLInputElement>) => {
+      if (e.target.checked) dispatch(checkPolicy());
+      else dispatch(unCheckPolicy());
+   };
+
+   const signup = async (event: ChangeEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      if (!teacherSignUpStep) {
+         if (currentStepIndex === 0) {
+            checkEmail(email, next, dispatch);
+         } else {
+            next();
+         }
+      } else {
+         const data = await dispatch(signUpUser());
+         localStorage.removeItem("parent-signup");
+         if (!data?.error?.message) {
+            dispatch(clearFields());
+            router.push("/verify-email");
+         }
       }
-      console.log(data);
-    }
-  };
+   };
 
-  return (
-    <div className="bg-gradient-to-br from-[#78A8FB] to-[#C4D7F8] min-h-[100vh] p-[2rem] relative">
-      <div className="flex justify-between items-center">
-        <h1 className="text-white text-3xl font-bold">CodeAlgo</h1>
-        <div>
-          <span className="font-semibold">Already have an account?</span>
-          <Link href="/login">
-            <span className="cursor-pointer ml-3 font-semibold text-[#2073FA]">Log in</span>
-          </Link>
-        </div>
-      </div>
-      <div className="flex p-[4rem]  items-center justify-center">
-        <div className="bg-white mr-[-2rem] w-[600px] px-[5rem] py-[4rem] bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-20 rounded-[2.5rem]">
-          <form onSubmit={signup}>
+   useEffect(() => {
+      dispatch(updateUser({ key: "accountType", value: "Teacher" }));
+   }, []);
+
+   return (
+      <AuthLayout>
+         <form onSubmit={signup}>
             <div className="">{step}</div>
             <div>
-              {!teacherSignUpStep && (
-                <button
-                  className="block  h-[2.5rem] mt-6 text-center w-full text-white bg-[#2073FA] font-bold rounded-xl"
-                  type="submit"
-                >
-                  Continue
-                </button>
-              )}
-              {teacherSignUpStep && (
-                <button
-                  className="block  h-[2.5rem] mt-6 text-center w-full text-white bg-[#2073FA] font-bold rounded-xl"
-                  type="submit"
-                >
-                  Sign up
-                </button>
-              )}
-              {!isFirstStep && !isLastStep && (
-                <button className="block text-center w-full mt-4" type="button" onClick={back}>
-                  back
-                </button>
-              )}
-              {isFirstStep && (
-                <button
-                  className="block  h-[2.5rem] mt-6 text-center w-full bg-neutral-100/70 font-semibold rounded-xl text-black"
-                  type="button"
-                  onClick={back}
-                >
-                  Sign Up with Google
-                </button>
-              )}
+               <div className="mt-4">
+                  <input
+                     type="checkbox"
+                     checked={policyChecked}
+                     onChange={toggleCheck}
+                     name=""
+                     className="inline-block scale-[120%] accent-mainColor"
+                     id="privacy"
+                     required={true}
+                  />
+                  <label htmlFor="privacy" className="ml-2 inline-block cursor-pointer hover:underline">
+                     <Link href={"/privacy-policy"}> I accept the terms and condition</Link>
+                  </label>
+               </div>
+               {!teacherSignUpStep && (
+                  <button className="mt-6  block h-[2.5rem] w-full rounded-xl bg-orange-400 text-center font-bold text-white" type="submit">
+                     Continue
+                  </button>
+               )}
+               {teacherSignUpStep && (
+                  <button className="mt-6  block h-[2.5rem] w-full rounded-xl bg-orange-400 text-center font-bold text-white" type="submit">
+                     Sign up
+                  </button>
+               )}
+               {!isFirstStep && (
+                  <button className="mt-4 block w-full text-center" type="button" onClick={back}>
+                     Back
+                  </button>
+               )}
+               {isFirstStep && <GoogleBtn />}
             </div>
-          </form>
-        </div>
-        <div className="ml-[-2rem]">
-          <Image
-            src="/assets/ComputerGraphic.png"
-            width="829.8"
-            height="520.2"
-            alt="computer graphic"
-          />
-        </div>
-      </div>
-      <div className="box-border text-[16px] text-white bg-[#2073FA] font-semibold flex justify-between w-full absolute left-0 bottom-0 py-3 px-10">
-        <p>© 2023 CodeAlgoAcademy. All rights reserved.</p>
-        <p className="left-0">Get help</p>
-      </div>
-    </div>
-  );
+         </form>
+      </AuthLayout>
+   );
 }
