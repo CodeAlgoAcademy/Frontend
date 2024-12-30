@@ -4,6 +4,8 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { checkPolicy, unCheckPolicy } from "store/policySlice";
+import Navbar from "@/components/navbar/home/Navbar";
+import Footer from "@/components/home/new-home/footer";
 
 interface BetaDisclaimerProps {
    title: string;
@@ -42,12 +44,13 @@ const PrivacyPolicy = () => {
    const router = useRouter();
    return (
       <section className="min-h-screen w-full bg-[#ecedf3]">
+         <Navbar />
          <div className="mx-auto max-w-[1200px] px-6 py-12 ">
             <header className="flex w-full flex-row items-center gap-x-4">
                <div className="h-[60px] w-[60px]">
                   <Image src="/assets/Coffee cup.png" width={"60px"} height={"60px"} alt="" />
                </div>
-               <h1 className="text-[28px] font-bold text-mainColor">CodeAlgo Academy Privacy Policy</h1>
+               <h1 className="text-[28px] font-bold text-mainPink">CodeAlgo Academy Privacy Policy</h1>
             </header>
             <div className="mt-[25px]">
                <p>
@@ -351,6 +354,7 @@ You will be able to access premium features for your child’s account for the p
             <p>CodeAlgo, LLC</p>
             <p>720 Main St, Kansas City, MO 64105</p>
          </div>
+         <Footer />
       </section>
    );
 };

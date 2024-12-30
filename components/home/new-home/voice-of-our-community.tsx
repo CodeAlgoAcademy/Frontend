@@ -1,5 +1,6 @@
+import { useMediaQuery } from "@mui/material";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ImQuotesLeft, ImQuotesRight } from "react-icons/im";
 import { A11y, EffectFlip, Navigation, Pagination, Scrollbar } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -68,15 +69,17 @@ const data = [
 ];
 
 const VoiceOfOurCommunity = () => {
+   const isMobile = useMediaQuery("(max-width: 768px)");
+
    return (
       <div className="mx-auto mt-16 max-w-[1200px] px-6 pb-12">
-         <h1 className="text-center font-tiltWarp text-[2.1rem]">THE VOICE OF OUR COMMUNITY</h1>
+         <h1 className="text-center font-tiltWarp text-[2.1rem] max-md:text-[1.5rem]">THE VOICE OF OUR COMMUNITY</h1>
 
          <Swiper
             className="mt-12"
             modules={[Navigation, Pagination, Scrollbar, A11y, EffectFlip]}
             spaceBetween={50}
-            slidesPerView={3}
+            slidesPerView={isMobile ? 1 : 3}
             navigation={true}
             pagination={{ clickable: true }}
             // scrollbar={{ draggable: true }}
@@ -88,7 +91,7 @@ const VoiceOfOurCommunity = () => {
          >
             {data.map((voice, index) => (
                <SwiperSlide key={index}>
-                  <div className="flex min-h-[450px] flex-col justify-between gap-6 rounded-xl  border bg-white p-8 !font-thabit text-[.85xrem] shadow-lg">
+                  <div className="flex min-h-[450px] flex-col justify-between gap-6 rounded-xl border  bg-white p-8 !font-thabit text-[.85rem] shadow-lg max-md:min-h-fit max-md:p-4">
                      <div dangerouslySetInnerHTML={{ __html: voice }} className="flex flex-col justify-between"></div>
                   </div>
                </SwiperSlide>

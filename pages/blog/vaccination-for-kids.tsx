@@ -1,4 +1,5 @@
-import Footer from "@/components/home/Footer";
+import Footer from "@/components/home/new-home/footer";
+
 import Navbar from "@/components/navbar/home/Navbar";
 import BlogTitle from "@/components/press/BlogTitle";
 import Header from "@/components/press/Header";

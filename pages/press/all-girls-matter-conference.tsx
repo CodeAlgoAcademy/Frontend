@@ -1,5 +1,5 @@
 import React from "react";
-import Footer from "@/components/home/Footer";
+import Footer from "@/components/home/new-home/footer";
 import Navbar from "@/components/navbar/home/Navbar";
 import BlogTitle from "@/components/press/BlogTitle";
 import DropCapsParagraph from "@/components/press/DropCapsParagraph";
@@ -44,7 +44,7 @@ export default function AllGirlsMatterConference() {
                      <Link text="Sign up today" link="https://www.codealgoacademy.com" /> to join the coding revolution
                   </p>
                   <p>Spread the word and let's make this workshop an inspiring space for all!</p>
-                  <i className="cursor-pointer font-bold text-orange-400">🔗 #BetaLaunch #Parents #Teachers #Coding #KidsCoding #K8</i>
+                  <i className="cursor-pointer font-bold text-mainPink">🔗 #BetaLaunch #Parents #Teachers #Coding #KidsCoding #K8</i>
                </section>
             </main>
          </div>

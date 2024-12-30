@@ -12,7 +12,7 @@ const StudentInternships = () => {
          <Image src={"/assets/home-banner.png"} width={1500} height={400} />
 
          <div className="mx-auto max-w-[1100px] p-6">
-            <h1 className="text-center  font-thabit text-[2.1rem] font-bold">Show the world what you can do!</h1>
+            <h1 className="text-center  font-thabit text-[2.1rem] font-bold max-md:text-[1.5rem]">Show the world what you can do!</h1>
 
             <div className="mt-10 space-y-6">
                <SingleJob />
@@ -29,9 +29,9 @@ const StudentInternships = () => {
 
 const SingleJob = () => {
    return (
-      <article className="flex items-center gap-3 rounded-xl border border-mainBlack py-3 px-8 font-thabit">
+      <article className="flex items-center gap-x-3 gap-y-8 rounded-xl border border-mainBlack py-3 px-8 font-thabit max-md:flex-col max-md:py-8">
          <div>
-            <p className="max-w-fit rounded-[10px] bg-slate-300 p-2 text-[.8rem] font-semibold">50 Hours of CodeAlgo</p>
+            <p className="w-full rounded-[10px] bg-slate-300 p-2 text-[.8rem] font-semibold md:max-w-fit">50 Hours of CodeAlgo</p>
 
             <p className="mt-6">Software Engineer Internship Google Kansas City, MO</p>
             <div className="flex items-center gap-4">
@@ -55,8 +55,8 @@ const SingleJob = () => {
             </p>
          </div>
 
-         <div className="min-w-fit max-w-fit">
-            <CustomButton variant="filled" className="max-w-fit py-3 text-[.75rem] text-mainBlack">
+         <div className="min-w-fit max-w-fit max-md:min-w-full max-md:max-w-full">
+            <CustomButton variant="filled" className="max-w-fit py-3 text-[.75rem] text-mainBlack max-md:w-full max-md:max-w-full" fullWidth>
                {"View Salary & More Info"}
             </CustomButton>
          </div>

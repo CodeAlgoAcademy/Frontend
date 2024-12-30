@@ -2,7 +2,7 @@ import Header from "@/components/about-us/Header";
 import Section from "@/components/about-us/Section";
 import Testimonials from "@/components/about-us/Testimonials";
 import AOC from "@/components/about-us/aoc";
-import Footer from "@/components/home/Footer";
+import Footer from "@/components/home/new-home/footer";
 import Navbar from "@/components/navbar/home/Navbar";
 import Link from "next/link";
 import React from "react";
@@ -14,7 +14,7 @@ import Leadership from "../components/about-us/leadership";
 const AboutUs = () => {
    return (
       <>
-         <section className="min-h-screen w-full bg-[#FFFFFF] pb-6">
+         <section className="min-h-screen w-full bg-[#FFFFFF] pb-6 font-thabit">
             <Navbar />
             <div className="">
                <Header />

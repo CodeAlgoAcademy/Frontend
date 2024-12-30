@@ -1,4 +1,4 @@
-import Footer from "@/components/home/Footer";
+import Footer from "@/components/home/new-home/footer";
 import Navbar from "@/components/navbar/home/Navbar";
 import BlogTitle from "@/components/press/BlogTitle";
 import Header from "@/components/press/Header";
@@ -132,9 +132,7 @@ const FamiliesTogetherConference = () => {
                      <ImagesContainer imageHeight={900} imageDetail="" image="/assets/blog/article6-7.png" />
                   </div>
                   <div className="flex-1">
-                     <h2 className="mt-5 mb-1 text-[1.4rem] font-bold text-orange-400">
-                        {"From Opponent to Partners: A Parent & Teacher’s Journey"}
-                     </h2>
+                     <h2 className="mt-5 mb-1 text-[1.4rem] font-bold text-mainPink">{"From Opponent to Partners: A Parent & Teacher’s Journey"}</h2>
                      <p className="mt-3">
                         What do you do when trust is lost, and adult issues have a negative impact on an IEP team’s ability to work together to meet
                         the needs of a student? Join Leia and Tierney as they share their journey of moving from opponents to partners. Leia and
@@ -219,7 +217,7 @@ const FamiliesTogetherConference = () => {
                      <ImagesContainer imageDetail={""} imageHeight={900} image="/assets/blog/article6-11.png" />
                   </div>
                   <div className="flex-1">
-                     <h2 className="mt-5 mb-1 text-[1.4rem] font-bold text-orange-400">{"Dream Big: Overcoming Challenges & Setting Goals"}</h2>
+                     <h2 className="mt-5 mb-1 text-[1.4rem] font-bold text-mainPink">{"Dream Big: Overcoming Challenges & Setting Goals"}</h2>
                      <p className="mt-3">
                         Sedric Hibler is a Data Analytics and Software Engineer at Oracle Cerner and CoFounder – CIO of CodeAlgo Academy. Triumfia
                         Houmbie Fulks is a Software Engineer at Oracle Cerner and Co-Founder – CEO of CodeAlgo Academy.

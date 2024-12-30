@@ -5,18 +5,20 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { getUserFromLocalStorage, refreshToken } from "utils/getTokens";
 import ErrorModal from "../UI/errorModal";
 import Preloader from "../UI/preloader";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { closePreloader } from "../../store/fetchSlice";
 import { addUserFromLocalStorage } from "store/authSlice";
 import SuccessModal from "../modals/SuccessModal";
 import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
-import { addAnnouncementSession, getAnnouncementSession } from "utils/announcement";
+import { RootState } from "store/store";
+import { getAccessibilityClassName } from "utils";
 
 interface Props {
    children?: ReactNode;
 }
 const Layout = ({ children }: Props) => {
    const dispatch = useDispatch();
+   const features = useSelector((state: RootState) => state.accessibility.features);
    const router = useRouter();
 
    useEffect(() => {
@@ -60,7 +62,7 @@ const Layout = ({ children }: Props) => {
 
    return (
       <GoogleOAuthProvider clientId={"354436342116-6kjbapf9ar5ad4rkho0hen2jndlcagff.apps.googleusercontent.com"}>
-         <div>
+         <div className={getAccessibilityClassName(features)}>
             <Head>
                <title>CodeAlgo Academy</title>
             </Head>

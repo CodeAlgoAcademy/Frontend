@@ -20,6 +20,7 @@ import policySliceReducer from "./policySlice";
 import parentChildSlice from "./parentChildSlice";
 import parentSlice from "./parentSlice";
 import organizersSlice from "./organizersSlice";
+import accessibilityReducer from "./accessibilitySlice";
 
 export const store = configureStore({
    reducer: {
@@ -43,6 +44,7 @@ export const store = configureStore({
       parentChild: parentChildSlice,
       parent: parentSlice,
       organizer: organizersSlice,
+      accessibility: accessibilityReducer,
    },
 });
 

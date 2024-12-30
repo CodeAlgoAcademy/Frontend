@@ -5,9 +5,9 @@ import { BsBag, BsBagFill, BsPinMapFill } from "react-icons/bs";
 const CodeToSuccess = () => {
    return (
       <section className="mx-auto mt-6 max-w-[1200px] p-6">
-         <h1 className="text-center font-tiltWarp text-[2.1rem]">CODE YOUR WAY TO SUCCESS</h1>
+         <h1 className="text-center font-tiltWarp text-[2.1rem] max-md:text-[1.5rem]">CODE YOUR WAY TO SUCCESS</h1>
 
-         <div className="mt-16 flex items-center justify-center gap-8">
+         <div className="mt-16 flex items-center justify-center gap-8 max-md:flex-col">
             <SingleJob />
             <SingleJob />
          </div>

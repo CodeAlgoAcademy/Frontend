@@ -1,6 +1,7 @@
 import Footer from "@/components/home/new-home/footer";
 import Navbar from "@/components/navbar/home/Navbar";
 import { CustomButton } from "@/components/UI/Button";
+import { useMediaQuery } from "@mui/material";
 import Image from "next/image";
 import React, { FC } from "react";
 import { FiArrowRight } from "react-icons/fi";
@@ -15,7 +16,7 @@ const Pricing = () => {
             <div className="mx-auto max-w-[1200px]">
                <h1 className="text-center text-[1.5rem] font-bold text-white">Choose the plan that is right for you</h1>
 
-               <div className="mt-12 flex justify-around gap-4">
+               <div className="mt-12 flex justify-around gap-8 max-md:flex-col">
                   <SinglePricing plan="Basic" amount="Free" />
                   <SinglePricing plan="Parent & Family" amount="$259/yr" />
                   <SinglePricing plan="Institution" amount="Contact us" />
@@ -24,19 +25,19 @@ const Pricing = () => {
          </section>
 
          <div className="mx-auto mt-12 max-w-[1200px]">
-            <div className="w-full rounded-[2rem] bg-gray-300 p-20">
+            <div className="w-full bg-gray-300 p-7 md:rounded-[2rem] md:p-20">
                <h1 className="text-center text-[1.5rem]">Institution Inquiry</h1>
                <p className="mt-2 text-center text-[1.1rem]">
                   Organization, School, and District bulk prices vary with bigger savings on larger orders.
                </p>
 
                <form className="mt-14 space-y-5">
-                  <div className="flex items-center gap-12">
-                     <div className="min-w-[250px] max-w-fit">
+                  <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
+                     <div className="max-w-fit md:min-w-[250px]">
                         <p>Name</p>
                      </div>
 
-                     <div className="flex-1">
+                     <div className="w-full flex-1">
                         <input
                            required
                            className="w-full rounded-md border-[1.5px] border-[#F4F4F4] bg-[#f4f4f4] p-2 outline-none focus:border-mainPink"
@@ -44,12 +45,12 @@ const Pricing = () => {
                      </div>
                   </div>
 
-                  <div className="flex items-center gap-12">
-                     <div className="min-w-[250px] max-w-fit">
+                  <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
+                     <div className="max-w-fit md:min-w-[250px]">
                         <p>Email</p>
                      </div>
 
-                     <div className="flex-1">
+                     <div className="w-full flex-1">
                         <input
                            required
                            className="w-full rounded-md border-[1.5px] border-[#F4F4F4] bg-[#f4f4f4] p-2 outline-none focus:border-mainPink"
@@ -57,12 +58,12 @@ const Pricing = () => {
                      </div>
                   </div>
 
-                  <div className="flex items-center gap-12">
-                     <div className="min-w-[250px] max-w-fit">
+                  <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
+                     <div className="max-w-fit md:min-w-[250px]">
                         <p>Select a category</p>
                      </div>
 
-                     <div className="flex-1">
+                     <div className="w-full flex-1">
                         <input
                            required
                            className="w-full rounded-md border-[1.5px] border-[#F4F4F4] bg-[#f4f4f4] p-2 outline-none focus:border-mainPink"
@@ -70,12 +71,12 @@ const Pricing = () => {
                      </div>
                   </div>
 
-                  <div className="flex items-center gap-12">
-                     <div className="min-w-[250px] max-w-fit">
+                  <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
+                     <div className="max-w-fit md:min-w-[250px]">
                         <p>Your Institution name</p>
                      </div>
 
-                     <div className="flex-1">
+                     <div className="w-full flex-1">
                         <input
                            required
                            className="w-full rounded-md border-[1.5px] border-[#F4F4F4] bg-[#f4f4f4] p-2 outline-none focus:border-mainPink"
@@ -83,12 +84,12 @@ const Pricing = () => {
                      </div>
                   </div>
 
-                  <div className="flex items-center gap-12">
-                     <div className="min-w-[250px] max-w-fit">
+                  <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
+                     <div className="max-w-fit md:min-w-[250px]">
                         <p>Number of students</p>
                      </div>
 
-                     <div className="flex-1">
+                     <div className="w-full flex-1">
                         <input
                            required
                            className="w-full rounded-md border-[1.5px] border-[#F4F4F4] bg-[#f4f4f4] p-2 outline-none focus:border-mainPink"
@@ -96,12 +97,12 @@ const Pricing = () => {
                      </div>
                   </div>
 
-                  <div className="flex items-center gap-12">
-                     <div className="min-w-[250px] max-w-fit">
+                  <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
+                     <div className="max-w-fit md:min-w-[250px]">
                         <p>Any other details?</p>
                      </div>
 
-                     <div className="flex-1">
+                     <div className="w-full flex-1">
                         <input
                            required
                            className="w-full rounded-md border-[1.5px] border-[#F4F4F4] bg-[#f4f4f4] p-2 outline-none focus:border-mainPink"
@@ -109,7 +110,7 @@ const Pricing = () => {
                      </div>
                   </div>
 
-                  <CustomButton size="medium" variant="filled" className="mx-auto !mt-10 min-w-[250px] justify-center">
+                  <CustomButton size="medium" variant="filled" className="mx-auto !mt-10 justify-center max-md:w-full md:min-w-[250px]">
                      Get a quote
                   </CustomButton>
                </form>
@@ -127,14 +128,16 @@ interface SinglePricingProps {
 }
 
 const SinglePricing: FC<SinglePricingProps> = ({ plan, amount }) => {
+   const isMobile = useMediaQuery("(max-width:768px)");
+
    return (
       <div className="flex flex-col items-center justify-center gap-2 font-bold">
-         <div className="mx-auto w-[120px]">
-            <Image src={"/assets/landing/logo_no_name.png"} width={120} height={40} />
+         <div className="mx-auto w-[120px] max-md:max-w-fit">
+            <Image src={"/assets/landing/logo_no_name.png"} width={isMobile ? 90 : 120} height={isMobile ? 40 : 30} />
          </div>
 
-         <h2 className="mt-2 text-center text-[1.5rem] text-white">{plan}</h2>
-         <h1 className="my-2 text-center text-[1.8rem] text-white">{amount}</h1>
+         <h2 className="mt-1 text-center text-[1.5rem] text-white max-md:text-[1.1rem] max-md:leading-[1]">{plan}</h2>
+         <h1 className="my-1 text-center text-[1.8rem] text-white max-md:text-[1.1rem] max-md:leading-[1]">{amount}</h1>
 
          <CustomButton icon={<FiArrowRight />} variant="filled" className="text-white">
             Get Started

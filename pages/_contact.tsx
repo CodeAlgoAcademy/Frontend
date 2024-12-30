@@ -1,5 +1,5 @@
 import Navbar from "@/components/navbar/home/Navbar";
-import Footer from "@/components/home/Footer";
+import Footer from "@/components/home/new-home/footer";
 import React, { ChangeEvent, useState } from "react";
 import { BiEnvelope, BiPhone } from "react-icons/bi";
 import http from "axios.config";

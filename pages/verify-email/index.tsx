@@ -30,7 +30,7 @@ const EmailVerification = () => {
                </p>
             </div>
             <footer className="w-full border-t-2 pt-4 text-center">
-               <button onClick={() => dispatch(resendEmail(email))} className="mt-2 w-[150px] rounded-md bg-orange-400 p-3 text-white shadow-md">
+               <button onClick={() => dispatch(resendEmail(email))} className="mt-2 w-[150px] rounded-md bg-mainPink p-3 text-white shadow-md">
                   Resend link
                </button>
             </footer>
