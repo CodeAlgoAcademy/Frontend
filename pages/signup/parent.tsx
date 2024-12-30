@@ -1,148 +1,136 @@
-import ParentSignUp1 from '@/components/parentMultiForm/ParentSignUp1';
-import ParentSignUp2 from '@/components/parentMultiForm/ParentSignUp2';
-import ParentSignUp3 from '@/components/parentMultiForm/ParentSignUp3';
-import ParentSignUp4 from '@/components/parentMultiForm/ParentSignUp4';
-import ParentSignUp5 from '@/components/parentMultiForm/ParentSignUp5';
-import ParentSignUp6 from '@/components/parentMultiForm/ParentSignUp6';
-import ParentSignUp7 from '@/components/parentMultiForm/ParentSignUp7';
-import Safety1 from '@/components/parentMultiForm/Safety1';
-import Safety2 from '@/components/parentMultiForm/Safety2';
-import Safety3 from '@/components/parentMultiForm/Safety3';
-import ThankyouForm from '@/components/parentMultiForm/ThankyouForm';
-import WelcomeForm from '@/components/parentMultiForm/WelcomeForm';
-import useMultiForm from '@/components/useMultiForm';
-import Image from 'next/image';
-import Link from 'next/link';
-import React, { ChangeEvent, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { signUpUser } from 'services/authService';
-import { addChild } from 'store/parentSlice';
+import GoogleBtn from "@/components/UI/googleBtn";
+import Form1 from "@/components/stepForm/general/Form1";
+import Form2 from "@/components/stepForm/general/Form2";
+import Form3 from "@/components/stepForm/general/Form3";
+import AuthLayout from "@/components/layouts/AuthLayout";
+import useMultiForm from "utils/useMultiForm";
+import { useRouter } from "next/router";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser, signUpUser } from "services/authService";
+import { addChild, addChildFriend, resetScreenTime } from "store/parentChildSlice";
+import { FiCheckCircle } from "react-icons/fi";
+import { RootState } from "store/store";
+import { updateUser } from "store/authSlice";
+import { checkEmail } from "utils/checkmail";
+import Link from "next/link";
+import { checkPolicy, unCheckPolicy } from "store/policySlice";
+import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
 
 export default function Parent() {
-  const dispatch = useDispatch();
-  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next, goTo } = useMultiForm(
-    [
-      <ParentSignUp1 key={1} />,
-      <ParentSignUp2 key={2} />,
-      <ParentSignUp3 key={3} />,
-      <WelcomeForm key={4} />,
-      <ParentSignUp4 key={5} />,
-      <ParentSignUp5 key={6} />,
-      <ParentSignUp6 key={7} />,
-      <ParentSignUp7 key={8} />,
-      <Safety1 key={9} />,
-      <Safety2 key={10} />,
-      <Safety3 key={11} />,
-      <ThankyouForm key={12} />,
-    ],
-  );
+   const dispatch = useDispatch();
+   const router = useRouter();
+   const credentials = useSelector((state: RootState) => state?.user?.auth);
+   const policyChecked = useSelector((state: RootState) => state.policyCheck.checked);
+   const parent = useSelector((state: RootState) => state.parentChild);
+   const [modalOpen, setModalOpen] = useState(false);
+   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next, goTo } = useMultiForm([
+      <Form1 key={1} />,
+      <Form2 key={2} />,
+      <Form3 key={3} />,
+   ]);
 
-  const signUp = async (e: ChangeEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (currentStepIndex === 2) {
-      const data = await dispatch(signUpUser());
-      if (!data?.error?.message) {
-        next();
-      }
-    } else if (currentStepIndex === 6) {
-      const data = await dispatch(addChild());
-      if (!data?.error?.message) {
-        next();
-      }
-    } else {
-      next();
-    }
-  };
+   const toggleCheck = (e: ChangeEvent<HTMLInputElement>) => {
+      if (e.target.checked) dispatch(checkPolicy());
+      else dispatch(unCheckPolicy());
+   };
 
-  return (
-    <div className="bg-gradient-to-br from-[#78A8FB] to-[#C4D7F8] min-h-[100vh] p-[2rem] relative">
-      <div className="flex justify-between items-center">
-        <h1 className="text-white text-3xl font-bold">CodeAlgo</h1>
-        <div>
-          <span className="font-semibold">Already have an account?</span>
-          <Link href="/login">
-            <span className="cursor-pointer ml-3 font-semibold text-[#2073FA]">Log in</span>
-          </Link>
-        </div>
-      </div>
-      <div
-        className={`flex p-[4rem] items-center justify-center ${
-          currentStepIndex === 8 && 'mb-[5.7rem]'
-        }`}
-      >
-        <div className="bg-white mr-[-2rem] w-[700px] px-[4rem] py-[4rem] bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-20 rounded-[2.5rem]">
-          <form onSubmit={signUp}>
-            <div className="">{step}</div>
-            <div>
-              {currentStepIndex === 7 && (
-                <button
-                  className="block p-2 mt-6 text-center w-full text-white bg-[#2073FA] font-bold rounded-xl"
-                  type="button"
-                  onClick={() => goTo(4)}
-                >
-                  Add another student
-                </button>
-              )}
-              <button
-                className="block  h-[2.5rem] mt-6 text-center w-full text-white bg-[#2073FA] font-bold rounded-xl"
-                type="submit"
-              >
-                Continue
-              </button>
-              {currentStepIndex === 8 && (
-                <p
-                  onClick={() => {
-                    goTo(10);
-                  }}
-                  className="my-3 text-center text-[14px] cursor-pointer underline font-bold"
-                >
-                  I do not want to set parental controls
-                </p>
-              )}
-              {!isFirstStep && !isLastStep && currentStepIndex !== 7 && (
-                <button className="block text-center w-full mt-4" type="button" onClick={back}>
-                  back
-                </button>
-              )}
-              {isFirstStep && (
-                <button
-                  className="block  h-[2.5rem] mt-6 text-center w-full bg-neutral-100/70 font-semibold rounded-xl text-black"
-                  type="button"
-                  onClick={back}
-                >
-                  Sign Up with Google
-                </button>
-              )}
-              {isFirstStep && (
-                <button
-                  className="block  h-[2.5rem] mt-6 text-center w-full bg-neutral-100/70 font-semibold rounded-xl text-black"
-                  type="button"
-                  onClick={back}
-                >
-                  Sign Up with Facebook
-                </button>
-              )}
-              {isLastStep && (
-                <button className="block text-center underline w-full mt-4">
-                  Continue as student
-                </button>
-              )}
+   const signUp = async (e: ChangeEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      if (currentStepIndex === 2) {
+         const data = await dispatch(signUpUser());
+         // Set this to the local storage to know whether to auto-close page after verification
+         localStorage.setItem(ILocalStorageItems.parent_signup, JSON.stringify(true));
+         if (!data?.error?.message) {
+            setModalOpen(true);
+         }
+         // next();
+      } else if (currentStepIndex === 9) {
+         const data = await dispatch(addChild());
+         if (!data?.error?.message) {
+            router.push("/parents");
+         }
+      }
+      // else if (currentStepIndex === 10) {
+      //    const data = await dispatch(addChildFriend());
+      //    if (!data?.error) {
+      //       router.push("/parents");
+      //    }
+      // }
+      else if (currentStepIndex === 0) {
+         checkEmail(credentials?.email, next, dispatch);
+      } else {
+         next();
+      }
+   };
+
+   useEffect(() => {
+      dispatch(updateUser({ key: "accountType", value: "Parent" }));
+   }, []);
+
+   return (
+      <>
+         <AuthLayout>
+            <form onSubmit={signUp}>
+               <div className="">{step}</div>
+               <div>
+                  <div className="mt-4">
+                     <input
+                        type="checkbox"
+                        onChange={toggleCheck}
+                        checked={policyChecked}
+                        name=""
+                        className="inline-block scale-[120%] accent-mainColor"
+                        id="privacy"
+                        required={true}
+                     />
+                     <label htmlFor="privacy" className="ml-2 inline-block cursor-pointer hover:underline">
+                        <Link href={"/privacy-policy"}> I accept the terms and condition</Link>
+                     </label>
+                  </div>
+                  <button className="mt-6  block h-[2.5rem] w-full rounded-xl bg-orange-400 text-center font-bold text-white" type="submit">
+                     Continue
+                  </button>
+                  {!isFirstStep && (
+                     <button className="mt-4 block w-full text-center" type="button" onClick={back}>
+                        Back
+                     </button>
+                  )}
+                  {isFirstStep && <GoogleBtn />}
+               </div>
+            </form>
+         </AuthLayout>
+         {modalOpen && (
+            <div
+               className="fixed top-0 left-0 z-[4] flex min-h-screen w-[100vw] items-center justify-center bg-[rgba(0,0,0,.5)]"
+               data-testid="success-modal"
+            >
+               <div className="w-[90vw] max-w-[600px] rounded-md bg-white p-8 shadow-md">
+                  <div className="py-6">
+                     <span className="mb-2 flex w-full items-center justify-center text-center text-[70px] text-green-600">
+                        <FiCheckCircle />
+                     </span>
+                     <p className="text-center text-[20px]">
+                        An email verification link has been sent to your email address <span className="font-[800]">{credentials?.email}</span>
+                        <span className="mt-2 block font-bold">Please check your email and verify before proceeding</span>
+                     </p>
+                  </div>
+                  <button
+                     className="mx-auto block max-w-fit rounded-md bg-orange-400 px-6 py-3 font-bold text-white"
+                     onClick={async () => {
+                        const isNotVerified = localStorage.getItem(ILocalStorageItems.parent_signup);
+                        if (!isNotVerified) {
+                           const { data } = await dispatch(loginUser());
+                        }
+                        setModalOpen(false);
+                        router.push("/login/parent?redirect=add-student");
+                     }}
+                  >
+                     Got it!
+                  </button>
+               </div>
             </div>
-          </form>
-        </div>
-        <div className="ml-[-2rem]">
-          <Image
-            src="/assets/ComputerGraphic.png"
-            width="829.8"
-            height="520.2"
-            alt="computer graphic"
-          />
-        </div>
-      </div>
-      <div className="box-border text-[16px] text-white bg-[#2073FA] font-semibold flex justify-between w-full absolute left-0 bottom-0 py-3 px-10">
-        <p>© 2023 CodeAlgoAcademy. All rights reserved.</p>
-        <p className="left-0">Get help</p>
-      </div>
-    </div>
-  );
+         )}
+      </>
+   );
 }
