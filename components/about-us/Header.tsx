@@ -7,7 +7,7 @@ import CharactersArrangement from "../home/charactersArrangement";
 const Header = () => {
    return (
       <header className="">
-         <div className="mb-[5rem] flex h-screen w-full  flex-col bg-home1 bg-cover bg-left pt-[6rem] lg:mb-0 lg:pt-0">
+         {/*  <div className="mb-[5rem] flex h-screen w-full  flex-col bg-home1 bg-cover bg-left pt-[6rem] lg:mb-0 lg:pt-0">
             <div className="z-3 mx-auto flex w-full max-w-[1200px] flex-1 flex-col items-center justify-center  p-6 lg:flex-row">
                <div className="flex-1">
                   <Fade triggerOnce={true} direction={"up"} duration={1000}>
@@ -33,8 +33,8 @@ const Header = () => {
                   <img src="/assets/about-page-hero.png" className="block w-full object-cover" alt="" />
                </CharactersArrangement>
             </div>
-         </div>
-         <div className="space-y-5 py-10 text-center text-slate-600 sm:px-20 md:px-80">
+         </div> */}
+         <div className="mx-auto max-w-[1200px] space-y-5 py-10 text-center text-slate-600 sm:px-20 md:px-60">
             <Fade triggerOnce={true} cascade duration={1000} direction={"up"}>
                <p className="text-4xl font-semibold">Our Mission</p>
                <p className="">
@@ -50,7 +50,7 @@ const Header = () => {
                </p>
             </Fade>
          </div>
-         <img src="/assets/0002.png" alt="" className="w-full object-cover" />
+         {/* <img src="/assets/0002.png" alt="" className="w-full object-cover" /> */}
       </header>
    );
 };

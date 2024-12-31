@@ -1,5 +1,6 @@
 import { CustomButton } from "@/components/UI/Button";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { FC } from "react";
 import { BsBag, BsBagFill, BsPinMapFill } from "react-icons/bs";
 
 const CodeToSuccess = () => {
@@ -8,39 +9,47 @@ const CodeToSuccess = () => {
          <h1 className="text-center font-tiltWarp text-[2.1rem] max-md:text-[1.5rem]">CODE YOUR WAY TO SUCCESS</h1>
 
          <div className="mt-16 flex items-center justify-center gap-8 max-md:flex-col">
-            <SingleJob />
-            <SingleJob />
+            <SingleJob jobLink="https://prox.org/students" location="Kansas City, MO" title="Software Engineer Internship" company="ProX" />
          </div>
       </section>
    );
 };
 
-const SingleJob = () => {
+interface JobProps {
+   title: string;
+   company: string;
+   location: string;
+   jobLink: string;
+}
+
+const SingleJob: FC<JobProps> = ({ title, company, location, jobLink }) => {
+   const { push } = useRouter();
    return (
       <div className="max-w-[260px] rounded-xl border p-6">
          <div className="mx-auto max-w-fit rounded-xl bg-gray-300 p-2 text-[.8rem]">
-            <p className="text-center font-tiltWarp font-bold">
+            <p className="text-center font-thabit font-bold">
                50 Hours of CodeAlgo <br /> Experience
             </p>
          </div>
 
-         <p className="mt-4 text-center font-tiltWarp text-[.8rem] font-bold">Software Engineer Internship WeCode Kansas City, MO</p>
+         <p className="mt-4 text-center font-thabit text-[.8rem] font-bold">{title}</p>
 
          <div className="mt-5 flex items-center justify-center gap-4">
-            <p className="flex items-center gap-2 font-tiltWarp text-[.8rem]">
+            <p className="flex items-center gap-2 font-thabit text-[.8rem]">
                <span>
                   <BsBagFill className="text-gray-500" />
                </span>
-               WeCode
+               {company}
             </p>
-            <p className="flex items-center gap-2 font-tiltWarp text-[.8rem]">
+            <p className="flex items-center gap-2 font-thabit text-[.8rem]">
                <span>
                   <BsPinMapFill className="text-gray-500" />
                </span>
-               Kansas City, MO
+               {location}
             </p>
          </div>
-         <CustomButton variant="filled" className="mt-4 max-w-[250px] text-mainBlack">
+
+         <CustomButton onClick={() => push(jobLink)} variant="filled" className="mx-auto mt-4 text-mainBlack">
             {"View Salary & More Info"}
          </CustomButton>
       </div>

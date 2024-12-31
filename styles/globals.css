@@ -49,14 +49,16 @@ body {
    @apply !bg-mainPink !text-mainBlack;
 }
 
-.invert-colors,
-.invert-colors * {
+.invert-colors {
    filter: invert(100) !important;
 }
 
-.dark-contrast,
-.dark-contrast * {
+.dark-contrast {
    filter: contrast(100) !important;
+}
+
+.invert-colors.dark-contrast {
+   filter: invert(100) contrast(100) !important;
 }
 
 .bigger-text {
