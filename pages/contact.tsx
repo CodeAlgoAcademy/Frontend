@@ -16,19 +16,19 @@ const Contact = () => {
             <Banner />
 
             <div className="mx-auto max-w-[1200px] p-6">
-               <h1 className="text-center text-[2.1rem] max-md:text-[1.5rem]">We are here to help!</h1>
+               <h1 className="text-center font-thabitBold text-[2.1rem] max-md:text-[1.5rem]">We are here to help!</h1>
 
                <div className="mt-28 flex items-start gap-8 max-md:flex-col">
                   <div className="flex-1">
                      <ul className="space-y-8">
-                        <li className="flex items-center gap-3">
+                        <li className="flex items-center gap-3 font-thabitBold">
                            <span>
                               <BiMapPin className="text-mainBlack" size={30} />
                            </span>
                            Kansas City, MO, USA
                         </li>
 
-                        <li className="flex items-center gap-3">
+                        <li className="flex items-center gap-3 font-thabitBold">
                            <span>
                               <BiEnvelopeOpen className="text-mainBlack" size={30} />
                            </span>
@@ -55,19 +55,19 @@ const Contact = () => {
                   </div>
 
                   <div className="relative flex-1">
-                     <img src={"/assets/0013_1.png"} className="absolute -top-[100px] left-[30px] z-[-1] w-[150px] max-md:hidden" />
+                     <img src={"/assets/0013_1.png"} className="absolute -top-[100px] left-[30px] z-[1] w-[150px] max-md:hidden" />
 
-                     <form className="z-[2]">
+                     <form className="relative z-[2]">
                         <div className="flex items-center gap-2">
                            <div className="mb-2 flex-1">
-                              <label htmlFor="" className="mb-1 block text-[.85rem]">
+                              <label htmlFor="" className="mb-1 block font-thabitBold text-[.85rem]">
                                  First Name
                               </label>
                               <input required type="text" className="w-full rounded-md border-[1.5px] p-2 outline-none focus:border-mainPink" />
                            </div>
 
                            <div className="mb-2 flex-1">
-                              <label htmlFor="" className="mb-1 block text-[.85rem]">
+                              <label htmlFor="" className="mb-1 block font-thabitBold text-[.85rem]">
                                  Last Name
                               </label>
                               <input required type="text" className="w-full rounded-md border-[1.5px] p-2 outline-none focus:border-mainPink" />
@@ -75,14 +75,14 @@ const Contact = () => {
                         </div>
 
                         <div className="mb-2">
-                           <label htmlFor="" className="mb-1 block text-[.85rem]">
+                           <label htmlFor="" className="mb-1 block font-thabitBold text-[.85rem]">
                               Email
                            </label>
                            <input required type="email" className="w-full rounded-md border-[1.5px] p-2 outline-none focus:border-mainPink" />
                         </div>
 
                         <div className="mb-2">
-                           <label htmlFor="" className="mb-1 block text-[.85rem]">
+                           <label htmlFor="" className="mb-1 block font-thabitBold text-[.85rem]">
                               Message
                            </label>
                            <textarea
@@ -90,7 +90,7 @@ const Contact = () => {
                               className="h-[150px] w-full resize-none rounded-md border-[1.5px] p-2 outline-none focus:border-mainPink"
                            />{" "}
                         </div>
-                        <CustomButton variant="filled" className="ml-auto min-w-[120px] justify-center text-center">
+                        <CustomButton variant="filled" className="ml-auto min-w-[120px] justify-center text-center font-thabitBold">
                            Send
                         </CustomButton>
                      </form>

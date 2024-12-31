@@ -3,7 +3,7 @@ import React from "react";
 
 const AsSeenIs = () => {
    return (
-      <div className="mx-auto mt-16 max-w-[1200px] px-6 pb-12">
+      <div className="mx-auto mt-10 max-w-[1200px] px-6 pb-12">
          <h1 className="text-center font-tiltWarp text-[2.1rem] max-md:text-[1.5rem]">AS SEEN IN</h1>
 
          <div className="mx-auto mt-12 max-w-[1200px]">

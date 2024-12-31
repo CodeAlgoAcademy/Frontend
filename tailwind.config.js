@@ -30,6 +30,7 @@ module.exports = {
          fontFamily: {
             tiltWarp: ["TiltWarp"],
             thabit: ["Thabit"],
+            thabitBold: ["ThabitBold"],
          },
       },
    },

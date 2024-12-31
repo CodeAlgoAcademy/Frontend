@@ -1,13 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import { BsTwitter, BsLinkedin, BsFacebook, BsInstagram } from "react-icons/bs";
-
-const socials = [
-   { link: "https://twitter.com/stcodealgo", icon: <BsTwitter /> },
-   { link: "https://linkedin.com/company/codealgo", icon: <BsLinkedin /> },
-   { link: "https://facebook.com/stcodealgo", icon: <BsFacebook /> },
-   { link: "https://instagram.com/stcodealgo", icon: <BsInstagram /> },
-];
+import { socials } from "./new-home/footer";
 
 const Footer = () => {
    return (

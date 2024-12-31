@@ -5,7 +5,7 @@ import { CustomButton } from "@/components/UI/Button";
 import { useMediaQuery } from "@mui/material";
 import Image from "next/image";
 import React, { FC } from "react";
-import { FiArrowRight } from "react-icons/fi"; 
+import { FiArrowRight } from "react-icons/fi";
 
 const Pricing = () => {
    return (
@@ -25,8 +25,8 @@ const Pricing = () => {
             </div>
          </section>
 
-         <div className="mx-auto mt-12 max-w-[1200px]">
-            <div className="w-full bg-gray-300 p-7 md:rounded-[2rem] md:p-20">
+         <div className="mx-auto mt-12 mb-12 max-w-[1200px]">
+            <div className="w-full bg-[#D9D9D9]/50 p-7 md:rounded-[2rem] md:p-20">
                <h1 className="text-center text-[1.5rem]">Institution Inquiry</h1>
                <p className="mt-2 text-center text-[1.1rem]">
                   Organization, School, and District bulk prices vary with bigger savings on larger orders.
@@ -41,7 +41,7 @@ const Pricing = () => {
                      <div className="w-full flex-1">
                         <input
                            required
-                           className="w-full rounded-md border-[1.5px] border-[#F4F4F4] bg-[#f4f4f4] p-2 outline-none focus:border-mainPink"
+                           className="w-full rounded-md border-[1.5px] border-[#D9D9D9] bg-[#D9D9D9] p-2 outline-none focus:border-mainPink"
                         />
                      </div>
                   </div>
@@ -54,7 +54,7 @@ const Pricing = () => {
                      <div className="w-full flex-1">
                         <input
                            required
-                           className="w-full rounded-md border-[1.5px] border-[#F4F4F4] bg-[#f4f4f4] p-2 outline-none focus:border-mainPink"
+                           className="w-full rounded-md border-[1.5px] border-[#D9D9D9] bg-[#D9D9D9] p-2 outline-none focus:border-mainPink"
                         />
                      </div>
                   </div>
@@ -67,7 +67,7 @@ const Pricing = () => {
                      <div className="w-full flex-1">
                         <input
                            required
-                           className="w-full rounded-md border-[1.5px] border-[#F4F4F4] bg-[#f4f4f4] p-2 outline-none focus:border-mainPink"
+                           className="w-full rounded-md border-[1.5px] border-[#D9D9D9] bg-[#D9D9D9] p-2 outline-none focus:border-mainPink"
                         />
                      </div>
                   </div>
@@ -80,7 +80,7 @@ const Pricing = () => {
                      <div className="w-full flex-1">
                         <input
                            required
-                           className="w-full rounded-md border-[1.5px] border-[#F4F4F4] bg-[#f4f4f4] p-2 outline-none focus:border-mainPink"
+                           className="w-full rounded-md border-[1.5px] border-[#D9D9D9] bg-[#D9D9D9] p-2 outline-none focus:border-mainPink"
                         />
                      </div>
                   </div>
@@ -93,7 +93,7 @@ const Pricing = () => {
                      <div className="w-full flex-1">
                         <input
                            required
-                           className="w-full rounded-md border-[1.5px] border-[#F4F4F4] bg-[#f4f4f4] p-2 outline-none focus:border-mainPink"
+                           className="w-full rounded-md border-[1.5px] border-[#D9D9D9] bg-[#D9D9D9] p-2 outline-none focus:border-mainPink"
                         />
                      </div>
                   </div>
@@ -106,12 +106,16 @@ const Pricing = () => {
                      <div className="w-full flex-1">
                         <input
                            required
-                           className="w-full rounded-md border-[1.5px] border-[#F4F4F4] bg-[#f4f4f4] p-2 outline-none focus:border-mainPink"
+                           className="w-full rounded-md border-[1.5px] border-[#D9D9D9] bg-[#D9D9D9] p-2 outline-none focus:border-mainPink"
                         />
                      </div>
                   </div>
 
-                  <CustomButton size="medium" variant="filled" className="mx-auto !mt-10 justify-center max-md:w-full md:min-w-[250px]">
+                  <CustomButton
+                     size="medium"
+                     variant="filled"
+                     className="mx-auto !mt-10 justify-center font-thabitBold text-[1.1rem] max-md:w-full md:min-w-[250px]"
+                  >
                      Get a quote
                   </CustomButton>
                </form>
