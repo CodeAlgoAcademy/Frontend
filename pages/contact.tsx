@@ -1,4 +1,5 @@
-import Footer from "@/components/home/new-home/footer";
+import Banner from "@/components/home/new-home/banner";
+import Footer, { socials } from "@/components/home/new-home/footer";
 import Navbar from "@/components/navbar/home/Navbar";
 import { CustomButton } from "@/components/UI/Button";
 import Image from "next/image";
@@ -11,8 +12,8 @@ const Contact = () => {
       <>
          <Navbar />
 
-         <div className="relative overflow-x-hidden font-thabit">
-            <Image src={"/assets/home-banner.png"} width={1500} height={400} />
+         <div className="relative overflow-x-hidden bg-white font-thabit">
+            <Banner />
 
             <div className="mx-auto max-w-[1200px] p-6">
                <h1 className="text-center text-[2.1rem] max-md:text-[1.5rem]">We are here to help!</h1>
@@ -41,11 +42,13 @@ const Contact = () => {
                               <TbThumbUp className="text-mainBlack" size={30} />
                            </span>
                            <div className="flex items-end gap-2">
-                              <BsYoutube className="text-black" size={15} />
-                              <BsLinkedin className="text-black" size={15} />
-                              <BsFacebook className="text-black" size={15} />
-                              <BsInstagram className="text-black" size={15} />
-                              <BsTwitter className="text-black" size={15} />
+                              {socials.map((social, index) => {
+                                 return (
+                                    <a href={social.link} target="_blank" rel="noopener noreferrer" key={index} className="text-[15px]">
+                                       {social.icon}
+                                    </a>
+                                 );
+                              })}
                            </div>
                         </li>
                      </ul>

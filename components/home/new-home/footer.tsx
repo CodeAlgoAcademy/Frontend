@@ -15,8 +15,8 @@ const links = [
             href: "",
          },
          {
-            title: "Students Internships",
-            href: "/student-internships",
+            title: "Corporate Partnership",
+            href: "https://forms.monday.com/forms/ef8bc548d5f5846d9f5c23baa615b924?r=use1",
          },
          {
             title: "Professional Development",
@@ -42,7 +42,7 @@ const links = [
          },
          {
             title: "Getting Set Up",
-            href: "",
+            href: "/signup",
          },
       ],
    },
@@ -88,9 +88,16 @@ const links = [
    },
 ];
 
+export const socials = [
+   { link: "https://twitter.com/stcodealgo", icon: <BsTwitter /> },
+   { link: "https://linkedin.com/company/codealgo", icon: <BsLinkedin /> },
+   { link: "https://facebook.com/stcodealgo", icon: <BsFacebook /> },
+   { link: "https://instagram.com/stcodealgo", icon: <BsInstagram /> },
+];
+
 const Footer = () => {
    return (
-      <footer className="mt-10 min-h-[150px] bg-mainBlack p-12 font-thabit text-white max-md:px-6">
+      <footer className="min-h-[150px] bg-mainBlack p-12 font-thabit text-white max-md:px-6">
          <div className="grid grid-cols-1 gap-8 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {links.map((link, index) => {
                return (
@@ -113,25 +120,19 @@ const Footer = () => {
 
          <div className="mt-20 flex items-center justify-between gap-4 max-md:flex-col-reverse max-md:items-start">
             <div className="flex items-end gap-2">
-               <span className="grid h-[30px] w-[30px] place-content-center rounded-full bg-white">
-                  <BsYoutube className="text-black" size={17} />
-               </span>
-
-               <span className="grid h-[30px] w-[30px] place-content-center rounded-full bg-white">
-                  <BsLinkedin className="text-black" size={17} />
-               </span>
-
-               <span className="grid h-[30px] w-[30px] place-content-center rounded-full bg-white">
-                  <BsFacebook className="text-black" size={17} />
-               </span>
-
-               <span className="grid h-[30px] w-[30px] place-content-center rounded-full bg-white">
-                  <BsInstagram className="text-black" size={17} />
-               </span>
-
-               <span className="grid h-[30px] w-[30px] place-content-center rounded-full bg-white">
-                  <BsTwitter className="text-black" size={17} />
-               </span>
+               {socials.map((social, index) => {
+                  return (
+                     <a
+                        href={social.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-white text-[17px] text-black"
+                        key={index}
+                     >
+                        {social.icon}
+                     </a>
+                  );
+               })}
             </div>
 
             <p className="text-[.9rem]">Copyright &copy; 2024 CodeAlgo</p>

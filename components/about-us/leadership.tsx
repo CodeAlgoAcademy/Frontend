@@ -23,15 +23,15 @@ export default function Leadership() {
    const changeLeader = (index: number) => setLeader(leaders.find((_, idx) => idx === index) as ILeader);
 
    return (
-      <section className="relative mx-auto w-[92vw] max-w-5xl pt-20 pb-0">
-         <h2 className="z-[5] mb-6 text-center text-4xl font-bold">Meet Our Leaders</h2>
+      <section className="relative mx-auto mb-20 w-[92vw] max-w-5xl pb-0">
+         <h2 className="z-[5] mb-6 text-center text-4xl font-bold text-slate-600">Meet Our Leaders</h2>
          <div className="mb-4 flex flex-wrap items-center justify-end gap-2">
             {leaders?.map(({ img, name }, index) => {
                return (
                   <img
                      key={index}
                      src={img}
-                     className={`h-[40px] w-[40px] cursor-pointer rounded-full border-2 object-cover object-center hover:border-orange-400 ${
+                     className={`h-[40px] w-[40px] cursor-pointer rounded-full border-2 object-cover object-center hover:border-mainPink ${
                         leaders?.[index]?.name === leader.name && "border-mainPink"
                      }`}
                      onClick={() => changeLeader(index)}

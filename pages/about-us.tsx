@@ -10,15 +10,17 @@ import { FiTarget } from "react-icons/fi";
 import { GiTargetArrows } from "react-icons/gi";
 import { CodeBlock, CopyBlock, dracula, androidstudio } from "react-code-blocks";
 import Leadership from "../components/about-us/leadership";
+import Banner from "@/components/home/new-home/banner";
 
 const AboutUs = () => {
    return (
       <>
          <section className="min-h-screen w-full bg-[#FFFFFF] pb-6 font-thabit">
             <Navbar />
-            <div className="">
+            <div>
+               <Banner />
                <Header />
-               <Section
+               {/* <Section
                   extraImage={undefined}
                   extraImagePosition={undefined}
                   hasButton={true}
@@ -53,9 +55,9 @@ const AboutUs = () => {
                   image="/assets/children.jpeg"
                   extraImage="/assets/0013_2.png"
                   extraImagePosition="top-[15%] right-[100%] translate-x-[30%] z-[-1]"
-               />
+               /> */}
                <Leadership />
-               <Testimonials />
+               {/* <Testimonials /> */}
                <AOC />
             </div>
          </section>

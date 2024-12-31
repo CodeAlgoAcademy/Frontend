@@ -2,7 +2,7 @@ import React, { FC, ReactElement } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import Footer from "../home/Footer";
+import Footer from "../home/new-home/footer";
 
 type AuthLayoutProps = {
    children: ReactElement;
@@ -23,14 +23,14 @@ const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
                      <>
                         <span className="hidden font-semibold sm:block">New here?</span>
                         <Link href="/signup">
-                           <span className="ml-3 cursor-pointer font-semibold text-mainColor">Register</span>
+                           <span className="ml-3 cursor-pointer font-semibold text-mainPink">Register</span>
                         </Link>
                      </>
                   ) : (
                      <>
                         <span className="hidden font-semibold sm:block">Already have an account?</span>
                         <Link href="/login">
-                           <span className="ml-3 cursor-pointer font-semibold text-mainColor">Log in</span>
+                           <span className="ml-3 cursor-pointer font-semibold text-mainPink">Log in</span>
                         </Link>
                      </>
                   )}
@@ -41,8 +41,8 @@ const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
                   {children}
                </div>
             </div>
-            <Footer />
          </div>
+         <Footer />
       </>
    );
 };
