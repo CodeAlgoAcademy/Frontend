@@ -5,7 +5,7 @@ import { CustomButton } from "@/components/UI/Button";
 import { useMediaQuery } from "@mui/material";
 import Image from "next/image";
 import React, { FC } from "react";
-import { FiArrowRight } from "react-icons/fi";
+import { FiArrowRight } from "react-icons/fi"; 
 
 const Pricing = () => {
    return (
