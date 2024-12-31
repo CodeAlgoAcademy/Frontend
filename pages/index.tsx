@@ -12,7 +12,7 @@ import Footer from "@/components/home/new-home/footer";
 
 const Home: NextPage = () => {
    return (
-      <div className="relative overflow-x-hidden" suppressHydrationWarning>
+      <div className="relative overflow-x-hidden bg-white" suppressHydrationWarning>
          <Navbar />
          <Hero />
          <WhatWeBuilt />

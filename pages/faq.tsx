@@ -1,3 +1,4 @@
+import Banner from "@/components/home/new-home/banner";
 import Footer from "@/components/home/new-home/footer";
 import Navbar from "@/components/navbar/home/Navbar";
 import Image from "next/image";
@@ -7,9 +8,9 @@ import { cn } from "utils";
 
 const FAQ = () => {
    return (
-      <div className="relative overflow-x-hidden font-thabit">
+      <div className="relative overflow-x-hidden bg-white font-thabit">
          <Navbar />
-         <Image src={"/assets/home-banner.png"} width={1500} height={400} />
+         <Banner />
 
          <div className="mx-auto mt-5 max-w-[1200px] p-6">
             <h1 className="text-center  text-[2.1rem]">CodeAlgo FAQ</h1>
@@ -17,47 +18,110 @@ const FAQ = () => {
             <section className="mx-auto mt-10 max-w-[700px] space-y-3">
                <h1 className="!mb-6 text-[1.5rem] font-bold">Account</h1>
 
-               <SingleAccordion question="How do I create an account?" />
-               <SingleAccordion question="What information is required to create an account?" />
-               <SingleAccordion question="Can I create an account for my child?" />
-               <SingleAccordion question="How do I log in to my account?" />
-               <SingleAccordion question="What should I do if I forget my password?" />
+               <SingleAccordion
+                  question="How do I create an account?"
+                  answer={`To create an account, visit the CodeAlgo Academy website, click on "Sign Up," and follow the prompts to complete the registration process.`}
+               />
+               <SingleAccordion
+                  question="What information is required to create an account?"
+                  answer={`You will need to provide a valid email address and some basic details to complete the registration form. Once submitted, your account will be activated.`}
+               />
+               <SingleAccordion
+                  question="Can I create an account for my child?"
+                  answer={`Yes, parents can create accounts for their children. This feature ensures a secure and enjoyable learning experience while allowing parents to manage and monitor their child’s progress.`}
+               />
+               <SingleAccordion
+                  question="How do I log in to my account?"
+                  answer={`Visit the CodeAlgo Academy homepage, click on "Log In," and enter your registered email address and password to access your account.`}
+               />
+               <SingleAccordion
+                  question="What should I do if I forget my password?"
+                  answer={`If you forget your password, select the "Forgot Password?" option on the login page. Follow the instructions to reset your password and regain access to your account.`}
+               />
             </section>
 
             <section className="mx-auto mt-10 max-w-[700px] space-y-3">
                <h1 className="!mb-6 text-[1.5rem] font-bold">Features</h1>
 
-               <SingleAccordion question="How do I get started?" />
-               <SingleAccordion question="What devices can I use to play?" />
-               <SingleAccordion question="How long does it take to learn coding concepts?" />
-               <SingleAccordion question="Can I save my progress and resume later?" />
-               <SingleAccordion question="Are there different difficulty levels?" />
-               <SingleAccordion question="What kind of feedback and support is available?" />
-               <SingleAccordion question="How do I track my child's progress?   " />
+               <SingleAccordion
+                  question="How do I get started?"
+                  answer="Getting started with CodeAlgo Academy is as easy as signing up on the website. Create an account, and you’ll unlock access to engaging coding lessons. Dive into the platform and start exploring its 3D game-based learning experience right away"
+               />
+               <SingleAccordion
+                  question="What devices can I use to play?"
+                  answer="CodeAlgo Academy is designed for convenience! You can access the platform through any device with a modern web browser, such as desktops, laptops, tablets, or even smartphones. Start learning wherever you are."
+               />
+               <SingleAccordion
+                  question="How long does it take to learn coding concepts?"
+                  answer="The platform is built to teach coding concepts interactively, letting learners absorb knowledge at their own pace. With its engaging 3D approach, learning becomes intuitive and fun, helping you master coding faster than traditional methods"
+               />
+               <SingleAccordion
+                  question="Can I save my progress and resume later?"
+                  answer="Yes, CodeAlgo Academy ensures that your progress is saved! You can log out and resume right where you left off, making it easy to learn at your own pace."
+               />
+               <SingleAccordion
+                  question="Are there different difficulty levels?"
+                  answer="Absolutely! The platform is crafted to cater to learners of all levels. Whether you’re a beginner or looking for more advanced challenges, CodeAlgo Academy adjusts to your skill level to keep you engaged."
+               />
+               <SingleAccordion
+                  question="What kind of feedback and support is available?"
+                  answer="Feedback is built right into the platform! You’ll receive interactive responses as you progress through activities, helping you learn and improve. If you have questions or need assistance, their support team is ready to help."
+               />
+               <SingleAccordion
+                  question="How do I track my child's progress?"
+                  answer="CodeAlgo Academy provides a parent-friendly dashboard that keeps you informed about your child’s learning journey. Check their progress, achievements, and areas they’re mastering—all in one place."
+               />
             </section>
 
             <section className="mx-auto mt-10 max-w-[700px] space-y-3">
                <h1 className="!mb-6 text-[1.5rem] font-bold">General Pricing</h1>
 
-               <SingleAccordion question="How much does a subscription cost?" />
-               <SingleAccordion question="What are the different subscription plans available?" />
-               <SingleAccordion question="Is there a free trial?" />
-               <SingleAccordion question="Can I cancel my subscription at any time?" />
+               <SingleAccordion
+                  question="How much does a subscription cost?"
+                  answer="CodeAlgo Academy provides subscription options designed to accommodate different budgets. Visit their website for up-to-date pricing information and select the plan that best meets your requirements."
+               />
+               <SingleAccordion
+                  question="What are the different subscription plans available?"
+                  answer="CodeAlgo Academy offers a range of subscription plans, including monthly and annual options. These plans are tailored to suit various preferences and provide flexibility. For detailed information, please explore the subscription section on their website."
+               />
+               <SingleAccordion
+                  question="Is there a free trial?"
+                  answer="Yes, a free trial is available, allowing you to explore the platform and evaluate its suitability for your or your child’s needs. This trial offers an excellent opportunity to experience CodeAlgo Academy before committing to a subscription."
+               />
+               <SingleAccordion
+                  question="Can I cancel my subscription at any time?"
+                  answer="Yes, subscriptions can be canceled at any time. You retain full control over your subscription, ensuring a flexible and user-friendly experience."
+               />
             </section>
 
             <section className="mx-auto mt-10 max-w-[700px] space-y-3">
                <h1 className="!mb-6 text-[1.5rem] font-bold">Feedback</h1>
 
-               <SingleAccordion question="How can I provide feedback or report a bug?" />
-               <SingleAccordion question="How does the platform use user feedback?" />
+               <SingleAccordion
+                  question="How can I provide feedback or report a bug?"
+                  answer="You can provide feedback or report a bug by emailing the CodeAlgo Academy support team at support@codealgoacademy.com."
+               />
+               <SingleAccordion
+                  question="How does the platform use user feedback?"
+                  answer="CodeAlgo Academy uses user feedback to improve the platform and its courses."
+               />
             </section>
 
             <section className="mx-auto mt-10 max-w-[700px] space-y-3">
                <h1 className="!mb-6 text-[1.5rem] font-bold">Legal & Compliance:</h1>
 
-               <SingleAccordion question="What is your privacy policy?" />
-               <SingleAccordion question="What are your terms of service?" />
-               <SingleAccordion question="How do you comply with child safety regulations?" />
+               <SingleAccordion
+                  question="What is your privacy policy?"
+                  answer="CodeAlgo Academy is dedicated to safeguarding your privacy. Their privacy policy details the collection, use, and protection of personal information, ensuring compliance with industry standards. You can access the complete privacy policy directly on their website."
+               />
+               <SingleAccordion
+                  question="What are your terms of service?"
+                  answer="The terms of service outline the guidelines and conditions for using the CodeAlgo Academy platform. These terms are designed to provide clarity and set expectations for users. For a comprehensive overview, visit the terms of service section on their website."
+               />
+               <SingleAccordion
+                  question="How do you comply with child safety regulations?"
+                  answer=" CodeAlgo Academy prioritizes the safety and security of children on its platform. They strictly adhere to child safety regulations, including robust parental controls and secure systems to ensure a safe learning environment. Detailed information on compliance practices can be found on their website."
+               />
             </section>
          </div>
 
@@ -95,12 +159,7 @@ const SingleAccordion: FC<AccordionProps> = ({ question, answer }) => {
 
          <div className={cn("overflow-hidden transition-all duration-300")} style={{ height: isOpen ? height : 0 }}>
             <p ref={ref as MutableRefObject<HTMLParagraphElement>} className="p-3 text-[.8rem]">
-               Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem mollitia sit, maxime a explicabo aperiam rem commodi reiciendis
-               accusamus! Soluta magni placeat voluptates nemo porro explicabo nesciunt autem praesentium possimus fugiat, numquam ut, eaque
-               recusandae alias quis obcaecati debitis qui rem, unde odio eius. Veniam quas fugit culpa dicta autem, voluptatem pariatur repudiandae,
-               aliquid beatae qui possimus id vel laudantium architecto labore, incidunt obcaecati facere excepturi quis cumque ipsa! Atque iure
-               optio, fuga molestias eaque consequatur, sapiente commodi, omnis architecto itaque ipsum. Nemo voluptates blanditiis error qui cum
-               molestias illum! Numquam eos unde cumque est quisquam! Maxime blanditiis recusandae sit?
+               {answer}
             </p>
          </div>
       </article>

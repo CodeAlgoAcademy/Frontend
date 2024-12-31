@@ -39,7 +39,7 @@ const AccessibilityMenu: FC<Props> = ({ onClose, open }) => {
          initial="hidden"
          animate={open ? "visible" : "hidden"}
          exit="hidden"
-         className="absolute top-[82px] left-0 z-[500] flex space-x-6"
+         className="absolute top-[82px] left-0 !z-[500] flex space-x-6"
       >
          <div className="min-w-[250px] bg-white p-6">
             <h1 className="text-[1.1rem]">Accessibility Menu</h1>

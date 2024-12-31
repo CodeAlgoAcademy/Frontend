@@ -23,9 +23,9 @@ const Navbar = () => {
       <nav className="bg-mainBlack px-2 py-4">
          <div className="mx-auto flex max-w-[1200px] items-center justify-between">
             <ul className="flex items-center gap-6">
-               <a href={"/"}>
+               <Link href={"/"}>
                   <img src={"/assets/landing/logo_white.png"} width={isMobile ? 70 : 100} height={isMobile ? 35 : 50} />
-               </a>
+               </Link>
 
                <div className="h-[30px] w-[3px] rounded-full bg-white/70"></div>
 
