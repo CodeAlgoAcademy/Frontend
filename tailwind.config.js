@@ -25,7 +25,7 @@ module.exports = {
             w500: "500px",
          },
          clipPath: {
-            wave: 'path("M0,0 Q50,100 100,0 T200,0")',
+            wave: "polygon(0 75%, 50% 100%, 100% 75%, 100% 100%, 0 100%)",
          },
          fontFamily: {
             tiltWarp: ["TiltWarp"],

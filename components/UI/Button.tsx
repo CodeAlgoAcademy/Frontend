@@ -16,7 +16,7 @@ const Button = ({ text, color }: { text: string; color: string }) => {
 
 export const AuthButton = (props: { text: string }) => {
    return (
-      <button className="mt-4  block h-[2.5rem] w-full rounded-xl bg-orange-400 text-center font-bold text-white" type="submit">
+      <button className="mt-4  block h-[2.5rem] w-full rounded-xl bg-mainPink text-center font-bold text-white" type="submit">
          {props.text}
       </button>
    );

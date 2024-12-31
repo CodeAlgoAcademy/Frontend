@@ -1,3 +1,4 @@
+import Banner from "@/components/home/new-home/banner";
 import Footer from "@/components/home/new-home/footer";
 import Navbar from "@/components/navbar/home/Navbar";
 import { CustomButton } from "@/components/UI/Button";
@@ -10,15 +11,15 @@ const Pricing = () => {
    return (
       <div className="relative overflow-x-hidden font-thabit">
          <Navbar />
-         <Image src={"/assets/home-banner.png"} width={1500} height={400} />
+         <Banner />
 
          <section className="mt-20 bg-mainBlack px-6 py-20">
             <div className="mx-auto max-w-[1200px]">
                <h1 className="text-center text-[1.5rem] font-bold text-white">Choose the plan that is right for you</h1>
 
                <div className="mt-12 flex justify-around gap-8 max-md:flex-col">
-                  <SinglePricing plan="Basic" amount="Free" />
-                  <SinglePricing plan="Parent & Family" amount="$259/yr" />
+                  <SinglePricing plan="Basic" amount="Free" benefits={["3 Python Units"]} />
+                  <SinglePricing plan="Parent & Family" amount="$259/yr" benefits={["Entire Curriculum", "Internship Opportunities"]} />
                   <SinglePricing plan="Institution" amount="Contact us" />
                </div>
             </div>
@@ -125,19 +126,29 @@ const Pricing = () => {
 interface SinglePricingProps {
    plan: string;
    amount: string;
+   benefits?: string[];
 }
 
-const SinglePricing: FC<SinglePricingProps> = ({ plan, amount }) => {
+const SinglePricing: FC<SinglePricingProps> = ({ plan, amount, benefits = [] }) => {
    const isMobile = useMediaQuery("(max-width:768px)");
 
    return (
-      <div className="flex flex-col items-center justify-center gap-2 font-bold">
-         <div className="mx-auto w-[120px] max-md:max-w-fit">
+      <div className="flex flex-col items-center justify-center gap-2 bg-white font-bold">
+         <div className="mx-auto w-[100px] max-md:max-w-fit">
             <Image src={"/assets/landing/logo_no_name.png"} width={isMobile ? 90 : 120} height={isMobile ? 40 : 30} />
          </div>
 
          <h2 className="mt-1 text-center text-[1.5rem] text-white max-md:text-[1.1rem] max-md:leading-[1]">{plan}</h2>
          <h1 className="my-1 text-center text-[1.8rem] text-white max-md:text-[1.1rem] max-md:leading-[1]">{amount}</h1>
+         <ul className="my-2 max-w-fit list-disc text-center">
+            {benefits.map((bnf, index) => {
+               return (
+                  <li className="mx-auto max-w-fit text-[.9rem] text-white" key={index}>
+                     {bnf}
+                  </li>
+               );
+            })}
+         </ul>
 
          <CustomButton icon={<FiArrowRight />} variant="filled" className="text-white">
             Get Started

@@ -73,10 +73,9 @@ const VoiceOfOurCommunity = () => {
 
    return (
       <div className="mx-auto mt-16 max-w-[1200px] px-6 pb-12">
-         <h1 className="text-center font-tiltWarp text-[2.1rem] max-md:text-[1.5rem]">THE VOICE OF OUR COMMUNITY</h1>
+         <h1 className="mb-8 text-center font-tiltWarp text-[2.1rem] max-md:text-[1.5rem]">THE VOICE OF OUR COMMUNITY</h1>
 
          <Swiper
-            className="mt-12"
             modules={[Navigation, Pagination, Scrollbar, A11y, EffectFlip]}
             spaceBetween={50}
             slidesPerView={isMobile ? 1 : 3}
@@ -91,7 +90,7 @@ const VoiceOfOurCommunity = () => {
          >
             {data.map((voice, index) => (
                <SwiperSlide key={index}>
-                  <div className="flex min-h-[450px] flex-col justify-between gap-6 rounded-xl border  bg-white p-8 !font-thabit text-[.85rem] shadow-lg max-md:min-h-fit max-md:p-4">
+                  <div className="flex min-h-[550px] flex-col justify-between gap-6 rounded-xl border  bg-white p-8 !font-thabit text-[.85rem] shadow-lg max-md:p-4">
                      <div dangerouslySetInnerHTML={{ __html: voice }} className="flex flex-col justify-between"></div>
                   </div>
                </SwiperSlide>

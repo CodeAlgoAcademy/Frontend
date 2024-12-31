@@ -29,6 +29,7 @@ const Hero = () => {
             controls={false}
             autoPlay={true}
             ref={videoRef as MutableRefObject<HTMLVideoElement>}
+            disablePictureInPicture
          ></video>
          <div className="absolute top-[40px] left-[50%] -translate-x-[50%]">
             <Image src={"/assets/landing/code-your-way-to-success.png"} width={800} height={50} />

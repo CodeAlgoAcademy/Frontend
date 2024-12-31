@@ -1,3 +1,4 @@
+import Banner from "@/components/home/new-home/banner";
 import Footer from "@/components/home/new-home/footer";
 import Navbar from "@/components/navbar/home/Navbar";
 import { CustomButton } from "@/components/UI/Button";
@@ -7,9 +8,9 @@ import { BsBagFill, BsPinMapFill } from "react-icons/bs";
 
 const StudentInternships = () => {
    return (
-      <div className="relative overflow-x-hidden">
+      <div className="relative overflow-x-hidden bg-white">
          <Navbar />
-         <Image src={"/assets/home-banner.png"} width={1500} height={400} />
+         <Banner />
 
          <div className="mx-auto max-w-[1100px] p-6">
             <h1 className="text-center  font-thabit text-[2.1rem] font-bold max-md:text-[1.5rem]">Show the world what you can do!</h1>

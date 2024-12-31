@@ -1,3 +1,4 @@
+import Banner from "@/components/home/new-home/banner";
 import Footer from "@/components/home/new-home/footer";
 import Navbar from "@/components/navbar/home/Navbar";
 import { CustomButton } from "@/components/UI/Button";
@@ -5,9 +6,9 @@ import Image from "next/image";
 import { FC } from "react";
 const DevForum = () => {
    return (
-      <div className="relative overflow-x-hidden font-thabit">
+      <div className="relative overflow-x-hidden bg-white font-thabit">
          <Navbar />
-         <Image src={"/assets/home-banner.png"} width={1500} height={400} />
+         <Banner />
 
          <div className="mx-auto mt-5 max-w-[1200px] p-6">
             <h1 className="text-center  text-[2.1rem] font-bold max-md:text-[1.5rem]">CodeAlgo Professional Development Program</h1>
