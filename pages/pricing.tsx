@@ -133,7 +133,7 @@ const SinglePricing: FC<SinglePricingProps> = ({ plan, amount, benefits = [] }) 
    const isMobile = useMediaQuery("(max-width:768px)");
 
    return (
-      <div className="flex flex-col items-center justify-center gap-2 bg-white font-bold">
+      <div className="flex flex-col items-center justify-center gap-2 font-bold">
          <div className="mx-auto w-[100px] max-md:max-w-fit">
             <Image src={"/assets/landing/logo_no_name.png"} width={isMobile ? 90 : 120} height={isMobile ? 40 : 30} />
          </div>

@@ -13,7 +13,7 @@ const GuidanceInCoding = () => {
          <Header
             body="The Guardian’s Guide to Nurturing Coding Skills in Kids"
             title={`Nurturing Youngsters`}
-            image="/assets/blog/guidance.JPG"
+            image="/assets/blog/guidance.jpg"
             date="December 2023"
          />
          <div className="mx-auto mb-14 mt-8 max-w-[1100px] rounded-md bg-white p-3 px-6 shadow-md">
