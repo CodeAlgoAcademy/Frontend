@@ -14,48 +14,48 @@ const data = [
         <br />
         <br />
         <div>
-        <p><b>Mikael Spears</b></p>
-        <p>Middle School Computer Science Teacher</p></div>
+        <p class="font-thabitBold"><b>Mikael Spears</b></p>
+        <p class="font-thabitBold">Middle School Computer Science Teacher</p></div>
     `,
    `
         <p>“As a parent, it is our responsibility to equip our children with the skills they need to succeed in the future. CodeAlgo provides an excellent platform for doing just that. The instructions were both easy to follow and challenging, making for an engaging learning experience. Watching my children proudly present the alarm system they built using the software was a joyous moment. I highly recommend CodeAlgo to other parents looking to give their children a competitive edge in today's world.”</p>
         <br />
         <br />
         <div>
-        <p><b>Shapree’ Marshall</b></p>
-        <p>Parent</p>
+        <p class="font-thabitBold"><b>Shapree’ Marshall</b></p>
+        <p class="font-thabitBold">Parent</p>
         </div>
     `,
    `
        <p> “He really enjoyed the freedom to build the obstacle course without hard time limits. I also enjoy the 4 top tables it allows for better social engagement for the kids. Great job. I wish his little brother could join. He is 6 years but he is very tech savvy with tablet and video game concepts.” </p>
        <br />
        <br />
-     <div>  <p><b>Arlene Byrd</b></p>
-       <p>Parent</p></div>
+     <div>  <p class="font-thabitBold"><b>Arlene Byrd</b></p>
+       <p class="font-thabitBold">Parent</p></div>
     `,
    `
         <p>“The teachers were great, Sedric and Triumfia are awesome teachers.”</p>
         <br />
         <br />
         <div>
-        <p><b>Turner Collins</b></p>
-        <p>Parent</p></div>
+        <p class="font-thabitBold"><b>Turner Collins</b></p>
+        <p class="font-thabitBold">Parent</p></div>
     `,
    `
         <p>“Great instruction, very well explained and instructors take the time to check in with kids that are falling behind and check their work.”</p>
         <br />
         <br />
         <div>
-        <p><b>Elsa</b></p>
-        <p>Parent</p></div>
+        <p class="font-thabitBold"><b>Elsa</b></p>
+        <p class="font-thabitBold">Parent</p></div>
     `,
    `
         <p>“It exposed my son to some concepts he is very interested in. Honestly, it was a perfect environment to get him started.”</p>
         <br />
         <br />
        <div>
-        <p><b>Nick Poffinbarger</b></p>
-        <p>Parent</p>
+        <p class="font-thabitBold"><b>Nick Poffinbarger</b></p>
+        <p class="font-thabitBold">Parent</p>
        </div>
     `,
    `
@@ -63,8 +63,8 @@ const data = [
         <br />
         <br />
         <div>
-        <p><b>Solomon Maximillen</b></p>
-        <p>Parent</p></div>
+        <p class="font-thabitBold"><b>Solomon Maximillen</b></p>
+        <p class="font-thabitBold">Parent</p></div>
     `,
 ];
 
@@ -90,7 +90,7 @@ const VoiceOfOurCommunity = () => {
          >
             {data.map((voice, index) => (
                <SwiperSlide key={index}>
-                  <div className="flex min-h-[550px] flex-col justify-between gap-6 rounded-xl border  bg-white p-8 !font-thabit text-[.85rem] shadow-lg max-md:p-4">
+                  <div className="flex min-h-[620px] flex-col justify-between gap-6 rounded-xl border  bg-white p-8 !font-thabit text-[.9rem] shadow-lg max-md:p-4">
                      <div dangerouslySetInnerHTML={{ __html: voice }} className="flex flex-col justify-between"></div>
                   </div>
                </SwiperSlide>

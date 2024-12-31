@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { BsFacebook, BsInstagram, BsLinkedin, BsTwitter, BsYoutube } from "react-icons/bs";
+import { BsFacebook, BsInstagram, BsLinkedin, BsTwitter, BsTwitterX, BsYoutube } from "react-icons/bs";
 
 const links = [
    {
@@ -8,11 +8,11 @@ const links = [
       sublinks: [
          {
             title: "Parents Resource",
-            href: "",
+            href: "/signup/parent",
          },
          {
             title: "Teachers Resource",
-            href: "",
+            href: "/signup/teacher",
          },
          {
             title: "Corporate Partnership",
@@ -89,7 +89,7 @@ const links = [
 ];
 
 export const socials = [
-   { link: "https://twitter.com/stcodealgo", icon: <BsTwitter /> },
+   { link: "https://twitter.com/stcodealgo", icon: <BsTwitterX /> },
    { link: "https://linkedin.com/company/codealgo", icon: <BsLinkedin /> },
    { link: "https://facebook.com/stcodealgo", icon: <BsFacebook /> },
    { link: "https://instagram.com/stcodealgo", icon: <BsInstagram /> },
@@ -102,7 +102,7 @@ const Footer = () => {
             {links.map((link, index) => {
                return (
                   <div key={index}>
-                     <p className="mb-2 font-tiltWarp text-[.9rem] md:mb-8">{link.header}</p>
+                     <p className="mb-2 font-thabitBold text-[.9rem] md:mb-8">{link.header}</p>
 
                      <ul className="space-y-2">
                         {link.sublinks.map((sublink, index) => {
