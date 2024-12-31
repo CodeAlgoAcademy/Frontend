@@ -84,7 +84,7 @@ export default function Teacher() {
                   </button>
                )}
                {!isFirstStep && (
-                  <button className="mt-4 block w-full text-center" type="button" onClick={back}>
+                  <button className="mt-4 block w-full text-center " type="button" onClick={back}>
                      Back
                   </button>
                )}
