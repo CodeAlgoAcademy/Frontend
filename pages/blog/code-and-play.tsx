@@ -12,7 +12,7 @@ const CoDesigResearchProgram = () => {
          <Header
             body="The Power of Gamification at CodeAlgo Academy"
             title={`Code and Play`}
-            image="/assets/blog/learining.JPG"
+            image="/assets/blog/learining.jpg"
             date="December 2023"
          />
          <div className="mx-auto mb-14 mt-8 max-w-[1100px] rounded-md bg-white p-3 px-6 shadow-md">

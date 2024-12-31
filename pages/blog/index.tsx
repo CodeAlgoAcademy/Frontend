@@ -13,7 +13,7 @@ const Press = () => {
          <Header
             body=""
             title={`2024 Startups to Watch: CodeAlgo Academy gamifies coding to build equity into new wave of software engineers`}
-            image="/assets/blog/2024-startups-to-watch.JPG"
+            image="/assets/blog/2024-startups-to-watch.jpg"
             date="January 2024"
             detailPage="/blog/2024-startups-to-watch"
          />
