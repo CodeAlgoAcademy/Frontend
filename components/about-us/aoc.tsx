@@ -5,7 +5,7 @@ const Footer = () => {
    return (
       <footer className="relative min-h-[260px] py-10">
          <div className="text-center">
-            <p className="font-thabitBold text-3xl">Getting started with CodeAlgo is easy</p>
+            <p className="text-3xl font-bold">Getting started with CodeAlgo is easy</p>
             <Link href={"/login"}>
                <button className="mt-8 w-[200px] rounded-lg bg-mainPink p-3 font-bold text-white">Sign in</button>
             </Link>

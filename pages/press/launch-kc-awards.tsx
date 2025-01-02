@@ -10,7 +10,7 @@ import React from "react";
 
 export default function LaunchKcAwards() {
    return (
-      <section className="press-page min-h-screen w-full bg-[#f7f8ff]">
+      <section className="press-page min-h-screen w-full bg-[#f7f8ff] font-thabit">
          <Navbar />
          <Header
             body=""

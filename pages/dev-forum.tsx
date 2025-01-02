@@ -11,7 +11,7 @@ const DevForum = () => {
          <Banner />
 
          <div className="mx-auto mt-5 max-w-[1200px] p-6">
-            <h1 className="text-center  font-thabitBold text-[2.1rem] font-bold max-md:text-[1.5rem]">CodeAlgo Professional Development Program</h1>
+            <h1 className="text-center  font-thabit text-[2.1rem] font-bold max-md:text-[1.5rem]">CodeAlgo Professional Development Program</h1>
 
             <p className="mx-auto mt-4 mb-12 max-w-[800px] text-center text-[1.4rem] font-light  max-md:text-[.87rem]">
                Our CodeAlgo Professional Development Program empowers educators with the skills and resources they need to elevate their teaching and
@@ -23,7 +23,7 @@ const DevForum = () => {
             </div>
 
             <div className="mt-16 rounded-2xl bg-[#f4f6f9] p-8 max-md:p-4">
-               <h1 className="text-center  font-thabitBold text-[2.1rem] font-bold max-md:text-[1.5rem]">About Our Program</h1>
+               <h1 className="text-center  font-thabit text-[2.1rem] font-bold max-md:text-[1.5rem]">About Our Program</h1>
 
                <p className="mx-auto mt-2 mb-12 max-w-[800px] text-center text-[1.4rem] font-light max-md:text-[.87rem]">
                   We offer in-person and virtual workshops to optimize the use of CodeAlgo.
@@ -63,7 +63,7 @@ interface ForumInfoProps {
 const SingleForumInfo: FC<ForumInfoProps> = ({ title, subtitle }) => {
    return (
       <div className="rounded-2xl bg-white px-4 py-6">
-         <h1 className="font-thabitBold text-[1.5rem] font-bold max-md:text-[1.2rem]">{title}</h1>
+         <h1 className="font-thabit text-[1.5rem] font-bold max-md:text-[1.2rem]">{title}</h1>
 
          <p className="mt-5 text-[.9rem]">{subtitle}</p>
       </div>

@@ -8,7 +8,7 @@ import React from "react";
 
 const CoDesigResearchProgram = () => {
    return (
-      <section className="min-h-screen w-full bg-[#f7f8ff]">
+      <section className="min-h-screen w-full bg-[#f7f8ff] font-thabit">
          <Navbar />
          <Header
             body="The Power of Vaccination for CodeAlgo Superstars and Their Families"

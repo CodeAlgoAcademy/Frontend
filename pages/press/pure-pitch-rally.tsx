@@ -9,7 +9,7 @@ import Footer from "@/components/home/new-home/footer";
 
 const PurePitchRally = () => {
    return (
-      <section className="press-page min-h-screen w-full bg-[#f7f8ff]">
+      <section className="press-page min-h-screen w-full bg-[#f7f8ff] font-thabit">
          <Navbar />
          <Header
             body="CodeAlgo Academy wins $13,000 from land sharks!"

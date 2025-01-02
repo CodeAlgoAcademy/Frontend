@@ -13,10 +13,10 @@ const FAQ = () => {
          <Banner />
 
          <div className="mx-auto mt-5 max-w-[1200px] p-6">
-            <h1 className="text-center  font-thabitBold text-[2.1rem] font-bold">CodeAlgo FAQ</h1>
+            <h1 className="text-center  font-thabit text-[2.1rem] font-bold">CodeAlgo FAQ</h1>
 
             <section className="mx-auto mt-10 max-w-[700px] space-y-3">
-               <h1 className="!mb-6 font-thabitBold text-[1.5rem] font-bold">Account</h1>
+               <h1 className="!mb-6 font-thabit text-[1.5rem] font-bold">Account</h1>
 
                <SingleAccordion
                   question="How do I create an account?"
@@ -41,7 +41,7 @@ const FAQ = () => {
             </section>
 
             <section className="mx-auto mt-10 max-w-[700px] space-y-3">
-               <h1 className="!mb-6 font-thabitBold text-[1.5rem] font-bold">Features</h1>
+               <h1 className="!mb-6 font-thabit text-[1.5rem] font-bold">Features</h1>
 
                <SingleAccordion
                   question="How do I get started?"
@@ -74,7 +74,7 @@ const FAQ = () => {
             </section>
 
             <section className="mx-auto mt-10 max-w-[700px] space-y-3">
-               <h1 className="!mb-6 font-thabitBold text-[1.5rem] font-bold">General Pricing</h1>
+               <h1 className="!mb-6 font-thabit text-[1.5rem] font-bold">General Pricing</h1>
 
                <SingleAccordion
                   question="How much does a subscription cost?"
@@ -95,7 +95,7 @@ const FAQ = () => {
             </section>
 
             <section className="mx-auto mt-10 max-w-[700px] space-y-3">
-               <h1 className="!mb-6 font-thabitBold text-[1.5rem] font-bold">Feedback</h1>
+               <h1 className="!mb-6 font-thabit text-[1.5rem] font-bold">Feedback</h1>
 
                <SingleAccordion
                   question="How can I provide feedback or report a bug?"
@@ -108,7 +108,7 @@ const FAQ = () => {
             </section>
 
             <section className="mx-auto mt-10 max-w-[700px] space-y-3">
-               <h1 className="!mb-6 font-thabitBold text-[1.5rem] font-bold">Legal & Compliance:</h1>
+               <h1 className="!mb-6 font-thabit text-[1.5rem] font-bold">Legal & Compliance:</h1>
 
                <SingleAccordion
                   question="What is your privacy policy?"
@@ -148,7 +148,7 @@ const SingleAccordion: FC<AccordionProps> = ({ question, answer }) => {
    return (
       <article>
          <header className="mb-5 flex items-center justify-between gap-3">
-            <h1 className="flex-1 font-thabitBold font-bold">{question}</h1>
+            <h1 className="flex-1 font-thabit font-bold">{question}</h1>
             <span
                onClick={() => setIsOpen(!isOpen)}
                className="flex h-[30px] w-[30px] max-w-[30px] flex-1 cursor-pointer items-center justify-center rounded-full bg-mainPink text-white"

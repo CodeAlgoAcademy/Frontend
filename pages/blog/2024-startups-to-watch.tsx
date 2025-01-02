@@ -10,7 +10,7 @@ import React from "react";
 
 export default function StartupsToWatch() {
    return (
-      <section className="press-page min-h-screen w-full bg-[#f7f8ff]">
+      <section className="press-page min-h-screen w-full bg-[#f7f8ff] font-thabit">
          <Navbar />
 
          <div className="mx-auto mb-14 mt-8 max-w-[1100px] rounded-md bg-white p-3 px-6 shadow-md">
