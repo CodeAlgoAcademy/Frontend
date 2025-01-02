@@ -64,7 +64,7 @@ const ChangePassword = () => {
                <div className={` relative z-20 mx-auto w-[90vw] max-w-[500px] rounded-md bg-white p-8 shadow-md`}>
                   <div className="flex items-center justify-between">
                      <span className="flex cursor-pointer items-center gap-x-4 text-[17px] font-bold">
-                        <i className="text-[22px] text-orange-400">
+                        <i className="text-[22px] text-mainPink">
                            <FaPaperPlane />
                         </i>{" "}
                         Password Reset

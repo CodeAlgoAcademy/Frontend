@@ -59,7 +59,7 @@ const VerifyWithKey = () => {
             {loading && !error && (
                <div className="flex flex-col items-center justify-center gap-y-4">
                   <div
-                     className="h-[50px] w-[50px] animate-spin rounded-full border-[6px] border-[#e6bfad] border-t-orange-400"
+                     className="h-[50px] w-[50px] animate-spin rounded-full border-[6px] border-[#e6bfad] border-t-mainPink"
                      data-testid="loader"
                   ></div>
                   <p className="text-[21px] font-bold" data-testid="loading-message">
@@ -92,7 +92,7 @@ const VerifyWithKey = () => {
                   <p className="mt-4 text-center text-[21px] font-bold">Unable to verify account</p>
                   <div className="mt-4 border-t-4 pt-4">
                      <button
-                        className=" mx-auto flex items-center gap-x-2 rounded-md bg-orange-400 py-3 px-5 text-white"
+                        className=" mx-auto flex items-center gap-x-2 rounded-md bg-mainPink py-3 px-5 text-white"
                         onClick={() => dispatch(resendEmail(email))}
                      >
                         <BiLoaderCircle /> Resend Link
