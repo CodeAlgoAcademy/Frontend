@@ -8,7 +8,7 @@ import React from "react";
 
 const GuidanceInCoding = () => {
    return (
-      <section className="min-h-screen w-full bg-[#f7f8ff]">
+      <section className="min-h-screen w-full bg-[#f7f8ff] font-thabit">
          <Navbar />
          <Header
             body="The Guardian’s Guide to Nurturing Coding Skills in Kids"

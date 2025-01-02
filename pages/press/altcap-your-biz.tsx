@@ -11,7 +11,7 @@ import ReactPlayer from "react-player";
 
 export default function Index() {
    return (
-      <section className="press-page min-h-screen w-full bg-[#f7f8ff]">
+      <section className="press-page min-h-screen w-full bg-[#f7f8ff] font-thabit">
          <Navbar />
          <div className="mx-auto mb-14 mt-8 max-w-[1100px] rounded-md bg-white p-3 px-6 shadow-md">
             <BlogTitle title="Big winner at GEWKC: AltCap Your Biz turns The Next Paige with $42K+ in prizes" date="November 17, 2023" />

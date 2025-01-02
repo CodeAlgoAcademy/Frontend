@@ -8,7 +8,7 @@ import React from "react";
 
 const CodeAlgoJoinsGoodieNation = () => {
    return (
-      <section className="min-h-screen w-full bg-[#f7f8ff]">
+      <section className="min-h-screen w-full bg-[#f7f8ff] font-thabit">
          <Navbar />
          <Header
             body="The Urgent Need for Diversity and Inclusion in Coding"

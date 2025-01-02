@@ -6,10 +6,9 @@ import Link from "next/link";
 import { posts } from "public/blog.data";
 import React from "react";
 
-
 const Press = () => {
    return (
-      <section className="min-h-screen w-full bg-[#ffffff]">
+      <section className="min-h-screen w-full bg-[#ffffff] font-thabit">
          <Navbar />
          <Header
             body=""

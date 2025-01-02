@@ -9,7 +9,7 @@ import Link from "@/components/press/Link";
 
 const CodeAlgoAtProX = () => {
    return (
-      <section className="press-page min-h-screen w-full bg-[#f7f8ff]">
+      <section className="press-page min-h-screen w-full bg-[#f7f8ff] font-thabit">
          <Navbar />
          <div className="mx-auto mb-14 mt-8 max-w-[1100px] rounded-md bg-white p-3 px-6 shadow-md">
             <BlogTitle title="CodeAlgo at ProX Hiring Fair – Connecting with Future Innovators!" date="October 7, 2023" />

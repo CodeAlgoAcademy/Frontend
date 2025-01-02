@@ -25,7 +25,7 @@ interface JobProps {
 const SingleJob: FC<JobProps> = ({ title, company, location, jobLink }) => {
    const { push } = useRouter();
    return (
-      <div className="max-w-[260px] rounded-xl border p-6 font-thabitBold">
+      <div className="max-w-[260px] rounded-xl border p-6 font-thabit">
          <div className="mx-auto max-w-fit rounded-xl bg-gray-300 p-2 text-[.8rem]">
             <p className="text-center font-bold">
                50 Hours of CodeAlgo <br /> Experience

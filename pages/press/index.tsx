@@ -7,7 +7,7 @@ import React from "react";
 
 const Press = () => {
    return (
-      <section className="min-h-screen w-full bg-[#ffffff]">
+      <section className="min-h-screen w-full bg-[#ffffff] font-thabit">
          <Navbar />
          <Header
             body=""
@@ -17,7 +17,7 @@ const Press = () => {
             detailPage="/press/launch-kc-awards"
          />
 
-         <section className="mx-auto mt-12 w-full max-w-[1100px] px-6">
+         <section className="mx-auto mt-12 mb-12 w-full max-w-[1100px] px-6">
             <div className="mt-8 grid grid-cols-1 items-center justify-center gap-[1rem] md:grid-cols-2 xl:grid-cols-3">
                {articles.map((article, index: number) => {
                   return (

@@ -2,7 +2,6 @@ import Banner from "@/components/home/new-home/banner";
 import Footer from "@/components/home/new-home/footer";
 import Navbar from "@/components/navbar/home/Navbar";
 import { CustomButton } from "@/components/UI/Button";
-import { useMediaQuery } from "@mui/material";
 import Image from "next/image";
 import React, { FC } from "react";
 import { FiArrowRight } from "react-icons/fi";
@@ -114,7 +113,7 @@ const Pricing = () => {
                   <CustomButton
                      size="medium"
                      variant="filled"
-                     className="mx-auto !mt-10 justify-center font-thabitBold text-[1.1rem] max-md:w-full md:min-w-[250px]"
+                     className="mx-auto !mt-10 justify-center font-thabit text-[1.1rem] max-md:w-full md:min-w-[250px]"
                   >
                      Get a quote
                   </CustomButton>
@@ -134,12 +133,10 @@ interface SinglePricingProps {
 }
 
 const SinglePricing: FC<SinglePricingProps> = ({ plan, amount, benefits = [] }) => {
-   const isMobile = useMediaQuery("(max-width:768px)");
-
    return (
       <div className="flex flex-col items-center justify-center gap-2 font-bold">
          <div className="mx-auto w-[100px] max-md:max-w-fit">
-            <Image src={"/assets/landing/logo_no_name.png"} width={isMobile ? 90 : 120} height={isMobile ? 40 : 30} />
+            <Image src={"/assets/landing/logo_no_name.png"} width={100} height={40} />
          </div>
 
          <h2 className="mt-1 text-center text-[1.5rem] text-white max-md:text-[1.1rem] max-md:leading-[1]">{plan}</h2>

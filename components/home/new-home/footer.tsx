@@ -102,7 +102,7 @@ const Footer = () => {
             {links.map((link, index) => {
                return (
                   <div key={index}>
-                     <p className="mb-2 font-thabitBold text-[.9rem] md:mb-8">{link.header}</p>
+                     <p className="mb-2 font-thabit text-[.9rem] md:mb-8">{link.header}</p>
 
                      <ul className="space-y-2">
                         {link.sublinks.map((sublink, index) => {
