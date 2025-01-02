@@ -18,6 +18,7 @@ const Navbar = () => {
    const router = useRouter();
    const [showMobileNav, setShowMobileNav] = useState(false);
    const isMobile = useMediaQuery("(max-width: 768px)");
+   const { push } = useRouter();
 
    return (
       <nav className="bg-mainBlack px-2 py-4">
@@ -94,7 +95,12 @@ const Navbar = () => {
                <AnimatePresence>{showMobileNav && <MobileNavbar close={() => setShowMobileNav(false)} />}</AnimatePresence>
             </ul>
 
-            <CustomButton variant="filled" size="medium" className="text-white max-md:hidden">
+            <CustomButton
+               onClick={() => push("https://play.codealgoacademy.com")}
+               variant="filled"
+               size="medium"
+               className="text-white max-md:hidden"
+            >
                PLAY GAME
             </CustomButton>
 
