@@ -26,14 +26,14 @@ const Pricing = () => {
 
          <div className="mx-auto mt-12 mb-12 max-w-[1200px]">
             <div className="w-full bg-[#D9D9D9]/50 p-7 md:rounded-[2rem] md:p-20">
-               <h1 className="text-center text-[1.5rem]">Institution Inquiry</h1>
+               <h1 className="text-center text-[1.5rem] font-bold">Institution Inquiry</h1>
                <p className="mt-2 text-center text-[1.1rem]">
                   Organization, School, and District bulk prices vary with bigger savings on larger orders.
                </p>
 
                <form className="mt-14 space-y-5">
                   <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
-                     <div className="max-w-fit md:min-w-[250px]">
+                     <div className="max-w-fit font-bold md:min-w-[250px]">
                         <p>Name</p>
                      </div>
 
@@ -46,7 +46,7 @@ const Pricing = () => {
                   </div>
 
                   <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
-                     <div className="max-w-fit md:min-w-[250px]">
+                     <div className="max-w-fit font-bold md:min-w-[250px]">
                         <p>Email</p>
                      </div>
 
@@ -59,7 +59,7 @@ const Pricing = () => {
                   </div>
 
                   <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
-                     <div className="max-w-fit md:min-w-[250px]">
+                     <div className="max-w-fit font-bold md:min-w-[250px]">
                         <p>Select a category</p>
                      </div>
 
@@ -72,7 +72,7 @@ const Pricing = () => {
                   </div>
 
                   <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
-                     <div className="max-w-fit md:min-w-[250px]">
+                     <div className="max-w-fit font-bold md:min-w-[250px]">
                         <p>Your Institution name</p>
                      </div>
 
@@ -85,7 +85,7 @@ const Pricing = () => {
                   </div>
 
                   <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
-                     <div className="max-w-fit md:min-w-[250px]">
+                     <div className="max-w-fit font-bold md:min-w-[250px]">
                         <p>Number of students</p>
                      </div>
 
@@ -98,7 +98,7 @@ const Pricing = () => {
                   </div>
 
                   <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
-                     <div className="max-w-fit md:min-w-[250px]">
+                     <div className="max-w-fit font-bold md:min-w-[250px]">
                         <p>Any other details?</p>
                      </div>
 
