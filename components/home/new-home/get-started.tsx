@@ -25,7 +25,7 @@ const GetStarted = () => {
 
    return (
       <section className="p-6">
-         <div className="mx-auto mt-12 mb-8 h-[6px] w-[500px] max-w-[90vw] bg-pinkGradient"></div>
+         <div className="mx-auto mt-0 mb-8 h-[6px] w-[500px] max-w-[90vw] bg-pinkGradient"></div>
 
          <h1 className="cursor-pointer text-center font-tiltWarp text-[2.1rem] max-md:text-[1.5rem]" onClick={() => push("/signup")}>
             SIGN UP TODAY!

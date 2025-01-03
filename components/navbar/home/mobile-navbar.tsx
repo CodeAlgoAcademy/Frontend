@@ -24,6 +24,8 @@ const variants: Record<string, Variant> = {
 };
 
 const MobileNavbar: FC<NavbarProps> = ({ close }) => {
+   const router = useRouter();
+
    return (
       <motion.aside
          variants={variants}
@@ -33,7 +35,9 @@ const MobileNavbar: FC<NavbarProps> = ({ close }) => {
          className="fixed top-0 left-0 z-[100] flex h-screen w-screen flex-col bg-mainBlack py-6 px-8 font-thabit md:hidden"
       >
          <header className="flex items-center justify-between gap-4">
-            <Image src={"/assets/landing/logo_white.png"} width={100} height={50} />
+            <div onClick={() => (router.push("/"), close())}>
+               <Image src={"/assets/landing/logo_white.png"} width={100} height={50} />
+            </div>
             <MdClose onClick={close} color="white" size={28} />
          </header>
 

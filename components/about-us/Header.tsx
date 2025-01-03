@@ -34,17 +34,17 @@ const Header = () => {
                </CharactersArrangement>
             </div>
          </div> */}
-         <div className="mx-auto max-w-[1200px] space-y-5 py-10 text-center sm:px-20 md:px-60">
+         <div className="mx-auto max-w-[1200px] space-y-5 py-10 px-6 text-center sm:px-20 md:px-60">
             <Fade triggerOnce={true} cascade duration={1000} direction={"up"}>
-               <p className="font-thabit text-4xl font-bold">Our Mission</p>
-               <p className="">
+               <p className="font-thabit text-4xl font-bold max-md:text-2xl">Our Mission</p>
+               <p className="max-md:text-[.9rem]">
                   To revolutionize coding education for elementary and middle school students, with a strong focus on underrepresented communities and
                   homeschooling networks, we aim to bridge the gap in technology literacy. We are on a mission to equip the next generation with the
                   essential skills they need to thrive in the workforce.
                </p>
 
-               <p className="font-thabit text-4xl font-bold">Our Vision</p>
-               <p className="">
+               <p className="font-thabit text-4xl font-bold max-md:text-2xl">Our Vision</p>
+               <p className="max-md:text-[.9rem]">
                   To create an inclusive, innovative, and globally accessible educational ecosystem where every student, regardless of their
                   background, can thrive in the digital age.
                </p>

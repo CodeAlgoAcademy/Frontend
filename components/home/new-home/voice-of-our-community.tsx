@@ -1,10 +1,3 @@
-import { useMediaQuery } from "@mui/material";
-import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
-import { ImQuotesLeft, ImQuotesRight } from "react-icons/im";
-import { A11y, EffectFlip, Navigation, Pagination, Scrollbar } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
-
 const data = [
    `
         <p>“The teachers were great, Sedric and Triumfia are awesome teachers.”</p>
@@ -63,15 +56,16 @@ const data = [
 ];
 
 const VoiceOfOurCommunity = () => {
-   const isMobile = useMediaQuery("(max-width: 768px)");
-
    return (
-      <div className="mx-auto mt-12 max-w-[1200px] px-6 pb-12">
+      <div className="mx-auto mt-12 max-w-[1200px] px-6 pb-10">
          <h1 className="mb-8 text-center font-tiltWarp text-[2.1rem] max-md:text-[1.5rem]">THE VOICE OF OUR COMMUNITY</h1>
 
          <div className="no-scrollbar flex w-full gap-8 overflow-x-scroll pb-3">
             {data.map((voice, index) => (
-               <div className="small-scroll-thumb neutral-small-scroll-thumb flex h-[250px] min-w-[350px] max-w-[90vw] flex-col justify-between gap-6 overflow-y-scroll  rounded-3xl border border-black/30 bg-white p-6 !font-thabit text-[.9rem] shadow-lg max-md:p-4">
+               <div
+                  key={index}
+                  className="small-scroll-thumb neutral-small-scroll-thumb flex h-[250px] min-w-[300px] max-w-[90vw] flex-col justify-between gap-6 overflow-y-scroll rounded-3xl  border border-black/30 bg-white p-6 !font-thabit text-[.9rem] shadow-lg max-md:p-4 md:min-w-[350px]"
+               >
                   <div dangerouslySetInnerHTML={{ __html: voice }} className="flex h-full flex-col justify-between gap-y-2"></div>
                </div>
             ))}
