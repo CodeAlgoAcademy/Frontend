@@ -35,7 +35,10 @@ const WhatWeBuilt = () => {
             </div>
 
             <span onClick={toggle} className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] cursor-pointer">
-               <Image width={110} height={110} src={playing ? "/assets/landing/pause-icon.png" : "/assets/landing/play-icon.png"} />
+               <img
+                  className="h-[110px] w-[110px] max-sm:h-[80px] max-sm:w-[80px]"
+                  src={playing ? "/assets/landing/pause-icon.png" : "/assets/landing/play-icon.png"}
+               />
             </span>
 
             <img

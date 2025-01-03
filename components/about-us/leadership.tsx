@@ -19,8 +19,8 @@ const leaders: ILeader[] = [
 
 export default function Leadership() {
    return (
-      <section className="relative mx-auto mb-20 w-[92vw] max-w-5xl pb-0">
-         <h2 className="z-[5] mb-12 text-center font-thabit text-4xl font-bold">Meet Our Leaders</h2>
+      <section className="relative mx-auto mb-20 w-[92vw] max-w-5xl px-6 pb-0">
+         <h2 className="z-[5] mb-12 text-center font-thabit text-4xl font-bold max-md:text-2xl">Meet Our Leaders</h2>
          <div className="mb-4 flex items-center justify-center gap-x-20 gap-y-10 max-md:flex-col">
             {leaders?.map((leader, index) => {
                return <SingleLeader {...leader} key={index} />;
