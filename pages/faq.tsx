@@ -12,8 +12,8 @@ const FAQ = () => {
          <Navbar />
          <Banner />
 
-         <div className="mx-auto mt-5 max-w-[1200px] p-6">
-            <h1 className="text-center  font-thabit text-[2.1rem] font-bold">CodeAlgo FAQ</h1>
+         <div className="mx-auto mt-5 mb-12 max-w-[1200px] p-6">
+            <h1 className="text-center  font-thabit text-[2.4rem] font-bold">CodeAlgo FAQ</h1>
 
             <section className="mx-auto mt-10 max-w-[700px] space-y-3">
                <h1 className="!mb-6 font-thabit text-[1.5rem] font-bold">Account</h1>
@@ -28,7 +28,7 @@ const FAQ = () => {
                />
                <SingleAccordion
                   question="Can I create an account for my child?"
-                  answer={`Yes, parents can create accounts for their children. This feature ensures a secure and enjoyable learning experience while allowing parents to manage and monitor their child’s progress.`}
+                  answer={`Yes, parents can create accounts for their children. This feature ensures a secure and enjoyable learning experience while allowing parents to manage and monitor their child's progress.`}
                />
                <SingleAccordion
                   question="How do I log in to my account?"
@@ -45,7 +45,7 @@ const FAQ = () => {
 
                <SingleAccordion
                   question="How do I get started?"
-                  answer="Getting started with CodeAlgo Academy is as easy as signing up on the website. Create an account, and you’ll unlock access to engaging coding lessons. Dive into the platform and start exploring its 3D game-based learning experience right away"
+                  answer="Getting started with CodeAlgo Academy is as easy as signing up on the website. Create an account, and you'll unlock access to engaging coding lessons. Dive into the platform and start exploring its 3D game-based learning experience right away"
                />
                <SingleAccordion
                   question="What devices can I use to play?"
@@ -61,15 +61,15 @@ const FAQ = () => {
                />
                <SingleAccordion
                   question="Are there different difficulty levels?"
-                  answer="Absolutely! The platform is crafted to cater to learners of all levels. Whether you’re a beginner or looking for more advanced challenges, CodeAlgo Academy adjusts to your skill level to keep you engaged."
+                  answer="Absolutely! The platform is crafted to cater to learners of all levels. Whether you're a beginner or looking for more advanced challenges, CodeAlgo Academy adjusts to your skill level to keep you engaged."
                />
                <SingleAccordion
                   question="What kind of feedback and support is available?"
-                  answer="Feedback is built right into the platform! You’ll receive interactive responses as you progress through activities, helping you learn and improve. If you have questions or need assistance, their support team is ready to help."
+                  answer="Feedback is built right into the platform! You'll receive interactive responses as you progress through activities, helping you learn and improve. If you have questions or need assistance, their support team is ready to help."
                />
                <SingleAccordion
                   question="How do I track my child's progress?"
-                  answer="CodeAlgo Academy provides a parent-friendly dashboard that keeps you informed about your child’s learning journey. Check their progress, achievements, and areas they’re mastering—all in one place."
+                  answer="CodeAlgo Academy provides a parent-friendly dashboard that keeps you informed about your child's learning journey. Check their progress, achievements, and areas they're mastering—all in one place."
                />
             </section>
 
@@ -86,7 +86,7 @@ const FAQ = () => {
                />
                <SingleAccordion
                   question="Is there a free trial?"
-                  answer="Yes, a free trial is available, allowing you to explore the platform and evaluate its suitability for your or your child’s needs. This trial offers an excellent opportunity to experience CodeAlgo Academy before committing to a subscription."
+                  answer="Yes, a free trial is available, allowing you to explore the platform and evaluate its suitability for your or your child's needs. This trial offers an excellent opportunity to experience CodeAlgo Academy before committing to a subscription."
                />
                <SingleAccordion
                   question="Can I cancel my subscription at any time?"
@@ -120,7 +120,7 @@ const FAQ = () => {
                />
                <SingleAccordion
                   question="How do you comply with child safety regulations?"
-                  answer=" CodeAlgo Academy prioritizes the safety and security of children on its platform. They strictly adhere to child safety regulations, including robust parental controls and secure systems to ensure a safe learning environment. Detailed information on compliance practices can be found on their website."
+                  answer="CodeAlgo Academy prioritizes the safety and security of children on its platform. They strictly adhere to child safety regulations, including robust parental controls and secure systems to ensure a safe learning environment. Detailed information on compliance practices can be found on their website."
                />
             </section>
          </div>
@@ -147,18 +147,18 @@ const SingleAccordion: FC<AccordionProps> = ({ question, answer }) => {
    }, [ref]);
    return (
       <article>
-         <header className="mb-5 flex items-center justify-between gap-3">
+         <header className="mb-5 flex items-center justify-between gap-3 px-4">
             <h1 className="flex-1 font-thabit font-bold">{question}</h1>
             <span
                onClick={() => setIsOpen(!isOpen)}
-               className="flex h-[30px] w-[30px] max-w-[30px] flex-1 cursor-pointer items-center justify-center rounded-full bg-mainPink text-white"
+               className="flex h-[30px] w-[30px] max-w-[30px] flex-1 cursor-pointer items-center justify-center rounded-full bg-mainPink text-black"
             >
                {isOpen ? <BiMinus size={25} /> : <BiPlus size={25} />}
             </span>
          </header>
 
          <div className={cn("overflow-hidden transition-all duration-300")} style={{ height: isOpen ? height : 0 }}>
-            <p ref={ref as MutableRefObject<HTMLParagraphElement>} className="p-3 text-[.9rem]">
+            <p ref={ref as MutableRefObject<HTMLParagraphElement>} className="px-3 py-1 text-[.9rem]">
                {answer}
             </p>
          </div>

@@ -25,17 +25,19 @@ const GetStarted = () => {
 
    return (
       <section className="p-6">
+         <div className="mx-auto mt-12 mb-8 h-[6px] w-[500px] max-w-[90vw] bg-pinkGradient"></div>
+
          <h1 className="cursor-pointer text-center font-tiltWarp text-[2.1rem] max-md:text-[1.5rem]" onClick={() => push("/signup")}>
             SIGN UP TODAY!
          </h1>
 
-         <div className="mt-6 flex items-center justify-center gap-8 max-md:flex-col">
+         <div className="mt-8 flex items-center justify-center gap-y-8 gap-x-24 max-md:flex-col">
             {data?.map((d, index) => {
                return (
-                  <div key={index} className="flex flex-1 flex-col items-center justify-center" onClick={() => d.link && push(d.link)}>
+                  <div key={index} className="flex flex-col items-center justify-center" onClick={() => d.link && push(d.link)}>
                      <Image src={`/assets/landing/${d.image}`} width={250} height={250} className="w-full" />
                      <CustomButton onClick={() => push("/login")} className="mt-6 !inline-block text-white" variant="filled">
-                        {d.title}
+                        <span className="no-contrast-adjust">{d.title}</span>
                      </CustomButton>
                   </div>
                );

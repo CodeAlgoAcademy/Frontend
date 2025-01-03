@@ -21,8 +21,8 @@ const Navbar = () => {
    const { push } = useRouter();
 
    return (
-      <nav className="bg-mainBlack px-2 py-4">
-         <div className="mx-auto flex max-w-[1350px] items-center justify-between xl:max-w-[1300px]">
+      <nav className="bg-mainBlack px-6 py-4">
+         <div className="mx-auto flex items-center justify-between">
             <ul className="flex items-center gap-6">
                <Link href={"/"}>
                   <img src={"/assets/landing/logo_white.png"} width={isMobile ? 70 : 100} height={isMobile ? 35 : 50} />
@@ -99,9 +99,9 @@ const Navbar = () => {
                onClick={() => push("https://play.codealgoacademy.com")}
                variant="filled"
                size="medium"
-               className="text-white max-md:hidden"
+               className="font-bold !text-white max-md:hidden"
             >
-               PLAY GAME
+               <span className="no-contrast-adjust">PLAY GAME</span>
             </CustomButton>
 
             <BiMenu className="text-white md:hidden" size={28} onClick={() => setShowMobileNav(true)} />

@@ -9,6 +9,7 @@ module.exports = {
             home3: "url('../public/assets/background1.png')",
             background: "url('../public/assets/background.png')",
             authLayout: "url('../public/assets/auth-layout-bg.jpg')",
+            pinkGradient: "linear-gradient(to right, #FF776D, #FF88AF, #FF98CE, #FFBFDE, #FFDBED, #FFE5F2)",
          },
          colors: {
             mainPurple: "#412281",
@@ -34,5 +35,14 @@ module.exports = {
          },
       },
    },
-   plugins: [require("tailwind-clip-path")],
+   plugins: [
+      require("tailwind-clip-path"),
+      function ({ addUtilities }) {
+         addUtilities({
+            ".forced-color-adjust-none": {
+               forcedColorAdjust: "none",
+            },
+         });
+      },
+   ],
 };

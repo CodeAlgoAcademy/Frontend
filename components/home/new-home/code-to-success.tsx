@@ -6,6 +6,8 @@ import { BsBag, BsBagFill, BsPinMapFill } from "react-icons/bs";
 const CodeToSuccess = () => {
    return (
       <section className="mx-auto max-w-[1200px] p-6">
+         <div className="mx-auto mt-12 mb-8 h-[6px] w-[500px] max-w-[90vw] bg-pinkGradient"></div>
+
          <h1 className="text-center font-tiltWarp text-[2.1rem] max-md:text-[1.5rem]">CODE YOUR WAY TO SUCCESS</h1>
 
          <div className="mt-8 flex items-center justify-center gap-8 max-md:flex-col">
@@ -25,7 +27,7 @@ interface JobProps {
 const SingleJob: FC<JobProps> = ({ title, company, location, jobLink }) => {
    const { push } = useRouter();
    return (
-      <div className="max-w-[260px] rounded-xl border p-6 font-thabit">
+      <div className="max-w-[260px] rounded-3xl border border-black p-4 font-thabit">
          <div className="mx-auto max-w-fit rounded-xl bg-gray-300 p-2 text-[.8rem]">
             <p className="text-center font-bold">
                50 Hours of CodeAlgo <br /> Experience
@@ -35,13 +37,13 @@ const SingleJob: FC<JobProps> = ({ title, company, location, jobLink }) => {
          <p className="mt-4 text-center text-[.8rem] font-bold">{title}</p>
 
          <div className="mt-5 flex items-center justify-center gap-4">
-            <p className="flex items-center gap-2  text-[.8rem]">
+            <p className="flex items-center gap-2 text-[.8rem] font-bold">
                <span>
                   <BsBagFill className="text-gray-500" />
                </span>
                {company}
             </p>
-            <p className="flex items-center gap-2  text-[.8rem]">
+            <p className="flex items-center gap-2 text-[.8rem] font-bold">
                <span>
                   <BsPinMapFill className="text-gray-500" />
                </span>
@@ -49,7 +51,7 @@ const SingleJob: FC<JobProps> = ({ title, company, location, jobLink }) => {
             </p>
          </div>
 
-         <CustomButton onClick={() => push(jobLink)} variant="filled" className="mx-auto mt-4  text-[.8rem] text-mainBlack" fullWidth>
+         <CustomButton onClick={() => push(jobLink)} variant="filled" className="mx-auto mt-4 text-[.8rem] font-bold text-mainBlack" fullWidth>
             {"View Salary & More Info"}
          </CustomButton>
       </div>
