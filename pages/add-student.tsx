@@ -61,7 +61,7 @@ export default function ParentStudent() {
             <form onSubmit={signUp}>
                <div className="">{step}</div>
                <div>
-                  <button className="mt-6  block h-[2.5rem] w-full rounded-xl bg-orange-400 text-center font-bold text-white" type="submit">
+                  <button className="mt-6  block h-[2.5rem] w-full rounded-xl bg-mainPink text-center font-bold text-white" type="submit">
                      Continue
                   </button>
                   {currentStepIndex === 5 && (

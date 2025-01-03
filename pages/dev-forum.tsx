@@ -10,7 +10,7 @@ const DevForum = () => {
          <Navbar />
          <Banner />
 
-         <div className="mx-auto mt-5 max-w-[1200px] p-6">
+         <div className="mx-auto mt-5 mb-16 max-w-[1200px] p-6">
             <h1 className="text-center  font-thabit text-[2.1rem] font-bold max-md:text-[1.5rem]">CodeAlgo Professional Development Program</h1>
 
             <p className="mx-auto mt-4 mb-12 max-w-[800px] text-center text-[1.4rem] font-light  max-md:text-[.87rem]">
@@ -26,7 +26,7 @@ const DevForum = () => {
                <h1 className="text-center  font-thabit text-[2.1rem] font-bold max-md:text-[1.5rem]">About Our Program</h1>
 
                <p className="mx-auto mt-2 mb-12 max-w-[800px] text-center text-[1.4rem] font-light max-md:text-[.87rem]">
-                  We offer in-person and virtual workshops to optimize the use of CodeAlgo.
+                  We offer in-person and virtual workshops to <br /> optimize the use of CodeAlgo.
                </p>
 
                <div className="grid gap-8 md:grid-cols-2">
@@ -62,7 +62,7 @@ interface ForumInfoProps {
 
 const SingleForumInfo: FC<ForumInfoProps> = ({ title, subtitle }) => {
    return (
-      <div className="rounded-2xl bg-white px-4 py-6">
+      <div className="rounded-3xl bg-white px-4 py-6">
          <h1 className="font-thabit text-[1.5rem] font-bold max-md:text-[1.2rem]">{title}</h1>
 
          <p className="mt-5 text-[.9rem]">{subtitle}</p>

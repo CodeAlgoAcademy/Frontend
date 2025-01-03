@@ -12,7 +12,7 @@ const ContactModal = () => {
                Thank you for reaching out, We have received your message and we will get back to you soon
             </h2>
             <Link href="/">
-               <button className="w-full rounded-md bg-orange-400 p-3 font-semibold text-white">Got it!</button>
+               <button className="w-full rounded-md bg-mainPink p-3 font-semibold text-white">Got it!</button>
             </Link>
          </div>
       </section>

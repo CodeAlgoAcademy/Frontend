@@ -63,12 +63,24 @@ body {
    filter: invert(100) !important;
 }
 
+.invert-colors .no-contrast-adjust {
+   filter: invert(0) !important;
+}
+
 .dark-contrast {
    filter: contrast(100) !important;
 }
 
+.dark-contrast .no-contrast-adjust {
+   filter: contrast(0) !important;
+}
+
 .invert-colors.dark-contrast {
    filter: invert(100) contrast(100) !important;
+}
+
+.invert-colors.dark-contrast .no-contrast-adjust {
+   filter: contrast(0) invert(0) !important;
 }
 
 .bigger-text {
@@ -361,6 +373,11 @@ a {
    width: 26px;
 }
 
+.no-scrollbar::-webkit-scrollbar {
+   width: 0;
+   height: 0;
+}
+
 .small-scroll-thumb::-webkit-scrollbar {
    width: 6px;
 }
@@ -371,6 +388,15 @@ a {
    background-color: #2073fa;
    border-radius: 2px;
 }
+
+.neutral-small-scroll-thumb::-webkit-scrollbar-thumb {
+   @apply bg-transparent;
+}
+
+.neutral-small-scroll-thumb:hover::-webkit-scrollbar-thumb {
+   @apply bg-mainPink;
+}
+
 .small-scroll-thumb.blue-scroll-thumb::-webkit-scrollbar {
    width: 4px;
    background: #d8dbe2;

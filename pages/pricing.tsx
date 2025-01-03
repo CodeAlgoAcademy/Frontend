@@ -12,20 +12,20 @@ const Pricing = () => {
          <Navbar />
          <Banner />
 
-         <section className="mt-20 bg-mainBlack px-6 py-20">
+         <section className="mt-20 bg-mainBlack px-6 py-12">
             <div className="mx-auto max-w-[1200px]">
                <h1 className="text-center text-[1.5rem] font-bold text-white">Choose the plan that is right for you</h1>
 
-               <div className="mt-12 flex justify-around gap-8 max-md:flex-col">
-                  <SinglePricing plan="Basic" amount="Free" benefits={["3 Python Units"]} />
+               <div className="mt-20 mb-10 flex items-start justify-around gap-8 max-md:flex-col">
+                  <SinglePricing plan="Basic" amount="Free" benefits={["3 Python Units", ""]} />
                   <SinglePricing plan="Parent & Family" amount="$259/yr" benefits={["Entire Curriculum", "Internship Opportunities"]} />
-                  <SinglePricing plan="Institution" amount="Contact us" />
+                  <SinglePricing plan="Institution" amount="Contact us" benefits={["", ""]} />
                </div>
             </div>
          </section>
 
-         <div className="mx-auto mt-12 mb-12 max-w-[1200px]">
-            <div className="w-full bg-[#D9D9D9]/50 p-7 md:rounded-[2rem] md:p-20">
+         <div className="mx-auto mt-12 mb-24 max-w-[1200px]">
+            <div className="w-full bg-[#D9D9D9]/70 p-7 md:rounded-[2rem] md:p-20">
                <h1 className="text-center text-[1.5rem] font-bold">Institution Inquiry</h1>
                <p className="mt-2 text-center text-[1.1rem]">
                   Organization, School, and District bulk prices vary with bigger savings on larger orders.
@@ -113,7 +113,7 @@ const Pricing = () => {
                   <CustomButton
                      size="medium"
                      variant="filled"
-                     className="mx-auto !mt-10 justify-center font-thabit text-[1.1rem] max-md:w-full md:min-w-[250px]"
+                     className="mx-auto !mt-10 justify-center font-thabit text-[1.1rem] font-bold max-md:w-full md:min-w-[250px]"
                   >
                      Get a quote
                   </CustomButton>
@@ -141,12 +141,14 @@ const SinglePricing: FC<SinglePricingProps> = ({ plan, amount, benefits = [] }) 
 
          <h2 className="mt-1 text-center text-[1.5rem] text-white max-md:text-[1.1rem] max-md:leading-[1]">{plan}</h2>
          <h1 className="my-1 text-center text-[1.8rem] text-white max-md:text-[1.1rem] max-md:leading-[1]">{amount}</h1>
-         <ul className="my-2 max-w-fit list-disc text-center">
+         <ul className="my-2 max-w-fit list-disc space-y-2 text-center">
             {benefits.map((bnf, index) => {
-               return (
+               return bnf ? (
                   <li className="mx-auto max-w-fit text-[.9rem] text-white" key={index}>
                      {bnf}
                   </li>
+               ) : (
+                  <div className="invisible">Placeholder</div>
                );
             })}
          </ul>

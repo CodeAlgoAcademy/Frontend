@@ -89,10 +89,11 @@ const links = [
 ];
 
 export const socials = [
-   { link: "https://twitter.com/stcodealgo", icon: <BsTwitterX /> },
+   { link: "https://www.youtube.com/@codealgoacademy6800", icon: <BsYoutube /> },
    { link: "https://linkedin.com/company/codealgo", icon: <BsLinkedin /> },
    { link: "https://facebook.com/stcodealgo", icon: <BsFacebook /> },
    { link: "https://instagram.com/stcodealgo", icon: <BsInstagram /> },
+   { link: "https://twitter.com/stcodealgo", icon: <BsTwitterX /> },
 ];
 
 const Footer = () => {

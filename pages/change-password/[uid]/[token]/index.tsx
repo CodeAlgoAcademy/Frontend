@@ -88,7 +88,7 @@ const ResetPassword = () => {
                      <h1>Password reset was successful!</h1>
                   </div>
                   <Link href="/login">
-                     <button className="mt-6 flex w-full items-center justify-center gap-x-4 rounded-md bg-orange-400 py-3 font-bold text-white shadow-md">
+                     <button className="mt-6 flex w-full items-center justify-center gap-x-4 rounded-md bg-mainPink py-3 font-bold text-white shadow-md">
                         <i>
                            <FaArrowLeft />
                         </i>
