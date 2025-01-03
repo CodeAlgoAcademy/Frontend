@@ -18,7 +18,7 @@ const Press = () => {
             detailPage="/blog/2024-startups-to-watch"
          />
 
-         <section className="mx-auto mt-12 w-full max-w-[1100px] px-6">
+         <section className="mx-auto mt-12 mb-12 w-full max-w-[1100px] px-6">
             <div className="mt-8 grid grid-cols-1 items-center justify-center gap-[1rem] md:grid-cols-2 xl:grid-cols-3">
                {posts.map((post, index: number) => {
                   return (

@@ -38,15 +38,22 @@ const Header = () => {
             <Fade triggerOnce={true} cascade duration={1000} direction={"up"}>
                <p className="font-thabit text-4xl font-bold max-md:text-2xl">Our Mission</p>
                <p className="max-md:text-[.9rem]">
-                  To revolutionize coding education for elementary and middle school students, with a strong focus on underrepresented communities and
-                  homeschooling networks, we aim to bridge the gap in technology literacy. We are on a mission to equip the next generation with the
-                  essential skills they need to thrive in the workforce.
+                  Our mission is to democratize access to high-quality coding education, empowering all K-12 students, particularly Black and Brown
+                  children, to develop critical thinking, creativity, and problem-solving skills. We equip students with the real programming skills,
+                  and experiences necessary to thrive in a technology-driven world, fostering a love of learning and preparing them for successful
+                  futures in diverse fields. We prioritize career readiness, especially for our high school students, providing pathways to in-demand
+                  tech careers through hands-on projects, mentorship, and industry connections. We strive to increase diversity within the tech sector
+                  by connecting students to internships, apprenticeships, and job opportunities, while cultivating an inclusive and supportive
+                  learning environment for all.
                </p>
 
                <p className="font-thabit text-4xl font-bold max-md:text-2xl">Our Vision</p>
                <p className="max-md:text-[.9rem]">
-                  To create an inclusive, innovative, and globally accessible educational ecosystem where every student, regardless of their
-                  background, can thrive in the digital age.
+                  To create a future where every student, regardless of background, has the skills, confidence, and opportunities to thrive in the
+                  digital age. We envision a world where coding is as fundamental as literacy, where Black and Brown students are equally represented
+                  in high-paying tech careers, and where diversity drives innovation in every industry. Through engaging, accessible education and
+                  strategic partnerships, we aim to empower the next generation to lead, create, and shape a more inclusive and equitable future in
+                  technology.
                </p>
             </Fade>
          </div>
