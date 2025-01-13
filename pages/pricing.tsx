@@ -8,7 +8,7 @@ import { FiArrowRight } from "react-icons/fi";
 
 const Pricing = () => {
    return (
-      <div className="relative overflow-x-hidden font-thabit">
+      <div className="relative font-thabit">
          <Navbar />
          <Banner />
 
@@ -148,7 +148,7 @@ const SinglePricing: FC<SinglePricingProps> = ({ plan, amount, benefits = [] }) 
                      {bnf}
                   </li>
                ) : (
-                  <div className="invisible">Placeholder</div>
+                  <div className="invisible text-[.9rem]">Placeholder</div>
                );
             })}
          </ul>

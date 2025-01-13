@@ -57,10 +57,12 @@ const data = [
 
 const VoiceOfOurCommunity = () => {
    return (
-      <div className="mx-auto mt-12 max-w-[1200px] px-6 pb-10">
-         <h1 className="mb-8 text-center font-tiltWarp text-[2.1rem] max-md:text-[1.5rem]">THE VOICE OF OUR COMMUNITY</h1>
+      <div className="mx-auto pb-10">
+         <h1 className="mb-8 bg-[#0961D6] py-4 text-center font-tiltWarp text-[2.1rem] text-white max-md:text-[1.5rem]">
+            THE VOICE OF OUR COMMUNITY
+         </h1>
 
-         <div className="no-scrollbar flex w-full gap-8 overflow-x-scroll pb-3">
+         <div className="no-scrollbar mx-auto mt-10 flex w-full gap-8 overflow-x-scroll px-6 pb-3 md:mt-20">
             {data.map((voice, index) => (
                <div
                   key={index}

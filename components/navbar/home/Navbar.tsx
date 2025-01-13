@@ -21,7 +21,7 @@ const Navbar = () => {
    const { push } = useRouter();
 
    return (
-      <nav className="bg-mainBlack px-6 py-4">
+      <nav className="sticky top-0 left-0 z-[500] bg-mainBlack px-6 py-4">
          <div className="mx-auto flex items-center justify-between">
             <ul className="flex items-center gap-6">
                <Link href={"/"}>
@@ -99,7 +99,7 @@ const Navbar = () => {
                onClick={() => push("https://play.codealgoacademy.com")}
                variant="filled"
                size="medium"
-               className="font-bold !text-white max-md:hidden"
+               className="bg-mainRed font-bold !text-white hover:bg-mainRed/80 max-md:hidden"
             >
                <span className="no-contrast-adjust">PLAY GAME</span>
             </CustomButton>
