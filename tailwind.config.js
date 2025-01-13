@@ -9,13 +9,16 @@ module.exports = {
             home3: "url('../public/assets/background1.png')",
             background: "url('../public/assets/background.png')",
             authLayout: "url('../public/assets/auth-layout-bg.jpg')",
-            pinkGradient: "linear-gradient(to right, #FF776D, #FF88AF, #FF98CE, #FFBFDE, #FFDBED, #FFE5F2)",
+            blueToBlackGradient: "linear-gradient(to bottom, #67B2E7 0%, #202748 75%)",
+            whiteToBlueGradient: "linear-gradient(to bottom left, #FFF7F0, #7193F9 40%)",
+            redToBlackGradient: "linear-gradient(to bottom, #FF0D11, #040404 99%)",
          },
          colors: {
             mainPurple: "#412281",
             mainColor: "#2073fa",
             mainPink: "#FF88AF",
             mainBlack: "#191919",
+            mainRed: "#FF0D11",
          },
          screens: {
             xs: "400px",
@@ -27,6 +30,9 @@ module.exports = {
          },
          clipPath: {
             wave: "polygon(0 75%, 50% 100%, 100% 75%, 100% 100%, 0 100%)",
+            "right-parallelogram": "polygon(0% 0, 100% 0, 75% 100%, 0% 100%)", // Left side straight
+            "left-parallelogram": "polygon(25% 0, 100% 0, 100% 100%, 0% 100%)", // Right side straight
+            "center-parallelogram": "polygon(25% 0, 100% 0, 75% 100%, 0% 100%)", // Both sides slanted
          },
          fontFamily: {
             tiltWarp: ["TiltWarp"],

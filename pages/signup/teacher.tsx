@@ -69,7 +69,7 @@ export default function Teacher() {
                      id="privacy"
                      required={true}
                   />
-                  <label htmlFor="privacy" className="ml-2 inline-block cursor-pointer hover:underline">
+                  <label htmlFor="privacy" className="ml-2 inline-block cursor-pointer underline">
                      <Link href={"/privacy-policy"}> I accept the terms and condition</Link>
                   </label>
                </div>

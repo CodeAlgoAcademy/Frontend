@@ -88,7 +88,7 @@ body {
 }
 
 .legible-fonts,
-.legible-fonts {
+.legible-fonts * {
    font-weight: bold !important;
 }
 
@@ -394,7 +394,7 @@ a {
 }
 
 .neutral-small-scroll-thumb:hover::-webkit-scrollbar-thumb {
-   @apply bg-mainPink;
+   @apply bg-mainRed;
 }
 
 .small-scroll-thumb.blue-scroll-thumb::-webkit-scrollbar {
@@ -723,4 +723,11 @@ a {
    background-position: center;
    background-size: cover;
    background-repeat: no-repeat;
+}
+
+.hide-video-controls::-webkit-media-controls {
+   display: none !important;
+}
+.hide-video-controls::-webkit-media-controls-enclosure {
+   display: none !important;
 }
