@@ -93,7 +93,7 @@ const SingleMobileLink = forwardRef<HTMLDivElement, Props>(({ link }, ref) => {
                   return (
                      <li key={index} onClick={close}>
                         <Link href={link.link}>
-                           <p className="rounded-md p-2 text-[.9rem] transition-all duration-300 hover:bg-mainPink hover:text-white" key={index}>
+                           <p className="rounded-md p-2 text-[.9rem] transition-all duration-300 hover:bg-mainRed hover:text-white" key={index}>
                               {link.name}
                            </p>
                         </Link>

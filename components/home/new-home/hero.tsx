@@ -2,10 +2,16 @@ import Image from "next/image";
 import React, { MutableRefObject, useEffect, useMemo, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
+import { detect } from "detect-browser";
 
 const Hero = () => {
    const features = useSelector((state: RootState) => state.accessibility.features);
    const videoRef = useRef<HTMLVideoElement>();
+
+   const isSafari = useMemo(() => {
+      const browser = detect();
+      return browser?.name == "safari";
+   }, []);
 
    const animationsPaused = useMemo(() => features.includes("pause-animations"), [features]);
 
@@ -31,17 +37,23 @@ const Hero = () => {
 
    return (
       <header className="relative">
-         <video
-            src="/assets/landing/hero.mp4"
-            className="hide-video-controls h-[50vh] w-full object-cover md:h-[90vh]"
-            loop
-            muted
-            controls={false}
-            autoPlay={true}
-            ref={videoRef as MutableRefObject<HTMLVideoElement>}
-            disablePictureInPicture
-            crossOrigin="anonymous"
-         ></video>
+         {isSafari ? (
+            <>
+               <img src="/assets/landing/hero.png" alt="hero" className="h-[50hv] w-full object-cover md:h-[90vh]"></img>
+            </>
+         ) : (
+            <video
+               src="/assets/landing/hero.mp4"
+               className="hide-video-controls h-[50vh] w-full object-cover md:h-[90vh]"
+               loop
+               muted
+               controls={false}
+               autoPlay={true}
+               ref={videoRef as MutableRefObject<HTMLVideoElement>}
+               disablePictureInPicture
+               crossOrigin="anonymous"
+            ></video>
+         )}
 
          <div className="absolute top-[40px] left-[50%] -translate-x-[50%]">
             <Image src={"/assets/landing/code-your-way-to-success.png"} width={800} height={50} />

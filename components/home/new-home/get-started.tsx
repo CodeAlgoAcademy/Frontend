@@ -44,7 +44,7 @@ const GetStarted = () => {
             <article className="relative -ml-24 grid h-full w-full flex-1 place-content-center overflow-hidden clip-path-left-parallelogram max-md:-ml-0">
                <img
                   src={"/assets/landing/get-started-3.png"}
-                  className="h-[650px] min-w-[38vw] object-cover object-right-top max-md:h-[300px] max-sm:min-w-[58vw]"
+                  className="h-[650px] min-w-[40vw] object-cover object-right-top max-md:h-[300px] max-sm:min-w-[58vw]"
                />
                <CustomButton
                   className={cn(buttonClassName, "left-[50%] max-md:left-[50%]")}

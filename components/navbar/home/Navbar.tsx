@@ -82,7 +82,7 @@ const Navbar = () => {
                               >
                                  {link.sublinks?.map((slinks, index) => (
                                     <Link key={index} href={slinks.link}>
-                                       <p className="z-[400] p-2 text-[.85rem] hover:bg-mainPink/20">{slinks.name}</p>
+                                       <p className="z-[400] p-2 text-[.85rem] hover:bg-mainRed/20">{slinks.name}</p>
                                     </Link>
                                  ))}
                               </div>
