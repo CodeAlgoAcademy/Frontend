@@ -1,5 +1,15 @@
 const data = [
    `
+   <p>
+   “CodeAlgo came to our middle school and made a tremendous impact on our future computer scientists. They were knowledgeable about their field and exhibited an enthusiasm for what they do that proved to be contagious. After the visit, I noticed a lot of students, who were not that interested in Computer Science, started to take the class more seriously. They also provided valuable insight on what it takes to enter the field, fresh out of high school. Their learning platform is inclusive to students from all backgrounds, and the game format allows students to learn at their own pace without feeling like they are doing work.”
+   </p>
+
+   
+   <div>
+   <p class="font-thabit"><b>Mikael Spears</b></p>
+   <p class="font-thabit">Middle School Computer Science Teacher</p></div>
+`,
+   `
         <p>“The teachers were great, Sedric and Triumfia are awesome teachers.”</p>
         
         <div>
@@ -28,16 +38,7 @@ const data = [
         <p class="font-thabit"><b>Solomon Maximillen</b></p>
         <p class="font-thabit">Parent</p></div>
     `,
-   `
-    <p>
-    “CodeAlgo came to our middle school and made a tremendous impact on our future computer scientists. They were knowledgeable about their field and exhibited an enthusiasm for what they do that proved to be contagious. After the visit, I noticed a lot of students, who were not that interested in Computer Science, started to take the class more seriously. They also provided valuable insight on what it takes to enter the field, fresh out of high school. Their learning platform is inclusive to students from all backgrounds, and the game format allows students to learn at their own pace without feeling like they are doing work.”
-    </p>
 
-    
-    <div>
-    <p class="font-thabit"><b>Mikael Spears</b></p>
-    <p class="font-thabit">Middle School Computer Science Teacher</p></div>
-`,
    `
     <p>“As a parent, it is our responsibility to equip our children with the skills they need to succeed in the future. CodeAlgo provides an excellent platform for doing just that. The instructions were both easy to follow and challenging, making for an engaging learning experience. Watching my children proudly present the alarm system they built using the software was a joyous moment. I highly recommend CodeAlgo to other parents looking to give their children a competitive edge in today's world.”</p>
     

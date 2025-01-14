@@ -51,7 +51,7 @@ const PrivacyPolicy = () => {
             </header>
             <div className="mt-[25px]">
                <p>
-                  Welcome to the CodeAlgo, a game-based practice & assessment platform, which is owned by CodeAlgo, LLC (“CodeAlgo,” “we,” “us,”
+                  Welcome to the CodeAlgo, a game-based practice & assessment platform, which is owned by CodeAlgo, Inc (“CodeAlgo,” “we,” “us,”
                   “our”). Please read the following Terms of Service (“ToS”) and our Privacy Policy.
                </p>
             </div>
@@ -348,7 +348,7 @@ You will be able to access premium features for your child’s account for the p
                />
             </div>
             <p className="mt-6">CodeAlgo is designed and operated by CodeAlgo, Inc. All inquiries may be directed to:</p>
-            <p>CodeAlgo, LLC</p>
+            <p>CodeAlgo, Inc</p>
             <p>720 Main St, Kansas City, MO 64105</p>
          </div>
          <Footer />
