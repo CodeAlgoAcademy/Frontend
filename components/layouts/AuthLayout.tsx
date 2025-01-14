@@ -23,14 +23,14 @@ const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
                      <>
                         <span className="hidden font-semibold sm:block">New here?</span>
                         <Link href="/signup">
-                           <span className="ml-3 cursor-pointer font-semibold text-mainPink">Register</span>
+                           <span className="ml-3 cursor-pointer font-semibold text-mainRed">Register</span>
                         </Link>
                      </>
                   ) : (
                      <>
                         <span className="hidden font-semibold sm:block">Already have an account?</span>
                         <Link href="/login">
-                           <span className="ml-3 cursor-pointer font-semibold text-mainPink">Log in</span>
+                           <span className="ml-3 cursor-pointer font-semibold text-mainRed">Log in</span>
                         </Link>
                      </>
                   )}

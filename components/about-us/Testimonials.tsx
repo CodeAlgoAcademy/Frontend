@@ -68,9 +68,9 @@ const Testimonials = () => {
                <SwiperSlide key={testimonial.name}>
                   <div className="flex min-h-[250px] flex-col justify-between gap-6 rounded-lg bg-white p-8 shadow-lg md:min-h-[450px]">
                      <div className="mb-6 flex flex-col gap-4 text-gray-500">
-                        <ImQuotesLeft className="mr-4 inline-block align-middle text-4xl text-mainPink" />
+                        <ImQuotesLeft className="mr-4 inline-block align-middle text-4xl text-mainRed" />
                         <p className="inline-block text-[1rem] font-bold leading-tight md:text-2xl">{testimonial.review}</p>
-                        <ImQuotesRight className="ml-4 inline-block self-end align-middle text-4xl text-mainPink" />
+                        <ImQuotesRight className="ml-4 inline-block self-end align-middle text-4xl text-mainRed" />
                      </div>
                      <div className="flex items-center">
                         <div>

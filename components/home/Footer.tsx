@@ -4,7 +4,7 @@ import { socials } from "./new-home/footer";
 
 const Footer = () => {
    return (
-      <footer className="mt-6 border-t-[1.5px] bg-mainPink py-4 px-6">
+      <footer className="mt-6 border-t-[1.5px] bg-mainRed py-4 px-6">
          <div className="mx-auto max-w-[1100px]">
             <div className="flex flex-col-reverse justify-between gap-4 sm:flex-row">
                <p className="block text-center font-bold text-white md:hidden">
@@ -17,7 +17,7 @@ const Footer = () => {
                            href={social.link}
                            target="_blank"
                            rel="noopener noreferrer"
-                           className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-white text-[17px] text-mainPink"
+                           className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-white text-[17px] text-mainRed"
                            key={index}
                         >
                            {social.icon}

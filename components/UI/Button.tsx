@@ -16,7 +16,7 @@ const Button = ({ text, color }: { text: string; color: string }) => {
 
 export const AuthButton = (props: { text: string }) => {
    return (
-      <button className="mt-4  block h-[2.5rem] w-full rounded-xl bg-mainPink text-center font-bold text-white" type="submit">
+      <button className="mt-4  block h-[2.5rem] w-full rounded-xl bg-mainRed text-center font-bold text-white" type="submit">
          {props.text}
       </button>
    );
@@ -58,10 +58,10 @@ export const CustomButton: FC<Props> = (props) => {
 
    switch (variant) {
       case "filled":
-         mainClass += "bg-mainPink text-mainBlack hover:bg-mainPink/80 text-center ";
+         mainClass += "bg-mainRed text-mainBlack hover:bg-mainRed/80 text-center ";
          break;
       case "outline":
-         mainClass += "bg-transparent border border-mainPink hover:bg-mainPink hover:text-mainBlack text-mainPink disabled:border-zinc-500/50 ";
+         mainClass += "bg-transparent border border-mainRed hover:bg-mainRed hover:text-mainBlack text-mainRed disabled:border-zinc-500/50 ";
          break;
       case "destructive":
          mainClass +=
@@ -72,7 +72,7 @@ export const CustomButton: FC<Props> = (props) => {
             "bg-transparent border border-success/50 hover:border-success hover:bg-success disabled:hover:bg-transparent hover:text-black disabled:hover:text-success text-success disabled:border-success/50 ";
          break;
       case "black":
-         mainClass += "hover:bg-mainPink/80 bg-mainPink text-mainPink ";
+         mainClass += "hover:bg-mainRed/80 bg-mainRed text-mainRed";
          break;
       default:
          break;
@@ -80,13 +80,13 @@ export const CustomButton: FC<Props> = (props) => {
 
    switch (size) {
       case "extra-small":
-         mainClass += "px-4 py-[6px] text-xs ";
+         mainClass += " px-4 py-[6px] text-xs ";
          break;
       case "small":
-         mainClass += "px-6 py-2 text-[14px] ";
+         mainClass += " px-6 py-2 text-[14px] ";
          break;
       case "medium":
-         mainClass += "px-6 py-3 text-sm";
+         mainClass += " px-4 py-3 text-sm ";
          break;
       case "large":
          mainClass += "px-8 py-[14px] ";

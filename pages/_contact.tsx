@@ -41,12 +41,12 @@ const Contact = () => {
          <Navbar />
          <div className="mx-auto w-full max-w-[1100px] px-6 pt-24">
             {modalOpened && <ContactModal />}
-            <h1 className="text-[1.8rem] font-bold text-mainPink">Contact Us</h1>
+            <h1 className="text-[1.8rem] font-bold text-mainRed">Contact Us</h1>
 
             <div className="mt-6 flex flex-wrap items-center justify-start gap-4">
                <article className="w-full max-w-[300px] rounded-md bg-white p-4 shadow-md">
                   <header className="flex items-center gap-4">
-                     <span className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-mainPink text-white">
+                     <span className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-mainRed text-white">
                         <BiEnvelope />
                      </span>
                      <a href={`mailto:${DEFAULT_SUPPORT.email}`} className="text-[0.9rem] font-bold hover:underline">
@@ -69,7 +69,7 @@ const Contact = () => {
                      }}
                      type="text"
                      placeholder="What's your name?"
-                     className="w-full rounded-md border-[1.5px] p-2 outline-none focus:border-mainPink"
+                     className="w-full rounded-md border-[1.5px] p-2 outline-none focus:border-mainRed"
                   />
                </div>
                <div className="mb-2">
@@ -84,7 +84,7 @@ const Contact = () => {
                      }}
                      type="email"
                      placeholder="What's your email?"
-                     className="w-full rounded-md border-[1.5px] p-2 outline-none focus:border-mainPink"
+                     className="w-full rounded-md border-[1.5px] p-2 outline-none focus:border-mainRed"
                   />
                </div>
                <div className="mb-2">
@@ -99,7 +99,7 @@ const Contact = () => {
                      }}
                      type="text"
                      placeholder="How can we help you?"
-                     className="w-full rounded-md border-[1.5px] p-2 outline-none focus:border-mainPink"
+                     className="w-full rounded-md border-[1.5px] p-2 outline-none focus:border-mainRed"
                   />
                </div>
                <div className="mb-2">
@@ -113,11 +113,11 @@ const Contact = () => {
                         setMessage(e.target.value);
                      }}
                      placeholder="Message..."
-                     className="h-[150px] w-full resize-none rounded-md border-[1.5px] p-2 outline-none focus:border-mainPink"
+                     className="h-[150px] w-full resize-none rounded-md border-[1.5px] p-2 outline-none focus:border-mainRed"
                   />
                </div>
 
-               <button type="submit" className="w-full rounded-[20px] bg-mainPink p-2 text-center font-bold text-white">
+               <button type="submit" className="w-full rounded-[20px] bg-mainRed p-2 text-center font-bold text-white">
                   Submit
                </button>
             </form>

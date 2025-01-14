@@ -102,7 +102,7 @@ const Contact = () => {
                                  onChange={(e) => {
                                     setFirstName(e.target.value);
                                  }}
-                                 className="w-full rounded-md border-[1.5px] p-2 outline-none focus:border-mainPink"
+                                 className="w-full rounded-md border-[1.5px] p-2 outline-none focus:border-mainRed"
                               />
                            </div>
 
@@ -116,7 +116,7 @@ const Contact = () => {
                                  onChange={(e) => {
                                     setLastName(e.target.value);
                                  }}
-                                 className="w-full rounded-md border-[1.5px] p-2 outline-none focus:border-mainPink"
+                                 className="w-full rounded-md border-[1.5px] p-2 outline-none focus:border-mainRed"
                               />
                            </div>
                         </div>
@@ -132,7 +132,7 @@ const Contact = () => {
                               onChange={(e) => {
                                  setEmail(e.target.value);
                               }}
-                              className="w-full rounded-md border-[1.5px] p-2 outline-none focus:border-mainPink"
+                              className="w-full rounded-md border-[1.5px] p-2 outline-none focus:border-mainRed"
                            />
                         </div>
 
@@ -144,7 +144,7 @@ const Contact = () => {
                               required
                               value={message}
                               onChange={(e) => setMessage(e.target.value)}
-                              className="h-[150px] w-full resize-none rounded-md border-[1.5px] p-2 outline-none focus:border-mainPink"
+                              className="h-[150px] w-full resize-none rounded-md border-[1.5px] p-2 outline-none focus:border-mainRed"
                            />{" "}
                         </div>
                         <CustomButton

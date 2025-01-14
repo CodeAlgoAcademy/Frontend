@@ -31,13 +31,13 @@ const SingleJob: FC<JobProps> = ({ title, company, location, jobLink }) => {
    const { push } = useRouter();
    return (
       <div className="w-full max-w-[520px] rounded-3xl border bg-white px-4 pt-4 pb-8 font-tiltWarp text-black">
-         <div className="mx-auto mb-2 max-w-fit rounded-md bg-[#d9d9d9] p-2 text-[.9rem]">
+         <div className="mx-auto mb-2 max-w-fit rounded-md bg-[#d9d9d9]/70 p-2 text-[.9rem]">
             <p className="text-center font-bold">50 Hours of CodeAlgo Experience</p>
          </div>
 
          <div className="flex items-center justify-between gap-x-8 gap-y-2 max-md:flex-col">
             <div className="flex-[1.3]">
-               <p className="mt-4 text-center text-[1rem] font-bold">{title}</p>
+               <p className="mt-4 text-center text-[1.05rem] font-bold tracking-wide">{title}</p>
 
                <div className="mt-2 flex items-center justify-center gap-4">
                   <p className="flex items-center gap-1 text-[.9rem] font-bold">
@@ -59,7 +59,7 @@ const SingleJob: FC<JobProps> = ({ title, company, location, jobLink }) => {
                <CustomButton
                   onClick={() => push(jobLink)}
                   variant="filled"
-                  className="mx-auto mt-4 rounded-full bg-mainRed text-[.8rem] font-bold text-white !shadow-lg hover:bg-mainRed/80"
+                  className="mx-auto mt-4 max-w-fit rounded-full bg-mainRed !py-4 text-[.8rem] font-bold tracking-wide text-white !shadow-lg hover:bg-mainRed/80"
                   fullWidth
                   size="medium"
                >

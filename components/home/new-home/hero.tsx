@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { MutableRefObject, useEffect, useMemo, useRef } from "react";
+import React, { MutableRefObject, useEffect, useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { detect } from "detect-browser";
@@ -7,11 +7,7 @@ import { detect } from "detect-browser";
 const Hero = () => {
    const features = useSelector((state: RootState) => state.accessibility.features);
    const videoRef = useRef<HTMLVideoElement>();
-
-   const isChrome = useMemo(() => {
-      const browser = detect();
-      return browser?.name == "edge" || browser?.name == "chrome";
-   }, []);
+   const [isChrome, setIsChrome] = useState(false);
 
    const animationsPaused = useMemo(() => features.includes("pause-animations"), [features]);
 
@@ -35,12 +31,18 @@ const Hero = () => {
       };
    }, [videoRef, animationsPaused]);
 
+   useEffect(() => {
+      const browser = detect();
+      const isChrome = browser?.name == "edge" || browser?.name == "chrome";
+      setIsChrome(isChrome);
+   }, []);
+
    return (
       <header className="relative">
-         {!isChrome ? (
-            <>
-               <img src="/assets/landing/hero.png" alt="hero" className="h-[50hv] w-full object-cover md:h-[90vh]"></img>
-            </>
+         {isChrome ? (
+            <div className="h-[50hv] w-full  md:h-[90vh]">
+               <img src="/assets/landing/hero.png" alt="hero" className="h-full w-full object-cover"></img>
+            </div>
          ) : (
             <video
                src="/assets/landing/hero.mp4"
