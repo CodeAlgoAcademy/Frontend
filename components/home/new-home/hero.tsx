@@ -8,9 +8,9 @@ const Hero = () => {
    const features = useSelector((state: RootState) => state.accessibility.features);
    const videoRef = useRef<HTMLVideoElement>();
 
-   const isSafari = useMemo(() => {
+   const isChrome = useMemo(() => {
       const browser = detect();
-      return browser?.name == "safari";
+      return browser?.name == "edge" || browser?.name == "chrome";
    }, []);
 
    const animationsPaused = useMemo(() => features.includes("pause-animations"), [features]);
@@ -37,7 +37,7 @@ const Hero = () => {
 
    return (
       <header className="relative">
-         {isSafari ? (
+         {!isChrome ? (
             <>
                <img src="/assets/landing/hero.png" alt="hero" className="h-[50hv] w-full object-cover md:h-[90vh]"></img>
             </>
