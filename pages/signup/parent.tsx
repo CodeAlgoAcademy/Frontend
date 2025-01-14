@@ -80,7 +80,7 @@ export default function Parent() {
                         onChange={toggleCheck}
                         checked={policyChecked}
                         name=""
-                        className="inline-block scale-[120%] accent-mainPink"
+                        className="inline-block scale-[120%] accent-mainRed"
                         id="privacy"
                         required={true}
                      />
@@ -88,7 +88,7 @@ export default function Parent() {
                         <Link href={"/privacy-policy"}> I accept the terms and condition</Link>
                      </label>
                   </div>
-                  <button className="mt-6  block h-[2.5rem] w-full rounded-xl bg-mainPink text-center font-bold text-white" type="submit">
+                  <button className="bg-mainRedtext-center  mt-6 block h-[2.5rem] w-full rounded-xl font-bold text-white" type="submit">
                      Continue
                   </button>
                   {!isFirstStep && (
@@ -116,7 +116,7 @@ export default function Parent() {
                      </p>
                   </div>
                   <button
-                     className="mx-auto block max-w-fit rounded-md bg-mainPink px-6 py-3 font-bold text-white"
+                     className="bg-mainRedpx-6 mx-auto block max-w-fit rounded-md py-3 font-bold text-white"
                      onClick={async () => {
                         const isNotVerified = localStorage.getItem(ILocalStorageItems.parent_signup);
                         if (!isNotVerified) {

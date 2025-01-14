@@ -40,7 +40,7 @@ const Pricing = () => {
                      <div className="w-full flex-1">
                         <input
                            required
-                           className="w-full rounded-md border-[1.5px] border-[#D9D9D9] bg-[#D9D9D9] p-2 outline-none focus:border-mainPink"
+                           className="w-full rounded-md border-[1.5px] border-[#D9D9D9] bg-[#D9D9D9] p-2 outline-none focus:border-mainRed"
                         />
                      </div>
                   </div>
@@ -53,7 +53,7 @@ const Pricing = () => {
                      <div className="w-full flex-1">
                         <input
                            required
-                           className="w-full rounded-md border-[1.5px] border-[#D9D9D9] bg-[#D9D9D9] p-2 outline-none focus:border-mainPink"
+                           className="w-full rounded-md border-[1.5px] border-[#D9D9D9] bg-[#D9D9D9] p-2 outline-none focus:border-mainRed"
                         />
                      </div>
                   </div>
@@ -66,7 +66,7 @@ const Pricing = () => {
                      <div className="w-full flex-1">
                         <input
                            required
-                           className="w-full rounded-md border-[1.5px] border-[#D9D9D9] bg-[#D9D9D9] p-2 outline-none focus:border-mainPink"
+                           className="w-full rounded-md border-[1.5px] border-[#D9D9D9] bg-[#D9D9D9] p-2 outline-none focus:border-mainRed"
                         />
                      </div>
                   </div>
@@ -79,7 +79,7 @@ const Pricing = () => {
                      <div className="w-full flex-1">
                         <input
                            required
-                           className="w-full rounded-md border-[1.5px] border-[#D9D9D9] bg-[#D9D9D9] p-2 outline-none focus:border-mainPink"
+                           className="w-full rounded-md border-[1.5px] border-[#D9D9D9] bg-[#D9D9D9] p-2 outline-none focus:border-mainRed"
                         />
                      </div>
                   </div>
@@ -92,7 +92,7 @@ const Pricing = () => {
                      <div className="w-full flex-1">
                         <input
                            required
-                           className="w-full rounded-md border-[1.5px] border-[#D9D9D9] bg-[#D9D9D9] p-2 outline-none focus:border-mainPink"
+                           className="w-full rounded-md border-[1.5px] border-[#D9D9D9] bg-[#D9D9D9] p-2 outline-none focus:border-mainRed"
                         />
                      </div>
                   </div>
@@ -105,7 +105,7 @@ const Pricing = () => {
                      <div className="w-full flex-1">
                         <input
                            required
-                           className="w-full rounded-md border-[1.5px] border-[#D9D9D9] bg-[#D9D9D9] p-2 outline-none focus:border-mainPink"
+                           className="w-full rounded-md border-[1.5px] border-[#D9D9D9] bg-[#D9D9D9] p-2 outline-none focus:border-mainRed"
                         />
                      </div>
                   </div>
@@ -113,7 +113,7 @@ const Pricing = () => {
                   <CustomButton
                      size="medium"
                      variant="filled"
-                     className="mx-auto !mt-10 justify-center font-thabit text-[1.1rem] font-bold max-md:w-full md:min-w-[250px]"
+                     className="mx-auto !mt-10 justify-center !px-2 font-thabit text-[1.1rem] font-bold max-md:w-full md:min-w-[250px]"
                   >
                      Get a quote
                   </CustomButton>

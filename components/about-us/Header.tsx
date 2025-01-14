@@ -13,7 +13,7 @@ const Header = () => {
                   <Fade triggerOnce={true} direction={"up"} duration={1000}>
                      <h1 className="font-tiltWarp text-[3.5rem] font-bold leading-[1.1] text-slate-700 md:max-w-[500px]">
                         About{" "}
-                        <span className="bg-gradient-to-r from-pink-500 via-mainPink to-pink-600 bg-clip-text font-extrabold text-transparent">
+                        <span className="bg-gradient-to-r from-pink-500 via-mainRed to-pink-600 bg-clip-text font-extrabold text-transparent">
                            CodeAlgo Academy
                         </span>
                      </h1>
@@ -23,7 +23,7 @@ const Header = () => {
                   </Fade>
                   <Fade triggerOnce={true} direction="up" duration={1000} delay={400}>
                      <Link href={"/login"}>
-                        <button className="mt-8 min-w-[120px] rounded-lg bg-mainPink p-3 font-tiltWarp text-[15px] font-bold text-white shadow-md">
+                        <button className="mt-8 min-w-[120px] rounded-lg bg-mainRedp-3 font-tiltWarp text-[15px] font-bold text-white shadow-md">
                            Sign in
                         </button>
                      </Link>

@@ -19,7 +19,7 @@ const SuccessModal = () => {
       <main className={styles.modalOverlay}>
          <div className={styles.modal}>
             <header className="mb-6 flex items-center justify-between gap-3">
-               <p className="cursor-pointer text-[1.2rem] font-bold text-mainPink">Success!</p>
+               <p className="cursor-pointer text-[1.2rem] font-bold text-mainRed">Success!</p>
                <i className="cursor-pointer text-[1.5rem] text-red-600" onClick={closeModal}>
                   <MdClose />
                </i>
@@ -44,5 +44,5 @@ export default SuccessModal;
 const styles = {
    modalOverlay: "fixed top-0 left-0 z-[999] flex h-screen w-full items-center justify-center bg-[rgba(0,0,0,0.2)]",
    modal: "z-[9] w-[90vw] max-w-[500px] rounded-md bg-white pt-4 pb-7 px-8 shadow-md min-h-fit",
-   button: "bg-mainPink text-white py-2 px-2 rounded-md max-w-[300px]  w-full text-center",
+   button: "bg-mainRed text-white py-2 px-2 rounded-md max-w-[300px]  w-full text-center",
 };

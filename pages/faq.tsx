@@ -151,7 +151,7 @@ const SingleAccordion: FC<AccordionProps> = ({ question, answer }) => {
             <h1 className="flex-1 font-thabit font-bold">{question}</h1>
             <span
                onClick={() => setIsOpen(!isOpen)}
-               className="flex h-[30px] w-[30px] max-w-[30px] flex-1 cursor-pointer items-center justify-center rounded-full bg-mainPink text-black"
+               className="flex h-[30px] w-[30px] max-w-[30px] flex-1 cursor-pointer items-center justify-center rounded-full bg-mainRed text-black"
             >
                {isOpen ? <BiMinus size={25} /> : <BiPlus size={25} />}
             </span>

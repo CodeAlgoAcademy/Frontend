@@ -47,7 +47,7 @@ const PrivacyPolicy = () => {
          <Navbar />
          <div className="mx-auto max-w-[1200px] px-6 py-12 ">
             <header className="flex w-full flex-row items-center gap-x-4">
-               <h1 className="text-[28px] font-bold text-mainPink">CodeAlgo Academy Privacy Policy</h1>
+               <h1 className="text-[28px] font-bold text-mainRed">CodeAlgo Academy Privacy Policy</h1>
             </header>
             <div className="mt-[25px]">
                <p>
