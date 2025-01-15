@@ -38,6 +38,7 @@ module.exports = {
             tiltWarp: ["TiltWarp"],
             thabit: ["Thabit"],
             thabitBold: ["ThabitBold"],
+            workSans: ["worksans"],
          },
       },
    },

@@ -18,7 +18,7 @@ const Header: FC<IArticle> = (props) => {
                   <p>{props.date}</p>
                   {(router.pathname === "/press" || router.pathname === "/blog") && props.detailPage && (
                      <Link href={props.detailPage as string}>
-                        <button className="min-w-[200px] rounded-[30px] bg-mainPink px-3 py-2 text-white">Read More</button>
+                        <button className="min-w-[200px] rounded-[30px] bg-mainRed px-3 py-2 text-white">Read More</button>
                      </Link>
                   )}
                </div>

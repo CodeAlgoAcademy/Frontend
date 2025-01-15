@@ -39,26 +39,30 @@ const Hero = () => {
 
    return (
       <header className="relative">
-         {isChrome ? (
+         {!isChrome ? (
             <div className="h-[50hv] w-full  md:h-[90vh]">
                <img src="/assets/landing/hero.png" alt="hero" className="h-full w-full object-cover"></img>
             </div>
          ) : (
-            <video
-               src="/assets/landing/hero.mp4"
-               className="hide-video-controls h-[50vh] w-full object-cover md:h-[90vh]"
-               loop
-               muted
-               controls={false}
-               autoPlay={true}
-               ref={videoRef as MutableRefObject<HTMLVideoElement>}
-               disablePictureInPicture
-               crossOrigin="anonymous"
-            ></video>
+            <div className="h-[50vh] w-full  md:h-[90vh]">
+               <video
+                  src="/assets/landing/hero.mp4"
+                  className="h-[50vh] w-full object-cover md:h-[90vh]"
+                  loop
+                  muted
+                  controls={false}
+                  autoPlay={false}
+                  ref={videoRef as MutableRefObject<HTMLVideoElement>}
+                  disablePictureInPicture
+                  crossOrigin="anonymous"
+               ></video>
+            </div>
          )}
 
-         <div className="absolute top-[40px] left-[50%] -translate-x-[50%]">
-            <Image src={"/assets/landing/code-your-way-to-success.png"} width={800} height={50} />
+         <div className="z-5 absolute top-0 left-0 h-full w-full bg-black/20">
+            <div className="absolute top-[40px] left-[50%] -translate-x-[50%]">
+               <Image src={"/assets/landing/code-your-way-to-success.png"} width={800} height={50} />
+            </div>
          </div>
       </header>
    );
