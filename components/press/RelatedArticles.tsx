@@ -3,7 +3,7 @@ import React from "react";
 const RelatedArticles = ({ link, title }: { link: string; title: string }) => {
    return (
       <a
-         className="] mt-4 inline-block rounded-md bg-[#f3f3f3] px-2 py-2 font-bold italic text-mainPink underline"
+         className="] mt-4 inline-block rounded-md bg-[#f3f3f3] px-2 py-2 font-bold italic text-mainRed underline"
          href={link}
          target="_blank"
          rel="noopener noreferrer"

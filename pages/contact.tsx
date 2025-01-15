@@ -138,6 +138,21 @@ const Contact = () => {
 
                         <div className="mb-2">
                            <label htmlFor="" className="mb-1 block font-thabit text-[.85rem]">
+                              Subject<sup>*</sup>
+                           </label>
+                           <input
+                              required
+                              type="text"
+                              value={subject}
+                              onChange={(e) => {
+                                 setSubject(e.target.value);
+                              }}
+                              className="w-full rounded-md border-[1.5px] p-2 outline-none focus:border-mainRed"
+                           />
+                        </div>
+
+                        <div className="mb-2">
+                           <label htmlFor="" className="mb-1 block font-thabit text-[.85rem]">
                               Message<sup>*</sup>
                            </label>
                            <textarea

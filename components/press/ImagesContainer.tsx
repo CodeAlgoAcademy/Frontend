@@ -22,7 +22,7 @@ const ImagesContainer = ({
       <article className="mt-2 py-2">
          {title && (
             <header className="mt-5 mb-3 gap-1 border-t-2 pt-4">
-               <h2 className="mb-1 inline-block text-[1.4rem] font-bold text-mainPink">
+               <h2 className="mb-1 inline-block text-[1.4rem] font-bold text-mainRed">
                   {link ? (
                      <a href={link} target="_blank" className="underline" rel="noopener noreferrer">
                         {title}

@@ -23,18 +23,16 @@ const WhatWeBuilt = () => {
             <div className="mx-auto h-[200px] w-[700px] max-w-[90vw] overflow-hidden rounded-[2rem] bg-white object-contain shadow-xl shadow-mainBlack md:h-[400px]">
                <img src="/assets/0002.png" alt="" className={cn("h-full w-full object-cover", playing && "hidden")} />
 
-               {playing && (
-                  <ReactPlayer
-                     width={"100%"}
-                     height={"100%"}
-                     url="https://youtu.be/cijtWZ1I2i4"
-                     playing={!animationsPaused}
-                     muted={true}
-                     controls={false}
-                     loop={true}
-                     style={{ objectFit: "cover", objectPosition: "center" }}
-                  />
-               )}
+               <ReactPlayer
+                  width={"100%"}
+                  height={"100%"}
+                  url="https://youtu.be/cijtWZ1I2i4"
+                  playing={!animationsPaused && playing}
+                  muted={false}
+                  controls={false}
+                  loop={true}
+                  style={{ objectFit: "cover", objectPosition: "center", display: playing ? "block" : "hidden" }}
+               />
             </div>
 
             <span onClick={toggle} className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] cursor-pointer">

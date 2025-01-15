@@ -8,7 +8,7 @@ const CodeToSuccess = () => {
    return (
       <section className="bg-[#040404] px-6 pb-28 pt-12 text-white md:pb-48">
          <div className="mx-auto max-w-[1200px]">
-            <h1 className="mx-auto mt-6 max-w-fit rounded-md bg-mainRed py-3 px-5 text-center font-tiltWarp text-[1.9rem] font-bold text-white shadow-md max-md:text-[1.5rem]">
+            <h1 className="mx-auto mt-6 max-w-fit rounded-md bg-mainRed py-3 px-5 text-center font-tiltWarp text-[1.9rem] font-bold text-white shadow-md max-md:text-[1.3rem]">
                {"CODE YOUR WAY TO SUCCESS"}
             </h1>
 

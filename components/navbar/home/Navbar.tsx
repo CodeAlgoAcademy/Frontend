@@ -21,7 +21,7 @@ const Navbar = () => {
    const { push } = useRouter();
 
    return (
-      <nav className="sticky top-0 left-0 z-[500] bg-mainBlack px-6 py-4">
+      <nav className="sticky top-0 left-0 z-[500] bg-mainBlack px-6 py-4 font-workSans">
          <div className="mx-auto flex items-center justify-between">
             <ul className="flex items-center gap-6">
                <Link href={"/"}>

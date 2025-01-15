@@ -39,7 +39,7 @@ const Press = () => {
                            <div className="flex items-center justify-between">
                               <p className="text-[14px] text-[#444]">{article.date}</p>
                               <Link href={`/press${article.detailPage}`}>
-                                 <button className="min-w-[100px] rounded-[20px] bg-mainPink py-1 px-4 text-white">Press</button>
+                                 <button className="min-w-[100px] rounded-[20px] bg-mainRed py-1 px-4 text-white">Press</button>
                               </Link>
                            </div>
                         </div>

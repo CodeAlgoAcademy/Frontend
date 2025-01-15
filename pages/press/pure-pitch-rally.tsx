@@ -49,7 +49,7 @@ const PurePitchRally = () => {
                            target={"_blank"}
                            rel="noopener noreferrer"
                            href="https://www.startlandnews.com/2022/07/asksamie/"
-                           className="text-mainPink underline"
+                           className="text-mainRed underline"
                         >
                            impressive year of fundraising
                         </a>{" "}

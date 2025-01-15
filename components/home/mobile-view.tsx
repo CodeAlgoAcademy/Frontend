@@ -45,7 +45,7 @@ const MobileView = () => {
                </p>
                <p className="mb-2 font-bold text-gray-800">Create your account: </p>
                <Link href="/signup">
-                  <button className="rounded-md bg-mainPink px-5 py-3 font-bold text-white">Sign Up</button>
+                  <button className="rounded-md bg-mainRed px-5 py-3 font-bold text-white">Sign Up</button>
                </Link>
             </div>
          </section>
