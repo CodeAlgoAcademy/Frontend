@@ -165,7 +165,7 @@ const Contact = () => {
                         <CustomButton
                            type="submit"
                            variant="filled"
-                           className="ml-auto min-w-[120px] justify-center text-center font-thabit font-bold"
+                           className="ml-auto min-w-[120px] justify-center text-center font-thabit font-bold text-white"
                         >
                            Send
                         </CustomButton>
