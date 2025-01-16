@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import http from "axios.config";
-import { openPreloader } from "store/fetchSlice";
+import { closePreloader, openPreloader } from "store/fetchSlice";
 import { InstitutionInquiryDto } from "types/interfaces";
 import { errorResolver } from "utils/errorResolver";
 
@@ -10,9 +10,8 @@ export const submitInstituionInquiry: any = createAsyncThunk("pricingService/ins
    dispatch(openPreloader({ loadingText: "Submitting Inquiry" }));
 
    try {
-      const response = await http.post("/contact/institution/", data);
-
-      console.log(response);
+      await http.post("/contact/institution/", data);
+      dispatch(closePreloader());
    } catch (error) {
       const errorMessage = errorResolver(error);
       return thunkApi.rejectWithValue(errorMessage);
