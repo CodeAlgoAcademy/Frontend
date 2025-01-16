@@ -14,3 +14,4 @@ export * from "./skill.interface";
 export * from "./student.interface";
 export * from "./teacher.interface";
 export * from "./unit.interface";
+export * from "./pricing.interface";

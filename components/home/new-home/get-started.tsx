@@ -13,12 +13,14 @@ const GetStarted = () => {
       "!bg-white !text-black !shadow-md absolute bottom-10 left-[40%] max-md:left-[40%] -translate-x-[50%] max-w-fit min-w-fit min-w-[150px] !mx-auto font-thabit font-bold text-[1.1rem] max-md:text-[.9rem] justify-center"
    );
 
+   const toSignUp = () => push("/signup");
+
    return (
       <section className="bg-redToBlackGradient">
          <div className="px-2 pt-12 pb-12">
             <button
                className="mx-auto block cursor-pointer rounded-3xl bg-white px-6 py-2 text-center font-tiltWarp text-[1.8rem] text-black max-md:text-[1.5rem]"
-               onClick={() => push("/signup")}
+               onClick={toSignUp}
             >
                SIGN UP TODAY!
             </button>
@@ -28,7 +30,7 @@ const GetStarted = () => {
             {!isMobile && (
                <article className="relative -mr-24 grid h-full w-full flex-1 place-content-center bg-whiteToBlueGradient clip-path-right-parallelogram">
                   <img src={"/assets/landing/get-started-1.png"} className="h-[550px] w-[450px]" />
-                  <CustomButton className={buttonClassName} variant="filled" size="medium">
+                  <CustomButton onClick={toSignUp} className={buttonClassName} variant="filled" size="medium">
                      CREATE YOUR AVATAR
                   </CustomButton>
                </article>
@@ -36,7 +38,7 @@ const GetStarted = () => {
 
             <article className="relative -mx-8 grid h-[650px] w-full flex-1 place-content-center bg-red-500 clip-path-center-parallelogram max-md:-ml-0 max-md:-mr-10 max-md:h-[300px] max-md:clip-path-right-parallelogram">
                <img src={"/assets/landing/get-started-2.png"} className="h-[650px] w-full object-cover max-md:h-[300px]" />
-               <CustomButton className={cn(buttonClassName)} variant="filled" size={isMobile ? "extra-small" : "medium"}>
+               <CustomButton onClick={toSignUp} className={cn(buttonClassName)} variant="filled" size={isMobile ? "extra-small" : "medium"}>
                   LEARN BY PLAYING
                </CustomButton>
             </article>
@@ -47,6 +49,7 @@ const GetStarted = () => {
                   className="h-[650px] min-w-[40vw] object-cover object-right-top max-md:h-[300px] max-sm:min-w-[58vw]"
                />
                <CustomButton
+                  onClick={toSignUp}
                   className={cn(buttonClassName, "left-[50%] max-md:left-[50%]")}
                   variant="filled"
                   size={isMobile ? "extra-small" : "medium"}
