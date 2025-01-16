@@ -10,7 +10,7 @@ export const submitInstituionInquiry: any = createAsyncThunk("pricingService/ins
    dispatch(openPreloader({ loadingText: "Submitting Inquiry" }));
 
    try {
-      const response = await http.post("/contact/institution", data);
+      const response = await http.post("/contact/institution/", data);
 
       console.log(response);
    } catch (error) {
