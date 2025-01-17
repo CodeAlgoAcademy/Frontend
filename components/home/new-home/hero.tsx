@@ -51,7 +51,7 @@ const Hero = () => {
                   loop
                   muted
                   controls={false}
-                  autoPlay={false}
+                  autoPlay={true}
                   ref={videoRef as MutableRefObject<HTMLVideoElement>}
                   disablePictureInPicture
                   crossOrigin="anonymous"
