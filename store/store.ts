@@ -21,6 +21,7 @@ import parentChildSlice from "./parentChildSlice";
 import parentSlice from "./parentSlice";
 import organizersSlice from "./organizersSlice";
 import accessibilityReducer from "./accessibilitySlice";
+import pricingReducer from "./pricingSlice";
 
 export const store = configureStore({
    reducer: {
@@ -45,6 +46,7 @@ export const store = configureStore({
       parent: parentSlice,
       organizer: organizersSlice,
       accessibility: accessibilityReducer,
+      pricing: pricingReducer,
    },
 });
 

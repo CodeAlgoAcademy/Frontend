@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import { closePreloader, openErrorModal } from "store/fetchSlice";
 import { store } from "store/store";
 
@@ -44,6 +45,15 @@ export const errorResolver = (error: any): string[] => {
 
    dispatch(closePreloader());
    dispatch(openErrorModal({ errorText: resolvedErrors }));
+   toast.error(
+      <ul className="flex flex-col gap-y-2">
+         {resolvedErrors?.map((error: string, index: number) => (
+            <li className="gap-x-4 text-[.85rem]" key={index}>
+               • {error}
+            </li>
+         ))}
+      </ul>
+   );
 
    return resolvedErrors;
 };

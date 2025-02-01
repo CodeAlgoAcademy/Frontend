@@ -2,11 +2,12 @@ import React, { ButtonHTMLAttributes, DetailedHTMLProps, FC, ReactNode } from "r
 import { BiLoaderAlt } from "react-icons/bi";
 import { cn } from "utils";
 
-const Button = ({ text, color }: { text: string; color: string }) => {
+const Button = ({ text, color = "#2073fa", onClick }: { text: string; color?: string; onClick?(): void }) => {
    return (
       <button
          type="button"
          style={{ backgroundColor: color }}
+         onClick={onClick}
          className="h-[44px] min-w-[130px] rounded-3xl px-8 font-bold text-white hover:opacity-80"
       >
          {text}

@@ -12,6 +12,7 @@ import SuccessModal from "../modals/SuccessModal";
 import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
 import { RootState } from "store/store";
 import { getAccessibilityClassName } from "utils";
+import { Toaster } from "sonner";
 
 interface Props {
    children?: ReactNode;
@@ -67,6 +68,7 @@ const Layout = ({ children }: Props) => {
                <title>CodeAlgo Academy</title>
             </Head>
             <main>{children}</main>
+            <Toaster />
             <SuccessModal />
             <ErrorModal />
             <Preloader />

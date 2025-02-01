@@ -74,12 +74,12 @@ export default function Teacher() {
                   </label>
                </div>
                {!teacherSignUpStep && (
-                  <button className="bg-mainRedtext-center  mt-6 block h-[2.5rem] w-full rounded-xl font-bold text-white" type="submit">
+                  <button className="mt-6 block  h-[2.5rem] w-full rounded-xl bg-mainRed text-center font-bold text-white" type="submit">
                      Continue
                   </button>
                )}
                {teacherSignUpStep && (
-                  <button className="bg-mainRedtext-center  mt-6 block h-[2.5rem] w-full rounded-xl font-bold text-white" type="submit">
+                  <button className="mt-6 block  h-[2.5rem] w-full rounded-xl bg-mainRed text-center font-bold text-white" type="submit">
                      Sign up
                   </button>
                )}

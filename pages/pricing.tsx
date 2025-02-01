@@ -2,15 +2,26 @@ import Banner from "@/components/home/new-home/banner";
 import Footer from "@/components/home/new-home/footer";
 import Navbar from "@/components/navbar/home/Navbar";
 import { CustomButton } from "@/components/UI/Button";
+import { MenuItem, Select } from "@mui/material";
 import Image from "next/image";
-import React, { FC, FormEvent, useState } from "react";
+import { useRouter } from "next/router";
+import React, { FC, FormEvent, useEffect, useState } from "react";
 import { FiArrowRight } from "react-icons/fi";
-import { useDispatch } from "react-redux";
-import { submitInstituionInquiry } from "services/pricingService";
+import { useDispatch, useSelector } from "react-redux";
+import { getPricingPlans, submitInstituionInquiry } from "services/pricingService";
+import { toast } from "sonner";
 import { openSuccessModal } from "store/modalSlice";
-import { InstitutionInquiryDto } from "types/interfaces";
+import { RootState } from "store/store";
+import { InstitutionInquiryDto, IPlan } from "types/interfaces";
 
 const Pricing = () => {
+   const { handlers: pricingHandlers, plans } = useSelector((state: RootState) => state.pricing);
+   const dispatch = useDispatch();
+
+   useEffect(() => {
+      dispatch(getPricingPlans());
+   }, []);
+
    return (
       <div className="relative font-thabit">
          <Navbar />
@@ -21,9 +32,15 @@ const Pricing = () => {
                <h1 className="text-center text-[1.5rem] font-bold text-white">Choose the plan that is right for you</h1>
 
                <div className="mt-20 mb-10 flex items-start justify-around gap-8 max-md:flex-col max-md:items-center">
-                  <SinglePricing plan="Basic" amount="Free" benefits={["3 Python Units", ""]} />
-                  <SinglePricing plan="Parent & Family" amount="$259/yr" benefits={["Entire Curriculum", "Internship Opportunities"]} />
-                  <SinglePricing plan="Institution" amount="Contact us" benefits={["", ""]} />
+                  {pricingHandlers.loading ? (
+                     <PricingShimmer />
+                  ) : plans.length === 0 ? (
+                     <div className="flex h-[200px] flex-1 items-center justify-center">
+                        <p className="text-[1.5rem] text-white">No Plan</p>
+                     </div>
+                  ) : (
+                     plans.map((plan, index) => <SinglePricing plan={plan} key={index} />)
+                  )}
                </div>
             </div>
          </section>
@@ -35,34 +52,48 @@ const Pricing = () => {
    );
 };
 
+const PricingShimmer = () => {
+   return (
+      <>
+         {[null, null, null].map((_, index) => {
+            return (
+               <div key={index} className="flex-1">
+                  <div className="mb-3 h-[200px] animate-pulse rounded-md bg-white/10"></div>
+                  <div className="mb-3 h-[50px] animate-pulse rounded-md bg-white/10"></div>
+               </div>
+            );
+         })}
+      </>
+   );
+};
+
 interface SinglePricingProps {
-   plan: string;
-   amount: string;
-   benefits?: string[];
+   plan: IPlan;
 }
 
-const SinglePricing: FC<SinglePricingProps> = ({ plan, amount, benefits = [] }) => {
+const SinglePricing: FC<SinglePricingProps> = ({ plan }) => {
+   const { push } = useRouter();
    return (
       <div className="flex flex-col items-center justify-center gap-2 font-bold">
          <div className="mx-auto w-[100px] max-md:max-w-fit">
             <Image src={"/assets/landing/logo_no_name.png"} width={100} height={40} />
          </div>
 
-         <h2 className="mt-1 text-center text-[1.5rem] text-white max-md:text-[1.1rem] max-md:leading-[1]">{plan}</h2>
-         <h1 className="my-1 text-center text-[1.8rem] text-white max-md:text-[1.1rem] max-md:leading-[1]">{amount}</h1>
-         <ul className="my-2 max-w-fit list-disc space-y-2 text-center">
-            {benefits.map((bnf, index) => {
-               return bnf ? (
-                  <li className="mx-auto max-w-fit text-[.9rem] text-white" key={index}>
-                     {bnf}
-                  </li>
-               ) : (
-                  <div className="invisible text-[.9rem] max-md:hidden">Placeholder</div>
-               );
-            })}
-         </ul>
+         <h2 className="mt-1 text-center text-[1.5rem] text-white max-md:text-[1.1rem] max-md:leading-[1]">{plan.name}</h2>
+         <h1 className="my-1 text-center text-[1.8rem] text-white max-md:text-[1.1rem] max-md:leading-[1]">
+            ${(plan.amount_in_cent / 1000).toFixed(2)}
+         </h1>
+         <ul className="my-2 max-w-fit list-disc space-y-2 text-center">{plan.description}</ul>
 
-         <CustomButton icon={<FiArrowRight />} variant="filled" className="text-white">
+         <CustomButton
+            onClick={() => {
+               toast.success("Login to your dashboard to complete payment");
+               push(`/login/parent`);
+            }}
+            icon={<FiArrowRight />}
+            variant="filled"
+            className="text-white"
+         >
             Get Started
          </CustomButton>
       </div>
@@ -143,12 +174,46 @@ const InstitutionInquiry = () => {
                   </div>
 
                   <div className="w-full flex-1">
-                     <input
-                        value={requestBody.category}
+                     <Select
+                        value={requestBody.category || "unselected"}
+                        fullWidth
+                        sx={{
+                           borderRadius: ".375rem",
+                           border: "1.5px solid #d9d9d9",
+                           backgroundColor: "#d9d9d9",
+                           height: 45,
+                           outline: "none",
+                           "& *": {
+                              outline: "none",
+                              border: "none !important",
+                           },
+                        }}
+                        MenuProps={{
+                           PaperProps: {
+                              sx: {
+                                 "& .MuiMenuItem-root": {
+                                    "&:hover": {
+                                       backgroundColor: "#FF575A",
+                                       color: "#FFFFFF",
+                                    },
+                                    "&.Mui-selected": {
+                                       backgroundColor: "#FF0D11",
+                                       color: "#FFFFFF",
+                                       "&:hover": {
+                                          backgroundColor: "#FF575A",
+                                       },
+                                    },
+                                 },
+                              },
+                           },
+                        }}
                         onChange={(e) => updateRequestBody("category", e.target.value)}
-                        required
-                        className="w-full rounded-md border-[1.5px] border-[#D9D9D9] bg-[#D9D9D9] p-2 outline-none focus:border-mainRed"
-                     />
+                     >
+                        <MenuItem value={"unselected"}>Please select a category</MenuItem>
+                        <MenuItem value={"organization"}>Organization</MenuItem>
+                        <MenuItem value={"school"}>School</MenuItem>
+                        <MenuItem value={"district"}>District</MenuItem>
+                     </Select>
                   </div>
                </div>
 

@@ -85,19 +85,19 @@ export const signUpUser: any = createAsyncThunk("authSlice/signUpUser", async (n
       }
 
       if (is_teacher) {
-         options = { ...options, country: schoolCountry, schoolCountry, schoolName, grade: "" };
+         options = { ...options, country: schoolCountry, schoolCountry, schoolName, grade: undefined };
       }
 
       if (is_student) {
-         options = { ...options, country, grade, schoolCountry: "", schoolName: "", dob };
+         options = { ...options, country, grade, schoolCountry: undefined, schoolName: undefined, dob };
       }
 
       if (is_parent) {
-         options = { ...options, country: country, grade: "", schoolCountry: "", schoolName: "" };
+         options = { ...options, country: country, grade: undefined, schoolCountry: undefined, schoolName: undefined };
       }
 
       if (is_organizer) {
-         options = { ...options, country: country, schoolCountry: "", schoolName: "", grade: "" };
+         options = { ...options, country: country, schoolCountry: undefined, schoolName: undefined, grade: undefined };
       }
 
       dispatch(openPreloader({ loadingText: "Creating Account" }));

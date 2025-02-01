@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { openErrorModal } from "store/fetchSlice";
 import { store } from "store/store";
-import { getRefreshToken } from "utils/getTokens";
+import { getAccessToken, getRefreshToken } from "utils/getTokens";
 
 const http = axios.create({
    baseURL: process.env.NEXT_PUBLIC_API_URL,

@@ -54,11 +54,11 @@ const ParentLayout = ({ children, title }: Props) => {
       if (typeof window !== "undefined") {
          const stringedToken = localStorage.getItem(ILocalStorageItems.token);
          const token = JSON.parse(`${stringedToken}`);
-         if (token?.user_type !== "parent") {
-            router.push("/login");
-         } else {
-            setUser(getUserFromLocalStorage());
-         }
+         // if (token?.user_type !== "parent") {
+         //    router.push("/login");
+         // } else {
+         //    setUser(getUserFromLocalStorage());
+         // }
       }
    }, [router]);
 

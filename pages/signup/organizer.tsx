@@ -69,7 +69,7 @@ const Organizer = () => {
                         <Link href={"/privacy-policy"}> I accept the terms and condition</Link>
                      </label>
                   </div>
-                  <button className="bg-mainRedtext-center  mt-6 block h-[2.5rem] w-full rounded-xl font-bold text-white" type="submit">
+                  <button className="mt-6 block  h-[2.5rem] w-full rounded-xl bg-mainRed text-center font-bold text-white" type="submit">
                      Continue
                   </button>
 

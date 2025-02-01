@@ -29,8 +29,8 @@ export default function ParentSidebar({ onClose, isOpen }: Props) {
          </div>
          <div className="my-2">
             <h2 className="ml-7 mb-3 text-xl font-medium text-[#A8ABB0]">ACCOUNT</h2>
-            {/* <NavButton title="Billing" image="Billing.svg" url="/parents/billing" /> */}
             <NavButton title="Student Accounts" image="people.svg" url="/parents/student" />
+            <NavButton title="Billing" image="Billing.svg" url="/parents/billing" />
             <NavButton title="Organization" image={<SlOrganization />} url="/parents/organization" />
          </div>
          <div className="my-2">
