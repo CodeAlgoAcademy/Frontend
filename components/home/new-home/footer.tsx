@@ -136,7 +136,7 @@ const Footer = () => {
                })}
             </div>
 
-            <p className="text-[.9rem]">Copyright &copy; 2024 CodeAlgo</p>
+            <p className="text-[.9rem]">Copyright &copy; {new Date().getFullYear()} CodeAlgo</p>
 
             <p className="text-[.9rem] font-semibold">720 Main St, Kansas City MO, 64105</p>
          </div>
