@@ -21,11 +21,7 @@ export const submitInstituionInquiry: any = createAsyncThunk("pricingService/ins
 
 export const getPricingPlans: any = createAsyncThunk("pricingService/getPlans", async (_, thunkApi) => {
    try {
-      const response = await http.get<IPlan[]>("/payment/parent/plans", {
-         headers: {
-            Authorization: `Bearer ${getAccessToken()}`,
-         },
-      });
+      const response = await http.get<IPlan[]>("/payment/parent/plans");
 
       return response.data;
    } catch (error) {
