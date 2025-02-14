@@ -20,7 +20,7 @@ export default function SelectAccountType() {
          <h1 className="text-mainRedmd:mt-[2rem] mt-[2rem] text-center text-xl font-bold md:text-3xl">
             Who are you {slug.pathname.includes("/login") ? "logging in" : "signing up"} as?
          </h1>
-         <div className="mx-6 mt-[2rem] grid flex-col items-center justify-center gap-y-3 sm:grid-cols-2 md:mt-[7rem] md:grid-cols-3 md:flex-row md:gap-x-[4rem] lg:grid-cols-4">
+         <div className="mx-6 mt-[2rem] grid flex-col items-center justify-center gap-y-6 sm:grid-cols-2 md:mt-[7rem] md:grid-cols-3 md:flex-row md:gap-x-[5rem] lg:grid-cols-4">
             <Link href={slug.pathname.includes("/signup") ? "/signup/organizer" : "/login/organizer"}>
                <div className="transition duration-300 ease-out hover:scale-110 hover:text-mainRed">
                   <div className="mx-auto max-h-[200px] max-w-[200px] md:max-h-fit md:max-w-fit">
