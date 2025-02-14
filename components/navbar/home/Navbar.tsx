@@ -95,7 +95,7 @@ const Navbar = () => {
                <AnimatePresence>{showMobileNav && <MobileNavbar close={() => setShowMobileNav(false)} />}</AnimatePresence>
             </ul>
              
-            <div className="flex items-center gap-4 max-md:hidden"> 
+        <div className="flex items-center gap-4 max-md:hidden"> 
             <CustomButton
                onClick={() => push("https://covidgame.s3.ca-central-1.amazonaws.com/index.html")}
                variant="filled"
@@ -113,6 +113,7 @@ const Navbar = () => {
             >
                <span className="no-contrast-adjust">PLAY GAME</span>
             </CustomButton>
+        </div>
 
             <BiMenu className="text-white md:hidden" size={28} onClick={() => setShowMobileNav(true)} />
          </div>
