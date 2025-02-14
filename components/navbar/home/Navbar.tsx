@@ -96,6 +96,15 @@ const Navbar = () => {
             </ul>
 
             <CustomButton
+               onClick={() => push("https://covidgame.s3.ca-central-1.amazonaws.com/index.html")}
+               variant="filled"
+               size="medium"
+               className="bg-mainRed font-bold !text-white hover:bg-mainRed/80 max-md:hidden"
+            >
+               <span className="no-contrast-adjust"> FREE COVID GAME</span>
+            </CustomButton>
+
+            <CustomButton
                onClick={() => push("https://play.codealgoacademy.com")}
                variant="filled"
                size="medium"
