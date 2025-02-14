@@ -38,7 +38,7 @@ export default function SelectAccountType() {
             <Link href={slug.pathname.includes("/signup") ? "/signup/parent" : "/login/parent"}>
                <div className="transition duration-300 ease-out hover:scale-110 hover:text-mainRed">
                   <div className="mx-auto max-h-[200px] max-w-[200px] md:max-h-fit md:max-w-fit">
-                     <Image src="/assets/parents.png" alt="parent" height="225" width="225" />
+                     <Image src="/assets/parents.png" alt="parent" height="200" width="200" />
                   </div>
                   <h2
                      data-testid="accountType"
@@ -51,7 +51,7 @@ export default function SelectAccountType() {
             <Link href={slug.pathname.includes("signup") ? "/signup/teacher" : "/login/teacher"}>
                <div className="transition duration-300 ease-out hover:scale-110 hover:text-mainRed">
                   <div className="mx-auto max-h-[200px] max-w-[200px] md:max-h-fit md:max-w-fit">
-                     <Image src="/assets/teacher.png" alt="parent" height="225" width="225" />
+                     <Image src="/assets/teacher.png" alt="parent" height="200" width="200" />
                   </div>
                   <h2
                      data-testid="accountType"
@@ -65,7 +65,7 @@ export default function SelectAccountType() {
             <a rel="noopener noreferrer" href={slug.pathname.includes("login") ? "https://play.codealgoacademy.com" : "/signup/student"}>
                <div className="transition duration-300 ease-out hover:scale-110 hover:text-mainRed">
                   <div className="mx-auto max-h-[200px] max-w-[200px] md:max-h-fit md:max-w-fit">
-                     <Image src="/assets/students.png" alt="parent" height="225" width="225" />
+                     <Image src="/assets/students.png" alt="parent" height="200" width="200" />
                   </div>
                   <h2
                      data-testid="accountType"
@@ -79,7 +79,7 @@ export default function SelectAccountType() {
              <a rel="noopener noreferrer" href={slug.pathname.includes("login") ? "https://covidgame.s3.ca-central-1.amazonaws.com/index.html" : "/signup/student"}>
                <div className="transition duration-300 ease-out hover:scale-110 hover:text-mainRed">
                   <div className="mx-auto max-h-[200px] max-w-[200px] md:max-h-fit md:max-w-fit">
-                     <Image src="/assets/covid.png" alt="parent" height="225" width="225" />
+                     <Image src="/assets/covid.png" alt="parent" height="200" width="200" />
                   </div>
                   <h2
                      data-testid="accountType"
