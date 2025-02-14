@@ -60,7 +60,9 @@ export default function SelectAccountType() {
                      Teacher
                   </h2>
                </div>
-            </Link>
+            </Link> 
+
+             /* This is how we are loading the student login*/
             <a rel="noopener noreferrer" href={slug.pathname.includes("login") ? "https://play.codealgoacademy.com" : "/signup/student"}>
                <div className="transition duration-300 ease-out hover:scale-110 hover:text-mainRed">
                   <div className="mx-auto max-h-[200px] max-w-[200px] md:max-h-fit md:max-w-fit">
@@ -74,6 +76,21 @@ export default function SelectAccountType() {
                   </h2>
                </div>
             </a>
+                /* This is how we are loading the pave project login*/
+             <a rel="noopener noreferrer" href={slug.pathname.includes("login") ? "https://covidgame.s3.ca-central-1.amazonaws.com/index.html" : "/signup/COVID-19_GAME"}>
+               <div className="transition duration-300 ease-out hover:scale-110 hover:text-mainRed">
+                  <div className="mx-auto max-h-[200px] max-w-[200px] md:max-h-fit md:max-w-fit">
+                     <Image src="/assets/students.png" alt="parent" height="225" width="225" />
+                  </div>
+                  <h2
+                     data-testid="accountType"
+                     className="text-black-500 mt-[.4rem] cursor-pointer text-center text-[1.3rem] font-[500] md:mt-[2rem] md:text-3xl md:font-bold"
+                  >
+                     COVID-19_GAME
+                  </h2>
+               </div>
+            </a>
+             
          </div>
       </div>
    );
