@@ -30,8 +30,8 @@ const BillingPlan: FC<Props> = ({ plan }) => {
                </p>
             </div>
             <div className="mt-5 flex items-start justify-center">
-               <h5 className="h-fit text-[32px] font-bold">${plan.amount_in_cent}</h5>
-               <p className="mt-4 text-sm">/Month</p>
+               <h5 className="h-fit text-[32px] font-bold">${plan.amount_in_cent/100}</h5>
+               <p className="mt-4 text-sm">/Year</p>
             </div>
          </div>
          <div className="mt-5 px-4">
@@ -41,7 +41,7 @@ const BillingPlan: FC<Props> = ({ plan }) => {
                   <p className="cursor-pointer font-bold text-mainColor">Current Plan</p>
                ) : (
                   <Link href={`/parents/billing/payment?plan_id=${plan.id}`}>
-                     <button className="rounded-[4px]   bg-mainColor px-4 py-2 text-xs text-white">Get Started</button>
+                     <button className="rounded-[4px]   bg-mainColor px-4 py-2 text-xs text-white">Activate</button>
                   </Link>
                )}
             </div>
