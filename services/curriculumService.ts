@@ -2,138 +2,127 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "store/store";
 import http from "axios.config";
 import { getAccessToken } from "utils/getTokens";
-import { openErrorModal } from "store/fetchSlice";
+import { closePreloader, openErrorModal, openPreloader } from "store/fetchSlice";
 import { Icurriculum } from "types/interfaces";
 import { getDate } from "utils/getDate";
+import { errorResolver } from "utils/errorResolver";
 
-export const addUnits: any = createAsyncThunk(
-  "unitsSlice/addUnits",
-  async (name, thunkApi) => {
-    const state: any = thunkApi.getState();
-    const dispatch = thunkApi.dispatch;
-    const { levels, standard, chosenGrades, unitsWithError } =
-      state.unit.addUnit;
-    let { rearrangedUnits } = state.unit.addUnit;
-    const { id } = state.currentClass;
-    const units = rearrangedUnits.map((unit: any) => {
+export const addUnits: any = createAsyncThunk("unitsSlice/addUnits", async (name, thunkApi) => {
+   const state = <RootState>thunkApi.getState();
+   const dispatch = thunkApi.dispatch;
+   const { levels, standard, chosenGrades, unitsWithError } = state.unit.addUnit;
+   let { rearrangedUnits } = state.unit.addUnit;
+   const { id } = state.currentClass;
+   const units = rearrangedUnits.map((unit: any) => {
       return { ...unit, class_model: id };
-    });
-    const errors = [];
+   });
+   const errors = [];
 
-    if (standard === "") {
+   if (standard === "") {
       errors.push("Please Select a standard");
-    }
-    if (levels === "") {
+   }
+   if (levels === "") {
       errors.push("Please Select a level");
-    }
-    if (rearrangedUnits.length === 0) {
+   }
+   if (rearrangedUnits.length === 0) {
       errors.push("Please Select one or more units");
-    }
-    if (chosenGrades.length === 0) {
+   }
+   if (chosenGrades.length === 0) {
       errors.push("Please Select one or more grades");
-    }
-    unitsWithError.forEach((error: string) => errors.push(error));
-    try {
+   }
+   unitsWithError.forEach((error: string) => errors.push(error));
+   dispatch(openPreloader({ loadingText: "Adding Curriculum" }));
+   try {
       if (errors.length === 0) {
-        const { data } = await http.post(
-          "/academics/curriculums/units/",
-          JSON.stringify(units),
-          {
+         const { data } = await http.post("/academics/curriculums/units/", JSON.stringify(units), {
             headers: { Authorization: "Bearer " + getAccessToken() },
-          }
-        );
-        return data;
+         });
+         dispatch(closePreloader());
+         return data;
       } else {
-        dispatch(openErrorModal({ errorText: [...errors] }));
-      }
-    } catch (error: any) {
-      if (error.response.status !== 401) {
-        dispatch(openErrorModal({ errorText: [error.message] }));
-      }
-      return thunkApi.rejectWithValue(error.response.data);
-    }
-  }
-);
+         dispatch(closePreloader());
 
-export const getAllCurriculums: any = createAsyncThunk(
-  "curriculumSlice/fetchCurriculum",
-  async (name, thunkApi) => {
-    const dispatch = thunkApi.dispatch;
-    try {
+         dispatch(openErrorModal({ errorText: [...errors] }));
+      }
+   } catch (error: any) {
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
+   }
+});
+
+export const getAllCurriculums: any = createAsyncThunk("curriculumSlice/fetchCurriculum", async (name, thunkApi) => {
+   const dispatch = thunkApi.dispatch;
+   try {
       const { data } = await http.get("/academics/curriculums/units/", {
-        headers: { Authorization: "Bearer " + getAccessToken() },
+         headers: { Authorization: "Bearer " + getAccessToken() },
       });
       return data;
-    } catch (error: any) {
-      if (error.response.status !== 401) {
-        dispatch(openErrorModal({ errorText: [error.message] }));
-      }
-      return thunkApi.rejectWithValue(error.response.data);
-    }
-  }
-);
+   } catch (error: any) {
+      return thunkApi.rejectWithValue(error.response?.data);
+   }
+});
 
-export const deleteCurriculum: any = createAsyncThunk(
-  "curriculumSlice/deleteCurriculum",
-  async (id: string, thunkApi) => {
-    const dispatch = thunkApi.dispatch;
-    try {
+export const deleteCurriculum: any = createAsyncThunk("curriculumSlice/deleteCurriculum", async (id: string, thunkApi) => {
+   const dispatch = thunkApi.dispatch;
+   dispatch(openPreloader({ loadingText: "Deleting Curriculum" }));
+   try {
       const { data } = await http.delete(`/academics/curriculums/units/${id}`, {
-        headers: {
-          Authorization: "Bearer " + getAccessToken(),
-        },
+         headers: {
+            Authorization: "Bearer " + getAccessToken(),
+         },
       });
+      dispatch(closePreloader());
       dispatch(getAllCurriculums());
-    } catch (error: any) {
-      if (error.response.status !== 401) {
-        dispatch(openErrorModal({ errorText: [error.message] }));
-      }
-      return thunkApi.rejectWithValue(error.response.data);
-    }
-  }
-);
+   } catch (error: any) {
+      // const errorMessage = errorResolver(error);
+      // return thunkApi.rejectWithValue(errorMessage);
+   }
+});
 
 export const updateCurriculumToPast: any = createAsyncThunk(
-  "curriculumSlice/updateCurriculum",
-  async (params: { curriculum: Icurriculum; id: number }, thunkApi) => {
-    const rearrangedUnit: Icurriculum = {
-      ...params.curriculum,
-      is_current: false,
-      is_finished: true,
-      end_date: getDate(),
-    };
-
-    try {
-      const { data } = await http.put(
-        "/academics/curriculums/units/" + params.id,
-        rearrangedUnit,
-        {
-          headers: { Authorization: "Bearer " + getAccessToken() },
-        }
-      );
-    } catch (error: any) {}
-  }
+   "curriculumSlice/updateCurriculum",
+   async (params: { curriculum: Icurriculum; id: number }, thunkApi) => {
+      const rearrangedUnit: Icurriculum = {
+         ...params.curriculum,
+         is_current: false,
+         is_finished: true,
+         end_date: getDate(),
+      };
+      const dispatch = thunkApi.dispatch;
+      dispatch(openPreloader({ loadingText: `Moving ${params.curriculum.title} to past` }));
+      try {
+         const { data } = await http.put("/academics/curriculums/units/" + params.id, rearrangedUnit, {
+            headers: { Authorization: "Bearer " + getAccessToken() },
+         });
+         dispatch(closePreloader());
+      } catch (error: any) {
+         // const errorMessage = errorResolver(error);
+         // return thunkApi.rejectWithValue(errorMessage);
+      }
+   }
 );
 
 export const updateCurriculumToCurrent: any = createAsyncThunk(
-  "curriculumSlice/updateCurriculum",
-  async (params: { curriculum: Icurriculum; id: number }, thunkApi) => {
-    const date = new Date();
-    const rearrangedUnit: Icurriculum = {
-      ...params.curriculum,
-      is_current: true,
-      is_finished: false,
-      start_date: getDate(),
-    };
+   "curriculumSlice/updateCurriculum",
+   async (params: { curriculum: Icurriculum; id: number }, thunkApi) => {
+      const date = new Date();
+      const rearrangedUnit: Icurriculum = {
+         ...params.curriculum,
+         is_current: true,
+         is_finished: false,
+         start_date: getDate(),
+      };
+      const dispatch = thunkApi.dispatch;
+      dispatch(openPreloader({ loadingText: `Moving ${params.curriculum.title} to current` }));
 
-    try {
-      const { data } = await http.put(
-        "/academics/curriculums/units/" + params.id,
-        rearrangedUnit,
-        {
-          headers: { Authorization: "Bearer " + getAccessToken() },
-        }
-      );
-    } catch (error: any) {}
-  }
+      try {
+         const { data } = await http.put("/academics/curriculums/units/" + params.id, rearrangedUnit, {
+            headers: { Authorization: "Bearer " + getAccessToken() },
+         });
+         dispatch(closePreloader());
+      } catch (error: any) {
+         // const errorMessage = errorResolver(error);
+         // return thunkApi.rejectWithValue(errorMessage);
+      }
+   }
 );

@@ -1,0 +1,58 @@
+[
+   {
+      "id": 139,
+      "title": "Variables",
+      "class_model": 1,
+      "standard": "Missiouri Learning Standards",
+      "teacher": "ADEJAREDaniel_59f98",
+      "grades": ["grade 5"],
+      "level": "yellow",
+      "is_current": false,
+      "is_finished": true,
+      "start_date": "2023-04-25",
+      "end_date": "2023-04-26",
+      "description": "Variables are used to stored to be referenced and manipulated in a computer program"
+   },
+   {
+      "id": 140,
+      "title": "Variables",
+      "class_model": 1,
+      "standard": "Missiouri Learning Standards",
+      "teacher": "ADEJAREDaniel_59f98",
+      "grades": ["grade 1", "grade 2"],
+      "level": "green",
+      "is_current": true,
+      "is_finished": false,
+      "start_date": "2023-05-09",
+      "end_date": "2023-05-09",
+      "description": "Variables are used to stored to be referenced and manipulated in a computer program"
+   },
+   {
+      "id": 141,
+      "title": "Algorithm",
+      "class_model": 1,
+      "standard": "CSTA",
+      "teacher": "ADEJAREDaniel_59f98",
+      "grades": ["grade 1", "grade 2", "grade K"],
+      "level": "green",
+      "is_current": false,
+      "is_finished": false,
+      "start_date": "2023-05-22",
+      "end_date": "2023-05-30",
+      "description": "An Algorithm is a set of steps to perform a task"
+   },
+   {
+      "id": 142,
+      "title": "Variables",
+      "class_model": 1,
+      "standard": "New York State Computer Science and Digital Fluency Science",
+      "teacher": "ADEJAREDaniel_59f98",
+      "grades": ["grade 6", "grade 5"],
+      "level": "yellow",
+      "is_current": false,
+      "is_finished": true,
+      "start_date": "2023-05-09",
+      "end_date": "2023-05-09",
+      "description": "Variables are used to stored to be referenced and manipulated in a computer program"
+   }
+]

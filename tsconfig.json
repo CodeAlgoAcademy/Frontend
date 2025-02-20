@@ -1,27 +1,43 @@
 {
-  "compilerOptions": {
-    "composite": false,
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/components/*": ["components/*"],
-      "@/pages/*": ["pages/*"],
-      "@/styles/*": ["styles/*"]
-    }
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+   "compilerOptions": {
+      "composite": false,
+      "target": "es5",
+      "lib": ["dom", "dom.iterable", "esnext"],
+      "allowJs": true,
+      "skipLibCheck": true,
+      "strict": true,
+      "forceConsistentCasingInFileNames": true,
+      "noEmit": true,
+      "esModuleInterop": true,
+      "module": "esnext",
+      "moduleResolution": "node",
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "jsx": "preserve",
+      "incremental": true,
+      "baseUrl": ".",
+      "paths": {
+         "@/components/*": ["components/*"],
+         "@/pages/*": ["pages/*"],
+         "@/styles/*": ["styles/*"]
+      }
+   },
+   "include": [
+      "next-env.d.ts",
+      "**/*.ts",
+      "**/*.tsx",
+      "cypress/e2e/login.spec.ts",
+      "tests/pages/*.js",
+      "tests/pages/parents/student.spec.js",
+      "tests/pages/parents/screentime.spec.js",
+      "tests/pages/parents/multiplayer.spec.js",
+      "tests/pages/parents/dashboard.spec.js",
+      "cypress/e2e/pages/index.cy.js",
+      "cypress/support/commands.ts",
+      "cypress/e2e/components/navbar/home-nav.cy.ts",
+      "cypress/e2e/pages/contact.cy.js",
+      "cypress/e2e/pages/login.cy.js",
+      "cypress/e2e/pages/signup.cy.js"
+   ],
+   "exclude": ["node_modules", "**/*.jsx"]
 }
