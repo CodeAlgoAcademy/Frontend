@@ -1,0 +1,42 @@
+[
+   {
+      "fullName": "Daniel Adejare",
+      "dob": "2023-05-05",
+      "codingExperience": "beginner",
+      "username": "Daniel Adejare_67625",
+      "id": 37,
+      "timeLimits": [
+         { "id": 142, "timeLimit": "01:00:00", "dayOfTheWeek": "Monday" },
+         { "id": 143, "timeLimit": "00:00:00", "dayOfTheWeek": "Tuesday" },
+         { "id": 144, "timeLimit": "00:00:00", "dayOfTheWeek": "Wednesday" },
+         { "id": 145, "timeLimit": "00:00:00", "dayOfTheWeek": "Thursday" },
+         { "id": 146, "timeLimit": "00:00:00", "dayOfTheWeek": "Friday" },
+         { "id": 147, "timeLimit": "01:00:00", "dayOfTheWeek": "Saturday" },
+         { "id": 148, "timeLimit": "00:00:00", "dayOfTheWeek": "Sunday" }
+      ],
+      "pendingRequests": [{ "id": 8, "from_user": "Daniel Adejare_67625", "to_user": "DUNSIN_1cea7" }],
+      "friendRequests": [],
+      "friends": [],
+      "progress": []
+   },
+   {
+      "fullName": "Adejare Daniel",
+      "dob": "2023-04-28",
+      "codingExperience": "beginner",
+      "username": "Adejare Daniel_",
+      "id": 36,
+      "timeLimits": [
+         { "id": 135, "timeLimit": "01:00:00", "dayOfTheWeek": "Monday" },
+         { "id": 136, "timeLimit": "03:00:00", "dayOfTheWeek": "Tuesday" },
+         { "id": 137, "timeLimit": "01:00:00", "dayOfTheWeek": "Wednesday" },
+         { "id": 138, "timeLimit": "01:00:00", "dayOfTheWeek": "Thursday" },
+         { "id": 139, "timeLimit": "03:00:00", "dayOfTheWeek": "Friday" },
+         { "id": 140, "timeLimit": "06:00:00", "dayOfTheWeek": "Saturday" },
+         { "id": 141, "timeLimit": "02:00:00", "dayOfTheWeek": "Sunday" }
+      ],
+      "pendingRequests": [],
+      "friendRequests": [{ "id": 7, "from_user": "DUNSIN_1cea7", "to_user": "Adejare Daniel_" }],
+      "friends": [],
+      "progress": []
+   }
+]
