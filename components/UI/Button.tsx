@@ -2,8 +2,6 @@ import React, { ButtonHTMLAttributes, DetailedHTMLProps, FC, ReactNode } from "r
 import { BiLoaderAlt } from "react-icons/bi";
 import { cn } from "utils";
 
-import { cn } from "utils";
-
 const Button = ({ text, color = "#2073fa", onClick }: { text: string; color?: string; onClick?(): void }) => {
    return (
       <button
