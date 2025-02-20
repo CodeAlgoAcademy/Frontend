@@ -53,7 +53,7 @@ const PaymentForm = () => {
          </div>
 
          <div className="w-full flex-[.3]">
-            <BillingSummary amount={initiated_payment?.amount_in_cent! / 1000} />
+            <BillingSummary amount={initiated_payment?.amount_in_cent! / 100} />
 
             <div className="mt-8 flex justify-end gap-3">
                <button
