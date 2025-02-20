@@ -81,7 +81,7 @@ const SinglePricing: FC<SinglePricingProps> = ({ plan }) => {
 
          <h2 className="mt-1 text-center text-[1.5rem] text-white max-md:text-[1.1rem] max-md:leading-[1]">{plan.name}</h2>
          <h1 className="my-1 text-center text-[1.8rem] text-white max-md:text-[1.1rem] max-md:leading-[1]">
-            ${(plan.amount_in_cent / 1000).toFixed(2)}
+            ${(plan.amount_in_cent / 100).toFixed(2)}
          </h1>
          <ul className="my-2 max-w-fit list-disc space-y-2 text-center">{plan.description}</ul>
 
