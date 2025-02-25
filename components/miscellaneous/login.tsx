@@ -11,6 +11,7 @@ import { AuthButton } from "../UI/Button";
 import Link from "next/link";
 import ResendVerificationEmailModal from "../modals/ResendVerificationEmailModal";
 import { ILoginReducerArg } from "types/interfaces";
+import { PasswordInput } from "../UI/input";
 
 const Login = ({ route }: { route?: any }) => {
    const dispatch = useDispatch();
@@ -37,7 +38,7 @@ const Login = ({ route }: { route?: any }) => {
             if (data?.payload?.is_teacher) {
                router?.push("/teachers/addClass");
             } else {
-               dispatch(openErrorModal({ errorText: ["This is not a teacher's account"] }));
+               dispatch(openErrorModal({ errorText: ["Invalid credentials"] }));
                return;
             }
          } else if (router.pathname.includes("/login/parent")) {
@@ -48,14 +49,14 @@ const Login = ({ route }: { route?: any }) => {
                   router?.push("/parents");
                }
             } else {
-               dispatch(openErrorModal({ errorText: ["This is not a parent's account"] }));
+               dispatch(openErrorModal({ errorText: ["Invalid credentials"] }));
                return;
             }
          } else if (router.pathname.includes("/login/organizer")) {
             if (data?.payload?.is_organizer) {
                router.push("/organizers");
             } else {
-               dispatch(openErrorModal({ errorText: ["This is not an organizer's account"] }));
+               dispatch(openErrorModal({ errorText: ["Invalid credentials"] }));
                return;
             }
          }
@@ -106,15 +107,12 @@ const Login = ({ route }: { route?: any }) => {
                      required
                   />
                   <label className="mt-6 block text-xl font-semibold">Password</label>
-                  <input
-                     className="auth-input"
-                     value={credentials?.password}
+
+                  <PasswordInput
+                     value={credentials?.password ?? ""}
                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
                         dispatch(updateUser({ key: "password", value: e.target.value }));
                      }}
-                     type="password"
-                     placeholder="Enter Password"
-                     required
                   />
                   <div className="mt-2 flex items-center justify-between">
                      <Link href="/change-password">
