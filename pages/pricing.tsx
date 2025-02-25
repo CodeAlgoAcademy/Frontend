@@ -107,7 +107,7 @@ const InstitutionInquiry = () => {
       email: "",
       name: "",
       institution_name: "",
-      student_count: 1,
+      student_count: 0,
       message: "",
    };
 
@@ -234,7 +234,7 @@ const InstitutionInquiry = () => {
 
                <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
                   <div className="max-w-fit font-bold md:min-w-[250px]">
-                     <p>Number of students</p>
+                     <p>Number of classrooms</p>
                   </div>
 
                   <div className="w-full flex-1">
