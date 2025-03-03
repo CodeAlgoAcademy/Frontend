@@ -1,8 +1,24 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { accessibility_functions } from "public/data";
 import { AccessibilityFeatures, AccessibilitySlice } from "types/interfaces/accessibility.interface";
 
 const initialState: AccessibilitySlice = {
-   features: [],
+   features: {
+      "bigger text": 0,
+      "contrast +": 0,
+      cursor: 0,
+      dictionary: 0,
+      "hide images": 0,
+      "highlight links": 0,
+      "line height": 0,
+      "pause animations": 0,
+      saturation: 0,
+      "screen reader": 0,
+      "text align": 0,
+      "text spacing": 0,
+      "legible fonts": 0,
+   },
+   oversizedWidgets: false,
 };
 
 export const accessibilitySlice = createSlice({
@@ -11,18 +27,22 @@ export const accessibilitySlice = createSlice({
    reducers: {
       reset(state) {
          state.features = initialState.features;
+         state.oversizedWidgets = false;
       },
+      toggleWidgetsSize(state) {
+         state.oversizedWidgets = !state.oversizedWidgets;
+      },
+      increaseFeatureCount(state, action: PayloadAction<AccessibilityFeatures>) {
+         const maxCount = accessibility_functions[action.payload].length - 1;
 
-      addFeature(state, action: PayloadAction<AccessibilityFeatures>) {
-         if (!state.features.includes(action.payload)) {
-            state.features = [...state.features, action.payload];
+         if (state.features[action.payload] === maxCount) {
+            state.features[action.payload] = 0;
+         } else {
+            state.features[action.payload] += 1;
          }
       },
-
-      removeFeature(state, action: PayloadAction<AccessibilityFeatures>) {
-         if (state.features.includes(action.payload)) {
-            state.features = [...state.features.filter((feat) => feat != action.payload)];
-         }
+      setProfileFeatures(state, action: PayloadAction<Partial<AccessibilitySlice["features"]>>) {
+         state.features = { ...initialState.features, ...action.payload };
       },
    },
 });
