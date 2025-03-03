@@ -9,7 +9,7 @@ const Hero = () => {
    const videoRef = useRef<HTMLVideoElement>();
    const [isChrome, setIsChrome] = useState(false);
 
-   const animationsPaused = useMemo(() => features.includes("pause-animations"), [features]);
+   const animationsPaused = useMemo(() => features["pause animations"], [features]);
 
    useEffect(() => {
       const video = videoRef?.current;

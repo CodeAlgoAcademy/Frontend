@@ -10,7 +10,7 @@ const LetsLearnTogether = () => {
    const isMobile = useMediaQuery("(max-width: 768px)");
    const features = useSelector((state: RootState) => state.accessibility.features);
 
-   const animationsPaused = useMemo(() => features.includes("pause-animations"), [features]);
+   const animationsPaused = useMemo(() => features["pause animations"], [features]);
 
    return (
       <div className="mt-20">
