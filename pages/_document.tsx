@@ -25,7 +25,7 @@ class MyDocument extends Document {
                   property="og:description"
                   content="3D games from CodeAlgo academy will bring students to computer sciences where they can teach themselves as they play."
                />
-               <meta property="og:image" content="https://res.cloudinary.com/dtori4rq2/image/upload/v1693174037/background2_1_rxj5w3.jpg" />
+               <meta property="og:image" content="https://res.cloudinary.com/denettr1i/image/upload/v1742451547/codealgo.png" />
                <meta property="og:image:alt" content="CodeAlgo Home Page" />
 
                {/* <!-- Twitter Meta Tags --> */}
@@ -37,7 +37,7 @@ class MyDocument extends Document {
                   name="twitter:description"
                   content="3D games from CodeAlgo academy will bring students to computer sciences where they can teach themselves as they play."
                />
-               <meta name="twitter:image" content="https://res.cloudinary.com/dtori4rq2/image/upload/v1693174037/background2_1_rxj5w3.jpg" />
+               <meta name="twitter:image" content="https://res.cloudinary.com/denettr1i/image/upload/v1742451547/codealgo.png" />
                <meta name="title" content="CodeAlgo Academy" />
                <meta
                   name="description"
