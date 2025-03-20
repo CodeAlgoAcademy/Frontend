@@ -207,7 +207,7 @@ export const updateFirstname: any = createAsyncThunk("authSlice/updateFirstname"
    const { lastname, email, country, schoolCountry, schoolName, is_student, is_teacher, is_parent, is_organizer, grade, username } = state.user;
    try {
       const { data } = await http.put(
-         "/auth/user",
+         "/auth/user/",
          {
             firstname,
             lastname,
@@ -243,7 +243,7 @@ export const updateLastname: any = createAsyncThunk("authSlice/updateLastname", 
    const { firstname, email, country, schoolCountry, schoolName, is_student, is_teacher, is_parent, is_organizer, grade, username } = state.user;
    try {
       const { data } = await http.put(
-         "/auth/user",
+         "/auth/user/",
          {
             lastname,
             firstname,
@@ -279,7 +279,7 @@ export const updateEmail: any = createAsyncThunk("authSlice/updateEmail", async 
    const { lastname, firstname, country, schoolCountry, schoolName, is_student, is_teacher, is_parent, is_organizer, grade, username } = state.user;
    try {
       const { data } = await http.put(
-         "/auth/user",
+         "/auth/user/",
          {
             email,
             lastname,
