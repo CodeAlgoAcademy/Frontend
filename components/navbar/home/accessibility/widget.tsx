@@ -24,9 +24,7 @@ const AccessibilityWidget: FC<Props> = ({ feature }) => {
    const is_selected = current_selection > 0;
 
    useEffect(() => {
-      if (!is_selected) {
-         speak(`Returned to ${current_selection_details?.name}`);
-      } else {
+      if (is_selected) {
          speak(`Selected ${current_selection_details?.name}`);
       }
    }, [is_selected, current_selection_details]);

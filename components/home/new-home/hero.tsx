@@ -11,24 +11,18 @@ const Hero = () => {
 
    const animationsPaused = useMemo(() => features["pause animations"], [features]);
 
+   console.log(animationsPaused);
+
    useEffect(() => {
       const video = videoRef?.current;
 
-      const handleCanPlay = () => {
-         if (animationsPaused) {
-            video?.pause();
-         } else {
-            video?.play().catch((err) => {
-               console.error("Error playing video:", err);
-            });
-         }
-      };
-
-      video?.addEventListener("canplay", handleCanPlay);
-
-      return () => {
-         video?.removeEventListener("canplay", handleCanPlay);
-      };
+      if (animationsPaused) {
+         video?.pause();
+      } else {
+         video?.play()?.catch((err) => {
+            console.error("Error playing video:", err);
+         });
+      }
    }, [videoRef, animationsPaused]);
 
    useEffect(() => {
