@@ -84,7 +84,7 @@ const Navbar = () => {
 
                <div className="flex items-center gap-4 max-md:hidden">
                   <CustomButton
-                     onClick={() => push("https://covidgame.s3.ca-central-1.amazonaws.com/index.html")}
+                     onClick={() => push("http://covidgame.codealgoacademy.com/")}
                      variant="filled"
                      size="medium"
                      className="bg-mainRed font-bold !text-white hover:bg-mainRed/80 max-md:hidden"

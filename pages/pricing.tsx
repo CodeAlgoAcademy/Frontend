@@ -84,7 +84,7 @@ const SinglePricing: FC<SinglePricingProps> = ({ plan }) => {
             ${(plan.amount_in_cent / 100).toFixed(2)}
          </h1>
          <ul className="my-2 max-w-fit list-disc space-y-2 text-center">{plan.description}</ul>
-
+         <h1 className="text-center text-[1.5rem] font-bold text-white">per year</h1>
          <CustomButton
             onClick={() => {
                toast.success("Login to your dashboard to complete payment");
