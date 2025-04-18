@@ -1,3 +1,4 @@
+import { PasswordInput } from "@/components/UI/input";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateChild } from "store/parentChildSlice";
@@ -25,7 +26,7 @@ export default function ParentSignUp5() {
          <input className="auth-input" name="username" type="text" autoFocus required value={child?.username} onChange={onChange} />
          <button
             type="button"
-            className="text-mainColor  hover:bg-mainColor mt-2 block h-[2.5rem] w-full rounded-xl bg-white text-center font-bold transition duration-300 ease-out hover:text-white"
+            className="mt-2  block h-[2.5rem] w-full rounded-xl bg-white text-center font-bold text-mainColor transition duration-300 ease-out hover:bg-mainColor hover:text-white"
             onClick={() => {
                if (child?.fullName) {
                   const randomName = generateUsername(child?.fullName, "");
@@ -36,10 +37,17 @@ export default function ParentSignUp5() {
             Generate Username
          </button>
          <label className="mt-6 block text-xl font-semibold">Password</label>
-         <input className="auth-input" type="password" name="password" required value={child?.password} onChange={onChange} />
+         <PasswordInput className="auth-input" type="password" name="password" required value={child?.password ?? ""} onChange={onChange} />
          <label className="mt-6 block text-xl font-semibold">Verify Password</label>
          <div className="mb-[2.5rem]">
-            <input className="auth-input" type="password" name="confirmPassword" required value={child?.confirmPassword} onChange={onChange} />
+            <PasswordInput
+               className="auth-input"
+               type="password"
+               name="confirmPassword"
+               required
+               value={child?.confirmPassword ?? ""}
+               onChange={onChange}
+            />
             {child?.confirmPassword && child?.password && child?.confirmPassword !== child?.password && (
                <p className="mt-2 text-red-500">Passwords do not match</p>
             )}

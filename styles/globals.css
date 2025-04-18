@@ -54,47 +54,157 @@ body {
    font-family: "worksans";
 }
 
+.invert-colors-1 *:not(.omit-invert, .omit-invert *) {
+   mix-blend-mode: difference !important;
+}
+
+.invert-colors-1 h1,
+.invert-colors-1 h2,
+.invert-colors-1 h3,
+.invert-colors-1 h4,
+.invert-colors-1 h5,
+.invert-colors-1 h6,
+.invert-colors-1 p {
+   color: white !important;
+   mix-blend-mode: difference !important;
+   background-color: black !important;
+}
+
+.invert-colors-2 *:not(.omit, .omit *) {
+   background-color: rgb(0, 0, 0) !important;
+   border-color: rgb(255, 255, 255) !important;
+   color: white !important;
+}
+
+.invert-colors-3 *:not(.omit, .omit *) {
+   border-color: rgb(0, 0, 0) !important;
+   background-color: rgb(255, 255, 255) !important;
+   color: rgb(0, 0, 0) !important;
+}
+
 .highlight-links a {
    text-decoration: underline !important;
    @apply !bg-mainRed !text-mainBlack;
 }
 
-.invert-colors {
-   filter: invert(100) !important;
+.bigger-text-1 {
+   font-size: 105% !important;
 }
 
-.invert-colors .no-contrast-adjust {
-   filter: invert(0) !important;
+.bigger-text-1 h1,
+.bigger-text-1 h2,
+.bigger-text-1 h3,
+.bigger-text-1 h4,
+.bigger-text-1 h5,
+.bigger-text-1 h6,
+.bigger-text-1 p {
+   font-size: 105% !important;
 }
 
-.dark-contrast {
-   filter: contrast(100) !important;
+.bigger-text-2 {
+   font-size: 110% !important;
 }
 
-.dark-contrast .no-contrast-adjust {
-   filter: contrast(0) !important;
+.bigger-text-2 h1,
+.bigger-text-2 h2,
+.bigger-text-2 h3,
+.bigger-text-2 h4,
+.bigger-text-2 h5,
+.bigger-text-2 h6,
+.bigger-text-2 p {
+   font-size: 110% !important;
 }
 
-.invert-colors.dark-contrast {
-   filter: invert(100) contrast(100) !important;
+.bigger-text-3 {
+   font-size: 115% !important;
 }
 
-.invert-colors.dark-contrast .no-contrast-adjust {
-   filter: contrast(0) invert(0) !important;
+.bigger-text-3 h1,
+.bigger-text-3 h2,
+.bigger-text-3 h3,
+.bigger-text-3 h4,
+.bigger-text-3 h5,
+.bigger-text-3 h6,
+.bigger-text-3 p {
+   font-size: 115% !important;
 }
 
-.bigger-text {
-   font-size: 125% !important;
+.bigger-text-4 {
+   font-size: 120% !important;
+}
+
+.bigger-text-4 h1,
+.bigger-text-4 h2,
+.bigger-text-4 h3,
+.bigger-text-4 h4,
+.bigger-text-4 h5,
+.bigger-text-4 h6,
+.bigger-text-4 p {
+   font-size: 120% !important;
+}
+
+.text-spacing-1 {
+   letter-spacing: 2px !important;
+}
+
+.text-spacing-2 {
+   letter-spacing: 6px !important;
+}
+
+.text-spacing-3 {
+   letter-spacing: 10px !important;
+}
+
+.hide-images img {
+   visibility: hidden !important;
+}
+
+.big-cursor-1,
+.big-cursor-1 * {
+   cursor: url("../public/assets/big-cursor.svg"), default;
+}
+
+.line-height-1 * {
+   line-height: 1.5 !important;
+}
+
+.line-height-2 * {
+   line-height: 1.75 !important;
+}
+
+.line-height-3 * {
+   line-height: 2 !important;
+}
+
+.text-align-1 * {
+   text-align: left !important;
+}
+
+.text-align-2 * {
+   text-align: right !important;
+}
+.text-align-3 * {
+   text-align: center !important;
+}
+.text-align-4 * {
+   text-align: justify !important;
+}
+
+.saturation-1 {
+   filter: saturate(0.5) !important;
+}
+
+.saturation-2 {
+   filter: saturate(3) !important;
+}
+
+.saturation-3 {
+   filter: saturate(0) !important;
 }
 
 .legible-fonts,
 .legible-fonts * {
    font-weight: bold !important;
-}
-
-.big-cursor,
-.big-cursor * {
-   cursor: url("../public/assets/big-cursor.svg"), default;
 }
 
 a {

@@ -6,6 +6,10 @@ const initialState: IModal = {
       message: "",
       isOpen: false,
    },
+   dictionaryModal: {
+      word: "",
+      isOpen: false,
+   },
    addClassModalOpen: false,
    gradesModalOpen: false,
    showAddStudents: false,
@@ -72,6 +76,16 @@ const modalSlice = createSlice({
          state.successModal.isOpen = false;
          state.successModal.message = "";
       },
+
+      openDictionaryModal: (state: IModal, action: PayloadAction<string>) => {
+         state.dictionaryModal.isOpen = true;
+         state.dictionaryModal.word = action.payload;
+      },
+
+      closeDictionaryModal: (state: IModal) => {
+         state.dictionaryModal.isOpen = false;
+         state.dictionaryModal.word = "";
+      },
    },
 });
 
@@ -92,6 +106,8 @@ export const {
    closeSelectOrg,
    openSuccessModal,
    closeSuccessModal,
+   openDictionaryModal,
+   closeDictionaryModal,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

@@ -32,21 +32,21 @@ const GoogleBtn: FC = () => {
 
                if (router.pathname === "/login/teacher") {
                   if (!data?.payload?.is_teacher) {
-                     dispatch(openErrorModal({ errorText: ["This is not a teacher's account"] }));
+                     dispatch(openErrorModal({ errorText: ["Invalid credentials"] }));
                      return;
                   } else {
                      router.push("/teachers/addClass");
                   }
                } else if (router.pathname === "/login/parent") {
                   if (!data?.payload?.is_parent) {
-                     dispatch(openErrorModal({ errorText: ["This is not a parent's account"] }));
+                     dispatch(openErrorModal({ errorText: ["Invalid credentials"] }));
                      return;
                   } else {
                      router.push("/parents");
                   }
                } else if (router.pathname === "/login/organizer") {
                   if (!data?.payload?.is_organizer) {
-                     dispatch(openErrorModal({ errorText: ["This is not an admin account"] }));
+                     dispatch(openErrorModal({ errorText: ["Invalid credentials"] }));
                      return;
                   } else {
                      router.push("/organizers");

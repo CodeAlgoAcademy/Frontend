@@ -14,3 +14,21 @@ export interface IInputFields {
 export interface DynamicChechbox {
    [key: string]: boolean;
 }
+
+export interface DictionaryMeaning {
+   word: string;
+   meanings: {
+      partOfSpeech: string;
+      definitions: {
+         definition: string;
+         example: string;
+      }[];
+   }[];
+}
+
+export interface DictionaryDefinitions {
+   word: string;
+   partOfSpeech: string;
+   definition: string;
+   example: string;
+}

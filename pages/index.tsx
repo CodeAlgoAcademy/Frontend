@@ -9,6 +9,7 @@ import GetStarted from "@/components/home/new-home/get-started";
 import CodeToSuccess from "@/components/home/new-home/code-to-success";
 import AsSeenIs from "@/components/home/new-home/as-seen-in";
 import Footer from "@/components/home/new-home/footer";
+import AccessibilityMenu from "@/components/navbar/home/accessibility/menu";
 
 const Home: NextPage = () => {
    return (

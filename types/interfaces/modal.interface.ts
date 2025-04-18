@@ -7,10 +7,14 @@ export interface IModal {
    selectOrganizationOpen: boolean;
    // Parents dashboard
    addChildModalOpen: boolean;
-   successModal: {
-      message:string;
+   dictionaryModal: {
+      word: string;
       isOpen: boolean;
-   }
+   };
+   successModal: {
+      message: string;
+      isOpen: boolean;
+   };
 }
 
 export interface IFetch {

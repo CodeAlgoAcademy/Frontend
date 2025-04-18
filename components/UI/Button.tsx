@@ -59,7 +59,7 @@ export const CustomButton: FC<Props> = (props) => {
 
    switch (variant) {
       case "filled":
-         mainClass += "bg-mainRed text-mainBlack hover:bg-mainRed/80 text-center ";
+         mainClass += "bg-mainRed text-mainBlack hover:bg-mainRed/80 text-center transition-all duration-100 ";
          break;
       case "outline":
          mainClass += "bg-transparent border border-mainRed hover:bg-mainRed hover:text-mainBlack text-mainRed disabled:border-zinc-500/50 ";

@@ -107,7 +107,7 @@ const InstitutionInquiry = () => {
       email: "",
       name: "",
       institution_name: "",
-      student_count: 1,
+      student_count: 0,
       message: "",
    };
 
