@@ -4,6 +4,7 @@ import { RootState } from "store/store";
 import { updateUser } from "store/authSlice";
 import UsernameButton2 from "../../signup/usernameButton2";
 import { useRouter } from "next/router";
+import { PasswordInput } from "@/components/UI/input";
 
 const ParentSignUp3 = () => {
    const dispatch = useDispatch();
@@ -43,16 +44,11 @@ const ParentSignUp3 = () => {
          )}
 
          <label className="mt-6 block text-xl font-semibold">Password</label>
-         <input
-            className="auth-input"
-            value={password}
+         <PasswordInput
+            value={password ?? ""}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
                dispatch(updateUser({ key: "password", value: e.target.value }));
             }}
-            minLength={10}
-            type="password"
-            placeholder="Enter your password"
-            required
          />
       </div>
    );

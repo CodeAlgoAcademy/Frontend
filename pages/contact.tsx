@@ -31,7 +31,6 @@ const Contact = () => {
             name: `${firstName} ${lastName}`,
          });
          setModalOpened(true);
-         alert(data?.email + data?.subject + data?.message + data?.name);
          dispatch(closePreloader());
       } catch (error: any) {
          console.log(error);

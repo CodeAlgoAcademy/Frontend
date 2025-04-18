@@ -13,6 +13,8 @@ import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
 import { RootState } from "store/store";
 import { getAccessibilityClassName } from "utils";
 import { Toaster } from "sonner";
+import DictionaryModal from "../modals/DictionaryModal";
+import useDictionary from "hooks/useDictionary";
 
 interface Props {
    children?: ReactNode;
@@ -21,6 +23,7 @@ const Layout = ({ children }: Props) => {
    const dispatch = useDispatch();
    const features = useSelector((state: RootState) => state.accessibility.features);
    const router = useRouter();
+   useDictionary();
 
    useEffect(() => {
       const token = typeof window !== "undefined" && JSON.parse(localStorage.getItem(ILocalStorageItems.token) as string);
@@ -72,6 +75,7 @@ const Layout = ({ children }: Props) => {
             <SuccessModal />
             <ErrorModal />
             <Preloader />
+            <DictionaryModal />
          </div>
       </GoogleOAuthProvider>
    );

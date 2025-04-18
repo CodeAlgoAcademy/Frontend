@@ -11,7 +11,7 @@ const WhatWeBuilt = () => {
    const [playing, setPlaying] = useState<boolean>(false);
    const features = useSelector((state: RootState) => state.accessibility.features);
 
-   const animationsPaused = useMemo(() => features.includes("pause-animations"), [features]);
+   const animationsPaused = useMemo(() => features["pause animations"], [features]);
    const toggle = () => {
       setPlaying(!playing);
    };
