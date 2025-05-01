@@ -7,7 +7,7 @@ import { detect } from "detect-browser";
 const Hero = () => {
    const features = useSelector((state: RootState) => state.accessibility.features);
    const videoRef = useRef<HTMLVideoElement>();
-   const [isChrome, setIsChrome] = useState(false);
+   const [isSafari, setIsSafari] = useState(false);
 
    const animationsPaused = useMemo(() => features["pause animations"], [features]);
 
@@ -27,13 +27,13 @@ const Hero = () => {
 
    useEffect(() => {
       const browser = detect();
-      const isChrome = browser?.name == "edge" || browser?.name == "chrome";
-      setIsChrome(isChrome);
+      const isSafari = browser?.name == "safari" || browser?.name == "ios" || browser?.name == "ios-webview";
+      setIsSafari(isSafari);
    }, []);
 
    return (
       <header className="relative">
-         {!isChrome ? (
+         {isSafari ? (
             <div className="h-[50hv] w-full  md:h-[90vh]">
                <img src="/assets/landing/hero.png" alt="hero" className="h-full w-full object-cover"></img>
             </div>
