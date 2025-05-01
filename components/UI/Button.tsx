@@ -126,5 +126,5 @@ export const CustomButton: FC<Props> = (props) => {
       </button>
    );
 };
-
+;
 export default Button;
