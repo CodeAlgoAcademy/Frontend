@@ -11,10 +11,10 @@ const Press = () => {
          <Navbar />
          <Header
             body=""
-            title={`LaunchKC awards $300K: Six new startups enter the winners’ circle with KC investments`}
-            image="/assets/blog/launch-kc-award.jpg"
-            date="November 2023"
-            detailPage="/press/launch-kc-awards"
+            title={`Success code: LINC student create online games, spark future aspirations`}
+            image= "/assets/blog/press/linc.png"
+            date="May 2025"
+            detailPage="/press/linc-student"
          />
 
          <section className="mx-auto mt-12 mb-12 w-full max-w-[1100px] px-6">
