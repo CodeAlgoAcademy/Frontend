@@ -1,6 +1,6 @@
 import Footer, { socials } from "@/components/home/new-home/footer";
 import Navbar from "@/components/navbar/home/Navbar";
-import { codingLanguages, fortune10Companies, thingsYouCanCreate, whatTheyDo } from "public/learnmore.data";
+import { codingLanguages, fortune10Companies, salaryByRegion, thingsYouCanCreate, whatTheyDo } from "public/learnmore.data";
 import React from 'react';
 import { FaCode, FaLaptopCode } from "react-icons/fa";
 
@@ -120,6 +120,46 @@ export default function index() {
           </div>
           <p className="text-sm text-gray-500 mt-4 font-thabit">*Salary depends on the job and where you live</p>
         </section>
+<section className="bg-blue-50 p-6 rounded-lg">
+  <div className="flex flex-col md:flex-row items-center gap-8">
+    <div className="md:w-1/2">
+      <h2 className="text-3xl font-semibold text-gray-800 mb-4 font-thabit">What Beginners in Coding Earn</h2>
+      <p className="text-lg text-gray-700 mb-4 font-thabit">
+        Even starting out, coding jobs pay very well. What you earn depends on:
+      </p>
+      <div className="bg-white p-4 rounded-lg shadow-sm">
+        <h3 className="font-bold text-blue-500 mb-2 font-thabit">What Affects Pay</h3>
+        <ul className="list-disc pl-5 space-y-2 font-thabit">
+          <li><strong>Where you work:</strong> Big tech cities pay the most</li>
+          <li><strong>Schooling:</strong> More education can mean higher pay</li>
+          <li><strong>Special skills:</strong> Some computer skills earn extra</li>
+          <li><strong>Company type:</strong> Big companies often pay more</li>
+        </ul>
+      </div>
+    </div>
+    <div className="md:w-1/2">
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h3 className="text-xl font-bold mb-4 text-center font-thabit">Typical Starting Salaries</h3>
+        <div className="space-y-4">
+          {salaryByRegion.map((region, index) => (
+            <div key={index}>
+              <div className="flex justify-between mb-1 font-thabit">
+                <span>{region.area}</span>
+                <span>{region.salary}</span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2.5">
+                <div 
+                  className="bg-blue-500 h-2.5 rounded-full" 
+                  style={{ width: `${region.percentage}%` }}
+                ></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
       </div>
       <Footer />
     </>
