@@ -13,6 +13,7 @@ export const links: NavbarLink[] = [
          { name: "About Us", link: "/about-us" },
          { name: "Press", link: "/press" },
          { name: "Blog", link: "/blog" },
+         { name: "Learn More", link: "/learn-more" },
          { name: "Contact Us", link: "/contact" },
       ],
    },
