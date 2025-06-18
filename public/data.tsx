@@ -24,6 +24,35 @@ export interface IArticle {
 }
 
 export const articles: IArticle[] = [
+    {
+      title: "Success code: LINC student create online games, spark future aspirations",
+      body: "LINC students at King Elementary in the Kansas City Public Schools pose with teachers and suppoerters as they display certificates from the CodeAlgo Academy coding program.",
+      date: "May 2025",
+      image: "/assets/blog/press/linc.png",
+      detailPage: "/linc-student",
+      // gamification
+   },
+    {
+      title: "Viruses vs. Bacteria—Made Fun for Kids!",
+      body: "We’ve partnered with the Kansas Department of Health to teach kids the difference between viruses and bacteria in a fun, interactive way—empowering them to understand their bodies and health!",
+      date: "Apirl 2025",
+      image: "/assets/blog/press/virus.jpeg",
+      detailPage: "/linkedin",
+   },
+   {
+      title: "2024 Startups to Watch: CodeAlgo Academy Gamifies Coding for Equity",
+      body: "Why aren’t more people entering this lucrative field—you can make six figures right out of high school. Are they just not pursuing it?” — Fulks",
+      date: "January 03, 2024",
+      image: "/assets/blog/press/triumfia.jpg",
+      detailPage: "/gamification",
+   },
+   {
+      title: "Pipeline's New Cohorts Highlight Power of Diversity",
+      body: "More than two dozen founders have joined Pipeline’s 2024 Fellowship and Pathfinder Program, expanding the elite network of high-growth Midwest entrepreneurs.",
+      date: "February 01, 2024",
+      image: "/assets/blog/press/pipeline.jpg",
+      detailPage: "/pipeline",
+   },
    {
       title: "LaunchKC awards $300K",
       body: "Six new startups enter the winners' circle with KC investments",
@@ -102,13 +131,13 @@ export const articles: IArticle[] = [
       detailPage: "/codealgo-joins-goodie-nation",
       date: "March 2022",
    },
-   {
-      title: "Pipeline has selected CodeAlgo Academy to join their Pathfinder ",
-      body: "Pipeline has extended an exclusive invitation to CodeAlgo Academy to join their Pathfinder program, marking a significant milestone in our journey toward excellence!",
-      image: "/assets/blog/article2.jpg",
-      detailPage: "/pipeline-selected-codealgo",
-      date: "January 2022",
-   },
+   // {
+   //    title: "Pipeline has selected CodeAlgo Academy to join their Pathfinder ",
+   //    body: "Pipeline has extended an exclusive invitation to CodeAlgo Academy to join their Pathfinder program, marking a significant milestone in our journey toward excellence!",
+   //    image: "/assets/blog/article2.jpg",
+   //    detailPage: "/pipeline-selected-codealgo",
+   //    date: "January 2022",
+   // },
 ];
 
 export const accessibility_profiles: {
