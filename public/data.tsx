@@ -36,7 +36,7 @@ export const articles: IArticle[] = [
       title: "Viruses vs. Bacteria—Made Fun for Kids!",
       body: "We’ve partnered with the Kansas Department of Health to teach kids the difference between viruses and bacteria in a fun, interactive way—empowering them to understand their bodies and health!",
       date: "Apirl 2025",
-      image: "/assets/blog/press/virus.jpeg",
+      image: "/assets/blog/press/save.PNG",
       detailPage: "/linkedin",
    },
    {
