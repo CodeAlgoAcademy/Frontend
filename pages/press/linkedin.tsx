@@ -19,7 +19,7 @@ export default function Index() {
             />
             <ImagesContainer
                imageHeight={450}
-               image="/assets/blog/press/virus.jpeg"
+               image="/assets/blog/press/save.PNG"
                imageDetail="Viruses vs. Bacteria—Made Fun for Kids!"
                className="lg:!object-cover"
             />
