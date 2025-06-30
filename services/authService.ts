@@ -188,7 +188,7 @@ export const updateAccountType: any = createAsyncThunk("authSlice/updateAccountT
    };
    console.log(requestBody);
    try {
-      const { data } = await http.put("/auth/user", requestBody, {
+      const { data } = await http.put("/auth/user/", requestBody, {
          headers: {
             Authorization: `Bearer ${getAccessToken()}`,
          },
