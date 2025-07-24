@@ -10,7 +10,7 @@ const CompletedStandard = ({ completedItems, isLoading }: ICompletedStandardProp
   const hasData = completedItems && completedItems.length > 0;
 
   return (
-    <ContentBox size="base" title="Completed Standards" padding="large" style={{height:"420px"}}>
+    <ContentBox size="base" title="Completed Standards" padding="large" style={{height:"400px"}}>
       <div className="mt-6">
         {isLoading ? (
           <p className="text-gray-500 animate-pulse">Loading completed standards...</p>

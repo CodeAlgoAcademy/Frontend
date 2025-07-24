@@ -16,7 +16,7 @@ const Level = ({ size, level, progressItems, isLoading, isBlockProgress = false 
     const hasData = progressItems && progressItems.length > 0;
 
    return (
-      <ContentBox size="large" title="Progress" padding="small" style={{ minWidth: "100%", maxWidth: "100%", height:"420px" }} >
+      <ContentBox size="large" title="Progress" padding="small" style={{ minWidth: "100%", maxWidth: "100%", height:"400px" }} >
          {/* <h2 className="font-medium text-center text-[22px]">Level {level} ⚡</h2> */}
          <React.Fragment>
             <div className="mt-6 ml-4">
