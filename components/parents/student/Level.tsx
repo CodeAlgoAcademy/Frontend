@@ -11,6 +11,7 @@ interface ILevelProps {
    isBlockProgress?: boolean;
 }
 
+
 const Level = ({ size, level, progressItems, isLoading, isBlockProgress = false }: ILevelProps) => {
     const hasData = progressItems && progressItems.length > 0;
 
