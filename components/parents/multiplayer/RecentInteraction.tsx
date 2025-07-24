@@ -169,7 +169,7 @@ const RecentInteraction = ({}: Props) => {
       setSliceEnd(() => recentIndex * 3 + 3);
    }, [recentIndex]);
    return (
-      <ContentBox size="base" title="Multiplayer" padding="large" showSublink={true} link="parents/multiplayer">
+      <ContentBox size="base" title="Multiplayer" padding="large" showSublink={true} link="parents/multiplayer" style={{height:"420px"}}>
          <p className="text-sm font-light">Recent interactions (last 30 days)</p>
          <p className="grid h-40 place-content-center text-2xl italic text-slate-400">Coming soon...</p>
          {/* UNCOMMENT BLOCK OF CODE WHEN NECESSARY DETAILS ARE READY */}

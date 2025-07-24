@@ -36,6 +36,7 @@ export default function ParentSidebar({ onClose, isOpen }: Props) {
          <div className="my-2">
             <h2 className="ml-7 mb-3 text-xl font-medium text-[#A8ABB0]">SAFETY</h2>
             <NavButton title="Screen Time" image="screen-time.svg" url="/parents/screen-time" />
+            {/* <NavButton title="Levels Threshold" image="screen-time.svg" url="/parents/LevelThreshold" /> */}
             {/* <NavButton title="Multiplayer" image="game.svg" url="/parents/multiplayer" /> */}
          </div>
          <NavButton image={<GiHelp size={22} />} url={DEFAULT_SUPPORT.discord} title="Get Help"></NavButton>
