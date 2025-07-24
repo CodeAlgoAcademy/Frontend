@@ -52,10 +52,10 @@ const Skills = ({ size }: ISkillProps) => {
    // }, [parent?.currentChild?.id]);
 
    return (
-      <ContentBox size={size} title="Skills" padding="small" style={{ minWidth: "100%", maxWidth: "100%", height:"420px" }}>
+      <ContentBox size={size} title="Skills" padding="small" style={{ minWidth: "100%", maxWidth: "100%", height:"400px" }}>
  <div className="mt-2 grid h-full grid-cols-2 gap-5">
           {isLoading ? (
-            <div className="flex h-full items-center justify-center text-sm text-gray-400 animate-pulse">
+            <div className="flex h-full  text-sm text-gray-400 animate-pulse">
               Loading skills...
             </div>
           ) : hasSkills ? (
@@ -68,7 +68,7 @@ const Skills = ({ size }: ISkillProps) => {
               </div>
             ))
           ) : (
-            <div className="flex h-full items-center justify-center text-center text-[1rem] text-gray-500">
+            <div className="flex h-full   text-[1rem] text-gray-500">
               <p>{parent?.currentChild?.fullName} no skills awarded.</p>
             </div>
           )}

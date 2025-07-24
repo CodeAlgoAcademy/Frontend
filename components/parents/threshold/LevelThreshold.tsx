@@ -36,7 +36,7 @@ const LevelsThreshold = ({ size }: LevelThresholdProps) => {
       padding="large"
       showSublink={router.pathname === "/parents"}
       // link={"/parents/LevelThreshold"}
-      style={{ minWidth: "100%", maxWidth: "100%", height:"420px" }}
+      style={{ minWidth: "100%", maxWidth: "100%", height:"400px" }}
     >
       <BarChart
         data={thresholds.map((level) => level.threshold)}
