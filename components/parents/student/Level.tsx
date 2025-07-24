@@ -5,8 +5,8 @@ import { IChildProgress } from "types/interfaces/parent.interface";
 
 interface ILevelProps {
    size: "large" | "base";
-   level: number;
-   progressItems: IChildProgress[];
+   level?: number;
+   progressItems?: IChildProgress[];
    isLoading?: boolean;
    isBlockProgress?: boolean;
 }
