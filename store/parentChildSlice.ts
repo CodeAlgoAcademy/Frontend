@@ -126,6 +126,28 @@ export const getChildProgress: any = createAsyncThunk("parent/child/progress", a
    }
 });
 
+export const fetchChildBlockGameProgress: any = createAsyncThunk("blockGame/getProgress",async (_, thunkAPI) => {
+      const state = thunkAPI.getState() as RootState;
+      try {
+         const id = state.parentChild.currentChild.id;
+         return await parentService.getChildBlockGameProgress(id);
+      } catch (error: any) {
+         return thunkAPI.rejectWithValue(error.response?.data || error.message);
+      }
+   }
+);
+
+export const fetchChildBlockGameSkills: any = createAsyncThunk("blockGame/getSkills",async (_, thunkAPI) => {
+      const state = thunkAPI.getState() as RootState;
+      try {
+         const id = state.parentChild.currentChild.id;
+         return await parentService.getChildBlockGameSkill(id);
+      } catch (error: any) {
+         return thunkAPI.rejectWithValue(error.response?.data || error.message);
+      }
+   }
+);
+
 export const getChildSkills: any = createAsyncThunk("/parent/child/skills", async (_, thunkApi) => {
    const state = <RootState>thunkApi.getState();
    const dispatch = thunkApi.dispatch;
@@ -256,6 +278,17 @@ export const parentSlice = createSlice({
       builder.addCase(getChildSkills.fulfilled, (state, action: PayloadAction<IChildSkill[]>) => {
          state.currentChild.skills = action.payload;
       });
+      builder.addCase(fetchChildBlockGameProgress.fulfilled, (state, action) => {
+   if (state.currentChild) {
+      state.currentChild.progress = action.payload;
+   }
+});
+      builder.addCase(fetchChildBlockGameSkills.fulfilled, (state, action) => {
+   if (state.currentChild) {
+      state.currentChild.skills = action.payload;
+   }
+});
+
    },
 });
 
