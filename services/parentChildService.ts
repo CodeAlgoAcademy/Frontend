@@ -40,6 +40,24 @@ const getChildProgress = async (id: string | number) => {
    return response.data;
 };
 
+const getChildBlockGameProgress = async (id: string | number) => {
+   const response = await http.get(`/parent/child/${id}/block-progress/`, {
+      headers: {
+         Authorization: `Bearer ${getAccessToken()}`,
+      },
+   });
+   return response.data;
+};
+
+const getChildBlockGameSkill = async (id: string | number) => {
+   const response = await http.get(`/parent/child/${id}/block-skills/`, {
+      headers: {
+         Authorization: `Bearer ${getAccessToken()}`,
+      },
+   });
+   return response.data;
+};
+
 const updateChildScreentime = async (data: any, id: string | number) => {
    const response = await http.put(
       "/parent/child/time-limit/" + id + "/",
@@ -99,6 +117,8 @@ const parentService = {
    getChildProgress,
    getChildSkills,
    updateChildPassword,
+   getChildBlockGameProgress,
+   getChildBlockGameSkill,
 };
 
 export default parentService;

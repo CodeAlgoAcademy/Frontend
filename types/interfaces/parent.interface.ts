@@ -10,6 +10,10 @@ export interface IChildProgress {
    title: string;
    level: number;
    progress: number;
+   standard_code?:string;
+   standard_name?:string;
+   iready_math_desc?:string;
+   common_core_math_desc?:string;
 }
 
 export interface IChildTopics {

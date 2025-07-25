@@ -148,7 +148,7 @@ export const signUpWithGoogle: any = createAsyncThunk("authSlice/signUpWithGoogl
    try {
       const { data } = await http.post<ILoginReducerArg>("/auth/google/", {
          access_token,
-         action: "signup",
+         // action: "signin",
       });
 
       dispatch(closePreloader());
