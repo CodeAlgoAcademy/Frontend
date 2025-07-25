@@ -1,7 +1,7 @@
 import React, { StyleHTMLAttributes } from "react";
 
 interface Props {
-   title: string;
+   title?: string;
    titleSize: "large" | "base";
    percentage: number;
    color: "red" | "green";
