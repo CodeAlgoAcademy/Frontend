@@ -29,65 +29,48 @@ const Dashboard = () => {
     return age;
   };
 
-  useEffect(() => {
-    const studentId = parent?.currentChild?.id;
-    const dob = parent?.currentChild?.dob;
+ useEffect(() => {
+  const studentId = parent?.currentChild?.id;
+  const dob = parent?.currentChild?.dob;
 
-    if (studentId && dob) {
-      setIsLoading(true);
-      
-      const age = calculateAge(dob);
-      const isUnder14 = age < 14;
-      setIsBlockProgress(isUnder14);
-      const progressAction = isUnder14 ? fetchChildBlockGameProgress(studentId) : getChildProgress(studentId);
+  if (studentId && dob) {
+    setIsLoading(true);
+    const age = calculateAge(dob);
+    const isUnder14 = age < 14;
+    setIsBlockProgress(isUnder14);
+    const progressAction = isUnder14 ? fetchChildBlockGameProgress(studentId) : getChildProgress(studentId);
 
-      dispatch(progressAction)
-        .unwrap()
-        .then((res: IChildProgress[]) => {
-          if (isUnder14) {
-            setProgressData(res);
-          } else {
-            setProgressData(res);
-          }
-        })
-        .catch((err: any) => {
-          console.error("Error fetching progress:", err);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    }
-  }, [parent?.currentChild?.id, parent?.currentChild?.dob, dispatch]);
+    dispatch(progressAction)
+      .unwrap()
+      .then((res: any) => {
+        console.log("Fetched Progress Data:", res);
+        setProgressData(isUnder14 ? res : res?.topic || []);
+      })
+      .catch((err: any) => {
+        console.error("Error fetching progress:", err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }
+}, [parent?.currentChild?.id, parent?.currentChild?.dob, dispatch]);
 
-   const getProgressItems = () => {
-    if (!progressData) return [];
-
-    if (isBlockProgress) {
-      return Array.isArray(progressData) ? progressData : [];
-    }
-    
-    if (progressData && typeof progressData === 'object' && !Array.isArray(progressData)) {
-      return progressData || [];
-    }
-    
-    return [];
-  };
-
-  const allProgressItems = getProgressItems();
-  const inProgressItems = isBlockProgress ? allProgressItems.filter(item => item.progress < 100) : allProgressItems;
-
-  const completedItems = isBlockProgress ? allProgressItems.filter(item => item.progress === 1.0) : [];
+const allProgressItems = Array.isArray(progressData) ? progressData : [];
+const inProgressItems = allProgressItems.filter(item => item.progress < 1.0);
+const completedItems = allProgressItems.filter(item => item.progress === 1.0);
 
   return (
     <ParentLayout title="Dashboard">
   <div className="relative bottom-14 mb-[-120px] scale-90 overflow-x-auto sm:bottom-0 sm:mb-0 sm:scale-100">
     <div className="grid max-w-fit grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 gap-6">
-      <Level 
+     <Level 
         size="base" 
         level={(parent?.currentChild?.level as number) + 1}
         progressItems={inProgressItems}
         isLoading={isLoading}
         isBlockProgress={isBlockProgress}
+        completedItems={completedItems}
+        currentProgress={!isBlockProgress && parent?.currentChild?.progress?.current }
       />
       <CompletedStandard completedItems={completedItems} isLoading={isLoading} />
       <Skills size="base" />
