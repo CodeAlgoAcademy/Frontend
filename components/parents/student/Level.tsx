@@ -1,56 +1,107 @@
 import ProgressBar from "../UI/ProgressBar";
 import ContentBox from "../UI/ContentBox";
 import React from "react";
-import { IChildProgress } from "types/interfaces/parent.interface";
+import { IChildProgress, IChildTopics } from "types/interfaces/parent.interface";
 
 interface ILevelProps {
-   size: "large" | "base";
-   level?: number;
-   progressItems?: IChildProgress[];
-   isLoading?: boolean;
-   isBlockProgress?: boolean;
+  size: "large" | "base";
+  level?: number;
+  progressItems?: IChildProgress[];
+  completedItems?: IChildProgress[];
+  isLoading?: boolean;
+  isBlockProgress?: boolean;
+  currentProgress?: false | IChildProgress;
 }
 
+const Level = ({ size, level, progressItems, isLoading, isBlockProgress = false, completedItems, currentProgress }: ILevelProps) => {
+  const hasProgressData = progressItems && progressItems.length > 0;
+  const hasCompletedData = completedItems && completedItems.length > 0;
 
-const Level = ({ size, level, progressItems, isLoading, isBlockProgress = false }: ILevelProps) => {
-    const hasData = progressItems && progressItems.length > 0;
+  return (
+    <ContentBox 
+      size="large" 
+      title="Progress" 
+      padding="small" 
+      style={{ 
+        minWidth: "100%", 
+        maxWidth: "100%", 
+        height: "400px",
+        overflowY: "auto"
+      }}
+    >
+      <div className="flex flex-col gap-6 pr-4">
+        {currentProgress && (
+          <div className="mb-4">
+            <h3 className="font-semibold">Current Progress</h3>
+            <ProgressBar
+              color="green"
+              percentage={currentProgress.progress || 0}
+              title={currentProgress.title}
+              titleSize="base"
+              containerSize={size}
+            />
+          </div>
+        )}
+        
+        <div className="ml-4">
+          {/* In Progress Section */}
+          {isLoading ? (
+    <>
+      <h3 className="font-semibold">Comprehension Tracking</h3>
+      <div className="mt-3 flex flex-col gap-5">
+        <p className="text-sm text-gray-400 animate-pulse">Loading progress...</p>
+      </div>
+      
+      <h3 className="font-semibold mt-6">Completed</h3>
+      <div className="mt-3 flex flex-col gap-5">
+        <p className="text-sm text-gray-400 animate-pulse">Loading completed items...</p>
+      </div>
+    </>
+  ) : (
+    <>
+      {/* In Progress Section */}
+      <h3 className="font-semibold">Comprehension Tracking</h3>
+      <div className="mt-3 flex flex-col gap-5">
+        {hasProgressData ? (
+          progressItems.map((lesson, index) => (
+            <ProgressBar
+              key={`inprogress-${index}`}
+              color={isBlockProgress ? "red" : "green"}
+              percentage={lesson.progress}
+              title={isBlockProgress ? lesson.standard_code : lesson.title}
+              titleSize="base"
+              containerSize={size}
+            />
+          ))
+        ) : (
+          <p className="text-sm text-gray-500">No in-progress items to show.</p>
+        )}
+      </div>
 
-   return (
-      <ContentBox size="large" title="Progress" padding="small" style={{ minWidth: "100%", maxWidth: "100%", height:"400px" }} >
-         {/* <h2 className="font-medium text-center text-[22px]">Level {level} ⚡</h2> */}
-         <React.Fragment>
-            <div className="mt-6 ml-4">
-              <div className="mt-8">
-                <h3 className="font-semibold">Comprehension Tracking</h3>
-                <div className="mb-6">
-                  <div className="small-scroll-thumb blue-scroll-thumb mt-3 flex flex-col gap-5 overflow-y-auto pr-4">
-                    {isLoading ? (
-                      <p className="text-sm text-gray-400 animate-pulse">
-                        Loading progress...
-                      </p>
-                    ) : hasData ? (
-                      progressItems.map((lesson, index) => (
-                        <ProgressBar
-                          key={`inprogress-${index}`}
-                          color={isBlockProgress ? "red" : "green"}
-                          percentage={isBlockProgress ? lesson.progress : lesson.progress}
-                          title={isBlockProgress ? lesson.standard_code : lesson.title}
-                          titleSize="base"
-                          containerSize={size}
-                        />
-                      ))
-                    ) : (
-                      <p className="text-sm text-gray-500">
-                        No progress items to show.
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-         </React.Fragment>
-      </ContentBox>
-   );
+      {/* Completed Items Section */}
+      {hasCompletedData && (
+        <>
+          <h3 className="font-semibold mt-6">Completed</h3>
+          <div className="mt-3 flex flex-col gap-5">
+            {completedItems.map((lesson, index) => (
+              <ProgressBar
+                key={`completed-${index}`}
+                color="green"
+                percentage={lesson.progress}
+                title={isBlockProgress ? lesson.standard_code : lesson.title}
+                titleSize="base"
+                containerSize={size}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </>
+  )}
+        </div>
+      </div>
+    </ContentBox>
+  );
 };
 
 export default Level;
