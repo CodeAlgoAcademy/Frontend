@@ -99,7 +99,7 @@ const getChildSkills = async (id: number) => {
 
 const updateChildPassword = async (child_id: number, password: string) => {
    const response = await http.put(
-      `/parent/child/${child_id}/update-password`,
+      `/parent/child/${child_id}/update-password/`,
       { password },
       { headers: { Authorization: `Bearer ${getAccessToken()}` } }
    );
