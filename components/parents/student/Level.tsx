@@ -1,57 +1,107 @@
-import React, { useEffect } from "react";
 import ProgressBar from "../UI/ProgressBar";
 import ContentBox from "../UI/ContentBox";
-import { getChildProgress } from "store/parentChildSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "store/store";
-import { IChildProgress } from "types/interfaces";
+import React from "react";
+import { IChildProgress, IChildTopics } from "types/interfaces/parent.interface";
 
 interface ILevelProps {
-   size: "large" | "base";
+  size: "large" | "base";
+  level?: number;
+  progressItems?: IChildProgress[];
+  completedItems?: IChildProgress[];
+  isLoading?: boolean;
+  isBlockProgress?: boolean;
+  currentProgress?: false | IChildProgress;
 }
 
-const Level = ({ size }: ILevelProps) => {
-   const dispatch = useDispatch();
-   const parent = useSelector((state: RootState) => state.parentChild);
+const Level = ({ size, level, progressItems, isLoading, isBlockProgress = false, completedItems, currentProgress }: ILevelProps) => {
+  const hasProgressData = progressItems && progressItems.length > 0;
+  const hasCompletedData = completedItems && completedItems.length > 0;
 
-   useEffect(() => {
-      if (parent?.currentChild?.id) {
-         dispatch(getChildProgress());
-      }
-   }, [parent.currentChild?.id]);
-   return (
-      <ContentBox size="large" title="Progress" padding="small" style={{ minWidth: "100%", maxWidth: "100%" }}>
-         <h2 className="font-medium\ text-center text-[22px]">Level {(parent?.currentChild?.level as number) + 1} ⚡</h2>
-         <React.Fragment>
-            <div className="mt-6 ml-4">
-               <ProgressBar
-                  containerSize={size}
-                  color="red"
-                  percentage={Number(parent?.currentChild?.progress?.current?.progress) || 0}
-                  title={parent?.currentChild?.progress?.current?.title as string}
-                  titleSize="large"
-               />
-               <div className="mt-8">
-                  <h3 className="font-semibold">Comprehension Tracking</h3>
-                  <div className="small-scroll-thumb blue-scroll-thumb mt-3 flex h-[100px] flex-col gap-5 overflow-y-auto pr-4">
-                     {[...(parent.currentChild?.progress?.topic || [])]
-                        ?.sort((lessonA, lessonB) => lessonA?.level - lessonB?.level)
-                        ?.map((lesson: IChildProgress, index: number) => (
-                           <ProgressBar
-                              key={index}
-                              color="green"
-                              percentage={lesson?.progress}
-                              title={lesson?.title}
-                              titleSize="base"
-                              containerSize={size}
-                           />
-                        ))}
-                  </div>
-               </div>
-            </div>
-         </React.Fragment>
-      </ContentBox>
-   );
+  return (
+    <ContentBox 
+      size="large" 
+      title="Progress" 
+      padding="small" 
+      style={{ 
+        minWidth: "100%", 
+        maxWidth: "100%", 
+        height: "400px",
+        overflowY: "auto"
+      }}
+    >
+      <div className="flex flex-col gap-6 pr-4">
+        {currentProgress && (
+          <div className="mb-4">
+            <h3 className="font-semibold">Current Progress</h3>
+            <ProgressBar
+              color="green"
+              percentage={currentProgress.progress || 0}
+              title={currentProgress.title}
+              titleSize="base"
+              containerSize={size}
+            />
+          </div>
+        )}
+        
+        <div className="ml-4">
+          {/* In Progress Section */}
+          {isLoading ? (
+    <>
+      <h3 className="font-semibold">Comprehension Tracking</h3>
+      <div className="mt-3 flex flex-col gap-5">
+        <p className="text-sm text-gray-400 animate-pulse">Loading progress...</p>
+      </div>
+      
+      <h3 className="font-semibold mt-6">Completed</h3>
+      <div className="mt-3 flex flex-col gap-5">
+        <p className="text-sm text-gray-400 animate-pulse">Loading completed items...</p>
+      </div>
+    </>
+  ) : (
+    <>
+      {/* In Progress Section */}
+      <h3 className="font-semibold">Comprehension Tracking</h3>
+      <div className="mt-3 flex flex-col gap-5">
+        {hasProgressData ? (
+          progressItems.map((lesson, index) => (
+            <ProgressBar
+              key={`inprogress-${index}`}
+              color={isBlockProgress ? "red" : "green"}
+              percentage={lesson.progress}
+              title={isBlockProgress ? lesson.standard_code : lesson.title}
+              titleSize="base"
+              containerSize={size}
+            />
+          ))
+        ) : (
+          <p className="text-sm text-gray-500">No in-progress items to show.</p>
+        )}
+      </div>
+
+      {/* Completed Items Section */}
+      {hasCompletedData && (
+        <>
+          <h3 className="font-semibold mt-6">Completed</h3>
+          <div className="mt-3 flex flex-col gap-5">
+            {completedItems.map((lesson, index) => (
+              <ProgressBar
+                key={`completed-${index}`}
+                color="green"
+                percentage={lesson.progress}
+                title={isBlockProgress ? lesson.standard_code : lesson.title}
+                titleSize="base"
+                containerSize={size}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </>
+  )}
+        </div>
+      </div>
+    </ContentBox>
+  );
 };
 
 export default Level;

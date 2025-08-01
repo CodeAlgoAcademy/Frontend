@@ -1,35 +1,82 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import ContentBox from "../UI/ContentBox";
-import SkillBox from "./SkillBox";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
-import { getChildSkills } from "store/parentChildSlice";
+import { fetchChildBlockGameSkills, getChildSkills } from "store/parentChildSlice";
 import { BiCheck } from "react-icons/bi";
-import { IChildSkill } from "types/interfaces";
 
 interface ISkillProps {
    size: "large" | "base";
 }
 
+interface SkillData {
+  name: string;
+  value: number;
+}
+
 const Skills = ({ size }: ISkillProps) => {
    const parent = useSelector((state: RootState) => state.parentChild);
    const dispatch = useDispatch();
-
+   
+    const [skills, setSkills] = useState<SkillData[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  
    useEffect(() => {
-      if (parent?.currentChild?.id) {
-         dispatch(getChildSkills());
-      }
-   }, [parent?.currentChild?.id]);
+    const studentId = parent?.currentChild?.id;
+
+    if (studentId) {
+      setIsLoading(true);
+      dispatch(fetchChildBlockGameSkills(studentId))
+        .unwrap()
+        .then((res: SkillData[]) => {
+          console.log({ res }, "skills");
+          setSkills(res); // Assuming res is an array
+        })
+        .catch((err: any) => {
+          console.error("Error fetching block game skills:", err);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, [parent?.currentChild?.id, dispatch]);
+
+  const hasSkills = skills && skills.length > 0;
+
+
+   // useEffect(() => {
+   //    if (parent?.currentChild?.id) {
+   //       dispatch(fetchChildBlockGameSkills());
+   //       // dispatch(getChildSkills());
+   //    }
+   // }, [parent?.currentChild?.id]);
 
    return (
-      <ContentBox size={size} title="Skills" padding="small" style={{ minWidth: "100%", maxWidth: "100%" }}>
-         <div className="mt-14 grid grid-cols-2">
-            <p className="text-center">Completed Skills</p>
-            <p className="text-center">Currently Learning</p>
-         </div>
-         <div className="mt-2 grid h-full grid-cols-2 gap-5">
+      <ContentBox size={size} title="Skills" padding="small" style={{ minWidth: "100%", maxWidth: "100%", height:"400px" }}>
+ <div className="mt-2 grid h-full grid-cols-2 gap-5">
+          {isLoading ? (
+            <div className="flex h-full  text-sm text-gray-400 animate-pulse">
+              Loading skills...
+            </div>
+          ) : hasSkills ? (
+            skills.map((skill, index) => (
+              <div key={index}>
+                <span className="mr-2 inline-block align-middle text-[1.2rem] font-bold">
+                  <BiCheck color="rgba(251, 87, 176, 1)" />
+                </span>
+                <p className="inline-block capitalize">{skill.name}: {skill.value}</p>
+              </div>
+            ))
+          ) : (
+            <div className="flex h-full   text-[1rem] text-gray-500">
+              <p>{parent?.currentChild?.fullName} no skills awarded.</p>
+            </div>
+          )}
+      </div>
+
+         {/* <div className="mt-2 grid h-full grid-cols-2 gap-5">
             <SkillBox>
-               {/* for completed skills */}
+               for completed skills
                {parent?.currentChild?.skills?.map((skill) => {
                   return (
                      <div key={skill.id}>
@@ -47,8 +94,9 @@ const Skills = ({ size }: ISkillProps) => {
                   </div>
                )}
             </SkillBox>
-            <SkillBox>{/* for currently learning */}</SkillBox>
-         </div>
+            <SkillBox></SkillBox>
+         </div> */}
+         
       </ContentBox>
    );
 };
