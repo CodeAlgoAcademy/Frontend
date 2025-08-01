@@ -82,7 +82,7 @@ const ParentLayout = ({ children, title }: Props) => {
                <div className="flex items-center gap-2">
                   <BetaButton />
                   <div className="relative">
-                     <div className="flex cursor-pointer items-center gap-1 text-mainColor" onClick={() => toggleTab("user", !tabs.user)}>
+                     <div className="flex cursor-pointer border items-center gap-1 text-mainColor" onClick={() => toggleTab("user", !tabs.user)}>
                         <BiUserCircle size={24} />
                         <p className="hidden text-[1rem] md:block">{user?.username}</p>
                         <BsChevronDown size={24} />
