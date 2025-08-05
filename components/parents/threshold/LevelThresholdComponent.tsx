@@ -1,37 +1,51 @@
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
 
 export interface levelThresholdType {
-  id: number;         
-  level: number;      
-  threshold: number;  
+  id: number;
+  level: number;
+  grade: string;
 }
-
-interface Props {
+interface Props { 
   threshold: levelThresholdType;
-  updateLevelThreshold: (id: number, level: number, value: number) => void;
+  updateLevelThreshold: (id: number, level: number, grade: string) => void;
 }
 
 const LevelThresholdComponent = ({ threshold, updateLevelThreshold }: Props) => {
-  const [value, setValue] = useState<number>(threshold.threshold);
+  const [inputValue, setInputValue] = useState<string>(threshold.level.toString());
+  
+  useEffect(() => {
+    setInputValue(threshold.level.toString());
+  }, [threshold.level]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newVal = parseInt(e.target.value);
-    setValue(newVal);
-    updateLevelThreshold(threshold.id, threshold.level, newVal);
+    const value = e.target.value;
+    setInputValue(value);
+    if (value === '') return;
+    const numValue = parseInt(value);
+    if (!isNaN(numValue) && numValue >= 1) {
+      updateLevelThreshold(threshold.id, numValue, threshold.grade);
+    }
+  };
+
+  const handleBlur = () => {
+    const numValue = parseInt(inputValue);
+    if (isNaN(numValue) || numValue < 1) {
+      setInputValue(threshold.level.toString());
+    }
   };
 
   return (
-    <div className="flex flex-col items-center rounded-md border p-3 shadow-sm w-[100px]">
-      <p className="text-sm font-medium">Level {threshold.level}</p>
+    <div className="flex flex-col items-center rounded-md border p-3 shadow-sm w-[140px]">
+      <p className="text-sm font-medium">{threshold.grade}</p>
       <input
         type="number"
         className="mt-2 w-full rounded border px-2 py-1 text-center"
-        value={value}
+        value={inputValue}
         onChange={handleChange}
-        min={0}
+        onBlur={handleBlur}
+        min="1"
       />
-      <span className="mt-1 text-xs text-gray-400">Threshold</span>
+      <span className="mt-1 text-xs text-gray-400">Max Level Allowed</span>
     </div>
   );
 };
