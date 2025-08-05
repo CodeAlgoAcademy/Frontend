@@ -1,3 +1,4 @@
+import { levelThresholdType } from "@/components/parents/threshold/LevelThresholdComponent";
 import { AssignmentDetails, IAllAssignments } from "./assignment.interface";
 import { screentimeTypes } from "./parent.interface";
 
@@ -12,11 +13,13 @@ export interface ISingleStudent {
    active?: boolean;
    assignments?: AssignmentDetails[];
    student_id?: string;
+   levelThreshold?:levelThresholdType[]
 }
 
 // add the timelimit to it
 export interface IStudentWithScreentime extends ISingleStudent {
    timeLimits?: screentimeTypes[];
+   levelThreshold?:levelThresholdType[]
 }
 
 export interface IUserStudent {
