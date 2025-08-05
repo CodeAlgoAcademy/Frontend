@@ -1,3 +1,5 @@
+import { levelThresholdType } from "@/components/parents/threshold/LevelThresholdComponent";
+
 export type days = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
 
 export interface IChildSkill {
@@ -42,6 +44,7 @@ export interface IParentChild {
       friend: string;
    }[];
    student_id?:number;
+  levelThresholds: levelThresholdType[]
    // }
 }
 
