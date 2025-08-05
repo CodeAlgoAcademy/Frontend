@@ -5,6 +5,7 @@ import { RootState } from "store/store";
 import LevelThresholdComponent, { levelThresholdType } from "@/components/parents/threshold/LevelThresholdComponent";
 import LevelsThreshold from "@/components/parents/threshold/LevelThreshold";
 import { createOrUpdateLevelThreshold, getChildren } from "store/parentChildSlice";
+import NoChild from "@/components/parents/UI/NoChild";
 
 export const ALL_GRADES = ["Kindergarten", "Grade 1", "Grade 2", "Grade 3", "Grade 4"];
 
@@ -42,6 +43,11 @@ const LevelThreshold = () => {
       console.error("Update error:", err);
     }
   };
+
+  const { children } = useSelector((state: RootState) => state.parentChild);
+     if (!children || children?.length === 0) {
+        return <NoChild />;
+     }
 
   return (
     <ParentLayout title="Levels Threshold">
