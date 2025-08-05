@@ -1,5 +1,5 @@
 import ParentLayout from "@/components/layouts/ParentLayout";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchChildBlockGameProgress, getChildProgress } from "store/parentChildSlice";
 import { RootState } from "store/store";
@@ -10,10 +10,23 @@ import Screentime from "@/components/parents/screentime/Screentime";
 import RecentInteraction from "@/components/parents/multiplayer/RecentInteraction";
 import CompletedStandard from "./standard";
 import LevelsThreshold from "@/components/parents/threshold/LevelThreshold";
+import { ALL_GRADES } from "./LevelThreshold";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const parent = useSelector((state: RootState) => state.parentChild);
+const thresholds = useMemo(() => {
+  return ALL_GRADES.map((grade, index) => {
+    const backendData = parent?.currentChild?.levelThresholds?.find(t => t.grade === grade);
+    return {
+      id: index + 1,
+      level: backendData?.level ?? 10,
+      grade,
+    };
+  });
+}, [parent?.currentChild?.levelThresholds]);
+
+  // const parent = useSelector((state: RootState) => state.parentChild);
   const [progressData, setProgressData] = useState<IChildProgress[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isBlockProgress, setIsBlockProgress] = useState<boolean>(false);
@@ -75,7 +88,7 @@ const completedItems = allProgressItems.filter(item => item.progress === 1.0);
       <CompletedStandard completedItems={completedItems} isLoading={isLoading} />
       <Skills size="base" />
       <Screentime size="base" />
-      <LevelsThreshold size="base" />
+      <LevelsThreshold size="base" thresholds={thresholds} />
       <RecentInteraction />
     </div>
   </div>

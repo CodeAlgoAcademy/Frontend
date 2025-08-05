@@ -38,6 +38,7 @@ const initialState: IParentChildren = {
          topic: [],
       },
       skills: [],
+      levelThresholds: []
    },
    codingExperience: "experienced",
    id: "",
@@ -56,6 +57,7 @@ const initialState: IParentChildren = {
       { dayOfTheWeek: "Saturday", timeLimit: "No Limit" },
       { dayOfTheWeek: "Sunday", timeLimit: "No Limit" },
    ],
+   levelThresholds: []
 };
 
 export const addChild: any = createAsyncThunk("parent/child/new", async (_, thunkAPI) => {
@@ -179,6 +181,21 @@ export const editScreentime: any = createAsyncThunk(
       }
    }
 );
+
+export const createOrUpdateLevelThreshold: any = createAsyncThunk(
+  "parent/child/createOrUpdateLevelThreshold",
+  async ({ id, data }: { id: number; data: { level: number; grade: string } }, thunkAPI) => {
+    const dispatch = thunkAPI.dispatch;
+    try {
+      const response = await parentService.createChildLevelThresHold(data, id);
+      return response;
+    } catch (error: any) {
+      const errorMessage = errorResolver(error);
+      return thunkAPI.rejectWithValue(errorMessage);
+    }
+  }
+);
+
 
 export const acceptFriendRequest: any = createAsyncThunk("friendRequest/reply", async (id: number, thunkAPI) => {
    const dispatch = thunkAPI.dispatch;

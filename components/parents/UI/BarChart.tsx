@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-
 interface Props {
    data: number[];
    maxHours: number;
    barWidth: number;
    barSpace: number;
+   labels?:string[];
+   unitLabel?: string;
 }
-
-const BarChart = ({ data, barSpace, barWidth, maxHours }: Props) => {
+const BarChart = ({ data, barSpace, barWidth, maxHours, unitLabel }: Props) => {
    const [weekIndex, setWeekIndex] = useState(0);
    return (
       <>
@@ -32,14 +32,12 @@ const BarChart = ({ data, barSpace, barWidth, maxHours }: Props) => {
                   </>
                </ul>
             </div>
-            <span className="absolute left-0 top-3 text-sm">{maxHours}h</span>
-            <span className="absolute left-0 bottom-[-2px] text-sm">0h</span>
+            <span className="absolute left-0 top-3 text-sm">{maxHours}{unitLabel}</span>
+            <span className="absolute left-0 bottom-[-2px] text-sm"> 0{unitLabel}</span>
             {/* <span className="text-xs opacity-90 text-[#BEC1C7] absolute right-0 top-[-2px]">
-          
         </span> */}
          </div>
       </>
    );
 };
-
 export default BarChart;

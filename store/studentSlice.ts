@@ -8,6 +8,7 @@ import { closePreloader, openErrorModal, openPreloader } from "./fetchSlice";
 import { RootState } from "./store";
 import { setTimeLimit } from "utils/useMultiForm";
 import parentService from "services/parentChildService";
+import { levelThresholdType } from "@/components/parents/threshold/LevelThresholdComponent";
 
 const initialState: IUserStudent = {
    newStudent: null,
@@ -96,6 +97,19 @@ export const getStudentScreentime: any = createAsyncThunk("get/student/screentim
 
    try {
       const data = await parentService.getChildScreentime(childId);
+
+      return data;
+   } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+   }
+});
+export const getStudentThreshold: any = createAsyncThunk("get/student/threshold", async (childId: number, thunkApi) => {
+   const state = <RootState>thunkApi.getState();
+
+   const dispatch = thunkApi.dispatch;
+
+   try {
+      const data = await parentService.getChildLevelThresHold(childId);
 
       return data;
    } catch (error: any) {
@@ -203,6 +217,9 @@ export const studentSlice = createSlice({
          })
          .addCase(getStudentScreentime.fulfilled, (state, action: PayloadAction<screentimeTypes[]>) => {
             (state.currentStudent as ISingleStudent).timeLimits = action.payload;
+         })
+         .addCase(getStudentThreshold.fulfilled, (state, action: PayloadAction<levelThresholdType[]>) => {
+            (state.currentStudent as ISingleStudent).levelThreshold = action.payload;
          });
    },
 });
