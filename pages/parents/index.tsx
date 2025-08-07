@@ -71,6 +71,12 @@ const thresholds = useMemo(() => {
 const allProgressItems = Array.isArray(progressData) ? progressData : [];
 const inProgressItems = allProgressItems.filter(item => item.progress < 1.0);
 const completedItems = allProgressItems.filter(item => item.progress === 1.0);
+const filteredCompletedItems = completedItems.filter(item => {
+  const hasNoCurriculum = 
+    item.iready_math_desc?.includes("(No direct curriculum unit)") && 
+    item.common_core_math_desc?.includes("(No direct curriculum unit)");
+  return !hasNoCurriculum;
+});
 
   return (
     <ParentLayout title="Dashboard">
@@ -85,7 +91,7 @@ const completedItems = allProgressItems.filter(item => item.progress === 1.0);
         completedItems={completedItems}
         currentProgress={!isBlockProgress && parent?.currentChild?.progress?.current }
       />
-      <CompletedStandard completedItems={completedItems} isLoading={isLoading} />
+      <CompletedStandard completedItems={filteredCompletedItems} isLoading={isLoading} />
       <Skills size="base" />
       <Screentime size="base" />
       <LevelsThreshold size="base" thresholds={thresholds} />
