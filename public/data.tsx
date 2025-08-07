@@ -90,7 +90,7 @@ export const articles: IArticle[] = [
    },
    {
       title: "CodeAlgo at ProX Hiring Fair – Connecting with Future Innovators!",
-      body: "We're thrilled to announce our active participation in the ProX Hiring Fair, an exceptional event hosted by Pro X, where more than 90 employers converge to interview over 1,000 talented students, paving the way for transformative summer internships. At CodeAlgo, we recognize the importance of nurturing the next generation of tech enthusiasts, and this event provides an ideal platform to connect with bright minds.",
+      body: "We're thrilled to announce our active participation in the ProX Hiring Fair, an exceptional event hosted by Pro X, where more than 90 employers converge to interview over 1,000 talented students, paving the way for transformative summer internships. ",
       image: "/assets/blog/codealgo-at-proX.jpeg",
       detailPage: "/codealgo-at-proX",
       date: "March 18, 2023",

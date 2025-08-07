@@ -7,10 +7,21 @@ interface ICompletedStandardProps {
 }
 
 const CompletedStandard = ({ completedItems, isLoading }: ICompletedStandardProps) => {
-  const hasData = completedItems && completedItems.length > 0;
+  const filteredItems = completedItems?.filter(item => {
+    const bothNoCurriculum = 
+      item.iready_math_desc?.includes("(No direct curriculum unit)") && 
+      item.common_core_math_desc?.includes("(No direct curriculum unit)");
+    return !bothNoCurriculum;
+  }) || [];
+
+  const hasData = filteredItems.length > 0;
 
   return (
-    <ContentBox size="base" title="Completed Standards" padding="large" style={{height:"400px"}}>
+    <ContentBox size="base" title="Completed Standards" padding="large" style={{
+      minWidth: "100%", 
+        maxWidth: "100%", 
+        height: "400px",
+        overflowY: "auto"}}>
       <div className="mt-6">
         {isLoading ? (
           <p className="text-gray-500 animate-pulse">Loading completed standards...</p>
@@ -24,16 +35,16 @@ const CompletedStandard = ({ completedItems, isLoading }: ICompletedStandardProp
               </tr>
             </thead>
             <tbody>
-              {completedItems && completedItems.filter((item) => item.standard_code).map((item, index) => (
+              {filteredItems.map((item, index) => (
                 <tr key={`completed-${index}`} className="border-b border-gray-200">
-                  <td className="px-4 py-2 text-sm w-[15%]">{item.standard_code || "hf,vh"}</td>
-                  <td className="px-4 py-2 text-sm ">
+                  <td className="px-4 py-2 text-[0.75rem] w-[15%]">{item.standard_code || "N/A"}</td>
+                  <td className="px-4 py-2 text-[0.75rem]">
                     <div className="max-h-20 overflow-y-auto">
-                      {item.iready_math_desc || "No description "}
+                      {item.iready_math_desc || "No description"}
                     </div>
                   </td>
-                  <td className="px-4 py-2 text-sm">
-                    <div className="max-h-20 overflow-x-auto">
+                  <td className="px-4 py-2 text-[0.75rem]">
+                    <div className="max-h-20 overflow-y-auto">
                       {item.common_core_math_desc || "No description"}
                     </div>
                   </td>
