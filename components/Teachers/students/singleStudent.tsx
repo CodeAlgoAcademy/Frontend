@@ -53,13 +53,19 @@ const SingleStudent = ({
       lastName: student?.lastName,
       email: student?.email,
    });
-   const [studentProgress, setStudentProgress] = useState<IChildTopics>({ current: { title: "", level: 0, progress: 0 }, topic: [] });
+const [studentProgress, setStudentProgress] = useState<IChildTopics>({ current: { title: "", level: 0, progress: 0 }, topic: [] });
 
-   const getStudentProgress = async () => {
-      const data = await studentService.getStudentProgressByTeacher(student?.student_id as string);
+const getStudentProgress = async () => {
+  if (!student?.student_id || !classId) return;
 
-      if (data) setStudentProgress(data);
-   };
+  const data = await studentService.getStudentProgressByTeacher(
+    student.student_id as string,
+    classId as string
+  );
+
+  if (data) setStudentProgress(data);
+};
+
 
    const updateComment = (text: string): void => {
       if (comment.length < 100) {
@@ -121,9 +127,9 @@ const SingleStudent = ({
       setEditStudentModalOpened("");
    };
 
-   useEffect(() => {
-      getStudentProgress();
-   }, []);
+useEffect(() => {
+  getStudentProgress();
+}, [student?.student_id, classId]);
 
    return (
       <div className="bg-[#fff] shadow-lg" data-testid={`single-student`}>
