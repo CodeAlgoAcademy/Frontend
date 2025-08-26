@@ -3,8 +3,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { BiHome } from "react-icons/bi";
-import { useDispatch } from "react-redux";
-import { updateUser } from "store/authSlice";
 
 export default function SelectAccountType() {
    const slug = useRouter();
@@ -75,21 +73,6 @@ export default function SelectAccountType() {
                   </h2>
                </div>
             </a>
-
-             <a rel="noopener noreferrer" href={slug.pathname.includes("login") ? "http://covidgame.codealgoacademy.com/" : "/signup/student"}>
-               <div className="transition duration-300 ease-out hover:scale-110 hover:text-mainRed">
-                  <div className="mx-auto max-h-[200px] max-w-[200px] md:max-h-fit md:max-w-fit">
-                     <Image src="/assets/covid.png" alt="parent" height="225" width="225" />
-                  </div>
-                  <h2
-                     data-testid="accountType"
-                     className="text-black-500 mt-[.4rem] cursor-pointer text-center text-[1.3rem] font-[500] md:mt-[2rem] md:text-3xl md:font-bold"
-                  >
-                   FREE COVID GAME
-                  </h2>
-               </div>
-            </a>
-             
          </div>
       </div>
    );
