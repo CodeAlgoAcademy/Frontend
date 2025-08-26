@@ -2,44 +2,46 @@ import React, { useMemo } from "react";
 import ContentBox from "../UI/ContentBox";
 import BarChart from "../UI/BarChart";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { RootState } from "store/store";
 
 interface LevelThresholdProps {
   size: "large" | "base";
-  thresholds: {
-    grade: string;
-    level: number;
-  }[];
 }
 
-const LevelsThreshold = React.memo(({ size, thresholds }: LevelThresholdProps) => {
+const ALL_GRADES = ["Kindergarten", "Grade 1", "Grade 2", "Grade 3", "Grade 4"] as const;
+
+const LevelsThresholdChart = ({ size }: LevelThresholdProps) => {
   const router = useRouter();
+  const { currentChild } = useSelector((state: RootState) => state.parentChild);
 
   const { chartData, chartLabels, maxLevel } = useMemo(() => {
-    const displayedData = Array.isArray(thresholds) ? thresholds : [];
-    return {
-      chartData: displayedData.map(t => t.level),
-      chartLabels: displayedData.map(t => t.grade),
-      maxLevel: Math.max(10, ...displayedData.map(t => t.level), 0),
-    };
-  }, [thresholds]);
+    const thresholds = currentChild?.levelThresholds?.length
+      ? currentChild.levelThresholds
+      : ALL_GRADES.map((grade) => ({ grade, level: 10 }));
 
-  const contentBoxStyle = useMemo(() => ({
-    minWidth: "100%",
-    maxWidth: "100%",
-    height: "400px"
-  }), []);
+    return {
+      chartData: thresholds.map((t) => t.level),
+      chartLabels: thresholds.map((t) => t.grade),
+      maxLevel: Math.max(10, ...thresholds.map((t) => t.level)),
+    };
+  }, [currentChild?.levelThresholds]);
 
   return (
     <ContentBox
       size={size}
-      title="Level Threshold"
+      title="Level Thresholds"
       padding="large"
       showSublink={router.pathname === "/parents"}
-      link={"/parents/LevelThreshold"}
-      style={contentBoxStyle}
+      link="/parents/LevelThreshold"
+      style={{
+        minWidth: "100%",
+        maxWidth: "100%",
+        height: "400px",
+        marginTop: "2rem",
+      }}
     >
       <BarChart
-        key={JSON.stringify(chartData)}
         data={chartData}
         labels={chartLabels}
         barSpace={9.6}
@@ -49,8 +51,6 @@ const LevelsThreshold = React.memo(({ size, thresholds }: LevelThresholdProps) =
       />
     </ContentBox>
   );
-});
+};
 
-LevelsThreshold.displayName = "LevelsThreshold";
-
-export default LevelsThreshold;
+export default LevelsThresholdChart;

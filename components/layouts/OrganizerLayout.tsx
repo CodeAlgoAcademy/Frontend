@@ -43,7 +43,7 @@ const OrganizerLayout = ({ children }: Props) => {
    useEffect(() => {
       const stringedToken = localStorage.getItem(ILocalStorageItems.token);
       const token = JSON.parse(`${stringedToken}`);
-      if (!stringedToken || !token || token?.user_type !== "organizer") {
+      if (!stringedToken || !token ) {
          router?.push("/login");
       } else {
          const user = getUserFromLocalStorage();

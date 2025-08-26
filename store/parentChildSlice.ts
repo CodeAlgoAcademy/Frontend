@@ -20,13 +20,34 @@ const initialState: IParentChildren = {
       username: "",
       friend: "",
       timeLimits: [
-         { dayOfTheWeek: "Monday", timeLimit: "" },
-         { dayOfTheWeek: "Tuesday", timeLimit: "" },
-         { dayOfTheWeek: "Wednesday", timeLimit: "" },
-         { dayOfTheWeek: "Thursday", timeLimit: "" },
-         { dayOfTheWeek: "Friday", timeLimit: "" },
-         { dayOfTheWeek: "Saturday", timeLimit: "" },
-         { dayOfTheWeek: "Sunday", timeLimit: "" },
+         {
+            dayOfTheWeek: "Monday", timeLimit: "",
+            id: ""
+         },
+         {
+            dayOfTheWeek: "Tuesday", timeLimit: "",
+            id: ""
+         },
+         {
+            dayOfTheWeek: "Wednesday", timeLimit: "",
+            id: ""
+         },
+         {
+            dayOfTheWeek: "Thursday", timeLimit: "",
+            id: ""
+         },
+         {
+            dayOfTheWeek: "Friday", timeLimit: "",
+            id: ""
+         },
+         {
+            dayOfTheWeek: "Saturday", timeLimit: "",
+            id: ""
+         },
+         {
+            dayOfTheWeek: "Sunday", timeLimit: "",
+            id: ""
+         },
       ],
       level: 0,
       progress: {
@@ -49,13 +70,34 @@ const initialState: IParentChildren = {
    username: "",
    friend: "",
    timeLimits: [
-      { dayOfTheWeek: "Monday", timeLimit: "No Limit" },
-      { dayOfTheWeek: "Tuesday", timeLimit: "No Limit" },
-      { dayOfTheWeek: "Wednesday", timeLimit: "No Limit" },
-      { dayOfTheWeek: "Thursday", timeLimit: "No Limit" },
-      { dayOfTheWeek: "Friday", timeLimit: "No Limit" },
-      { dayOfTheWeek: "Saturday", timeLimit: "No Limit" },
-      { dayOfTheWeek: "Sunday", timeLimit: "No Limit" },
+      {
+         dayOfTheWeek: "Monday", timeLimit: "No Limit",
+         id: ""
+      },
+      {
+         dayOfTheWeek: "Tuesday", timeLimit: "No Limit",
+         id: ""
+      },
+      {
+         dayOfTheWeek: "Wednesday", timeLimit: "No Limit",
+         id: ""
+      },
+      {
+         dayOfTheWeek: "Thursday", timeLimit: "No Limit",
+         id: ""
+      },
+      {
+         dayOfTheWeek: "Friday", timeLimit: "No Limit",
+         id: ""
+      },
+      {
+         dayOfTheWeek: "Saturday", timeLimit: "No Limit",
+         id: ""
+      },
+      {
+         dayOfTheWeek: "Sunday", timeLimit: "No Limit",
+         id: ""
+      },
    ],
    levelThresholds: []
 };
@@ -305,6 +347,24 @@ export const parentSlice = createSlice({
       state.currentChild.skills = action.payload;
    }
 });
+ builder.addCase(createOrUpdateLevelThreshold.fulfilled, (state, action) => {
+      if (state.currentChild) {
+        const { grade, level } = action.payload
+        if (!state.currentChild.levelThresholds) {
+          state.currentChild.levelThresholds = []
+        }
+        const existingIndex = state.currentChild.levelThresholds.findIndex((t: { grade: any }) => t.grade === grade)
+
+        if (existingIndex >= 0) {
+          state.currentChild.levelThresholds[existingIndex].level = level
+        } else {
+          state.currentChild.levelThresholds.push({
+             grade, level,
+             id: 0
+          })
+        }
+      }
+    })
 
    },
 });

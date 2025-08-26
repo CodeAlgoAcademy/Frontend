@@ -65,6 +65,7 @@
       "swiper": "^9.2.3",
       "tailwind-clip-path": "^1.0.0",
       "tailwind-merge": "^2.5.5",
+      "use-debounce": "^10.0.5",
       "uuid": "^9.0.0",
       "websocket": "^1.0.34"
    },
