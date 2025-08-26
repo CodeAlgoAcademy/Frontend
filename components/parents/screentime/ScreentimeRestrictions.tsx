@@ -21,7 +21,10 @@ const ScreentimeRestrictions = () => {
    ]);
 
    const updateTime = async (id: string | number, day: days, hour: number | "No Limit") => {
-      const data: screentimeTypes = { dayOfTheWeek: day, timeLimit: hour };
+      const data: screentimeTypes = {
+         dayOfTheWeek: day, timeLimit: hour,
+         id: ""
+      };
       currentChild && (await dispatch(editScreentime({ id, data })));
       currentChild && (await dispatch(getChildren()));
    };

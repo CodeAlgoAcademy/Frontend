@@ -14,8 +14,11 @@ export default function ParentSidebar({ onClose, isOpen }: Props) {
    return (
       <aside
          className={`${
-            isOpen ? "translate-x-0" : "translate-x-[100%]"
-         } fixed top-0 right-0 z-[5] h-full max-h-full w-full overflow-y-scroll bg-white p-2 transition-all duration-500 md:left-0 md:!w-[300px] md:!translate-x-0 md:py-9`}
+            isOpen ? "translate-x-0" : "translate-x-[100%]"}
+         fixed top-0 right-0 z-[5]  h-full max-h-full w-full 
+         overflow-y-scroll bg-white p-2 transition-all duration-500 md:left-0 
+         md:!w-[300px] md:!translate-x-0 md:py-9 max-w820:hidden
+      `}
       >
          <header className="flex items-center justify-between gap-2 md:justify-center">
             <Image src={"/assets/CodeAlgo_Logo.png"} className="h-9 md:cursor-pointer" alt="logo" loading="lazy" width={90} height={45} />

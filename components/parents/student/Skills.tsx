@@ -9,7 +9,7 @@ interface ISkillProps {
    size: "large" | "base";
 }
 
-interface SkillData {
+export interface SkillData {
   name: string;
   value: number;
 }

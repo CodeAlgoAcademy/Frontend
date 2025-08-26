@@ -13,6 +13,7 @@ import ClassSelector from "../Teachers/UI/ClassSelector";
 import { FaUserGraduate } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { getAllClasses } from "services/classesService";
+import { FiActivity } from "react-icons/fi";
 
 interface Props {
    children?: ReactNode;
@@ -29,6 +30,11 @@ const links = [
       name: "dashboard",
       icon: <TbLayoutDashboard />,
       url: "/teachers",
+   },
+   {
+      name: "Activity",
+      icon: <FiActivity />,
+      url: "/teachers/activities",
    },
    {
       name: "curriculum",
@@ -77,8 +83,11 @@ const TeacherLayout = ({ children, className }: Props) => {
    return (
       <section className="h-screen w-full bg-white md:flex md:px-4">
          <TeacherSidebar links={links} isOpen={sidebarOpened} close={() => setSidebarOpened(false)} />
-
-         <section className="ml-[0px] flex h-screen max-h-screen w-full flex-col items-center overflow-hidden md:ml-[300px]">
+         <section className={`
+       flex h-screen max-h-screen w-full flex-col items-center overflow-hidden
+       transition-all duration-500
+       w820:ml-[300px]
+     `}>
             <nav className="flex w-full items-center justify-between gap-2 py-2 px-4 md:py-6 md:px-0">
                <div className="flex items-center gap-2">
                   <div className="md:hidden">
@@ -99,7 +108,7 @@ const TeacherLayout = ({ children, className }: Props) => {
                </div>
             </nav>
 
-            <div className={`w-full flex-1 bg-[#ecedf3] p-[1rem] md:h-full md:overflow-y-scroll md:rounded-[30px] md:p-[2rem] ${className}`}>
+            <div className={`w-full flex-1 bg-[#ecedf3] p-[1rem] md:h-full overflow-y-scroll md:rounded-[30px] md:p-[2rem] ${className}`}>
                <div className="flex items-center justify-end md:hidden">
                   <ClassSelector />
                </div>

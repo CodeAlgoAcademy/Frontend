@@ -8,18 +8,28 @@ import { BsArrowLeft, BsArrowLeftCircle } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { getSingleStudent, getStudentScreentime } from "store/studentSlice";
+import { changeCurrentStudent } from "store/teacherStudentSlice";
+import { BaseStudent } from "types/interfaces/teacherstudent.interface";
 
 export default function Screentime() {
    const slug = useRouter();
    const dispatch = useDispatch();
-
+//  const teacherStudents = useSelector((state: RootState) => state.teacherStudentSlice);
    const student = useSelector((state: RootState) => state.students?.currentStudent);
 
-   useEffect(() => {
-      if (slug?.query?.classId) {
-         dispatch(getSingleStudent({ classId: slug?.query?.classId, studentId: slug?.query?.studentId }));
-      }
-   }, [slug]);
+useEffect(() => {
+   if (slug?.query?.classId && slug?.query?.studentId) {
+      dispatch(
+         getSingleStudent({
+            classId: slug.query.classId as string,
+            studentId: slug.query.studentId as string,
+         })
+      ).unwrap().then((student: BaseStudent) => {
+         dispatch(changeCurrentStudent(student));
+      });
+   }
+}, [slug]);
+
 
    useEffect(() => {
       if (student?.id) dispatch(getStudentScreentime(student?.id));
@@ -31,14 +41,14 @@ export default function Screentime() {
             <Link href={`/teachers/students/${slug?.query?.classId}/${slug?.query?.studentId}`}>
                <BsArrowLeftCircle className="cursor-pointer" />
             </Link>
-            <h1 className={styles.headerTitle}>Adejare Daniel's Screentime</h1>
+            <h1 className={styles.headerTitle}>{student?.firstName} Screentime</h1>
          </div>
 
          <div>
-            <StudentBarChart />
+            <StudentBarChart showEditLink={false}/>
          </div>
 
-         <div>
+         <div className="mt-10">
             <ScreentimeRestrictions />
          </div>
       </TeacherLayout>

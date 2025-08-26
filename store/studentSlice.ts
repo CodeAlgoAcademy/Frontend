@@ -1,20 +1,18 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import http from "axios.config";
 import studentService from "services/studentService";
-import { IUserStudent, ISingleStudent, screentimeTypes } from "types/interfaces";
+import { ISingleStudent, screentimeTypes, TeacherStudentsState } from "types/interfaces";
 import { errorResolver } from "utils/errorResolver";
 import { getAccessToken } from "utils/getTokens";
-import { closePreloader, openErrorModal, openPreloader } from "./fetchSlice";
+import { closePreloader, openPreloader } from "./fetchSlice";
 import { RootState } from "./store";
 import { setTimeLimit } from "utils/useMultiForm";
 import parentService from "services/parentChildService";
-import { levelThresholdType } from "@/components/parents/threshold/LevelThresholdComponent";
 
-const initialState: IUserStudent = {
-   newStudent: null,
+const initialState: TeacherStudentsState = {
    students: [],
-   studentComments: [],
-   currentStudent: undefined,
+   currentStudent: null,
+   studentComments: []
 };
 
 export const addStudent: any = createAsyncThunk("new/student", async (data: ISingleStudent, thunkAPI) => {
@@ -217,9 +215,6 @@ export const studentSlice = createSlice({
          })
          .addCase(getStudentScreentime.fulfilled, (state, action: PayloadAction<screentimeTypes[]>) => {
             (state.currentStudent as ISingleStudent).timeLimits = action.payload;
-         })
-         .addCase(getStudentThreshold.fulfilled, (state, action: PayloadAction<levelThresholdType[]>) => {
-            (state.currentStudent as ISingleStudent).levelThreshold = action.payload;
          });
    },
 });
