@@ -6,15 +6,12 @@ import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { changeTimeLimit } from "utils/timelimit";
 import { useRouter } from "next/router";
-
 interface ScreentimeProps {
    size: "large" | "base";
 }
-
 const Screentime = ({ size }: ScreentimeProps) => {
    const { currentChild } = useSelector((state: RootState) => state.parentChild);
    const router = useRouter();
-
    const [timeLimits, setTimeLimits] = useState<screentimeTypes[]>([
       { id: 1, dayOfTheWeek: "Monday", timeLimit: 0 },
       { id: 1, dayOfTheWeek: "Tuesday", timeLimit: 0 },
@@ -24,13 +21,11 @@ const Screentime = ({ size }: ScreentimeProps) => {
       { id: 1, dayOfTheWeek: "Saturday", timeLimit: 0 },
       { id: 1, dayOfTheWeek: "Sunday", timeLimit: 0 },
    ]);
-
    useEffect(() => {
       if (currentChild) {
          setTimeLimits(changeTimeLimit(currentChild?.timeLimits));
       }
    }, [currentChild, currentChild?.timeLimits]);
-
    return (
       <ContentBox
          size={size}
@@ -38,7 +33,7 @@ const Screentime = ({ size }: ScreentimeProps) => {
          padding="large"
          showSublink={router.pathname === "/parents"}
          link={"/parents/screen-time"}
-         style={{ minWidth: "100%", maxWidth: "100%", height:"400px" }}
+         style={{ minWidth: "100%", maxWidth: "100%", height: "400px", marginTop:"2rem"}}
       >
          <BarChart
             data={timeLimits?.map((time) => {
@@ -47,9 +42,9 @@ const Screentime = ({ size }: ScreentimeProps) => {
             barSpace={9.6}
             barWidth={3.3}
             maxHours={8}
+            unitLabel="h"
          />
       </ContentBox>
    );
 };
-
 export default Screentime;

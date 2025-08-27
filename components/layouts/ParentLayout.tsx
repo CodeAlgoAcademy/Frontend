@@ -76,7 +76,8 @@ const ParentLayout = ({ children, title }: Props) => {
             <MdMenu size={26} cursor={"pointer"} onClick={() => toggleTab("sidebar", true)} />
          </nav>
          {/* Main */}
-         <div className="min-h-full w-full flex-1 bg-[#ecedf3] p-[1rem] md:ml-[300px] md:h-full md:overflow-y-scroll md:rounded-[30px] md:p-[2rem]">
+         <div className="min-h-full w-full flex-1 bg-[#ecedf3] p-[1rem]
+          w820:ml-[300px] md:h-full overflow-y-scroll md:rounded-[30px] md:p-[2rem]">
             <header className="mb-8 flex items-center justify-between gap-2">
                <h1 className="text-[1.2rem] font-medium text-mainColor md:text-[1.4rem] lg:text-[1.6rem]">{title}</h1>
                <div className="flex items-center gap-2">

@@ -72,6 +72,22 @@ const updateChildScreentime = async (data: any, id: string | number) => {
    return response.data;
 };
 
+const createChildLevelThresHold = async (data: any, id: string | number) => {
+   const response = await http.post(`/parent/child/level_thresholds_limit/child/${id}/`, data, {
+      headers: {
+         Authorization: `Bearer ${getAccessToken()}`,
+      },
+   });
+   return response.data;
+};
+
+const getChildLevelThresHold = async (childId: number) => {
+   const response = await http.get(`/users/student/${childId}/threshold-limit/`,
+       { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+
+   return response?.data;
+};
+
 const getChildScreentime = async (childId: number) => {
    const response = await http.get(`/users/student/${childId}/screen-time/`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
 
@@ -112,8 +128,10 @@ const parentService = {
    addChildFriends,
    getAllChildren,
    updateChildScreentime,
+   createChildLevelThresHold,
    replyFriendRequest,
    getChildScreentime,
+   getChildLevelThresHold,
    getChildProgress,
    getChildSkills,
    updateChildPassword,

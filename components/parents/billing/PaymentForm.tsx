@@ -14,6 +14,7 @@ const PaymentForm = () => {
    const elements = useElements();
    const [isLoading, setIsLoading] = useState(false);
 
+
    const handleSubmit = async (e: FormEvent) => {
       e.preventDefault();
 
@@ -26,7 +27,7 @@ const PaymentForm = () => {
       const { error } = await stripe.confirmPayment({
          elements,
          confirmParams: {
-            return_url: "http://localhost:3000/payment/confirm",
+      return_url: `${window.location.origin}/payment/confirm`,
          },
       });
       if (error.type === "card_error" || error.type === "validation_error") {

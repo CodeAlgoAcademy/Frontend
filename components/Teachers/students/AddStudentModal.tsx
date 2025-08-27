@@ -14,13 +14,34 @@ import BulkImportModal from "@/components/Teachers/addClass/bulkImportModal";
 import { openSuccessModal } from "store/modalSlice";
 
 export const defaultTimeLimits: screentimeTypes[] = [
-   { dayOfTheWeek: "Monday", timeLimit: "No Limit" },
-   { dayOfTheWeek: "Tuesday", timeLimit: "No Limit" },
-   { dayOfTheWeek: "Wednesday", timeLimit: "No Limit" },
-   { dayOfTheWeek: "Thursday", timeLimit: "No Limit" },
-   { dayOfTheWeek: "Friday", timeLimit: "No Limit" },
-   { dayOfTheWeek: "Saturday", timeLimit: "No Limit" },
-   { dayOfTheWeek: "Sunday", timeLimit: "No Limit" },
+   {
+      dayOfTheWeek: "Monday", timeLimit: "No Limit",
+      id: ""
+   },
+   {
+      dayOfTheWeek: "Tuesday", timeLimit: "No Limit",
+      id: ""
+   },
+   {
+      dayOfTheWeek: "Wednesday", timeLimit: "No Limit",
+      id: ""
+   },
+   {
+      dayOfTheWeek: "Thursday", timeLimit: "No Limit",
+      id: ""
+   },
+   {
+      dayOfTheWeek: "Friday", timeLimit: "No Limit",
+      id: ""
+   },
+   {
+      dayOfTheWeek: "Saturday", timeLimit: "No Limit",
+      id: ""
+   },
+   {
+      dayOfTheWeek: "Sunday", timeLimit: "No Limit",
+      id: ""
+   },
 ];
 
 const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {

@@ -18,6 +18,9 @@ import Link from "next/link";
 import { AssignmentDetails, IChildProgress, IChildTopics, ISingleStudent } from "types/interfaces";
 import { RootState } from "store/store";
 import studentService from "services/studentService";
+import { fetchStudentBlockGameProgress } from "store/teacherStudentSlice";
+import { useAppDispatch } from "store/hooks";
+// import { useAppDispatch } from "store/store"; 
 
 const SingleStudent = ({
    student,
@@ -42,7 +45,8 @@ const SingleStudent = ({
    setEditStudentModalOpened: Dispatch<SetStateAction<string>>;
    index: number;
 }) => {
-   const dispatch = useDispatch();
+   // const dispatch = useDispatch();
+   const dispatch = useAppDispatch();
    const { id: classId } = useSelector((state: RootState) => state.currentClass);
    const [headings, setHeadings] = useState<number[]>([]);
    const { students, studentComments } = useSelector((state: any) => state.students);
@@ -52,13 +56,42 @@ const SingleStudent = ({
       firstName: student?.firstName,
       lastName: student?.lastName,
       email: student?.email,
+      username: student?.username
    });
    const [studentProgress, setStudentProgress] = useState<IChildTopics>({ current: { title: "", level: 0, progress: 0 }, topic: [] });
 
-   const getStudentProgress = async () => {
-      const data = await studentService.getStudentProgressByTeacher(student?.student_id as string);
+   // const getStudentProgress = async () => {
+   //   if (!student?.student_id || !classId) return;
 
-      if (data) setStudentProgress(data);
+   //   const data = await studentService.getStudentProgressByTeacher(
+   //     student.student_id as string,
+   //     classId as string
+   //   );
+
+   //   if (data) setStudentProgress(data);
+   // };
+
+   const getStudentProgress = async () => {
+      if (!student?.student_id || !classId) return;
+
+      try {
+         const data = await dispatch(
+            fetchStudentBlockGameProgress({
+               classId,
+               studentId: student.student_id,
+            })
+         ).unwrap();
+
+         if (data) {
+            // blockgame progress comes back as a list
+            setStudentProgress({
+               current: { title: "", level: 0, progress: 0 },
+               topic: data,
+            });
+         }
+      } catch (error) {
+         console.error("Failed to fetch blockgame progress:", error);
+      }
    };
 
    const updateComment = (text: string): void => {
@@ -114,16 +147,25 @@ const SingleStudent = ({
       });
    };
 
+   // const handleSubmittionOfEditDetails = async (e: ChangeEvent<HTMLFormElement>) => {
+   //    e.preventDefault();
+   //    await dispatch(editStudent({ id: student.id, ...editingStudentDetails }));
+   //    await dispatch(getStudents());
+   //    setEditStudentModalOpened("");
+   // };
+
    const handleSubmittionOfEditDetails = async (e: ChangeEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      await dispatch(editStudent({ id: student.id, ...editingStudentDetails }));
-      await dispatch(getStudents());
-      setEditStudentModalOpened("");
-   };
+  e.preventDefault();
+  const payload = { id: student.id, ...editingStudentDetails };
+  console.log("Submitting:", payload);
+  await dispatch(editStudent(payload));
+  await dispatch(getStudents());
+  setEditStudentModalOpened("");
+};
 
    useEffect(() => {
       getStudentProgress();
-   }, []);
+   }, [student?.student_id, classId]);
 
    return (
       <div className="bg-[#fff] shadow-lg" data-testid={`single-student`}>
@@ -158,6 +200,15 @@ const SingleStudent = ({
                         name="lastName"
                         required
                         placeholder="Enter Lastname*"
+                        onChange={updateEditingDetails}
+                     />
+                     <input
+                        value={editingStudentDetails.username}
+                        type="text"
+                        className={styles.input}
+                        name="username"
+                        required
+                        placeholder="Enter username*"
                         onChange={updateEditingDetails}
                      />
 
@@ -327,7 +378,9 @@ const SingleStudent = ({
          ) : (
             <>
                {headings.includes(parseInt(student?.id as string)) && (
-                  <StudentTable student={student} details={student?.assignments as AssignmentDetails[]} progress={studentProgress} />
+                  <StudentTable student={student} 
+                  details={student?.assignments as AssignmentDetails[]}
+                   progress={studentProgress} />
                )}
             </>
          )}

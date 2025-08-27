@@ -9,7 +9,7 @@ interface ISkillProps {
    size: "large" | "base";
 }
 
-interface SkillData {
+export interface SkillData {
   name: string;
   value: number;
 }
@@ -52,28 +52,27 @@ const Skills = ({ size }: ISkillProps) => {
    // }, [parent?.currentChild?.id]);
 
    return (
-      <ContentBox size={size} title="Skills" padding="small" style={{ minWidth: "100%", maxWidth: "100%", height:"400px" }}>
- <div className="mt-2 grid h-full grid-cols-2 gap-5">
-          {isLoading ? (
-            <div className="flex h-full  text-sm text-gray-400 animate-pulse">
-              Loading skills...
-            </div>
-          ) : hasSkills ? (
-            skills.map((skill, index) => (
-              <div key={index}>
-                <span className="mr-2 inline-block align-middle text-[1.2rem] font-bold">
-                  <BiCheck color="rgba(251, 87, 176, 1)" />
-                </span>
-                <p className="inline-block capitalize">{skill.name}: {skill.value}</p>
-              </div>
-            ))
-          ) : (
-            <div className="flex h-full   text-[1rem] text-gray-500">
-              <p>{parent?.currentChild?.fullName} no skills awarded.</p>
-            </div>
-          )}
+    <ContentBox size={size} title="Skills" padding="small" style={{ height: "400px" }}>
+  <div className="mt-2 grid h-full grid-cols-2 gap-5">
+    {isLoading ? (
+      <div className="flex h-full text-sm text-gray-400 animate-pulse">
+        Loading skills...
       </div>
-
+    ) : hasSkills ? (
+      skills.map((skill, index) => (
+        <div key={index}>
+          <span className="mr-2 inline-block align-middle text-[1.2rem] font-bold">
+            <BiCheck color="rgba(251, 87, 176, 1)" />
+          </span>
+          <p className="inline-block capitalize">{skill.name}: {skill.value}</p>
+        </div>
+      ))
+    ) : (
+      <div className="w-full items-center justify-center text-[1rem] text-center text-gray-500">
+        <p>{parent?.currentChild?.fullName} has no skills awarded.</p>
+      </div>
+    )}
+  </div>
          {/* <div className="mt-2 grid h-full grid-cols-2 gap-5">
             <SkillBox>
                for completed skills

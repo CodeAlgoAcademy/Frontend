@@ -14,8 +14,11 @@ export default function ParentSidebar({ onClose, isOpen }: Props) {
    return (
       <aside
          className={`${
-            isOpen ? "translate-x-0" : "translate-x-[100%]"
-         } fixed top-0 right-0 z-[5] h-full max-h-full w-full overflow-y-scroll bg-white p-2 transition-all duration-500 md:left-0 md:!w-[300px] md:!translate-x-0 md:py-9`}
+            isOpen ? "translate-x-0" : "translate-x-[100%]"}
+         fixed top-0 right-0 z-[5]  h-full max-h-full w-full 
+         overflow-y-scroll bg-white p-2 transition-all duration-500 md:left-0 
+         md:!w-[300px] md:!translate-x-0 md:py-9 max-w820:hidden
+      `}
       >
          <header className="flex items-center justify-between gap-2 md:justify-center">
             <Image src={"/assets/CodeAlgo_Logo.png"} className="h-9 md:cursor-pointer" alt="logo" loading="lazy" width={90} height={45} />
@@ -36,7 +39,7 @@ export default function ParentSidebar({ onClose, isOpen }: Props) {
          <div className="my-2">
             <h2 className="ml-7 mb-3 text-xl font-medium text-[#A8ABB0]">SAFETY</h2>
             <NavButton title="Screen Time" image="screen-time.svg" url="/parents/screen-time" />
-            {/* <NavButton title="Levels Threshold" image="screen-time.svg" url="/parents/LevelThreshold" /> */}
+            <NavButton title="Levels Threshold" image="screen-time.svg" url="/parents/LevelThreshold" />
             {/* <NavButton title="Multiplayer" image="game.svg" url="/parents/multiplayer" /> */}
          </div>
          <NavButton image={<GiHelp size={22} />} url={DEFAULT_SUPPORT.discord} title="Get Help"></NavButton>

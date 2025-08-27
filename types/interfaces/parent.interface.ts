@@ -1,9 +1,13 @@
+import { LevelThresholdInputProps } from "@/components/parents/UI/levelthreshold";
+
 export type days = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
 
 export interface IChildSkill {
    id: number;
    title: string;
    level: number;
+   name?:string;
+   value?:string;
 }
 
 export interface IChildProgress {
@@ -42,6 +46,8 @@ export interface IParentChild {
       friend: string;
    }[];
    student_id?:number;
+  levelThresholds: LevelThresholdInputProps[]
+   selectedChild?: boolean;
    // }
 }
 
@@ -51,7 +57,7 @@ export interface IParentChildren extends IParentChild {
 }
 
 export interface screentimeTypes {
-   id?: number | string;
+   id: number | string;
    dayOfTheWeek: days;
    timeLimit: "" | string | number | "No Limit";
 }
