@@ -31,13 +31,13 @@ const links = [
       icon: <TbLayoutDashboard />,
       url: "/teachers",
    },
+   // {
+   //    name: "Activity",
+   //    icon: <FiActivity />,
+   //    url: "/teachers/activities",
+   // },
    {
-      name: "Activity",
-      icon: <FiActivity />,
-      url: "/teachers/activities",
-   },
-   {
-      name: "curriculum",
+      name: "Lesson plan",
       icon: <TbClipboardText />,
       url: "/teachers/curriculum",
    },
