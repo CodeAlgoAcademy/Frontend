@@ -1,11 +1,9 @@
-import Image from "next/image";
 import React, { Fragment, useState } from "react";
 import { links } from "./Links";
 import Button, { CustomButton } from "@/components/UI/Button";
 import Link from "next/link";
 import { AnimatePresence } from "framer-motion";
 import AccessibilityMenu from "./accessibility/menu";
-import { IoAccessibility, IoPerson } from "react-icons/io5";
 import { cn } from "utils";
 import { BiMenu } from "react-icons/bi";
 import MobileNavbar from "./mobile-navbar";
@@ -83,15 +81,6 @@ const Navbar = () => {
                </ul>
 
                <div className="flex items-center gap-4 max-md:hidden">
-                  <CustomButton
-                     onClick={() => push("http://covidgame.codealgoacademy.com/")}
-                     variant="filled"
-                     size="medium"
-                     className="bg-mainRed font-bold !text-white hover:bg-mainRed/80 max-md:hidden"
-                  >
-                     <span className="no-contrast-adjust"> FREE COVID GAME</span>
-                  </CustomButton>
-
                   <CustomButton
                      onClick={() => push("https://play.codealgoacademy.com")}
                      variant="filled"

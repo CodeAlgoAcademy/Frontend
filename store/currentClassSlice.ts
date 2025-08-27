@@ -15,10 +15,13 @@ const currentClassSlice = createSlice({
       updateCurrentClass: (state: CurrentClassState, action: PayloadAction<CurrentClassState>) => action.payload,
    },
    extraReducers: (builder) => {
-      // Set the default class to the user's first class when fetched
       builder.addCase(getAllClasses.fulfilled, (state: CurrentClassState, action: PayloadAction<IClass[]>) => {
-         return action.payload?.[0];
-      });
+   if (!state?.id && action.payload.length > 0) {
+      const { id, className, color } = action.payload[0];
+      return { id, className, color };
+   }
+   return state;
+});
    },
 });
 
