@@ -1,19 +1,18 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import http from "axios.config";
 import studentService from "services/studentService";
-import { IUserStudent, ISingleStudent, screentimeTypes } from "types/interfaces";
+import { ISingleStudent, screentimeTypes, TeacherStudentsState } from "types/interfaces";
 import { errorResolver } from "utils/errorResolver";
 import { getAccessToken } from "utils/getTokens";
-import { closePreloader, openErrorModal, openPreloader } from "./fetchSlice";
+import { closePreloader, openPreloader } from "./fetchSlice";
 import { RootState } from "./store";
 import { setTimeLimit } from "utils/useMultiForm";
 import parentService from "services/parentChildService";
 
-const initialState: IUserStudent = {
-   newStudent: null,
+const initialState: TeacherStudentsState = {
    students: [],
-   studentComments: [],
-   currentStudent: undefined,
+   currentStudent: null,
+   studentComments: []
 };
 
 export const addStudent: any = createAsyncThunk("new/student", async (data: ISingleStudent, thunkAPI) => {
@@ -47,6 +46,7 @@ export const editStudent: any = createAsyncThunk("edit/student", async (student:
                firstName: student.firstName,
                lastName: student.lastName,
                email: student.email,
+               username: student?.username
             },
          },
          {
@@ -96,6 +96,19 @@ export const getStudentScreentime: any = createAsyncThunk("get/student/screentim
 
    try {
       const data = await parentService.getChildScreentime(childId);
+
+      return data;
+   } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+   }
+});
+export const getStudentThreshold: any = createAsyncThunk("get/student/threshold", async (childId: number, thunkApi) => {
+   const state = <RootState>thunkApi.getState();
+
+   const dispatch = thunkApi.dispatch;
+
+   try {
+      const data = await parentService.getChildLevelThresHold(childId);
 
       return data;
    } catch (error: any) {

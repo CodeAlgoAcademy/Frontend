@@ -6,7 +6,7 @@ interface ICompletedStandardProps {
   isLoading?: boolean;
 }
 
-const CompletedStandard = ({ completedItems, isLoading }: ICompletedStandardProps) => {
+const TeacherStudentCompletedStandard = ({ completedItems, isLoading }: ICompletedStandardProps) => {
   const filteredItems = completedItems?.filter(item => {
     const bothNoCurriculum = 
       item.iready_math_desc?.includes("(No direct curriculum unit)") && 
@@ -60,4 +60,4 @@ const CompletedStandard = ({ completedItems, isLoading }: ICompletedStandardProp
   );
 };
 
-export default CompletedStandard;
+export default TeacherStudentCompletedStandard;

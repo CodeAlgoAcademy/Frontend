@@ -1,51 +1,56 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo } from "react";
 import ContentBox from "../UI/ContentBox";
 import BarChart from "../UI/BarChart";
+import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
-import { useRouter } from "next/router";
 
 interface LevelThresholdProps {
   size: "large" | "base";
 }
 
-interface LevelThresholdType {
-  level: number;
-  threshold: number;
-}
+const ALL_GRADES = ["Kindergarten", "Grade 1", "Grade 2", "Grade 3", "Grade 4"] as const;
 
-const LevelsThreshold = ({ size }: LevelThresholdProps) => {
-  const { currentChild } = useSelector((state: RootState) => state.parentChild);
+const LevelsThresholdChart = ({ size }: LevelThresholdProps) => {
   const router = useRouter();
+  const { currentChild } = useSelector((state: RootState) => state.parentChild);
 
-  const [thresholds, setThresholds] = useState<LevelThresholdType[]>([]);
+  const { chartData, chartLabels, maxLevel } = useMemo(() => {
+    const thresholds = currentChild?.levelThresholds?.length
+      ? currentChild.levelThresholds
+      : ALL_GRADES.map((grade) => ({ grade, level: 10 }));
 
-  useEffect(() => {
-    const defaultThresholds = Array.from({ length: 10 }, (_, i) => ({
-      level: i + 1,
-      threshold: (i + 1) * 10, 
-    }));
-
-    setThresholds(defaultThresholds);
-  }, [currentChild]);
+    return {
+      chartData: thresholds.map((t) => t.level),
+      chartLabels: thresholds.map((t) => t.grade),
+      maxLevel: Math.max(10, ...thresholds.map((t) => t.level)),
+    };
+  }, [currentChild?.levelThresholds]);
 
   return (
     <ContentBox
       size={size}
-      title="Level Threshold"
+      title="Level Thresholds"
       padding="large"
       showSublink={router.pathname === "/parents"}
-      // link={"/parents/LevelThreshold"}
-      style={{ minWidth: "100%", maxWidth: "100%", height:"400px" }}
+      link="/parents/LevelThreshold"
+      style={{
+        minWidth: "100%",
+        maxWidth: "100%",
+        height: "400px",
+        marginTop: "2rem",
+      }}
     >
       <BarChart
-        data={thresholds.map((level) => level.threshold)}
+        data={chartData}
+        labels={chartLabels}
         barSpace={9.6}
         barWidth={3.3}
-        maxHours={100} 
+        maxHours={maxLevel}
+        unitLabel=""
       />
     </ContentBox>
   );
 };
 
-export default LevelsThreshold;
+export default LevelsThresholdChart;

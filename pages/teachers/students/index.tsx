@@ -6,9 +6,9 @@ import { FaSearch } from "react-icons/fa";
 import TeacherLayout from "@/components/layouts/TeacherLayout";
 import AddStudentModal from "@/components/Teachers/students/AddStudentModal";
 import Students from "@/components/Teachers/students/Students";
-import { getStudents } from "store/studentSlice";
 import NoItem from "@/components/UI/NoItem";
 import { ISingleStudent } from "types/interfaces";
+import { getStudents } from "store/studentSlice";
 
 const Index = () => {
    const dispatch = useDispatch();
@@ -87,7 +87,7 @@ const Index = () => {
 
 export default Index;
 
-const styles = {
+export const styles = {
    container: "bg-[#ECEDF3] py-5 overflow-x-auto flex-1 w-full students-container",
    containerHeader: "flex justify-between py-3 items-center border-b border-b-slate-400 students-container",
    headerTitle: "font-medium text-[30px] students-container text-mainColor",

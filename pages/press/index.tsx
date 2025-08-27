@@ -17,37 +17,46 @@ const Press = () => {
             detailPage="/press/linc-student"
          />
 
-         <section className="mx-auto mt-12 mb-12 w-full max-w-[1100px] px-6">
-            <div className="mt-8 grid grid-cols-1 items-center justify-center gap-[1rem] md:grid-cols-2 xl:grid-cols-3">
-               {articles.map((article, index: number) => {
-                  return (
-                     <article
-                        key={index}
-                        className="mx-auto h-[400px] w-full max-w-[350px] rounded-[10px] border-[1.5px] bg-white p-4 shadow-sm transition-all hover:shadow-md md:h-[450px]"
-                     >
-                        {/* image container */}
-                        <div className="h-[50%] w-full">
-                           <img src={article.image} alt={article.title} className="h-full w-full rounded-[10px] object-cover object-center" />
-                        </div>
-                        <div className="mt-2 flex h-[50%] w-full flex-col justify-between py-2">
-                           <div>
-                              <h2 className="text-[1rem] font-bold text-[#222]">{article.title}</h2>
-                              <p className="mt-2 text-[0.9rem] text-[#444]">
-                                 {article.body.length > 120 ? `${article.body.slice(0, 121)}...` : article.body}
-                              </p>
-                           </div>
-                           <div className="flex items-center justify-between">
-                              <p className="text-[14px] text-[#444]">{article.date}</p>
-                              <Link href={`/press${article.detailPage}`}>
-                                 <button className="min-w-[100px] rounded-[20px] bg-mainRed py-1 px-4 text-white">Press</button>
-                              </Link>
-                           </div>
-                        </div>
-                     </article>
-                  );
-               })}
-            </div>
-         </section>
+       <section className="mx-auto mt-12 mb-12 w-full max-w-[1100px] px-4 sm:px-6">
+    <div className="mt-8 grid grid-cols-1 items-start justify-center gap-4 md:grid-cols-2 md:gap-[1rem] xl:grid-cols-3">
+        {articles.map((article, index: number) => (
+            <article
+                key={index}
+                className="mx-auto flex h-full w-full max-w-[350px] flex-col overflow-hidden rounded-[10px] border-[1.5px] bg-white p-4 shadow-sm transition-all hover:shadow-md"
+            >
+                <div className="aspect-video w-full overflow-hidden rounded-[10px]">
+                    <img 
+                        src={article.image} 
+                        alt={article.title} 
+                        className="h-full w-full object-cover object-center" 
+                    />
+                </div>
+                
+                <div className="mt-3 flex flex-1 flex-col justify-between">
+                    <div className="space-y-2">
+                        <h2 className="text-base font-bold text-[#222] line-clamp-2">
+                            {article.title}
+                        </h2>
+                        <p className="text-sm text-[#444] line-clamp-3">
+                            {article.body}
+                        </p>
+                    </div>
+                    
+                    <div className="mt-4 flex items-center justify-between">
+                        <p className="text-xs text-[#444] sm:text-[14px]">
+                            {article.date}
+                        </p>
+                        <Link href={`/press${article.detailPage}`}>
+                            <button className="min-w-[100px] rounded-[20px] bg-mainRed py-1 px-4 text-sm text-white">
+                                Press
+                            </button>
+                        </Link>
+                    </div>
+                </div>
+            </article>
+        ))}
+    </div>
+</section>
          <Footer />
       </section>
    );

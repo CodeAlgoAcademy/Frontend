@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import SingleStudent from "./singleStudent";
-import { useSelector } from "react-redux";
-import { RootState } from "store/store";
 import { ISingleStudent } from "types/interfaces";
 
 const Students = ({ commentTabsOpened, students }: { commentTabsOpened: boolean; students: ISingleStudent[] }) => {
@@ -9,7 +7,7 @@ const Students = ({ commentTabsOpened, students }: { commentTabsOpened: boolean;
    const [comment, setComment] = useState<string>("");
    const [studentCommentsTabOpen, setStudentCommentsTabOpen] = useState<string>("");
    const [editStudentModalOpened, setEditStudentModalOpened] = useState<string>("");
-
+   
    useEffect(() => {
       if (!commentTabsOpened) {
          setStudentCommentOpen("");
