@@ -21,14 +21,45 @@ const StudentTable = ({ details, student, progress }: StudentTableProps) => {
          </header>
          <div className="max-h-[200px] overflow-y-scroll">
             <table className={styles.table}>
-               <thead>
+               {/* <thead>
                   <tr className={styles.headingRow}>
                      <th className={styles.headingColumn}>Level</th>
                      <th className={styles.headingColumn}>Lesson</th>
                      <th className={styles.headingColumn}>Progress</th>
                   </tr>
+               </thead> */}
+               <thead>
+                  <tr className={styles.headingRow}>
+                     <th className={styles.headingColumn}>Standard Name</th>
+                     <th className={styles.headingColumn}>Standard Code</th>
+                     <th className={styles.headingColumn}>Progress</th>
+                  </tr>
                </thead>
+
                <tbody className="p-3">
+  {progress?.topic
+  ?.slice() // makes a shallow copy
+  .sort((a: IChildProgress, b: IChildProgress) => a.level - b.level)
+  ?.map((course: IChildProgress, index: number) => (
+    <tr key={index} className={styles.bodyRow}>
+      <td className={styles.bodyColumn}>{course?.standard_name}</td>
+      <td className={styles.bodyColumn}>
+        <p>{course?.title || course?.standard_code}</p>
+      </td>
+      <td className={styles.progress}>
+        <LinearProgress
+          variant="determinate"
+          value={course?.progress * 100}
+          sx={{ borderRadius: 5 }}
+          color="success"
+        />
+        <p>{course?.progress * 100}%</p>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
+               {/* <tbody className="p-3">
                   {progress?.topic
                      ?.sort((a: IChildProgress, b: IChildProgress) => a.level - b.level)
                      ?.map((course: IChildProgress, index: number) => (
@@ -45,7 +76,7 @@ const StudentTable = ({ details, student, progress }: StudentTableProps) => {
                            </td>
                         </tr>
                      ))}
-               </tbody>
+               </tbody> */}
             </table>
          </div>
       </div>
