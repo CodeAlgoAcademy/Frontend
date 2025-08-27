@@ -30,24 +30,27 @@ export const getPricingPlans: any = createAsyncThunk("pricingService/getPlans", 
    }
 });
 
-export const initiatePayment: any = createAsyncThunk("initiatePayment", async (plan_id: number, thunkApi) => {
-   try {
-      const response = await http.post<InitiatePaymentRes>(
-         "/payment/parent/initiate",
-         { plan_id },
-         {
-            headers: {
-               Authorization: `Bearer ${getAccessToken()}`,
-            },
-         }
-      );
-
-      return response.data;
-   } catch (error) {
-      const errorMessage = errorResolver(error);
-      return thunkApi.rejectWithValue(errorMessage);
+export const initiatePayment: any = createAsyncThunk(
+   "initiatePayment",
+   async ({ plan_id, children }: { plan_id: number; children: number[] }, thunkApi) => {
+      try {
+         const response = await http.post<InitiatePaymentRes>(
+            "/payment/parent/initiate",
+            { plan_id, children },
+            {
+               headers: {
+                  Authorization: `Bearer ${getAccessToken()}`,
+               },
+            }
+         );
+         return response.data;
+      } catch (error) {
+         const errorMessage = errorResolver(error);
+         return thunkApi.rejectWithValue(errorMessage);
+      }
    }
-});
+);
+
 
 export const verifyPayment: any = createAsyncThunk("verifyPayment", async (paymentIntent: string, thunkApi) => {
    try {

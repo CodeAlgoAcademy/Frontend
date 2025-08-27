@@ -47,6 +47,7 @@ export interface IParentChild {
    }[];
    student_id?:number;
   levelThresholds: LevelThresholdInputProps[]
+   selectedChild?: boolean;
    // }
 }
 
