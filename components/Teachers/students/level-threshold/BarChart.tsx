@@ -54,6 +54,7 @@ const StudentLevelChart = ({ showEditLink = true }: StudentBarChartProps) => {
         className="w-full overflow-y-auto rounded-2xl bg-white p-6"
         style={{ minWidth: "100%", maxWidth: "100%", height: "400px" }}
       >
+        <h1 className="text-2xl font-semibold text-mainColor">Level Threshold</h1>
         <BarChart
           data={chartData}
           labels={chartLabels}

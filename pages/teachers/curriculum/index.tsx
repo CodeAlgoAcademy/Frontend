@@ -210,7 +210,7 @@ export default function Index() {
       <TeacherLayout>
        <div className="w-full h-screen">
    <iframe
-      src="https://docs.google.com/document/d/e/2PACX-1vSqlAzm5LmjOUs_F67M_hCi2QhHuY5gFfvahoGbHeu1cBsMl81CN1sPyU4d9wjKKOIkXVfLUkwz1D9H/pub?embedded=true"
+      src="https://docs.google.com/document/d/e/2PACX-1vSbvlM0Hwh7Yys0XuUMUw4Mm5B9NelhqHDv_TV-TeAS2xqWwvlurLRiicpgC9IElw/pub?embedded=true"
       className="w-full h-full border-0"
    ></iframe>
 </div>
