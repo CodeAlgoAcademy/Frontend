@@ -28,9 +28,9 @@ export default function ClassSelector() {
    };
 
    useEffect(() => {
-      if (!currentClass || classes?.length === 0) {
-         getClass();
-      }
+      if (!classes?.length) {
+      getClass();
+   }
    }, [router?.pathname]);
 
    return (
@@ -54,7 +54,7 @@ export default function ClassSelector() {
             <div className="small-scroll-thumb fade-in absolute top-[110%] left-0 z-[5] h-[190px] w-[90vw] max-w-[200px] overflow-y-scroll rounded-[20px] border border-[#bdbdbd] bg-white shadow-md">
                {!otherClassDetails?.length ? (
                   <div className="flex h-full w-full items-center p-[1rem]">
-                     <p className="text-center font-medium leading-[1.2]">No class has been added</p>
+                     <p className="text-center font-medium leading-[1.2]">No other classes available</p>
                   </div>
                ) : (
                   otherClassDetails?.map((singleClass, index) => {
