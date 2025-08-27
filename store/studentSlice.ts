@@ -46,6 +46,7 @@ export const editStudent: any = createAsyncThunk("edit/student", async (student:
                firstName: student.firstName,
                lastName: student.lastName,
                email: student.email,
+               username: student?.username
             },
          },
          {

@@ -32,6 +32,7 @@ const StudentBarChart = ({ showEditLink = true }) => {
             className=" w-full overflow-y-auto rounded-2xl bg-white p-6"
             style={{ minWidth: "100%", maxWidth: "100%", height: "400px", }}
          >
+            <h1 className="text-2xl font-semibold text-mainColor">Screen Time</h1>
             <BarChart
                data={(timeLimits || []).map((time) =>
                   time.timeLimit === "No Limit" ? 8 : parseInt(time.timeLimit as string)
@@ -39,6 +40,7 @@ const StudentBarChart = ({ showEditLink = true }) => {
                barSpace={9.6}
                barWidth={4.3}
                maxHours={8}
+               unitLabel="h"
             />
          </div>
 

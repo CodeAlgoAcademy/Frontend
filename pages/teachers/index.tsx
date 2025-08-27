@@ -13,13 +13,15 @@ import { getChildProgress } from "store/parentChildSlice";
 import TeacherStudentSkills from "@/components/Teachers/students/studentsprogress/skills";
 import TeacherStudentCompletedStandard from "@/components/Teachers/students/studentsprogress/standard";
 import TeacherStudentProgress from "@/components/Teachers/students/studentsprogress/progress";
+import { useAppDispatch } from "store/hooks";
 
 interface TeachersTabs {
    students: boolean;
 }
 
 const Dashboard = () => {
-   const dispatch = useDispatch();
+   // const dispatch = useDispatch();
+   const dispatch = useAppDispatch();
    const router = useRouter();
    const { currentStudent } = useSelector((state: RootState) => state.teacherStudentSlice);
    const { id: classId } = useSelector((state: RootState) => state.currentClass);
@@ -50,32 +52,58 @@ const Dashboard = () => {
 
    useEffect(() => {
       const studentId = currentStudent?.student_id;
-      const dob = currentStudent?.dob;
 
-      if (classId && studentId && dob) {
+      if (classId && studentId) {
          setIsLoading(true);
-         const age = calculateAge(dob);
-         const isUnder14 = age < 14;
-         setIsBlockProgress(isUnder14);
-         const progressAction = isUnder14 ? fetchStudentBlockGameProgress({ classId, studentId }) : getChildProgress(studentId);
 
-         dispatch(progressAction)
+         dispatch(fetchStudentBlockGameProgress({ classId, studentId }))
             .unwrap()
             .then((res: any) => {
-               console.log("Fetched Progress Data:", res);
-               setProgressData(isUnder14 ? res : res?.topic || []);
+               console.log("Fetched Blockgame Progress Data:", res);
+               setProgressData(res);
             })
             .catch((err: any) => {
-               console.error("Error fetching progress:", err);
+               console.error("Error fetching blockgame progress:", err);
             })
             .finally(() => {
                setIsLoading(false);
             });
       }
-   }, [classId, currentStudent?.student_id, currentStudent?.dob, dispatch]);
+   }, [classId, currentStudent?.student_id, dispatch]);
+
    const allProgressItems = Array.isArray(progressData) ? progressData : [];
    const inProgressItems = allProgressItems.filter((item) => item.progress < 1.0);
    const completedItems = allProgressItems.filter((item) => item.progress === 1.0);
+
+   // useEffect(() => {
+   //    const studentId = currentStudent?.student_id;
+   //    const dob = currentStudent?.dob;
+
+   //    if (classId && studentId && dob) {
+   //       setIsLoading(true);
+   //       const age = calculateAge(dob);
+   //       const isUnder14 = age < 14;
+   //       setIsBlockProgress(isUnder14);
+   //       const progressAction = isUnder14 ? fetchStudentBlockGameProgress({ classId, studentId }) : getChildProgress(studentId);
+
+   //       dispatch(progressAction)
+   //          .unwrap()
+   //          .then((res: any) => {
+   //             console.log("Fetched Progress Data:", res);
+   //             setProgressData(isUnder14 ? res : res?.topic || []);
+   //          })
+   //          .catch((err: any) => {
+   //             console.error("Error fetching progress:", err);
+   //          })
+   //          .finally(() => {
+   //             setIsLoading(false);
+   //          });
+   //    }
+   // }, [classId, currentStudent?.student_id, currentStudent?.dob, dispatch]);
+   // const allProgressItems = Array.isArray(progressData) ? progressData : [];
+   // const inProgressItems = allProgressItems.filter((item) => item.progress < 1.0);
+   // const completedItems = allProgressItems.filter((item) => item.progress === 1.0);
+
    const filteredCompletedItems = completedItems.filter((item) => {
       const hasNoCurriculum =
          item.iready_math_desc?.includes("(No direct curriculum unit)") && item.common_core_math_desc?.includes("(No direct curriculum unit)");
@@ -86,9 +114,16 @@ const Dashboard = () => {
       <TeacherLayout>
          <StudentsList isOpen={tabs.students} open={() => toggleTab("students", true)} close={() => toggleTab("students", false)} />
 
-         <div className="relative h-auto bottom-14 mb-[-120px] scale-90 overflow-x-auto overflow-scroll sm:bottom-0 sm:mb-0 sm:scale-100">
-            <div className="grid grid-flow-row grid-cols-1 gap-6 sm:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 h-auto overflow-scroll">
+         <div className="relative bottom-14 mb-[-120px] h-auto scale-90 overflow-scroll overflow-x-auto sm:bottom-0 sm:mb-0 sm:scale-100">
+            <div className="grid h-auto grid-flow-row grid-cols-1 gap-6 overflow-scroll sm:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4">
                <TeacherStudentProgress
+                  size="base"
+                  level={(currentStudent?.level as number) + 1}
+                  progressItems={inProgressItems}
+                  isLoading={isLoading}
+                  completedItems={completedItems}
+               />
+               {/* <TeacherStudentProgress
                   size="base"
                   level={(currentStudent?.level as number) + 1}
                   progressItems={inProgressItems}
@@ -96,14 +131,14 @@ const Dashboard = () => {
                   isBlockProgress={isBlockProgress}
                   completedItems={completedItems}
                   currentProgress={!isBlockProgress && currentStudent?.progress?.current}
-               />
+               /> */}
                <TeacherStudentCompletedStandard completedItems={filteredCompletedItems} isLoading={isLoading} />
                <TeacherStudentSkills size="base" />
                <div className="dashboard-widget">
                   <StudentBarChart showEditLink={false} />
                </div>
                <div className="dashboard-widget">
-                  <StudentLevelChart  showEditLink={false} />
+                  <StudentLevelChart showEditLink={false} />
                </div>
                <RecentInteraction />
             </div>
