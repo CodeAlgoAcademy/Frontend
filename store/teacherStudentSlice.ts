@@ -27,32 +27,39 @@ const initialState: ITeacherStudentsState = {
       username: "",
       timeLimits: [
          {
-            dayOfTheWeek: "Monday", timeLimit: "",
-            id: ""
+            dayOfTheWeek: "Monday",
+            timeLimit: "",
+            id: "",
          },
          {
-            dayOfTheWeek: "Tuesday", timeLimit: "",
-            id: ""
+            dayOfTheWeek: "Tuesday",
+            timeLimit: "",
+            id: "",
          },
          {
-            dayOfTheWeek: "Wednesday", timeLimit: "",
-            id: ""
+            dayOfTheWeek: "Wednesday",
+            timeLimit: "",
+            id: "",
          },
          {
-            dayOfTheWeek: "Thursday", timeLimit: "",
-            id: ""
+            dayOfTheWeek: "Thursday",
+            timeLimit: "",
+            id: "",
          },
          {
-            dayOfTheWeek: "Friday", timeLimit: "",
-            id: ""
+            dayOfTheWeek: "Friday",
+            timeLimit: "",
+            id: "",
          },
          {
-            dayOfTheWeek: "Saturday", timeLimit: "",
-            id: ""
+            dayOfTheWeek: "Saturday",
+            timeLimit: "",
+            id: "",
          },
          {
-            dayOfTheWeek: "Sunday", timeLimit: "",
-            id: ""
+            dayOfTheWeek: "Sunday",
+            timeLimit: "",
+            id: "",
          },
       ],
       level: 0,
@@ -66,7 +73,7 @@ const initialState: ITeacherStudentsState = {
       },
       skills: [],
       levelThresholds: [],
-      student_id: ""
+      student_id: "",
    },
    codingExperience: "experienced",
    id: "",
@@ -78,101 +85,91 @@ const initialState: ITeacherStudentsState = {
    friend: "",
    timeLimits: [
       {
-         dayOfTheWeek: "Monday", timeLimit: "No Limit",
-         id: ""
+         dayOfTheWeek: "Monday",
+         timeLimit: "No Limit",
+         id: "",
       },
       {
-         dayOfTheWeek: "Tuesday", timeLimit: "No Limit",
-         id: ""
+         dayOfTheWeek: "Tuesday",
+         timeLimit: "No Limit",
+         id: "",
       },
       {
-         dayOfTheWeek: "Wednesday", timeLimit: "No Limit",
-         id: ""
+         dayOfTheWeek: "Wednesday",
+         timeLimit: "No Limit",
+         id: "",
       },
       {
-         dayOfTheWeek: "Thursday", timeLimit: "No Limit",
-         id: ""
+         dayOfTheWeek: "Thursday",
+         timeLimit: "No Limit",
+         id: "",
       },
       {
-         dayOfTheWeek: "Friday", timeLimit: "No Limit",
-         id: ""
+         dayOfTheWeek: "Friday",
+         timeLimit: "No Limit",
+         id: "",
       },
       {
-         dayOfTheWeek: "Saturday", timeLimit: "No Limit",
-         id: ""
+         dayOfTheWeek: "Saturday",
+         timeLimit: "No Limit",
+         id: "",
       },
       {
-         dayOfTheWeek: "Sunday", timeLimit: "No Limit",
-         id: ""
+         dayOfTheWeek: "Sunday",
+         timeLimit: "No Limit",
+         id: "",
       },
    ],
    levelThresholds: [],
    classId: "",
    isLoading: false,
    error: undefined,
-   student_id: ""
+   student_id: "",
 };
 
 export const createOrUpdateLevelThreshold: any = createAsyncThunk(
-  "class/student/createOrUpdateLevelThreshold",
-  async (
-    {
-      class_id,
-      student_id,
-      data,
-    }: { class_id: number; student_id: number; data: { level: number; grade: string } },
-    thunkAPI
-  ) => {
-    try {
-      const response = await teachersStudentServices.createStudentLevelThresHold(
-        data,
-        class_id,
-        student_id
-      );
-      return response;
-    } catch (error: any) {
-      const errorMessage = errorResolver(error);
-      return thunkAPI.rejectWithValue(errorMessage);
-    }
-  }
+   "class/student/createOrUpdateLevelThreshold",
+   async ({ class_id, student_id, data }: { class_id: number; student_id: number; data: { level: number; grade: string } }, thunkAPI) => {
+      try {
+         const response = await teachersStudentServices.createStudentLevelThresHold(data, class_id, student_id);
+         return response;
+      } catch (error: any) {
+         const errorMessage = errorResolver(error);
+         return thunkAPI.rejectWithValue(errorMessage);
+      }
+   }
 );
 
 export const editSudentsScreentime = createAsyncThunk(
-  "teacher/student/edit-screentime",
-  async (
-    {
-      class_id,
-      student_id,
-      id,
-      data,
-    }: {
-      class_id: string | number;
-      student_id: string | number;
-      id: string | number;
-      data: screentimeTypes;
-    },
-    thunkAPI
-  ) => {
-    const dispatch = thunkAPI.dispatch;
-    data.timeLimit = setTimeLimit(data.timeLimit as string);
-    dispatch(openPreloader({ loadingText: "Editing student Screentime" }));
+   "teacher/student/edit-screentime",
+   async (
+      {
+         class_id,
+         student_id,
+         id,
+         data,
+      }: {
+         class_id: string | number;
+         student_id: string | number;
+         id: string | number;
+         data: screentimeTypes;
+      },
+      thunkAPI
+   ) => {
+      const dispatch = thunkAPI.dispatch;
+      data.timeLimit = setTimeLimit(data.timeLimit as string);
+      dispatch(openPreloader({ loadingText: "Editing student Screentime" }));
 
-    try {
-      const response =
-        await teachersStudentServices.editStudentScreentimeteachers(
-          data,
-          class_id,
-          student_id,
-          id
-        );
-      dispatch(closePreloader());
-      return response;
-    } catch (error: any) {
-      const errorMessage = errorResolver(error);
-      dispatch(closePreloader());
-      return thunkAPI.rejectWithValue(errorMessage);
-    }
-  }
+      try {
+         const response = await teachersStudentServices.editStudentScreentimeteachers(data, class_id, student_id, id);
+         dispatch(closePreloader());
+         return response;
+      } catch (error: any) {
+         const errorMessage = errorResolver(error);
+         dispatch(closePreloader());
+         return thunkAPI.rejectWithValue(errorMessage);
+      }
+   }
 );
 
 export const fetchStudentBlockGameProgress = createAsyncThunk(
@@ -207,18 +204,33 @@ export const getStudentBlockGameStandard = createAsyncThunk(
    }
 );
 
+export const deleteStudent = createAsyncThunk(
+   "teacher/student/delete",
+   async ({ classId, studentId }: { classId: string | number; studentId: string | number }, thunkAPI) => {
+      const dispatch = thunkAPI.dispatch;
+      dispatch(openPreloader({ loadingText: "Deleting student..." }));
+
+      try {
+         const response = await teachersStudentServices.deleteStudent(classId, studentId);
+         dispatch(closePreloader());
+         return { studentId };
+      } catch (error: any) {
+         const errorMessage = errorResolver(error);
+         dispatch(closePreloader());
+         return thunkAPI.rejectWithValue(errorMessage);
+      }
+   }
+);
+
 export const teacherStudentSlice = createSlice({
    name: "teacherStudent",
    initialState,
    reducers: {
-      updateStudent: (
-  state,
-  action: PayloadAction<{ key: keyof BaseStudent; value: any }>
-) => {
-  if (state.currentStudent) {
-    state.currentStudent[action.payload.key] = action.payload.value as never;
-  }
-},
+      updateStudent: (state, action: PayloadAction<{ key: keyof BaseStudent; value: any }>) => {
+         if (state.currentStudent) {
+            state.currentStudent[action.payload.key] = action.payload.value as never;
+         }
+      },
       resetStudent: (state) => {
          return { ...initialState, students: state.students, currentStudent: state.currentStudent };
       },
@@ -242,24 +254,22 @@ export const teacherStudentSlice = createSlice({
       },
    },
    extraReducers(builder) {
-      builder.addCase(getStudents.fulfilled, (state, action: PayloadAction<BaseStudent[]>) => {
-         state.students = action.payload;
-         const student = action.payload.find((s) => s.id === state.currentStudent?.id);
-         state.currentStudent = student || action.payload[0] || null;
-      })
-      .addCase(
-  fetchStudentBlockGameSkill.fulfilled,
-  (state, action: PayloadAction<SkillData[]>) => {
-    if (state.currentStudent) {
-      state.currentStudent.skills = action.payload.map((skill, index) => ({
-        id: index,              
-        title: skill.name,
-        level: skill.value,
-      }));
-    }
-    state.isLoading = false;
-  }
-)
+      builder
+         .addCase(getStudents.fulfilled, (state, action: PayloadAction<BaseStudent[]>) => {
+            state.students = action.payload;
+            const student = action.payload.find((s) => s.id === state.currentStudent?.id);
+            state.currentStudent = student || action.payload[0] || null;
+         })
+         .addCase(fetchStudentBlockGameSkill.fulfilled, (state, action: PayloadAction<SkillData[]>) => {
+            if (state.currentStudent) {
+               state.currentStudent.skills = action.payload.map((skill, index) => ({
+                  id: index,
+                  title: skill.name,
+                  level: skill.value,
+               }));
+            }
+            state.isLoading = false;
+         })
          .addCase(editSudentsScreentime.fulfilled, (state, action: PayloadAction<screentimeTypes[]>) => {
             if (state.currentStudent) state.currentStudent.timeLimits = action.payload;
          })
@@ -273,7 +283,15 @@ export const teacherStudentSlice = createSlice({
                   state.currentStudent.levelThresholds.push(action.payload);
                }
             }
-         });
+         })
+       .addCase(deleteStudent.fulfilled, (state, action) => {
+        state.students = state.students.filter(
+  (student) => String(student.id) !== String(action.payload.studentId)
+);
+      })
+      .addCase(deleteStudent.rejected, (state, action) => {
+        state.error = action.payload as string;
+      });
    },
 });
 

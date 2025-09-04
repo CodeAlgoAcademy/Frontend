@@ -24,7 +24,7 @@ export interface ISingleStudent {
   email: string;
   username: string;
   dob: string;
-  id?: string;
+  id: string | number;
   active?: boolean;
   student_id?: string;
   assignments?: AssignmentDetails[];
