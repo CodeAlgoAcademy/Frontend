@@ -15,22 +15,39 @@ const PaymentPage = () => {
    const { handlers, initiated_payment } = useSelector((state: RootState) => state.pricing);
 const currentChild = useSelector((state: RootState) => state.parentChild.currentChild);
    const { query, push } = useRouter();
-   const { plan_id } = query;
+   const { plan_id, children } = query;
 
    const { stripePromise, options: paymentFormOptions } = useInitStripe(initiated_payment?.client_secret);
 
 useEffect(() => {
-   if (!plan_id) {
-      push("/parents/billing");
-   } else if (currentChild?.id) {
-      dispatch(
-         initiatePayment({
-            plan_id: Number(plan_id),
-            children: [currentChild.id],
-         })
-      );
-   }
-}, [plan_id, currentChild?.id]);
+  if (!plan_id) {
+    push("/parents/billing");
+  } else {
+    const childIds = children 
+      ? String(children).split(',').map(id => Number(id))
+      : [];
+    
+    dispatch(
+      initiatePayment({
+        plan_id: Number(plan_id),
+        children: childIds,
+      })
+    );
+  }
+}, [plan_id, children]);
+
+// useEffect(() => {
+//    if (!plan_id) {
+//       push("/parents/billing");
+//    } else if (currentChild?.id) {
+//       dispatch(
+//          initiatePayment({
+//             plan_id: Number(plan_id),
+//             children: [currentChild.id],
+//          })
+//       );
+//    }
+// }, [plan_id, currentChild?.id]);
 
    if (handlers.initiate_payment_loading || !initiated_payment?.client_secret) {
       return <Skeleton />;

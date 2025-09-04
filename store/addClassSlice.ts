@@ -10,6 +10,7 @@ const initialState: IAddClass = {
       email: "",
       username: "",
       dob: "",
+      id: ""
    },
    class: {
       className: "",

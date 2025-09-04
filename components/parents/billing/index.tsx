@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getActiveSubscription } from "services/pricingService";
 import { RootState } from "store/store";
+import BillingStepper from "./Stepper/BillingStepper.tsx";
 
 const BillingPage = () => {
   const { active_subscription } = useSelector((state: RootState) => state.pricing);
@@ -27,20 +28,17 @@ const BillingPage = () => {
   return (
     <ParentLayout title="Billing">
       <div className="scrollbar-hide overflow-y-scroll px-4 py-6">
-        {active_subscription ? (
+        {active_subscription && (
           <p className="mb-4">
             Current Plan -{" "}
             <span className="cursor-pointer text-mainColor">
               {active_subscription.plan.name}
             </span>
           </p>
-        ) : (
-          <p className="mb-4 text-red-500">
-            No active plan for {currentChild?.fullName}. Please activate one below.
-          </p>
         )}
 
-        <BillingsPlansList />
+ <BillingStepper />
+        {/* <BillingsPlansList /> */}
         <BillingHistory />
       </div>
     </ParentLayout>

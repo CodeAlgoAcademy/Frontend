@@ -48,7 +48,8 @@ export const store = configureStore({
       organizer: organizersSlice,
       accessibility: accessibilityReducer,
       pricing: pricingReducer,
-      teacherStudentSlice: teacherStudentReducer
+      teacherStudentSlice: teacherStudentReducer,
+      
    },
 });
 

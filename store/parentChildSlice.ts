@@ -70,34 +70,13 @@ const initialState: IParentChildren = {
    username: "",
    friend: "",
    timeLimits: [
-      {
-         dayOfTheWeek: "Monday", timeLimit: "No Limit",
-         id: ""
-      },
-      {
-         dayOfTheWeek: "Tuesday", timeLimit: "No Limit",
-         id: ""
-      },
-      {
-         dayOfTheWeek: "Wednesday", timeLimit: "No Limit",
-         id: ""
-      },
-      {
-         dayOfTheWeek: "Thursday", timeLimit: "No Limit",
-         id: ""
-      },
-      {
-         dayOfTheWeek: "Friday", timeLimit: "No Limit",
-         id: ""
-      },
-      {
-         dayOfTheWeek: "Saturday", timeLimit: "No Limit",
-         id: ""
-      },
-      {
-         dayOfTheWeek: "Sunday", timeLimit: "No Limit",
-         id: ""
-      },
+      {dayOfTheWeek: "Monday", timeLimit: "No Limit",id: ""},
+      {dayOfTheWeek: "Tuesday", timeLimit: "No Limit",id: ""},
+      {dayOfTheWeek: "Wednesday", timeLimit: "No Limit",id: ""},
+      {dayOfTheWeek: "Thursday", timeLimit: "No Limit",id: ""},
+      {dayOfTheWeek: "Friday", timeLimit: "No Limit",id: ""},
+      {dayOfTheWeek: "Saturday", timeLimit: "No Limit",id: ""},
+      {dayOfTheWeek: "Sunday", timeLimit: "No Limit",id: ""},
    ],
    levelThresholds: []
 };
