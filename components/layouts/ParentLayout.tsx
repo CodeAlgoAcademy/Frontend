@@ -25,9 +25,10 @@ interface ParentTabs {
 interface Props {
    children?: ReactNode;
    title: string;
+    showChildrenList?: boolean;
 }
 
-const ParentLayout = ({ children, title }: Props) => {
+const ParentLayout = ({ children, title, showChildrenList}: Props) => {
    const router = useRouter();
    const [tabs, setTabs] = useState<ParentTabs>({
       user: false,
@@ -93,7 +94,14 @@ const ParentLayout = ({ children, title }: Props) => {
                   </div>
                </div>
             </header>
-            <ChildrenList isOpen={tabs.children} open={() => toggleTab("children", true)} close={() => toggleTab("children", false)} />
+            {showChildrenList && (
+   <ChildrenList
+      isOpen={tabs.children}
+      open={() => toggleTab("children", true)}
+      close={() => toggleTab("children", false)}
+   />
+)}
+            {/* <ChildrenList isOpen={tabs.children} open={() => toggleTab("children", true)} close={() => toggleTab("children", false)} /> */}
 
             {children}
          </div>

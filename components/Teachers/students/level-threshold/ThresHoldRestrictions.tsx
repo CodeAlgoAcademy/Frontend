@@ -7,7 +7,7 @@ import { getStudents } from "store/studentSlice";
 import { createOrUpdateLevelThreshold } from "store/teacherStudentSlice";
 import { useDebouncedCallback } from "hooks/useDebounce";
 
-const ALL_GRADES = ["Kindergarten", "Grade 1", "Grade 2", "Grade 3", "Grade 4"] as const;
+const ALL_GRADES = ["0", "1", "2", "3", "4"] as const;
 
 interface LevelThresholdRestrictionsProps {
    onEditSuccess?: () => void;
