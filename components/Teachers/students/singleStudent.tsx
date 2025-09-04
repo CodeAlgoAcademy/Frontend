@@ -18,9 +18,8 @@ import Link from "next/link";
 import { AssignmentDetails, IChildProgress, IChildTopics, ISingleStudent } from "types/interfaces";
 import { RootState } from "store/store";
 import studentService from "services/studentService";
-import { fetchStudentBlockGameProgress } from "store/teacherStudentSlice";
+import { deleteStudent, fetchStudentBlockGameProgress } from "store/teacherStudentSlice";
 import { useAppDispatch } from "store/hooks";
-// import { useAppDispatch } from "store/store"; 
 
 const SingleStudent = ({
    student,
@@ -52,11 +51,14 @@ const SingleStudent = ({
    const { students, studentComments } = useSelector((state: any) => state.students);
    const [editingComment, setEditingComment] = useState<string>("");
    const [isEditingComment, setIsEditingComment] = useState<string>("");
+   const [isActionMenuOpen, setIsActionMenuOpen] = useState(false);
+   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+
    const [editingStudentDetails, setEditingStudentDetails] = useState({
       firstName: student?.firstName,
       lastName: student?.lastName,
       email: student?.email,
-      username: student?.username
+      username: student?.username,
    });
    const [studentProgress, setStudentProgress] = useState<IChildTopics>({ current: { title: "", level: 0, progress: 0 }, topic: [] });
 
@@ -155,13 +157,13 @@ const SingleStudent = ({
    // };
 
    const handleSubmittionOfEditDetails = async (e: ChangeEvent<HTMLFormElement>) => {
-  e.preventDefault();
-  const payload = { id: student.id, ...editingStudentDetails };
-  console.log("Submitting:", payload);
-  await dispatch(editStudent(payload));
-  await dispatch(getStudents());
-  setEditStudentModalOpened("");
-};
+      e.preventDefault();
+      const payload = { id: student.id, ...editingStudentDetails };
+      console.log("Submitting:", payload);
+      await dispatch(editStudent(payload));
+      await dispatch(getStudents());
+      setEditStudentModalOpened("");
+   };
 
    useEffect(() => {
       getStudentProgress();
@@ -209,6 +211,15 @@ const SingleStudent = ({
                         name="username"
                         required
                         placeholder="Enter username*"
+                        onChange={updateEditingDetails}
+                     />
+                     <input
+                        value={editingStudentDetails.email}
+                        type="text"
+                        className={styles.input}
+                        name="email"
+                        required
+                        placeholder="Enter email*"
                         onChange={updateEditingDetails}
                      />
 
@@ -356,7 +367,73 @@ const SingleStudent = ({
                >
                   <IoChatbubblesOutline className={styles.pointer} />
                </span>
-               <span
+
+               <div className="relative">
+                  <span onClick={() => setIsActionMenuOpen((prev) => !prev)}>
+                     <HiOutlineDotsHorizontal className={styles.pointer} />
+                  </span>
+
+                  {isActionMenuOpen && (
+                     <div className="absolute top-full right-0 z-50 w-40 rounded-md border bg-white shadow-lg">
+                        <button
+                           className="block w-full px-4 py-2 text-left text-sm hover:bg-gray-100"
+                           onClick={() => {
+                              setIsActionMenuOpen(false);
+                              setConfirmDeleteOpen(true);
+                           }}
+                        >
+                           Delete student
+                        </button>
+
+                        <button
+                           className="block w-full text-sm px-4 py-2 text-left hover:bg-gray-100"
+                           onClick={() => {
+                              setIsActionMenuOpen(false);
+                              setStudentCommentOpen("");
+                              if (studentCommentsTabOpen === student.firstName + student.email) {
+                                 setStudentCommentsTabOpen("");
+                              } else {
+                                 setStudentCommentsTabOpen(student.firstName + student.email);
+                                 getStudentComment(student.id as string);
+                              }
+                           }}
+                        >
+                           View Comments
+                        </button>
+                     </div>
+                  )}
+
+                  {confirmDeleteOpen && (
+                     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                        <div className="rounded-lg bg-white p-6 shadow-lg">
+                           <p className="mb-4 text-sm">
+                              Are you sure you want to delete{" "}
+                              <span className="font-semibold">
+                                 {student.firstName} {student.lastName}
+                              </span>
+                              ?
+                           </p>
+                           <div className="flex justify-end space-x-2">
+                              <button className="rounded bg-gray-300 px-4 py-2" onClick={() => setConfirmDeleteOpen(false)}>
+                                 Cancel
+                              </button>
+                              <button
+                                 className="rounded bg-red-600 px-4 py-2 text-white"
+                                 onClick={async () => {
+                                    await dispatch(deleteStudent({ classId, studentId: student?.id }));
+                                    await dispatch(getStudents());
+                                    setConfirmDeleteOpen(false);
+                                 }}
+                              >
+                                 Delete
+                              </button>
+                           </div>
+                        </div>
+                     </div>
+                  )}
+               </div>
+
+               {/* <span
                   onClick={() => {
                      setStudentCommentOpen("");
                      if (studentCommentsTabOpen === student.firstName + student.email) {
@@ -368,7 +445,7 @@ const SingleStudent = ({
                   }}
                >
                   <HiOutlineDotsHorizontal className={styles.pointer} />
-               </span>{" "}
+               </span>{" "} */}
             </div>
          </div>
          {students?.assignments?.length === 0 ? (
@@ -378,9 +455,7 @@ const SingleStudent = ({
          ) : (
             <>
                {headings.includes(parseInt(student?.id as string)) && (
-                  <StudentTable student={student} 
-                  details={student?.assignments as AssignmentDetails[]}
-                   progress={studentProgress} />
+                  <StudentTable student={student} details={student?.assignments as AssignmentDetails[]} progress={studentProgress} />
                )}
             </>
          )}

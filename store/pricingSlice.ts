@@ -1,12 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getActiveSubscription, getBillingHistory, getPricingPlans, initiatePayment, verifyPayment } from "../services/pricingService";
-import { IBilling, InitiatePaymentRes, IPlan, ISubscribedPlan, PaymentStatus, PricingSlice } from "types/interfaces";
+import { getActiveSubscription, getAllPayment, getBillingHistory, getPricingPlans, initiatePayment, verifyPayment } from "../services/pricingService";
+import { IBilling, InitiatePaymentRes, IPlan, ISubscribedPlan, Payment, PaymentsResponse, PaymentStatus, PricingSlice } from "types/interfaces";
 
 const initialState: PricingSlice = {
    plans: [],
+   payments: [],
    handlers: {
       loading: false,
       initiate_payment_loading: false,
+       payments_loading: false,
       verify_payment_loading: false,
       active_subscription_loading: false,
       billing_history_loading: false,
@@ -32,6 +34,17 @@ const pricingSlice = createSlice({
          .addCase(getPricingPlans.rejected, (state) => {
             state.handlers.loading = false;
          })
+         // .addCase(getAllPayment.pending, (state) => {
+         //    state.handlers.payments_loading = true;
+         // })
+         // .addCase(getAllPayment.fulfilled, (state, action: PayloadAction<Payment[]>) => {
+         // state.handlers.payments_loading = false;
+         // state.payments = action.payload;
+         // })
+
+         // .addCase(getAllPayment.rejected, (state) => {
+         //    state.handlers.payments_loading = false;
+         // })
          .addCase(initiatePayment.pending, (state) => {
             state.handlers.initiate_payment_loading = true;
             state.initiated_payment = undefined;

@@ -53,6 +53,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
       email: "",
       username: "",
       dob: "",
+      id:"",
    });
    const [file, setFile] = useState<any>(null);
    const [bulkImportModalOpen, setBulkImportModalOpen] = useState<boolean>(false);
@@ -108,6 +109,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
             username,
             dob,
             timeLimits: defaultTimeLimits,
+            id: ""
          };
 
          dispatch(addStudent(data)).then((data: any) => {
