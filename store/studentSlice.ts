@@ -40,7 +40,7 @@ export const editStudent: any = createAsyncThunk("edit/student", async (student:
    dispatch(openPreloader({ loadingText: "Editing Student's Details" }));
    try {
       const response = await http.put(
-         `/academics/class/${id}/student/${student.id}/`,
+         `/academics/class/${id}/student/${student.id}`,
          {
             student: {
                firstName: student.firstName,
