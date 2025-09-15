@@ -21,10 +21,12 @@ export interface IStudentsTopics {
 export interface ISingleStudent {
   firstName: string;
   lastName: string;
+  first_name?: string;
+  last_name?: string;
   email: string;
   username: string;
   dob: string;
-  id: string | number;
+  id: string;
   active?: boolean;
   student_id?: string;
   assignments?: AssignmentDetails[];

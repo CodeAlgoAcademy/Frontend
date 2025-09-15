@@ -17,7 +17,6 @@ interface FetchStudentBlockGameProgressArgs {
 const initialState: ITeacherStudentsState = {
    students: [],
    currentStudent: {
-      id: "",
       codingExperience: "",
       classId: "",
       dob: "",
@@ -25,42 +24,13 @@ const initialState: ITeacherStudentsState = {
       firstName: "",
       lastName: "",
       username: "",
-      timeLimits: [
-         {
-            dayOfTheWeek: "Monday",
-            timeLimit: "",
-            id: "",
-         },
-         {
-            dayOfTheWeek: "Tuesday",
-            timeLimit: "",
-            id: "",
-         },
-         {
-            dayOfTheWeek: "Wednesday",
-            timeLimit: "",
-            id: "",
-         },
-         {
-            dayOfTheWeek: "Thursday",
-            timeLimit: "",
-            id: "",
-         },
-         {
-            dayOfTheWeek: "Friday",
-            timeLimit: "",
-            id: "",
-         },
-         {
-            dayOfTheWeek: "Saturday",
-            timeLimit: "",
-            id: "",
-         },
-         {
-            dayOfTheWeek: "Sunday",
-            timeLimit: "",
-            id: "",
-         },
+      timeLimits: [{dayOfTheWeek: "Monday",timeLimit: "",},
+         {dayOfTheWeek: "Tuesday",timeLimit: "",},
+         {dayOfTheWeek: "Wednesday",timeLimit: "",},
+         {dayOfTheWeek: "Thursday",timeLimit: "",},
+         {dayOfTheWeek: "Friday",timeLimit: "",},
+         {dayOfTheWeek: "Saturday",timeLimit: "",},
+         {dayOfTheWeek: "Sunday",timeLimit: "",},
       ],
       level: 0,
       progress: {
@@ -84,41 +54,13 @@ const initialState: ITeacherStudentsState = {
    username: "",
    friend: "",
    timeLimits: [
-      {
-         dayOfTheWeek: "Monday",
-         timeLimit: "No Limit",
-         id: "",
-      },
-      {
-         dayOfTheWeek: "Tuesday",
-         timeLimit: "No Limit",
-         id: "",
-      },
-      {
-         dayOfTheWeek: "Wednesday",
-         timeLimit: "No Limit",
-         id: "",
-      },
-      {
-         dayOfTheWeek: "Thursday",
-         timeLimit: "No Limit",
-         id: "",
-      },
-      {
-         dayOfTheWeek: "Friday",
-         timeLimit: "No Limit",
-         id: "",
-      },
-      {
-         dayOfTheWeek: "Saturday",
-         timeLimit: "No Limit",
-         id: "",
-      },
-      {
-         dayOfTheWeek: "Sunday",
-         timeLimit: "No Limit",
-         id: "",
-      },
+      {dayOfTheWeek: "Monday",timeLimit: "No Limit",},
+      {dayOfTheWeek: "Tuesday",timeLimit: "No Limit",},
+      {dayOfTheWeek: "Wednesday",timeLimit: "No Limit",},
+      {dayOfTheWeek: "Thursday",timeLimit: "No Limit",},
+      {dayOfTheWeek: "Friday",timeLimit: "No Limit",},
+      {dayOfTheWeek: "Saturday",timeLimit: "No Limit",},
+      {dayOfTheWeek: "Sunday",timeLimit: "No Limit",},
    ],
    levelThresholds: [],
    classId: "",
@@ -284,14 +226,12 @@ export const teacherStudentSlice = createSlice({
                }
             }
          })
-       .addCase(deleteStudent.fulfilled, (state, action) => {
-        state.students = state.students.filter(
-  (student) => String(student.id) !== String(action.payload.studentId)
-);
-      })
-      .addCase(deleteStudent.rejected, (state, action) => {
-        state.error = action.payload as string;
-      });
+         .addCase(deleteStudent.fulfilled, (state, action) => {
+            state.students = state.students.filter((student) => String(student.id) !== String(action.payload.studentId));
+         })
+         .addCase(deleteStudent.rejected, (state, action) => {
+            state.error = action.payload as string;
+         });
    },
 });
 

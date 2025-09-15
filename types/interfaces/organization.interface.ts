@@ -23,9 +23,23 @@ export interface IOrganizationUser {
    role: IRole;
    created_at: Date;
    status: string;
-   user: number;
+   user: InnerUser;
    organization: IOrganization;
 }
+
+interface InnerUser {
+  id: number;
+  firstName: string;
+  lastName: string;
+  username: string;
+  email: string;
+}
+
+export interface UserWrapper {
+  id: number;
+  user: InnerUser;
+}
+
 
 export interface IOrganizationInvitations {
    id: number;
@@ -55,4 +69,64 @@ export interface IOrganizationSlice {
    userInvitation: IUserOrganization[];
    userOrganizations: IOrganization[];
    licenses: ILicense[];
+   studentUsers: UserResponseList;
+   singlStudentUsers?: UserWrapper;
+   isLoadingStudents?: boolean;
+   errorStudents?: string;
+     loading: boolean;
+  error?: string | null;
+  isLoadingAnalytics: boolean;
+  organizationStats?:OrganizationStats;
+  organizationAudit:AuditLogEvent[]
+}
+
+
+interface User {
+  firstname: string;
+  lastname: string;
+  username: string;
+  email: string;
+  is_student: boolean;
+  is_teacher: boolean;
+  is_parent: boolean;
+  is_pave: boolean;
+  is_organizer: boolean;
+  country: string;
+  schoolName: string;
+  schoolCountry: string;
+}
+export interface UserResponse {
+  id: string;
+  user: User;
+}
+export type UserResponseList = UserResponse[];
+
+
+interface SignupsByDay {
+  labels: string[];
+  data: number[];
+}
+
+export interface OrganizationStats {
+  invite_code: string;
+  org_description: string;
+  total_accounts: number;
+  new_accounts_today: number;
+  signups_by_day: SignupsByDay;
+}
+
+
+export interface AuditLogDetails {
+  [key: string]: string;
+}
+
+export interface AuditLogEvent {
+  id: number;
+  timestamp: string;
+  event_type: string; 
+  actor: string;
+  actor_name: string;
+  target: string;
+  organization: number;
+  details: AuditLogDetails;
 }
