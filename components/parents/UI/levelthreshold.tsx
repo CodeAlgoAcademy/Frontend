@@ -15,7 +15,7 @@ interface Props {
 const LevelThresholdInput = ({ threshold, updateLevelThreshold, isLoading }: Props) => {
   const [inputValue, setInputValue] = useState(threshold.level.toString());
   
-  const debouncedUpdate = useDebouncedCallback(updateLevelThreshold, 500);
+  const debouncedUpdate = useDebouncedCallback(updateLevelThreshold, 800);
 
   useEffect(() => {
     setInputValue(threshold.level.toString());

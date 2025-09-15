@@ -10,7 +10,7 @@ const TeacherScreenTimeComponent = ({
    index,
 }: {
    time: screentimeTypes;
-   updateScreenTimeForChild: (id: string | number, day: days, hour: number | "No Limit") => void;
+   updateScreenTimeForChild: (id: string | number | undefined, day: days, hour: number | "No Limit") => void;
    index?: number;
 }) => {
    const [hoursListOpen, setHoursListOpen] = useState<boolean>(false);

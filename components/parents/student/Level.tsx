@@ -44,60 +44,59 @@ const Level = ({ size, level, progressItems, isLoading, isBlockProgress = false,
         )}
         
         <div className="ml-4">
-          {/* In Progress Section */}
           {isLoading ? (
-    <>
-      <h3 className="font-semibold">Comprehension Tracking</h3>
-      <div className="mt-3 flex flex-col gap-5">
-        <p className="text-sm text-gray-400 animate-pulse">Loading progress...</p>
-      </div>
-      
-      <h3 className="font-semibold mt-6">Completed</h3>
-      <div className="mt-3 flex flex-col gap-5">
-        <p className="text-sm text-gray-400 animate-pulse">Loading completed items...</p>
-      </div>
-    </>
-  ) : (
-    <>
-      {/* In Progress Section */}
-      <h3 className="font-semibold">Comprehension Tracking</h3>
-      <div className="mt-3 flex flex-col gap-5">
-        {hasProgressData ? (
-          progressItems.map((lesson, index) => (
-            <ProgressBar
-              key={`inprogress-${index}`}
-              color={isBlockProgress ? "red" : "green"}
-              percentage={lesson.progress}
-              title={isBlockProgress ? lesson.standard_code : lesson.title}
-              titleSize="base"
-              containerSize={size}
-            />
-          ))
-        ) : (
-          <p className="text-sm text-gray-500">No in-progress items to show.</p>
-        )}
-      </div>
+            <>
+              <h3 className="font-semibold">Comprehension Tracking</h3>
+              <div className="mt-3 flex flex-col gap-5">
+                <p className="text-sm text-gray-400 animate-pulse">Loading progress...</p>
+              </div>
+              
+              <h3 className="font-semibold mt-6">Completed</h3>
+              <div className="mt-3 flex flex-col gap-5">
+                <p className="text-sm text-gray-400 animate-pulse">Loading completed items...</p>
+              </div>
+            </>
+          ) : (
+            <>
+              {/* In Progress Section - Only show items with progress < 1.0 */}
+              <h3 className="font-semibold">Comprehension Tracking</h3>
+              <div className="mt-3 flex flex-col gap-5">
+                {hasProgressData ? (
+                  progressItems.map((lesson, index) => (
+                    <ProgressBar
+                      key={`inprogress-${index}`}
+                      color={isBlockProgress ? "red" : "green"}
+                      percentage={lesson.progress}
+                      title={isBlockProgress ? lesson.standard_code : lesson.title}
+                      titleSize="base"
+                      containerSize={size}
+                    />
+                  ))
+                ) : (
+                  <p className="text-sm text-gray-500">No in-progress items to show.</p>
+                )}
+              </div>
 
-      {/* Completed Items Section */}
-      {hasCompletedData && (
-        <>
-          <h3 className="font-semibold mt-6">Completed</h3>
-          <div className="mt-3 flex flex-col gap-5">
-            {completedItems.map((lesson, index) => (
-              <ProgressBar
-                key={`completed-${index}`}
-                color="green"
-                percentage={lesson.progress}
-                title={isBlockProgress ? lesson.standard_code : lesson.title}
-                titleSize="base"
-                containerSize={size}
-              />
-            ))}
-          </div>
-        </>
-      )}
-    </>
-  )}
+              {/* Completed Items Section - Only show items with progress === 1.0 */}
+              {hasCompletedData && (
+                <>
+                  <h3 className="font-semibold mt-6">Completed</h3>
+                  <div className="mt-3 flex flex-col gap-5">
+                    {completedItems.map((lesson, index) => (
+                      <ProgressBar
+                        key={`completed-${index}`}
+                        color="green"
+                        percentage={lesson.progress}
+                        title={isBlockProgress ? lesson.standard_code : lesson.title}
+                        titleSize="base"
+                        containerSize={size}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
+            </>
+          )}
         </div>
       </div>
     </ContentBox>
