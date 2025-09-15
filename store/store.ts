@@ -23,6 +23,7 @@ import organizersSlice from "./organizersSlice";
 import accessibilityReducer from "./accessibilitySlice";
 import pricingReducer from "./pricingSlice";
 import teacherStudentReducer  from "./teacherStudentSlice";
+import studentInfoReducer from "./usersStudentslice"; 
 
 export const store = configureStore({
    reducer: {
@@ -49,6 +50,7 @@ export const store = configureStore({
       accessibility: accessibilityReducer,
       pricing: pricingReducer,
       teacherStudentSlice: teacherStudentReducer,
+      studentInfo: studentInfoReducer,
       
    },
 });

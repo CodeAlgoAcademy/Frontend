@@ -171,6 +171,33 @@ export const sendLicenseRequest: any = createAsyncThunk("sendLicenseReq", async 
       return thunkApi.rejectWithValue(error);
    }
 });
+// =============analytics
+export const getOrganizationAnalytics: any = createAsyncThunk("organizer/get-analytiics", async (_, thunkApi) => {
+   const { selectedOrganization } = (thunkApi.getState() as RootState).organizer;
+
+   const { id } = selectedOrganization as IOrganization;
+
+   try {
+      const response = await http.get(`/organization/${id}/analytics`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+
+      return response?.data;
+   } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+   }
+});
+export const getOrganizationAudit: any = createAsyncThunk("organizer/get-audit", async (_, thunkApi) => {
+   const { selectedOrganization } = (thunkApi.getState() as RootState).organizer;
+
+   const { id } = selectedOrganization as IOrganization;
+
+   try {
+      const response = await http.get(`/organization/${id}/audit-logs`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+
+      return response?.data;
+   } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+   }
+});
 
 // ================== USERS
 export const getOrganizationUsers: any = createAsyncThunk("organizer/get-users", async (_, thunkApi) => {
@@ -186,6 +213,38 @@ export const getOrganizationUsers: any = createAsyncThunk("organizer/get-users",
       return thunkApi.rejectWithValue(error.message);
    }
 });
+export const getStudentOrganizationUsers: any = createAsyncThunk("organizer/get-student-users", async (_, thunkApi) => {
+   const { selectedOrganization } = (thunkApi.getState() as RootState).organizer;
+
+   const { id } = selectedOrganization as IOrganization;
+
+   try {
+      const response = await http.get(`/organization/${id}/users/students/`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+
+      return response?.data;
+   } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+   }
+});
+export const getSingleStudentOrganizationUsers: any = createAsyncThunk(
+  "organizer/get-single-student-users",
+  async (student_id: string, thunkApi) => {
+    const { selectedOrganization } = (thunkApi.getState() as RootState).organizer;
+    const { id } = selectedOrganization as IOrganization;
+
+    try {
+      const response = await http.get(
+        `/organization/${id}/users/students/${student_id}`,
+        { headers: { Authorization: `Bearer ${getAccessToken()}` } }
+      );
+
+      return response?.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
 
 export const addUserToOrganization: any = createAsyncThunk(
    "organizaer/add-user",

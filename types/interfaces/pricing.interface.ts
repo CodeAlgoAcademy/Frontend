@@ -46,15 +46,32 @@ export interface InitiatePaymentRes {
 
 export type PaymentStatus = "succeeded" | "failed" | "pending";
 
+export interface IChild {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  username: string;
+  dob: string;
+  schoolCountry: string | null;
+  schoolName: string | null;
+  codingExperience: string;
+}
+
 export interface IBilling {
-   activated_date: Date;
-   amount: number;
-   currency: "usd";
-   expiration_date: Date;
-   is_activated: boolean;
-   is_active: boolean;
-   plan_duration: number;
-   plan_name: string;
+  id: number;
+  plan_name: string;
+  plan_duration: number;
+  is_activated: boolean;
+  activated_date: string | number | Date; 
+  expiration_date: string | number | Date;
+  is_active: boolean;
+  payment_status: "Paid" | "Pending" | "Failed"; 
+  amount: number;
+  currency: "usd";
+  payment_date: string | null;
+  charged_amount: number;
+  children: IChild[];
 }
 export interface Payment {
   payment_id: string;

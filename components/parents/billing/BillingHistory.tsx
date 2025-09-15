@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
-import { TbFileDownload } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { getBillingHistory } from "services/pricingService";
 import { RootState } from "store/store";
