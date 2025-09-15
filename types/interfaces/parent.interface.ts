@@ -57,7 +57,7 @@ export interface IParentChildren extends IParentChild {
 }
 
 export interface screentimeTypes {
-   id: number | string;
+   id?: number | string;
    dayOfTheWeek: days;
    timeLimit: "" | string | number | "No Limit";
 }

@@ -114,8 +114,10 @@ const Dashboard = () => {
       <TeacherLayout>
          <StudentsList isOpen={tabs.students} open={() => toggleTab("students", true)} close={() => toggleTab("students", false)} />
 
-         <div className="relative bottom-14 mb-[-120px] h-auto scale-90 overflow-scroll overflow-x-auto sm:bottom-0 sm:mb-0 sm:scale-100">
-            <div className="grid h-auto grid-flow-row grid-cols-1 gap-6 overflow-scroll sm:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4">
+         <div className="relative bottom-14 mb-[-120px] h-auto scale-90 overflow-scroll 
+         overflow-x-auto sm:bottom-0 sm:mb-0 sm:scale-100">
+            <div className="grid h-auto grid-flow-row grid-cols-1 gap-6 overflow-scroll 
+            sm:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4">
                <TeacherStudentProgress
                   size="base"
                   level={(currentStudent?.level as number) + 1}
