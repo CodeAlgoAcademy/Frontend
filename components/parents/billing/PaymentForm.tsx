@@ -58,8 +58,6 @@ const PaymentForm = () => {
    return (
       <form onSubmit={handleSubmit} className="mt-8 flex w-full items-start gap-8 max-lg:flex-col">
          <div className="w-full flex-[.7]">
-            {!isPaymentElementReady && !hasPaymentError && <div className="mb-4 h-40 animate-pulse rounded-lg bg-gray-200"></div>}
-
             {hasPaymentError ? (
                <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-4">
                   <p className="text-sm text-red-700">Failed to load payment methods. Please check your internet connection.</p>
