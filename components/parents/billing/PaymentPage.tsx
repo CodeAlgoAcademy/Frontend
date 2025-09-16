@@ -52,6 +52,10 @@ useEffect(() => {
    if (handlers.initiate_payment_loading || !initiated_payment?.client_secret) {
       return <Skeleton />;
    }
+   console.log(initiated_payment?.client_secret)
+   console.log(stripePromise)
+   console.log(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
+   
 
    return (
       <div className=" scrollbar-hide mt-12 overflow-y-scroll bg-white px-8 pt-6 pb-10">
