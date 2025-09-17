@@ -8,15 +8,13 @@ import { getAccessToken } from "utils/getTokens";
 
 export const fetchOrganiztions: any = createAsyncThunk("organzer/fetch-organizations", async (name, thunkApi) => {
    try {
-      const response = await http.get("/organization/admin/", { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+      const response = await http.get("/organization/", { headers: { Authorization: `Bearer ${getAccessToken()}` } });
 
-      return response?.data;
+      return response?.data?.results || response?.data?.organizations || response?.data;
    } catch (error: any) {
-      //   error = errorResolver(error);
       return thunkApi.rejectWithValue(error.message);
    }
 });
-
 export const addOrganization: any = createAsyncThunk(
    "organizer/add-organization",
    async ({ name, description, invite_code }: { name: string; description: string; invite_code: string }, thunkApi) => {
@@ -70,7 +68,12 @@ export const getAllRoles: any = createAsyncThunk("organizer/get-all-roles", asyn
    try {
       const response = await http.get("/organization/role", { headers: { Authorization: `Bearer ${getAccessToken()}` } });
 
-      return response?.data;
+      //       return response?.data;
+      //    } catch (error: any) {
+      //       return thunkApi.rejectWithValue(error.message);
+      //    }
+      // });
+      return response?.data?.results || response?.data?.roles || response?.data || [];
    } catch (error: any) {
       return thunkApi.rejectWithValue(error.message);
    }
@@ -208,7 +211,12 @@ export const getOrganizationUsers: any = createAsyncThunk("organizer/get-users",
    try {
       const response = await http.get(`/organization/${id}/users`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
 
-      return response?.data;
+      //       return response?.data;
+      //    } catch (error: any) {
+      //       return thunkApi.rejectWithValue(error.message);
+      //    }
+      // });
+      return response?.data?.results || response?.data;
    } catch (error: any) {
       return thunkApi.rejectWithValue(error.message);
    }
@@ -221,30 +229,26 @@ export const getStudentOrganizationUsers: any = createAsyncThunk("organizer/get-
    try {
       const response = await http.get(`/organization/${id}/users/students/`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
 
+      // return response?.data;
+      return response.data.results || [];
+   } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+   }
+});
+export const getSingleStudentOrganizationUsers: any = createAsyncThunk("organizer/get-single-student-users", async (student_id: string, thunkApi) => {
+   const { selectedOrganization } = (thunkApi.getState() as RootState).organizer;
+   const { id } = selectedOrganization as IOrganization;
+
+   try {
+      const response = await http.get(`/organization/${id}/users/students/${student_id}`, {
+         headers: { Authorization: `Bearer ${getAccessToken()}` },
+      });
+
       return response?.data;
    } catch (error: any) {
       return thunkApi.rejectWithValue(error.message);
    }
 });
-export const getSingleStudentOrganizationUsers: any = createAsyncThunk(
-  "organizer/get-single-student-users",
-  async (student_id: string, thunkApi) => {
-    const { selectedOrganization } = (thunkApi.getState() as RootState).organizer;
-    const { id } = selectedOrganization as IOrganization;
-
-    try {
-      const response = await http.get(
-        `/organization/${id}/users/students/${student_id}`,
-        { headers: { Authorization: `Bearer ${getAccessToken()}` } }
-      );
-
-      return response?.data;
-    } catch (error: any) {
-      return thunkApi.rejectWithValue(error.message);
-    }
-  }
-);
-
 
 export const addUserToOrganization: any = createAsyncThunk(
    "organizaer/add-user",
@@ -275,10 +279,9 @@ export const getAllInvitations: any = createAsyncThunk("getallinvitations", asyn
    try {
       const response = await http.get(`/organization/${id}/invite`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
 
-      return response?.data;
-   } catch (error) {
-      error = errorResolver(error);
-      return thunkApi.rejectWithValue(error);
+      return response?.data?.results;
+   } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
    }
 });
 

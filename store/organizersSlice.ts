@@ -42,7 +42,7 @@ const initialState: IOrganizationSlice = {
    error: null,
    isLoadingAnalytics: false,
    organizationStats: undefined,
-   organizationAudit:[]
+   organizationAudit: [],
 };
 
 const organizersSlice = createSlice({
@@ -54,16 +54,24 @@ const organizersSlice = createSlice({
       },
    },
    extraReducers: (builder) => {
+      // builder.addCase(fetchOrganiztions.fulfilled, (state: IOrganizationSlice, action: PayloadAction<IOrganization[]>) => {
+      //    state.organizations = action.payload;
+
+      //    const organization = action.payload?.find((org) => org.id === state?.selectedOrganization?.id);
+
+      //    if (organization) {
+      //       state.selectedOrganization = organization;
+      //    } else {
+      //       state.selectedOrganization = action.payload?.[0];
+      //    }
+      // });
       builder.addCase(fetchOrganiztions.fulfilled, (state: IOrganizationSlice, action: PayloadAction<IOrganization[]>) => {
-         state.organizations = action.payload;
+         const orgs = Array.isArray(action.payload) ? action.payload : [];
+         state.organizations = orgs;
 
-         const organization = action.payload?.find((org) => org.id === state?.selectedOrganization?.id);
+         const organization = orgs.find((org) => org.id === state?.selectedOrganization?.id);
 
-         if (organization) {
-            state.selectedOrganization = organization;
-         } else {
-            state.selectedOrganization = action.payload?.[0];
-         }
+         state.selectedOrganization = organization || orgs[0] || null;
       });
 
       builder.addCase(getAllRoles.fulfilled, (state: IOrganizationSlice, action: PayloadAction<IRole[]>) => {
@@ -75,24 +83,50 @@ const organizersSlice = createSlice({
       });
 
       builder
+         // .addCase(getOrganizationUsers.pending, (state) => {
+         //    state.loading = true;
+         //    state.error = null;
+         // })
+         // .addCase(getOrganizationUsers.fulfilled, (state, action: PayloadAction<IOrganizationUser[]>) => {
+         //    const sorted = [...action.payload].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+         //    state.users = sorted;
+         //    state.loading = false;
+         // })
+         // .addCase(getOrganizationUsers.fulfilled, (state, action: PayloadAction<IOrganizationUser[]>) => {
+         //    const users = Array.isArray(action.payload) ? action.payload : [];
+
+         //    const sorted = [...users].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
+         //    state.users = sorted;
+         //    state.loading = false;
+         // })
+         // .addCase(getOrganizationUsers.rejected, (state, action) => {
+         //    state.loading = false;
+         //    state.error = action.payload as string;
+         // });
          .addCase(getOrganizationUsers.pending, (state) => {
             state.loading = true;
             state.error = null;
          })
          .addCase(getOrganizationUsers.fulfilled, (state, action: PayloadAction<IOrganizationUser[]>) => {
-            const sorted = [...action.payload].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+            const users = Array.isArray(action.payload) ? action.payload : [];
+
+            const sorted = [...users].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
             state.users = sorted;
             state.loading = false;
          })
          .addCase(getOrganizationUsers.rejected, (state, action) => {
             state.loading = false;
-            state.error = action.payload as string;
+            state.error = action.error.message || "Failed to fetch organization users";
          });
 
+      // builder.addCase(getAllInvitations.fulfilled, (state: IOrganizationSlice, action: PayloadAction<IOrganizationInvitations[]>) => {
+      //    state.invitations = action.payload;
+      // });
       builder.addCase(getAllInvitations.fulfilled, (state: IOrganizationSlice, action: PayloadAction<IOrganizationInvitations[]>) => {
          state.invitations = action.payload;
       });
-
       builder.addCase(getMyInvitations.fulfilled, (state: IOrganizationSlice, action: PayloadAction<IUserOrganization[]>) => {
          state.userInvitation = action.payload;
       });
