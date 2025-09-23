@@ -25,7 +25,7 @@ const getStudents = async (id: string) => {
 };
 
 const getClassProgressSummary = async (class_id: string) => {
-   const response = await http.get(`/academics/class/${class_id}/progress-summary/`, {
+   const response = await http.get(`/academics/class/${class_id}/progress-summary`, {
       headers: {
          Authorization: `Bearer ${getAccessToken()}`,
       },
