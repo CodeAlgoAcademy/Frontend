@@ -23,9 +23,9 @@ export const StudentProgressCards = ({ students }: StudentProgressCardsProps) =>
             >
                <h3
                   className="mb-3 max-w-full overflow-hidden truncate text-ellipsis text-lg font-bold text-gray-800"
-                  title={formatName(student.student_name)}
+                  title={formatName(student.student_username)}
                >
-                  {formatName(student.student_name)}
+                  {formatName(student.student_username)}
                </h3>
 
                <div className="mb-4">
