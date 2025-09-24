@@ -78,7 +78,7 @@ interface CurrentStandard {
 
 export interface StudentProgress {
   student_id: number;
-  student_name: string;
+  student_username: string;
   current_level: CurrentStandard | null; 
   overall_progress: number;
   completed_count: number;
