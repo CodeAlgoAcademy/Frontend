@@ -24,6 +24,15 @@ const getStudents = async (id: string) => {
    return response.data?.students;
 };
 
+const getClassProgressSummary = async (class_id: string) => {
+   const response = await http.get(`/academics/class/${class_id}/progress-summary`, {
+      headers: {
+         Authorization: `Bearer ${getAccessToken()}`,
+      },
+   });
+   return response.data;
+}; 
+
 const getSingleStudent = async (classId: number, studentId: number) => {
    console.log(classId, studentId);
    const response = await http.get(`/academics/class/${classId}/student/${studentId}`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
@@ -65,6 +74,7 @@ const studentService = {
    getStudents,
    getSingleStudent,
    getStudentProgressByTeacher,
+   getClassProgressSummary,
 };
 
 export default studentService;
