@@ -12,7 +12,9 @@ import parentService from "services/parentChildService";
 const initialState: TeacherStudentsState = {
    students: [],
    currentStudent: null,
-   studentComments: []
+   studentComments: [],
+   progressSummary: null,
+   loading: false,
 };
 
 export const addStudent: any = createAsyncThunk("new/student", async (data: ISingleStudent, thunkAPI) => {
@@ -68,6 +70,16 @@ export const getStudents: any = createAsyncThunk("get/students", async (_, thunk
    const { id } = state.currentClass;
    try {
       return await studentService.getStudents(id as string);
+   } catch (error: any) {
+      // const errorMessage = errorResolver(error);
+      // return thunkAPI.rejectWithValue(errorMessage);
+   }
+});
+export const getStudentsClassProgresss: any = createAsyncThunk("get/student/class-progress-summary", async (_, thunkAPI) => {
+   const state = <RootState>thunkAPI.getState();
+   const { id } = state.currentClass;
+   try {
+      return await studentService.getClassProgressSummary(id as string);
    } catch (error: any) {
       // const errorMessage = errorResolver(error);
       // return thunkAPI.rejectWithValue(errorMessage);
@@ -207,6 +219,10 @@ export const studentSlice = createSlice({
       builder
          .addCase(getStudents.fulfilled, (state, action) => {
             state.students = action.payload;
+         })
+         .addCase(getStudentsClassProgresss.fulfilled, (state, action) => {
+            state.progressSummary = action.payload;
+            state.loading = false;
          })
          .addCase(getStudentComment.fulfilled, (state, action) => {
             state.studentComments = action.payload;
