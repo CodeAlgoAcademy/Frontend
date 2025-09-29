@@ -61,4 +61,34 @@ export interface TeacherStudentsState {
     id: number | string;
     date: string;
   }>;
+    progressSummary: ClassroomProgressResponse | null; 
+    loading:Boolean
 }
+
+
+interface CurrentStandard {
+  level:string;
+  code: string;
+  name: string;
+  status: "completed" | "in_progress" | "not_started";
+  started_at: string; 
+  completed_at: string;
+  suggested_next: boolean;
+}
+
+export interface StudentProgress {
+  student_id: number;
+  student_username: string;
+  current_level: CurrentStandard | null; 
+  overall_progress: number;
+  completed_count: number;
+  in_progress_count: number;
+  not_started_count: number;
+  total_standards: number;
+}
+
+export interface ClassroomProgressResponse {
+  class_id: number;
+  students: StudentProgress[];
+}
+
