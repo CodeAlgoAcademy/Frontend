@@ -2,6 +2,7 @@ import { ISingleStudent } from "./student.interface";
 
 export interface IAllClasses {
    classes: IClass[];
+   loading?:boolean
 }
 
 export interface IAddClass {
