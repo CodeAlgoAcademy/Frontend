@@ -47,6 +47,11 @@ const links = [
       url: "/teachers/students",
    },
    {
+      name: "Live Class",
+      icon: <FaUserGraduate />,
+      url: "/teachers/overview",
+   },
+   {
       name: "organizations",
       icon: <SlOrganization />,
       url: "/teachers/organization",
