@@ -8,6 +8,7 @@ import { closePreloader, openPreloader } from "./fetchSlice";
 import { RootState } from "./store";
 import { setTimeLimit } from "utils/useMultiForm";
 import parentService from "services/parentChildService";
+import { closeGeneratingModal, openGeneratingModal } from "./modalSlice";
 
 const initialState: TeacherStudentsState = {
    students: [],
@@ -19,18 +20,30 @@ export const addStudent: any = createAsyncThunk("new/student", async (data: ISin
    const state = <RootState>thunkAPI.getState();
    const { id } = state.currentClass;
    const dispatch = thunkAPI.dispatch;
-   dispatch(openPreloader({ loadingText: "Adding Student(s)" }));
+   dispatch(openGeneratingModal("Generating..."));
+   // dispatch(openPreloader({ loadingText: "Adding Student(s)" }));
 
-   data.timeLimits = data.timeLimits?.map((timeInfo) => ({ ...timeInfo, timeLimit: setTimeLimit(timeInfo.timeLimit as string) }));
+   data.timeLimits = data.timeLimits?.map((timeInfo) =>
+       ({ ...timeInfo, timeLimit: setTimeLimit(timeInfo.timeLimit as string) }));
+
 
    try {
       const student = await studentService.addStudent(data, id as string);
-      dispatch(closePreloader());
+      dispatch(closeGeneratingModal());
       return student;
    } catch (error: any) {
+      dispatch(closeGeneratingModal());
       const errorMessage = errorResolver(error);
       return thunkAPI.rejectWithValue(errorMessage);
    }
+   // try {
+   //    const student = await studentService.addStudent(data, id as string);
+   //    dispatch(closePreloader());
+   //    return student;
+   // } catch (error: any) {
+   //    const errorMessage = errorResolver(error);
+   //    return thunkAPI.rejectWithValue(errorMessage);
+   // }
 });
 
 export const editStudent: any = createAsyncThunk("edit/student", async (student: any, thunkApi) => {

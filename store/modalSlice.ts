@@ -6,6 +6,10 @@ const initialState: IModal = {
       message: "",
       isOpen: false,
    },
+   generatingModal: {
+      isOpen: false,
+      message: "Generating...",
+   },
    dictionaryModal: {
       word: "",
       isOpen: false,
@@ -66,15 +70,27 @@ const modalSlice = createSlice({
       closeSelectOrg: (state: IModal) => {
          state.selectOrganizationOpen = false;
       },
-
-      openSuccessModal: (state: IModal, action: PayloadAction<string>) => {
+      openSuccessModal: (state: IModal, action: PayloadAction<{ message: string; studentId?: string }>) => {
          state.successModal.isOpen = true;
-         state.successModal.message = action.payload;
+         state.successModal.message = action.payload.message;
+         state.successModal.studentId = action.payload.studentId;
       },
+      // openSuccessModal: (state: IModal, action: PayloadAction<string>) => {
+      //    state.successModal.isOpen = true;
+      //    state.successModal.message = action.payload;
+      // },
 
       closeSuccessModal: (state: IModal) => {
          state.successModal.isOpen = false;
          state.successModal.message = "";
+      },
+      openGeneratingModal: (state, action: PayloadAction<string | undefined>) => {
+         state.generatingModal.isOpen = true;
+         state.generatingModal.message = action.payload || "Generating...";
+      },
+      closeGeneratingModal: (state) => {
+         state.generatingModal.isOpen = false;
+         state.generatingModal.message = "Generating...";
       },
 
       openDictionaryModal: (state: IModal, action: PayloadAction<string>) => {
@@ -106,6 +122,8 @@ export const {
    closeSelectOrg,
    openSuccessModal,
    closeSuccessModal,
+   openGeneratingModal, 
+  closeGeneratingModal,
    openDictionaryModal,
    closeDictionaryModal,
 } = modalSlice.actions;
