@@ -2,7 +2,6 @@ import React from "react";
 import ContentBox from "../UI/ContentBox";
 import { RootState } from "store/store";
 import { useSelector } from "react-redux";
-import { GrOrganization } from "react-icons/gr";
 import { SlOrganization } from "react-icons/sl";
 
 const MyOrganizations = () => {
@@ -18,7 +17,7 @@ const MyOrganizations = () => {
                         <span className="text-mainColor text-[0.8rem]">
                            <SlOrganization />
                         </span>
-                        <p className="font-lighter text-[12px]">{org.name}</p>
+                        <p className="font-lighter text-[12px]">{org?.name}</p>
                      </div>
                      <p className="text-[12px]">{org?.invite_code}</p>
                   </article>
