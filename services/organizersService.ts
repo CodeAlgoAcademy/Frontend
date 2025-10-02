@@ -8,7 +8,7 @@ import { getAccessToken } from "utils/getTokens";
 
 export const fetchOrganiztions: any = createAsyncThunk("organzer/fetch-organizations", async (name, thunkApi) => {
    try {
-      const response = await http.get("/organization/admin/", { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+      const response = await http.get("/organization/", { headers: { Authorization: `Bearer ${getAccessToken()}` } });
 
       return response?.data;
    } catch (error: any) {
