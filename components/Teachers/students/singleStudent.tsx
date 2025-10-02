@@ -341,10 +341,10 @@ const SingleStudent = ({
                      {headings.includes(parseInt(student.id as string)) ? <IoIosArrowUp /> : <IoIosArrowDown />}
                   </span>
                </div>
-               <div className="hidden px-2 text-[12px] md:block">
+               {/* <div className="hidden px-2 text-[12px] md:block">
                   <span className={(student.active ? "bg-green-500" : "border-2") + styles.active}></span>
-                  {student.active ? `Active in ${student.active}` : "Inactive"}
-               </div>
+                  {student.active && `Active in ${student.active}`}
+               </div> */}
             </div>
             <span
                className="ml-4 flex-1 cursor-pointer underline"
