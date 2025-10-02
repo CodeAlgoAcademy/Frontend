@@ -23,6 +23,29 @@ export const getAllClasses: any = createAsyncThunk("allClassesSlice/getAllClasse
    }
 });
 
+export const deleteClass: any = createAsyncThunk(
+  "allClassesSlice/deleteClass",
+  async (classId: string | number, thunkApi) => {
+    const dispatch = thunkApi.dispatch;
+    
+    try {
+      dispatch(openPreloader({ loadingText: "Deleting Class" }));
+      
+      const response = await http.delete(`/academics/class/${classId}`, {
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      });
+      
+      dispatch(closePreloader());
+      return response.data;
+      
+    } catch (error: any) {
+      dispatch(closePreloader());
+    }
+  }
+);
+
 export const addClass: any = createAsyncThunk("allClassesSlice/addClass", async (name, thunkApi) => {
    const state = thunkApi.getState() as RootState;
    const dispatch = thunkApi.dispatch;
