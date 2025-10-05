@@ -18,7 +18,7 @@ const Home: NextPage = () => {
            <Head>
             <meta
                name="google-site-verification"
-               content="googlee251066f0a02b311.html"
+               content="eGB3Olxnsy0kXPD_3EoaI1Fzl7xsQVK4R1WxbBSCrFI"
             />
          </Head>
          <Navbar />
