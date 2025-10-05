@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import React from "react";
+import Head from "next/head"; 
 import Navbar from "@/components/navbar/home/Navbar";
 import Hero from "@/components/home/new-home/hero";
 import WhatWeBuilt from "@/components/home/new-home/what-we-built";
@@ -14,6 +15,12 @@ import AccessibilityMenu from "@/components/navbar/home/accessibility/menu";
 const Home: NextPage = () => {
    return (
       <div className="relative  bg-white" suppressHydrationWarning>
+           <Head>
+            <meta
+               name="google-site-verification"
+               content="googlee251066f0a02b311.html"
+            />
+         </Head>
          <Navbar />
          <Hero />
          <WhatWeBuilt />
