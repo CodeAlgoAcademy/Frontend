@@ -20,7 +20,7 @@ import Script from "next/script";
 
 registerLicense(`${process.env.NEXT_PUBLIC_SYNC_FUSION_LICENSE}`);
 
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-K648E5ZLW4';
+const GA_MEASUREMENT_ID = 'G-K648E5ZLW4';
 
 function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
@@ -39,7 +39,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     
    return (
-       <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}"></script>
         <script>
         window.dataLayer = window.dataLayer || [];
