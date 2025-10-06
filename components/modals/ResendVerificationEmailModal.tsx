@@ -19,7 +19,7 @@ const ResendVerificationEmailModal = ({ closeModal }: Props) => {
       const data = await dispatch(resendEmail(email));
       if (!data?.error) {
          closeModal();
-         dispatch(openSuccessModal("Verification email sent"));
+         dispatch(openSuccessModal({ message: "Verification email sent" }));
       }
    };
 

@@ -123,7 +123,7 @@ const InstitutionInquiry = () => {
       const data = await dispatch(submitInstituionInquiry(requestBody));
 
       if (!data.error) {
-         dispatch(openSuccessModal("Insitution inquiry submitted successfully"));
+         dispatch(openSuccessModal({ message: "Insitution inquiry submitted successfully" }));
          setRequestBody(initialValues);
       }
    };

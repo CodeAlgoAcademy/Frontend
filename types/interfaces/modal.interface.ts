@@ -14,7 +14,12 @@ export interface IModal {
    successModal: {
       message: string;
       isOpen: boolean;
+      studentId?:string;
    };
+   generatingModal: {
+    isOpen: boolean;
+    message?: string;
+  };
 }
 
 export interface IFetch {
