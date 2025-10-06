@@ -14,6 +14,9 @@ import { FaUserGraduate } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { getAllClasses } from "services/classesService";
 import { FiActivity } from "react-icons/fi";
+import PrintLoginsButton from "../UI/printlogins";
+import GeneratingModal from "../Teachers/students/generatingModal";
+import SuccessModal from "../modals/SuccessModal";
 
 interface Props {
    children?: ReactNode;
@@ -107,6 +110,7 @@ const TeacherLayout = ({ children, className }: Props) => {
                </div>
 
                <div className="flex items-center gap-2">
+                  <PrintLoginsButton />
                   <BetaButton />
                   <UserInfo />
                   <MdMenu cursor={"pointer"} size={26} className="md:hidden" onClick={() => setSidebarOpened(true)} />
@@ -120,6 +124,8 @@ const TeacherLayout = ({ children, className }: Props) => {
                {children}
             </div>
          </section>
+         <GeneratingModal />
+         <SuccessModal />
       </section>
    );
 };
