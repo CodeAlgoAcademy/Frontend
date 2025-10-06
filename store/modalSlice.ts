@@ -75,11 +75,6 @@ const modalSlice = createSlice({
          state.successModal.message = action.payload.message;
          state.successModal.studentId = action.payload.studentId;
       },
-      // openSuccessModal: (state: IModal, action: PayloadAction<string>) => {
-      //    state.successModal.isOpen = true;
-      //    state.successModal.message = action.payload;
-      // },
-
       closeSuccessModal: (state: IModal) => {
          state.successModal.isOpen = false;
          state.successModal.message = "";
