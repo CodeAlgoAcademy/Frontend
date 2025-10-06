@@ -23,8 +23,7 @@ const ResetPassword = ({ closeModal }: Props) => {
 
       if (!data?.error) {
          closeModal();
-
-         dispatch(openSuccessModal("Child's password has been changed successfully"));
+         dispatch(openSuccessModal({ message: "Child's password has been changed successfully" }));
       }
    };
 
