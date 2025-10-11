@@ -25,6 +25,7 @@ export const links: NavbarLink[] = [
          // { name: "Parent's Page", link: '/parents' },
          // { name: 'FAQ', link: '/parents/faq' },
          { name: "Login", link: "/login/parent" },
+         { name: "SignUp", link: "/signup/parent" },
       ],
    },
    {
@@ -34,6 +35,7 @@ export const links: NavbarLink[] = [
          // { name: "Teacher's Page", link: '/teachers' },
          // { name: 'Resources', link: '/teachers/resources' },
          { name: "Login", link: "/login/teacher" },
+         { name: "SignUp", link: "/signup/teacher" },
       ],
    },
    {

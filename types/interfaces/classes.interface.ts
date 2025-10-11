@@ -1,3 +1,4 @@
+import { screentimeTypes } from "./parent.interface";
 import { ISingleStudent } from "./student.interface";
 
 export interface IAllClasses {
@@ -44,4 +45,5 @@ export interface CurrentClassState {
    className: string;
    color: string;
    id: string | number;
+    timeLimits?: screentimeTypes[];
 }
