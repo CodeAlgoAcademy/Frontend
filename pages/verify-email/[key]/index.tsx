@@ -89,7 +89,7 @@ const VerifyWithKey = () => {
                   <span className="mb-2 flex w-full items-center justify-center text-center text-[70px] text-red-600">
                      <BsExclamationTriangle />
                   </span>
-                  <p className="mt-4 text-center text-[21px] font-bold">Unable to verify account</p>
+                  <p className="mt-4 text-center text-[21px] font-bold">Oops! This link is no longer valid — your account has already been verified.</p>
                   <div className="mt-4 border-t-4 pt-4">
                      <button
                         className="mx-auto flex items-center gap-x-2 rounded-md bg-mainRed py-3 px-5 text-white"

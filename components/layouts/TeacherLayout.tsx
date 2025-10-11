@@ -55,6 +55,11 @@ const links = [
       url: "/teachers/overview",
    },
    {
+      name: "Class Settings",
+      icon: <FaUserGraduate />,
+      url: "/teachers/classbulksettings",
+   },
+   {
       name: "organizations",
       icon: <SlOrganization />,
       url: "/teachers/organization",

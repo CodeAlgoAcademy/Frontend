@@ -40,3 +40,15 @@ export default function useMultiForm(steps: ReactElement[]) {
 export const setTimeLimit = (timeLimit: string): string => {
    return (timeLimit = timeLimit === "No Limit" ? `23:00:00` : timeLimit === "" ? "00:00:00" : `${timeLimit}:00:00`);
 };
+
+export const setClassBaseTimeLimit = (timeLimit?: string | number): string => {
+  if (timeLimit === "No Limit") return "23:00:00";
+
+  const value = String(timeLimit ?? "").trim();
+  if (!value) return "00:00:00";
+  if (value.includes(":")) return value;
+
+  const hour = Number(value);
+  return !isNaN(hour) ? `${hour.toString().padStart(2, "0")}:00:00` : "00:00:00";
+};
+
