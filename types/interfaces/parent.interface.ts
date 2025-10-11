@@ -18,6 +18,8 @@ export interface IChildProgress {
    standard_name?:string;
    iready_math_desc?:string;
    common_core_math_desc?:string;
+   unit_level?:string;
+   grade?:string;
 }
 
 export interface IChildTopics {
@@ -59,7 +61,7 @@ export interface IParentChildren extends IParentChild {
 export interface screentimeTypes {
    id?: number | string;
    dayOfTheWeek: days;
-   timeLimit: "" | string | number | "No Limit";
+   timeLimit: "" | string | number | "No Limit"|null;
 }
 
 export interface FriendRequests {
