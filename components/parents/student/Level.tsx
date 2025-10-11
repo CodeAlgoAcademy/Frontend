@@ -69,8 +69,8 @@ const Level = ({ size, level, progressItems, isLoading, isBlockProgress = false,
                       percentage={lesson.progress}
                       title={isBlockProgress ? lesson.standard_code : lesson.title}
                       titleSize="base"
-                      containerSize={size}
-                    />
+                      containerSize={size} 
+                                         />
                   ))
                 ) : (
                   <p className="text-sm text-gray-500">No in-progress items to show.</p>

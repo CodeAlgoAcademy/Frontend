@@ -31,7 +31,7 @@ export interface ISingleStudent {
   student_id?: string;
   assignments?: AssignmentDetails[];
   timeLimits?: screentimeTypes[];
-  levelThreshold?: LevelThresholdInputProps[];
+  levelThresholds?: LevelThresholdInputProps[];
   progress?: IStudentsTopics;
   level?: number;
   class_id?:string
@@ -39,7 +39,7 @@ export interface ISingleStudent {
 
 export interface IStudentWithScreentime extends ISingleStudent {
   timeLimits?: screentimeTypes[];
-  levelThreshold?: LevelThresholdInputProps[];
+  levelThresholds?: LevelThresholdInputProps[];
 }
 
 export interface IUserStudent {

@@ -1,21 +1,96 @@
-import { useCallback, useEffect, useState } from "react";
-import { IoIosAddCircleOutline } from "react-icons/io";
-import Image from "next/image";
-import { HiDotsHorizontal } from "react-icons/hi";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
-import { openAddUnitModal } from "store/modalSlice";
-import AddUnit from "@/components/Teachers/curriculum/addUnit";
-import { RootState } from "store/store";
-import { SlLoop } from "react-icons/sl";
-import { deleteCurriculum, getAllCurriculums } from "services/curriculumService";
-import { IAllCurriculum, Icurriculum } from "types/interfaces";
-import { BiArrowBack } from "react-icons/bi";
-import SingleCurriculum from "@/components/Teachers/curriculum/singleCurriculum";
-import { getDate } from "utils/getDate";
-import TeacherLayout from "@/components/layouts/TeacherLayout";
-import NoItem from "@/components/UI/NoItem";
+import { useState, useEffect } from 'react';
+import { Clock, BookOpen, Loader } from 'lucide-react';
+import TeacherLayout from '@/components/layouts/TeacherLayout';
+
+export default function LessonTab() {
+  const [activeLesson, setActiveLesson] = useState<'60min' | '30min'>('60min');
+  const [isLoading, setIsLoading] = useState(true);
+  const [iframeLoaded, setIframeLoaded] = useState(false);
+
+  const lessonDocuments = {
+    '60min': "https://docs.google.com/document/d/e/2PACX-1vSbvlM0Hwh7Yys0XuUMUw4Mm5B9NelhqHDv_TV-TeAS2xqWwvlurLRiicpgC9IElw/pub?embedded=true",
+    '30min': "https://docs.google.com/document/d/your-30min-document-id-here/pub?embedded=true"
+  };
+
+  useEffect(() => {
+    setIsLoading(true);
+    setIframeLoaded(false);
+  }, [activeLesson]);
+
+  const handleIframeLoad = () => {
+    setIsLoading(false);
+    setIframeLoaded(true);
+  };
+
+  return (
+    <TeacherLayout>
+      <div className="w-full min-h-screen bg-gray-50">
+        <div className="bg-white border-b border-gray-200 px-6 py-4 shadow-sm">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="p-2 bg-blue-100 rounded-lg">
+                <BookOpen className="w-5 h-5 text-blue-600" />
+              </div>
+              <div>
+                <h1 className="text-lg font-semibold text-gray-900">
+                  Lesson Materials
+                </h1>
+                <p className="text-sm text-gray-500">
+                  Select your lesson duration
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="mt-4 flex space-x-3">
+            <button
+              onClick={() => setActiveLesson('60min')}
+              className={`flex items-center space-x-2 px-4 py-2 rounded-lg border transition-all duration-200 ${
+                activeLesson === '60min'
+                  ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
+                  : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+              }`}
+            >
+              <Clock className="w-4 h-4" />
+              <span>60 Minute Lesson</span>
+            </button>
+
+            <button
+              onClick={() => setActiveLesson('30min')}
+              className={`flex items-center space-x-2 px-4 py-2 rounded-lg border transition-all duration-200 ${
+                activeLesson === '30min'
+                  ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
+                  : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+              }`}
+            >
+              <Clock className="w-4 h-4" />
+              <span>30 Minute Lesson</span>
+            </button>
+          </div>
+        </div>
+
+        <div className="h-[calc(100vh-140px)] relative">
+          {isLoading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
+              <div className="flex flex-col items-center space-y-3">
+                <Loader className="w-8 h-8 text-blue-600 animate-spin" />
+                <p className="text-gray-600">Loading lesson content...</p>
+              </div>
+            </div>
+          )}
+          
+          <iframe
+            src={lessonDocuments[activeLesson]}
+            className="w-full h-full border-0"
+            title={`Lesson Document - ${activeLesson}`}
+            onLoad={handleIframeLoad}
+            style={{ opacity: iframeLoaded ? 1 : 0 }}
+          />
+        </div>
+      </div>
+    </TeacherLayout>
+  );
+}
+
 
 // export default function Index() {
 //    const [past, setPast] = useState<boolean>(false);
@@ -204,17 +279,3 @@ import NoItem from "@/components/UI/NoItem";
 //       </TeacherLayout>
 //    );
 // }
-
-export default function Index() {
-   return (
-      <TeacherLayout>
-       <div className="w-full h-screen">
-   <iframe
-      src="https://docs.google.com/document/d/e/2PACX-1vSbvlM0Hwh7Yys0XuUMUw4Mm5B9NelhqHDv_TV-TeAS2xqWwvlurLRiicpgC9IElw/pub?embedded=true"
-      className="w-full h-full border-0"
-   ></iframe>
-</div>
-
-      </TeacherLayout>
-   );
-}
