@@ -9,7 +9,7 @@ export default function LessonTab() {
 
   const lessonDocuments = {
     '60min': "https://docs.google.com/document/d/e/2PACX-1vSbvlM0Hwh7Yys0XuUMUw4Mm5B9NelhqHDv_TV-TeAS2xqWwvlurLRiicpgC9IElw/pub?embedded=true",
-    '30min': "https://docs.google.com/document/d/your-30min-document-id-here/pub?embedded=true"
+    '30min': "https://docs.google.com/document/d/e/2PACX-1vTFpa3jOj6W1Y7EQVoK_aVYAb5rpeucefKrQ5OLdGDahiR73vRtA8wtSde0g6-0tjSphVghjLXVeIJ6/pub?embedded=true"
   };
 
   useEffect(() => {
