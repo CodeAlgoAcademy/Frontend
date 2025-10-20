@@ -13,7 +13,6 @@ interface Props {
 export default function TeacherStudentsList({ close, open, isOpen }: Props) {
    const teacherStudents = useSelector((state: RootState) => state.teacherStudentSlice);
    const dispatch = useDispatch();
-   console.log(teacherStudents, "this is student");
 
    if (!teacherStudents?.students || teacherStudents?.students?.length === 0) {
       return <></>;

@@ -64,6 +64,7 @@ const TeacherStudentProgress = ({
                       percentage={lesson.progress}
                       title={lesson.standard_code}
                       level={lesson.unit_level}
+                      grade={lesson.grade}
                       titleSize="base"
                       containerSize={size} 
                     />
@@ -88,6 +89,7 @@ const TeacherStudentProgress = ({
                         titleSize="base"
                         containerSize={size} 
                         level={lesson.unit_level}
+                        grade={lesson.grade}
                   />
                     ))}
                   </div>

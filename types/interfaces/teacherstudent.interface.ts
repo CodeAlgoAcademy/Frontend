@@ -24,7 +24,7 @@ export interface BaseStudent {
   classId: number | string;
 }
 
-export interface ITeacherStudentsState extends BaseStudent{
+export interface ITeacherStudentsState{
   students: BaseStudent[];
   currentStudent: BaseStudent;
   isLoading: boolean;
