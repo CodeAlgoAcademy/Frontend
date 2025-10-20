@@ -116,53 +116,84 @@ export const signUpUser: any = createAsyncThunk("authSlice/signUpUser", async (n
    }
 });
 
-export const loginWithGoogle: any = createAsyncThunk("authSlice/loginWithGoogle", async (access_token: string, thunkApi) => {
-   const dispatch = thunkApi.dispatch;
+export const signUpWithGoogle: any = createAsyncThunk(
+  "authSlice/signUpWithGoogle",
+  async (
+    payload: { access_token: string; role: string },
+    thunkApi
+  ) => {
+    const { dispatch } = thunkApi;
+    dispatch(openPreloader({ loadingText: "Registering your Google account" }));
 
-   dispatch(openPreloader({ loadingText: "Signing in your google account" }));
-
-   try {
-      const { data } = await http.post<ILoginReducerArg>("/auth/google/", {
-         access_token,
-         action: "signin",
+    try {
+      const res = await http.post("/auth/google/", {
+        access_token: payload.access_token,
+        role: payload.role,
       });
 
       dispatch(closePreloader());
 
+      // ✅ If backend intentionally sends 202 — treat it as success but flag it
+      if (res.status === 202) {
+        const details = res.data?.details?.[0];
+        return {
+          role_addition_required: true,
+          confirmation_token: details?.confirmation_token,
+          message: details?.message,
+        };
+      }
+
+      // ✅ Normal signup success
       return {
-         access_token: data.access_token,
-         refresh_token: data.refresh_token,
-         ...data.user,
+        access_token: res.data.access_token,
+        refresh_token: res.data.refresh_token,
+        ...res.data.user,
       };
-   } catch (error: any) {
-      const errorMessage = errorResolver(error);
-      return thunkApi.rejectWithValue(errorMessage);
-   }
-});
-
-export const signUpWithGoogle: any = createAsyncThunk("authSlice/signUpWithGoogle", async (access_token: string, thunkApi) => {
-   const dispatch = thunkApi.dispatch;
-
-   dispatch(openPreloader({ loadingText: "Registering your google account" }));
-
-   try {
-      const { data } = await http.post<ILoginReducerArg>("/auth/google/", {
-         access_token,
-         // action: "signin",
-      });
-
+    } catch (error: any) {
       dispatch(closePreloader());
 
-      return {
-         access_token: data.access_token,
-         refresh_token: data.refresh_token,
-         ...data.user,
-      };
-   } catch (error: any) {
       const errorMessage = errorResolver(error);
       return thunkApi.rejectWithValue(errorMessage);
-   }
-});
+    }
+  }
+);
+
+export const loginWithGoogle: any = createAsyncThunk(
+  "authSlice/loginWithGoogle",
+  async (access_token: string, thunkApi) => {
+    const dispatch = thunkApi.dispatch
+
+    dispatch(openPreloader({ loadingText: "Signing in with Google" }))
+
+    try {
+      const { data } = await http.post<ILoginReducerArg>("/auth/google/", {
+        access_token,
+        action: "signin",
+      })
+
+      dispatch(closePreloader())
+
+      return {
+        access_token: data.access_token,
+        refresh_token: data.refresh_token,
+        ...data.user,
+      }
+    } catch (error: any) {
+      dispatch(closePreloader())
+
+      if (error.response?.status === 202) {
+        const details = error.response.data.details?.[0] || {}
+        return {
+          confirmation_token: details.confirmation_token,
+          message: details.message,
+        }
+      }
+
+      const errorMessage = errorResolver(error)
+      return thunkApi.rejectWithValue(errorMessage)
+    }
+  },
+)
 
 export const updateAccountType: any = createAsyncThunk("authSlice/updateAccountType", async (accountType: string, thunkApi) => {
    const is_parent: boolean = accountType === "Parent";
@@ -199,6 +230,34 @@ export const updateAccountType: any = createAsyncThunk("authSlice/updateAccountT
       return thunkApi.rejectWithValue(errorMessage);
    }
 });
+
+export const confirmAddRole: any = createAsyncThunk(
+  "authSlice/confirmAddRole",
+  async (confirmation_token: string, thunkApi) => {
+    const dispatch = thunkApi.dispatch
+
+    dispatch(openPreloader({ loadingText: "Adding role to your account" }))
+
+    try {
+      const { data } = await http.post<ILoginReducerArg>("/auth/social/confirm-add-role/", {
+        confirmation_token,
+      })
+
+      dispatch(closePreloader())
+
+      return {
+        access_token: data.access_token,
+        refresh_token: data.refresh_token,
+        ...data.user,
+      }
+    } catch (error: any) {
+      dispatch(closePreloader())
+
+      const errorMessage = errorResolver(error)
+      return thunkApi.rejectWithValue(errorMessage)
+    }
+  },
+)
 
 export const updateFirstname: any = createAsyncThunk("authSlice/updateFirstname", async (_, thunkApi) => {
    const state = <RootState>thunkApi.getState();
