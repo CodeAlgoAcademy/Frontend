@@ -11,6 +11,7 @@ const Orgnization = () => {
    useEffect(() => {
       dispatch(getOrgIBelongTo());
    }, [dispatch]);
+   
    return (
       <TeacherLayout>
          <div className="flex flex-col items-center justify-center gap-10 md:flex-row md:items-start md:justify-start">

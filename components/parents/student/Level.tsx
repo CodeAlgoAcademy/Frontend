@@ -39,6 +39,7 @@ const Level = ({ size, level, progressItems, isLoading, isBlockProgress = false,
               title={currentProgress.title}
               titleSize="base"
               containerSize={size}
+              level={currentProgress.unit_level}
             />
           </div>
         )}
@@ -70,6 +71,7 @@ const Level = ({ size, level, progressItems, isLoading, isBlockProgress = false,
                       title={isBlockProgress ? lesson.standard_code : lesson.title}
                       titleSize="base"
                       containerSize={size} 
+                      level={lesson.unit_level}
                                          />
                   ))
                 ) : (
@@ -90,6 +92,7 @@ const Level = ({ size, level, progressItems, isLoading, isBlockProgress = false,
                         title={isBlockProgress ? lesson.standard_code : lesson.title}
                         titleSize="base"
                         containerSize={size}
+                      level={lesson.unit_level}
                       />
                     ))}
                   </div>

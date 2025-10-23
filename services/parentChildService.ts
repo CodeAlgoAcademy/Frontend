@@ -123,6 +123,18 @@ const updateChildPassword = async (child_id: number, password: string) => {
    return response?.data;
 };
 
+const deleteChild = async (child_id: string | number) => {
+  const response = await http.delete(
+    `/parent/child/${child_id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${getAccessToken()}`,
+      },
+    }
+  );
+  return response.data;
+};
+
 const parentService = {
    addChild,
    addChildFriends,
@@ -137,6 +149,7 @@ const parentService = {
    updateChildPassword,
    getChildBlockGameProgress,
    getChildBlockGameSkill,
+   deleteChild,
 };
 
 export default parentService;

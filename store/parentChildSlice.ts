@@ -263,6 +263,23 @@ export const updateChildPassword: any = createAsyncThunk(
       }
    }
 );
+export const deleteChild = createAsyncThunk(
+   "parent/child/delete",
+   async ({ child_id }: {child_id: string | number }, thunkAPI) => {
+      const dispatch = thunkAPI.dispatch;
+      dispatch(openPreloader({ loadingText: "Deleting student..." }));
+      try {
+         const response = await parentService.deleteChild(child_id);
+         dispatch(closePreloader());
+         return { child_id };
+      } catch (error: any) {
+         const errorMessage = errorResolver(error);
+         dispatch(closePreloader());
+         return thunkAPI.rejectWithValue(errorMessage);
+      }
+   }
+);
+
 
 export const parentSlice = createSlice({
    name: "parentChild",
@@ -345,8 +362,19 @@ export const parentSlice = createSlice({
       }
     })
 
+builder.addCase(deleteChild.fulfilled, (state, action) => {
+          const { child_id } = action.payload;
+          state.children = state.children.filter(child => child.id !== child_id);
+          if (state.currentChild.id === child_id) {
+             if (state.children.length > 0) {
+                state.currentChild = state.children[0];
+             } else {
+                state.currentChild = initialState.currentChild;
+             }
+          }
+       });
    },
-});
+})
 
 export const { resetChild, updateChild, updateScreentime, resetScreenTime, changeCurrentChild } = parentSlice.actions;
 export default parentSlice.reducer;
