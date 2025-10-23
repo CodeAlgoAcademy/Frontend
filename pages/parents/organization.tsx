@@ -1,9 +1,16 @@
 import ParentLayout from "@/components/layouts/ParentLayout";
 import MyOrganizations from "@/components/parents/organization/MyOrganizations";
 import OrganizationRequest from "@/components/parents/organization/OrganizationRequest";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getOrgIBelongTo } from "services/organizersService";
 
 const Organization = () => {
+      const dispatch = useDispatch();
+   
+      useEffect(() => {
+         dispatch(getOrgIBelongTo());
+      }, [dispatch]);
    return (
       <ParentLayout title="Organizations" showChildrenList>
          <div className="relative  mb-[-120px] scale-90 overflow-x-auto sm:bottom-0 sm:mb-0 sm:scale-100">

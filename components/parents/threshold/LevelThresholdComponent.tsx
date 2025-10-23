@@ -13,7 +13,6 @@ const LevelThresholdComponent = () => {
 
   const thresholds: LevelThresholdInputProps[] = useMemo(() => {
     if (!ALL_GRADES || !Array.isArray(ALL_GRADES)) {
-      console.error("ALL_GRADES is not defined or not an array")
       return []
     }
     return ALL_GRADES.map((grade, index) => {
@@ -29,7 +28,6 @@ const LevelThresholdComponent = () => {
 
   const updateLevel = async (id: number, level: number, grade: string) => {
     if (!currentChild || isNaN(level) || level < 1) {
-      console.warn("Invalid update parameters:", { currentChild, level, grade })
       return
     }
     try {
