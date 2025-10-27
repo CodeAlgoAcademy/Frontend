@@ -4,7 +4,7 @@ import { IAllClasses, IClass } from "../types/interfaces";
 
 const initialState: IAllClasses = {
    classes: [],
-   loading:false,
+   loading: false,
 };
 
 const allClassesSlice = createSlice({
@@ -12,16 +12,29 @@ const allClassesSlice = createSlice({
    initialState,
    reducers: {},
    extraReducers: (builder) => {
-      builder.addCase(getAllClasses?.fulfilled, (state: IAllClasses, action: PayloadAction<IClass[]>) => {
-         state.classes = action.payload;
-      })
-      .addCase(deleteClass.fulfilled, (state, action) => {
-        state.loading = false;
-        // Remove the deleted class from state
-        state.classes = state.classes.filter(
-          (cls: any) => cls.id !== action.meta.arg
-        );
-      })
+      builder
+         .addCase(getAllClasses.pending, (state: IAllClasses) => {
+            state.loading = true;
+         })
+         .addCase(getAllClasses.fulfilled, (state: IAllClasses, action: PayloadAction<IClass[]>) => {
+            state.loading = false;
+            state.classes = action.payload;
+         })
+         .addCase(getAllClasses.rejected, (state: IAllClasses) => {
+            state.loading = false;
+         })
+         .addCase(deleteClass.pending, (state) => {
+            state.loading = true;
+         })
+         .addCase(deleteClass.fulfilled, (state, action) => {
+            state.loading = false;
+            state.classes = state.classes.filter(
+               (cls: any) => cls.id !== action.meta.arg
+            );
+         })
+         .addCase(deleteClass.rejected, (state) => {
+            state.loading = false;
+         });
    },
 });
 
