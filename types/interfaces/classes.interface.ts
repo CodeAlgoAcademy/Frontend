@@ -3,7 +3,7 @@ import { ISingleStudent } from "./student.interface";
 
 export interface IAllClasses {
    classes: IClass[];
-   loading?:boolean
+   loading?: boolean;
 }
 
 export interface IAddClass {
@@ -14,28 +14,38 @@ export interface IAddClass {
 
 export interface IClass {
    teacher: {
+      firstName: string;
+      lastName: string;
+      username: string;
       email: string;
-      firstname: string;
-      lastname: string;
       country: string;
-      schoolName: string;
+      schoolCountry: string | null;
+      schoolName: string | null;
       id: string | number;
    };
    className: string;
-   roomNumber: number | string;
+   roomNumber: string;
    subject: string;
-   coTeachers: string;
+   coTeacher: string | null;
    grade: string;
    color: string;
-   totalStudent: number | string;
+   totalStudent: number;
    id: number | string;
+   organization: {
+      id: string | number;
+      name: string;
+      description: string;
+      invite_code: string;
+      status: string;
+      created_by: string | null;
+   } | null;
 }
 
 export interface ISingleClass {
    className: string;
-   roomNumber: number | string;
+   roomNumber: string;
    subject: string;
-   coTeachers: string;
+   coTeachers: string; 
    grade: string;
    color: string;
    organization: string | number;
@@ -45,5 +55,10 @@ export interface CurrentClassState {
    className: string;
    color: string;
    id: string | number;
-    timeLimits?: screentimeTypes[];
+   timeLimits?: screentimeTypes[];
+   isOrganizationClass?: boolean;
+   organization?: {
+      id: string | number;
+      name: string;
+   } | null;
 }

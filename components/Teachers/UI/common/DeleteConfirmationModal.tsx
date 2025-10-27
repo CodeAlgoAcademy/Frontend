@@ -1,4 +1,3 @@
-// components/Common/DeleteConfirmationModal.tsx
 import React from 'react';
 
 interface DeleteConfirmationModalProps {
@@ -8,6 +7,7 @@ interface DeleteConfirmationModalProps {
   title: string;
   itemName: string;
   isLoading?: boolean;
+  warningMessage?: string;
 }
 
 const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
@@ -16,7 +16,8 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
   onConfirm,
   title,
   itemName,
-  isLoading = false
+  isLoading = false,
+  warningMessage
 }) => {
   if (!isOpen) return null;
 
@@ -30,6 +31,11 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
             Are you sure you want to delete <span className="font-semibold">"{itemName}"</span>? 
             This action cannot be undone.
           </p>
+          {warningMessage && (
+            <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+              <p className="text-yellow-800 text-sm">{warningMessage}</p>
+            </div>
+          )}
         </div>
 
         <div className="mt-6 flex justify-end gap-3">
