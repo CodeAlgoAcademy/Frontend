@@ -10,11 +10,23 @@ import AddStudentModal from "../students/AddStudentModal";
 import { getAllClasses, deleteClass } from "services/classesService";
 import DeleteConfirmationModal from "../UI/common/DeleteConfirmationModal";
 
-const SingleClass: FC<IClass> = ({ id, className, grade, subject, color, totalStudent }) => {
+const SingleClass: FC<IClass> = ({ 
+  id, 
+  className, 
+  grade, 
+  subject, 
+  color, 
+  totalStudent,
+  organization,
+  roomNumber,
+  teacher
+}) => {
    const dispatch = useDispatch();
    const [isOpen, setIsOpen] = useState<boolean>(false);
    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
    const [isDeleting, setIsDeleting] = useState<boolean>(false);
+
+   const isOrganizationClass = organization !== null;
 
    const handleDeleteClick = () => {
       setIsDeleteModalOpen(true);
@@ -39,14 +51,27 @@ const SingleClass: FC<IClass> = ({ id, className, grade, subject, color, totalSt
 
    return (
       <article
-         className="col-span-1 flex min-h-[200px] w-full overflow-hidden rounded-md bg-white shadow-md hover:shadow-lg"
+         className="col-span-1 flex min-h-[200px] w-full overflow-hidden rounded-md bg-white shadow-md hover:shadow-lg relative"
          data-testid="single-class"
       >
          <aside className={`h-full flex-[0.15]`} style={{ backgroundColor: color }}></aside>
          <div className="h-full flex-[0.85] px-4 pb-4">
             <header className="border-b-2 py-4">
                <div className="flex items-center justify-between">
-                  <h1 className="text-[25px] font-bold text-black md:text-[30px]">{className}</h1>
+                  <div>
+                     <h1 className="text-[25px] font-bold text-black md:text-[30px]">{className}</h1>
+                     <div className="flex    ">
+                     {isOrganizationClass ? (
+                        <p className="text-sm text-gray-600 mt-1 ">
+                          Org Name: {organization?.name} • Room {roomNumber}
+                        </p>
+                     ) : (
+                        <p className="text-sm text-gray-600 mt-1">
+                           Private Class • Room {roomNumber}
+                        </p>
+                     )}
+                     </div>
+                  </div>
                   <button
                      onClick={handleDeleteClick}
                      className="rounded-md p-2 text-red-600 hover:bg-red-50"
@@ -56,7 +81,7 @@ const SingleClass: FC<IClass> = ({ id, className, grade, subject, color, totalSt
                   </button>
                </div>
             </header>
-            <main className="mt-4 flex flex-col justify-between">
+            <main className="mt-4 flex flex-col justify-between space-y-2">
                <h2 className="font-bold">Grade {grade}</h2>
                <h2 className="font-bold">{subject}</h2>
                <h2 className="font-bold">{totalStudent} Student(s)</h2>
@@ -66,7 +91,13 @@ const SingleClass: FC<IClass> = ({ id, className, grade, subject, color, totalSt
                   className="flex cursor-pointer items-center gap-x-2 px-2 py-2 text-[16px] font-semibold hover:bg-gray-100"
                   onClick={() => {
                      setIsOpen(true);
-                     dispatch(updateCurrentClass({ className, color, id }));
+                     dispatch(updateCurrentClass({ 
+                        className, 
+                        color, 
+                        id,
+                        isOrganizationClass,
+                        organization: organization 
+                     }));
                   }}
                >
                   Add Students
@@ -78,7 +109,13 @@ const SingleClass: FC<IClass> = ({ id, className, grade, subject, color, totalSt
                   <div
                      className="flex w-fit cursor-pointer items-center justify-end gap-x-2"
                      onClick={() => {
-                        dispatch(updateCurrentClass({ className, color, id }));
+                        dispatch(updateCurrentClass({ 
+                           className, 
+                           color, 
+                           id,
+                           isOrganizationClass,
+                           organization: organization 
+                        }));
                      }}
                      data-testid="dashboard-button"
                   >
@@ -99,6 +136,11 @@ const SingleClass: FC<IClass> = ({ id, className, grade, subject, color, totalSt
             title="Delete Class"
             itemName={className}
             isLoading={isDeleting}
+            warningMessage={
+               isOrganizationClass 
+                  ? "This is an organization class. You may need special permissions to delete it."
+                  : undefined
+            }
          />
       </article>
    );
