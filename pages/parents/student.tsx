@@ -21,7 +21,7 @@ const Student = () => {
    }
 
    return (
-      <ParentLayout title="Student">
+      <ParentLayout title="Student" showChildrenList>
          <div className="z-[5] mb-8 flex w-full items-center justify-end text-[1.2rem] text-mainColor">
             <div
                className="z-[5] max-w-fit cursor-pointer p-2"

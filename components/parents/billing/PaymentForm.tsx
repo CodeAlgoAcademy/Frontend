@@ -13,7 +13,7 @@ const PaymentForm = () => {
    const stripe = useStripe();
    const elements = useElements();
    const [isLoading, setIsLoading] = useState(false);
-
+   const [isPaymentElementReady, setIsPaymentElementReady] = useState(false);
 
    const handleSubmit = async (e: FormEvent) => {
       e.preventDefault();
@@ -27,20 +27,24 @@ const PaymentForm = () => {
       const { error } = await stripe.confirmPayment({
          elements,
          confirmParams: {
-      return_url: `${window.location.origin}/payment/confirm`,
+            return_url: `${window.location.origin}/payment/confirm`,
          },
       });
-      if (error.type === "card_error" || error.type === "validation_error") {
+
+      if (error?.type === "card_error" || error?.type === "validation_error") {
          toast.error(error.message);
-      } else {
-         toast.error("An unexpected error occured");
+      } else if (error) {
+         toast.error("An unexpected error occurred");
       }
 
       setIsLoading(false);
    };
 
    return (
-      <form onSubmit={handleSubmit} className="mt-8 flex w-full items-start gap-8 max-lg:flex-col">
+      <form
+         onSubmit={handleSubmit}
+         className="mt-8 flex w-full items-start gap-8 max-lg:flex-col"
+      >
          <div className="w-full flex-[.7]">
             <PaymentElement
                id="payment-element"
@@ -50,6 +54,10 @@ const PaymentForm = () => {
                      name: "CodeAlgo LLC",
                   },
                }}
+               onReady={() => setIsPaymentElementReady(false)}
+               onChange={(event) => {
+                  setIsPaymentElementReady(event.complete);
+               }}
             />
          </div>
 
@@ -58,14 +66,16 @@ const PaymentForm = () => {
 
             <div className="mt-8 flex justify-end gap-3">
                <button
-                  className="w-[100px] rounded-[4px] border border-black bg-white   px-4 py-2 text-xs text-black"
+                  className="w-[100px] rounded-[4px] border border-black bg-white px-4 py-2 text-xs text-black"
                   onClick={() => push("/parents/billing")}
+                  type="button"
+                  disabled={isLoading}
                >
                   Cancel
                </button>
                <button
-                  disabled={isLoading}
-                  className="flex w-[100px] items-center justify-center rounded-[4px]  bg-mainColor px-4 py-2 text-xs text-white disabled:bg-gray-100"
+                  disabled={isLoading || !isPaymentElementReady}
+                  className="flex w-[100px] items-center justify-center rounded-[4px] bg-mainColor px-4 py-2 text-xs text-white transition-colors hover:bg-mainColor/90 disabled:cursor-not-allowed disabled:bg-gray-100"
                   type="submit"
                >
                   {isLoading ? <Loader color="gray" /> : "Proceed"}

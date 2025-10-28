@@ -7,9 +7,11 @@ import { closeAddClassModal, openAddClassModal } from "store/modalSlice";
 import Classes from "@/components/Teachers/addClass/classes";
 import { getAllClasses } from "services/classesService";
 import { RootState } from "store/store";
+import EmptyState from "@/components/Teachers/addClass/state/emptyState";
 
 const AddClass = () => {
    const dispatch = useDispatch();
+   const { classes, loading } = useSelector((state: RootState) => state.allClasses);
 
    const getClass = async () => {
       await dispatch(getAllClasses());
@@ -20,13 +22,14 @@ const AddClass = () => {
       dispatch(closeAddClassModal());
    }, []);
 
+   const hasNoClasses = !loading && classes?.length === 0;
+
    return (
       <main>
          <Head>
             <title>CodeAlgo Academy | Add Class</title>
          </Head>
 
-         {/* navbar here */}
          <section className="min-h-screen w-full bg-[#ECEDF3]">
             <div className="mx-auto w-full max-w-[1250px] px-[16px] py-[30px]">
                <div className="flex w-full flex-wrap items-center justify-between">
@@ -46,12 +49,22 @@ const AddClass = () => {
                </div>
 
                <section className="mt-12">
-                  <Classes />
+                  {loading ? (
+                     <div className="flex justify-center items-center py-16">
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-mainColor"></div>
+                     </div>
+                  ) : hasNoClasses ? (
+                    <>
+                    <EmptyState onClick={() => dispatch(openAddClassModal())} title={"No Classes Created Yet"}  
+                    description={"Start by creating your first class to organize students and track their progress."}/>
+                    </>
+                  ) : (
+                     <Classes />
+                  )}
                </section>
             </div>
          </section>
 
-         {/* it has a position of fixed */}
          <Modal />
       </main>
    );

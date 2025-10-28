@@ -14,7 +14,7 @@ export interface BaseStudent {
    dob: string;
    timeLimits: screentimeTypes[];
    friend?: string;
-   id: string | number;
+   id?: string | number;
    friends?: {
       id: number;
       friend: string;
@@ -24,7 +24,7 @@ export interface BaseStudent {
   classId: number | string;
 }
 
-export interface ITeacherStudentsState extends BaseStudent{
+export interface ITeacherStudentsState{
   students: BaseStudent[];
   currentStudent: BaseStudent;
   isLoading: boolean;

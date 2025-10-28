@@ -64,14 +64,25 @@ const getStudentBlockGameStandard = async (class_id: string | number, student_id
    return response.data;
 };
 
+  const deleteStudent = async (classId: string | number, studentId: string | number) => {
+  const response = await http.delete(
+    `/academics/class/${classId}/student/${studentId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${getAccessToken()}`,
+      },
+    }
+  );
+  return response.data;
+};
+
 
 const teachersStudentServices={
     createStudentLevelThresHold,
     editStudentScreentimeteachers,
     getStudentBlockGameProgress,
     getStudentBlockGameSkill,
-    getStudentBlockGameStandard
-
-
+    getStudentBlockGameStandard,
+    deleteStudent
 }
 export default teachersStudentServices;

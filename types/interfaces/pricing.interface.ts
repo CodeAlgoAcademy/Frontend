@@ -1,8 +1,10 @@
 export interface PricingSlice {
    plans: IPlan[];
+     payments: Payment[];
    handlers: {
       loading: boolean;
       initiate_payment_loading: boolean;
+       payments_loading: boolean,
       verify_payment_loading: boolean;
       active_subscription_loading: boolean;
       billing_history_loading: boolean;
@@ -44,13 +46,40 @@ export interface InitiatePaymentRes {
 
 export type PaymentStatus = "succeeded" | "failed" | "pending";
 
-export interface IBilling {
-   activated_date: Date;
-   amount: number;
-   currency: "usd";
-   expiration_date: Date;
-   is_activated: boolean;
-   is_active: boolean;
-   plan_duration: number;
-   plan_name: string;
+export interface IChild {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  username: string;
+  dob: string;
+  schoolCountry: string | null;
+  schoolName: string | null;
+  codingExperience: string;
 }
+
+export interface IBilling {
+  id: number;
+  plan_name: string;
+  plan_duration: number;
+  is_activated: boolean;
+  activated_date: string | number | Date; 
+  expiration_date: string | number | Date;
+  is_active: boolean;
+  payment_status: "Paid" | "Pending" | "Failed"; 
+  amount: number;
+  currency: "usd";
+  payment_date: string | null;
+  charged_amount: number;
+  children: IChild[];
+}
+export interface Payment {
+  payment_id: string;
+  status: string;
+  currency: string; 
+  client_secret: string;
+  amount_in_cent: number; 
+  charged_amount: number; 
+}
+
+export type PaymentsResponse = Payment[];
