@@ -25,7 +25,7 @@
     ]);
 
  const updateTime = async (
-  id: string | number,
+  id: string | number| undefined,
   day: days,
   hour: number | "No Limit"
 ) => {

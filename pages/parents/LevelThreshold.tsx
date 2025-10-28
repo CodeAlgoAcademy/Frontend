@@ -15,7 +15,7 @@ export default function LevelThreshold() {
   }
   
   return (
-    <ParentLayout title="Levels Threshold">
+    <ParentLayout title="Levels Threshold" showChildrenList>
       <LevelsThresholdChart size="base" />
       <LevelThresholdComponent />
     </ParentLayout>

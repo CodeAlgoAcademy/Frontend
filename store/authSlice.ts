@@ -11,6 +11,7 @@ import {
    updateEmail,
    signUpWithGoogle,
    updateAccountType,
+   confirmAddRole,
 } from "services/authService";
 import { countryList } from "@/components/signup/countries";
 import { addUserToLocalStorage, setTimeStamp, updateUserInLocalStorage } from "utils/getTokens";
@@ -139,6 +140,13 @@ export const userSlice = createSlice({
       });
 
       builder.addCase(signUpWithGoogle.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
+         addUserToLocalStorage(action.payload);
+         return {
+            ...state,
+            ...action.payload,
+         };
+      });
+      builder.addCase(confirmAddRole.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
          addUserToLocalStorage(action.payload);
          return {
             ...state,

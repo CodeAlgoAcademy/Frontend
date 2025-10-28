@@ -15,13 +15,12 @@ const StudentLevelChart = ({ showEditLink = true }: StudentBarChartProps) => {
   const { chartData, chartLabels, maxLevel } = useMemo(() => {
     const thresholds = currentStudent?.levelThresholds || [];
     const defaultLevels = [
-      "Kindergarten",
-      "Grade 1",
-      "Grade 2",
-      "Grade 3",
-      "Grade 4",
-      "Grade 5",
-      "Grade 6",
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
     ];
 
     const thresholdMap = thresholds.reduce<Record<string, number>>(

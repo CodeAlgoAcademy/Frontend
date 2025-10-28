@@ -31,8 +31,9 @@ export default function OrganizerSidebar({ onClose, isOpen }: Props) {
             <NavButton title="Add Organization" image={<GoOrganization size={22} />} url="/organizers/create-organization" />
 
             <NavButton title="Roles" image={<BiUserPin size={22} />} url="/organizers/roles" />
+            <NavButton title="Student" image={<BiUserPin size={22} />} url="/organizers/student" />
 
-            <NavButton title="Licenses" image={<BiUserPin size={22} />} url="/organizers/licenses" />
+            {/* <NavButton title="Licenses" image={<BiUserPin size={22} />} url="/organizers/licenses" /> */}
 
             <NavButton title="Users" image={<HiUsers size={22} />} url="/organizers/users" />
 

@@ -4,7 +4,7 @@ import { RootState } from "store/store";
 import BillingPlan from "./BillingPlan";
 import { getPricingPlans } from "services/pricingService";
 
-const BillingsPlansList = () => {
+const BillingsPlansList = ({ onSelect }: { onSelect?: (plan: any) => void }) => {
    const dispatch = useDispatch();
    const { plans, handlers } = useSelector((state: RootState) => state.pricing);
 
@@ -19,7 +19,7 @@ const BillingsPlansList = () => {
    return (
       <div className="flex flex-wrap gap-6">
          {plans.map((plan, index) => (
-            <BillingPlan plan={plan} key={index} />
+            <BillingPlan plan={plan} key={index} onSelect={onSelect} />
          ))}
       </div>
    );

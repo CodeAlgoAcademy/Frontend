@@ -8,6 +8,9 @@ import { closeAddClassModal, closeColorModal } from "../../../store/modalSlice";
 import CreateClass from "./createClass";
 import AddStudents from "./addStudents";
 import { addFile, clearFields } from "store/addClassSlice";
+
+
+
 const Modal = () => {
    const { addClassModalOpen, showAddStudents } = useSelector((state: RootState) => state.modal);
    const { color } = useSelector((state: RootState) => state.addClass.class);
@@ -19,7 +22,6 @@ const Modal = () => {
 
    return (
       <section className={`${styles.modalOverlay} bg-[rgba(0,0,0,.25)] ${!addClassModalOpen && "hidden"}`} data-testid="addClassModal">
-         {/* modal itself */}
          <main className="relative mx-auto flex h-fit max-h-[95vh] w-[90vw] max-w-[900px] overflow-hidden overflow-y-scroll rounded-md bg-white shadow-lg">
             <span
                onClick={() => {
@@ -34,8 +36,6 @@ const Modal = () => {
             <aside className={`flex-[0.075]  rounded-tl-md rounded-bl-md`} style={{ backgroundColor: color }}></aside>
 
             {!showAddStudents ? <CreateClass /> : <AddStudents />}
-
-            {/* position fixed */}
             <Grades addStudents={true} />
          </main>
       </section>

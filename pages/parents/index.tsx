@@ -65,7 +65,7 @@ const Dashboard = () => {
    });
 
    return (
-      <ParentLayout title="Dashboard">
+      <ParentLayout title="Dashboard" showChildrenList>
          <div className="relative bottom-14 mb-[-120px] scale-90 overflow-x-auto sm:bottom-0 sm:mb-0 sm:scale-100">
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4">
                <Level
