@@ -33,6 +33,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
       username: "",
       dob: "",
       id:"",
+      // password:"",
    });
    const [file, setFile] = useState<any>(null);
    const [bulkImportModalOpen, setBulkImportModalOpen] = useState<boolean>(false);
@@ -77,6 +78,12 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
          placeholder: "Enter Username",
          value: username,
       },
+      // {
+      //    type: "password",
+      //    name: "password",
+      //    placeholder: "Enter password",
+      //    value: password,
+      // },
    ];
 
    const onSubmit = async (e: any) => {
