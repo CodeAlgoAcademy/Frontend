@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { deleteClass, getAllClasses } from "services/classesService";
+import { deleteClass, getAllClasses, updateClass } from "services/classesService";
 import { IAllClasses, IClass } from "../types/interfaces";
 
 const initialState: IAllClasses = {
@@ -24,7 +24,7 @@ const allClassesSlice = createSlice({
             state.loading = false;
          })
          .addCase(deleteClass.pending, (state) => {
-            state.loading = true;
+            state.loading = false;
          })
          .addCase(deleteClass.fulfilled, (state, action) => {
             state.loading = false;
@@ -33,6 +33,20 @@ const allClassesSlice = createSlice({
             );
          })
          .addCase(deleteClass.rejected, (state) => {
+            state.loading = false;
+         })
+         .addCase(updateClass.pending, (state) => {
+            state.loading = true;
+         })
+         .addCase(updateClass.fulfilled, (state, action) => {
+            state.loading = false;
+            const updatedClass = action.payload;
+            const index = state.classes.findIndex((cls: IClass) => cls.id === updatedClass.id);
+            if (index !== -1) {
+               state.classes[index] = updatedClass;
+            }
+         })
+         .addCase(updateClass.rejected, (state) => {
             state.loading = false;
          });
    },

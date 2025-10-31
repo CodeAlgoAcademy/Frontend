@@ -20,6 +20,8 @@ export interface IModal {
     isOpen: boolean;
     message?: string;
   };
+  isEditMode: boolean; 
+  editingClassId: string | null | number;
 }
 
 export interface IFetch {
