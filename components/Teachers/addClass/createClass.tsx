@@ -8,13 +8,14 @@ import {
    openGradesModal,
    closeAddClassModal,
    toggleSelectOrg,
+   closeEditClassModal,
 } from "../../../store/modalSlice";
 import { colors } from "./colors";
 import { RootState } from "../../../store/store";
 import { IInputFields } from "../../../types/interfaces";
 import { updateClassDetails, clearFields } from "../../../store/addClassSlice";
 import styles from "../../../styles/styles";
-import { addClass, getAllClasses } from "services/classesService";
+import { addClass, getAllClasses, updateClass } from "services/classesService";
 import SelectOrganization from "./organizations";
 import { getOrgIBelongTo } from "services/organizersService";
 import { openErrorModal } from "store/fetchSlice";
@@ -39,7 +40,7 @@ const inputFields: IInputFields[] = [
 
 const CreateClass = () => {
    const dispatch = useDispatch();
-   const { colorsModalOpen, selectOrganizationOpen } = useSelector((state: RootState) => state.modal);
+   const { colorsModalOpen, selectOrganizationOpen, isEditMode, editingClassId } = useSelector((state: RootState) => state.modal);
    const classInfo = useSelector((state: RootState) => state.addClass.class);
 
    const handleSubmit = async (event: ChangeEvent<HTMLFormElement>) => {
@@ -47,15 +48,31 @@ const CreateClass = () => {
       if (!classInfo?.grade) {
          return dispatch(openErrorModal({ errorText: ["Select Grade"] }));
       }
-      const data = await dispatch(addClass());
-      if (!data?.error?.message) {
-         dispatch(clearFields());
-         dispatch(closeAddClassModal());
-         dispatch(getAllClasses());
+      
+      if (isEditMode && editingClassId) {
+         try {
+            const result = await dispatch(updateClass({ 
+               classId: editingClassId, 
+               classData: classInfo 
+            }));
+            
+            if (result.payload && !result.error) {
+               dispatch(clearFields());
+               dispatch(closeEditClassModal());
+               
+            }
+         } catch (error) {
+            console.error("Failed to update class:", error);
+         }
+      } else {
+         const data = await dispatch(addClass());
+         if (!data?.error?.message) {
+            dispatch(clearFields());
+            dispatch(closeAddClassModal());
+            dispatch(getAllClasses());
+         }
       }
    };
-
-   // fetch all organizations
    useEffect(() => {
       dispatch(getOrgIBelongTo());
    }, []);
