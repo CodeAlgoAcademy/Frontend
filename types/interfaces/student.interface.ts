@@ -34,7 +34,8 @@ export interface ISingleStudent {
   levelThresholds?: LevelThresholdInputProps[];
   progress?: IStudentsTopics;
   level?: number;
-  class_id?:string
+  class_id?:string;
+  password?:string
 }
 
 export interface IStudentWithScreentime extends ISingleStudent {

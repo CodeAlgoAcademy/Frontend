@@ -3,6 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import http from "axios.config";
 import { closePreloader, openErrorModal, openPreloader } from "store/fetchSlice";
 import { RootState } from "store/store";
+import { ISingleClass } from "types/interfaces/classes.interface";
 import { errorResolver } from "utils/errorResolver";
 import { getAccessToken } from "utils/getTokens";
 
@@ -42,6 +43,41 @@ export const deleteClass: any = createAsyncThunk(
       
     } catch (error: any) {
       dispatch(closePreloader());
+    }
+  }
+);
+
+export const updateClass: any = createAsyncThunk(
+  "allClassesSlice/updateClass",
+  async ({ classId, classData }: { classId: string | number; classData: ISingleClass }, thunkApi) => {
+    const dispatch = thunkApi.dispatch as any;
+    try {
+      dispatch(openPreloader({ loadingText: "Updating Class" }));
+      const payload: any = {
+        className: classData.className,
+        grade: classData.grade,
+        subject: classData.subject,
+        roomNumber: classData.roomNumber,
+        color: classData.color,
+      };
+      if (classData.organization) {
+        payload.organization = classData.organization;
+      }
+      
+      const response = await http.put(`/academics/class/${classId}`, payload, {
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      });
+      
+      dispatch(closePreloader());
+      return response.data;
+      
+    } catch (error: any) {
+      dispatch(closePreloader());
+      const errorMessage = error.response?.data.message || "Failed to update class";
+      dispatch(openErrorModal({ errorText: [errorMessage] }));
+      return thunkApi.rejectWithValue(error.response?.data || error.message);
     }
   }
 );
