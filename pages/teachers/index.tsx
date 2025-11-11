@@ -20,7 +20,6 @@ interface TeachersTabs {
 }
 
 const Dashboard = () => {
-   // const dispatch = useDispatch();
    const dispatch = useAppDispatch();
    const router = useRouter();
    const { currentStudent } = useSelector((state: RootState) => state.teacherStudentSlice);
@@ -59,11 +58,10 @@ const Dashboard = () => {
          dispatch(fetchStudentBlockGameProgress({ classId, studentId }))
             .unwrap()
             .then((res: any) => {
-               console.log("Fetched Blockgame Progress Data:", res);
                setProgressData(res);
+               console.log(progressData, "student progress")
             })
             .catch((err: any) => {
-               console.error("Error fetching blockgame progress:", err);
             })
             .finally(() => {
                setIsLoading(false);
@@ -72,6 +70,7 @@ const Dashboard = () => {
    }, [classId, currentStudent?.student_id, dispatch]);
 
    const allProgressItems = Array.isArray(progressData) ? progressData : [];
+   console.log(allProgressItems, "allstudebt")
    const inProgressItems = allProgressItems.filter((item) => item.progress < 1.0);
    const completedItems = allProgressItems.filter((item) => item.progress === 1.0);
 
@@ -135,7 +134,7 @@ const Dashboard = () => {
                   currentProgress={!isBlockProgress && currentStudent?.progress?.current}
                /> */}
                <TeacherStudentCompletedStandard completedItems={filteredCompletedItems} isLoading={isLoading} />
-               <TeacherStudentSkills size="base" />
+               <TeacherStudentSkills size="base" allProgressItems={allProgressItems} />
                <div className="dashboard-widget">
                   <StudentBarChart showEditLink={false} />
                </div>
