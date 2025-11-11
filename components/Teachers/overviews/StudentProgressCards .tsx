@@ -59,7 +59,7 @@ export const StudentProgressCards = ({ students }: StudentProgressCardsProps) =>
                      <h4 className="mb-1 text-sm font-medium text-gray-700">Current Level</h4>
                   </div>
                   <div className="flex items-center justify-between ">
-                     <div className="text-sm text-gray-600">{student?.current_level?.level || "No active level"}</div>
+                     <div className="text-sm text-gray-600">{student?.current_level?.unit_level || "No active level"}</div>
                      <div className="mt-1 text-xs text-gray-500">
                         {student?.current_level?.status ? (
                            <>

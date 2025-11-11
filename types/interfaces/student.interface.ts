@@ -68,7 +68,7 @@ export interface TeacherStudentsState {
 
 
 interface CurrentProgress {
-  level:string;
+  unit_level:string;
   code: string;
   name: string;
   status: "completed" | "in_progress" | "not_started";
