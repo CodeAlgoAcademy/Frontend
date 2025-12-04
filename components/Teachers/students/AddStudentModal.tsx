@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { getAllClasses } from "services/classesService";
 import { openErrorModal } from "store/fetchSlice";
 import BulkImportModal from "@/components/Teachers/addClass/bulkImportModal";
-import { openSuccessModal, openGeneratingModal } from "store/modalSlice";
+import { openSuccessModal, openGeneratingModal, closeGeneratingModal } from "store/modalSlice";
 import { RootState } from "store/store";
 import GeneratingModal from "./generatingModal";
 
@@ -33,11 +33,11 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
       username: "",
       dob: "",
       id:"",
-      // password:"",
+      password:"",
    });
    const [file, setFile] = useState<any>(null);
    const [bulkImportModalOpen, setBulkImportModalOpen] = useState<boolean>(false);
-   const { email, firstName, lastName, username, dob } = formData;
+   const { email, firstName, lastName, username, dob, password } = formData;
    const { generatingModal: generatingPDFModal } = useSelector((state: RootState) => state.modal);
 
    const onChange = (e: any) => {
@@ -73,17 +73,17 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
          value: dob,
       },
       {
+         type: "password",
+         name: "password",
+         placeholder: "Enter password",
+         value: password,
+      },
+      {
          type: "text",
          name: "username",
          placeholder: "Enter Username",
          value: username,
       },
-      // {
-      //    type: "password",
-      //    name: "password",
-      //    placeholder: "Enter password",
-      //    value: password,
-      // },
    ];
 
    const onSubmit = async (e: any) => {
@@ -96,6 +96,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
             email,
             username,
             dob,
+            password,
             timeLimits: defaultTimeLimits,
             id: ""
          };
@@ -129,25 +130,48 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
    };
 
    const handleFileSubmit = async () => {
-      if (!file) return;
-      
-      const formData = new FormData();
-      formData.append("file", file, file.name);
-      
-      // Show generating modal for bulk import
-      dispatch(openGeneratingModal("Importing Students..."));
-      
-      try {
-         await dispatch(studentsBulkImport(formData)).unwrap();
-         setIsOpen(false);
-         dispatch(getStudents());
-         if (router.pathname === "/addClass") {
+    if (!file) return;
+
+    const formDataObj = new FormData();
+    formDataObj.append("file", file, file.name);
+    dispatch(openGeneratingModal("Importing Students..."));
+
+    try {
+        await dispatch(studentsBulkImport(formDataObj)).unwrap();
+        setIsOpen(false);
+        dispatch(getStudents());
+        if (router.pathname === "/addClass") {
             dispatch(getAllClasses());
-         }
-      } catch (error) {
-         console.error("Bulk import failed:", error);
-      }
-   };
+        }
+    } catch (error) {
+        console.error("Bulk import failed:", error);
+
+        dispatch(closeGeneratingModal());
+    } finally {
+        dispatch(closeGeneratingModal());
+    }
+};
+
+
+   // const handleFileSubmit = async () => {
+   //    if (!file) return;
+      
+   //    const formData = new FormData();
+   //    formData.append("file", file, file.name);
+      
+   //    dispatch(openGeneratingModal("Importing Students..."));
+      
+   //    try {
+   //       await dispatch(studentsBulkImport(formData)).unwrap();
+   //       setIsOpen(false);
+   //       dispatch(getStudents());
+   //       if (router.pathname === "/addClass") {
+   //          dispatch(getAllClasses());
+   //       }
+   //    } catch (error) {
+   //       console.error("Bulk import failed:", error);
+   //    }
+   // };
 
    return (
       <>
@@ -177,7 +201,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
                      >
                         <FaChevronLeft />
                      </span>
-                     <h1 className="text-[20px] font-bold md:text-[30px]">Add new student(s)</h1>
+                     <h1 className="text-[20px] font-bold md:text-[30px]">Add new student(sss)</h1>
                   </header>
                   <section className="grid gap-[1rem] px-8 md:grid-cols-2">
                      {inputFields?.map((inputField: IInputFields, index: number) => {
