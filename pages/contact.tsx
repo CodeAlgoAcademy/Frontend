@@ -5,6 +5,7 @@ import Navbar from "@/components/navbar/home/Navbar";
 import { CustomButton } from "@/components/UI/Button";
 import http from "axios.config";
 import Image from "next/image";
+import TawkToWidget from "public/TawkToWidget";
 import { ChangeEvent, useState } from "react";
 import { BiEnvelopeOpen, BiMapPin } from "react-icons/bi";
 import { TbThumbUp } from "react-icons/tb";
@@ -172,6 +173,8 @@ const Contact = () => {
                   </div>
                </div>
             </div>
+
+             <TawkToWidget />
 
             <Footer />
          </div>
