@@ -201,7 +201,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
                      >
                         <FaChevronLeft />
                      </span>
-                     <h1 className="text-[20px] font-bold md:text-[30px]">Add new student(sss)</h1>
+                     <h1 className="text-[20px] font-bold md:text-[30px]">Add new student(s)</h1>
                   </header>
                   <section className="grid gap-[1rem] px-8 md:grid-cols-2">
                      {inputFields?.map((inputField: IInputFields, index: number) => {
