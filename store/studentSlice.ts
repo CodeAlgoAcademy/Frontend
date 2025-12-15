@@ -209,7 +209,7 @@ export const studentsBulkImport: any = createAsyncThunk("newStudents/bulkImport"
    const state = <RootState>thunkApi.getState();
    const dispatch = thunkApi.dispatch;
    const { id } = state.currentClass;
-   dispatch(openPreloader({ loadingText: "Adding Student" }));
+   // dispatch(openPreloader({ loadingText: "Adding Student" }));
    try {
       const { data } = await http.post(`/academics/class/${id}/student/file`, formData, {
          headers: {
@@ -217,7 +217,8 @@ export const studentsBulkImport: any = createAsyncThunk("newStudents/bulkImport"
             "Content-Type": "multipart/form-data",
          },
       });
-      dispatch(closePreloader());
+      // dispatch(closePreloader());
+      return data;
    } catch (error: any) {
       const errorMessage = errorResolver(error);
       return thunkApi.rejectWithValue(errorMessage);
