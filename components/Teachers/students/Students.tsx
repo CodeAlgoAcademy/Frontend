@@ -48,3 +48,5 @@ const styles = {
    pointer: "cursor-pointer",
    commentIcons: "w-[28px] h-[28px] rounded-md text-white flex justify-center items-center text-[15px]",
 };
+
+
