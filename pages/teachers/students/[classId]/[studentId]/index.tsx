@@ -1,4 +1,5 @@
 "use client";
+import TeacherResetPassword from "@/components/Teachers/students/ResetPassword";
 import StudentLevelChart from "@/components/Teachers/students/level-threshold/BarChart";
 import StudentBarChart from "@/components/Teachers/students/screentime/BarChart";
 import TeacherLayout from "@/components/layouts/TeacherLayout";
@@ -6,7 +7,7 @@ import StudentProfileInfo from "@/components/parents/UI/StudentProfileInfo";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BsArrowLeftCircle } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
@@ -16,23 +17,25 @@ import { BaseStudent } from "types/interfaces/teacherstudent.interface";
 
 export default function StudentProfile() {
    const dispatch = useDispatch();
-   const slug = useRouter();
+   const router = useRouter();
+   const { classId, studentId } = router.query;
 
    const student = useSelector((state: RootState) => state.students?.currentStudent);
+   const [resetPasswordOpen, setResetPasswordOpen] = useState<boolean>(false);
+   
 
    useEffect(() => {
-   if (slug?.query?.classId) {
-      dispatch(
-         getSingleStudent({
-            classId: slug?.query?.classId,
-            studentId: slug?.query?.studentId,
-         })
-      ).unwrap().then((student: BaseStudent) => {
-         dispatch(changeCurrentStudent(student));
-      });
-   }
-}, [slug]);
-
+      if (classId) {
+         dispatch(
+            getSingleStudent({
+               classId: classId as string,
+               studentId: studentId as string,
+            })
+         ).unwrap().then((student: BaseStudent) => {
+            dispatch(changeCurrentStudent(student));
+         });
+      }
+   }, [classId, studentId]);
 
    useEffect(() => {
       if (student?.id) dispatch(getStudentScreentime(student?.id));
@@ -47,15 +50,33 @@ export default function StudentProfile() {
             <h1 className={styles.headerTitle}>Student Profile</h1>
          </div>
 
-         <header className="mt-6 flex flex-wrap justify-center gap-[3rem]">
+         <header className="mt-6 flex flex-wrap justify-center gap-[3rem] relative">
             <div className="h-[200px] w-[200px] overflow-hidden rounded-full">
-               <Image width={200} height={200} src={"/assets/no user.png"} />
+               <Image width={200} height={200} src={"/assets/no user.png"} alt="Student profile" />
             </div>
             <div className="grid min-w-[200px] flex-1 grid-cols-2 gap-[1rem]">
                <StudentProfileInfo header="Name" body={student?.firstName + " " + student?.lastName} />
                <StudentProfileInfo header="Username" body={student?.username} />
                <StudentProfileInfo header="Email" body={student?.email} />
+            <div className="">
+               <p 
+                  className="cursor-pointer font-medium underline" 
+                  onClick={() => setResetPasswordOpen(!resetPasswordOpen)}
+               >
+                  Reset Password
+               </p>
+               
+               {resetPasswordOpen && student && classId && (
+                  <TeacherResetPassword 
+                     closeModal={() => setResetPasswordOpen(false)}
+                     studentId={student.id || student.student_id}
+                     classId={classId as string}
+                     studentName={`${student.firstName} ${student.lastName}`}
+                  />
+               )}
             </div>
+            </div>
+
          </header>
 
          <div>
