@@ -4,12 +4,11 @@ import Marquee from "react-marquee-slider";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 
-const images = ["learn1.png", "learn2.png", "learn3.png", "learn4.png", "learn5.png", "learn6.png", "learn7.png", "learn8.png"];
+const images = ["subset1.webp", "subset9.jpg", "subset2.jpg", "subset13.jpg", "subset3.jpg", "subset4.jpg", "subset12.jpg", "subset5.jpg", "subset11.jpg", "subset6.jpg", "subset10.jpg", "subset7.jpg", "subset8.jpg"];
 
 const LetsLearnTogether = () => {
    const isMobile = useMediaQuery("(max-width: 768px)");
    const features = useSelector((state: RootState) => state.accessibility.features);
-
    const animationsPaused = useMemo(() => features["pause animations"], [features]);
 
    return (
@@ -27,7 +26,7 @@ const LetsLearnTogether = () => {
                   {images.map((image, index) => (
                      <img
                         key={index}
-                        src={`/assets/landing/${image}`}
+                        src={`/assets/landing/revamp/${image}`}
                         alt={image}
                         className="mx-1 h-[200px] w-[240px] rounded-md object-cover max-md:h-[150px]"
                      />
@@ -47,7 +46,7 @@ const LetsLearnTogether = () => {
                   {images.map((image, index) => (
                      <img
                         key={index}
-                        src={`/assets/landing/${image}`}
+                        src={`/assets/landing/revamp/${image}`}
                         alt={image}
                         className="mx-1 h-[200px] w-[240px] rounded-md object-cover max-md:h-[150px]"
                      />
