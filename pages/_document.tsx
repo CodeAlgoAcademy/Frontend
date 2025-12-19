@@ -1,6 +1,7 @@
 import Document, { DocumentContext, Head, Html, Main, NextScript } from "next/document";
 import React from "react";
 import Script from "next/script";
+import TawkToWidget from "public/TawkToWidget";
 
 class MyDocument extends Document {
    static async getInitialProps(ctx: DocumentContext) {
@@ -47,6 +48,7 @@ class MyDocument extends Document {
             <body>
                <Main />
                <NextScript />
+               <TawkToWidget />
 
             <Script
                       strategy="afterInteractive"
