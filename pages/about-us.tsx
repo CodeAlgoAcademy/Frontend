@@ -23,7 +23,7 @@ const AboutUs = () => {
           <Header />
           <Leadership />
           <AOC />
-           <TawkToWidget />
+           {/* <TawkToWidget /> */}
         </div>
       </section>
 
