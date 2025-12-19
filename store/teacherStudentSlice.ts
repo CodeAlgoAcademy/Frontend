@@ -199,6 +199,33 @@ export const deleteStudent = createAsyncThunk(
    }
 );
 
+export const updateStudentPassword: any = createAsyncThunk(
+   "teacher/update-student-password",
+   async (
+      data: {
+         class_id: string | number | undefined, 
+         student_id:string | number | undefined,
+         password: string;
+      },
+      thunkApi
+   ) => {
+      const dispatch = thunkApi.dispatch;
+      dispatch(openPreloader({ loadingText: "Updating Student's Password" }));
+
+      try {
+         const response = await teachersStudentServices.updateStudentPassword(data.class_id, data.student_id, data.password);
+
+         dispatch(closePreloader());
+
+         return response;
+      } catch (error) {
+         const errorMessage = errorResolver(error);
+
+         return thunkApi.rejectWithValue(errorMessage);
+      }
+   }
+);
+
 
 export const teacherStudentSlice = createSlice({
    name: "teacherStudent",
@@ -266,6 +293,15 @@ export const teacherStudentSlice = createSlice({
             state.students = state.students.filter((student) => String(student.id) !== String(action.payload.studentId));
          })
          .addCase(deleteStudent.rejected, (state, action) => {
+            state.error = action.payload as string;
+         })
+         .addCase(updateStudentPassword.pending, (state) => {
+            state.error = undefined;
+         })
+         .addCase(updateStudentPassword.fulfilled, (state) => {
+            state.error = undefined;
+         })
+       .addCase(updateStudentPassword.rejected, (state, action) => {
             state.error = action.payload as string;
          });
    },
