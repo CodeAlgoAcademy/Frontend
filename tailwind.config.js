@@ -19,6 +19,7 @@ module.exports = {
             mainPink: "#FF88AF",
             mainBlack: "#191919",
             mainRed: "#FF0D11",
+            mainGreen: "#038800",
          },
          screens: {
             xs: "400px",
