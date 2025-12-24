@@ -11,7 +11,6 @@ import { GiTargetArrows } from "react-icons/gi";
 import { CodeBlock, CopyBlock, dracula, androidstudio } from "react-code-blocks";
 import Leadership from "../components/about-us/leadership";
 import Banner from "@/components/home/new-home/banner";
-import TawkToWidget from "public/TawkToWidget";
 
 const AboutUs = () => {
   return (
@@ -23,7 +22,6 @@ const AboutUs = () => {
           <Header />
           <Leadership />
           <AOC />
-           <TawkToWidget />
         </div>
       </section>
 

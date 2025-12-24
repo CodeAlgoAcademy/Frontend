@@ -47,7 +47,6 @@ class MyDocument extends Document {
             <body>
                <Main />
                <NextScript />
-
             <Script
                       strategy="afterInteractive"
                       src="https://www.googletagmanager.com/gtag/js?id=G-K648E5ZLW4"
