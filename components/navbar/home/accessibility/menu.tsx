@@ -58,7 +58,7 @@ const AccessibilityMenu = () => {
       <section className="omit-invert">
          <div
             onClick={() => setIsOpen(true)}
-            className="!fixed top-[85vh] right-7 z-[1000] h-[60px] w-[60px] cursor-pointer rounded-full bg-mainRed p-2 shadow-lg transition-all duration-300 hover:scale-[1.2]"
+className="!fixed bottom-[120px] right-7 z-[1000] h-[60px] w-[60px] cursor-pointer rounded-full bg-mainRed p-2 shadow-lg transition-all duration-300 hover:scale-[1.2]"
          >
             <div className="flex h-full w-full items-center justify-center rounded-full border-2 border-white bg-transparent">
                <IoAccessibility color="white" size={20} />
@@ -86,3 +86,4 @@ const AccessibilityMenu = () => {
 };
 
 export default AccessibilityMenu;
+
