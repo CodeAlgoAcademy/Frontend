@@ -33,7 +33,7 @@ const Step3ConfirmPay: React.FC<Step3Props> = ({ selectedPlan, selectedChildren,
       <div className="mb-4 flex justify-between border-b pb-2">
         <span className="font-medium text-gray-600">Plan</span>
         <span className="font-semibold text-gray-900">
-          {plan.name} – ${plan.amount_in_cent / 100}
+          {plan.name} – ${plan.amount_in_cent}
         </span>
       </div>
     )}

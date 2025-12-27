@@ -9,10 +9,6 @@ const ValuePropositions = () => {
       description: "Build actual games, apps, and websites as you learn."
     },
     {
-      title: "Live Mentors",
-      description: "Get guidance through 1-on-1 sessions with coding experts."
-    },
-    {
       title: "Progress Tracking",
       description: "Watch your child’s confidence and skills grow over time."
     }
