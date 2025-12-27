@@ -12,6 +12,7 @@ const BillingPage = () => {
   const { active_subscription } = useSelector((state: RootState) => state.pricing);
   const currentChild = useSelector((state: RootState) => state.parentChild.currentChild);
   const dispatch = useDispatch();
+  console.log(active_subscription, "active plan")
 
  useEffect(() => {
       dispatch(getActiveSubscription());
