@@ -41,7 +41,7 @@ const BillingPlan: FC<Props & { onSelect?: (plan: IPlan) => void }> = ({ plan, o
                </p>
             </div>
             <div className="mt-5 flex items-start justify-center">
-               <h5 className="h-fit text-[32px] font-bold">${plan.amount_in_cent/100}</h5>
+               <h5 className="h-fit text-[32px] font-bold">${plan.amount_in_cent}</h5>
                <p className="mt-4 text-sm">/{plan.duration_in_days}</p>
             </div>
          </div>

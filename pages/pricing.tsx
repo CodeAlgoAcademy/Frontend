@@ -18,6 +18,7 @@ import { InstitutionInquiryDto, IPlan } from "types/interfaces";
 const Pricing = () => {
    const { handlers: pricingHandlers, plans } = useSelector((state: RootState) => state.pricing);
    const dispatch = useDispatch();
+   console.log(plans, "plan princing")
 
    const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("yearly");
 
@@ -110,9 +111,9 @@ interface SinglePricingProps {
 const SinglePricing: FC<SinglePricingProps> = ({ plan, billingCycle }) => {
    const { push } = useRouter();
 
-   const monthlyPrice = plan.amount_in_cent / 100;
-   const yearlyTotal = monthlyPrice * 12 * 0.8;
-   const yearlyMonthlyEquivalent = yearlyTotal / 12;
+  const yearlyTotal = plan.amount_in_cent;
+  const monthlyPrice = 21.59;
+  const yearlyPrice = 259.08;
 
    const isYearly = billingCycle === "yearly";
 
@@ -127,12 +128,12 @@ const SinglePricing: FC<SinglePricingProps> = ({ plan, billingCycle }) => {
             {isYearly ? (
                <>
                   <h1 className="text-[2.5rem] font-bold text-[#8B1E1E]">
-                     ${yearlyMonthlyEquivalent.toFixed(2)}
-                     <span className="text-base font-medium text-[#4B6B88]">/mo</span>
+                     ${yearlyTotal.toFixed(2)}
+                     <span className="text-base font-medium text-[#4B6B88]">/Annually</span>
                   </h1>
 
                   <p className="mt-2 text-sm text-gray-400 line-through">
-                     ${(monthlyPrice).toFixed(2)}/mo
+                     ${(yearlyPrice).toFixed(2)}/Annually
                   </p>
 
                   <p className="mt-2 text-sm font-semibold text-pink-600">
