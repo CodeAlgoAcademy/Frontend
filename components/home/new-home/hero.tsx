@@ -62,7 +62,7 @@ const Hero = () => {
                      <h1 className="sm:mb-4 mb-2 max-w-xl text-xl font-extrabold leading-tight sm:text-xl md:text-4xl lg:text-5xl">
                         YOUR CHILD’S <br /> <span className="text-primary">Path to Coding Success</span> <br /> STARTS HERE{" "}
                      </h1>
-                     <p className="sm:mb-5 mb-3 max-w-lg text-md text-white/90 sm:mb-8 sm:max-w-md sm:text-xl md:text-xl">
+                     <p className="sm:mb-5 mb-3 max-w-lg text-md text-white/90 sm:max-w-md sm:text-xl md:text-xl">
                         {" "}
                         Learn coding anywhere. Cancel anytime. Join thousands of kids learning to code.{" "}
                      </p>{" "}
