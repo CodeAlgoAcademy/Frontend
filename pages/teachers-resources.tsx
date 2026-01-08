@@ -116,7 +116,6 @@ const TeachersResources = () => {
                      Everything you need to successfully teach coding in your classroom.
                   </p>
                </div>
-
                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                   {teacherResources.map((resource, index) => (
                      <div className="group rounded-2xl border border-gray-200 bg-white p-6 transition hover:shadow-xl">
@@ -148,7 +147,6 @@ const TeachersResources = () => {
                      Step-by-step instructions for getting the most out of CodeAlgo Academy in your classroom.
                   </p>
                </div>
-
                <div className="mx-auto max-w-3xl space-y-4">
                   {howToGuides.map((guide, index) => (
                      <SimpleAccordion key={index} guide={guide} index={index} />
