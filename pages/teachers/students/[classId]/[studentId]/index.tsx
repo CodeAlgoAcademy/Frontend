@@ -22,6 +22,7 @@ export default function StudentProfile() {
 
    const student = useSelector((state: RootState) => state.students?.currentStudent);
    const [resetPasswordOpen, setResetPasswordOpen] = useState<boolean>(false);
+   const lastInitial = student?.lastName ? `${student?.lastName[0]}.` : "";
    
 
    useEffect(() => {
@@ -55,7 +56,7 @@ export default function StudentProfile() {
                <Image width={200} height={200} src={"/assets/no user.png"} alt="Student profile" />
             </div>
             <div className="grid min-w-[200px] flex-1 grid-cols-2 gap-[1rem]">
-               <StudentProfileInfo header="Name" body={student?.firstName + " " + student?.lastName} />
+               <StudentProfileInfo header="Name" body={student?.firstName + " " + lastInitial} />
                <StudentProfileInfo header="Username" body={student?.username} />
                <StudentProfileInfo header="Email" body={student?.email} />
             <div className="">

@@ -347,6 +347,14 @@ You will be able to access premium features for your child’s account for the p
                   body="These Terms of Service take effect from the moment of your acceptance and are subject to potential modifications by CodeAlgo at its discretion. It is your responsibility to routinely scrutinize these Terms of Service to remain apprised of any alterations. Your continued use of CodeAlgo subsequent to any adjustments signifies your unequivocal acceptance of the updated Terms of Service."
                />
             </div>
+            {/* <div className="mt-[20px]">
+               <Policies
+                  title="Parental Consent"
+                  body={`If the student using CodeAlgo is under the age of 18, a parent or legal guardian must review and agree to this Privacy Policy and the Terms of Service on the student’s behalf.
+
+               By permitting a student to access or use CodeAlgo, the parent or legal guardian acknowledges and agrees that they have provided consent for the collection, use, and processing of the student’s personal data as described in this Privacy Policy, and that they accept responsibility for the student’s use of the platform.`}
+               />
+            </div> */}
             <p className="mt-6">CodeAlgo is designed and operated by CodeAlgo, Inc. All inquiries may be directed to:</p>
             <p>CodeAlgo, Inc</p>
             <p>720 Main St, Kansas City, MO 64105</p>

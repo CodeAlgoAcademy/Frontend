@@ -12,7 +12,7 @@ const links = [
          },
          {
             title: "Teachers Resource",
-            href: "/signup/teacher",
+            href: "/teachers-resources",
          },
          {
             title: "Corporate Partnership",
