@@ -29,7 +29,7 @@ const Footer = () => {
                   Copyright &copy; {new Date().getFullYear()} CodeAlgo Academy - All Rights Reserved
                </p>
 
-               <p className="text-center font-bold text-white">720 Main St, Kansas City MO, 64105</p>
+               <p className="text-center font-bold text-white">800 E 18th St, Kansas City, MO 64108</p>
             </div>
          </div>
       </footer>

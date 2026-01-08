@@ -21,8 +21,8 @@ const TeachersResources = () => {
                   <div className="lg:w-1/2">
                      <div className="relative overflow-hidden rounded-xl">
                         <video controls className="h-auto w-full rounded-3xl object-cover">
-                           <source src="/assets/landing/revamp/teachertutorial.mp4" type="video/mp4" />
-                           Your browser does not support the video.
+                        <source src="https://res.cloudinary.com/dg2vox5g0/video/upload/v1766998742/ad4teacher_keusqf.mp4" type="video/mp4" />
+                        Your browser does not support the video.
                         </video>
                      </div>
                   </div>
