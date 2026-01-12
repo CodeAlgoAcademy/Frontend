@@ -57,7 +57,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
       {
          type: "text",
          name: "lastName",
-         placeholder: "Enter Student Last Name",
+         placeholder: "Enter Student Last Initial Name",
          value: lastName,
       },
       {

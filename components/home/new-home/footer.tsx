@@ -8,7 +8,7 @@ const links = [
       sublinks: [
          {
             title: "Parents Resource",
-            href: "/signup/parent",
+            href: "/parents-resources",
          },
          {
             title: "Teachers Resource",
