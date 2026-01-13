@@ -1,7 +1,7 @@
 import React from "react";
 import { ChevronRight, CheckCircle } from "lucide-react";
 import Navbar from "@/components/navbar/home/Navbar";
-import Footer from "@/components/home/new-home/footer";
+import Footer from "@/components/about-us/aoc";
 import { howToGuides, teacherResources } from "@/components/home/const";
 import Link from "next/link";
 import { SimpleAccordion } from "@/components/home/accordion";
