@@ -1,7 +1,7 @@
 import React from "react";
 import { ChevronRight, CheckCircle } from "lucide-react";
 import Navbar from "@/components/navbar/home/Navbar";
-import Footer from "@/components/home/new-home/footer";
+import Footer from "@/components/about-us/aoc";
 import { howToGuides, teacherResources } from "@/components/home/const";
 import Link from "next/link";
 import { SimpleAccordion } from "@/components/home/accordion";
@@ -21,8 +21,8 @@ const TeachersResources = () => {
                   <div className="lg:w-1/2">
                      <div className="relative overflow-hidden rounded-xl">
                         <video controls className="h-auto w-full rounded-3xl object-cover">
-                           <source src="/assets/landing/revamp/teachertutorial.mp4" type="video/mp4" />
-                           Your browser does not support the video.
+                        <source src="https://res.cloudinary.com/dg2vox5g0/video/upload/v1766998742/ad4teacher_keusqf.mp4" type="video/mp4" />
+                        Your browser does not support the video.
                         </video>
                      </div>
                   </div>
@@ -116,7 +116,6 @@ const TeachersResources = () => {
                      Everything you need to successfully teach coding in your classroom.
                   </p>
                </div>
-
                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                   {teacherResources.map((resource, index) => (
                      <div className="group rounded-2xl border border-gray-200 bg-white p-6 transition hover:shadow-xl">
@@ -148,11 +147,6 @@ const TeachersResources = () => {
                      Step-by-step instructions for getting the most out of CodeAlgo Academy in your classroom.
                   </p>
                </div>
-
-               <div className="mx-auto max-w-3xl space-y-4">
-                  {howToGuides.map((guide, index) => (
-                     <SimpleAccordion key={index} guide={guide} index={index} />
-                  ))}
                </div>
             </div>
          </section>

@@ -28,7 +28,7 @@ const AddStudents = () => {
       {
          type: "text",
          name: "lastName",
-         placeholder: "Enter Student Last Name",
+         placeholder: "Enter Student Last Initial",
          value: lastName,
          required: true,
       },
