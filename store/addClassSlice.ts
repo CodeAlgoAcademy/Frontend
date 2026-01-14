@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IAddClass, screentimeTypes } from "../types/interfaces";
+import { IAddClass, ISingleClass, screentimeTypes } from "../types/interfaces";
 import { colors } from "../components/Teachers/addClass/colors";
 import { addClass } from "services/classesService";
 
@@ -10,7 +10,8 @@ const initialState: IAddClass = {
       email: "",
       username: "",
       dob: "",
-      id: ""
+      id: "",
+      password: "",
    },
    class: {
       className: "",
@@ -49,8 +50,11 @@ const addClassSlice = createSlice({
          state.student = initialState.student;
          state.class = initialState.class;
       },
+      populateClassForEdit: (state, action: PayloadAction<ISingleClass>) => {
+         state.class = { ...state.class, ...action.payload };
+      },
    },
 });
 
 export default addClassSlice.reducer;
-export const { updateClassDetails, clearFields, addFile } = addClassSlice.actions;
+export const { updateClassDetails, clearFields, addFile, populateClassForEdit } = addClassSlice.actions;

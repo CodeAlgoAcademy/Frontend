@@ -22,6 +22,8 @@ const initialState: IModal = {
    selectOrganizationOpen: false,
    // parent dashboard
    addChildModalOpen: false,
+   isEditMode: false,
+   editingClassId: null,
 };
 
 const modalSlice = createSlice({
@@ -33,6 +35,16 @@ const modalSlice = createSlice({
       },
       closeAddClassModal: (state: IModal) => {
          state.addClassModalOpen = false;
+      },
+       openEditClassModal: (state: IModal, action: PayloadAction<string | number>) => {
+         state.addClassModalOpen = true;
+         state.isEditMode = true;
+         state.editingClassId = action.payload;
+      },
+      closeEditClassModal: (state: IModal) => {
+         state.addClassModalOpen = false;
+         state.isEditMode = false;
+         state.editingClassId = null;
       },
       openGradesModal: (state: IModal) => {
          state.gradesModalOpen = true;
@@ -103,6 +115,8 @@ const modalSlice = createSlice({
 export const {
    openAddClassModal,
    closeAddClassModal,
+    openEditClassModal,
+   closeEditClassModal,
    openGradesModal,
    closeGradesModal,
    openAddStudentsModal,

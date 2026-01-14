@@ -28,13 +28,14 @@ export interface ISingleStudent {
   dob: string;
   id: string;
   active?: boolean;
-  student_id?: string;
+  student_id?: string | number;
   assignments?: AssignmentDetails[];
   timeLimits?: screentimeTypes[];
   levelThresholds?: LevelThresholdInputProps[];
   progress?: IStudentsTopics;
   level?: number;
-  class_id?:string
+  class_id?:string | number;
+  password?:string
 }
 
 export interface IStudentWithScreentime extends ISingleStudent {

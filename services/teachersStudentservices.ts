@@ -76,6 +76,15 @@ const getStudentBlockGameStandard = async (class_id: string | number, student_id
   return response.data;
 };
 
+const updateStudentPassword = async (class_id: string | number | undefined, student_id:string | number | undefined, password: string) => {
+   const response = await http.put(
+      `/academics/class/${class_id}/student/${student_id}/reset-password/`,
+      { password },
+      { headers: { Authorization: `Bearer ${getAccessToken()}` } }
+   );
+
+   return response?.data;
+};
 
 const teachersStudentServices={
     createStudentLevelThresHold,
@@ -83,6 +92,7 @@ const teachersStudentServices={
     getStudentBlockGameProgress,
     getStudentBlockGameSkill,
     getStudentBlockGameStandard,
-    deleteStudent
+    deleteStudent,
+    updateStudentPassword
 }
 export default teachersStudentServices;

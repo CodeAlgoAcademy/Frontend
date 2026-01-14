@@ -24,13 +24,19 @@ export interface IArticle {
 }
 
 export const articles: IArticle[] = [
+  {
+   title: "2025 Black Ambition Semifinalists Announcement",
+   body: "Black Ambition unveils the 177 visionaries selected as the 2025 Semifinalists, a pioneering class of founders who are defying gravity and shaping the future of innovation across industries.",
+   date: "June 2025",
+   image: "/assets/blog/press/blackam.png",
+   detailPage: "/blackambition"
+},
     {
       title: "Success code: LINC student create online games, spark future aspirations",
       body: "LINC students at King Elementary in the Kansas City Public Schools pose with teachers and suppoerters as they display certificates from the CodeAlgo Academy coding program.",
       date: "May 2025",
       image: "/assets/blog/press/linc.png",
       detailPage: "/linc-student",
-      // gamification
    },
     {
       title: "Viruses vs. Bacteria—Made Fun for Kids!",

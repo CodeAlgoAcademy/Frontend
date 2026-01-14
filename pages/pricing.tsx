@@ -1,5 +1,6 @@
 import Banner from "@/components/home/new-home/banner";
 import Footer from "@/components/home/new-home/footer";
+import { PromoBanner } from "@/components/home/new-home/winter-banner";
 import Navbar from "@/components/navbar/home/Navbar";
 import { CustomButton } from "@/components/UI/Button";
 import { MenuItem, Select } from "@mui/material";
@@ -17,40 +18,75 @@ import { InstitutionInquiryDto, IPlan } from "types/interfaces";
 const Pricing = () => {
    const { handlers: pricingHandlers, plans } = useSelector((state: RootState) => state.pricing);
    const dispatch = useDispatch();
+   console.log(plans, "plan princing")
+
+   const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("yearly");
 
    useEffect(() => {
       dispatch(getPricingPlans());
    }, []);
 
    return (
-      <div className="relative font-thabit">
+      <div className="relative font-thabit bg-[#F5FAFF]">
          <Navbar />
          <Banner />
-
-         <section className="mt-20 bg-mainBlack px-6 py-12">
+         <section className="mt-20 px-6 py-16">
             <div className="mx-auto max-w-[1200px]">
-               <h1 className="text-center text-[1.5rem] font-bold text-white">Choose the plan that is right for you</h1>
+               <h1 className="text-center text-[1.8rem] font-bold text-[#0B2C4A]">
+                  Choose the plan that is right for you
+               </h1>
 
-               <div className="mt-20 mb-10 flex items-start justify-around gap-8 max-md:flex-col max-md:items-center">
+               {/* Billing toggle */}
+               <div className="mt-8 flex justify-center  border-mainRed">
+                  <div className="flex rounded-full bg-[#E6F1FF] p-3">
+                     <button
+                        onClick={() => setBillingCycle("yearly")}
+                        className={`rounded-full px-6 py-2 text-sm font-semibold transition ${
+                           billingCycle === "yearly"
+                              ? "bg-white text-[#0B2C4A] shadow"
+                              : "text-[#4B6B88]"
+                        }`}
+                     >
+                        Yearly
+                     </button>
+
+                     <button
+                        onClick={() => setBillingCycle("monthly")}
+                        className={`rounded-full px-6 py-2 text-sm font-semibold transition ${
+                           billingCycle === "monthly"
+                              ? "bg-white text-[#0B2C4A] shadow"
+                              : "text-[#4B6B88]"
+                        }`}
+                     >
+                        Monthly
+                     </button>
+                  </div>
+               </div>
+
+               <div className="mt-16 flex justify-center gap-8 max-md:flex-col max-md:items-center">
                   {pricingHandlers.loading ? (
                      <PricingShimmer />
                   ) : plans.length === 0 ? (
-                     <div className="flex h-[200px] flex-1 items-center justify-center">
-                        <p className="text-[1.5rem] text-white">No Plan</p>
-                     </div>
+                     <p className="text-[1.2rem] text-gray-500">No Plan</p>
                   ) : (
-                     plans.map((plan, index) => <SinglePricing plan={plan} key={index} />)
+                     plans.map((plan, index) => (
+                        <SinglePricing
+                           key={index}
+                           plan={plan}
+                           billingCycle={billingCycle}
+                        />
+                     ))
                   )}
                </div>
             </div>
          </section>
 
          <InstitutionInquiry />
-
          <Footer />
       </div>
    );
 };
+
 
 const PricingShimmer = () => {
    return (
@@ -58,8 +94,8 @@ const PricingShimmer = () => {
          {[null, null, null].map((_, index) => {
             return (
                <div key={index} className="flex-1">
-                  <div className="mb-3 h-[200px] animate-pulse rounded-md bg-white/10"></div>
-                  <div className="mb-3 h-[50px] animate-pulse rounded-md bg-white/10"></div>
+                  <div className="mb-3 h-[200px] animate-pulse rounded-md bg-gray-200"></div>
+                  <div className="mb-3 h-[50px] animate-pulse rounded-md bg-gray-200"></div>
                </div>
             );
          })}
@@ -69,36 +105,68 @@ const PricingShimmer = () => {
 
 interface SinglePricingProps {
    plan: IPlan;
+   billingCycle: "monthly" | "yearly";
 }
 
-const SinglePricing: FC<SinglePricingProps> = ({ plan }) => {
+const SinglePricing: FC<SinglePricingProps> = ({ plan, billingCycle }) => {
    const { push } = useRouter();
+
+  const yearlyTotal = plan.amount_in_cent;
+  const monthlyPrice = 21.59;
+  const yearlyPrice = 259.08;
+
+   const isYearly = billingCycle === "yearly";
+
    return (
-      <div className="flex flex-col items-center justify-center gap-2 font-bold">
-         <div className="mx-auto w-[100px] max-md:max-w-fit">
-            <Image src={"/assets/landing/logo_no_name.png"} width={100} height={40} />
+      <div className="w-full max-w-[800px] rounded-2xl border border-mainRed bg-white p-10 text-center shadow-sm">
+         <h2 className="text-[1.5rem] font-bold text-[#0B2C4A]">
+            {plan.name}
+         </h2>
+
+         {/* Price */}
+         <div className="mt-6">
+            {isYearly ? (
+               <>
+                  <h1 className="text-[2.5rem] font-bold text-[#8B1E1E]">
+                     ${yearlyTotal.toFixed(2)}
+                     <span className="text-base font-medium text-[#4B6B88]">/Annually</span>
+                  </h1>
+
+                  <p className="mt-2 text-sm text-gray-400 line-through">
+                     ${(yearlyPrice).toFixed(2)}/Annually
+                  </p>
+
+                  <p className="mt-2 text-sm font-semibold text-pink-600">
+                     Best value!
+                  </p>
+               </>
+            ) : (
+               <h1 className="text-[2.5rem] font-bold text-[#0B2C4A]">
+                  ${monthlyPrice.toFixed(2)}
+                  <span className="text-base font-medium text-[#4B6B88]">/mo</span>
+               </h1>
+            )}
          </div>
 
-         <h2 className="mt-1 text-center text-[1.5rem] text-white max-md:text-[1.1rem] max-md:leading-[1]">{plan.name}</h2>
-         <h1 className="my-1 text-center text-[1.8rem] text-white max-md:text-[1.1rem] max-md:leading-[1]">
-            ${(plan.amount_in_cent / 100).toFixed(2)}
-         </h1>
-         <ul className="my-2 max-w-fit list-disc space-y-2 text-center">{plan.description}</ul>
-         <h1 className="text-center text-[1.5rem] font-bold text-white">per year</h1>
+         {/* Description */}
+         <ul className="my-6 space-y-2 text-sm text-[#4B6B88]">
+            {plan.description}
+         </ul>
+
          <CustomButton
             onClick={() => {
                toast.success("Login to your dashboard to complete payment");
                push(`/login/parent`);
             }}
-            icon={<FiArrowRight />}
             variant="filled"
-            className="text-white"
+            className="mx-auto text-2xl mt-6 w-full max-w-[400px] justify-center text-white"
          >
             Get Started
          </CustomButton>
       </div>
    );
 };
+
 
 const InstitutionInquiry = () => {
    const dispatch = useDispatch();
@@ -123,16 +191,16 @@ const InstitutionInquiry = () => {
       const data = await dispatch(submitInstituionInquiry(requestBody));
 
       if (!data.error) {
-         dispatch(openSuccessModal({ message: "Insitution inquiry submitted successfully" }));
+         dispatch(openSuccessModal({ message: "Institution inquiry submitted successfully" }));
          setRequestBody(initialValues);
       }
    };
 
    return (
       <div className="mx-auto mb-24 max-w-[1200px] md:mt-12">
-         <div className="w-full bg-[#D9D9D9]/70 p-7 md:rounded-[2rem] md:p-20">
+         <div className="w-full bg-gray-50 p-7 md:rounded-[2rem] md:p-20">
             <h1 className="text-center text-[1.5rem] font-bold">Institution Inquiry</h1>
-            <p className="mt-2 text-center text-[1.1rem]">
+            <p className="mt-2 text-center text-[1.1rem] text-gray-600">
                Organization, School, and District bulk prices vary with bigger savings on larger orders.
             </p>
 
@@ -147,7 +215,7 @@ const InstitutionInquiry = () => {
                         value={requestBody.name}
                         onChange={(e) => updateRequestBody("name", e.target.value)}
                         required
-                        className="w-full rounded-md border-[1.5px] border-[#D9D9D9] bg-[#D9D9D9] p-2 outline-none focus:border-mainRed"
+                        className="w-full rounded-md border border-gray-300 bg-white p-3 outline-none focus:border-mainRed focus:ring-1 focus:ring-mainRed"
                      />
                   </div>
                </div>
@@ -163,7 +231,7 @@ const InstitutionInquiry = () => {
                         onChange={(e) => updateRequestBody("email", e.target.value)}
                         type="email"
                         required
-                        className="w-full rounded-md border-[1.5px] border-[#D9D9D9] bg-[#D9D9D9] p-2 outline-none focus:border-mainRed"
+                        className="w-full rounded-md border border-gray-300 bg-white p-3 outline-none focus:border-mainRed focus:ring-1 focus:ring-mainRed"
                      />
                   </div>
                </div>
@@ -179,13 +247,17 @@ const InstitutionInquiry = () => {
                         fullWidth
                         sx={{
                            borderRadius: ".375rem",
-                           border: "1.5px solid #d9d9d9",
-                           backgroundColor: "#d9d9d9",
+                           border: "1px solid #d1d5db",
+                           backgroundColor: "white",
                            height: 45,
                            outline: "none",
                            "& *": {
                               outline: "none",
                               border: "none !important",
+                           },
+                           "&:focus": {
+                              borderColor: "#FF0D11",
+                              boxShadow: "0 0 0 1px #FF0D11",
                            },
                         }}
                         MenuProps={{
@@ -227,7 +299,7 @@ const InstitutionInquiry = () => {
                         required
                         value={requestBody.institution_name}
                         onChange={(e) => updateRequestBody("institution_name", e.target.value)}
-                        className="w-full rounded-md border-[1.5px] border-[#D9D9D9] bg-[#D9D9D9] p-2 outline-none focus:border-mainRed"
+                        className="w-full rounded-md border border-gray-300 bg-white p-3 outline-none focus:border-mainRed focus:ring-1 focus:ring-mainRed"
                      />
                   </div>
                </div>
@@ -243,7 +315,7 @@ const InstitutionInquiry = () => {
                         type="number"
                         value={requestBody.student_count}
                         onChange={(e) => updateRequestBody("student_count", e.target.value)}
-                        className="w-full rounded-md border-[1.5px] border-[#D9D9D9] bg-[#D9D9D9] p-2 outline-none focus:border-mainRed"
+                        className="w-full rounded-md border border-gray-300 bg-white p-3 outline-none focus:border-mainRed focus:ring-1 focus:ring-mainRed"
                      />
                   </div>
                </div>
@@ -254,11 +326,12 @@ const InstitutionInquiry = () => {
                   </div>
 
                   <div className="w-full flex-1">
-                     <input
+                     <textarea
                         required
                         value={requestBody.message}
                         onChange={(e) => updateRequestBody("message", e.target.value)}
-                        className="w-full rounded-md border-[1.5px] border-[#D9D9D9] bg-[#D9D9D9] p-2 outline-none focus:border-mainRed"
+                        rows={3}
+                        className="w-full rounded-md border border-gray-300 bg-white p-3 outline-none focus:border-mainRed focus:ring-1 focus:ring-mainRed"
                      />
                   </div>
                </div>

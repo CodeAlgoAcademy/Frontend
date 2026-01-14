@@ -8,11 +8,11 @@ const links = [
       sublinks: [
          {
             title: "Parents Resource",
-            href: "/signup/parent",
+            href: "/parents-resources",
          },
          {
             title: "Teachers Resource",
-            href: "/signup/teacher",
+            href: "/teachers-resources",
          },
          {
             title: "Corporate Partnership",
@@ -138,7 +138,7 @@ const Footer = () => {
 
             <p className="text-[.9rem]">Copyright &copy; {new Date().getFullYear()} CodeAlgo</p>
 
-            <p className="text-[.9rem] font-semibold">720 Main St, Kansas City MO, 64105</p>
+            <p className="text-[.9rem] font-semibold">800 E 18th St, Kansas City, MO 64108</p>
          </div>
       </footer>
    );

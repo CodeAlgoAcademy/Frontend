@@ -10,11 +10,11 @@ const Press = () => {
       <section className="min-h-screen w-full bg-[#ffffff] font-thabit">
          <Navbar />
          <Header
-            body=""
-            title={`Success code: LINC student create online games, spark future aspirations`}
-            image= "/assets/blog/press/linc.png"
-            date="May 2025"
-            detailPage="/press/linc-student"
+            body= ""
+            title= "The 2025 Semifinalists represent more than business potential. They carry cultural influence, economic promise, and a commitment to lasting impact."           
+            date="June 2025"            
+            image="/assets/blog/press/blackam.png"
+            detailPage="/press/blackambition"
          />
 
        <section className="mx-auto mt-12 mb-12 w-full max-w-[1100px] px-4 sm:px-6">
