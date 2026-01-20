@@ -148,9 +148,7 @@ const TeachersResources = () => {
                   </p>
                </div>
                </div>
-            </div>
          </section>
-
          <Footer />
       </div>
    );

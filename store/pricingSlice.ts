@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getActiveSubscription, getAllPayment, getBillingHistory, getPricingPlans, initiatePayment, verifyPayment } from "../services/pricingService";
-import { IBilling, InitiatePaymentRes, IPlan, ISubscribedPlan, Payment, PaymentsResponse, PaymentStatus, PricingSlice } from "types/interfaces";
+import { getActiveSubscription, getAllPayment, getBillingHistory, getPricingPlans, initiatePayment, verifyPayment, validateCoupon } from "../services/pricingService";
+import { CouponValidationResponse, IBilling, InitiatePaymentRes, IPlan, ISubscribedPlan, Payment, PaymentsResponse, PaymentStatus, PricingSlice, Subscription } from "types/interfaces";
 
 const initialState: PricingSlice = {
    plans: [],
@@ -12,10 +12,13 @@ const initialState: PricingSlice = {
       verify_payment_loading: false,
       active_subscription_loading: false,
       billing_history_loading: false,
+      coupon_validation_loading: false,
    },
    initiated_payment: undefined,
    payment_verification_status: undefined,
    active_subscription: undefined,
+   billing_history: [],
+   coupon_validation: undefined,
 };
 
 const pricingSlice = createSlice({
@@ -84,12 +87,26 @@ const pricingSlice = createSlice({
          .addCase(getBillingHistory.pending, (state) => {
             state.handlers.billing_history_loading = true;
          })
-         .addCase(getBillingHistory.fulfilled, (state, action: PayloadAction<IBilling[]>) => {
+         .addCase(getBillingHistory.fulfilled, (state, action: PayloadAction<Subscription[]>) => {
             state.handlers.billing_history_loading = false;
             state.billing_history = action.payload;
          })
          .addCase(getBillingHistory.rejected, (state) => {
             state.handlers.billing_history_loading = false;
+         })
+         .addCase(validateCoupon.pending, (state) => {
+            state.handlers.verify_payment_loading = true;
+            state.payment_verification_status = "pending";
+         })
+         .addCase(
+         validateCoupon.fulfilled,
+         (state, action: PayloadAction<CouponValidationResponse>) => {
+            state.handlers.coupon_validation_loading = false;
+            state.coupon_validation = action.payload;
+         })
+         .addCase(validateCoupon.rejected, (state) => {
+         state.handlers.coupon_validation_loading = false;
+         state.coupon_validation = undefined;
          });
    },
 });
