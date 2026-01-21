@@ -90,16 +90,16 @@ const Step2SelectChildren: React.FC<Step2Props> = ({
                   <PlanCard
                     key={yearlyPrice.id}
                     title={`${plan.name} Annual Plan`}
-                    price={yearlyPrice.amount_in_cent / 100}
-                    originalPrice={(monthlyPrice.amount_in_cent / 100) * 12}
-                    interval="yearly"
+                    price={17.3}
+                    originalPrice={(monthlyPrice.amount_in_cent / 100)}
+                    interval="mo"
                     trialText="7-Day Free Trial"
-                    billingText="Billed yearly"
+                    billingText={`$${(yearlyPrice.amount_in_cent / 100)} Billed yearly`}
                     badge="Save 20%"
                     selected={selectedPriceId === yearlyPrice.id}
                     onSelect={() => {
                       setSelectedPriceId(yearlyPrice.id);
-                      setPriceId(yearlyPrice.id);
+                      setPriceId(yearlyPrice.id); 
                     }}
                   />
                 )}
@@ -112,7 +112,7 @@ const Step2SelectChildren: React.FC<Step2Props> = ({
                     price={monthlyPrice.amount_in_cent / 100}
                     interval="mo"
                     trialText="7-Day Free Trial"
-                    billingText="Billed monthly"
+                    billingText={`$${(monthlyPrice.amount_in_cent / 100)} Billed monthly`}
                     selected={selectedPriceId === monthlyPrice.id}
                     onSelect={() => {
                       setSelectedPriceId(monthlyPrice.id);

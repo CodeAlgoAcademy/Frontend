@@ -51,7 +51,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
         <span className="text-sm text-mainColor">/{interval}</span>
       </div>
 
-      <p className="mt-3 text-sm text-gray-600">{trialText}</p>
+      <p className="mt-3 text-md text-gray-600">{trialText}</p>
       <p className="text-sm text-gray-500 mt-2">{billingText}</p>
       </div>
 

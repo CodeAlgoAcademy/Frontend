@@ -62,12 +62,12 @@ const Pricing = () => {
           <PlanCard
             key={yearlyPrice.id}
             title={`${plan.name} Annual Plan`}
-            price={yearlyPrice.amount_in_cent / 100}
-            originalPrice={(monthlyPrice.amount_in_cent / 100) * 12}
-            interval="yearly"
-            trialText="14-Day Free Trial"
-            billingText="Billed yearly"
-            badge="Save 50%"
+            price={17.3}
+            originalPrice={(monthlyPrice.amount_in_cent / 100)}
+            interval="mo"
+            trialText="7-Day Free Trial"
+            billingText={`$ ${yearlyPrice.amount_in_cent / 100} Billed yearly`}
+            badge="Save 20%"
             showButton={true}
             buttonText="Try For Free"
             onSelect={() => {
@@ -85,7 +85,7 @@ const Pricing = () => {
             price={monthlyPrice.amount_in_cent / 100}
             interval="mo"
             trialText="7-Day Free Trial"
-            billingText="Billed monthly"
+            billingText={`$${(monthlyPrice.amount_in_cent / 100)} Billed monthly`}
             showButton={true}
             buttonText="Try For Free"
             onSelect={() => {
