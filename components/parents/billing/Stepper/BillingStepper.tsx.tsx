@@ -4,7 +4,6 @@ import Step3ConfirmPay from "./Step3ConfirmPay";
 
 const BillingStepper = () => {
   const [currentStep, setCurrentStep] = useState(1);
-
   const [selectedChildren, setSelectedChildren] = useState<(string | number)[]>([]);
   const [priceId, setPriceId] = useState<number | null>(null);
   console.log(priceId, "price id")
@@ -32,16 +31,16 @@ const BillingStepper = () => {
         <Step2SelectChildren
           selectedChildren={selectedChildren}
           setSelectedChildren={setSelectedChildren}
-          setPriceId={setPriceId}   // ✅ FIXED
+          setPriceId={setPriceId}
           goNext={goNext}
         />
       )}
 
       {currentStep === 2 && priceId !== null && (
         <Step3ConfirmPay
-          priceId={priceId}        // ✅ CORRECT PROP
+          priceId={priceId}   
           selectedChildren={selectedChildren}
-          goBack={goBack}          // ✅ FIXED
+          goBack={goBack}   
         />
       )}
     </div>
