@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import http from "axios.config";
 import { closePreloader, openPreloader } from "store/fetchSlice";
-import { IBilling, InitiatePaymentRes, InstitutionInquiryDto, IPlan, ISubscribedPlan, PaymentsResponse, PaymentStatus } from "types/interfaces";
+import { CouponValidationResponse, IBilling, InitiatePaymentRes, InstitutionInquiryDto, IPlan, ISubscribedPlan, PaymentsResponse, PaymentStatus, Subscription } from "types/interfaces";
 import { errorResolver } from "utils/errorResolver";
 import { getAccessToken } from "utils/getTokens";
 
@@ -21,7 +21,7 @@ export const submitInstituionInquiry: any = createAsyncThunk("pricingService/ins
 
 export const getPricingPlans: any = createAsyncThunk("pricingService/getPlans", async (_, thunkApi) => {
    try {
-      const response = await http.get<IPlan[]>("/payment/parent/plans");
+      const response = await http.get<IPlan[]>("/payment/product/");
 
       return response.data;
    } catch (error) {
@@ -40,32 +40,72 @@ export const getAllPayment: any = createAsyncThunk("pricingService/getPlans", as
    }
 });
 
-export const initiatePayment: any = createAsyncThunk(
-   "initiatePayment",
-   async ({ plan_id, children }: { plan_id: number; children: number[] }, thunkApi) => {
-      try {
-         const response = await http.post<InitiatePaymentRes>(
-            "/payment/parent/initiate",
-            { plan_id, children },
-            {
-               headers: {
-                  Authorization: `Bearer ${getAccessToken()}`,
-               },
-            }
-         );
-         return response.data;
-      } catch (error) {
-         const errorMessage = errorResolver(error);
-         return thunkApi.rejectWithValue(errorMessage);
-      }
-   }
+export const initiatePayment = createAsyncThunk(
+  "initiatePayment",
+  async (
+    { price_id, children }: { price_id: number; children: number[] },
+    thunkApi
+  ) => {
+    try {
+      const response = await http.post<InitiatePaymentRes>(
+        "/payment/subscription/initiate",
+        {
+          price_id,
+          children,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${getAccessToken()}`,
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
+    }
+  }
+);
+
+export const validateCoupon = createAsyncThunk(
+  "pricingService/validateCoupon",
+  async (
+    {
+      code,
+      price_id,
+      children,
+    }: { code: string; price_id: number; children: number[] },
+    thunkApi
+  ) => {
+    try {
+      const response = await http.post<CouponValidationResponse>(
+        "/payment/coupon/validate/",
+        {
+          code,
+          price_id,
+          children,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${getAccessToken()}`,
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
+    }
+  }
 );
 
 
 export const verifyPayment: any = createAsyncThunk("verifyPayment", async (paymentIntent: string, thunkApi) => {
    try {
       const response = await http.post<{ status: PaymentStatus }>(
-         "/payment/parent/verify",
+         "/payment/subscription/verify",
          { intent_id: paymentIntent },
          {
             headers: {
@@ -98,7 +138,7 @@ export const getActiveSubscription: any = createAsyncThunk("activeSubscription",
 
 export const getBillingHistory: any = createAsyncThunk("getBillingHistory", async (_, thunkApi) => {
    try {
-      const response = await http.get<IBilling[]>(`/payment/parent/history`, {
+      const response = await http.get<Subscription[]>(`/payment/subscription/history`, {
          headers: {
             Authorization: `Bearer ${getAccessToken()}`,
          },

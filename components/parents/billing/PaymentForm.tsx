@@ -7,8 +7,13 @@ import { toast } from "sonner";
 import { useRouter } from "next/router";
 import Loader from "@/components/UI/loader";
 
-const PaymentForm = () => {
+interface PaymentFormProps {
+  amount: number;
+}
+
+const PaymentForm: React.FC<PaymentFormProps> = ({ amount }) => {
    const { initiated_payment } = useSelector((state: RootState) => state.pricing);
+   
    const { push } = useRouter();
    const stripe = useStripe();
    const elements = useElements();
@@ -62,7 +67,7 @@ const PaymentForm = () => {
          </div>
 
          <div className="w-full flex-[.3]">
-            <BillingSummary amount={initiated_payment?.amount_in_cent!} />
+            <BillingSummary amount={amount} />
 
             <div className="mt-8 flex justify-end gap-3">
                <button

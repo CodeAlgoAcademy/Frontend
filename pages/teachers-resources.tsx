@@ -147,14 +147,8 @@ const TeachersResources = () => {
                      Step-by-step instructions for getting the most out of CodeAlgo Academy in your classroom.
                   </p>
                </div>
-               <div className="mx-auto max-w-3xl space-y-4">
-                  {howToGuides.map((guide, index) => (
-                     <SimpleAccordion key={index} guide={guide} index={index} />
-                  ))}
                </div>
-            </div>
          </section>
-
          <Footer />
       </div>
    );

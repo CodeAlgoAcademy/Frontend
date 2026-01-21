@@ -8,6 +8,7 @@ import { format } from "date-fns";
 
 const BillingHistory = () => {
    const { handlers, billing_history } = useSelector((state: RootState) => state.pricing);
+   console.log(billing_history, "history")
    const dispatch = useDispatch();
    const [showBill, setShowBill] = useState(false);
 

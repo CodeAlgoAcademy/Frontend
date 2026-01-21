@@ -1,6 +1,5 @@
 
 import ParentLayout from "@/components/layouts/ParentLayout";
-import BillingsPlansList from "./BillingsPlansList";
 import BillingHistory from "./BillingHistory";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,14 +17,6 @@ const BillingPage = () => {
       dispatch(getActiveSubscription());
    }, []);
 
-//   useEffect(() => {
-//     if (currentChild?.id) {
-//       console.log(currentChild.id, "child's id")
-//       dispatch(getActiveSubscription(currentChild.id));
-
-//     }
-//   }, [currentChild?.id]);
-
   return (
     <ParentLayout title="Billing">
       <div className="scrollbar-hide overflow-y-scroll px-4 py-6">
@@ -39,7 +30,6 @@ const BillingPage = () => {
         )}
 
  <BillingStepper />
-        {/* <BillingsPlansList /> */}
         <BillingHistory />
       </div>
     </ParentLayout>
