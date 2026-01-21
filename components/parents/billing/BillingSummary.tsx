@@ -19,16 +19,16 @@ const BillingSummary: FC<Props> = ({ amount }) => {
       <div className="pt-4 pb-8 text-[.9rem]">
         <div className="flex justify-between px-4">
           <p>Subtotal</p>
-          <p>₦{finalAmount}</p>
+          <p>${finalAmount}</p>
         </div>
         <div className="mt-4 flex justify-between px-4">
           <p>VAT</p>
-          <p>₦0.00</p>
+          <p>$0.00</p>
         </div>
 
         <div className="mt-4 flex justify-between border-t border-[#C5C5C5] pt-4 px-4 font-semibold">
           <p>Total billing price</p>
-          <p>₦{finalAmount}</p>
+          <p>${finalAmount}</p>
         </div>
       </div>
     </div>
