@@ -18,7 +18,7 @@ export const posts: Post[] = [
       title: "Code and Play",
       body: "The Power of Gamification at CodeAlgo Academy",
       date: "December 2023",
-      image: "/assets/blog/learining1.jpg",
+      image: "/assets/blog/codingfun.png",
       detailPage: "/code-and-play",
    },
    {
@@ -39,7 +39,7 @@ export const posts: Post[] = [
       title: "Nurturing Youngsters",
       body: "The Guardian’s Guide to Nurturing Coding Skills in Kids",
       date: "December 2023",
-      image: "/assets/blog/guidance1.jpg",
+      image: "/assets/blog/nutrition.png",
       detailPage: "/guidance-in-coding",
    },
 ];

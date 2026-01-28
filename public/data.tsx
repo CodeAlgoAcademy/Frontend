@@ -25,6 +25,13 @@ export interface IArticle {
 
 export const articles: IArticle[] = [
   {
+   title: "Real, live astronaut’ preaches courage for unlimited imagination to LINC, CodeAlgo students.",
+   body: "The 11 -year-old LINC student knew that he and his King Elementary classmates were special invitees because they were in an after-school coding program. He knew the bus had delivered them to an engineering firm — Burns & McDonnell.",
+   date: "January 13, 2026",            
+   image: "/assets/blog/press/demarris.webp",
+   detailPage: "/codeAlgoStudents",
+},
+  {
    title: "2025 Black Ambition Semifinalists Announcement",
    body: "Black Ambition unveils the 177 visionaries selected as the 2025 Semifinalists, a pioneering class of founders who are defying gravity and shaping the future of innovation across industries.",
    date: "June 2025",

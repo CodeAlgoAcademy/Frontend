@@ -11,10 +11,10 @@ const Press = () => {
          <Navbar />
          <Header
             body= ""
-            title= "The 2025 Semifinalists represent more than business potential. They carry cultural influence, economic promise, and a commitment to lasting impact."           
-            date="June 2025"            
-            image="/assets/blog/press/blackam.png"
-            detailPage="/press/blackambition"
+            title= "‘Real, live astronaut’ preaches courage for unlimited imagination to LINC, CodeAlgo students."           
+            date="January 13, 2026"            
+            image="/assets/blog/press/demarris.webp"
+            detailPage="/press/codeAlgoStudents"
          />
 
        <section className="mx-auto mt-12 mb-12 w-full max-w-[1100px] px-4 sm:px-6">

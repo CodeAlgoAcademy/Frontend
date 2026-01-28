@@ -47,8 +47,6 @@ const Step3ConfirmPay: React.FC<Step3Props> = ({
 
     return { baseAmount, discount, finalAmount };
   }, [selectedPrice, coupon_validation]);
-
-  // Build payment URL with all necessary info including amount
   const paymentUrl = useMemo(() => {
     if (!priceDetails) return '#';
     
