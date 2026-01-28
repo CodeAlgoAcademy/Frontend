@@ -58,7 +58,7 @@ const BillingHistory = () => {
                                  !data.is_active && "border-red-600 bg-red-200 text-red-600"
                               )}
                            >
-                              {data.is_active ? "Active" : "Inactive"}
+                              {data.status}
                            </p>
                         </div>
                      </div>

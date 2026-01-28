@@ -93,6 +93,14 @@ const Navbar = () => {
           </ul>
 
           <div className="flex items-center gap-4 max-md:hidden">
+              <CustomButton
+              onClick={() => push("/login")}
+              variant="filled"
+              size="medium"
+              className="bg-mainRed font-bold !text-white hover:bg-mainRed/80 max-md:hidden"
+            >
+              <span className="no-contrast-adjust">Login </span>
+            </CustomButton>
             <CustomButton
               onClick={() => setShowAppModal(true)}
               variant="outline"
