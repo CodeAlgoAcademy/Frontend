@@ -10,7 +10,7 @@ export interface PricingSlice {
     billing_history_loading: boolean;
     coupon_validation_loading: boolean;
   };
-  initiated_payment?: InitiatePaymentRes;
+  initiated_payment?: TrialInitiateResponse;
   coupon_validation?: CouponValidationResponse;
   payment_verification_status?: PaymentStatus;
   active_subscription?: ISubscribedPlan;
@@ -51,6 +51,18 @@ export interface InitiatePaymentRes {
    amount_in_cent: number;
 }
 
+export interface TrialInitiateResponse {
+  status: string; 
+}
+
+export interface PaidInitiateResponse {
+  subscription_id: number;
+  is_trial: false;
+  payment_id: string;
+  client_secret: string;
+  amount_in_cent: number;
+}
+
 export type PaymentStatus = "succeeded" | "failed" | "pending";
 
 export interface IChild {
@@ -70,8 +82,6 @@ export interface IBilling {
   activated_date: string;
   expiration_date: string;
 }
-
-// type UserPlansResponse = UserPlan[];
 
 export interface IHistory {
   id: number;

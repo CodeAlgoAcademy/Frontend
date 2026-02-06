@@ -11,10 +11,10 @@ const Press = () => {
          <Navbar />
          <Header
             body= ""
-            title= "‘Real, live astronaut’ preaches courage for unlimited imagination to LINC, CodeAlgo students."           
-            date="January 13, 2026"            
-            image="/assets/blog/press/demarris.webp"
-            detailPage="/press/codeAlgoStudents"
+            title= "CodeAlgo Academy hits classrooms as the edtech platform (and founder) proves independence."           
+            date="February 03, 2026"            
+            image="/assets/blog/press/codealgopoto.jpg"
+            detailPage="/press/codeAlgo-academy-hits-as-edtech-platform"
          />
 
        <section className="mx-auto mt-12 mb-12 w-full max-w-[1100px] px-4 sm:px-6">
