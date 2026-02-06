@@ -152,10 +152,3 @@ export interface CouponValidationResponse {
   message?: string;
 }
 
-export interface InitiatePaymentParams {
-  price_id: number;
-  children?: number[];
-  is_trial: boolean;
-  promotion_code?: string;
-}
-

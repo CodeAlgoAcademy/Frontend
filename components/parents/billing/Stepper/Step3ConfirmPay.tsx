@@ -18,8 +18,9 @@ const Step3ConfirmPay: React.FC<Step3Props> = ({
   selectedChildren,
   goBack,
 }) => {
-  const { plans, coupon_validation } = useSelector((state: RootState) => state.pricing);
+  const { plans, coupon_validation, billing_history } = useSelector((state: RootState) => state.pricing);
   const { children } = useSelector((state: RootState) => state.parentChild);
+  const user = useSelector((state: RootState) => state.user);
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { handlers } = useSelector((state: RootState) => state.pricing);
@@ -32,6 +33,15 @@ const Step3ConfirmPay: React.FC<Step3Props> = ({
   } | null>(null);
   const [isLoadingSubscription, setIsLoadingSubscription] = useState(false);
 
+  const isFirstSubscription = useMemo(() => {
+    if (typeof user?.has_created_subscription === 'boolean') {
+      return !user.has_created_subscription;
+    }
+    return !billing_history || billing_history.length === 0;
+  }, [user?.has_created_subscription, billing_history]);
+
+  const hasSelectedChildren = selectedChildren.length > 0;
+
   const selectedPrice = useMemo(() => {
     for (const plan of plans) {
       const price = plan.prices.find((p) => p.id === priceId);
@@ -40,12 +50,11 @@ const Step3ConfirmPay: React.FC<Step3Props> = ({
     return null;
   }, [plans, priceId]);
 
-  const childNames = children.filter((c) => selectedChildren.includes(c.id)).map((c) => c.fullName);
-
-  // Convert selectedChildren to numbers array - CRITICAL FIX
-  const childIdsAsNumbers = useMemo(() => {
-    return selectedChildren.map(id => typeof id === 'string' ? parseInt(id, 10) : id);
-  }, [selectedChildren]);
+  const childNames = hasSelectedChildren 
+    ? children
+        .filter((c) => selectedChildren.includes(c.id))
+        .map((c) => c.fullName)
+    : [];
 
   const priceDetails = useMemo(() => {
     if (!selectedPrice) return null;
@@ -69,28 +78,29 @@ const Step3ConfirmPay: React.FC<Step3Props> = ({
   const handleActivate = async () => {
     try {
       setIsLoadingSubscription(true);
-      
-      // Debug logging
-      console.log("Selected Children (original):", selectedChildren);
-      console.log("Child IDs as Numbers:", childIdsAsNumbers);
-      
-      const result = await dispatch(
-        initiatePayment({
-          price_id: priceId,
-          children: childIdsAsNumbers.length > 0 ? childIdsAsNumbers : undefined,
-          is_trial: true,
-          promotion_code: coupon_validation?.code,
-        })
-      );
+      const existingSubscriptionIds = billing_history?.map(sub => sub.id) || [];
+    
+      const payload: any = {
+        price_id: priceId,
+        is_trial: true,
+      };
 
+      if (hasSelectedChildren) {
+        payload.children = selectedChildren as number[];
+      }
+      
+      if (coupon_validation?.code) {
+        payload.promotion_code = coupon_validation.code;
+      }
+      const result = await dispatch(initiatePayment(payload));
       if (!initiatePayment.fulfilled.match(result)) {
         toast.error("Failed to create subscription");
         setIsLoadingSubscription(false);
         return;
       }
 
-      const initiateData = result.payload;
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
       const billingResult = await dispatch(getBillingHistory());
       if (!getBillingHistory.fulfilled.match(billingResult)) {
         toast.error("Subscription created but couldn't retrieve details. Please check your billing page.");
@@ -99,31 +109,48 @@ const Step3ConfirmPay: React.FC<Step3Props> = ({
         return;
       }
       const subscriptions = billingResult.payload;
-      const newSubscription = subscriptions.find(
-  (sub: any) =>
-    sub.status?.toLowerCase() === "trialing" || sub.status?.toLowerCase() === "active"
-);
+      let newSubscription = subscriptions.find((sub: any) => 
+        !existingSubscriptionIds.includes(sub.id)
+      );
 
-      if (!newSubscription) { 
-        toast.error("Subscription created! Redirecting to billing page...");
+      if (!newSubscription) {        
+        if (hasSelectedChildren) {
+          newSubscription = subscriptions.find((sub: any) => {
+            const isTrialing = sub.status?.toLowerCase() === 'trialing';
+            const hasMatchingChild = sub.children?.some((child: any) => 
+              selectedChildren.includes(child.id)
+            );
+            return isTrialing && hasMatchingChild;
+          });
+        } else {
+          const trialingSubscriptions = subscriptions.filter(
+            (sub: any) => sub.status?.toLowerCase() === 'trialing'
+          );
+          
+          if (trialingSubscriptions.length > 0) {
+            newSubscription = trialingSubscriptions.sort((a: any, b: any) => 
+              new Date(b.activated_date).getTime() - new Date(a.activated_date).getTime()
+            )[0];
+          }
+        }
+      }
+
+      if (!newSubscription) {
+        toast.success("Subscription created! Redirecting to billing page...");
         setIsLoadingSubscription(false);
         setTimeout(() => router.push("/parents/billing"), 2000);
         return;
       }
-
-      setSubscriptionData({
+      const subscriptionInfo = {
         subscription_id: newSubscription.id,
         is_trial: newSubscription.status?.toLowerCase() === 'trialing',
         trial_ends_at: newSubscription.expiration_date,
-      });
-      
-
+      };
+      setSubscriptionData(subscriptionInfo);
       setIsLoadingSubscription(false);
       setShowSuccessModal(true);
 
-
     } catch (error) {
-      console.error("Subscription error:", error);
       toast.error("An error occurred. Please try again.");
       setIsLoadingSubscription(false);
     }
@@ -187,12 +214,21 @@ const Step3ConfirmPay: React.FC<Step3Props> = ({
               )}
             </>
           )}
+          
+          {/* Children Section */}
           <div className="mb-6 flex justify-between border-b pb-2">
             <span className="font-medium text-gray-600">Children</span>
             <span className="font-semibold text-gray-900 text-right">
-              {childNames.length > 0 ? childNames.join(", ") : "None selected"}
+              {hasSelectedChildren ? (
+                childNames.join(", ")
+              ) : (
+                <span className="text-gray-400 italic text-sm">
+                  None selected - you can add children later
+                </span>
+              )}
             </span>
           </div>
+
           <div className="mt-8 flex justify-between gap-4">
             <button
               onClick={goBack}
@@ -206,7 +242,7 @@ const Step3ConfirmPay: React.FC<Step3Props> = ({
               disabled={isLoading}
               className="w-1/2 rounded-md bg-mainColor px-4 py-2 text-white disabled:opacity-50"
             >
-              {isLoading ? "Subscribe..." : "Subscribe"}
+              {isLoading ? "Creating Subscription..." : "Start Subscription"}
             </button>
           </div>
         </div>

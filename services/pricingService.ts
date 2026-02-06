@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import http from "axios.config";
 import { closePreloader, openPreloader } from "store/fetchSlice";
-import { CouponValidationResponse, IBilling, InitiatePaymentParams, InitiatePaymentRes, InstitutionInquiryDto, IPlan, ISubscribedPlan, PaidInitiateResponse, PaymentsResponse, PaymentStatus, Subscription, TrialInitiateResponse } from "types/interfaces";
+import { CouponValidationResponse, IBilling, InitiatePaymentRes, InstitutionInquiryDto, IPlan, ISubscribedPlan, PaidInitiateResponse, PaymentsResponse, PaymentStatus, Subscription, TrialInitiateResponse } from "types/interfaces";
 import { errorResolver } from "utils/errorResolver";
 import { getAccessToken } from "utils/getTokens";
 
