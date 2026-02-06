@@ -1,7 +1,11 @@
-import Link from "next/link";
-import { useMemo } from "react";
+import { useRouter } from "next/router";
+import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
+import { initiatePayment, getBillingHistory } from "services/pricingService";
+import { useAppDispatch } from "store/hooks";
 import { RootState } from "store/store";
+import { toast } from "sonner";
+import SubscriptionSuccessModal from "../TrialPaymentRequiredModal";
 
 interface Step3Props {
   priceId: number;
@@ -16,6 +20,17 @@ const Step3ConfirmPay: React.FC<Step3Props> = ({
 }) => {
   const { plans, coupon_validation } = useSelector((state: RootState) => state.pricing);
   const { children } = useSelector((state: RootState) => state.parentChild);
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const { handlers } = useSelector((state: RootState) => state.pricing);
+
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [subscriptionData, setSubscriptionData] = useState<{
+    subscription_id: number;
+    is_trial: boolean;
+    trial_ends_at?: string;
+  } | null>(null);
+  const [isLoadingSubscription, setIsLoadingSubscription] = useState(false);
 
   const selectedPrice = useMemo(() => {
     for (const plan of plans) {
@@ -25,9 +40,12 @@ const Step3ConfirmPay: React.FC<Step3Props> = ({
     return null;
   }, [plans, priceId]);
 
-  const childNames = children
-    .filter((c) => selectedChildren.includes(c.id))
-    .map((c) => c.fullName);
+  const childNames = children.filter((c) => selectedChildren.includes(c.id)).map((c) => c.fullName);
+
+  // Convert selectedChildren to numbers array - CRITICAL FIX
+  const childIdsAsNumbers = useMemo(() => {
+    return selectedChildren.map(id => typeof id === 'string' ? parseInt(id, 10) : id);
+  }, [selectedChildren]);
 
   const priceDetails = useMemo(() => {
     if (!selectedPrice) return null;
@@ -37,7 +55,7 @@ const Step3ConfirmPay: React.FC<Step3Props> = ({
     let finalAmount = baseAmount;
 
     if (coupon_validation?.code && coupon_validation.discount) {
-      if (coupon_validation.discount.type === 'percentage') {
+      if (coupon_validation.discount.type === "percentage") {
         discount = (baseAmount * coupon_validation.discount.value) / 100;
       } else {
         discount = coupon_validation.discount.value;
@@ -47,87 +65,165 @@ const Step3ConfirmPay: React.FC<Step3Props> = ({
 
     return { baseAmount, discount, finalAmount };
   }, [selectedPrice, coupon_validation]);
-  const paymentUrl = useMemo(() => {
-    if (!priceDetails) return '#';
-    
-    const params = new URLSearchParams({
-      price_id: String(priceId),
-      children: selectedChildren.join(","),
-      amount: String(Math.round(priceDetails.finalAmount * 100)), // Send in cents
-    });
-    
-    if (coupon_validation?.code) {
-      params.append('coupon', coupon_validation.code);
+
+  const handleActivate = async () => {
+    try {
+      setIsLoadingSubscription(true);
+      
+      // Debug logging
+      console.log("Selected Children (original):", selectedChildren);
+      console.log("Child IDs as Numbers:", childIdsAsNumbers);
+      
+      const result = await dispatch(
+        initiatePayment({
+          price_id: priceId,
+          children: childIdsAsNumbers.length > 0 ? childIdsAsNumbers : undefined,
+          is_trial: true,
+          promotion_code: coupon_validation?.code,
+        })
+      );
+
+      if (!initiatePayment.fulfilled.match(result)) {
+        toast.error("Failed to create subscription");
+        setIsLoadingSubscription(false);
+        return;
+      }
+
+      const initiateData = result.payload;
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      const billingResult = await dispatch(getBillingHistory());
+      if (!getBillingHistory.fulfilled.match(billingResult)) {
+        toast.error("Subscription created but couldn't retrieve details. Please check your billing page.");
+        setIsLoadingSubscription(false);
+        setTimeout(() => router.push("/parents/billing"), 2000);
+        return;
+      }
+      const subscriptions = billingResult.payload;
+      const newSubscription = subscriptions.find(
+  (sub: any) =>
+    sub.status?.toLowerCase() === "trialing" || sub.status?.toLowerCase() === "active"
+);
+
+      if (!newSubscription) { 
+        toast.error("Subscription created! Redirecting to billing page...");
+        setIsLoadingSubscription(false);
+        setTimeout(() => router.push("/parents/billing"), 2000);
+        return;
+      }
+
+      setSubscriptionData({
+        subscription_id: newSubscription.id,
+        is_trial: newSubscription.status?.toLowerCase() === 'trialing',
+        trial_ends_at: newSubscription.expiration_date,
+      });
+      
+
+      setIsLoadingSubscription(false);
+      setShowSuccessModal(true);
+
+
+    } catch (error) {
+      console.error("Subscription error:", error);
+      toast.error("An error occurred. Please try again.");
+      setIsLoadingSubscription(false);
     }
-    
-    return `/parents/billing/payment?${params.toString()}`;
-  }, [priceId, selectedChildren, coupon_validation, priceDetails]);
+  };
+
+  const handleCloseModal = () => {
+    setShowSuccessModal(false);
+    router.push("/parents/billing");
+  };
+
+  const handleAddPayment = () => {
+    if (!subscriptionData?.subscription_id) {
+      toast.error("Missing subscription information");
+      return;
+    }
+    setShowSuccessModal(false);
+    router.push(
+      `/parents/billing/payment?subscription_id=${subscriptionData.subscription_id}`
+    );
+  };
+
+  const isLoading = handlers.initiate_payment_loading || isLoadingSubscription;
 
   return (
-    <div className="group flex-1 overflow-hidden rounded-lg rounded-tr-[30px] border bg-white shadow-sm">
-      <div className="flex justify-center bg-mainColor px-4 py-6 text-white">
-        <h2 className="text-lg font-bold">Confirm & Pay</h2>
-      </div>
-
-      <div className="px-6 py-6">
-        {selectedPrice && priceDetails && (
-          <>
-            <div className="mb-4 flex justify-between border-b pb-2">
-              <span className="font-medium text-gray-600">Plan</span>
-              <span className="font-semibold text-gray-900">
-                {selectedPrice.plan.name} – ₦{priceDetails.baseAmount.toFixed(2)} /{" "}
-                {selectedPrice.price.interval.toLowerCase()}
-              </span>
-            </div>
-
-            {coupon_validation?.code && priceDetails.discount > 0 && (
-              <>
-                <div className="mb-4 flex justify-between border-b pb-2">
-                  <span className="font-medium text-gray-600">
-                    Coupon Discount
-                    {coupon_validation?.code &&
-                      ` (${coupon_validation?.code})`
-                    }
-                  </span>
-                  <span className="font-semibold text-green-600">
-                    -₦{priceDetails.discount.toFixed(2)}
-                  </span>
-                </div>
-
-                <div className="mb-4 flex justify-between border-b pb-2">
-                  <span className="font-medium text-gray-600">Total</span>
-                  <span className="font-bold text-gray-900">
-                    ₦{priceDetails.finalAmount.toFixed(2)}
-                  </span>
-                </div>
-              </>
-            )}
-          </>
-        )}
-
-        <div className="mb-6 flex justify-between border-b pb-2">
-          <span className="font-medium text-gray-600">Children</span>
-          <span className="font-semibold text-gray-900 text-right">
-            {childNames.join(", ")}
-          </span>
+    <>
+      <div className="group flex-1 overflow-hidden rounded-lg rounded-tr-[30px] border bg-white shadow-sm">
+        <div className="flex justify-center bg-mainColor px-4 py-6 text-white">
+          <h2 className="text-lg font-bold">Confirm & Pay</h2>
         </div>
 
-        <div className="mt-8 flex justify-between gap-4">
-          <button
-            onClick={goBack}
-            className="w-1/2 rounded-md border border-gray-300 bg-gray-100 px-4 py-2"
-          >
-            Back
-          </button>
+        <div className="px-6 py-6">
+          {selectedPrice && priceDetails && (
+            <>
+              <div className="mb-4 flex justify-between border-b pb-2">
+                <span className="font-medium text-gray-600">Plan</span>
+                <span className="font-semibold text-gray-900">
+                  {selectedPrice.plan.name} – ${priceDetails.baseAmount.toFixed(2)} /{" "}
+                  {selectedPrice.price.interval.toLowerCase()}
+                </span>
+              </div>
 
-          <Link href={paymentUrl} className="w-1/2">
-            <button className="w-full rounded-md bg-mainColor px-4 py-2 text-white">
-              Activate
+              {coupon_validation?.code && priceDetails.discount > 0 && (
+                <>
+                  <div className="mb-4 flex justify-between border-b pb-2">
+                    <span className="font-medium text-gray-600">
+                      Coupon Discount
+                      {coupon_validation?.code && ` (${coupon_validation?.code})`}
+                    </span>
+                    <span className="font-semibold text-green-600">
+                      -${priceDetails.discount.toFixed(2)}
+                    </span>
+                  </div>
+
+                  <div className="mb-4 flex justify-between border-b pb-2">
+                    <span className="font-medium text-gray-600">Total</span>
+                    <span className="font-bold text-gray-900">
+                      ${priceDetails.finalAmount.toFixed(2)}
+                    </span>
+                  </div>
+                </>
+              )}
+            </>
+          )}
+          <div className="mb-6 flex justify-between border-b pb-2">
+            <span className="font-medium text-gray-600">Children</span>
+            <span className="font-semibold text-gray-900 text-right">
+              {childNames.length > 0 ? childNames.join(", ") : "None selected"}
+            </span>
+          </div>
+          <div className="mt-8 flex justify-between gap-4">
+            <button
+              onClick={goBack}
+              disabled={isLoading}
+              className="w-1/2 rounded-md border border-gray-300 bg-gray-100 px-4 py-2 disabled:opacity-50"
+            >
+              Back
             </button>
-          </Link>
+            <button
+              onClick={handleActivate}
+              disabled={isLoading}
+              className="w-1/2 rounded-md bg-mainColor px-4 py-2 text-white disabled:opacity-50"
+            >
+              {isLoading ? "Subscribe..." : "Subscribe"}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* Success Modal */}
+      {subscriptionData && (
+        <SubscriptionSuccessModal
+          open={showSuccessModal}
+          onClose={handleCloseModal}
+          onAddPayment={handleAddPayment}
+          subscriptionId={subscriptionData.subscription_id}
+          isTrialSubscription={subscriptionData.is_trial}
+          trialEndsAt={subscriptionData.trial_ends_at}
+        />
+      )}
+    </>
   );
 };
 

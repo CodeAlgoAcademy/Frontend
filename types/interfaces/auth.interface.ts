@@ -26,6 +26,7 @@ export interface IUserData {
    is_teacher: boolean;
    dob: string;
    organization_code: "";
+   has_created_subscription?: boolean;
 }
 
 export interface User {

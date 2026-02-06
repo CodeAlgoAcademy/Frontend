@@ -6,13 +6,11 @@ const BillingStepper = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedChildren, setSelectedChildren] = useState<(string | number)[]>([]);
   const [priceId, setPriceId] = useState<number | null>(null);
-  console.log(priceId, "price id")
   const goNext = () => setCurrentStep((s) => s + 1);
   const goBack = () => setCurrentStep((s) => s - 1);
 
   return (
     <div>
-      {/* Step Indicator */}
       <div className="flex items-center justify-between mb-6">
         {["Select Plan & Children", "Confirm & Pay"].map((label, i) => (
           <div key={i} className="flex-1 text-center">

@@ -1,21 +1,20 @@
-
 import ParentLayout from "@/components/layouts/ParentLayout";
 import BillingHistory from "./BillingHistory";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getActiveSubscription } from "services/pricingService";
+import { getActiveSubscription, getBillingHistory } from "services/pricingService";
 import { RootState } from "store/store";
 import BillingStepper from "./Stepper/BillingStepper.tsx";
+import SubscriptionChildrenCard from "./SubscriptionChildrenCard"
 
 const BillingPage = () => {
   const { active_subscription } = useSelector((state: RootState) => state.pricing);
-  const currentChild = useSelector((state: RootState) => state.parentChild.currentChild);
   const dispatch = useDispatch();
-  console.log(active_subscription, "active plan")
 
- useEffect(() => {
-      dispatch(getActiveSubscription());
-   }, []);
+  useEffect(() => {
+    dispatch(getActiveSubscription());
+    dispatch(getBillingHistory());
+  }, [dispatch]);
 
   return (
     <ParentLayout title="Billing">
@@ -28,8 +27,8 @@ const BillingPage = () => {
             </span>
           </p>
         )}
-
- <BillingStepper />
+        <BillingStepper />
+    <SubscriptionChildrenCard />
         <BillingHistory />
       </div>
     </ParentLayout>

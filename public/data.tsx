@@ -25,6 +25,13 @@ export interface IArticle {
 
 export const articles: IArticle[] = [
   {
+   title: "CodeAlgo Academy hits classrooms as the edtech platform (and founder) proves independence.",
+   body: "After years of putting the building blocks together, Triumfia Houmbie Fulks’ edtech startup has officially entered the game, the founder said, noting she launched the coding platform into area schools this fall.",
+   date: "February 03, 2026",            
+   image: "/assets/blog/press/codealgopoto.jpg",
+   detailPage: "/codeAlgo-academy-hits-as-edtech-platform",
+},
+  {
    title: "Real, live astronaut’ preaches courage for unlimited imagination to LINC, CodeAlgo students.",
    body: "The 11 -year-old LINC student knew that he and his King Elementary classmates were special invitees because they were in an after-school coding program. He knew the bus had delivered them to an engineering firm — Burns & McDonnell.",
    date: "January 13, 2026",            

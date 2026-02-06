@@ -1,94 +1,67 @@
 import { PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import React, { FormEvent, useState } from "react";
-import BillingSummary from "./BillingSummary";
-import { useSelector } from "react-redux";
-import { RootState } from "store/store";
 import { toast } from "sonner";
-import { useRouter } from "next/router";
 import Loader from "@/components/UI/loader";
 
 interface PaymentFormProps {
-  amount: number;
+  subscriptionId: number;
 }
 
-const PaymentForm: React.FC<PaymentFormProps> = ({ amount }) => {
-   const { initiated_payment } = useSelector((state: RootState) => state.pricing);
-   
-   const { push } = useRouter();
-   const stripe = useStripe();
-   const elements = useElements();
-   const [isLoading, setIsLoading] = useState(false);
-   const [isPaymentElementReady, setIsPaymentElementReady] = useState(false);
+const PaymentForm: React.FC<PaymentFormProps> = ({ subscriptionId }) => {
+  const stripe = useStripe();
+  const elements = useElements();
+  const [isLoading, setIsLoading] = useState(false);
 
-   const handleSubmit = async (e: FormEvent) => {
-      e.preventDefault();
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
 
-      if (!stripe || !elements) {
-         return;
-      }
+    if (!stripe || !elements) {
+      toast.error("Payment form not ready");
+      return;
+    }
 
-      setIsLoading(true);
+    setIsLoading(true);
 
-      const { error } = await stripe.confirmPayment({
-         elements,
-         confirmParams: {
-            return_url: `${window.location.origin}/payment/confirm`,
-         },
+    try {
+      const { error } = await stripe.confirmSetup({
+        elements,
+        confirmParams: {
+          return_url: `${window.location.origin}/parents/billing/payment/confirm?subscription_id=${subscriptionId}`,
+        },
       });
 
-      if (error?.type === "card_error" || error?.type === "validation_error") {
-         toast.error(error.message);
-      } else if (error) {
-         toast.error("An unexpected error occurred");
+      if (error) {
+        toast.error(error.message || "Failed to save payment method");
+        console.error("Stripe error:", error);
+        setIsLoading(false);
+        return;
       }
-
       setIsLoading(false);
-   };
 
-   return (
-      <form
-         onSubmit={handleSubmit}
-         className="mt-8 flex w-full items-start gap-8 max-lg:flex-col"
-      >
-         <div className="w-full flex-[.7]">
-            <PaymentElement
-               id="payment-element"
-               options={{
-                  layout: "tabs",
-                  business: {
-                     name: "CodeAlgo LLC",
-                  },
-               }}
-               onReady={() => setIsPaymentElementReady(false)}
-               onChange={(event) => {
-                  setIsPaymentElementReady(event.complete);
-               }}
-            />
-         </div>
+    } catch (error) {
+      console.error("Payment form error:", error);
+      toast.error("An unexpected error occurred");
+      setIsLoading(false);
+    }
+  };
 
-         <div className="w-full flex-[.3]">
-            <BillingSummary amount={amount} />
+  return (
+    <form onSubmit={handleSubmit} className="mt-8">
+      <div className="mb-6">
+        <PaymentElement />
+      </div>
 
-            <div className="mt-8 flex justify-end gap-3">
-               <button
-                  className="w-[100px] rounded-[4px] border border-black bg-white px-4 py-2 text-xs text-black"
-                  onClick={() => push("/parents/billing")}
-                  type="button"
-                  disabled={isLoading}
-               >
-                  Cancel
-               </button>
-               <button
-                  disabled={isLoading || !isPaymentElementReady}
-                  className="flex w-[100px] items-center justify-center rounded-[4px] bg-mainColor px-4 py-2 text-xs text-white transition-colors hover:bg-mainColor/90 disabled:cursor-not-allowed disabled:bg-gray-100"
-                  type="submit"
-               >
-                  {isLoading ? <Loader color="gray" /> : "Proceed"}
-               </button>
-            </div>
-         </div>
-      </form>
-   );
+      <div className="flex justify-end gap-4">
+        <button
+          type="submit"
+          disabled={isLoading || !stripe || !elements}
+          className="rounded bg-mainColor px-6 py-2 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isLoading ? <Loader color="white" /> : "Save Payment Method"}
+        </button>
+      </div>
+    </form>
+  );
 };
 
 export default PaymentForm;
