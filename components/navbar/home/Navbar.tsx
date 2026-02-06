@@ -117,39 +117,9 @@ const Navbar = () => {
     size="medium"
     className="w-[100px] h-[44px] bg-mainRed font-bold !text-white flex items-center justify-center hover:bg-mainRed/80"
   >
-    <span className="no-contrast-adjust">PLAY GAME</span>
+    <span className="no-contrast-adjust">Play Game</span>
   </CustomButton>
 </div>
-
-
-
-          {/* <div className="flex items-center gap-4 max-md:hidden">
-              <CustomButton
-              onClick={() => push("/login")}
-              variant="filled"
-              size="medium"
-              className="bg-mainRed font-bold !text-white hover:bg-mainRed/80 max-md:hidden"
-            >
-              <span className="no-contrast-adjust">Login </span>
-            </CustomButton>
-            <CustomButton
-              onClick={() => setShowAppModal(true)}
-              variant="outline"
-              size="medium"
-              className="font-bold !text-white max-md:hidden"
-            >
-              <span className="no-contrast-adjust">Get App</span>
-            </CustomButton>
-            <CustomButton
-              onClick={() => push("https://play.codealgoacademy.com")}
-              variant="filled"
-              size="medium"
-              className="bg-mainRed font-bold !text-white hover:bg-mainRed/80 max-md:hidden"
-            >
-              <span className="no-contrast-adjust">PLAY GAME</span>
-            </CustomButton>
-          </div> */}
-
           <BiMenu
             className="text-white md:hidden"
             size={28}
