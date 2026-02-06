@@ -263,7 +263,7 @@ const Step2SelectChildren: React.FC<Step2Props> = ({ selectedChildren, setSelect
 
             <div className="mt-8">
                <button
-                  disabled={!selectedPriceId}
+                disabled={!selectedPriceId || selectedChildren.length === 0}
                   onClick={goNext}
                   className="w-full rounded-md bg-mainColor px-4 py-2 text-white disabled:opacity-50"
                >
