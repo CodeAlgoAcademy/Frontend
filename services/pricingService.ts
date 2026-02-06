@@ -40,8 +40,6 @@ export const getAllPayment: any = createAsyncThunk("pricingService/getPlans", as
    }
 });
 
-
-
 export const initiatePayment = createAsyncThunk(
   "initiatePayment",
   async (
@@ -50,21 +48,23 @@ export const initiatePayment = createAsyncThunk(
       children,
       is_trial,
       promotion_code,
-    }: InitiatePaymentParams,
+    }: {
+      price_id: number;
+      children: number[];
+      is_trial: boolean;
+      promotion_code?: string;
+    },
     thunkApi
   ) => {
     try {
-      const payload: any = {
-        price_id,
-        is_trial,
-      };
-      
-      if (promotion_code) {
-        payload.promotion_code = promotion_code;
-      }
       const response = await http.post<TrialInitiateResponse>(
         "/payment/subscription/initiate",
-        payload,
+        {
+          price_id,
+          children,
+          is_trial,
+          promotion_code,
+        },
         {
           headers: {
             Authorization: `Bearer ${getAccessToken()}`,

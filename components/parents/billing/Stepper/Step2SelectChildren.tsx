@@ -202,10 +202,6 @@ const Step2SelectChildren: React.FC<Step2Props> = ({ selectedChildren, setSelect
                               />
                               <span className="font-medium">{child.fullName}</span>
                            </div>
-
-                           {isAlreadySubscribed && (
-                              <span className="rounded-full bg-green-100 px-2 py-1 text-xs font-semibold text-green-600">Added to Subscription</span>
-                           )}
                         </label>
                      );
                   })}
