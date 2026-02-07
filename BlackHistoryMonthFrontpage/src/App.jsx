@@ -4,7 +4,7 @@ const App = () => {
     console.log("Rendering App with Images");
 
     return (
-        <div className="min-h-screen w-full bg-[url('/images/background_bluepink.png')] bg-contain bg-center bg-no-repeat">
+        <div className="min-h-screen w-full bg-[url('/images/blackhistorybackground.png')] bg-cover bg-center bg-no-repeat">
 
             {/* --- NAVBAR --- */}
             <nav className="bg-stone-900 text-white py-4 px-6 flex items-center shadow-xl">
@@ -34,8 +34,8 @@ const App = () => {
                         Celebrating Black History Through
                     </h1>
                     <h2
-                        className="text-6xl md:text-8xl font-black text-red-600 tracking-wider drop-shadow-lg"
-                        style={{ WebkitTextStroke: '2px black' }}
+                        className="text-6xl md:text-8xl font-black text-red-800 tracking-wider drop-shadow-lg"
+                        style={{ WebkitTextStroke: '2px brown' }}
                     >
                         CODING
                     </h2>
@@ -45,16 +45,18 @@ const App = () => {
 
                 
 
-                <p className="max-w-2xl mt-8 text-1xl md:text-3xl font-bold text-gray-700 mb-16 font-mono leading-relaxed">
-Engaging coding activities that support logical reasoning, creativity, and critical thinking - while honoring history
+                <p className="max-w-3xl mt-8 text-1xl md:text-3xl font-bold text-gray-700 mb-16 font-mono leading-relaxed">
+                Engaging coding activities that support logical reasoning, creativity, and critical thinking - while honoring history
                 </p>
 
-                 {/* Main Button */}
+                
+                 {/* --- MAIN CTA & IMAGES --- */}
+                <div className="flex flex-col md:flex-row items-center justify-center gap-8 w-full mb-20">
+
+                    {/* Main Button */}
                     <button className="bg-yellow-400 border-b-4 border-yellow-600 text-black text-2xl font-black py-4 px-10 rounded-xl shadow-2xl hover:translate-y-1 hover:border-b-0 hover:mt-1 transition-all z-10">
                         TRY GAME FOR FREE
                     </button>
-                {/* --- MAIN CTA & IMAGES --- */}
-                <div className="flex flex-col md:flex-row items-center justify-center gap-8 w-full mb-20">
 
                     {/* Character Images Group */}
                     {/* Used 'items-end' to align them at the bottom so they sit on the same invisible floor */}
@@ -81,40 +83,53 @@ Engaging coding activities that support logical reasoning, creativity, and criti
                             className="w-20 md:w-24 transform rotate-12 hover:rotate-0 transition-transform duration-300"
                         />
 
-                        {/* 4. DONUT IMAGE - Increased size for impact */}
+                    </div>
+                </div>
+
+                {/* --- BOTTOM GRID --- */}
+                <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-12 items-end">
+
+                    {/* LEFT: Donut + Pink Bubble */}
+                    <div className="flex flex-col items-center relative group">
+                        {/* Speech Bubble */}
+                        <div className="bg-red-300 border-6 border-red-900 p-6 rounded-2xl shadow-xl relative mb-4 w-64 transform group-hover:-translate-y-2 transition-transform">
+                            <p className="font-black text-black-800 text-lg">Sign up now for</p>
+                            <p className="font-black text-2xl text-black">only 259$/Year!</p>
+                            <div className="absolute -bottom-3 left-10 w-6 h-6 bg-red-300 border-r-4 border-b-2 border-red-900 transform rotate-45"></div>
+                        </div>
+
+                        {/* DONUT IMAGE - Increased size for impact */}
                         <img
                             src="public/images/donut-character.png"
                             alt="Donut Character"
                             className="w-40 md:w-56 drop-shadow-2xl"
                         />
-
-                        {/* Pink Bubble */}
-                    <div className="flex flex-col items-center relative group">
-                        {/* Speech Bubble */}
-                        <div className="mb-50 bg-green-300 border-2 border-white p-6 rounded-2xl shadow-xl relative mb-4 w-64 transform group-hover:-translate-y-2 transition-transform">
-                            <p className="font-bold text-black-800 text-lg">Sign up now for</p>
-                            <p className="font-black text-2xl text-black">only 259$/Year!</p>
-                            <div className="absolute -bottom-3 left-10 w-6 h-6 bg-pink-300 border-r-2 border-b-2 border-white transform rotate-45"></div>
-                        </div>
-
                     </div>
 
-                    {/* Action Buttons */}
-                    <div className="flex flex-col gap-6 w-full px-4 mb-8">
-                        <button className="w-full bg-blue-500 border-b-4 border-blue-700 text-white font-bold text-2xl py-4 rounded-lg shadow-lg uppercase hover:brightness-110 active:border-b-0 active:translate-y-1">
+                    {/* CENTER: Action Buttons */}
+                    <div className="flex flex-col gap-6 w-full px-4 mb-25">
+                        <button className="w-full bg-green-500 border-b-4 border-green-700 text-black font-black text-2xl py-4 rounded-lg shadow-lg uppercase hover:brightness-110 active:border-b-0 active:translate-y-1">
                             Sign Up Now
                         </button>
 
                         <div className="flex flex-col gap-2">
                             <span className="font-bold text-gray-600">Already have an account?</span>
-                            <button className="w-full bg-pink-400 border-b-4 border-pink-600 text-white font-bold text-xl py-3 rounded-lg shadow uppercase hover:brightness-110">
+                            <button className="w-full bg-yellow-400 border-b-4 border-yellow-600 text-black font-black text-xl py-3 rounded-lg shadow uppercase hover:brightness-110">
                                 Click here to sign in
                             </button>
-
+                        </div>
                     </div>
-                </div>
-                </div>
 
+                    {/* RIGHT: Quote Bubble */}
+                    <div className="flex flex-col items-center mb-8">
+                        <div className="bg-red-300 border-6 border-red-900 p-11 rounded-2xl shadow-xl relative w-full transform hover:scale-105 transition-transform">
+                            <p className="font-mono font-bold text-black text-2xl leading-tight">
+                                "You lose your curiosity when you stop learning" <br/>
+                                <span className="text-sm mt-2 block opacity-75">- Katherine Johnson</span>
+                            </p>
+                            <div className="absolute -bottom-3 right-10 w-6 h-6 bg-red-300 border-r-4 border-b-2 border-red-900 transform rotate-45"></div>
+                        </div>
+                    </div>
                 </div>
             </main>
         </div>
