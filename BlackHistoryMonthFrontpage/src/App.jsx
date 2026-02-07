@@ -31,29 +31,28 @@ const App = () => {
                 {/* HEADLINE */}
                 <div className="mb-10 relative z-10">
                     <h1 className="text-4xl md:text-5xl font-bold text-black mb-2 tracking-tight">
-                        Help your Child Learn
+                        Celebrating Black History Through
                     </h1>
                     <h2
-                        className="text-6xl md:text-8xl font-black text-blue-600 tracking-wider drop-shadow-lg"
+                        className="text-6xl md:text-8xl font-black text-red-600 tracking-wider drop-shadow-lg"
                         style={{ WebkitTextStroke: '2px black' }}
                     >
                         CODING
                     </h2>
-                                        <h1 className="text-4xl md:text-5xl font-bold text-black mb-2 tracking-tight">
-                        the Fun Way
-                    </h1>
+                              
+            
                 </div>
 
-                {/* Main Button */}
-                    <button className="bg-red-400 border-b-4 border-red-600 text-white text-2xl font-black py-4 px-10 rounded-xl shadow-2xl hover:translate-y-1 hover:border-b-0 hover:mt-1 transition-all z-10">
-                        TRY GAME FOR FREE
-                    </button>
+                
 
-                <p className="max-w-2xl mt-8 text-2xl md:text-3xl font-bold text-gray-700 mb-16 font-mono leading-relaxed">
-                    Designed for Kids. Trusted by Parents.
+                <p className="max-w-2xl mt-8 text-1xl md:text-3xl font-bold text-gray-700 mb-16 font-mono leading-relaxed">
+Engaging coding activities that support logical reasoning, creativity, and critical thinking - while honoring history
                 </p>
 
-
+                 {/* Main Button */}
+                    <button className="bg-yellow-400 border-b-4 border-yellow-600 text-black text-2xl font-black py-4 px-10 rounded-xl shadow-2xl hover:translate-y-1 hover:border-b-0 hover:mt-1 transition-all z-10">
+                        TRY GAME FOR FREE
+                    </button>
                 {/* --- MAIN CTA & IMAGES --- */}
                 <div className="flex flex-col md:flex-row items-center justify-center gap-8 w-full mb-20">
 
@@ -92,8 +91,8 @@ const App = () => {
                         {/* Pink Bubble */}
                     <div className="flex flex-col items-center relative group">
                         {/* Speech Bubble */}
-                        <div className="mb-50 bg-pink-300 border-2 border-white p-6 rounded-2xl shadow-xl relative mb-4 w-64 transform group-hover:-translate-y-2 transition-transform">
-                            <p className="font-bold text-gray-800 text-lg">Sign up now for</p>
+                        <div className="mb-50 bg-green-300 border-2 border-white p-6 rounded-2xl shadow-xl relative mb-4 w-64 transform group-hover:-translate-y-2 transition-transform">
+                            <p className="font-bold text-black-800 text-lg">Sign up now for</p>
                             <p className="font-black text-2xl text-black">only 259$/Year!</p>
                             <div className="absolute -bottom-3 left-10 w-6 h-6 bg-pink-300 border-r-2 border-b-2 border-white transform rotate-45"></div>
                         </div>
