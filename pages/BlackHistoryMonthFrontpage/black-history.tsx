@@ -4,13 +4,13 @@ const App: React.FC = () => {
     console.log("Rendering App with Images");
 
     return (
-        <div className="min-h-screen w-full bg-[url('/images/blackhistorybackground.png')] bg-cover bg-center bg-no-repeat">
+        <div className="min-h-screen w-full bg-[url('/assets/images/blackhistorybackground.png')] bg-cover bg-center bg-no-repeat">
 
             {/* --- NAVBAR --- */}
             <nav className="bg-stone-900 text-white py-4 px-6 flex items-center shadow-xl">
                 <div className="flex items-center gap-3">
                     {}
-                    <img src="../../public/assets/images/logo_white.png" alt="logo" className="h-10" />
+                    <img src="/assets/images/logo_white.png" alt="logo" className="h-10" />
                 </div>
 
                 <div className="hidden md:flex gap-8 text-sm font-medium text-gray-300 ml-10">
@@ -58,21 +58,21 @@ const App: React.FC = () => {
                     <div className="flex items-end gap-4 mt-8 md:mt-0">
                         {/* 1. Banana */}
                         <img
-                            src="../../public/assets/images/banana-character.png"
+                            src="/assets/images/banana-character.png"
                             alt="Banana Character"
                             className="w-20 md:w-24 transform -rotate-12 hover:rotate-0 transition-transform duration-300"
                         />
 
                         {/* 2. Laptop (Center) */}
                         <img
-                            src="../../public/assets/images/laptop-icon.png"
+                            src="/assets/images/laptop-icon.png"
                             alt="Laptop Coding"
                             className="w-24 md:w-32 drop-shadow-xl"
                         />
 
                         {/* 3. Cookie */}
                         <img
-                            src="../../public/assets/images/cookie-character.png"
+                            src="/assets/images/cookie-character.png" 
                             alt="Cookie Character"
                             className="w-20 md:w-24 transform rotate-12 hover:rotate-0 transition-transform duration-300"
                         />
@@ -93,7 +93,7 @@ const App: React.FC = () => {
 
                         {/* DONUT IMAGE */}
                         <img
-                            src="../../public/assets/images/donut-character.png"
+                            src="/assets/images/donut-character.png"
                             alt="Donut Character"
                             className="w-40 md:w-56 drop-shadow-2xl"
                         />
