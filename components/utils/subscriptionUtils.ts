@@ -1,7 +1,7 @@
 
 import { Subscription } from "types/interfaces";
 
-export const getActiveSubscription = (billing_history: Subscription[] | undefined): Subscription | null => {
+export const getActiveSubscription = (billing_history: Subscription[] | null): Subscription | null => {
   if (!billing_history || billing_history.length === 0) return null;
   
   return billing_history.find(

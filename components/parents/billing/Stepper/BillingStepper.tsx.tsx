@@ -6,7 +6,7 @@ import Step3ConfirmPay from "./Step3ConfirmPay";
 //   resetToStepOne: () => void;
 // }
 
-const BillingStepper = forwardRef<any>((props, ref) => {
+const BillingStepper = forwardRef<any>(() => {
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedChildren, setSelectedChildren] = useState<(string | number)[]>([]);
   const [priceId, setPriceId] = useState<number | null>(null);

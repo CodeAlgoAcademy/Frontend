@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getActiveSubscription, getBillingHistory } from "services/pricingService";
 import { RootState } from "store/store";
 import BillingStepper from "./Stepper/BillingStepper.tsx";
-import { BillingStepperHandle } from "./Stepper/BillingStepper.tsx";
 import { useRouter } from "next/router";
 import TrialExpiryCard from "./TrialExpiryCard";
 import SubscriptionChildrenCard from "./SubscriptionChildrenCard";
@@ -14,7 +13,6 @@ const BillingPage = () => {
   const { active_subscription, billing_history } = useSelector((state: RootState) => state.pricing);
   const dispatch = useDispatch();
   const router = useRouter();
-  const stepperRef = useRef<BillingStepperHandle>(null);
 
   useEffect(() => {
     dispatch(getActiveSubscription());
@@ -38,7 +36,6 @@ const BillingPage = () => {
   };
 
   const handleChangePlan = () => {
-    stepperRef.current?.resetToStepOne();
     document.getElementById('stepper-section')?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -54,7 +51,7 @@ const BillingPage = () => {
           </p>
         )}
         <div id="stepper-section">
-          <BillingStepper ref={stepperRef} />
+          <BillingStepper/>
         </div>
         <SubscriptionChildrenCard />
         {expiringTrial && (
