@@ -9,6 +9,7 @@ export interface PricingSlice {
     active_subscription_loading: boolean;
     billing_history_loading: boolean;
     coupon_validation_loading: boolean;
+    reactivate_subscription_loading: boolean;
   };
   initiated_payment?: TrialInitiateResponse;
   coupon_validation?: CouponValidationResponse;
@@ -132,13 +133,16 @@ export interface Subscription {
   is_active: string;
   activated_date: string; 
   expiration_date: string; 
+  trial_ends_at:string;
+  cancel_at_period_end:boolean;
+  canceled_at: string;
   children: Child[];
   payment_status: string;
   amount: number;
   currency: string;
   payment_date: string;
   charged_amount: number;
-}
+} 
 export interface CouponValidationResponse {
   code: string;
   discount: {

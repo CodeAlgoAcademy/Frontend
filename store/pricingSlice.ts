@@ -6,7 +6,9 @@ import {
   initiatePayment, 
   verifyPayment, 
   validateCoupon, 
-  attachPaymentMethod 
+  attachPaymentMethod,
+  cancelSubscription,
+  reactivateSubscription
 } from "../services/pricingService";
 import { 
   CouponValidationResponse, 
@@ -30,6 +32,7 @@ const initialState: PricingSlice = {
     active_subscription_loading: false,
     billing_history_loading: false,
     coupon_validation_loading: false,
+    reactivate_subscription_loading: false, // ✅ ADDED THIS
   },
   initiated_payment: undefined,
   payment_verification_status: undefined,
@@ -71,19 +74,19 @@ const pricingSlice = createSlice({
         state.initiated_payment = undefined;
       })
       .addCase(verifyPayment.pending, (state) => {
-        state.handlers.verify_payment_loading = true; // ✅ Fixed
+        state.handlers.verify_payment_loading = true;
         state.payment_verification_status = "pending";
       })
       .addCase(verifyPayment.fulfilled, (state, action: PayloadAction<PaymentStatus>) => {
-        state.handlers.verify_payment_loading = false; // ✅ Fixed
+        state.handlers.verify_payment_loading = false;
         state.payment_verification_status = action.payload;
       })
       .addCase(verifyPayment.rejected, (state) => {
-        state.handlers.verify_payment_loading = false; // ✅ Fixed
+        state.handlers.verify_payment_loading = false;
         state.payment_verification_status = undefined;
       })
       .addCase(getActiveSubscription.pending, (state) => {
-        state.handlers.active_subscription_loading = true; // ✅ Fixed
+        state.handlers.active_subscription_loading = true;
         state.active_subscription = undefined;
       })
       .addCase(getActiveSubscription.fulfilled, (state, action: PayloadAction<ISubscribedPlan>) => {
@@ -105,7 +108,7 @@ const pricingSlice = createSlice({
         state.handlers.billing_history_loading = false;
       })
       .addCase(validateCoupon.pending, (state) => {
-        state.handlers.coupon_validation_loading = true; // ✅ Fixed
+        state.handlers.coupon_validation_loading = true;
       })
       .addCase(validateCoupon.fulfilled, (state, action: PayloadAction<CouponValidationResponse>) => {
         state.handlers.coupon_validation_loading = false;
@@ -123,6 +126,39 @@ const pricingSlice = createSlice({
       })
       .addCase(attachPaymentMethod.rejected, (state) => {
         state.handlers.initiate_payment_loading = false;
+      })
+      .addCase(cancelSubscription.pending, (state) => {
+        state.handlers.initiate_payment_loading = true;
+      })
+      .addCase(cancelSubscription.fulfilled, (state) => {
+        state.handlers.initiate_payment_loading = false;
+      })
+      .addCase(cancelSubscription.rejected, (state) => {
+        state.handlers.initiate_payment_loading = false;
+      })
+      // ========== REACTIVATE SUBSCRIPTION ==========
+      .addCase(reactivateSubscription.pending, (state) => {
+        state.handlers.reactivate_subscription_loading = true;
+      })
+      .addCase(reactivateSubscription.fulfilled, (state, action) => {
+        state.handlers.reactivate_subscription_loading = false;
+        // Update the subscription in billing_history
+        if (state.billing_history) {
+          const index = state.billing_history.findIndex(
+            (sub) => sub.id === action.meta.arg
+          );
+          if (index !== -1) {
+            state.billing_history[index] = {
+              ...state.billing_history[index],
+              cancel_at_period_end: false,
+              canceled_at: "",
+            };
+          }
+        }
+      })
+      .addCase(reactivateSubscription.rejected, (state, action) => {
+        state.handlers.reactivate_subscription_loading = false;
+        console.error("Reactivate subscription failed:", action.payload);
       });
   },
 });

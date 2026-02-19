@@ -1,16 +1,31 @@
-import { useState } from "react";
+import React, { useState, useImperativeHandle, forwardRef, useCallback } from "react";
 import Step2SelectChildren from "./Step2SelectChildren";
 import Step3ConfirmPay from "./Step3ConfirmPay";
 
-const BillingStepper = () => {
+// export interface BillingStepperHandle {
+//   resetToStepOne: () => void;
+// }
+
+const BillingStepper = forwardRef<any>((props, ref) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedChildren, setSelectedChildren] = useState<(string | number)[]>([]);
   const [priceId, setPriceId] = useState<number | null>(null);
+
   const goNext = () => setCurrentStep((s) => s + 1);
   const goBack = () => setCurrentStep((s) => s - 1);
+  
+  // const resetToStepOne = useCallback(() => {
+  //   setCurrentStep(1);
+  //   setSelectedChildren([]);
+  //   setPriceId(null); 
+  // }, []);
+
+  // useImperativeHandle(ref, () => ({
+  //   resetToStepOne
+  // }));
 
   return (
-    <div>
+    <div id="stepper-section">
       <div className="flex items-center justify-between mb-6">
         {["Select Plan & Children", "Confirm & Pay"].map((label, i) => (
           <div key={i} className="flex-1 text-center">
@@ -38,11 +53,15 @@ const BillingStepper = () => {
         <Step3ConfirmPay
           priceId={priceId}   
           selectedChildren={selectedChildren}
-          goBack={goBack}   
+          goBack={goBack}
         />
       )}
     </div>
   );
-};
+});
+
+BillingStepper.displayName = "BillingStepper";
 
 export default BillingStepper;
+
+

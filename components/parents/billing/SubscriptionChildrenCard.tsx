@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { useAppDispatch } from "store/hooks";
 import { RootState } from "store/store";
 import { getBillingHistory } from "services/pricingService";
-import { CreditCard } from "lucide-react";
 
 const SubscriptionChildrenCard = () => {
   const dispatch = useAppDispatch();
@@ -11,8 +10,10 @@ const SubscriptionChildrenCard = () => {
   const { billing_history, handlers } = useSelector((state: RootState) => state.pricing);
   const { children } = useSelector((state: RootState) => state.parentChild);
   
+  // Find active subscription (not cancelled)
   const activeSubscription = billing_history?.find(sub => 
     sub.is_active && 
+    !sub.cancel_at_period_end && // Exclude cancelled subscriptions
     (sub.status === 'TRIALING' || sub.status === 'ACTIVE')
   );
 
@@ -20,12 +21,7 @@ const SubscriptionChildrenCard = () => {
     dispatch(getBillingHistory());
   };
 
-  const handleAddPaymentMethod = () => {
-    if (activeSubscription) {
-      router.push(`/parents/billing/payment?subscription_id=${activeSubscription.id}`);
-    }
-  };
-  const hasPaymentMethod = activeSubscription?.payment_status === 'Paid' || activeSubscription?.status === 'ACTIVE';
+  // Don't render if no active subscription
   if (!activeSubscription) {
     return null;
   }
@@ -47,7 +43,7 @@ const SubscriptionChildrenCard = () => {
         <div>
           <p className="text-sm text-gray-600 mb-1">Plan</p>
           <p className="font-medium">
-            {activeSubscription.plan_name} - {activeSubscription.plan_interval}
+            {activeSubscription?.plan_name} - {activeSubscription?.plan_interval}
           </p>
           <p className="text-xs text-gray-500 mt-1">
             Status: <span className={`font-semibold ${
@@ -58,36 +54,11 @@ const SubscriptionChildrenCard = () => {
           </p>
         </div>
 
-        {!hasPaymentMethod && activeSubscription.status === 'TRIALING' && (
-          <div className="border-t pt-4">
-            <div className="bg-mainColor/10 border border-mainColor rounded-lg p-4">
-              <div className="flex items-start gap-3">
-                <CreditCard className="h-5 w-5 text-mainColor mt-0.5 flex-shrink-0" />
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-mainColor mb-1">
-                    Payment Method Required
-                  </p>
-                  <p className="text-xs text-mainColor-700 mb-3">
-                    Add a payment method before your trial ends to continue your subscription without interruption.
-                  </p>
-                  <button
-                    onClick={handleAddPaymentMethod}
-                    className="inline-flex items-center gap-2 bg-mainColor hover:bg-mainColor text-white text-sm font-medium px-4 py-2 rounded-md transition-colors"
-                  >
-                    <CreditCard className="h-4 w-4" />
-                    Add Payment Method
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
         <div className="border-t pt-4">
           <p className="text-sm text-gray-600 mb-2">
-            Children in subscription ({activeSubscription.children.length})
+            Children in subscription ({activeSubscription.children?.length || 0})
           </p>
-          {activeSubscription.children.length > 0 ? (
+          {activeSubscription.children && activeSubscription.children.length > 0 ? (
             <div className="flex flex-wrap gap-2">
               {activeSubscription.children.map(child => (
                 <span 

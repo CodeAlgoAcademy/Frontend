@@ -190,6 +190,28 @@ export const verifyPayment: any = createAsyncThunk("verifyPayment", async (payme
    }
 });
 
+
+export const cancelSubscription: any = createAsyncThunk(
+  "pricingService/cancelSubscription",
+  async (id: number | string, thunkApi) => {
+    try {
+      const response = await http.post(
+        `/payment/subscription/${id}/cancel/`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${getAccessToken()}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
+    }
+  }
+);
+
 export const getActiveSubscription: any = createAsyncThunk("activeSubscription", async (_, thunkApi) => {
    try {
       const response = await http.get<ISubscribedPlan[]>("/payment/parent/active", {
@@ -205,6 +227,27 @@ export const getActiveSubscription: any = createAsyncThunk("activeSubscription",
    }
 });
 
+export const reactivateSubscription = createAsyncThunk(
+  "pricing/reactivateSubscription",
+  async (subscriptionId: number, thunkApi) => {
+    try {
+      const response = await http.post(
+        `/payment/subscription/${subscriptionId}/reactivate/`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${getAccessToken()}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
+    }
+  }
+);
+
 export const getBillingHistory: any = createAsyncThunk("getBillingHistory", async (_, thunkApi) => {
    try {
       const response = await http.get<Subscription[]>(`/payment/subscription/history`, {
@@ -219,3 +262,29 @@ export const getBillingHistory: any = createAsyncThunk("getBillingHistory", asyn
       return thunkApi.rejectWithValue(errorMessage);
    }
 });
+
+
+export const updateSubscriptionChildren = createAsyncThunk(
+  "pricing/updateSubscriptionChildren",
+  async (
+    payload: {
+      subscription_id: number;
+      children_to_add: number[];
+      children_to_remove: number[];
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await http.patch(
+        `/subscriptions/${payload.subscription_id}/children`,
+        {
+          children_to_add: payload.children_to_add,
+          children_to_remove: payload.children_to_remove,
+        }
+      );
+      return response.data;
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || "Update failed");
+    }
+  }
+);
