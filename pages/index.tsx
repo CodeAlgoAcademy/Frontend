@@ -12,6 +12,7 @@ import { WinterBanner } from "@/components/home/new-home/winter-banner";
 import ValuePropositions from "@/components/home/new-home/ValuePropositions";
 import Navbar from "@/components/navbar/home/Navbar";
 import HomepageContent from "@/components/home/new-home/HomepageContent";
+import HomepageExpandedContent from "@/components/home/new-home/HomepageExpandedContent";
 
 const Home: NextPage = () => {
    return (
@@ -36,6 +37,7 @@ const Home: NextPage = () => {
          <CodeToSuccess />
          <VoiceOfOurCommunity />
          <HomepageContent />
+         <HomepageExpandedContent />
          <AsSeenIs />
          <Footer />
       </div>

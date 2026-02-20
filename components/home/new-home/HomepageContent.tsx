@@ -30,54 +30,51 @@ const HomepageContent = () => {
     },
     {
       icon: <Blocks className="h-6 w-6 text-purple-600" />,
-      title: "Scratch & Block-Based Coding",
-      description: "Perfect for ages 6–9, giving a visual introduction to programming logic through our specialized kids coding courses.",
+      title: "Block-Based Coding",
+      description: "Perfect for ages 6–14, giving a visual introduction to programming logic through our specialized kids coding courses.",
       color: "purple",
       keyword: "kids coding courses"
     },
     {
       icon: <Globe className="h-6 w-6 text-orange-600" />,
-      title: "Learn Programming Online",
-      description: "Older students explore HTML, CSS, and JavaScript through our interactive platform, building real web projects they can share.",
+      title: "Online Coding Classes",
+      description: "Self-paced online coding classes that kids can access anytime, anywhere from the comfort of home.",
       color: "orange",
-      keyword: "learn programming online"
+      keyword: "online coding classes"
     },
     {
-      icon: <TrendingUp className="h-6 w-6 text-red-600" />,
-      title: "Data Structures & Algorithms",
-      description: "For advanced learners preparing for competitive programming and college-level computer science.",
-      color: "red",
-      keyword: "coding for kids"
+      icon: <GraduationCap className="h-6 w-6 text-indigo-600" />,
+      title: "For Kids Ages 6-14",
+      description: "Age-appropriate curriculum designed specifically for young minds, from elementary to early middle school.",
+      color: "indigo",
+      keyword: "kids ages 6-14"
+    },
+    {
+      icon: <Gamepad2 className="h-6 w-6 text-pink-600" />,
+      title: "Learn Through Games",
+      description: "Turn coding into play! Our game-based approach keeps kids engaged while they master programming concepts.",
+      color: "pink",
+      keyword: "learn programming through games"
     }
-  ];;
-
+  ];
 
   return (
-    <section className="bg-gradient-to-b from-gray-50 to-white px-4 py-16 font-inter sm:px-6 lg:px-8">
+    <section className="bg-gradient-to-b from-gray-50 to-white px-4 py-10 sm:px-6 font-thabit">
       <div className="mx-auto max-w-7xl">
-
         <div className="mb-16 text-center">
           <h1 className="mb-6 text-4xl font-bold text-gray-900 md:text-5xl lg:text-6xl">
             The #1 Coding Platform for Kids
           </h1>
-          <p className="mx-auto max-w-3xl text-lg text-gray-600 md:text-xl">
+          <p className="mx-auto max-w-3xl text-md text-gray-600 md:text-xl">
             CodeAlgo Academy makes learning to code genuinely fun. Our game-based
-            platform turns coding for kids into an adventure — where every lesson
+            platform turns coding for kids into an adventure, where every lesson
             is a level, every project is a quest, and every child becomes a
             builder.
           </p>
         </div>
 
-
-        <div className="mb-20">
-          <h2 className="mb-3 text-3xl font-bold text-gray-900">What Kids Learn</h2>
-          <p className="mb-10 text-lg text-gray-600">
-            Our curriculum covers a wide range of programming languages and
-            computer science concepts, introduced progressively based on age and
-            skill level.
-          </p>
-          
-  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mb-20 text-center">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {learningPaths.map((item, idx) => (
               <div
                 key={idx}
