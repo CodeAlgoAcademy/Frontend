@@ -1,4 +1,5 @@
 import React from "react";
+import Head from "next/head"; 
 import { ChevronRight, CheckCircle } from "lucide-react";
 import Navbar from "@/components/navbar/home/Navbar";
 import Footer from "@/components/about-us/aoc";
@@ -9,6 +10,11 @@ import { SimpleAccordion } from "@/components/home/accordion";
 const TeachersResources = () => {
    return (
       <div className="min-h-screen font-thabit">
+  <Head>
+        <title>For Educators | Coding for Schools | CodeAlgo Academy</title>
+        <meta name="description" content="Bring CodeAlgo Academy to your classroom. Resources and tools for teachers." />
+      </Head>
+
          <Navbar />
 
          <section className="bg-background py-16 lg:py-24">

@@ -14,7 +14,7 @@ const AsSeenIs = () => {
          <h1 className="text-center font-tiltWarp text-[2.1rem] max-md:text-[1.5rem]">AS SEEN IN</h1>
 
          <div className="mx-auto mt-12 max-w-[1200px]">
-            <Image src={"/assets/landing/as-seen-in.png"} width={2000} height={600} />
+            <Image src={"/assets/landing/as-seen-in.png"} width={2000} height={600} alt="as seen in"/>
          </div>
       </div>
    );
