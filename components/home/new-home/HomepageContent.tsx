@@ -13,38 +13,43 @@ import {
 } from "lucide-react";
 
 const HomepageContent = () => {
-  const learningPaths = [
+ const learningPaths = [
     {
       icon: <Brain className="h-6 w-6 text-blue-600" />,
       title: "Algorithms & Problem Solving",
       description: "Kids learn to think like engineers, breaking problems into steps and building logical solutions.",
-      color: "blue"
+      color: "blue",
+      keyword: "coding for kids"
     },
     {
       icon: <Code2 className="h-6 w-6 text-green-600" />,
       title: "Python for Kids",
-      description: "One of the world's most in-demand languages, taught through interactive challenges.",
-      color: "green"
+      description: "One of the world's most in-demand languages, taught through interactive challenges designed specifically for young learners.",
+      color: "green",
+      keyword: "Python for kids"
     },
     {
       icon: <Blocks className="h-6 w-6 text-purple-600" />,
       title: "Scratch & Block-Based Coding",
-      description: "Perfect for ages 6–9, giving a visual introduction to programming logic.",
-      color: "purple"
+      description: "Perfect for ages 6–9, giving a visual introduction to programming logic through our specialized kids coding courses.",
+      color: "purple",
+      keyword: "kids coding courses"
     },
     {
       icon: <Globe className="h-6 w-6 text-orange-600" />,
-      title: "earn programming online",
-      description: "Older students explore HTML, CSS, and JavaScript, building real web projects.",
-      color: "orange"
+      title: "Learn Programming Online",
+      description: "Older students explore HTML, CSS, and JavaScript through our interactive platform, building real web projects they can share.",
+      color: "orange",
+      keyword: "learn programming online"
     },
     {
       icon: <TrendingUp className="h-6 w-6 text-red-600" />,
       title: "Data Structures & Algorithms",
-      description: "For advanced learners preparing for competitive programming.",
-      color: "red"
+      description: "For advanced learners preparing for competitive programming and college-level computer science.",
+      color: "red",
+      keyword: "coding for kids"
     }
-  ];
+  ];;
 
 
   return (
