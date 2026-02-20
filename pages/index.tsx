@@ -8,14 +8,20 @@ import GetStarted from "@/components/home/new-home/get-started";
 import CodeToSuccess from "@/components/home/new-home/code-to-success";
 import AsSeenIs from "@/components/home/new-home/as-seen-in";
 import Footer from "@/components/home/new-home/footer";
-import {WinterBanner} from "@/components/home/new-home/winter-banner";
+import { WinterBanner } from "@/components/home/new-home/winter-banner";
 import ValuePropositions from "@/components/home/new-home/ValuePropositions";
 import Navbar from "@/components/navbar/home/Navbar";
+import HomepageContent from "@/components/home/new-home/HomepageContent";
 
 const Home: NextPage = () => {
    return (
-      <div className="relative  bg-white" suppressHydrationWarning>
-           <Head>
+      <div className="relative bg-white" suppressHydrationWarning>
+         <Head>
+            <title>Kids Coding Classes Online | Learn Programming for Children | CodeAlgo Academy</title>
+            <meta 
+               name="description" 
+               content="CodeAlgo Academy teaches kids ages 5-14 to code through fun, game-based lessons. Build real projects, track progress, and learn Python & more. Try free today!" 
+            />
             <meta
                name="google-site-verification"
                content="eGB3Olxnsy0kXPD_3EoaI1Fzl7xsQVK4R1WxbBSCrFI"
@@ -29,6 +35,7 @@ const Home: NextPage = () => {
          <GetStarted />
          <CodeToSuccess />
          <VoiceOfOurCommunity />
+         <HomepageContent />
          <AsSeenIs />
          <Footer />
       </div>

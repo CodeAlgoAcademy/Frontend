@@ -12,6 +12,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
+
 // import "../styles/SyncfusionMaterial.min.css";
 
 registerLicense(`${process.env.NEXT_PUBLIC_SYNC_FUSION_LICENSE}`);
@@ -20,9 +21,10 @@ function MyApp({ Component, pageProps }: AppProps) {
    return (
       <Provider store={store}>
          <Layout>
-            <Head>
-               <title>CodeAlgo Academy</title>
-            </Head>
+           <Head>
+  <title>CodeAlgo Academy | Online Coding Classes for Kids</title>
+  <meta name="description" content="CodeAlgo Academy teaches kids ages 6-18 to code through fun, game-based lessons. Learn Python, algorithms & more." />
+</Head>
             <Component {...pageProps} />
          </Layout>
       </Provider>

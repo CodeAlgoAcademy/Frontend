@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Footer from "@/components/home/new-home/footer";
 import Navbar from "@/components/navbar/home/Navbar";
 import Header from "@/components/press/Header";
@@ -8,6 +9,10 @@ import React from "react";
 const Press = () => {
    return (
       <section className="min-h-screen w-full bg-[#ffffff] font-thabit">
+        <Head>
+  <title>Press & Media | CodeAlgo Academy</title>
+  <meta name="description" content="CodeAlgo Academy in the news. Read our latest press coverage, media features, and announcements about kids coding education." />
+</Head>
          <Navbar />
          <Header
             body= ""
