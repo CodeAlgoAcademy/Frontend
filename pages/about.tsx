@@ -1,3 +1,4 @@
+import Head from "next/head"; 
 import Header from "@/components/about-us/Header";
 import Section from "@/components/about-us/Section";
 import Testimonials from "@/components/about-us/Testimonials";
@@ -15,6 +16,10 @@ import Banner from "@/components/home/new-home/banner";
 const AboutUs = () => {
   return (
     <>
+     <Head>
+        <title>About Us | CodeAlgo Academy</title>
+        <meta name="description" content="CodeAlgo Academy teaches kids coding through game-based learning. Learn about our mission and team." />
+      </Head>
       <section className="min-h-screen w-full bg-[#FFFFFF] pb-6 font-thabit">
         <Navbar />
         <div>

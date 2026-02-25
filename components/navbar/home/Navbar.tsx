@@ -16,7 +16,7 @@ const Navbar = () => {
   const [heading, setHeading] = useState("");
   const router = useRouter();
   const [showMobileNav, setShowMobileNav] = useState(false);
-  const [showAppModal, setShowAppModal] = useState(false); // Modal state
+  const [showAppModal, setShowAppModal] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const { push } = useRouter();
 
@@ -30,7 +30,7 @@ const Navbar = () => {
                 src={"/assets/landing/logo_white.png"}
                 width={isMobile ? 70 : 100}
                 height={isMobile ? 35 : 50}
-                alt="Logo"
+                alt="CodeAlgo Academy logo"
               />
             </Link>
 
@@ -57,14 +57,14 @@ const Navbar = () => {
                         } else {
                           setHeading(link.name);
                         }
-
+                        
                         if (link.route) {
                           router.push(link.route);
                         }
                       }}
                     >
                       <p className="text-white">
-                        <Link href={""}>{link.name}</Link>
+                        <Link href={link.route || "/"}>{link.name}</Link>
                       </p>
 
                       <div
@@ -92,34 +92,34 @@ const Navbar = () => {
             </AnimatePresence>
           </ul>
 
-<div className="flex items-center gap-4 max-md:hidden">
-  <CustomButton
-    onClick={() => push("/login")}
-    variant="filled"
-    size="medium"
-    className="w-[100px] h-[44px] bg-mainRed font-bold !text-white flex items-center justify-center hover:bg-mainRed/80"
-  >
-    <span className="no-contrast-adjust">Login</span>
-  </CustomButton>
+          <div className="flex items-center gap-4 max-md:hidden">
+            <CustomButton
+              onClick={() => push("/login")}
+              variant="filled"
+              size="medium"
+              className="w-[100px] h-[44px] bg-mainRed font-bold !text-white flex items-center justify-center hover:bg-mainRed/80"
+            >
+              <span className="no-contrast-adjust">Login</span>
+            </CustomButton>
 
-  <CustomButton
-    onClick={() => setShowAppModal(true)}
-    variant="outline"
-    size="medium"
-    className="w-[100px] h-[44px] font-bold !text-white flex items-center justify-center"
-  >
-    <span className="no-contrast-adjust">Get App</span>
-  </CustomButton>
+            <CustomButton
+              onClick={() => setShowAppModal(true)}
+              variant="outline"
+              size="medium"
+              className="w-[100px] h-[44px] font-bold !text-white flex items-center justify-center"
+            >
+              <span className="no-contrast-adjust">Get App</span>
+            </CustomButton>
 
-  <CustomButton
-    onClick={() => push("https://play.codealgoacademy.com")}
-    variant="filled"
-    size="medium"
-    className="w-[100px] h-[44px] bg-mainRed font-bold !text-white flex items-center justify-center hover:bg-mainRed/80"
-  >
-    <span className="no-contrast-adjust">Play Game</span>
-  </CustomButton>
-</div>
+            <CustomButton
+              onClick={() => push("https://play.codealgoacademy.com")}
+              variant="filled"
+              size="medium"
+              className="w-[100px] h-[44px] bg-mainRed font-bold !text-white flex items-center justify-center hover:bg-mainRed/80"
+            >
+              <span className="no-contrast-adjust">Play Game</span>
+            </CustomButton>
+          </div>
           <BiMenu
             className="text-white md:hidden"
             size={28}

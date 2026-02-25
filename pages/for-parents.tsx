@@ -1,4 +1,5 @@
 import React from "react";
+import Head from "next/head"; 
 import { ChevronRight, CheckCircle } from "lucide-react";
 import Footer from "@/components/about-us/aoc";
 import { SimpleAccordion } from "@/components/home/accordion";
@@ -9,6 +10,10 @@ import Navbar from "@/components/navbar/home/Navbar";
 const ParentsResources = () => {
   return (
     <div className="min-h-screen font-thabit">
+        <Head>
+        <title>For Parents | Kids Coding Curriculum | CodeAlgo Academy</title>
+        <meta name="description" content="Track your child's coding progress and view our curriculum designed for ages 5-14." />
+      </Head>
       <Navbar />
 
       <section className="bg-gray-50 py-16 lg:py-24 bg-background">

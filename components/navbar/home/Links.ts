@@ -10,7 +10,7 @@ export const links: NavbarLink[] = [
       name: "About",
       subMenu: true,
       sublinks: [
-         { name: "About Us", link: "/about-us" },
+         { name: "About Us", link: "/about" },
          { name: "Press", link: "/press" },
          { name: "Blog", link: "/blog" },
          { name: "Learn More", link: "/learn-more" },
@@ -28,7 +28,7 @@ export const links: NavbarLink[] = [
          { name: "SignUp", link: "/signup/parent" },
           {
             name: "Resources",
-            link: "/parents-resources",
+            link: "/for-parents",
          },
       ],
    },
@@ -42,7 +42,7 @@ export const links: NavbarLink[] = [
          { name: "SignUp", link: "/signup/teacher" },
          {
             name: "Resources",
-            link: "/teachers-resources",
+            link: "/for-educators",
          },
       ],
    },

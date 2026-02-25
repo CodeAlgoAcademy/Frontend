@@ -29,7 +29,9 @@ const GetStarted = () => {
          <div className="mt-8 flex h-[650px] items-center justify-center max-md:mt-0 max-md:h-[300px]">
             {!isMobile && (
                <article className="relative -mr-24 grid h-full w-full flex-1 place-content-center bg-whiteToBlueGradient clip-path-right-parallelogram">
-                  <img src={"/assets/landing/get-started-1.png"} className="h-[550px] w-[450px]" />
+                  <img src={"/assets/landing/get-started-1.png"} 
+                  className="h-[550px] w-[450px]" 
+                  alt="Kids learning to code on CodeAlgo platform"/>
                   <CustomButton onClick={toSignUp} className={buttonClassName} variant="filled" size="medium">
                      CREATE YOUR AVATAR
                   </CustomButton>
@@ -37,7 +39,9 @@ const GetStarted = () => {
             )}
 
             <article className="relative -mx-8 grid h-[650px] w-full flex-1 place-content-center bg-red-500 clip-path-center-parallelogram max-md:-ml-0 max-md:-mr-10 max-md:h-[300px] max-md:clip-path-right-parallelogram">
-               <img src={"/assets/landing/get-started-2.png"} className="h-[650px] w-full object-cover max-md:h-[300px]" />
+               <img src={"/assets/landing/get-started-2.png"} 
+               className="h-[650px] w-full object-cover max-md:h-[300px]"
+               alt="Kids learning to code on CodeAlgo platform" />
                <CustomButton onClick={toSignUp} className={cn(buttonClassName)} variant="filled" size={isMobile ? "extra-small" : "medium"}>
                   LEARN BY PLAYING
                </CustomButton>
@@ -47,6 +51,7 @@ const GetStarted = () => {
                <img
                   src={"/assets/landing/get-started-3.png"}
                   className="h-[650px] min-w-[40vw] object-cover object-right-top max-md:h-[300px] max-sm:min-w-[58vw]"
+                  alt="Kids learning to code on CodeAlgo platform"
                />
                <CustomButton
                   onClick={toSignUp}

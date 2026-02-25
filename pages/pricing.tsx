@@ -15,6 +15,8 @@ import { toast } from "sonner";
 import { openSuccessModal } from "store/modalSlice";
 import { RootState } from "store/store";
 import { InstitutionInquiryDto, IPlan } from "types/interfaces";
+import Head from "next/head";
+
 
 const Pricing = () => {
    const { handlers: pricingHandlers, plans } = useSelector((state: RootState) => state.pricing);
@@ -34,6 +36,10 @@ const Pricing = () => {
 
    return (
       <div className="relative font-thabit bg-[#F5FAFF]">
+         <Head>
+  <title>Coding Classes Pricing for Kids | CodeAlgo Academy</title>
+  <meta name="description" content="Affordable online coding classes for kids ages 6-18. Flexible monthly and annual plans. Start free today — no credit card required." />
+</Head>
          <Navbar />
          <Banner />
          <section className="mt-20 px-6 py-16">

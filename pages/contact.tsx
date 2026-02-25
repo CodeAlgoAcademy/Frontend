@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Banner from "@/components/home/new-home/banner";
 import Footer, { socials } from "@/components/home/new-home/footer";
 import ContactModal from "@/components/modals/contactUsModal";
@@ -41,6 +42,10 @@ const Contact = () => {
    };
    return (
       <>
+      <Head>
+  <title>Contact Us | CodeAlgo Academy</title>
+  <meta name="description" content="Get in touch with the CodeAlgo Academy team. We're here to help with questions about our kids coding courses, pricing, and more." />
+</Head>
          <Navbar />
 
          <div className="relative overflow-x-hidden bg-white font-thabit">
