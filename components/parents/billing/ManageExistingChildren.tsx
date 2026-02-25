@@ -16,6 +16,7 @@ const ManageExistingChildren: React.FC<ManageExistingChildrenProps> = ({ onCance
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { current_subscription } = useSelector((state: RootState) => state.pricing);
+  
   const [selectedChildIds, setSelectedChildIds] = useState<number[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -25,6 +26,7 @@ const ManageExistingChildren: React.FC<ManageExistingChildrenProps> = ({ onCance
     }
   }, [current_subscription]);
 
+  // Locked state check
   const isLocked = current_subscription?.status === "PAST_DUE" || current_subscription?.status === "INCOMPLETE";
 
   const handlePayNow = () => {
@@ -50,6 +52,7 @@ const ManageExistingChildren: React.FC<ManageExistingChildrenProps> = ({ onCance
     }
 
     try {
+      // 1. Process Removals
       await Promise.all(childrenToRemove.map(id => 
         dispatch(updateSubscriptionChild({
           subscriptionId: current_subscription.id,
@@ -58,6 +61,7 @@ const ManageExistingChildren: React.FC<ManageExistingChildrenProps> = ({ onCance
         }))
       ));
 
+      // 2. Process Additions
       for (const id of childrenToAdd) {
         const result = await dispatch(updateSubscriptionChild({
           subscriptionId: current_subscription.id,
@@ -70,7 +74,9 @@ const ManageExistingChildren: React.FC<ManageExistingChildrenProps> = ({ onCance
            
            if (payload.status === 'requires_payment' || payload.status === 'requires_payment_action') {
              toast.message("Payment Required", { description: "Please complete payment to activate this child." });
-             router.push(`/parents/billing/payment?subscription_id=${current_subscription.id}`);
+             
+             const secretParam = payload.client_secret ? `&client_secret=${payload.client_secret}` : "";
+             router.push(`/parents/billing/payment?subscription_id=${current_subscription.id}${secretParam}`);
              return; 
            }
         } 
@@ -99,29 +105,13 @@ const ManageExistingChildren: React.FC<ManageExistingChildrenProps> = ({ onCance
   if (isLocked) {
     return (
       <div className="mt-6 rounded-2xl border border-red-100 bg-red-50 p-6 text-center">
-        <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-red-100 text-red-600">
-           <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-           </svg>
-        </div>
         <h3 className="text-lg font-bold text-red-900">Payment Required</h3>
         <p className="mt-1 text-sm text-red-700">
-          Your subscription is currently <strong>Past Due</strong> because a previous update requires payment. 
-          You cannot add or remove children until this is resolved.
+          Your subscription is currently <strong>Past Due</strong>. Please pay to continue.
         </p>
         <div className="mt-6 flex justify-center gap-3">
-          <button 
-            onClick={onCancel}
-            className="rounded-xl border border-red-200 bg-white px-4 py-2 text-sm font-semibold text-red-700 hover:bg-red-50"
-          >
-            Cancel
-          </button>
-          <button 
-            onClick={handlePayNow}
-            className="rounded-xl bg-red-600 px-6 py-2 text-sm font-semibold text-white hover:bg-red-700"
-          >
-            Pay Outstanding Balance
-          </button>
+          <button onClick={onCancel} className="rounded-xl border border-red-200 bg-white px-4 py-2 text-sm font-semibold text-red-700">Cancel</button>
+          <button onClick={handlePayNow} className="rounded-xl bg-red-600 px-6 py-2 text-sm font-semibold text-white">Pay Outstanding Balance</button>
         </div>
       </div>
     )

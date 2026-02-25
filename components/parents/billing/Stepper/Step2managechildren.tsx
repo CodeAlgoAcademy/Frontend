@@ -51,13 +51,16 @@ const Step2ManageChildren: React.FC<Step2ManageChildrenProps> = ({
         ) : (
           <ul className="max-h-80 space-y-3 overflow-y-auto pr-1">
             {children.map((child) => {
-              const isSelected = safeSelectedIds.includes(child.id);
+              // ✅ FIX 1: Convert ID to Number for the check
+              const childId = Number(child.id);
+              const isSelected = safeSelectedIds.includes(childId);
               
               return (
                 <li key={child.id}>
                   <button
                     type="button"
-                    onClick={() => handleToggle(child.id)}
+                    // ✅ FIX 2: Pass the converted number to the handler
+                    onClick={() => handleToggle(childId)}
                     disabled={isProcessing}
                     className={`flex w-full items-center justify-between rounded-xl border p-4 transition-all
                       ${isSelected ? "border-mainColor bg-mainColor/5" : "border-gray-200 hover:bg-gray-50"}

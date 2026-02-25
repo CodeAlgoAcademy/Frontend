@@ -10,8 +10,7 @@ import {
   getActiveSubscription,
 } from "services/pricingService";
 import { toast } from "sonner";
-
-// ✅ REMOVED: SubscriptionSuccessModal import
+import SubscriptionSuccessModal from "../TrialPaymentRequiredModal";
 
 interface Step3ConfirmProps {
   priceId: number;
@@ -21,13 +20,7 @@ interface Step3ConfirmProps {
   existingSubscriptionId: number | null;
 }
 
-const Step3Confirm: React.FC<Step3ConfirmProps> = ({ 
-  priceId, 
-  goBack, 
-  onSuccess, 
-  existingSubscriptionId, 
-  selectedChildIds 
-}) => {
+const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess, existingSubscriptionId, selectedChildIds }) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { plans, coupon_validation, current_subscription, handlers } = useSelector(
@@ -37,18 +30,19 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({
 
   const hasExistingSubscription = !!existingSubscriptionId;
   const [isProcessing, setIsProcessing] = useState(false);
-  const [isDone, setIsDone] = useState(false);
-  
-  // ✅ REMOVED: Local state for modals (showSuccessModal, etc)
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [newSubscriptionId, setNewSubscriptionId] = useState<number | null>(null);
+  const [isTrialSubscription, setIsTrialSubscription] = useState(false);
 
   const selectedChildrenNames = useMemo(() => {
     if (!selectedChildIds || selectedChildIds.length === 0) return "None";
     
     return allChildren
-      .filter((child) => selectedChildIds.includes(child.id))
+      .filter((child) => selectedChildIds.includes(Number(child.id)))
       .map((child) => child.fullName || child.username || "Child")
       .join(", ");
   }, [allChildren, selectedChildIds]);
+
 
   const isPendingSubscription = useMemo(() => {
     return hasExistingSubscription && current_subscription?.status === "PENDING";
@@ -104,17 +98,16 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({
       await dispatch(getActiveSubscription());
       await dispatch(getBillingHistory());
 
-      // CASE 1: Payment Required (Redirect immediately)
-      if (status === "requires_payment_action" || status === "requires_payment") {
+      setNewSubscriptionId(newSubId);
+
+      if (status === "requires_payment_action") {
          toast.success("Subscription created! Please complete payment.");
          router.push(`/parents/billing/payment?subscription_id=${newSubId}`);
          return; 
       }
 
-      // CASE 2: Success (Trial or Active) -> CLOSE STEPPER IMMEDIATELY
-toast.success(status === "trialing" ? "Free trial started!" : "Subscription active!");
-  setIsDone(true); // ← hide content immediately
-  onSuccess(newSubId);
+      setIsTrialSubscription(status === "trialing");
+      setShowSuccessModal(true);
 
     } catch (error) {
       console.error(error);
@@ -136,15 +129,10 @@ toast.success(status === "trialing" ? "Free trial started!" : "Subscription acti
         toast.error("Failed to change plan. Please try again.");
         return;
       }
-      
       toast.success("Plan updated successfully!");
       await dispatch(getActiveSubscription());
       await dispatch(getBillingHistory());
-      
-      toast.success("Plan updated successfully!");
-  setIsDone(true);
-  onSuccess(existingSubscriptionId);
-
+      onSuccess(existingSubscriptionId);
     } catch {
       toast.error("An error occurred. Please try again.");
     } finally {
@@ -162,9 +150,20 @@ toast.success(status === "trialing" ? "Free trial started!" : "Subscription acti
     }
   };
 
+  const handleSuccessClose = () => {
+    setShowSuccessModal(false);
+    if (newSubscriptionId) onSuccess(newSubscriptionId);
+  };
+
+  const handleAddPayment = () => {
+    if (!newSubscriptionId) return;
+    setShowSuccessModal(false);
+    router.push(`/parents/billing/payment?subscription_id=${newSubscriptionId}`);
+  };
+
   const isLoading =
     handlers.initiate_payment_loading || handlers.change_plan_loading || isProcessing;
-if (isDone) return null;
+
   return (
     <>
       <div className="flex-1 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm">
@@ -236,8 +235,7 @@ if (isDone) return null;
             </div>
           ) : (
             <p className="py-6 text-center text-sm text-gray-400">Loading plan details…</p>
-          )
-          }
+          )}
 
           <div className="mt-8 flex gap-3">
             <button
@@ -267,6 +265,16 @@ if (isDone) return null;
           </div>
         </div>
       </div>
+
+      {newSubscriptionId && (
+        <SubscriptionSuccessModal
+          open={showSuccessModal}
+          onClose={handleSuccessClose}
+          onAddPayment={handleAddPayment}
+          subscriptionId={newSubscriptionId}
+          isTrialSubscription={isTrialSubscription}
+        />
+      )}
     </>
   );
 };

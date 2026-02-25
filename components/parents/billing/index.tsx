@@ -27,12 +27,6 @@ const BillingPage = () => {
     setShowChildrenManager(true);
   };
 
-const handleChildrenDone = () => {
-  setShowChildrenManager(false);
-  dispatch(getActiveSubscription());
-  dispatch(getBillingHistory());
-};
-
   useEffect(() => {
     dispatch(getActiveSubscription());
     dispatch(getBillingHistory());
