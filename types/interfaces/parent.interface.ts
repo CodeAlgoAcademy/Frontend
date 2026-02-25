@@ -40,7 +40,7 @@ export interface IParentChild {
    confirmPassword?: string;
    timeLimits: screentimeTypes[];
    friend?: string;
-   id: string | number;
+   id: number;
    pendingRequests?: FriendRequests[];
    friendRequests?: FriendRequests[];
    friends?: {

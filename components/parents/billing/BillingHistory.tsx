@@ -12,16 +12,15 @@ import BillingTableRow from "./components/BillingTableRow";
 import ConfirmationModal from "./components/ConfirmationModal";
 import HistorySkeleton from "./components/HistorySkeleton";
 
-
-
 const BillingHistory = () => {
    const { handlers, billing_history } = useSelector((state: RootState) => state.pricing);
    const [showBill, setShowBill] = useState(true);
    const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
    
    const router = useRouter();
-   const dispatch = useAppDispatch();
    
+   const isLoading = handlers.billing_history_loading;
+
    const {
       reactivatingId,
       cancelModalOpen,
@@ -44,11 +43,12 @@ const BillingHistory = () => {
    };
 
    const displayHistory = useMemo(() => 
-      sortBillingHistory(billing_history), 
+      sortBillingHistory(billing_history || []), 
    [billing_history]);
 
    return (
-      <div>
+      <div className="mb-10">
+         {/* Modals */}
          <ConfirmationModal
             isOpen={cancelModalOpen}
             onClose={closeCancelModal}
@@ -72,48 +72,61 @@ const BillingHistory = () => {
          />
 
          <div className="mt-8 flex items-end justify-between">
-            <div 
+            <button 
                onClick={() => setShowBill(!showBill)} 
-               className="flex items-center gap-3 cursor-pointer"
+               className="flex items-center gap-2 text-lg font-semibold text-gray-800 focus:outline-none"
             >
-               <h3 className="text-lg font-[600]">Billing Detail</h3>
-               <p>
-                  <BiChevronDown className={cn("transition-transform", showBill && "rotate-180")} />
-               </p>
-            </div>
+               Billing History
+               <BiChevronDown 
+                  className={cn("h-5 w-5 text-gray-500 transition-transform duration-200", showBill && "rotate-180")} 
+               />
+            </button>
          </div>
 
+         {/* Content Area */}
          {showBill && (
             <div className="mt-4">
-               <div className="overflow-y-hidden overflow-x-scroll rounded-lg border">
-                  <BillingTableHeader />
-
-                  {handlers.billing_history_loading && (
-                     <>
-                        <HistorySkeleton />
-                        <HistorySkeleton />
-                        <HistorySkeleton />
-                     </>
-                  )}
-
-                  {!handlers.billing_history_loading && displayHistory?.length === 0 && (
-                     <div className="flex min-w-fit items-center justify-center bg-white px-5 py-10">
-                        <p className="text-sm text-gray-500">No billing history available yet.</p>
+               <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+                  <div className="overflow-x-auto">
+                     <div className="min-w-[800px]">
+                        <BillingTableHeader />
+                        
+                        {isLoading ? (
+                           <div className="divide-y divide-gray-100 bg-white">
+                              {[...Array(3)].map((_, i) => (
+                                 <HistorySkeleton key={i} />
+                              ))}
+                           </div>
+                        ) : (
+                           <div className="divide-y divide-gray-100 bg-white">
+                              {displayHistory.length === 0 ? (
+                                 <div className="flex flex-col items-center justify-center py-12 text-center">
+                                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-100">
+                                       <svg className="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                       </svg>
+                                    </div>
+                                    <p className="mt-3 text-sm font-medium text-gray-900">No billing history</p>
+                                    <p className="text-xs text-gray-500">Past invoices will appear here.</p>
+                                 </div>
+                              ) : (
+                                 displayHistory.map((data) => (
+                                    <BillingTableRow
+                                       key={data.id}
+                                       data={data}
+                                       isReactivating={reactivatingId === data.id}
+                                       openDropdownId={openDropdownId}
+                                       onToggleDropdown={handleToggleDropdown}
+                                       onAddPayment={handleAddPayment}
+                                       onCancel={openCancelModal}
+                                       onReactivate={openReactivateModal}
+                                    />
+                                 ))
+                              )}
+                           </div>
+                        )}
                      </div>
-                  )}
-
-                  {!handlers?.billing_history_loading && displayHistory?.map((data) => (
-                     <BillingTableRow
-                        key={data.id}
-                        data={data}
-                        isReactivating={reactivatingId === data.id}
-                        openDropdownId={openDropdownId}
-                        onToggleDropdown={handleToggleDropdown}
-                        onAddPayment={handleAddPayment}
-                        onCancel={openCancelModal}
-                        onReactivate={openReactivateModal}
-                     />
-                  ))}
+                  </div>
                </div>
             </div>
          )}

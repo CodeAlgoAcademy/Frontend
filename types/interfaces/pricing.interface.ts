@@ -10,11 +10,14 @@ export interface PricingSlice {
     billing_history_loading: boolean;
     coupon_validation_loading: boolean;
     reactivate_subscription_loading: boolean;
+    change_plan_loading: boolean;
+    update_child_loading: boolean;
   };
   initiated_payment?: TrialInitiateResponse;
   coupon_validation?: CouponValidationResponse;
   payment_verification_status?: PaymentStatus;
   active_subscription?: ISubscribedPlan;
+  current_subscription?: Subscription;
   billing_history?: Subscription[];
 }
 
@@ -54,6 +57,7 @@ export interface InitiatePaymentRes {
 
 export interface TrialInitiateResponse {
   status: string; 
+  subscription: number;
 }
 
 export interface PaidInitiateResponse {
@@ -135,6 +139,7 @@ export interface Subscription {
   expiration_date: string; 
   trial_ends_at:string;
   cancel_at_period_end:boolean;
+  latest_client_secret:string;
   canceled_at: string;
   children: Child[];
   payment_status: string;

@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { useAppDispatch } from "store/hooks";
-import { cancelSubscription, getBillingHistory, reactivateSubscription } from "services/pricingService";
+import { 
+  cancelSubscription, 
+  getBillingHistory, 
+  reactivateSubscription,
+  getActiveSubscription
+} from "services/pricingService";
 import { toast } from "sonner";
 
 export const useBillingHistory = () => {
@@ -32,32 +37,42 @@ export const useBillingHistory = () => {
 
    const handleCancel = async () => {
       if (!selectedSubscriptionId) return;
+      const idToCancel = selectedSubscriptionId;
+      closeCancelModal(); 
       
       try {
-         const result = await dispatch(cancelSubscription(selectedSubscriptionId));
+         const result = await dispatch(cancelSubscription(idToCancel));
+         
          if (cancelSubscription.fulfilled.match(result)) {
             toast.success("Subscription cancelled successfully");
-            dispatch(getBillingHistory());
+            await Promise.all([
+               dispatch(getBillingHistory()),
+               dispatch(getActiveSubscription()) 
+            ]);
          } else {
             toast.error("Failed to cancel subscription");
          }
       } catch (error) {
          toast.error("An error occurred");
-      } finally {
-         setSelectedSubscriptionId(null);
       }
    };
 
    const handleReactivate = async () => {
       if (!selectedSubscriptionId) return;
       
-      setReactivatingId(selectedSubscriptionId);
-      
+      const idToReactivate = selectedSubscriptionId;
+      setReactivatingId(idToReactivate);
+      closeReactivateModal();
+
       try {
-         const result = await dispatch(reactivateSubscription(selectedSubscriptionId));
+         const result = await dispatch(reactivateSubscription(idToReactivate));
+         
          if (reactivateSubscription.fulfilled.match(result)) {
             toast.success("Subscription reactivated successfully!");
-            dispatch(getBillingHistory());
+            await Promise.all([
+               dispatch(getBillingHistory()),
+               dispatch(getActiveSubscription())
+            ]);
          } else {
             toast.error("Failed to reactivate subscription");
          }
@@ -65,7 +80,6 @@ export const useBillingHistory = () => {
          toast.error("An error occurred while reactivating");
       } finally {
          setReactivatingId(null);
-         setSelectedSubscriptionId(null);
       }
    };
 
