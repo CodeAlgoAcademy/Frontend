@@ -40,7 +40,7 @@ export interface IParentChild {
    confirmPassword?: string;
    timeLimits: screentimeTypes[];
    friend?: string;
-   id: string | number;
+   id: number | string;
    pendingRequests?: FriendRequests[];
    friendRequests?: FriendRequests[];
    friends?: {
@@ -50,7 +50,6 @@ export interface IParentChild {
    student_id?:number;
   levelThresholds: LevelThresholdInputProps[]
    selectedChild?: boolean;
-   // }
 }
 
 export interface IParentChildren extends IParentChild {

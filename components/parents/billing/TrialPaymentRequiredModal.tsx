@@ -32,7 +32,7 @@ const SubscriptionSuccessModal: React.FC<SubscriptionSuccessModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
       <div className="w-[420px] rounded-lg bg-white p-6 shadow-lg">
-        {/* Header with close button */}
+
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
             <div className="rounded-full bg-green-100 p-2">
@@ -50,7 +50,6 @@ const SubscriptionSuccessModal: React.FC<SubscriptionSuccessModalProps> = ({
           </button>
         </div>
 
-        {/* Content */}
         <div className="mt-4 ml-11">
           {isTrialSubscription ? (
             <>
@@ -89,7 +88,6 @@ const SubscriptionSuccessModal: React.FC<SubscriptionSuccessModalProps> = ({
           )}
         </div>
 
-        {/* Action buttons */}
         <div className="mt-6 flex gap-3">
           <button
             onClick={onClose}
