@@ -31,15 +31,23 @@ const App: React.FC = () => {
 
                 {/* HEADLINE */}
                 <div className="mb-10 relative z-10">
+                    {/* First Line */}
                     <h1 className="text-4xl md:text-5xl font-bold text-black mb-2 tracking-tight">
-                        Celebrating Black History Through
+                        Celebrating Black History
                     </h1>
-                    <h2
-                        className="text-6xl md:text-8xl font-black text-red-800 tracking-wider drop-shadow-lg"
+
+                    {/* Second Line */}
+                    <div>
+                        <h1 className="inline text-4xl md:text-5xl font-bold text-black tracking-tight">
+                        Through{" "}
+                        </h1>
+                        <h2
+                        className="inline text-6xl md:text-8xl font-black text-red-800 tracking-wider drop-shadow-lg"
                         style={{ WebkitTextStroke: '2px brown' } as React.CSSProperties}
-                    >
+                        >
                         CODING
-                    </h2>
+                        </h2>
+                    </div>
                 </div>
 
                 <p className="max-w-3xl mt-8 text-1xl md:text-3xl font-bold text-gray-700 mb-16 font-mono leading-relaxed">
