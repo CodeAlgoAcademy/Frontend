@@ -90,7 +90,7 @@ const App: React.FC = () => {
                   <img src="/assets/images/donut-character.png" alt="Donut Character" className="w-40 drop-shadow-2xl md:w-56" />
 
                   {/* Speech Bubble */}
-                  <div className="relative ml-4 w-[22rem] rounded-2xl border-4 border-red-900 bg-red-300 p-6 shadow-xl transition-transform group-hover:-translate-y-2 md:w-[24rem]">
+                  <div className="relative ml-4 w-[22rem] rounded-2xl border-4 border-red-900 bg-red-300 pb-6 pt-6 shadow-xl transition-transform group-hover:-translate-y-2 md:w-[24rem]">
                      <p className="whitespace-normal break-words text-center text-lg font-semibold leading-snug">Sign up now for only 259$/Year!</p>
 
                      {/* Bubble Tail */}
