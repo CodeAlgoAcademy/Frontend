@@ -50,7 +50,7 @@ const App: React.FC = () => {
                </div>
             </div>
 
-            <p className="mt-2 max-w-5xl font-mono text-xl font-bold leading-relaxed text-gray-700 md:text-3xl">
+            <p className="mt-2 max-w-6xl font-mono text-xl font-bold leading-relaxed text-gray-700 md:text-3xl">
                Engaging coding activities that support logical reasoning, creativity, and critical thinking - while honoring history
             </p>
 
