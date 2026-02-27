@@ -30,9 +30,9 @@ const App: React.FC = () => {
             <main className="container mx-auto px-4 py-12 flex flex-col items-center text-center">
 
                 {/* HEADLINE */}
-                <div className="mb-4 relative z-10">
+                <div className="relative z-10">
                 {/* First Line */}
-                <h1 className="text-4xl md:text-5xl font-bold text-black mb-1 tracking-tight">
+                <h1 className="text-4xl md:text-5xl font-bold text-black tracking-tight">
                     Celebrating Black History
                 </h1>
 
@@ -50,12 +50,12 @@ const App: React.FC = () => {
                 </div>
                 </div>
 
-                <p className="max-w-5xl mt-4 text-xl md:text-3xl font-bold text-gray-700 mb-8 font-mono leading-relaxed">
+                <p className="max-w-5xl mt-4 text-xl md:text-3xl font-bold text-gray-700 font-mono leading-relaxed">
                 Engaging coding activities that support logical reasoning, creativity, and critical thinking - while honoring history
                 </p>
 
                 {/* --- MAIN CTA & IMAGES --- */}
-                <div className="flex flex-col md:flex-row items-center justify-center gap-8 w-full mb-20">
+                <div className="flex flex-col md:flex-row items-center justify-center gap-8 w-full">
 
                     {/* Main Button */}
                     <button className="bg-yellow-400 border-b-4 border-yellow-600 text-black text-2xl font-black py-4 px-10 rounded-xl shadow-2xl hover:translate-y-1 hover:border-b-0 hover:mt-1 transition-all z-10 cursor-pointer">
@@ -93,7 +93,7 @@ const App: React.FC = () => {
                     {/* LEFT: Donut + Pink Bubble */}
                     <div className="flex flex-col items-center relative group">
                         {/* Speech Bubble */}
-                        <div className="bg-red-300 border-6 border-red-900 p-6 rounded-2xl shadow-xl relative mb-4 w-64 transform group-hover:-translate-y-2 transition-transform">
+                        <div className="bg-red-300 border-6 border-red-900 p-6 rounded-2xl shadow-xl relative w-64 transform group-hover:-translate-y-2 transition-transform">
                             <p className="font-black text-black-800 text-lg">Sign up now for</p>
                             <p className="font-black text-2xl text-black">only 259$/Year!</p>
                             <div className="absolute -bottom-3 left-10 w-6 h-6 bg-red-300 border-r-4 border-b-2 border-red-900 transform rotate-45"></div>
@@ -108,7 +108,7 @@ const App: React.FC = () => {
                     </div>
 
                     {/* CENTER: Action Buttons */}
-                    <div className="flex flex-col gap-6 w-full px-4 mb-25">
+                    <div className="flex flex-col gap-6 w-full px-4">
                         <button className="w-full bg-green-500 border-b-4 border-green-700 text-black font-black text-2xl py-4 rounded-lg shadow-lg uppercase hover:brightness-110 active:border-b-0 active:translate-y-1 cursor-pointer">
                             Sign Up Now
                         </button>
@@ -122,7 +122,7 @@ const App: React.FC = () => {
                     </div>
 
                     {/* RIGHT: Quote Bubble */}
-                    <div className="flex flex-col items-center mb-8">
+                    <div className="flex flex-col items-center">
                         <div className="bg-red-300 border-6 border-red-900 p-11 rounded-2xl shadow-xl relative w-full transform hover:scale-105 transition-transform">
                             <p className="font-mono font-bold text-black text-2xl leading-tight">
                                 "You lose your curiosity when you stop learning" <br/>
