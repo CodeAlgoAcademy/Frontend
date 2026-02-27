@@ -30,28 +30,28 @@ const App: React.FC = () => {
             <main className="container mx-auto px-4 py-12 flex flex-col items-center text-center">
 
                 {/* HEADLINE */}
-                <div className="mb-10 relative z-10">
-                    {/* First Line */}
-                    <h1 className="text-4xl md:text-5xl font-bold text-black mb-2 tracking-tight">
-                        Celebrating Black History
-                    </h1>
+                <div className="mb-4 relative z-10">
+                {/* First Line */}
+                <h1 className="text-4xl md:text-5xl font-bold text-black mb-1 tracking-tight">
+                    Celebrating Black History
+                </h1>
 
-                    {/* Second Line */}
-                    <div>
-                        <h1 className="inline text-4xl md:text-5xl font-bold text-black tracking-tight">
-                        Through{" "}
-                        </h1>
-                        <h2
-                        className="inline text-6xl md:text-8xl font-black text-red-800 tracking-wider drop-shadow-lg"
-                        style={{ WebkitTextStroke: '2px brown' } as React.CSSProperties}
-                        >
-                        CODING
-                        </h2>
-                    </div>
+                {/* Second Line */}
+                <div>
+                    <h1 className="inline text-4xl md:text-5xl font-bold text-black tracking-tight">
+                    Through{" "}
+                    </h1>
+                    <h2
+                    className="inline text-6xl md:text-8xl font-black text-red-800 tracking-wider drop-shadow-lg"
+                    style={{ WebkitTextStroke: '2px brown' } as React.CSSProperties}
+                    >
+                    CODING
+                    </h2>
+                </div>
                 </div>
 
-                <p className="max-w-3xl mt-8 text-1xl md:text-3xl font-bold text-gray-700 mb-16 font-mono leading-relaxed">
-                    Engaging coding activities that support logical reasoning, creativity, and critical thinking - while honoring history
+                <p className="max-w-5xl mt-4 text-xl md:text-3xl font-bold text-gray-700 mb-8 font-mono leading-relaxed">
+                Engaging coding activities that support logical reasoning, creativity, and critical thinking - while honoring history
                 </p>
 
                 {/* --- MAIN CTA & IMAGES --- */}
