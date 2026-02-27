@@ -36,13 +36,13 @@ const App: React.FC = () => {
             {/* HEADLINE */}
             <div className="relative z-10">
                {/* First Line */}
-               <h1 className="text-4xl font-bold tracking-tight text-black md:text-5xl">Celebrating Black History</h1>
+               <h1 className="text-4xl font-bold tracking-tight text-black md:text-7xl">Celebrating Black History</h1>
 
                {/* Second Line */}
                <div>
-                  <h1 className="inline text-4xl font-bold tracking-tight text-black md:text-5xl">Through </h1>
+                  <h1 className="inline text-4xl font-bold tracking-tight text-black md:text-7xl">Through </h1>
                   <h2
-                     className="inline text-6xl font-black tracking-wider text-red-800 drop-shadow-lg md:text-8xl"
+                     className="inline text-6xl font-bold tracking-wider text-red-800 drop-shadow-lg md:text-9xl"
                      style={{ WebkitTextStroke: "2px brown" } as React.CSSProperties}
                   >
                      CODING
@@ -50,7 +50,7 @@ const App: React.FC = () => {
                </div>
             </div>
 
-            <p className="mt-2 max-w-6xl font-mono text-xl font-bold leading-relaxed text-gray-700 md:text-3xl">
+            <p className="m-10 max-w-6xl font-mono text-xl font-bold leading-relaxed text-gray-700 md:text-3xl">
                Engaging coding activities that support logical reasoning, creativity, and critical thinking - while honoring history
             </p>
 
