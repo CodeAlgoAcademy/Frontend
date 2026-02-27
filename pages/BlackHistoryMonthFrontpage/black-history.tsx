@@ -50,7 +50,7 @@ const App: React.FC = () => {
                </div>
             </div>
 
-            <p className="mt-4 max-w-5xl font-mono text-xl font-bold leading-relaxed text-gray-700 md:text-3xl">
+            <p className="mt-2 max-w-5xl font-mono text-xl font-bold leading-relaxed text-gray-700 md:text-3xl">
                Engaging coding activities that support logical reasoning, creativity, and critical thinking - while honoring history
             </p>
 
@@ -62,7 +62,7 @@ const App: React.FC = () => {
                </button>
 
                {/* Character Images Group */}
-               <div className="mt-8 flex items-end gap-4 md:mt-0">
+               <div className="mt-6 flex items-end gap-4 md:mt-0">
                   {/* 1. Banana */}
                   <img
                      src="/assets/images/banana-character.png"
@@ -83,16 +83,18 @@ const App: React.FC = () => {
             </div>
 
             {/* --- BOTTOM GRID --- */}
-            <div className="grid w-full max-w-6xl grid-cols-1 items-end gap-12 md:grid-cols-3">
+            <div className="max-w-10xl grid w-full grid-cols-1 items-end gap-2 md:grid-cols-3">
                {/* LEFT: Donut + Pink Bubble */}
                <div className="group relative flex flex-row items-center">
                   {/* DONUT IMAGE */}
                   <img src="/assets/images/donut-character.png" alt="Donut Character" className="w-40 drop-shadow-2xl md:w-56" />
+
                   {/* Speech Bubble */}
-                  <div className="border-6 relative w-64 transform rounded-2xl border-red-900 bg-red-300 p-6 shadow-xl transition-transform group-hover:-translate-y-2">
-                     <p className="text-black-800 text-lg font-black">Sign up now for</p>
-                     <p className="text-2xl font-black text-black">only 259$/Year!</p>
-                     <div className="absolute -bottom-3 left-10 h-6 w-6 rotate-45 transform border-r-4 border-b-2 border-red-900 bg-red-300"></div>
+                  <div className="relative ml-4 w-[22rem] rounded-2xl border-4 border-red-900 bg-red-300 p-6 shadow-xl transition-transform group-hover:-translate-y-2 md:w-[24rem]">
+                     <p className="whitespace-normal break-words text-center text-lg font-semibold leading-snug">Sign up now for only 259$/Year!</p>
+
+                     {/* Bubble Tail */}
+                     <div className="absolute -left-3 top-1/2 h-6 w-6 -translate-y-1/2 -rotate-45 transform border-l-4 border-t-4 border-red-900 bg-red-300"></div>
                   </div>
                </div>
 
@@ -112,12 +114,12 @@ const App: React.FC = () => {
 
                {/* RIGHT: Quote Bubble */}
                <div className="flex flex-col items-center">
-                  <div className="border-6 relative w-full transform rounded-2xl border-red-900 bg-red-300 p-11 shadow-xl transition-transform hover:scale-105">
-                     <p className="font-mono text-2xl font-bold leading-tight text-black">
-                        "You lose your curiosity when you stop learning" <br />
-                        <span className="mt-2 block text-sm opacity-75">- Katherine Johnson</span>
+                  <div className="relative w-full max-w-lg rounded-2xl border-4 border-red-900 bg-red-300 p-11 shadow-xl transition-transform hover:scale-105">
+                     <p className="text-center font-mono text-2xl font-bold leading-tight text-black">
+                        "You lose your curiosity when you stop learning" <br />- Katherine Johnson (Mathematician at NASA)
                      </p>
-                     <div className="absolute -bottom-3 right-10 h-6 w-6 rotate-45 transform border-r-4 border-b-2 border-red-900 bg-red-300"></div>
+                     {/* Bubble Tail */}
+                     <div className="absolute -bottom-3 left-1/2 h-6 w-6 translate-x-[-50%] -rotate-45 border-b-4 border-l-4 border-red-900 bg-red-300"></div>{" "}
                   </div>
                </div>
             </div>
