@@ -20,7 +20,7 @@ const teacherStories = [
     {
       name: "Alexis Rocha",
       role: "Fourth Grade Teacher",
-      school: "Shuano Elementary School",
+      school: "Shawanoe Elementary",
       achievement: "85% of students now show interest in programming",
       videoId: "85iqLQCrgaU"
     },
