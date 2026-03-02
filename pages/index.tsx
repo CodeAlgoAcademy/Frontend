@@ -13,6 +13,7 @@ import ValuePropositions from "@/components/home/new-home/ValuePropositions";
 import Navbar from "@/components/navbar/home/Navbar";
 import HomepageContent from "@/components/home/new-home/HomepageContent";
 import HomepageExpandedContent from "@/components/home/new-home/HomepageExpandedContent";
+import BlackHistoryHero from "@/components/home/new-home/BlackHistoryHero";
 
 const Home: NextPage = () => {
    return (
@@ -30,7 +31,8 @@ const Home: NextPage = () => {
          </Head>
          <Navbar />
          <WinterBanner />
-         <Hero />
+         <BlackHistoryHero />
+         {/* <Hero /> */}
          <ValuePropositions /> 
          <WhatWeBuilt />
          <GetStarted />
