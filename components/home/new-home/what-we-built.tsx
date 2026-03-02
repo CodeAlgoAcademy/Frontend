@@ -22,7 +22,7 @@ const WhatWeBuilt = () => {
     <section className="w-full bg-blueToBlackGradient pt-12 pb-1">
       <h1
         onClick={toSignUp}
-        className="mx-auto max-w-fit cursor-pointer rounded-md bg-mainRed py-2 px-5 text-center font-tiltWarp text-[2rem] font-bold text-white shadow-md max-md:text-[1.5rem]"
+        className="mx-auto max-w-fit mb-10 cursor-pointer rounded-md bg-mainRed py-2 px-5 text-center font-tiltWarp text-[2rem] font-bold text-white shadow-md max-md:text-[1.5rem]"
       >
         {"LET'S HAVE FUN TOGETHER!"}
       </h1>
