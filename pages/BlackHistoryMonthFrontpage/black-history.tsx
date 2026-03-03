@@ -4,7 +4,7 @@ const App: React.FC = () => {
    console.log("Rendering App with Images");
 
    return (
-      <div className="min-h-screen w-full bg-[url('/assets/images/blackhistorybackground.png')] bg-cover bg-center bg-no-repeat">
+      <div className="min-h-screen w-full bg-[url('/assets/images/background2.png')] bg-cover bg-center bg-no-repeat">
          {/* --- NAVBAR --- */}
          <nav className="flex items-center bg-stone-900 py-4 px-6 text-white shadow-xl">
             <div className="flex items-center gap-3">
@@ -32,22 +32,21 @@ const App: React.FC = () => {
          </nav>
 
          {/* --- HERO SECTION --- */}
+
          <main className="container mx-auto flex flex-col items-center px-4 py-12 text-center">
             {/* HEADLINE */}
-            <div className="relative z-10">
-               {/* First Line */}
-               <h1 className="text-4xl font-bold tracking-tight text-black md:text-7xl">Celebrating Black History</h1>
-
-               {/* Second Line */}
-               <div>
-                  <h1 className="inline text-4xl font-bold tracking-tight text-black md:text-7xl">Through </h1>
-                  <h2
-                     className="inline text-6xl font-bold tracking-wider text-red-800 drop-shadow-lg md:text-9xl"
-                     style={{ WebkitTextStroke: "2px brown" } as React.CSSProperties}
-                  >
-                     CODING
-                  </h2>
-               </div>
+            <div className="relative z-10"></div>
+            {/* First Line */}
+            <h1 className="text-4xl font-bold tracking-tight text-black md:text-7xl">Celebrating Black History</h1>
+            {/* Second Line */}
+            <div>
+               <h1 className="inline text-4xl font-bold tracking-tight text-black md:text-7xl">Through </h1>
+               <h2
+                  className="inline text-6xl font-bold tracking-wider text-red-800 drop-shadow-lg md:text-9xl"
+                  style={{ WebkitTextStroke: "2px brown" } as React.CSSProperties}
+               >
+                  CODING
+               </h2>
             </div>
 
             <p className="m-10 max-w-6xl font-mono text-xl font-bold leading-relaxed text-gray-700 md:text-3xl">
@@ -90,7 +89,7 @@ const App: React.FC = () => {
                   <img src="/assets/images/donut-character.png" alt="Donut Character" className="w-40 drop-shadow-2xl md:w-56" />
 
                   {/* Speech Bubble */}
-                  <div className="relative ml-4 w-[22rem] rounded-2xl border-4 border-red-900 bg-red-300 pb-6 pt-6 shadow-xl transition-transform group-hover:-translate-y-2 md:w-[24rem]">
+                  <div className="relative ml-4 w-[22rem] rounded-2xl border-4 border-red-900 bg-red-300 pt-6 pb-6 shadow-xl transition-transform group-hover:-translate-y-2 md:w-[24rem]">
                      <p className="whitespace-normal break-words text-center text-lg font-semibold leading-snug">Sign up now for only 259$/Year!</p>
 
                      {/* Bubble Tail */}
@@ -100,22 +99,22 @@ const App: React.FC = () => {
 
                {/* CENTER: Action Buttons */}
                <div className="flex w-full flex-col gap-6 px-4">
-                  <button className="w-full cursor-pointer rounded-lg border-b-4 border-green-700 bg-green-500 py-4 text-2xl font-black uppercase text-black shadow-lg hover:brightness-110 active:translate-y-1 active:border-b-0">
+                  <button className="ml-14 w-64 cursor-pointer rounded-lg border-b-4 border-green-700 bg-green-500 py-4 text-2xl font-black uppercase text-black shadow-lg hover:brightness-110 active:translate-y-1 active:border-b-0">
                      Sign Up Now
                   </button>
 
                   <div className="flex flex-col gap-2">
-                     <span className="font-bold text-gray-600">Already have an account?</span>
-                     <button className="w-full cursor-pointer rounded-lg border-b-4 border-yellow-600 bg-yellow-400 py-3 text-xl font-black uppercase text-black shadow hover:brightness-110">
-                        Click here to sign in
+                     <span className="text-black-600 font-bold">Already have an account?</span>
+                     <button className="ml-14 w-64 cursor-pointer rounded-lg border-b-4 border-yellow-600 bg-yellow-400 py-3 text-xl font-black uppercase text-black shadow hover:brightness-110">
+                        Click here to <br /> sign in
                      </button>
                   </div>
                </div>
 
                {/* RIGHT: Quote Bubble */}
                <div className="flex flex-col items-center">
-                  <div className="relative w-full max-w-lg rounded-2xl border-4 border-red-900 bg-red-300 p-11 shadow-xl transition-transform hover:scale-105">
-                     <p className="text-center font-mono text-2xl font-bold leading-tight text-black">
+                  <div className="relative w-80 max-w-lg rounded-2xl border-4 border-red-900 bg-red-300 p-4 shadow-xl transition-transform hover:scale-105">
+                     <p className="font-lightbold text-left font-mono text-2xl leading-tight text-black">
                         "You lose your curiosity when you stop learning" <br />- Katherine Johnson (Mathematician at NASA)
                      </p>
                      {/* Bubble Tail */}
