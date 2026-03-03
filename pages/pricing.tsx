@@ -116,6 +116,7 @@ const Pricing = () => {
    );
 };
 
+
 const PricingShimmer = () => {
    return (
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2 max-w-[900px] mx-auto">
@@ -125,6 +126,7 @@ const PricingShimmer = () => {
       </div>
    );
 };
+
 
 const InstitutionInquiry = () => {
    const dispatch = useDispatch();
