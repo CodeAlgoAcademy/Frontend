@@ -64,7 +64,7 @@ const Hero = () => {
 </h1>
                      <p className="sm:mb-5 mb-3 max-w-lg text-sm text-white/90 sm:max-w-md sm:text-xl md:text-xl">
                         {" "}
-                        Fun, game-based coding courses for kids. Learn Python, algorithms & more — anywhere, anytime. Join thousands of young coders today.
+                        Fun and Simple Coding for Young Minds. Learn Python, algorithms & more — anywhere, anytime. Join thousands of young coders today.
 {" "}
                      </p>{" "}
                      <div className="flex flex-col gap-4 xs:flex-row">
