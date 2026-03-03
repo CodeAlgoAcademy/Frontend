@@ -59,10 +59,10 @@ const HomepageContent = () => {
   ];
 
   return (
-    <section className="bg-gradient-to-b from-gray-50 to-white px-4 py-10 sm:px-6 font-thabit">
+    <section className="bg-gradient-to-b from-gray-50 to-white px-4 py-10 sm:px-6 ">
       <div className="mx-auto max-w-7xl">
         <div className="mb-16 text-center">
-          <h1 className="mb-6 text-4xl font-bold text-gray-900 md:text-5xl lg:text-6xl">
+          <h1 className="mb-6 text-4xl font-extrabold text-gray-900 md:text-5xl lg:text-6xl">
             The #1 Coding Platform for Kids
           </h1>
           <p className="mx-auto max-w-3xl text-md text-gray-600 md:text-xl">
@@ -78,7 +78,7 @@ const HomepageContent = () => {
             {learningPaths.map((item, idx) => (
               <div
                 key={idx}
-                className="group rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-200 transition-all hover:shadow-lg hover:ring-2 hover:ring-blue-500"
+                className="group font-thabit rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-200 transition-all hover:shadow-lg hover:ring-2 hover:ring-blue-500"
               >
                 <div className={`mb-4 inline-block rounded-xl bg-${item.color}-50 p-3 group-hover:scale-110 transition-transform`}>
                   {item.icon}

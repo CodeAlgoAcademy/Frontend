@@ -20,7 +20,7 @@ const teacherStories = [
     {
       name: "Alexis Rocha",
       role: "Fourth Grade Teacher",
-      school: "Shuano Elementary School",
+      school: "Shawanoe Elementary",
       achievement: "85% of students now show interest in programming",
       videoId: "85iqLQCrgaU"
     },
@@ -34,13 +34,13 @@ const teacherStories = [
   ];
 
   return (
-    <section className="bg-gradient-to-b from-gray-50 to-white py-10 px-4  sm:px-6 font-thabit">
+    <section className="bg-gradient-to-b from-gray-50 to-white py-10 px-4  sm:px-6">
       <div className="mx-auto max-w-7xl">
         <div className="mb-20">
-          <h2 className="mb-8 text-3xl font-bold text-gray-900 md:text-4xl text-center">
+          <h2 className="mb-3 text-3xl font-extrabold text-gray-900 md:text-5xl text-center">
             What <span className="text-blue-600">Parents & Teachers</span> Are Saying
           </h2>
-          <p className="text-center text-gray-600 max-w-2xl mx-auto mb-12">
+          <p className="text-center md:text-xl text-md text-gray-600 max-w-2xl mx-auto mb-12">
             Real feedback from our community
           </p>
         </div>
@@ -48,7 +48,7 @@ const teacherStories = [
        <div className="mb-10">
   <div className="grid gap-8 md:grid-cols-2">
     {teacherStories.map((story, idx) => (
-      <div key={idx} className="bg-gray-50 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+      <div key={idx} className="bg-gray-50 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow font-thabit">
         <div className="aspect-video w-full">
           <iframe
             className="w-full h-full"
@@ -82,10 +82,10 @@ const teacherStories = [
 </div>
 
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 md:p-12 text-white">
-          <h2 className="text-2xl md:text-3xl font-bold mb-6">
+          <h2 className="text-2xl md:text-3xl font-extrabold mb-6">
             Why Parents Choose CodeAlgo Academy for <span className="text-yellow-300">Kids Coding Courses</span>
           </h2>
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-8 font-thabit">
             <div>
               <p className="mb-4 text-blue-50">
                 Looking for <strong className="text-white">coding for kids</strong> that actually works? Our platform makes 

@@ -15,10 +15,10 @@ const ValuePropositions = () => {
   ];
 
   return (
-    <section className="relative bg-gray-50 py-20 font-thabit">
+    <section className="relative bg-gray-50 py-20 ">
       <div className="container mx-auto px-6">
 
-        <h2 className="mb-4 text-center text-3xl font-extrabold md:text-4xl">
+         <h2 className="mb-4 text-center text-3xl font-extrabold md:text-4xl">
           Everything Your Child Needs to Succeed in Coding
         </h2>
 

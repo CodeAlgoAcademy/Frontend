@@ -26,7 +26,7 @@ const WhatWeBuilt = () => {
             {"LET'S HAVE FUN TOGETHER!"}
          </h1>
 
-<div className="relative mx-auto h-[200px] w-[700px] max-w-[90vw] overflow-hidden rounded-[2rem] bg-white object-contain shadow-xl shadow-mainBlack md:h-[400px]">
+<div className="relative mx-auto mt-12 h-[200px] w-[700px] max-w-[90vw] overflow-hidden rounded-[2rem] bg-white object-contain shadow-xl shadow-mainBlack md:h-[400px]">
   <img
     src="/assets/0002.png"
     alt=""
