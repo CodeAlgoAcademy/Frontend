@@ -30,7 +30,7 @@ const PaymentPage = () => {
       return;
     }
 
-    const initPayment = async () => {
+const initPayment = async () => {
       setIsLoading(true);
       setError("");
 
@@ -42,7 +42,6 @@ const PaymentPage = () => {
         }
 
         let activeSub = current_subscription;
-        
         if (!activeSub || activeSub.id !== subscriptionId) {
            const action = await dispatch(getActiveSubscription());
            if (getActiveSubscription.fulfilled.match(action)) {
@@ -51,21 +50,22 @@ const PaymentPage = () => {
            }
         }
 
-        if (activeSub && activeSub.id === subscriptionId && activeSub.latest_client_secret) {
-           console.log("Using existing PaymentIntent:", activeSub.latest_client_secret);
-           setClientSecret(activeSub.latest_client_secret);
-        } else {
-           const result = await dispatch(createSetupIntent(subscriptionId));
-           if (createSetupIntent.fulfilled.match(result)) {
-             setClientSecret(result.payload.client_secret);
+        if (activeSub && activeSub.id === subscriptionId) {
+           if (activeSub.latest_client_secret) {
+             setClientSecret(activeSub.latest_client_secret);
+           } else if (activeSub.status === "ACTIVE") {
+             toast.success("No payment required.");
+             push("/parents/billing");
+             return;
            } else {
-             throw new Error("Failed to initialize payment form");
+             const result = await dispatch(createSetupIntent(subscriptionId));
+             if (createSetupIntent.fulfilled.match(result)) {
+               setClientSecret(result.payload.client_secret);
+             }
            }
         }
       } catch (err) {
-        console.error(err);
         setError("An error occurred while loading payment form");
-        toast.error("Failed to load payment form");
       } finally {
         setIsLoading(false);
       }

@@ -26,7 +26,6 @@ const ManageExistingChildren: React.FC<ManageExistingChildrenProps> = ({ onCance
     }
   }, [current_subscription]);
 
-  // Locked state check
   const isLocked = current_subscription?.status === "PAST_DUE" || current_subscription?.status === "INCOMPLETE";
 
   const handlePayNow = () => {
@@ -37,7 +36,6 @@ const ManageExistingChildren: React.FC<ManageExistingChildrenProps> = ({ onCance
 
   const handleSaveChanges = async () => {
     if (!current_subscription) return;
-    
     setIsProcessing(true);
     
     const currentIds = current_subscription.children?.map(c => c.id) || [];
@@ -52,16 +50,10 @@ const ManageExistingChildren: React.FC<ManageExistingChildrenProps> = ({ onCance
     }
 
     try {
-      // 1. Process Removals
       await Promise.all(childrenToRemove.map(id => 
-        dispatch(updateSubscriptionChild({
-          subscriptionId: current_subscription.id,
-          childId: id,
-          active: false
-        }))
+        dispatch(updateSubscriptionChild({ subscriptionId: current_subscription.id, childId: id, active: false }))
       ));
 
-      // 2. Process Additions
       for (const id of childrenToAdd) {
         const result = await dispatch(updateSubscriptionChild({
           subscriptionId: current_subscription.id,
@@ -71,31 +63,21 @@ const ManageExistingChildren: React.FC<ManageExistingChildrenProps> = ({ onCance
 
         if (updateSubscriptionChild.fulfilled.match(result)) {
            const payload = result.payload as any;
-           
-           if (payload.status === 'requires_payment' || payload.status === 'requires_payment_action') {
+           if ((payload.status === 'requires_payment' || payload.status === 'requires_payment_action') && payload.client_secret) {
              toast.message("Payment Required", { description: "Please complete payment to activate this child." });
-             
-             const secretParam = payload.client_secret ? `&client_secret=${payload.client_secret}` : "";
-             router.push(`/parents/billing/payment?subscription_id=${current_subscription.id}${secretParam}`);
+             router.push(`/parents/billing/payment?subscription_id=${current_subscription.id}&client_secret=${payload.client_secret}`);
              return; 
            }
-        } 
-        else if (updateSubscriptionChild.rejected.match(result)) {
-           const errorPayload = result.payload as any;
-           if (errorPayload?.status_code === 400 || errorPayload?.details?.[0]?.message?.includes("active")) {
-              toast.error("Subscription is Past Due", { description: "You must pay your outstanding balance before adding more children." });
-              router.push(`/parents/billing/payment?subscription_id=${current_subscription.id}`);
-              return;
-           }
+        } else {
+           toast.error("Could not add child. Please check your billing status.");
+           return;
         }
       }
 
       toast.success("Subscription updated successfully");
       await dispatch(getActiveSubscription());
       onSuccess();
-
     } catch (error) {
-      console.error(error);
       toast.error("An error occurred while updating.");
     } finally {
       setIsProcessing(false);
