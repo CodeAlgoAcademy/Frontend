@@ -104,7 +104,7 @@ export const signUpUser: any = createAsyncThunk("authSlice/signUpUser", async (n
 
       localStorage.setItem(ILocalStorageItems.signupAccountType, is_teacher ? "teacher" : is_parent ? "parent" : "student");
       try {
-         const { data } = await http.post("/auth/registration/", { ...options });
+         const { data } = await http.post("/auth/registration/", { ...options,  source: "web", });
          dispatch(clearFields());
          dispatch(closePreloader());
 

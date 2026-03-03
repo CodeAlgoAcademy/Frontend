@@ -334,7 +334,7 @@ request, please email us at info@codealgoacademy.com.
         Contact Us If you have any questions about this Privacy Policy, please contact us at info@codealgoacademy.com.
       </p>
     </Section>
-    <AcceptButton onAccept={onAccept} accepted={accepted} docType="Privacy Policy" />
+    {/* <AcceptButton onAccept={onAccept} accepted={accepted} docType="Privacy Policy" /> */}
   </div>
 );
 
@@ -397,7 +397,7 @@ const COPPACompliance = ({ onAccept, accepted }:IAcceptButton) => (
       </div>
     </Section>
 
-    <AcceptButton onAccept={onAccept} accepted={accepted} docType="COPPA Compliance" />
+    {/* <AcceptButton onAccept={onAccept} accepted={accepted} docType="COPPA Compliance" /> */}
   </div>
 );
 
@@ -580,7 +580,7 @@ const DataPrivacyAgreement = ({ onAccept, accepted }:IAcceptButton) => (
       </div>
     </Section>
 
-    <AcceptButton onAccept={onAccept} accepted={accepted} docType="Data Privacy Agreement" />
+    {/* <AcceptButton onAccept={onAccept} accepted={accepted} docType="Data Privacy Agreement" /> */}
   </div>
 );
 
@@ -712,7 +712,7 @@ const ParentalConsent = ({ onAccept, accepted }:IAcceptButton) => (
       </div>
     </Section>
 
-    <AcceptButton onAccept={onAccept} accepted={accepted} docType="Parental Consent" />
+    {/* <AcceptButton onAccept={onAccept} accepted={accepted} docType="Parental Consent" /> */}
   </div>
 );
 
@@ -1046,7 +1046,7 @@ our successors, assigns, licensees, and sublicensees.
       </div>
     </Section>
 
-    <AcceptButton onAccept={onAccept} accepted={accepted} docType="Terms of Service" />
+    {/* <AcceptButton onAccept={onAccept} accepted={accepted} docType="Terms of Service" /> */}
   </div>
 );
 
@@ -1204,7 +1204,7 @@ IS THE COMPLETE AND EXCLUSIVE AGREEMENT BETWEEN THE PARTIES
       </p>
     </div>
 
-    <AcceptButton onAccept={onAccept} accepted={accepted} docType="EULA" />
+    {/* <AcceptButton onAccept={onAccept} accepted={accepted} docType="EULA" /> */}
   </div>
 );
 

@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Footer from "@/components/home/new-home/footer";
 import Navbar from "@/components/navbar/home/Navbar";
 import Header from "@/components/press/Header";
@@ -8,13 +9,17 @@ import React from "react";
 const Press = () => {
    return (
       <section className="min-h-screen w-full bg-[#ffffff] font-thabit">
+        <Head>
+  <title>Press & Media | CodeAlgo Academy</title>
+  <meta name="description" content="CodeAlgo Academy in the news. Read our latest press coverage, media features, and announcements about kids coding education." />
+</Head>
          <Navbar />
          <Header
             body= ""
-            title= "The 2025 Semifinalists represent more than business potential. They carry cultural influence, economic promise, and a commitment to lasting impact."           
-            date="June 2025"            
-            image="/assets/blog/press/blackam.png"
-            detailPage="/press/blackambition"
+            title= "CodeAlgo Academy hits classrooms as the edtech platform (and founder) proves independence."           
+            date="February 03, 2026"            
+            image="/assets/blog/press/codealgopoto.jpg"
+            detailPage="/press/codeAlgo-academy-hits-as-edtech-platform"
          />
 
        <section className="mx-auto mt-12 mb-12 w-full max-w-[1100px] px-4 sm:px-6">

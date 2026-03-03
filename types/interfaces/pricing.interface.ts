@@ -1,19 +1,26 @@
 export interface PricingSlice {
-   plans: IPlan[];
-     payments: Payment[];
-   handlers: {
-      loading: boolean;
-      initiate_payment_loading: boolean;
-       payments_loading: boolean,
-      verify_payment_loading: boolean;
-      active_subscription_loading: boolean;
-      billing_history_loading: boolean;
-   };
-   initiated_payment?: InitiatePaymentRes;
-   payment_verification_status?: PaymentStatus;
-   active_subscription?: ISubscribedPlan;
-   billing_history?: IBilling[];
+  plans: IPlan[];
+  payments: Payment[];
+  handlers: {
+    loading: boolean;
+    initiate_payment_loading: boolean;
+    payments_loading: boolean;
+    verify_payment_loading: boolean;
+    active_subscription_loading: boolean;
+    billing_history_loading: boolean;
+    coupon_validation_loading: boolean;
+    reactivate_subscription_loading: boolean;
+    change_plan_loading: boolean;
+    update_child_loading: boolean;
+  };
+  initiated_payment?: TrialInitiateResponse;
+  coupon_validation?: CouponValidationResponse;
+  payment_verification_status?: PaymentStatus;
+  active_subscription?: ISubscribedPlan;
+  current_subscription?: Subscription;
+  billing_history?: Subscription[];
 }
+
 export interface InstitutionInquiryDto {
    name: string;
    email: string;
@@ -23,12 +30,16 @@ export interface InstitutionInquiryDto {
    message: string;
 }
 
+export interface PlanPrice {
+  id: number;
+  amount_in_cent: number;
+  interval: "DAY" | "WEEK" | "MONTH" | "YEAR" | string;
+}
 export interface IPlan {
-   id: number;
-   name: string;
-   amount_in_cent: number;
-   description: string;
-   duration_in_days: number;
+  id: number;
+  name: string;
+  description: string;
+  prices: PlanPrice[];
 }
 
 export interface ISubscribedPlan {
@@ -44,6 +55,19 @@ export interface InitiatePaymentRes {
    amount_in_cent: number;
 }
 
+export interface TrialInitiateResponse {
+  status: string; 
+  subscription: number;
+}
+
+export interface PaidInitiateResponse {
+  subscription_id: number;
+  is_trial: false;
+  payment_id: string;
+  client_secret: string;
+  amount_in_cent: number;
+}
+
 export type PaymentStatus = "succeeded" | "failed" | "pending";
 
 export interface IChild {
@@ -57,8 +81,14 @@ export interface IChild {
   schoolName: string | null;
   codingExperience: string;
 }
-
 export interface IBilling {
+  plan: IPlan;
+  is_active: string; 
+  activated_date: string;
+  expiration_date: string;
+}
+
+export interface IHistory {
   id: number;
   plan_name: string;
   plan_duration: number;
@@ -83,3 +113,51 @@ export interface Payment {
 }
 
 export type PaymentsResponse = Payment[];
+
+type SubscriptionStatus = 'TRIALING' | 'ACTIVE' | 'CANCELLED' | 'EXPIRED';
+type PlanInterval = 'DAY' | 'WEEK' | 'MONTH' | 'YEAR';
+
+interface Child {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  username: string;
+  dob: string; // YYYY-MM-DD
+  schoolName: string;
+  schoolCountry: string;
+  codingExperience: string;
+}
+
+export interface Subscription {
+  id: number;
+  plan_name: string;
+  plan_interval: PlanInterval | string;
+  status: SubscriptionStatus | string;
+  is_active: string;
+  activated_date: string; 
+  expiration_date: string; 
+  trial_ends_at:string;
+  cancel_at_period_end:boolean;
+  latest_client_secret:string;
+  canceled_at: string;
+  children: Child[];
+  payment_status: string;
+  amount: number;
+  currency: string;
+  payment_date: string;
+  charged_amount: number;
+} 
+export interface CouponValidationResponse {
+  code: string;
+  discount: {
+    type: "percentage" | "fixed";
+    value: number;
+  };
+  original_amount?: number;
+  final_amount?: number;
+  discount_amount?: number;
+  currency?: string;
+  message?: string;
+}
+

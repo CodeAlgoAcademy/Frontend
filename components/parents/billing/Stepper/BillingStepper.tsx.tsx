@@ -1,61 +1,124 @@
-import { useState } from "react";
-import Step1ChoosePlan from "./Step1ChoosePlan";
-import Step2SelectChildren from "./Step2SelectChildren";
-import Step3ConfirmPay from "./Step3ConfirmPay";
+import React, { useState, useEffect, forwardRef, useImperativeHandle, useCallback } from "react";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "store/hooks";
+import { RootState } from "store/store";
+import { getActiveSubscription, getBillingHistory } from "services/pricingService";
+import Step1SelectPlan from "./Step1selectplan";
+import Step2ManageChildren from "./Step2managechildren";
+import Step3Confirm from "./Step3ConfirmPay";
 
+interface BillingStepperProps {
+  onDone?: () => void;
+  onLockStepper?: () => void;
+}
 
-const BillingStepper = () => {
-  const [currentStep, setCurrentStep] = useState(1);
-  const [selectedPlan, setSelectedPlan] = useState<any>(null);
-//   const [selectedChildren, setSelectedChildren] = useState<string[]>([]);
-const [selectedChildren, setSelectedChildren] = useState<(string | number)[]>([]);
+export interface BillingStepperHandle {
+  resetToStepOne: () => void;
+}
 
+type StepId = 1 | 2 | 3;
 
-  const goNext = () => setCurrentStep((s) => s + 1);
-  const goBack = () => setCurrentStep((s) => s - 1);
+const BillingStepper = forwardRef<BillingStepperHandle, BillingStepperProps>(({ onDone, onLockStepper }, ref) => {
+  const dispatch = useAppDispatch();
+  const { current_subscription } = useSelector((state: RootState) => state.pricing);
+
+  const hasExistingSubscription = !!current_subscription?.id;
+
+  const [step, setStep] = useState<StepId>(1);
+  const [selectedPriceId, setSelectedPriceId] = useState<number | null>(null);
+  const [selectedChildIds, setSelectedChildIds] = useState<number[]>([]); 
+  const [initialLoadDone, setInitialLoadDone] = useState(false);
+
+  useEffect(() => {
+    const load = async () => {
+      await dispatch(getActiveSubscription());
+      dispatch(getBillingHistory());
+      setInitialLoadDone(true);
+    };
+    load();
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (current_subscription?.children) {
+      setSelectedChildIds(current_subscription.children.map((c) => c.id));
+    }
+  }, [current_subscription]);
+
+  const reset = useCallback(() => {
+    setStep(1);
+    setSelectedPriceId(null);
+    setSelectedChildIds([]);
+    onDone?.();
+  }, [onDone]);
+
+  useImperativeHandle(ref, () => ({ resetToStepOne: reset }));
+
+  const steps = [
+    { id: 1, label: hasExistingSubscription ? "Change Plan" : "Select Plan" },
+    { id: 2, label: "Select Children" }, 
+    { id: 3, label: hasExistingSubscription ? "Confirm" : "Subscribe" },
+  ];
+
+  if (!initialLoadDone && step === 1) {
+    return <div className="py-16 text-center text-gray-400">Loading...</div>;
+  }
 
   return (
-    <div>
-      {/* Step Indicator */}
-      <div className="flex items-center justify-between mb-6">
-        {["Choose Plan", "Select Children", "Confirm & Pay"].map((label, i) => (
-          <div key={i} className="flex-1 text-center">
-            <div
-              className={`rounded-full w-8 h-8 mx-auto flex items-center justify-center 
-              ${currentStep === i + 1 ? "bg-mainColor text-white" : "bg-gray-300"}`}
-            >
-              {i + 1}
-            </div>
-            <p className="mt-2 text-sm">{label}</p>
-          </div>
+    <div id="stepper-section">
+      <div className="mb-8 flex items-center">
+        {steps.map((s, i) => (
+           <React.Fragment key={s.id}>
+             <div className="flex flex-col items-center">
+               <div className={`flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold transition-colors ${step === s.id ? "bg-mainColor text-white" : step > s.id ? "bg-mainColor/20 text-mainColor" : "bg-gray-100 text-gray-400"}`}>
+                 {step > s.id ? "✓" : s.id}
+               </div>
+               <p className="mt-1.5 text-xs font-medium text-gray-700">{s.label}</p>
+             </div>
+             {i < steps.length - 1 && <div className="mx-2 mb-5 h-0.5 flex-1 bg-gray-100" />}
+           </React.Fragment>
         ))}
       </div>
 
-      {/* Step Content */}
-      {currentStep === 1 && (
-        <Step1ChoosePlan
-          selectedPlan={selectedPlan}
-          setSelectedPlan={setSelectedPlan}
-          goNext={goNext}
+      {/* STEP 1: PLAN */}
+      {step === 1 && (
+        <Step1SelectPlan
+          selectedPriceId={selectedPriceId}
+          setSelectedPriceId={setSelectedPriceId}
+          couponCode=""
+          setCouponCode={() => {}} 
+          goNext={() => {
+            if (onLockStepper) onLockStepper();
+            setStep(2);
+          }}
         />
       )}
-      {currentStep === 2 && (
-        <Step2SelectChildren
-          selectedChildren={selectedChildren}
-          setSelectedChildren={setSelectedChildren}
-          goNext={goNext}
-          goBack={goBack}
+
+      {/* STEP 2: CHILDREN */}
+      {step === 2 && (
+        <Step2ManageChildren
+          selectedChildIds={selectedChildIds}
+          setSelectedChildIds={setSelectedChildIds}
+          goBack={() => setStep(1)}
+          goNext={() => setStep(3)}
         />
       )}
-      {currentStep === 3 && (
-        <Step3ConfirmPay
-          selectedPlan={selectedPlan}
-          selectedChildren={selectedChildren}
-          goBack={goBack}
+
+      {/* STEP 3: CONFIRM & PAY */}
+      {step === 3 && selectedPriceId !== null && (
+        <Step3Confirm
+          priceId={selectedPriceId}
+          selectedChildIds={selectedChildIds}
+          goBack={() => setStep(2)}
+          existingSubscriptionId={current_subscription?.id || null} 
+          onSuccess={(subscriptionId) => {
+            console.log("Subscription processed:", subscriptionId);
+            reset();
+          }}       
         />
       )}
     </div>
   );
-};
+});
 
+BillingStepper.displayName = "BillingStepper";
 export default BillingStepper;

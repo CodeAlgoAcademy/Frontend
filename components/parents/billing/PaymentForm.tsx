@@ -1,89 +1,81 @@
 import { PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import React, { FormEvent, useState } from "react";
-import BillingSummary from "./BillingSummary";
-import { useSelector } from "react-redux";
-import { RootState } from "store/store";
 import { toast } from "sonner";
-import { useRouter } from "next/router";
 import Loader from "@/components/UI/loader";
 
-const PaymentForm = () => {
-   const { initiated_payment } = useSelector((state: RootState) => state.pricing);
-   const { push } = useRouter();
-   const stripe = useStripe();
-   const elements = useElements();
-   const [isLoading, setIsLoading] = useState(false);
-   const [isPaymentElementReady, setIsPaymentElementReady] = useState(false);
+interface PaymentFormProps {
+  subscriptionId: number;
+  clientSecret: string;
+}
 
-   const handleSubmit = async (e: FormEvent) => {
-      e.preventDefault();
+const PaymentForm: React.FC<PaymentFormProps> = ({ subscriptionId, clientSecret }) => {
+  const stripe = useStripe();
+  const elements = useElements();
+  const [isLoading, setIsLoading] = useState(false);
 
-      if (!stripe || !elements) {
-         return;
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    if (!stripe || !elements) {
+      toast.error("Payment form not ready");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const isPayment = clientSecret.startsWith("pi_");
+      
+      let error;
+
+      if (isPayment) {
+        const result = await stripe.confirmPayment({
+          elements,
+          confirmParams: {
+            return_url: `${window.location.origin}/parents/billing/payment/confirm?subscription_id=${subscriptionId}&type=payment`,
+          },
+        });
+        error = result.error;
+      } else {
+        const result = await stripe.confirmSetup({
+          elements,
+          confirmParams: {
+            return_url: `${window.location.origin}/parents/billing/payment/confirm?subscription_id=${subscriptionId}&type=setup`,
+          },
+        });
+        error = result.error;
       }
 
-      setIsLoading(true);
-
-      const { error } = await stripe.confirmPayment({
-         elements,
-         confirmParams: {
-            return_url: `${window.location.origin}/payment/confirm`,
-         },
-      });
-
-      if (error?.type === "card_error" || error?.type === "validation_error") {
-         toast.error(error.message);
-      } else if (error) {
-         toast.error("An unexpected error occurred");
-      }
-
+      if (error) {
+        toast.error(error.message || "Payment failed");
+        console.error("Stripe error:", error);
+      } 
+      
+    } catch (error) {
+      console.error("Payment form error:", error);
+      toast.error("An unexpected error occurred");
+    } finally {
       setIsLoading(false);
-   };
+    }
+  };
 
-   return (
-      <form
-         onSubmit={handleSubmit}
-         className="mt-8 flex w-full items-start gap-8 max-lg:flex-col"
-      >
-         <div className="w-full flex-[.7]">
-            <PaymentElement
-               id="payment-element"
-               options={{
-                  layout: "tabs",
-                  business: {
-                     name: "CodeAlgo LLC",
-                  },
-               }}
-               onReady={() => setIsPaymentElementReady(false)}
-               onChange={(event) => {
-                  setIsPaymentElementReady(event.complete);
-               }}
-            />
-         </div>
+  return (
+    <form onSubmit={handleSubmit} className="mt-8">
+      <div className="mb-6">
+        <PaymentElement />
+      </div>
 
-         <div className="w-full flex-[.3]">
-            <BillingSummary amount={initiated_payment?.amount_in_cent!} />
-
-            <div className="mt-8 flex justify-end gap-3">
-               <button
-                  className="w-[100px] rounded-[4px] border border-black bg-white px-4 py-2 text-xs text-black"
-                  onClick={() => push("/parents/billing")}
-                  type="button"
-                  disabled={isLoading}
-               >
-                  Cancel
-               </button>
-               <button
-                  disabled={isLoading || !isPaymentElementReady}
-                  className="flex w-[100px] items-center justify-center rounded-[4px] bg-mainColor px-4 py-2 text-xs text-white transition-colors hover:bg-mainColor/90 disabled:cursor-not-allowed disabled:bg-gray-100"
-                  type="submit"
-               >
-                  {isLoading ? <Loader color="gray" /> : "Proceed"}
-               </button>
-            </div>
-         </div>
-      </form>
-   );
+      <div className="flex justify-end gap-4">
+        <button
+          type="submit"
+          disabled={isLoading || !stripe || !elements}
+          className="rounded bg-mainColor px-6 py-2 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isLoading ? <Loader color="white" /> : clientSecret.startsWith("pi_") ? "Pay Now" : "Save Payment Method"}
+        </button>
+      </div>
+    </form>
+  );
 };
 
 export default PaymentForm;

@@ -35,7 +35,7 @@ const Hero = () => {
          {/* Media */}
          <div className="relative h-[75vh] min-h-[600px] w-full md:h-[90vh]">
             {isSafari ? (
-               <img src="/assets/landing/hero.png" alt="hero" className="h-full w-full object-cover" />
+               <img src="/assets/landing/hero.png" alt="Kids learning to code online with CodeAlgo Academy" className="h-full w-full object-cover" />
             ) : (
                <video
                   src="/assets/landing/hero.mp4"
@@ -59,12 +59,13 @@ const Hero = () => {
                   {" "}
                   {/* Text */}
                   <div className="pointer-events-auto pl-8 pt-6 sm:pt-0 text-white sm:pl-0">
-                     <h1 className="sm:mb-4 mb-2 max-w-xl text-xl font-extrabold leading-tight sm:text-xl md:text-4xl lg:text-5xl">
-                        YOUR CHILD’S <br /> <span className="text-primary">Path to Coding Success</span> <br /> STARTS HERE{" "}
-                     </h1>
-                     <p className="sm:mb-5 mb-3 max-w-lg text-md text-white/90 sm:max-w-md sm:text-xl md:text-xl">
+                    <h1 className="sm:mb-4 mb-2 max-w-xl text-lg font-extrabold leading-tight sm:text-xl md:text-4xl lg:text-5xl">
+   Online Coding Classes <br /> <span className="text-primary">for Kids Ages 6–18</span> <br /> Learn Programming Through Games{" "}
+</h1>
+                     <p className="sm:mb-5 mb-3 max-w-lg text-sm text-white/90 sm:max-w-md sm:text-xl md:text-xl">
                         {" "}
-                        Learn coding anywhere. Cancel anytime. Join thousands of kids learning to code.{" "}
+                        Fun and Simple Coding for Young Minds. Learn Python, algorithms & more — anywhere, anytime. Join thousands of young coders today.
+{" "}
                      </p>{" "}
                      <div className="flex flex-col gap-4 xs:flex-row">
                         <button

@@ -2,6 +2,7 @@ import Banner from "@/components/home/new-home/banner";
 import Footer from "@/components/home/new-home/footer";
 import { PromoBanner } from "@/components/home/new-home/winter-banner";
 import Navbar from "@/components/navbar/home/Navbar";
+import PlanCard from "@/components/parents/billing/priceCard";
 import { CustomButton } from "@/components/UI/Button";
 import { MenuItem, Select } from "@mui/material";
 import Image from "next/image";
@@ -14,20 +15,31 @@ import { toast } from "sonner";
 import { openSuccessModal } from "store/modalSlice";
 import { RootState } from "store/store";
 import { InstitutionInquiryDto, IPlan } from "types/interfaces";
+import Head from "next/head";
+
 
 const Pricing = () => {
    const { handlers: pricingHandlers, plans } = useSelector((state: RootState) => state.pricing);
    const dispatch = useDispatch();
-   console.log(plans, "plan princing")
+   const { push } = useRouter();
 
-   const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("yearly");
+   const [selectedPriceId, setSelectedPriceId] = useState<number | null>(null);
 
    useEffect(() => {
       dispatch(getPricingPlans());
    }, []);
 
+   const handleGetStarted = () => {
+      toast.success("Login to your dashboard to complete payment");
+      push(`/login/parent`);
+   };
+
    return (
       <div className="relative font-thabit bg-[#F5FAFF]">
+         <Head>
+  <title>Coding Classes Pricing for Kids | CodeAlgo Academy</title>
+  <meta name="description" content="Affordable online coding classes for kids ages 6-18. Flexible monthly and annual plans. Start free today — no credit card required." />
+</Head>
          <Navbar />
          <Banner />
          <section className="mt-20 px-6 py-16">
@@ -36,48 +48,65 @@ const Pricing = () => {
                   Choose the plan that is right for you
                </h1>
 
-               {/* Billing toggle */}
-               <div className="mt-8 flex justify-center  border-mainRed">
-                  <div className="flex rounded-full bg-[#E6F1FF] p-3">
-                     <button
-                        onClick={() => setBillingCycle("yearly")}
-                        className={`rounded-full px-6 py-2 text-sm font-semibold transition ${
-                           billingCycle === "yearly"
-                              ? "bg-white text-[#0B2C4A] shadow"
-                              : "text-[#4B6B88]"
-                        }`}
-                     >
-                        Yearly
-                     </button>
-
-                     <button
-                        onClick={() => setBillingCycle("monthly")}
-                        className={`rounded-full px-6 py-2 text-sm font-semibold transition ${
-                           billingCycle === "monthly"
-                              ? "bg-white text-[#0B2C4A] shadow"
-                              : "text-[#4B6B88]"
-                        }`}
-                     >
-                        Monthly
-                     </button>
-                  </div>
-               </div>
-
-               <div className="mt-16 flex justify-center gap-8 max-md:flex-col max-md:items-center">
-                  {pricingHandlers.loading ? (
+               {pricingHandlers.loading ? (
+                  <div className="mt-16">
                      <PricingShimmer />
-                  ) : plans.length === 0 ? (
-                     <p className="text-[1.2rem] text-gray-500">No Plan</p>
-                  ) : (
-                     plans.map((plan, index) => (
-                        <SinglePricing
-                           key={index}
-                           plan={plan}
-                           billingCycle={billingCycle}
-                        />
-                     ))
-                  )}
-               </div>
+                  </div>
+               ) : plans.length === 0 ? (
+                  <p className="mt-16 text-center text-[1.2rem] text-gray-500">No Plan</p>
+               ) : (
+                  <div className="mt-16">
+                     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2 max-w-[900px] mx-auto">
+  {plans.map((plan) => {
+    const monthlyPrice = plan.prices?.find(p => p.interval === "MONTH");
+    const yearlyPrice = plan.prices?.find(p => p.interval === "YEAR");
+
+    return (
+      <React.Fragment key={plan.id}>
+         
+         {yearlyPrice && monthlyPrice && (
+          <PlanCard
+            key={yearlyPrice.id}
+            title={`${plan.name} Annual Plan`}
+            price={17.3}
+            originalPrice={(monthlyPrice.amount_in_cent / 100)}
+            interval="mo"
+            trialText="7-Day Free Trial"
+            billingText={`$ ${yearlyPrice.amount_in_cent / 100} Billed yearly`}
+            badge="Save 20%"
+            showButton={true}
+            buttonText="Try For Free"
+            onSelect={() => {
+              setSelectedPriceId(yearlyPrice.id);
+              handleGetStarted();
+            }}
+          />
+        )}
+
+        {/* MONTHLY */}
+        {monthlyPrice && (
+          <PlanCard
+            key={monthlyPrice.id}
+            title={`${plan.name} Monthly Plan`}
+            price={monthlyPrice.amount_in_cent / 100}
+            interval="mo"
+            trialText="7-Day Free Trial"
+            billingText={`$${(monthlyPrice.amount_in_cent / 100)} Billed monthly`}
+            showButton={true}
+            buttonText="Try For Free"
+            onSelect={() => {
+              setSelectedPriceId(monthlyPrice.id);
+              handleGetStarted();
+            }}
+          />
+        )}
+        
+      </React.Fragment>
+    );
+  })}
+</div>
+                  </div>
+               )}
             </div>
          </section>
 
@@ -90,79 +119,10 @@ const Pricing = () => {
 
 const PricingShimmer = () => {
    return (
-      <>
-         {[null, null, null].map((_, index) => {
-            return (
-               <div key={index} className="flex-1">
-                  <div className="mb-3 h-[200px] animate-pulse rounded-md bg-gray-200"></div>
-                  <div className="mb-3 h-[50px] animate-pulse rounded-md bg-gray-200"></div>
-               </div>
-            );
-         })}
-      </>
-   );
-};
-
-interface SinglePricingProps {
-   plan: IPlan;
-   billingCycle: "monthly" | "yearly";
-}
-
-const SinglePricing: FC<SinglePricingProps> = ({ plan, billingCycle }) => {
-   const { push } = useRouter();
-
-  const yearlyTotal = plan.amount_in_cent;
-  const monthlyPrice = 21.59;
-  const yearlyPrice = 259.08;
-
-   const isYearly = billingCycle === "yearly";
-
-   return (
-      <div className="w-full max-w-[800px] rounded-2xl border border-mainRed bg-white p-10 text-center shadow-sm">
-         <h2 className="text-[1.5rem] font-bold text-[#0B2C4A]">
-            {plan.name}
-         </h2>
-
-         {/* Price */}
-         <div className="mt-6">
-            {isYearly ? (
-               <>
-                  <h1 className="text-[2.5rem] font-bold text-[#8B1E1E]">
-                     ${yearlyTotal.toFixed(2)}
-                     <span className="text-base font-medium text-[#4B6B88]">/Annually</span>
-                  </h1>
-
-                  <p className="mt-2 text-sm text-gray-400 line-through">
-                     ${(yearlyPrice).toFixed(2)}/Annually
-                  </p>
-
-                  <p className="mt-2 text-sm font-semibold text-pink-600">
-                     Best value!
-                  </p>
-               </>
-            ) : (
-               <h1 className="text-[2.5rem] font-bold text-[#0B2C4A]">
-                  ${monthlyPrice.toFixed(2)}
-                  <span className="text-base font-medium text-[#4B6B88]">/mo</span>
-               </h1>
-            )}
-         </div>
-
-         {/* Description */}
-         <ul className="my-6 space-y-2 text-sm text-[#4B6B88]">
-            {plan.description}
-         </ul>
-
-         <CustomButton
-            onClick={() => {
-               toast.success("Login to your dashboard to complete payment");
-               push(`/login/parent`);
-            }}
-            variant="filled"
-            className="mx-auto text-2xl mt-6 w-full max-w-[400px] justify-center text-white"
-         >
-            Get Started
-         </CustomButton>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2 max-w-[900px] mx-auto">
+         {[null, null, null, null].map((_, index) => (
+            <div key={index} className="h-[280px] animate-pulse rounded-2xl bg-gray-200"></div>
+         ))}
       </div>
    );
 };

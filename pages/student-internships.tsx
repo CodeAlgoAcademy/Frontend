@@ -5,10 +5,15 @@ import { CustomButton } from "@/components/UI/Button";
 import Image from "next/image";
 import React from "react";
 import { BsBagFill, BsPinMapFill } from "react-icons/bs";
+import Head from "next/head";
 
 const StudentInternships = () => {
    return (
       <div className="relative overflow-x-hidden bg-white">
+         <Head>
+  <title>Student Internships | Coding Experience for Teens | CodeAlgo Academy</title>
+  <meta name="description" content="Real-world coding internship opportunities for student developers. Build your portfolio and gain experience with CodeAlgo Academy." />
+</Head>
          <Navbar />
          <Banner />
 
