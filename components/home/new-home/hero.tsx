@@ -58,14 +58,14 @@ const Hero = () => {
                <div className="grid max-w-6xl grid-cols-1 items-center justify-center gap-5 sm:grid-cols-2 sm:gap-12">
                   {" "}
                   {/* Text */}
-                  <div className="pointer-events-auto pl-8 pt-6 sm:pt-0 text-white sm:pl-0">
-                    <h1 className="sm:mb-4 mb-2 max-w-xl text-lg font-extrabold leading-tight sm:text-xl md:text-4xl lg:text-5xl">
-   Online Coding Classes <br /> <span className="text-primary">for Kids Ages 6–18</span> <br /> Learn Programming Through Games{" "}
-</h1>
-                     <p className="sm:mb-5 mb-3 max-w-lg text-sm text-white/90 sm:max-w-md sm:text-xl md:text-xl">
+                  <div className="pointer-events-auto pt-6 text-white sm:pt-0 md:pl-8">
+                     <h1 className="mb-2 max-w-xl text-lg font-extrabold leading-tight sm:mb-4 sm:text-xl md:text-4xl lg:text-5xl">
+                        Fun and Simple Coding for Young Minds.
+                     </h1>
+                     <p className="mb-3 max-w-lg text-sm text-white/90 sm:mb-5 sm:max-w-md sm:text-xl md:text-xl">
                         {" "}
-                        Fun and Simple Coding for Young Minds. Learn Python, algorithms & more — anywhere, anytime. Join thousands of young coders today.
-{" "}
+                        Learn Python, explore algorithms, and build problem-solving and critical thinking skills with fun activities available
+                        anytime, anywhere. Join thousands of young coders today!{" "}
                      </p>{" "}
                      <div className="flex flex-col gap-4 xs:flex-row">
                         <button
@@ -87,17 +87,17 @@ const Hero = () => {
                   {/* Offer Card */}{" "}
                   <div className="pointer-events-auto flex justify-center lg:justify-end">
                      {" "}
-                     <div className="w-full max-w-sm rounded-2xl border border-white/20 bg-white/10 sm:p-5 p-3 text-white backdrop-blur-md">
+                     <div className="w-full max-w-sm rounded-2xl border border-white/20 bg-white/10 p-3 text-white backdrop-blur-md sm:p-5">
                         {" "}
                         <div className="mb-3 text-center">
                            {" "}
                            <span className="rounded-full bg-mainRed px-3 py-1 text-sm font-bold uppercase"> Annual Offer </span>{" "}
                         </div>{" "}
-                        <h3 className="sm:mb-3 mb-1 text-center text-xl font-bold text-mainRed">
+                        <h3 className="mb-1 text-center text-xl font-bold text-mainRed sm:mb-3">
                            {" "}
                            GET UP TO <br /> <span className="text-2xl text-white md:text-3xl">20% OFF</span> <br /> MONTHLY PRICING{" "}
                         </h3>{" "}
-                        <div className="sm:mb-6 mb-3  text-center">
+                        <div className="mb-3 text-center  sm:mb-6">
                            {" "}
                            <span className="text-2xl font-extrabold md:text-4xl">$21</span> <span> / month</span>{" "}
                            <p className="mt-1 text-sm">Billed annually. Cancel anytime.</p>{" "}
