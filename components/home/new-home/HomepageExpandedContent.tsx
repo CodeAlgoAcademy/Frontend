@@ -18,16 +18,14 @@ import {
 const HomepageExpandedContent = () => {
 const teacherStories = [
     {
-      name: "Alexis Rocha",
+      name: "Alexis R.",
       role: "Fourth Grade Teacher",
-      school: "Shawanoe Elementary",
-      achievement: "85% of students now show interest in programming",
+      achievement: "100% of students now show interest in programming",
       videoId: "85iqLQCrgaU"
     },
     {
-      name: "Kevin Foster",
+      name: "Kevin F.",
       role: "Executive Director",
-      school: "Genesis School",
       achievement: "Entire school K-8 participating and building projects",
       videoId: "0MbxPAUDvww"
     }
@@ -66,10 +64,6 @@ const teacherStories = [
           <div className="flex items-center gap-2 mb-3">
             <Star className="h-5 w-5 text-yellow-500" />
             <span className="text-gray-700">{story.role}</span>
-          </div>
-          <div className="flex items-start gap-2 mb-2">
-            <MapPin className="h-4 w-4 text-gray-500 mt-1 flex-shrink-0" />
-            <p className="text-gray-700">{story.school}</p>
           </div>
           <div className="flex items-start gap-2">
             <Award className="h-4 w-4 text-purple-600 mt-1 flex-shrink-0" />
