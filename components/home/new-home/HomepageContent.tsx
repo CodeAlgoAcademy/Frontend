@@ -86,7 +86,7 @@ const HomepageContent = () => {
                 <h3 className="mb-2 text-xl font-semibold text-gray-900">{item.title}</h3>
                 <p className="text-gray-600">{item.description}</p>
                 <span className="mt-3 inline-block text-xs font-medium text-blue-600">
-                  #{item.keyword}
+                  {item.keyword}
                 </span>
               </div>
             ))}
