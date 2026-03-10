@@ -44,65 +44,70 @@ const initialState: ITeacherStudentsState = {
       skills: [],
       levelThresholds: [],
       student_id: "",
-   },
+ codingAccess: {
+         line_coding_locked: false,
+         block_coding_max_level: ""
+      },
+      // blockLevels: [],
+      },
    isLoading: false,
    error: undefined,
 };
 
-const initiaddlState = {
-   students: [],
-   currentStudent: {
-      codingExperience: "",
-      classId: "",
-      dob: "",
-      fullName: "",
-      firstName: "",
-      lastName: "",
-      username: "",
-      timeLimits: [{dayOfTheWeek: "Monday",timeLimit: "",},
-         {dayOfTheWeek: "Tuesday",timeLimit: "",},
-         {dayOfTheWeek: "Wednesday",timeLimit: "",},
-         {dayOfTheWeek: "Thursday",timeLimit: "",},
-         {dayOfTheWeek: "Friday",timeLimit: "",},
-         {dayOfTheWeek: "Saturday",timeLimit: "",},
-         {dayOfTheWeek: "Sunday",timeLimit: "",},
-      ],
-      level: 0,
-      progress: {
-         current: {
-            title: "",
-            level: 0,
-            progress: 0,
-         },
-         topic: [],
-      },
-      skills: [],
-      levelThresholds: [],
-      student_id: "",
-   },
-   codingExperience: "experienced",
-   id: "",
-   dob: "",
-   firstName: "",
-   lastName: "",
-   fullName: "",
-   username: "",
-   friend: "",
-   timeLimits: [
-      {dayOfTheWeek: "Monday",timeLimit: "No Limit",},
-      {dayOfTheWeek: "Tuesday",timeLimit: "No Limit",},
-      {dayOfTheWeek: "Wednesday",timeLimit: "No Limit",},
-      {dayOfTheWeek: "Thursday",timeLimit: "No Limit",},
-      {dayOfTheWeek: "Friday",timeLimit: "No Limit",},
-      {dayOfTheWeek: "Saturday",timeLimit: "No Limit",},
-      {dayOfTheWeek: "Sunday",timeLimit: "No Limit",},
-   ],
-   levelThresholds: [],
-   classId: "",
-   isLoading: false,
-   error: undefined,
-   student_id: "",
-};
+// const initiaddlState = {
+//    students: [],
+//    currentStudent: {
+//       codingExperience: "",
+//       classId: "",
+//       dob: "",
+//       fullName: "",
+//       firstName: "",
+//       lastName: "",
+//       username: "",
+//       timeLimits: [{dayOfTheWeek: "Monday",timeLimit: "",},
+//          {dayOfTheWeek: "Tuesday",timeLimit: "",},
+//          {dayOfTheWeek: "Wednesday",timeLimit: "",},
+//          {dayOfTheWeek: "Thursday",timeLimit: "",},
+//          {dayOfTheWeek: "Friday",timeLimit: "",},
+//          {dayOfTheWeek: "Saturday",timeLimit: "",},
+//          {dayOfTheWeek: "Sunday",timeLimit: "",},
+//       ],
+//       level: 0,
+//       progress: {
+//          current: {
+//             title: "",
+//             level: 0,
+//             progress: 0,
+//          },
+//          topic: [],
+//       },
+//       skills: [],
+//       levelThresholds: [],
+//       student_id: "",
+//    },
+//    codingExperience: "experienced",
+//    id: "",
+//    dob: "",
+//    firstName: "",
+//    lastName: "",
+//    fullName: "",
+//    username: "",
+//    friend: "",
+//    timeLimits: [
+//       {dayOfTheWeek: "Monday",timeLimit: "No Limit",},
+//       {dayOfTheWeek: "Tuesday",timeLimit: "No Limit",},
+//       {dayOfTheWeek: "Wednesday",timeLimit: "No Limit",},
+//       {dayOfTheWeek: "Thursday",timeLimit: "No Limit",},
+//       {dayOfTheWeek: "Friday",timeLimit: "No Limit",},
+//       {dayOfTheWeek: "Saturday",timeLimit: "No Limit",},
+//       {dayOfTheWeek: "Sunday",timeLimit: "No Limit",},
+//    ],
+//    levelThresholds: [],
+//    classId: "",
+//    isLoading: false,
+//    error: undefined,
+//    student_id: "",
+// };
 
 export const createOrUpdateLevelThreshold: any = createAsyncThunk(
    "class/student/createOrUpdateLevelThreshold",
@@ -227,6 +232,41 @@ export const updateStudentPassword: any = createAsyncThunk(
 );
 
 
+export const fetchCodingAccess = createAsyncThunk(
+   "teacher/student/fetchCodingAccess",
+   async (studentId: string | number, thunkAPI) => {
+      try {
+         return await teachersStudentServices.getCodingAccess(studentId);
+      } catch (error: any) {
+         return thunkAPI.rejectWithValue(error.response?.data);
+      }
+   }
+);
+
+export const updateCodingAccess = createAsyncThunk(
+   "teacher/student/updateCodingAccess",
+   async ({ studentId, data }: { studentId: string | number, data: any }, thunkAPI) => {
+      try {
+         return await teachersStudentServices.updateCodingAccess(studentId, data);
+      } catch (error: any) {
+         return thunkAPI.rejectWithValue(error.response?.data);
+      }
+   }
+);
+
+// export const fetchBlockGameLevels = createAsyncThunk(
+//    "teacher/student/fetchBlockLevels",
+//    async (_, thunkAPI) => {
+//       try {
+//          return await teachersStudentServices.getBlockGameLevels();
+//       } catch (error: any) {
+//          return thunkAPI.rejectWithValue(error.response?.data);
+//       }
+//    }
+// );
+
+
+
 export const teacherStudentSlice = createSlice({
    name: "teacherStudent",
    initialState,
@@ -303,7 +343,30 @@ export const teacherStudentSlice = createSlice({
          })
        .addCase(updateStudentPassword.rejected, (state, action) => {
             state.error = action.payload as string;
-         });
+         })
+
+      .addCase(fetchCodingAccess.fulfilled, (state, action) => {
+      state.students = state.students.map(s => 
+         String(s.student_id) === String(state.currentStudent?.student_id) 
+         ? { ...s, codingAccess: action.payload } 
+         : s
+      );
+   })
+   .addCase(updateCodingAccess.fulfilled, (state, action) => {
+      state.students = state.students.map(s => 
+         String(s.student_id) === String(state.currentStudent?.student_id) 
+         ? { ...s, codingAccess: action.payload } 
+         : s
+      );
+      if (state.currentStudent) {
+          state.currentStudent.codingAccess = action.payload;
+      }
+   })
+
+   // .addCase(fetchBlockGameLevels.fulfilled, (state, action) => {
+   //    state.blockLevels = action.payload;
+   // });
+
    },
 });
 

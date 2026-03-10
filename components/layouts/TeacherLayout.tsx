@@ -10,13 +10,17 @@ import TeacherSidebar from "../Teachers/UI/Sidebar";
 import UserInfo from "../Teachers/UI/UserInfo";
 import { MdClass, MdMenu } from "react-icons/md";
 import ClassSelector from "../Teachers/UI/ClassSelector";
-import { FaUserGraduate } from "react-icons/fa";
+import { PiStudent } from "react-icons/pi";
 import { useDispatch } from "react-redux";
 import { getAllClasses } from "services/classesService";
 import { FiActivity } from "react-icons/fi";
 import PrintLoginsButton from "../UI/printlogins";
 import GeneratingModal from "../Teachers/students/generatingModal";
 import SuccessModal from "../modals/SuccessModal";
+import { TbLivePhoto } from "react-icons/tb";
+import { CiSettings } from "react-icons/ci";
+import { SlGameController } from "react-icons/sl";
+
 
 interface Props {
    children?: ReactNode;
@@ -46,17 +50,22 @@ const links = [
    },
    {
       name: "students",
-      icon: <FaUserGraduate />,
+      icon: <PiStudent />,
       url: "/teachers/students",
    },
    {
       name: "Live Class",
-      icon: <FaUserGraduate />,
+      icon: <TbLivePhoto />,
       url: "/teachers/overview",
+   },
+      {
+      name: "Game Locks",
+      icon: <SlGameController />,
+      url: "/teachers/gamelocks",
    },
    {
       name: "Class Settings",
-      icon: <FaUserGraduate />,
+      icon: <CiSettings />,
       url: "/teachers/classbulksettings",
    },
    {

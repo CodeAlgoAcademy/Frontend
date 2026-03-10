@@ -22,6 +22,23 @@ export interface BaseStudent {
    student_id:string | number;
   levelThresholds: LevelThresholdInputProps[];
   classId: number | string;
+  codingAccess?: ICodingAccess; 
+  // blockLevels: IBlockLevel[]
+}
+
+export interface IBlockLevel {
+   id: number;
+   name: string; // This is likely what we use for the "22_40" code
+   data: {
+      [key: string]: string; // Represents additionalProp1, etc.
+   };
+   student_id: number;
+   student: string;
+   created_at: string;
+}
+export interface ICodingAccess {
+   line_coding_locked: boolean;
+   block_coding_max_level: string;
 }
 
 export interface ITeacherStudentsState{

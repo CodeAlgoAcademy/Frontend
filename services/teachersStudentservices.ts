@@ -86,6 +86,30 @@ const updateStudentPassword = async (class_id: string | number | undefined, stud
    return response?.data;
 };
 
+const getCodingAccess = async (student_id: string | number) => {
+   const response = await http.get(`/academics/block_game/coding-access/${student_id}/`, {
+      headers: { Authorization: `Bearer ${getAccessToken()}` },
+   });
+   return response.data;
+};
+
+const updateCodingAccess = async (
+   student_id: string | number, 
+   data: { line_coding_locked?: boolean; block_coding_max_level?: string }
+) => {
+   const response = await http.patch(`/academics/block_game/coding-access/${student_id}/`, data, {
+      headers: { Authorization: `Bearer ${getAccessToken()}` },
+   });
+   return response.data;
+};
+
+// const getBlockGameLevels = async () => {
+//    const response = await http.get(`/academics/block_game/levels/`, {
+//       headers: { Authorization: `Bearer ${getAccessToken()}` },
+//    });
+//    return response.data;
+// };
+
 const teachersStudentServices={
     createStudentLevelThresHold,
     editStudentScreentimeteachers,
@@ -93,6 +117,9 @@ const teachersStudentServices={
     getStudentBlockGameSkill,
     getStudentBlockGameStandard,
     deleteStudent,
-    updateStudentPassword
+    updateStudentPassword,
+    getCodingAccess,
+    updateCodingAccess,
+    // getBlockGameLevels
 }
 export default teachersStudentServices;
