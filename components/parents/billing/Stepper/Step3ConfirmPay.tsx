@@ -118,23 +118,30 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess,
   };
 
   const handleChangePlan = async () => {
-   if (!existingSubscriptionId) return;
+    if (!existingSubscriptionId) return;
     setIsProcessing(true);
     try {
       const result = await dispatch(
         changePlan({ subscriptionId: existingSubscriptionId, priceId })
       );
       
-      if (!changePlan.fulfilled.match(result)) {
-        toast.error("Failed to change plan. Please try again.");
-        return;
+      if (changePlan.fulfilled.match(result)) {
+        const payload = result.payload as any;
+        
+        if (payload.client_secret) {
+          toast.success("Action required to complete plan change.");
+          router.push(`/parents/billing/payment?subscription_id=${existingSubscriptionId}&client_secret=${payload.client_secret}`);
+        } else {
+          toast.success("Plan updated successfully!");
+          await dispatch(getActiveSubscription());
+          await dispatch(getBillingHistory());
+          onSuccess(existingSubscriptionId);
+        }
+      } else {
+        toast.error("Failed to change plan.");
       }
-      toast.success("Plan updated successfully!");
-      await dispatch(getActiveSubscription());
-      await dispatch(getBillingHistory());
-      onSuccess(existingSubscriptionId);
     } catch {
-      toast.error("An error occurred. Please try again.");
+      toast.error("An error occurred.");
     } finally {
       setIsProcessing(false);
     }
