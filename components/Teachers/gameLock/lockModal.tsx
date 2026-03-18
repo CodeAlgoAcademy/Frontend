@@ -62,13 +62,13 @@ export default function LockModal({ student, onClose }: { student: any; onClose:
                   <select value={blockLevel} onChange={(e) => setBlockLevel(e.target.value)} className="...">
                      <option value="">No Limit (Unrestricted)</option>
 
-                     <optgroup label="Kindergarten">
+                     {/* <optgroup label="Kindergarten">
                         {BLOCK_CURRICULUM.filter((l) => l.code.startsWith("K")).map((lvl) => (
                            <option key={lvl.code} value={lvl.code}>
                               {lvl.name}
                            </option>
                         ))}
-                     </optgroup>
+                     </optgroup> */}
 
                      <optgroup label="Grade 1">
                         {BLOCK_CURRICULUM.filter((l) => l.code.startsWith("1")).map((lvl) => (
