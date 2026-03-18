@@ -22,8 +22,14 @@ export interface BaseStudent {
    student_id:string | number;
   levelThresholds: LevelThresholdInputProps[];
   classId: number | string;
+  codingAccess?: ICodingAccess; 
+
 }
 
+export interface ICodingAccess {
+   line_coding_locked: boolean;
+   block_coding_max_level: string;
+}
 export interface ITeacherStudentsState{
   students: BaseStudent[];
   currentStudent: BaseStudent;

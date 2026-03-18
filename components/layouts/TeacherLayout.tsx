@@ -17,6 +17,11 @@ import { FiActivity } from "react-icons/fi";
 import PrintLoginsButton from "../UI/printlogins";
 import GeneratingModal from "../Teachers/students/generatingModal";
 import SuccessModal from "../modals/SuccessModal";
+import { PiStudentDuotone } from "react-icons/pi";
+import { TbLivePhoto } from "react-icons/tb";
+import { SlGameController } from "react-icons/sl";
+import { SlSettings } from "react-icons/sl";
+
 
 interface Props {
    children?: ReactNode;
@@ -46,17 +51,22 @@ const links = [
    },
    {
       name: "students",
-      icon: <FaUserGraduate />,
+      icon: <PiStudentDuotone />,
       url: "/teachers/students",
    },
    {
       name: "Live Class",
-      icon: <FaUserGraduate />,
+      icon: <TbLivePhoto />,
       url: "/teachers/overview",
+   },
+      {
+      name: "Game Locks",
+      icon: <SlGameController />,
+      url: "/teachers/game-locks",
    },
    {
       name: "Class Settings",
-      icon: <FaUserGraduate />,
+      icon: <SlSettings />,
       url: "/teachers/classbulksettings",
    },
    {

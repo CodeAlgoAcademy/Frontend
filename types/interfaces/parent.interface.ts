@@ -27,6 +27,11 @@ export interface IChildTopics {
    topic: IChildProgress[];
 }
 
+export interface ICodingAccess {
+   line_coding_locked: boolean;
+   block_coding_max_level: string;
+}
+
 export interface IParentChild {
    question_level?: number;
    skills?: IChildSkill[];
@@ -50,6 +55,7 @@ export interface IParentChild {
    student_id?:number;
   levelThresholds: LevelThresholdInputProps[]
    selectedChild?: boolean;
+   codingAccess?: ICodingAccess; 
 }
 
 export interface IParentChildren extends IParentChild {
