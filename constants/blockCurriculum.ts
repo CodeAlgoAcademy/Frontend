@@ -1,8 +1,8 @@
 export const BLOCK_CURRICULUM = [
     // Kindergarten
-    { code: "K_5", name: "Kindergarten - Level 5" },
-    { code: "K_10", name: "Kindergarten - Level 10" },
-    { code: "K_20", name: "Kindergarten - Level 20" },
+    // { code: "K_5", name: "Kindergarten - Level 5" },
+    // { code: "K_10", name: "Kindergarten - Level 10" },
+    // { code: "K_20", name: "Kindergarten - Level 20" },
     
     // Grade 1
     { code: "1_5", name: "Grade 1 - Level 5" },
