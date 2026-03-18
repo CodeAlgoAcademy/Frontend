@@ -227,6 +227,46 @@ export const updateStudentPassword: any = createAsyncThunk(
 );
 
 
+export const fetchCodingAccess = createAsyncThunk(
+   "teacher/student/fetchCodingAccess",
+   async (studentId: string | number, thunkAPI) => {
+      try {
+         return await teachersStudentServices.getCodingAccess(studentId);
+      } catch (error: any) {
+         return thunkAPI.rejectWithValue(error.response?.data);
+      }
+   }
+);
+
+export const updateCodingAccess = createAsyncThunk(
+   "teacher/student/updateCodingAccess",
+   async ({ studentId, data }: { studentId: string | number, data: any }, thunkAPI) => {
+      try {
+         return await teachersStudentServices.updateCodingAccess(studentId, data);
+      } catch (error: any) {
+         return thunkAPI.rejectWithValue(error.response?.data);
+      }
+   }
+);
+
+export const fetchAllClassAccess = createAsyncThunk(
+   "teacher/student/fetchAllAccess",
+   async (students: BaseStudent[], thunkAPI) => {
+      try {
+         const accessPromises = students.map(student => 
+            teachersStudentServices.getCodingAccess(student.student_id)
+               .then(data => ({ studentId: student.student_id, data }))
+         );
+         
+         const results = await Promise.all(accessPromises);
+         return results;
+      } catch (error: any) {
+         return thunkAPI.rejectWithValue("Failed to fetch access levels");
+      }
+   }
+);
+
+
 export const teacherStudentSlice = createSlice({
    name: "teacherStudent",
    initialState,
@@ -303,7 +343,31 @@ export const teacherStudentSlice = createSlice({
          })
        .addCase(updateStudentPassword.rejected, (state, action) => {
             state.error = action.payload as string;
-         });
+         })
+
+          .addCase(fetchCodingAccess.fulfilled, (state, action) => {
+      state.students = state.students.map(s => 
+         String(s.student_id) === String(action.meta.arg) 
+         ? { ...s, codingAccess: action.payload } 
+         : s
+      );
+   })
+   .addCase(updateCodingAccess.fulfilled, (state, action) => {
+      state.students = state.students.map(s => 
+         String(s.student_id) === String(action.meta.arg.studentId) 
+         ? { ...s, codingAccess: action.payload } 
+         : s
+      );
+   })
+   .addCase(fetchAllClassAccess.fulfilled, (state, action) => {
+   action.payload.forEach(({ studentId, data }) => {
+      const student = state.students.find(s => String(s.student_id) === String(studentId));
+      if (student) {
+         student.codingAccess = data;
+      }
+   });
+});
+
    },
 });
 

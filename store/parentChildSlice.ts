@@ -78,7 +78,11 @@ const initialState: IParentChildren = {
       {dayOfTheWeek: "Saturday", timeLimit: "No Limit",id: ""},
       {dayOfTheWeek: "Sunday", timeLimit: "No Limit",id: ""},
    ],
-   levelThresholds: []
+   levelThresholds: [],
+    codingAccess: {
+         line_coding_locked: false,
+         block_coding_max_level: ""
+      }
 };
 
 export const addChild: any = createAsyncThunk("parent/child/new", async (_, thunkAPI) => {
@@ -280,6 +284,28 @@ export const deleteChild = createAsyncThunk(
    }
 );
 
+export const fetchChildCodingAccess = createAsyncThunk(
+   "parent/child/fetchCodingAccess",
+   async (studentId: string | number, thunkAPI) => {
+      try {
+         return await parentService.getChildCodingAccess(studentId);
+      } catch (error: any) {
+         return thunkAPI.rejectWithValue(error.response?.data);
+      }
+   }
+);
+
+export const updateChildCodingAccess = createAsyncThunk(
+   "parent/child/updateCodingAccess",
+   async ({ studentId, data }: { studentId: string | number, data: any }, thunkAPI) => {
+      try {
+         return await parentService.updateChildCodingAccess(studentId, data);
+      } catch (error: any) {
+         return thunkAPI.rejectWithValue(error.response?.data);
+      }
+   }
+);
+
 
 export const parentSlice = createSlice({
    name: "parentChild",
@@ -373,6 +399,31 @@ builder.addCase(deleteChild.fulfilled, (state, action) => {
              }
           }
        });
+builder
+  .addCase(fetchChildCodingAccess.fulfilled, (state, action) => {
+   const studentId = action.meta.arg;
+   
+   state.children = state.children.map(child => 
+      String(child.id) === String(studentId) 
+      ? { ...child, codingAccess: action.payload } 
+      : child
+   );
+
+   if (String(state.currentChild?.id) === String(studentId)) {
+      state.currentChild.codingAccess = action.payload;
+   }
+})
+
+   .addCase(updateChildCodingAccess.fulfilled, (state, action) => {
+      state.children = state.children.map(child => 
+         String(child.id) === String(action.meta.arg.studentId) 
+         ? { ...child, codingAccess: action.payload } 
+         : child
+      );
+      if (String(state.currentChild.id) === String(action.meta.arg.studentId)) {
+         state.currentChild.codingAccess = action.payload;
+      }
+   });
    },
 })
 

@@ -4,6 +4,10 @@ import { GiHelp } from "react-icons/gi";
 import { MdClose } from "react-icons/md";
 import Image from "next/image";
 import { DEFAULT_SUPPORT } from "constants/support.const";
+import { GiLevelThreeAdvanced } from "react-icons/gi";
+import { SlGameController } from "react-icons/sl";
+
+
 
 interface Props {
    onClose(): void;
@@ -11,6 +15,7 @@ interface Props {
 }
 
 export default function ParentSidebar({ onClose, isOpen }: Props) {
+    const iconSize = 20;
    return (
       <aside
          className={`${
@@ -39,7 +44,8 @@ export default function ParentSidebar({ onClose, isOpen }: Props) {
          <div className="my-2">
             <h2 className="ml-7 mb-3 text-xl font-medium text-[#A8ABB0]">SAFETY</h2>
             <NavButton title="Screen Time" image="screen-time.svg" url="/parents/screen-time" />
-            <NavButton title="Levels Threshold" image="screen-time.svg" url="/parents/LevelThreshold" />
+            <NavButton title="Levels Threshold" image={<GiLevelThreeAdvanced size={iconSize} />}  url="/parents/LevelThreshold" />
+            <NavButton title="Game Lock" image={<SlGameController size={iconSize} />} url="/parents/game-lock" />
             {/* <NavButton title="Multiplayer" image="game.svg" url="/parents/multiplayer" /> */}
          </div>
          <NavButton image={<GiHelp size={22} />} url={DEFAULT_SUPPORT.discord} title="Get Help"></NavButton>
