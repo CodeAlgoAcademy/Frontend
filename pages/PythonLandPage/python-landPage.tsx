@@ -39,10 +39,10 @@ const App: React.FC = () => {
             {/* HEADLINE */}
             <div className="relative z-10"></div>
             {/* First Line */}
-            <h1 className="text-4xl font-bold tracking-tight text-white md:text-7xl">Turn Screen Time Into</h1>
+            <h1 className="text-4xl font-mono tracking-tight text-white md:text-7xl">Turn Screen Time Into</h1>
             {/* Second Line */}
             <div>
-               <h1 className="inline text-4xl font-bold tracking-tight text-white md:text-7xl">Python Time.</h1>
+               <h1 className="inline text-4xl font-mono tracking-tight text-white md:text-7xl">Python Time.</h1>
             </div>
 
             <div className="flex w-full flex-col items-center justify-center gap-8 md:flex-row">
