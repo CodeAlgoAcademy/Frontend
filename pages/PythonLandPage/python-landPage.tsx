@@ -35,7 +35,11 @@ const App: React.FC = () => {
 
          <main className="container mx-auto flex flex-col items-center px-4 py-12 text-center">
             {/* BLACK BOX */}
-            <div className="bg-black px-10 py-12 shadow-2xl">          
+            <div className="bg-black px-10 py-12 shadow-2xl">    
+               <div className="flex justify-end ">
+               {}
+               <img src="/assets/images/white-x.png" alt="white-x" className="h-10 mt-0" />
+            </div>     
             
             {/* First Line */}
             <h1 className="text-4xl font-mono tracking-tight text-white md:text-7xl">Turn Screen Time Into</h1>
