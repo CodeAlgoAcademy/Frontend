@@ -36,8 +36,7 @@ const App: React.FC = () => {
          <main className="container mx-auto flex flex-col items-center px-4 py-12 text-center">
             {/* BLACK BOX */}
             <div className="bg-black px-10 py-12 shadow-2xl">          
-            {/* HEADLINE */}
-            <div className="relative z-10"></div>
+            
             {/* First Line */}
             <h1 className="text-4xl font-mono tracking-tight text-white md:text-7xl">Turn Screen Time Into</h1>
             {/* Second Line */}
@@ -46,11 +45,16 @@ const App: React.FC = () => {
             </div>
 
             <div className="flex w-full flex-col items-center justify-center gap-8 md:flex-row">
+               {/*Blue Boy*/}
+               <img src="/assets/images/blueBoy.png" alt="Blue Boy" className="w-40 drop-shadow-2xl md:w-56" />
                {/* Main Button */}
                <button className="z-10 cursor-pointer rounded-xl border-b-4 border-[#E60909] bg-[#E60909] py-4 px-10 text-2xl font-black text-white shadow-2xl transition-all hover:mt-1 hover:translate-y-1 hover:border-b-0">
                   TRY GAME FOR FREE
                </button>
+               {/*Snake */}
+               <img src="/assets/images/snake.png" alt="Snake" className="w-20 drop-shadow-2xl md:w-40" />
             </div>
+               <img src="/assets/images/grass.png" alt="Grass"  />
             </div>
          </main>
       </div>
