@@ -28,6 +28,7 @@ const BillingStepper = forwardRef<BillingStepperHandle, BillingStepperProps>(({ 
   const [selectedPriceId, setSelectedPriceId] = useState<number | null>(null);
   const [selectedChildIds, setSelectedChildIds] = useState<number[]>([]); 
   const [initialLoadDone, setInitialLoadDone] = useState(false);
+  const [couponCode, setCouponCode] = useState("");
 
   useEffect(() => {
     const load = async () => {
@@ -81,17 +82,17 @@ const BillingStepper = forwardRef<BillingStepperHandle, BillingStepperProps>(({ 
 
       {/* STEP 1: PLAN */}
       {step === 1 && (
-        <Step1SelectPlan
-          selectedPriceId={selectedPriceId}
-          setSelectedPriceId={setSelectedPriceId}
-          couponCode=""
-          setCouponCode={() => {}} 
-          goNext={() => {
-            if (onLockStepper) onLockStepper();
-            setStep(2);
-          }}
-        />
-      )}
+  <Step1SelectPlan
+    selectedPriceId={selectedPriceId}
+    setSelectedPriceId={setSelectedPriceId}
+    couponCode={couponCode}
+    setCouponCode={setCouponCode}
+    goNext={() => {
+      if (onLockStepper) onLockStepper();
+      setStep(2);
+    }}
+  />
+)}
 
       {/* STEP 2: CHILDREN */}
       {step === 2 && (
