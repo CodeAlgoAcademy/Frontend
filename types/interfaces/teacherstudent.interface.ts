@@ -33,6 +33,18 @@ export interface ICodingAccess {
 export interface ITeacherStudentsState{
   students: BaseStudent[];
   currentStudent: BaseStudent;
+  diagnosticSummary: IDiagnosticSummary[]; 
   isLoading: boolean;
   error?: string;
+}
+
+export interface IDiagnosticSummary {
+   student_id: number;
+   student_name: string;
+   last_completed_unit_level: string;
+   mastery_band: "remediation" | "developing" | "proficient" | "advanced";
+   persistence_band: "low" | "moderate" | "high";
+   independence_band: "guided" | "independent";
+   recommended_action: string;
+   flags: string[];
 }

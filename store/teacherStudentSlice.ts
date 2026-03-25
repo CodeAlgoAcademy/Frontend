@@ -45,6 +45,7 @@ const initialState: ITeacherStudentsState = {
       levelThresholds: [],
       student_id: "",
    },
+   diagnosticSummary: [], 
    isLoading: false,
    error: undefined,
 };
@@ -266,6 +267,17 @@ export const fetchAllClassAccess = createAsyncThunk(
    }
 );
 
+export const fetchDiagnosticSummary = createAsyncThunk(
+   "teacher/fetchDiagnosticSummary",
+   async (classId: string | number, thunkAPI) => {
+      try {
+         return await teachersStudentServices.getClassDiagnosticSummary(classId);
+      } catch (error: any) {
+         return thunkAPI.rejectWithValue(error.response?.data);
+      }
+   }
+);
+
 
 export const teacherStudentSlice = createSlice({
    name: "teacherStudent",
@@ -366,6 +378,10 @@ export const teacherStudentSlice = createSlice({
          student.codingAccess = data;
       }
    });
+})
+
+.addCase(fetchDiagnosticSummary.fulfilled, (state, action) => {
+   state.diagnosticSummary = action.payload.students;
 });
 
    },
