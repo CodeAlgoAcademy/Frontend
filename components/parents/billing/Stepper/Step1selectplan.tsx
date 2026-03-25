@@ -54,8 +54,11 @@ const Step1SelectPlan: React.FC<Step1Props> = ({
   }, [selectedPriceId, dispatch]);
 
   const handleApplyCoupon = () => {
-    if (!couponCode || !selectedPriceId) return;
-    dispatch(validateCoupon({ code: couponCode, price_id: selectedPriceId }));
+    const cleanCode = couponCode.trim();
+  if (!cleanCode || !selectedPriceId) return;
+  dispatch(validateCoupon({ code: cleanCode, price_id: selectedPriceId }));
+    // if (!couponCode || !selectedPriceId) return;
+    // dispatch(validateCoupon({ code: couponCode, price_id: selectedPriceId }));
   };
 
   const isCouponValid = coupon_validation && "code" in coupon_validation && coupon_validation.code;
@@ -155,22 +158,22 @@ const Step1SelectPlan: React.FC<Step1Props> = ({
           <div className="mt-6">
             <h3 className="mb-2 text-sm font-semibold text-gray-700">Have a coupon?</h3>
             <div className="flex gap-2">
-              <input
-                type="text"
-                value={couponCode}
-                onChange={(e) => setCouponCode(e.target.value.trim())}
-                placeholder="Enter coupon code"
-                className="flex-1 rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-mainColor focus:outline-none focus:ring-1 focus:ring-mainColor"
-                disabled={handlers.coupon_validation_loading}
-              />
-              <button
-                type="button"
-                disabled={!couponCode || !selectedPriceId || handlers.coupon_validation_loading}
-                onClick={handleApplyCoupon}
-                className="rounded-lg bg-gray-900 px-4 py-2 text-sm text-white transition hover:bg-gray-800 disabled:opacity-40"
-              >
-                {handlers.coupon_validation_loading ? "Validating..." : "Apply"}
-              </button>
+             <input
+  type="text"
+  value={couponCode}
+  onChange={(e) => setCouponCode(e.target.value)}
+  placeholder="Enter coupon code"
+  className="flex-1 rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-mainColor focus:outline-none focus:ring-1 focus:ring-mainColor"
+  disabled={handlers.coupon_validation_loading}
+/>
+<button
+  type="button"
+  disabled={!couponCode.trim() || !selectedPriceId || handlers.coupon_validation_loading}
+  onClick={handleApplyCoupon}
+  className="rounded-lg bg-gray-900 px-4 py-2 text-sm text-white transition hover:bg-gray-800 disabled:opacity-40"
+>
+  {handlers.coupon_validation_loading ? "Validating..." : "Apply"}
+</button>
             </div>
             {coupon_validation && (
               <div className={`mt-2 rounded-lg p-3 text-sm ${isCouponValid ? "bg-green-50 text-green-700" : "bg-red-50 text-red-700"}`}>
