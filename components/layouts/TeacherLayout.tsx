@@ -21,6 +21,7 @@ import { PiStudentDuotone } from "react-icons/pi";
 import { TbLivePhoto } from "react-icons/tb";
 import { SlGameController } from "react-icons/sl";
 import { SlSettings } from "react-icons/sl";
+import { MdOutlineReportGmailerrorred } from "react-icons/md";
 
 
 interface Props {
@@ -54,16 +55,22 @@ const links = [
       icon: <PiStudentDuotone />,
       url: "/teachers/students",
    },
-   {
-      name: "Live Class",
-      icon: <TbLivePhoto />,
-      url: "/teachers/overview",
-   },
       {
       name: "Game Locks",
       icon: <SlGameController />,
       url: "/teachers/game-locks",
    },
+   {
+      name: "Live Class",
+      icon: <TbLivePhoto />,
+      url: "/teachers/overview",
+   },
+    {
+      name: "Class Report",
+      icon: <MdOutlineReportGmailerrorred />,
+      url: "/teachers/report",
+   },
+
    {
       name: "Class Settings",
       icon: <SlSettings />,
@@ -106,11 +113,13 @@ const TeacherLayout = ({ children, className }: Props) => {
    return (
       <section className="h-screen w-full bg-white md:flex md:px-4">
          <TeacherSidebar links={links} isOpen={sidebarOpened} close={() => setSidebarOpened(false)} />
-         <section className={`
+         <section
+            className={`
        flex h-screen max-h-screen w-full flex-col items-center overflow-hidden
        transition-all duration-500
        w820:ml-[300px]
-     `}>
+     `}
+         >
             <nav className="flex w-full items-center justify-between gap-2 py-2 px-4 md:py-6 md:px-0">
                <div className="flex items-center gap-2">
                   <div className="md:hidden">
@@ -132,7 +141,7 @@ const TeacherLayout = ({ children, className }: Props) => {
                </div>
             </nav>
 
-            <div className={`w-full flex-1 bg-[#ecedf3] p-[1rem] md:h-full overflow-y-scroll md:rounded-[30px] md:p-[2rem] ${className}`}>
+            <div className={`w-full flex-1 overflow-y-scroll bg-[#ecedf3] p-[1rem] md:h-full md:rounded-[30px] md:p-[2rem] ${className}`}>
                <div className="flex items-center justify-end md:hidden">
                   <ClassSelector />
                </div>

@@ -103,6 +103,21 @@ const updateCodingAccess = async (
    return response.data;
 };
 
+const getClassDiagnosticSummary = async (classId: string | number) => {
+   const response = await http.get(`/academics/visual-scripting/teacher-diagnostics/class/${classId}/summary/`, {
+      headers: { Authorization: `Bearer ${getAccessToken()}` },
+   });
+   return response.data;
+};
+
+const getStudentDiagnosticDetail = async (studentId: string | number) => {
+   const response = await http.get(`/academics/visual-scripting/teacher-diagnostics/student/${studentId}/?latest_only=true&limit=20`, {
+      headers: { Authorization: `Bearer ${getAccessToken()}` },
+   });
+   return response.data;
+};
+
+
 const teachersStudentServices={
     createStudentLevelThresHold,
     editStudentScreentimeteachers,
@@ -112,6 +127,8 @@ const teachersStudentServices={
     deleteStudent,
     updateStudentPassword,
     updateCodingAccess,
-    getCodingAccess
+    getCodingAccess,
+   getClassDiagnosticSummary,
+   getStudentDiagnosticDetail
 }
 export default teachersStudentServices;
