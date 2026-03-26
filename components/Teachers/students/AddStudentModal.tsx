@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addStudent, getStudents, studentsBulkImport } from "store/studentSlice";
 import { IInputFields, ISingleStudent, screentimeTypes } from "types/interfaces";
 import style from "styles/styles";
-import { FaTimes, FaChevronLeft, FaPlus } from "react-icons/fa";
+import { FaTimes, FaChevronLeft, FaPlus, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { getAllClasses } from "services/classesService";
 import { openErrorModal } from "store/fetchSlice";
@@ -37,6 +37,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
    });
    const [file, setFile] = useState<any>(null);
    const [bulkImportModalOpen, setBulkImportModalOpen] = useState<boolean>(false);
+   const [showPassword, setShowPassword] = useState<boolean>(false);
    const { email, firstName, lastName, username, dob, password } = formData;
    const { generatingModal: generatingPDFModal } = useSelector((state: RootState) => state.modal);
 
@@ -145,33 +146,11 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
         }
     } catch (error) {
         console.error("Bulk import failed:", error);
-
         dispatch(closeGeneratingModal());
     } finally {
         dispatch(closeGeneratingModal());
     }
 };
-
-
-   // const handleFileSubmit = async () => {
-   //    if (!file) return;
-      
-   //    const formData = new FormData();
-   //    formData.append("file", file, file.name);
-      
-   //    dispatch(openGeneratingModal("Importing Students..."));
-      
-   //    try {
-   //       await dispatch(studentsBulkImport(formData)).unwrap();
-   //       setIsOpen(false);
-   //       dispatch(getStudents());
-   //       if (router.pathname === "/addClass") {
-   //          dispatch(getAllClasses());
-   //       }
-   //    } catch (error) {
-   //       console.error("Bulk import failed:", error);
-   //    }
-   // };
 
    return (
       <>
@@ -206,6 +185,32 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
                   <section className="grid gap-[1rem] px-8 md:grid-cols-2">
                      {inputFields?.map((inputField: IInputFields, index: number) => {
                         const { name, type, placeholder, value } = inputField;
+
+                        if (name === "password") {
+                           return (
+                              <div key={index} className="relative flex items-center">
+                                 <input
+                                    type={showPassword ? "text" : "password"}
+                                    name={name}
+                                    placeholder={placeholder}
+                                    value={value}
+                                    onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e)}
+                                    className={`${style.input} w-full pr-10`}
+                                    required={!file}
+                                 />
+                                 <button
+                                    type="button"
+                                    onClick={() => setShowPassword((prev) => !prev)}
+                                    className="absolute right-3 text-gray-500 hover:text-gray-700"
+                                    tabIndex={-1}
+                                    aria-label={showPassword ? "Hide password" : "Show password"}
+                                 >
+                                    {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+                                 </button>
+                              </div>
+                           );
+                        }
+
                         return (
                            <input
                               key={index}
