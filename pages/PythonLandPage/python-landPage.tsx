@@ -59,6 +59,7 @@ const App: React.FC = () => {
                   {/*Snake */}
                   <img src="/assets/images/snake.png" alt="Snake" className="w-24 md:w-32" />
                </div>
+               <p className="font-mono text-2xl tracking-tight text-white md:text-4xl">Only $259/Year!</p>
                <img src="/assets/images/grass.png" alt="Grass" />
             </div>
          </main>
