@@ -35,7 +35,7 @@ const App: React.FC = () => {
 
          <main className="container mx-auto flex flex-col items-center px-4 py-12 text-center">
             {/* BLACK BOX */}
-            <div className="bg-black  shadow-2xl">
+            <div className="bg-[#4EAEB4]  shadow-2xl">
                {/* Closing Button */}
                <div className="flex justify-end ">
                   <button>
@@ -43,24 +43,25 @@ const App: React.FC = () => {
                   </button>
                </div>
                {/* First Line */}
-               <h1 className="font-mono text-4xl tracking-tight text-white md:text-7xl">Turn Screen Time Into</h1>
+               <h1 className="font-mono text-4xl tracking-tight text-white md:text-7xl">Coding Adventures from </h1>
                {/* Second Line */}
                <div>
-                  <h1 className="inline font-mono text-4xl tracking-tight text-white md:text-7xl">Python Time.</h1>
+                  <h1 className="inline font-mono text-4xl tracking-tight text-white md:text-7xl">Kindergarten to 12th Grade</h1>
                </div>
+                {/* Main Button */}
+                <button className="z-10 cursor-pointer rounded-xl border-b-4 border-[#7CCF3A] bg-[#7CCF3A] py-4 px-12 text-3xl font-black text-white shadow-2xl transition-all hover:mt-1 hover:translate-y-1 hover:border-b-0">
+                    TRY GAME FOR FREE
+                </button>
+                <p className="font-mono text-2xl tracking-tight text-white md:text-4xl">Only $259/Year!</p>
                {/*Main Box*/}
                <div className="justify-even mt-8 flex w-full flex-col items-center gap-8 md:flex-row">
-                  {/*Blue Boy*/}
-                  <img src="/assets/images/blueBoy.png" alt="Blue Boy" className="w-40 drop-shadow-2xl md:w-56" />
-                  {/* Main Button */}
-                  <button className="z-10 cursor-pointer rounded-xl border-b-4 border-[#E60909] bg-[#E60909] py-4 px-12 text-3xl font-black text-white shadow-2xl transition-all hover:mt-1 hover:translate-y-1 hover:border-b-0">
-                     TRY GAME FOR FREE
-                  </button>
-                  {/*Snake */}
-                  <img src="/assets/images/snake.png" alt="Snake" className="w-24 md:w-32" />
+                  {/*Students*/}
+                  <img src="/assets/images/students.png" alt="Students" className="w-40 drop-shadow-2xl md:w-56" />
+                  {/*Teacher*/}
+                  <img src="/assets/images/teacher.png" alt="Teacher" className="w-24 md:w-32" />
+                  {/*Dots*/}
+                  <img src="/assets/images/dots.png" alt="Dots" className="w-24 md:w-32" />
                </div>
-               <p className="font-mono text-2xl tracking-tight text-white md:text-4xl">Only $259/Year!</p>
-               <img src="/assets/images/grass.png" alt="Grass" />
             </div>
          </main>
       </div>
