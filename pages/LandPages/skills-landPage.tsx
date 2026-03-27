@@ -35,7 +35,7 @@ const App: React.FC = () => {
 
          <main className="container mx-auto flex flex-col items-center px-4 py-12 text-center">
             {/* MAIN BOX */}
-            <div className="bg-[#4EAEB4]  shadow-2xl">
+            <div className="bg-[#2F5E6A]  shadow-2xl">
                {/* Closing Button */}
                <div className="flex justify-end ">
                   <button>
@@ -43,13 +43,17 @@ const App: React.FC = () => {
                   </button>
                </div>
                {/* First Line */}
-               <h1 className="ml-2 mr-2 font-mono text-4xl tracking-tight text-white md:text-7xl">Coding Adventures from </h1>
+               <h1 className="ml-2 mr-2 font-mono text-4xl tracking-tight text-white md:text-7xl">Turn Ideas into Games </h1>
                {/* Second Line */}
                <div>
-                  <h1 className="ml-2 mr-2 inline font-mono text-4xl tracking-tight text-white md:text-7xl">Kindergarten to 12th Grade</h1>
+                  <h1 className="ml-2 mr-2 inline font-mono text-4xl tracking-tight text-white md:text-7xl">and Develop Skills </h1>
+               </div>
+               {/* Third Line */}
+               <div>
+                  <h1 className="ml-2 mr-2 inline font-mono text-4xl tracking-tight text-white md:text-7xl">Through Code</h1>
                </div>
                 {/* Main Button */}
-                <button className="z-10 m-8 cursor-pointer rounded-xl bg-[#7CCF3A] py-4 px-12 text-3xl font-black text-white shadow-2xl transition-all hover:translate-y-1 hover:shadow-md">
+                <button className="z-10 m-8 cursor-pointer rounded-xl bg-[#759CE6] py-4 px-12 text-3xl font-black text-white shadow-2xl transition-all hover:translate-y-1 hover:shadow-md">
                     TRY GAME FOR FREE
                 </button>
                 <p className="font-mono text-2xl tracking-tight text-white md:text-4xl">Only $259/Year!</p>
