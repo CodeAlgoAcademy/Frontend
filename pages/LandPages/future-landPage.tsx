@@ -43,30 +43,26 @@ const App: React.FC = () => {
                   </button>
                </div>
                {/* First Line */}
-               <h1 className="ml-4 mr-4 font-mono text-4xl tracking-tight text-black md:text-7xl">Building Kansas City </h1>
+               <h1 className="ml-20 mr-20 font-mono text-4xl tracking-tight text-black md:text-7xl">Building Kansas City </h1>
                {/* Second Line */}
                <div>
                   <h1 className="ml-2 mr-2 inline font-mono text-4xl tracking-tight text-black md:text-7xl">Future Coders</h1>
                </div>
+               {/*Line */}
+                  <img src="/assets/images/pink line.png" alt="Pink Line" className="w-full md:w-[750px] mt-8 mx-auto"/>
+                <p className="mt-6 font-mono text-2xl tracking-tight text-black md:text-4xl">Only $259/Year!</p>
                 {/* Main Button */}
-                <button className="z-10 m-8 cursor-pointer rounded-xl bg-[#759CE6] py-4 px-12 text-3xl font-black text-white shadow-2xl transition-all hover:translate-y-1 hover:shadow-md">
+                <button className="z-10 m-8 cursor-pointer rounded-xl bg-[#FF776D] py-4 px-12 text-3xl font-black text-white shadow-2xl transition-all hover:translate-y-1 hover:shadow-md">
                     TRY GAME FOR FREE
                 </button>
-                <p className="font-mono text-2xl tracking-tight text-white md:text-4xl">Only $259/Year!</p>
                {/*Pic Box*/}
                <div className="justify-around flex w-full flex-col items-center gap-8 md:flex-row">
-                  {/*Button1*/}
-                  <button className="z-10 m-8 cursor-pointer bg-[#00FF3C] py-4 px-8 text-2xl font-mono text-black shadow-xl transition-all hover:translate-y-1 hover:shadow-md">
-                    Web Design
-                  </button>
-                  {/*Button2*/}
-                  <button className="z-10 m-8 cursor-pointer bg-[#FB0004] py-4 px-8 text-2xl font-mono text-white shadow-xl transition-all hover:translate-y-1 hover:shadow-md">
-                    Game Development
-                  </button>
-                  {/*Button3*/}
-                  <button className="z-10 m-8 cursor-pointer bg-[#FFFB00] py-4 px-8 text-2xl font-mono text-black shadow-xl transition-all hover:translate-y-1 hover:shadow-md">
-                    App Creation
-                  </button>
+                  {/*Buildings*/}
+                  <img src="/assets/images/buildings.png" alt="Buildings" className="w-40 drop-shadow-2xl md:w-56" />
+                  {/*City*/}
+                  <img src="/assets/images/city.png" alt="City" className="w-40 md:w-56" />
+                  {/*Fountain*/}
+                  <img src="/assets/images/fountain.png" alt="Fountain" className="w-40 md:w-56 mt-auto" />
                </div>
             </div>
          </main>

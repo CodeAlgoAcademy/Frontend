@@ -57,7 +57,7 @@ const App: React.FC = () => {
                     TRY GAME FOR FREE
                 </button>
                 <p className="font-mono text-2xl tracking-tight text-white md:text-4xl">Only $259/Year!</p>
-               {/*Pic Box*/}
+               {/*Button Box*/}
                <div className="justify-around flex w-full flex-col items-center gap-8 md:flex-row">
                   {/*Button1*/}
                   <button className="z-10 m-8 cursor-pointer bg-[#00FF3C] py-4 px-8 text-2xl font-mono text-black shadow-xl transition-all hover:translate-y-1 hover:shadow-md">
