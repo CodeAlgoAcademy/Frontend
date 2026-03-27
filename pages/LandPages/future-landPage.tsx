@@ -51,16 +51,19 @@ const App: React.FC = () => {
                {/*Line */}
                   <img src="/assets/images/pink line.png" alt="Pink Line" className="w-full md:w-[750px] mt-8 mx-auto"/>
                 <p className="mt-6 font-mono text-2xl tracking-tight text-black md:text-4xl">Only $259/Year!</p>
-                {/* Main Button */}
-                <button className="z-10 m-8 cursor-pointer rounded-xl bg-[#FF776D] py-4 px-12 text-3xl font-black text-white shadow-2xl transition-all hover:translate-y-1 hover:shadow-md">
-                    TRY GAME FOR FREE
-                </button>
+                
                {/*Pic Box*/}
                <div className="justify-around flex w-full flex-col items-center gap-8 md:flex-row">
                   {/*Buildings*/}
                   <img src="/assets/images/buildings.png" alt="Buildings" className="w-40 drop-shadow-2xl md:w-56" />
-                  {/*City*/}
-                  <img src="/assets/images/city.png" alt="City" className="w-40 md:w-56" />
+                  <div className="justify-around flex w-full flex-col items-center gap-2 md:flex-col">
+                    {/* Main Button */}
+                    <button className="z-10 mt-6 cursor-pointer rounded-xl bg-[#FF776D] py-4 px-12 text-3xl font-black text-white shadow-2xl transition-all hover:translate-y-1 hover:shadow-md">
+                    TRY GAME FOR FREE
+                    </button>
+                    {/*City*/}
+                    <img src="/assets/images/city.png" alt="City" className="w-40 md:w-56" />
+                  </div>
                   {/*Fountain*/}
                   <img src="/assets/images/fountain.png" alt="Fountain" className="w-40 md:w-56 mt-auto" />
                </div>
