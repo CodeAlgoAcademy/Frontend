@@ -49,23 +49,23 @@ const App: React.FC = () => {
                   <h1 className="ml-2 mr-2 inline font-mono text-4xl tracking-tight text-black md:text-7xl">Future Coders</h1>
                </div>
                {/*Line */}
-                  <img src="/assets/images/pink line.png" alt="Pink Line" className="w-full md:w-[750px] mt-8 mx-auto"/>
-                <p className="mt-6 font-mono text-2xl tracking-tight text-black md:text-4xl">Only $259/Year!</p>
-                
+               <img src="/assets/images/pink line.png" alt="Pink Line" className="mx-auto mt-8 w-full md:w-[750px]" />
+               <p className="mt-6 font-mono text-2xl tracking-tight text-black md:text-4xl">Only $259/Year!</p>
+
                {/*Pic Box*/}
-               <div className="justify-around flex w-full flex-col items-center gap-8 md:flex-row">
+               <div className="flex w-full flex-col items-center justify-around gap-8 md:flex-row">
                   {/*Buildings*/}
-                  <img src="/assets/images/buildings.png" alt="Buildings" className="w-40 drop-shadow-2xl md:w-56" />
-                  <div className="justify-around flex w-full flex-col items-center gap-2 md:flex-col">
-                    {/* Main Button */}
-                    <button className="z-10 mt-6 cursor-pointer rounded-xl bg-[#FF776D] py-4 px-12 text-3xl font-black text-white shadow-2xl transition-all hover:translate-y-1 hover:shadow-md">
-                    TRY GAME FOR FREE
-                    </button>
-                    {/*City*/}
-                    <img src="/assets/images/city.png" alt="City" className="w-40 md:w-56" />
+                  <img src="/assets/images/buildings.png" alt="Buildings" className="mt-auto w-40 drop-shadow-2xl md:w-56" />
+                  <div className="flex w-full flex-col items-center justify-around md:flex-col">
+                     {/* Main Button */}
+                     <button className="z-10 mt-6 cursor-pointer rounded-xl bg-[#FF776D] py-4 px-12 text-3xl font-black text-white shadow-2xl transition-all hover:translate-y-1 hover:shadow-md">
+                        TRY GAME FOR FREE
+                     </button>
+                     {/*City*/}
+                     <img src="/assets/images/city.png" alt="City" className="w-40 md:w-56" />
                   </div>
                   {/*Fountain*/}
-                  <img src="/assets/images/fountain.png" alt="Fountain" className="w-40 md:w-56 mt-auto" />
+                  <img src="/assets/images/fountain.png" alt="Fountain" className="mt-auto w-40 md:w-56" />
                </div>
             </div>
          </main>
