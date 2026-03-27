@@ -35,22 +35,18 @@ const App: React.FC = () => {
 
          <main className="container mx-auto flex flex-col items-center px-4 py-12 text-center">
             {/* MAIN BOX */}
-            <div className="bg-[#2F5E6A]  shadow-2xl">
+            <div className="bg-[#FFFF73]  shadow-2xl">
                {/* Closing Button */}
                <div className="flex justify-end ">
                   <button>
-                     <img src="/assets/images/white-x.png" alt="white-x" className="mt-0 h-10" />
+                     <img src="/assets/images/black-x.png" alt="black-x" className="mt-0 h-10" />
                   </button>
                </div>
                {/* First Line */}
-               <h1 className="ml-4 mr-4 font-mono text-4xl tracking-tight text-white md:text-7xl">Turn Ideas into Games </h1>
+               <h1 className="ml-4 mr-4 font-mono text-4xl tracking-tight text-black md:text-7xl">Building Kansas City </h1>
                {/* Second Line */}
                <div>
-                  <h1 className="ml-2 mr-2 inline font-mono text-4xl tracking-tight text-white md:text-7xl">and Develop Skills </h1>
-               </div>
-               {/* Third Line */}
-               <div>
-                  <h1 className="ml-2 mr-2 inline font-mono text-4xl tracking-tight text-white md:text-7xl">Through Code</h1>
+                  <h1 className="ml-2 mr-2 inline font-mono text-4xl tracking-tight text-black md:text-7xl">Future Coders</h1>
                </div>
                 {/* Main Button */}
                 <button className="z-10 m-8 cursor-pointer rounded-xl bg-[#759CE6] py-4 px-12 text-3xl font-black text-white shadow-2xl transition-all hover:translate-y-1 hover:shadow-md">
