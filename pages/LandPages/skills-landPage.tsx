@@ -43,7 +43,7 @@ const App: React.FC = () => {
                   </button>
                </div>
                {/* First Line */}
-               <h1 className="ml-2 mr-2 font-mono text-4xl tracking-tight text-white md:text-7xl">Turn Ideas into Games </h1>
+               <h1 className="ml-4 mr-4 font-mono text-4xl tracking-tight text-white md:text-7xl">Turn Ideas into Games </h1>
                {/* Second Line */}
                <div>
                   <h1 className="ml-2 mr-2 inline font-mono text-4xl tracking-tight text-white md:text-7xl">and Develop Skills </h1>
@@ -59,12 +59,18 @@ const App: React.FC = () => {
                 <p className="font-mono text-2xl tracking-tight text-white md:text-4xl">Only $259/Year!</p>
                {/*Pic Box*/}
                <div className="justify-around flex w-full flex-col items-center gap-8 md:flex-row">
-                  {/*Students*/}
-                  <img src="/assets/images/students.png" alt="Students" className="w-40 drop-shadow-2xl md:w-56" />
-                  {/*Teacher*/}
-                  <img src="/assets/images/teacher.png" alt="Teacher" className="w-40 md:w-56" />
-                  {/*Dots*/}
-                  <img src="/assets/images/dots.png" alt="Dots" className="w-40 md:w-56 mt-auto" />
+                  {/*Button1*/}
+                  <button className="z-10 m-8 cursor-pointer bg-[#00FF3C] py-4 px-8 text-2xl font-mono text-black shadow-xl transition-all hover:translate-y-1 hover:shadow-md">
+                    Web Design
+                  </button>
+                  {/*Button2*/}
+                  <button className="z-10 m-8 cursor-pointer bg-[#FB0004] py-4 px-8 text-2xl font-mono text-white shadow-xl transition-all hover:translate-y-1 hover:shadow-md">
+                    Game Development
+                  </button>
+                  {/*Button3*/}
+                  <button className="z-10 m-8 cursor-pointer bg-[#FFFB00] py-4 px-8 text-2xl font-mono text-black shadow-xl transition-all hover:translate-y-1 hover:shadow-md">
+                    App Creation
+                  </button>
                </div>
             </div>
          </main>
