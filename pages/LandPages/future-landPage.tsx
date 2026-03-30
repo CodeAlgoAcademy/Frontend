@@ -13,7 +13,7 @@ const App: React.FC = () => {
 
          <main className="container mx-auto flex flex-col items-center px-4 py-12 text-center">
             {/* MAIN BOX */}
-            <div className="bg-[#FFFF73]  shadow-2xl">
+            <div className="bg-[#FFFF73] shadow-2xl w-full max-w-5xl mx-auto p-15">
                {/* Closing Button */}
                <div className="flex justify-end ">
                   <button>
