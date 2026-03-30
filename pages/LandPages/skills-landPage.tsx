@@ -1,18 +1,18 @@
 import React from "react";
-import Navigation from "components/navbar/home/Navbar.tsx"
+import Navigation from "components/navbar/home/Navbar";
 const App: React.FC = () => {
    console.log("Rendering App with Images");
 
    return (
       <div className="min-h-screen w-full bg-[url('/assets/images/background2.png')] bg-cover bg-center bg-no-repeat">
          {/* --- NAVBAR --- */}
-         <Navigation/>
+         <Navigation />
 
          {/* --- MAIN SECTION --- */}
 
-         <main className="container mx-auto flex flex-col items-center min-h-screen justify-center px-4 py-12 text-center">
+         <main className="container mx-auto flex min-h-screen flex-col items-center justify-center px-4 py-12 text-center">
             {/* MAIN BOX */}
-            <div className="bg-[#2F5E6A]  shadow-2xl w-full max-w-5xl mx-auto p-8">
+            <div className="mx-auto  w-full max-w-5xl bg-[#2F5E6A] p-8 shadow-2xl">
                {/* Closing Button */}
                <div className="flex justify-end ">
                   <button>
@@ -29,24 +29,24 @@ const App: React.FC = () => {
                <div>
                   <h1 className="ml-2 mr-2 inline font-mono text-4xl tracking-tight text-white md:text-7xl">Through Code</h1>
                </div>
-                {/* Main Button */}
-                <button className="z-10 m-8 cursor-pointer rounded-xl bg-[#759CE6] py-4 px-12 text-3xl font-black text-white shadow-2xl transition-all hover:translate-y-1 hover:shadow-md">
-                    TRY GAME FOR FREE
-                </button>
-                <p className="font-mono text-2xl tracking-tight text-white md:text-4xl">Only $259/Year!</p>
+               {/* Main Button */}
+               <button className="z-10 m-8 cursor-pointer rounded-xl bg-[#759CE6] py-4 px-12 text-3xl font-black text-white shadow-2xl transition-all hover:translate-y-1 hover:shadow-md">
+                  TRY GAME FOR FREE
+               </button>
+               <p className="font-mono text-2xl tracking-tight text-white md:text-4xl">Only $259/Year!</p>
                {/*Button Box*/}
-               <div className="justify-around flex w-full flex-col items-center gap-8 md:flex-row">
+               <div className="flex w-full flex-col items-center justify-around gap-8 md:flex-row">
                   {/*Button1*/}
-                  <button className="z-10 m-8 cursor-pointer bg-[#00FF3C] py-4 px-8 text-2xl font-mono text-black shadow-xl transition-all hover:translate-y-1 hover:shadow-md">
-                    Web Design
+                  <button className="z-10 m-8 cursor-pointer bg-[#00FF3C] py-4 px-8 font-mono text-2xl text-black shadow-xl transition-all hover:translate-y-1 hover:shadow-md">
+                     Web Design
                   </button>
                   {/*Button2*/}
-                  <button className="z-10 m-8 cursor-pointer bg-[#FB0004] py-4 px-8 text-2xl font-mono text-white shadow-xl transition-all hover:translate-y-1 hover:shadow-md">
-                    Game Development
+                  <button className="z-10 m-8 cursor-pointer bg-[#FB0004] py-4 px-8 font-mono text-2xl text-white shadow-xl transition-all hover:translate-y-1 hover:shadow-md">
+                     Game Development
                   </button>
                   {/*Button3*/}
-                  <button className="z-10 m-8 cursor-pointer bg-[#FFFB00] py-4 px-8 text-2xl font-mono text-black shadow-xl transition-all hover:translate-y-1 hover:shadow-md">
-                    App Creation
+                  <button className="z-10 m-8 cursor-pointer bg-[#FFFB00] py-4 px-8 font-mono text-2xl text-black shadow-xl transition-all hover:translate-y-1 hover:shadow-md">
+                     App Creation
                   </button>
                </div>
             </div>

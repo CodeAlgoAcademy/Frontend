@@ -1,5 +1,5 @@
 import React from "react";
-import Navigation from "components/navbar/home/Navbar.tsx"
+import Navigation from "components/navbar/home/Navbar";
 
 const App: React.FC = () => {
    console.log("Rendering App with Images");
@@ -11,9 +11,9 @@ const App: React.FC = () => {
 
          {/* --- MAIN SECTION --- */}
 
-         <main className="mx-auto flex flex-col min-h-screen items-center justify-center px-4 py-12 text-center">
+         <main className="mx-auto flex min-h-screen flex-col items-center justify-center px-4 py-12 text-center">
             {/* MAIN BOX */}
-            <div className="bg-[#FFFF73] shadow-2xl w-full max-w-5xl mx-auto p-8">
+            <div className="mx-auto w-full max-w-5xl bg-[#FFFF73] p-8 shadow-2xl">
                {/* Closing Button */}
                <div className="flex justify-end ">
                   <button>

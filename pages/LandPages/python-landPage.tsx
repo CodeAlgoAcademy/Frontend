@@ -1,5 +1,5 @@
 import React from "react";
-import Navigation from "components/navbar/home/Navbar.tsx";
+import Navigation from "components/navbar/home/Navbar";
 
 const App: React.FC = () => {
    console.log("Rendering App with Images");
