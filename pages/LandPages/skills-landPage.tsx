@@ -1,41 +1,18 @@
 import React from "react";
-
+import Navigation from "components/navbar/home/Navbar.tsx"
 const App: React.FC = () => {
    console.log("Rendering App with Images");
 
    return (
       <div className="min-h-screen w-full bg-[url('/assets/images/background2.png')] bg-cover bg-center bg-no-repeat">
          {/* --- NAVBAR --- */}
-         <nav className="flex items-center bg-stone-900 py-4 px-6 text-white shadow-xl">
-            <div className="flex items-center gap-3">
-               {}
-               <img src="/assets/images/logo_white.png" alt="logo" className="h-10" />
-            </div>
-
-            <div className="ml-10 hidden gap-8 text-sm font-medium text-gray-300 md:flex">
-               <a href="#" className="transition-colors hover:text-white">
-                  About
-               </a>
-               <span className="text-gray-600">|</span>
-               <a href="#" className="transition-colors hover:text-white">
-                  Educators
-               </a>
-               <span className="text-gray-600">|</span>
-               <a href="#" className="transition-colors hover:text-white">
-                  Parents
-               </a>
-            </div>
-
-            <button className="ml-auto cursor-pointer rounded bg-white px-6 py-2 text-sm font-bold text-black shadow transition-colors hover:bg-gray-200">
-               SIGN IN
-            </button>
-         </nav>
+         <Navigation/>
 
          {/* --- MAIN SECTION --- */}
 
-         <main className="container mx-auto flex flex-col items-center px-4 py-12 text-center">
+         <main className="container mx-auto flex flex-col items-center min-h-screen justify-center px-4 py-12 text-center">
             {/* MAIN BOX */}
-            <div className="bg-[#2F5E6A]  shadow-2xl">
+            <div className="bg-[#2F5E6A]  shadow-2xl w-full max-w-5xl mx-auto p-8">
                {/* Closing Button */}
                <div className="flex justify-end ">
                   <button>
