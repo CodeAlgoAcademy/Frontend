@@ -25,6 +25,7 @@ import pricingReducer from "./pricingSlice";
 import teacherStudentReducer  from "./teacherStudentSlice";
 import teacherClassReducer from "./teachersClassSlice";
 import studentInfoReducer from "./usersStudentslice"; 
+import assignmentReducer from "./blockAssignmentSlice"
 
 export const store = configureStore({
    reducer: {
@@ -53,6 +54,7 @@ export const store = configureStore({
       teacherStudentSlice: teacherStudentReducer,
       studentInfo: studentInfoReducer,
       teacherClassSlice: teacherClassReducer,
+      assignments: assignmentReducer,
       
    },
 });

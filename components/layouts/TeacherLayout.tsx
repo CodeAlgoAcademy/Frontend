@@ -22,6 +22,8 @@ import { TbLivePhoto } from "react-icons/tb";
 import { SlGameController } from "react-icons/sl";
 import { SlSettings } from "react-icons/sl";
 import { MdOutlineReportGmailerrorred } from "react-icons/md";
+import { MdOutlineAssignment } from "react-icons/md";
+
 
 
 interface Props {
@@ -30,68 +32,47 @@ interface Props {
 }
 
 const links = [
-   // {
-   //    name: "Classes",
-   //    icon: <MdClass />,
-   //    url: "/teachers/addClass",
-   // },
    {
-      name: "dashboard",
+      name: "Dashboard",
       icon: <TbLayoutDashboard />,
       url: "/teachers",
    },
-   // {
-   //    name: "Activity",
-   //    icon: <FiActivity />,
-   //    url: "/teachers/activities",
-   // },
    {
-      name: "Lesson plan",
-      icon: <TbClipboardText />,
-      url: "/teachers/curriculum",
+      name: "Classroom",
+      icon: "🎓", 
+      subLinks: [
+         { name: "Lesson Plan", url: "/teachers/curriculum" },
+         { name: "Live Class", url: "/teachers/overview" },
+         { name: "Assignments", url: "/teachers/assignments" },
+      ],
    },
    {
-      name: "students",
-      icon: <PiStudentDuotone />,
+      name: "Reports & Settings",
+      icon: "📊",
+      subLinks: [
+         { name: "Class Report", url: "/teachers/report" },
+         { name: "Class Settings", url: "/teachers/classbulksettings" },
+      ],
+   },
+   {
+      name: "Students",
+      icon: "👥",
       url: "/teachers/students",
    },
-      {
-      name: "Game Locks",
-      icon: <SlGameController />,
-      url: "/teachers/game-locks",
-   },
    {
-      name: "Live Class",
-      icon: <TbLivePhoto />,
-      url: "/teachers/overview",
-   },
-    {
-      name: "Class Report",
-      icon: <MdOutlineReportGmailerrorred />,
-      url: "/teachers/report",
-   },
-
-   {
-      name: "Class Settings",
-      icon: <SlSettings />,
-      url: "/teachers/classbulksettings",
-   },
-   {
-      name: "organizations",
-      icon: <SlOrganization />,
+      name: "Organization",
+      icon: "🏢",
       url: "/teachers/organization",
    },
-   // {
-   //    name: "calendar",
-   //    icon: <HiOutlineCalendar />,
-   //    url: "/teachers/calendar",
-   // },
-   // {
-   //    name: "messages",
-   //    icon: <BiMessageRounded />,
-   //    url: "/teachers/messages",
-   // },
+   {
+      name: "Help",
+      icon: "❓",
+      url: "/teachers/help",
+   },
 ];
+
+
+
 
 const TeacherLayout = ({ children, className }: Props) => {
    const [sidebarOpened, setSidebarOpened] = useState<boolean>(false);

@@ -30,19 +30,6 @@ const PERSISTENCE_CONFIG: Record<string, { label: string; color: string; bg: str
 const AVATAR_COLORS = ['#6366f1','#8b5cf6','#ec4899','#0ea5e9','#10b981','#f59e0b','#14b8a6','#f43f5e'];
 
 
-function Avatar({ name }: { name: string }) {
-    const parts = name.trim().split(' ');
-    const initials = parts.length >= 2
-        ? `${parts[0][0]}${parts[parts.length - 1][0]}`
-        : name.slice(0, 2);
-    const bg = AVATAR_COLORS[name.charCodeAt(0) % AVATAR_COLORS.length];
-    return (
-        <div style={{ background: bg }}
-            className="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-black uppercase flex-shrink-0 shadow-sm">
-            {initials.toUpperCase()}
-        </div>
-    );
-}
 
 function MasteryCell({ band }: { band: string }) {
     const key = band?.toLowerCase();
@@ -170,9 +157,8 @@ export default function DiagnosticReportPage() {
 
                                         <td className="px-5 py-4">
                                             <div className="flex items-center gap-3">
-                                                <Avatar name={student.student_name} />
                                                 <div>
-                                                    <p className="font-bold text-slate-800 text-sm leading-snug">
+                                                    <p className="font-bold text-mainColor text-sm leading-snug">
                                                         {student.student_name}
                                                     </p>
                                                     {student.flags.length > 0 ? (
@@ -185,7 +171,7 @@ export default function DiagnosticReportPage() {
                                                             ))}
                                                         </div>
                                                     ) : (
-                                                        <p className="text-[10px] text-slate-300 mt-0.5">
+                                                        <p className="text-[10px] text-slate-500 mt-0.5">
                                                             Diagnostic pending
                                                         </p>
                                                     )}
