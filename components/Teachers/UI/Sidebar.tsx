@@ -1,17 +1,14 @@
 import React, { ReactElement, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { MdClose, MdKeyboardArrowRight, MdKeyboardArrowDown } from "react-icons/md";
 import Image from "next/image";
-import NavButton from "@/components/parents/UI/NavButton";
-import { BsQuestion } from "react-icons/bs";
-import { GiHelp } from "react-icons/gi";
-import { MdClose } from "react-icons/md";
-import { DEFAULT_SUPPORT } from "constants/support.const";
 
 export interface ILink {
    name: string;
-   icon: ReactElement;
-   url: string;
+   icon: ReactElement | string;
+   url?: string;
+   subLinks?: { name: string; url: string }[];
 }
 
 interface Props {
@@ -20,63 +17,90 @@ interface Props {
    close(): void;
 }
 
-const TeacherSidebar = (props: Props) => {
+const TeacherSidebar = ({ links, isOpen, close }: Props) => {
    const router = useRouter();
-   const [activeLink, setActiveLink] = useState(router?.pathname);
+   const [expandedMenus, setExpandedMenus] = useState<string[]>(["Classroom", "Reports & Settings"]);
+
+   const toggleMenu = (name: string) => {
+      setExpandedMenus((prev) =>
+         prev.includes(name) ? prev.filter((i) => i !== name) : [...prev, name]
+      );
+   };
+
    return (
       <aside
          className={`
-         ${props.isOpen ? "translate-x-0" : "translate-x-[100%]"}
-         fixed top-0 right-0 z-[5]  h-full max-h-full w-full 
-         overflow-y-scroll bg-white p-2 transition-all duration-500 md:left-0 
-         md:!w-[300px] md:!translate-x-0 md:py-9 max-w820:hidden
+         ${isOpen ? "translate-x-0" : "-translate-x-full"}
+         fixed top-0 left-0 z-[50] h-full w-full bg-white p-4 transition-transform duration-300 
+         md:translate-x-0 md:w-[280px] border-r border-gray-100 overflow-y-auto
       `}
       >
          <div className="mb-8 flex w-full items-center justify-between gap-2">
-            <div className="block max-w-[150px]  md:mx-auto">
-               <Link href={router?.pathname?.includes("/teacher") ? "/teachers/addClass" : "/organizers"}>
-                  <Image src="/assets/CodeAlgo_Logo.png" alt="logo" loading="lazy" className="md:cursor-pointer" width={90} height={45} />
-               </Link>
-            </div>
-            <span className="block md:hidden" onClick={props.close}>
-               <MdClose size={26} cursor={"pointer"} />
-            </span>
+         <div className="block max-w-[150px]  md:mx-auto">
+         <Link href={router?.pathname?.includes("/teacher") ? "/teachers/addClass" : "/organizers"}>
+         <Image src="/assets/CodeAlgo_Logo.png" alt="logo" loading="lazy" className="md:cursor-pointer" width={90} height={45} />
+         </Link>
          </div>
-         <>
-            <div className="">
-               {props?.links.map((link) => (
-                  <div key={link.name} className=" mb-2 p-2">
-                     <Link href={`${link.url}`} onClick={props.close}>
-                        <div
-                           className={
-                              activeLink === link.url ||
-                              (router?.pathname.includes(link.url) && link.url !== "/teachers" && link.url !== "/organizers")
-                                 ? "flex w-full cursor-pointer items-center gap-6 rounded-md bg-mainColor px-[30px] py-3 text-white md:rounded-[28px]"
-                                 : "flex cursor-pointer items-center gap-6 rounded-md px-[30px] py-3  text-mainColor hover:bg-slate-50 md:rounded-[28px] "
-                           }
-                           onClick={() => {
-                              setActiveLink(() => link.url);
-                           }}
+         <span className="block md:hidden" onClick={close}>
+         <MdClose size={26} cursor={"pointer"} />
+         </span>
+         </div>
+
+         <div className="flex flex-col gap-1">
+            {links.map((link) => {
+               const isExpanded = expandedMenus.includes(link.name);
+               const hasSubLinks = !!link.subLinks;
+               const isActive = router.pathname === link.url || link.subLinks?.some(s => s.url === router.pathname);
+
+               return (
+                  <div key={link.name} className="w-full">
+                     {hasSubLinks ? (
+                        <button
+                           onClick={() => toggleMenu(link.name)}
+                           className="flex w-full items-center justify-between px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-xl transition-colors"
                         >
-                           <span
-                              className={`text-lg ${
-                                 activeLink === link.url ||
-                                 (router?.pathname.includes(link.url) && link.url !== "/teachers" && link.url !== "/organizers")
-                                    ? "text-white"
-                                    : "text-mainColor"
+                           <div className="flex items-center gap-4">
+                              <span className="text-xl">{link.icon}</span>
+                              <span className="text-[16px] font-medium">{link.name}</span>
+                           </div>
+                           {isExpanded ? <MdKeyboardArrowDown size={20} className="text-gray-400" /> : <MdKeyboardArrowRight size={20} className="text-gray-400" />}
+                        </button>
+                     ) : (
+                        <Link href={link.url || "#"} onClick={close}>
+                           <div
+                              className={`flex items-center gap-4 px-4 py-3 rounded-xl transition-all mb-1 ${
+                                 isActive
+                                    ? "bg-[#007bff] text-white shadow-md"
+                                    : "text-gray-700 hover:bg-gray-50"
                               }`}
                            >
-                              {link.icon}
-                           </span>
-                           <span className="text-base font-semibold capitalize">{link.name}</span>
-                        </div>
-                     </Link>
-                  </div>
-               ))}
+                              <span className={`text-xl ${isActive ? "text-white" : ""}`}>{link.icon}</span>
+                              <span className="text-[16px] font-medium">{link.name}</span>
+                           </div>
+                        </Link>
+                     )}
 
-               <NavButton url={DEFAULT_SUPPORT.discord} title="Get Help" image={<GiHelp size={22} />} className="mx-auto max-w-[230px]" />
-            </div>
-         </>
+                     {hasSubLinks && isExpanded && (
+                        <div className="ml-12 flex flex-col gap-4 py-2 mb-2">
+                           {link.subLinks?.map((sub) => (
+                              <Link key={sub.url} href={sub.url} onClick={close}>
+                                 <div
+                                    className={`text-[15px] cursor-pointer transition-colors ${
+                                       router.pathname === sub.url
+                                          ? "text-[#007bff] font-semibold"
+                                          : "text-gray-600 hover:text-black"
+                                    }`}
+                                 >
+                                    {sub.name}
+                                 </div>
+                              </Link>
+                           ))}
+                        </div>
+                     )}
+                  </div>
+               );
+            })}
+         </div>
       </aside>
    );
 };
