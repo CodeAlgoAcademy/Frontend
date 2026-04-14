@@ -25,10 +25,16 @@ export default function AssignmentDetailView({ classId, assignmentId, onBack, on
    const [viewMode, setViewMode] = useState<ViewMode>("numeric");
 
    useEffect(() => {
-      Promise.all([assignmentServices.getAssignmentResults(classId, assignmentId), assignmentServices.getSinglAssignment(classId, assignmentId)])
+      Promise.all([
+         assignmentServices.getAssignmentResults(classId, assignmentId), 
+         assignmentServices.getSinglAssignment(classId, assignmentId)
+      ])
          .then(([results, detail]) => {
-            const masterStandards = detail.topics || [];
-            const mappedStudents = (results.student_records || []).map((student: any) => {
+            const studentRecords = results.assignment?.student_records || [];
+            const topicStats = results.topic_breakdown || [];
+            const masterTopics = detail.topics || [];
+
+            const mappedStudents = studentRecords.map((student: any) => {
                const rawScores = student.topic_scores || {};
                const scores: Record<string, { correct: number; total: number }> = {};
 
@@ -45,19 +51,21 @@ export default function AssignmentDetailView({ classId, assignmentId, onBack, on
                };
             });
 
-            const mergedCols = masterStandards.map((std: any) => {
-               const stats = results.topic_breakdown?.find((t: any) => Number(t.topic_id) === Number(std.id));
+            const mergedCols = masterTopics.map((topicItem: any) => {
+               const stats = topicStats.find((t: any) => Number(t.topic_id) === Number(topicItem.id));
                return {
-                  topic_id: std.id,
-                  topic_name: std.name || std.topic_name,
-                  standard_code: std.code || std.standard_code,
+                  topic_id: topicItem.id,
+                  topic_name: topicItem.name || topicItem.topic_name,
+                  standard_code: topicItem.code || topicItem.standard_code,
                   total: stats ? stats.total : 0,
                   correct: stats ? stats.correct : 0,
                };
             });
 
             setData({
-               ...results,
+               title: results.assignment?.title || detail.title,
+               created_at: results.assignment?.created_at || detail.created_at,
+               question_count: results.assignment?.question_count || detail.question_count,
                status: detail.status,
                all_topics: mergedCols,
                student_records: mappedStudents,
