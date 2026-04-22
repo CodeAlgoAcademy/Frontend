@@ -18,6 +18,13 @@ const BANNER_GRADIENTS = [
    "linear-gradient(135deg, #0c4a6e 0%, #0369a1 50%, #0ea5e9 100%)",
 ];
 
+const getGameTypeBadge = (gameType?: "block" | "line") => {
+   if (gameType === "block") {
+      return { label: "Block Game", bg: "bg-emerald-100", text: "text-emerald-700" };
+   }
+   return { label: "Line Coding", bg: "bg-purple-100", text: "text-purple-700" };
+};
+
 export default function AssignmentCard({ assignment, onArchive, onEdit, onDelete, onClick }: AssignmentCardProps) {
    const [showMenu, setShowMenu] = useState(false);
    const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
@@ -25,6 +32,7 @@ export default function AssignmentCard({ assignment, onArchive, onEdit, onDelete
    const gearBtnRef = useRef<HTMLButtonElement>(null);
 
    const bannerBg = BANNER_GRADIENTS[assignment.id % BANNER_GRADIENTS.length];
+   const gameTypeBadge = getGameTypeBadge(assignment.game_type);
 
    const menuItems = useMemo(() => {
       const isArchived = assignment.status === "archived";
@@ -53,6 +61,7 @@ export default function AssignmentCard({ assignment, onArchive, onEdit, onDelete
          },
       ];
    }, [assignment.status, assignment.id, onArchive, onEdit, onDelete]);
+
    const handleMouseEnter = () => {
       if (hoverTimeout) clearTimeout(hoverTimeout);
       setShowMenu(true);
@@ -147,8 +156,19 @@ export default function AssignmentCard({ assignment, onArchive, onEdit, onDelete
 
          <div className="p-3.5 pb-4">
             <div className="mb-0.5 text-xl font-bold text-slate-900">{assignment.title}</div>
-            <div className="mb-3 text-xs text-slate-500">
-               Math · {assignment.standards?.length ?? 0} Skills · <strong>{assignment.question_count || "All"} Questions</strong>
+            
+            <div className="mb-3 flex flex-wrap items-center gap-2 text-xs">
+               <span
+                  className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 font-semibold ${gameTypeBadge.bg} ${gameTypeBadge.text}`}
+               >
+                  <span>{gameTypeBadge.label}</span>
+               </span>
+               <span className="text-slate-500">·</span>
+               <span className="text-slate-500">{assignment.standards?.length ?? 0} Skills</span>
+               <span className="text-slate-500">·</span>
+               <span className="text-slate-500">
+                  <strong>{assignment.question_count || "All"}</strong> Questions
+               </span>
             </div>
 
             <div className="mb-2.5 grid grid-cols-2 gap-1">
@@ -156,15 +176,7 @@ export default function AssignmentCard({ assignment, onArchive, onEdit, onDelete
                   <div className="mb-0.5 text-[11px] text-slate-400">Start Date</div>
                   <div className="text-[13px] font-bold text-blue-600">{startDate}</div>
                </div>
-               <div>
-                  <div className="mb-0.5 text-[11px] text-slate-400">Status</div>
-                  <div className={`text-[13px] font-bold capitalize ${assignment.status === "archived" ? "text-amber-600" : "text-green-600"}`}>
-                     {assignment.status}
-                  </div>
-               </div>
-            </div>
 
-            <div className="mt-2 grid grid-cols-2 items-end gap-4">
                <div>
                   <div className="mb-1.5 text-[11px] font-medium uppercase tracking-wider text-slate-400">Progress</div>
                   <div className="flex items-center gap-2">
@@ -172,6 +184,15 @@ export default function AssignmentCard({ assignment, onArchive, onEdit, onDelete
                         <div className="h-full rounded-full bg-blue-600 transition-all duration-300" style={{ width: `${pct}%` }} />
                      </div>
                      <span className="text-xs font-bold text-blue-600">{pct}%</span>
+                  </div>
+               </div>
+            </div>
+
+            <div className="mt-2 grid grid-cols-2 items-end gap-4">
+               <div>
+                  <div className="mb-0.5 text-[11px] text-slate-400">Status</div>
+                  <div className={`text-[13px] font-bold capitalize ${assignment.status === "archived" ? "text-amber-600" : "text-green-600"}`}>
+                     {assignment.status}
                   </div>
                </div>
 

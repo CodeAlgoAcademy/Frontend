@@ -22,8 +22,16 @@ const initialState: AssignmentState = {
 
 export const fetchSkillPicker = createAsyncThunk(
   "assignments/fetchSkillPicker",
-  async ({ classId, grade }: { classId: string | number; grade?: string }) => {
-    return await assignmentServices.getSkillPicker(classId, grade);
+  async ({ 
+    grade, 
+    gameType, 
+    subject 
+  }: { 
+    grade?: string; 
+    gameType?: string; 
+    subject?: string 
+  }) => {
+    return await assignmentServices.getSkillPicker(grade, gameType, subject);
   }
 );
 

@@ -3,10 +3,18 @@ import { AssignmentListItem, BlockStandardWithTopics, CreateAssignmentPayload } 
 import { getAccessToken } from "utils/getTokens";
 
 
-export const getSkillPicker = async (class_id: string | number, grade?: string) => {
-  const params = grade ? `?grade=${grade}` : "";
+export const getSkillPicker = async (
+  grade?: string, 
+  gameType: string = "block", 
+  subject: string = "math"
+) => {
+  const params = new URLSearchParams();
+  if (grade) params.append("grade", grade);
+  params.append("game_type", gameType);
+  params.append("subject", subject);
+
   const response = await http.get(
-    `/academics/block_game/assignments/skill-picker/${params}`,
+    `/academics/block_game/assignments/skill-picker/?${params.toString()}`,
     {
       headers: {
         Authorization: `Bearer ${getAccessToken()}`,

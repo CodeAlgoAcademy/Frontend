@@ -35,6 +35,14 @@ export default function NewAssignmentForm({ classId, students, onSuccess, onCanc
    const [submitting, setSubmitting] = useState(false);
    const [error, setError] = useState("");
    const [title, setTitle] = useState(editData?.title || today());
+   const [gameType, setGameType] = useState<"block" | "line">(editData?.game_type || "block");
+
+const handleGameTypeChange = (type: "block" | "line") => {
+   if (type !== gameType) {
+      setGameType(type);
+      setSelectedTopics([]);
+   }
+};
 
    const [selectedTopics, setSelectedTopics] = useState<SelectedTopic[]>(editData?.topics || []);
    const [selectedStudents, setSelectedStudents] = useState<Student[]>([]);
@@ -73,6 +81,7 @@ export default function NewAssignmentForm({ classId, students, onSuccess, onCanc
          topic_ids: selectedTopics.map((t) => t.id),
          question_order: questionOrder,
          question_count: questionCount,
+         game_type: gameType,
          start_now: startNow,
          scheduled_at: startNow ? null : scheduledAt || null,
          student_ids: selectedStudents.map((s) => s.id),
@@ -103,6 +112,7 @@ export default function NewAssignmentForm({ classId, students, onSuccess, onCanc
             <SkillPickerModal
                classId={classId}
                selectedTopics={selectedTopics}
+               gameType={gameType}
                onClose={() => setShowSkillPicker(false)}
                onConfirm={(topics) => {
                   setSelectedTopics(topics);
@@ -138,7 +148,7 @@ export default function NewAssignmentForm({ classId, students, onSuccess, onCanc
 
             <h1 className="mb-7 text-[28px] font-bold text-slate-900">{editData ? "Edit Assignment" : "New Assignment"}</h1>
 
-            <div className="mb-10">
+   <div className="mb-10">
                <label className="mb-2 block text-sm text-slate-600">Assignment title</label>
                <div className="flex max-w-[460px] items-center overflow-hidden rounded-lg border border-slate-200 bg-white">
                   <input
@@ -150,6 +160,26 @@ export default function NewAssignmentForm({ classId, students, onSuccess, onCanc
                   <span className="px-3.5 text-xs text-slate-400">{title.length}/40</span>
                </div>
             </div>
+
+            <div className="mb-7 rounded-xl ">
+               <div className="mb-3 text-sm font-bold uppercase tracking-wider text-slate-900">Select Game Type</div>
+               <div className="max-w-xs">
+                  <select
+                     value={gameType}
+                     onChange={(e) => handleGameTypeChange(e.target.value as "block" | "line")}
+                     className="w-full cursor-pointer rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 shadow-sm outline-none transition-colors focus:border-blue-600"
+                  >
+                     <option value="block">Block Coding</option>
+                     <option value="line">Line Coding</option>
+                  </select>
+               </div>
+               <p className="mt-2 text-xs text-slate-400">
+                  {gameType === "block"
+                     ? "Best for younger students using visual blocks."
+                     : "Advanced coding challenges and AI Literacy for older students."}
+               </p>
+            </div>
+         
 
             <div className="mb-10">
                <div className="mb-3.5 text-lg font-bold text-slate-900">Skill</div>
