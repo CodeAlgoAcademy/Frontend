@@ -48,5 +48,6 @@ export interface AssignmentListItem {
   completed_count: number;
 topics: AssignmentTopic[];
 progress_percentage:string
+  game_type: "block" | "line"; 
 }
  
