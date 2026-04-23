@@ -22,12 +22,10 @@ export default function HowCodingHelpsKids() {
             />
 
             <main className="mt-6">
-               {/* Intro */}
                <section className="my-4">
                   <DropCapsParagraph text="Many parents see coding as a technical skill, but it is actually one of the most effective ways to sharpen a child's brain for math and logic. By moving math off the chalkboard and into a digital world, coding makes 'difficult' concepts feel like natural tools for creation." />
                </section>
 
-               {/* Section 1 */}
                <section className="my-6">
                   <h2 className="mb-2 text-xl font-bold text-gray-800">
                      Breaking Down Big Problems (Decomposition)
@@ -40,7 +38,6 @@ export default function HowCodingHelpsKids() {
                   </p>
                </section>
 
-               {/* Section 2 */}
                <section className="my-6">
                   <h2 className="mb-2 text-xl font-bold text-gray-800">
                      Making Variables and Algebra Tangible
@@ -56,14 +53,12 @@ export default function HowCodingHelpsKids() {
                   </p>
                </section>
 
-               {/* Image break */}
                <ImagesContainer
                   imageHeight={380}
                   image="/assets/blog/codingkids3.png"
                   imageDetail="Children using Turtle Graphics to explore geometry and coordinates"
                />
 
-               {/* Section 3 */}
                <section className="my-6">
                   <h2 className="mb-2 text-xl font-bold text-gray-800">
                      Visualizing Geometry and Coordinates
@@ -76,7 +71,6 @@ export default function HowCodingHelpsKids() {
                   </p>
                </section>
 
-               {/* Section 4 */}
                <section className="my-6">
                   <h2 className="mb-2 text-xl font-bold text-gray-800">
                      The Logic of Trial and Error (Debugging)

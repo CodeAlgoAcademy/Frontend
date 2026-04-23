@@ -22,12 +22,10 @@ export default function PythonVsScratch() {
             />
 
             <main className="mt-6">
-               {/* Intro */}
                <section className="my-4">
                   <DropCapsParagraph text="Choosing the first programming language for your child is a big decision. While both Scratch and Python teach the fundamentals of logic, they offer very different experiences. Here is why Python might be the perfect 'next-level' choice for your young coder." />
                </section>
 
-               {/* Section 1 */}
                <section className="my-6">
                   <h2 className="mb-2 text-xl font-bold text-gray-800">
                      Visual Blocks vs. Real-World Syntax
@@ -41,7 +39,6 @@ export default function PythonVsScratch() {
                   </p>
                </section>
 
-               {/* Section 2 */}
                <section className="my-6">
                   <h2 className="mb-2 text-xl font-bold text-gray-800">
                      From Playing Games to Building Tools
@@ -55,14 +52,12 @@ export default function PythonVsScratch() {
                   </p>
                </section>
 
-               {/* Image break */}
                <ImagesContainer
                   imageHeight={380}
                   image="/assets/blog/python2.png"
                   imageDetail="Young learners exploring text-based coding with Python"
                />
 
-               {/* Section 3 */}
                <section className="my-6">
                   <h2 className="mb-2 text-xl font-bold text-gray-800">
                      Overcoming the "Syntax" Fear Early
@@ -75,7 +70,6 @@ export default function PythonVsScratch() {
                   </p>
                </section>
 
-               {/* Section 4 */}
                <section className="my-6">
                   <h2 className="mb-2 text-xl font-bold text-gray-800">
                      A Bridge to Infinite Creativity
