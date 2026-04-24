@@ -6,7 +6,7 @@ import { RootState } from "store/store";
 export default function ParentSignUp2() {
    const dispatch = useDispatch();
    const auth = useSelector((state: RootState) => state?.user?.auth);
-
+   const isStudent = auth?.is_student;
    return (
       <div key={2}>
          <h1 className="text-[32px] font-bold">Create Your Account</h1>
@@ -21,16 +21,24 @@ export default function ParentSignUp2() {
             required
             placeholder="Enter your firstname"
          />
-         <label className="mt-6 block text-xl font-semibold">Last Name</label>
+
+         <label className="mt-6 block text-xl font-semibold">{isStudent ? "Last Initial" : "Last Name"}</label>
+
          <input
             value={auth?.lastname}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
-               dispatch(updateUser({ key: "lastname", value: e.target.value }));
+               let value = e.target.value;
+               if (isStudent) {
+                  value = value.charAt(0);
+               }
+
+               dispatch(updateUser({ key: "lastname", value }));
             }}
             type="text"
             className="auth-input"
             required
-            placeholder="Enter your lastname"
+            placeholder={isStudent ? "Enter your last initial (e.g. A)" : "Enter your lastname"}
+            maxLength={isStudent ? 1 : undefined}
          />
       </div>
    );
