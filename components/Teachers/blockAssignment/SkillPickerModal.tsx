@@ -101,7 +101,7 @@ export default function SkillPickerModal({ selectedTopics, onConfirm, onClose, g
                <div>
                   <h2 className="text-xl font-bold text-slate-900">Select Skills</h2>
                   <p className="mt-1 text-xs font-medium uppercase tracking-wider text-blue-600">
-                     {gameType === "block" ? "🧩 Block Coding Mode" : "🐍 Line Coding Mode"}
+                     {gameType === "block" ? "Block Coding Mode" : "Line Coding Mode"}
                   </p>
                </div>
                <button
@@ -204,7 +204,7 @@ export default function SkillPickerModal({ selectedTopics, onConfirm, onClose, g
                                              {selCount} selected
                                           </span>
                                        )}
-                                       <span className="text-xs text-slate-400">{std.topic_count} skills</span>
+                                       <span className={`text-xs  ${std.topic_count ? "text-mainColor font-bold" : "text-slate-400"}`}>{std.topic_count} skills</span>
                                        <button
                                           className={`rounded-md border px-2 py-0.5 text-xs font-medium transition-colors ${
                                              allPicked
