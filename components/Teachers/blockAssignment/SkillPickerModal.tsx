@@ -143,9 +143,7 @@ export default function SkillPickerModal({ selectedTopics, onConfirm, onClose, g
                            <button
                               key={g.value}
                               className={`cursor-pointer rounded-md px-2 py-1.5 text-left text-xs font-medium transition-all ${
-                                 grade === g.value
-                                    ? "bg-blue-100 text-blue-700 ring-1 ring-blue-300"
-                                    : "bg-white text-slate-600 hover:bg-slate-100"
+                                 grade === g.value ? "bg-blue-100 text-blue-700 ring-1 ring-blue-300" : "bg-white text-slate-600 hover:bg-slate-100"
                               }`}
                               onClick={() => setGrade((p) => (p === g.value ? "" : g.value))}
                            >
@@ -166,10 +164,7 @@ export default function SkillPickerModal({ selectedTopics, onConfirm, onClose, g
                         onChange={(e) => setSearch(e.target.value)}
                      />
                      {search && (
-                        <button
-                           className="text-xs text-slate-400 hover:text-slate-600"
-                           onClick={() => setSearch("")}
-                        >
+                        <button className="text-xs text-slate-400 hover:text-slate-600" onClick={() => setSearch("")}>
                            Clear
                         </button>
                      )}
@@ -193,9 +188,9 @@ export default function SkillPickerModal({ selectedTopics, onConfirm, onClose, g
                                  >
                                     <div className="flex items-center gap-3">
                                        <span className="text-xl">🎯</span>
-                                       <div>
-                                          <span className="text-sm font-bold text-slate-900">{std.code}</span>
-                                          <span className="ml-2 text-sm text-slate-600">{std.name}</span>
+                                       <div className="flex flex-col">
+                                          <span className="text-sm font-bold text-slate-900">{std.name}</span>
+                                          <span className="text-[11px] font-medium uppercase text-slate-400">{std.code}</span>
                                        </div>
                                     </div>
                                     <div className="flex items-center gap-2">
@@ -204,7 +199,9 @@ export default function SkillPickerModal({ selectedTopics, onConfirm, onClose, g
                                              {selCount} selected
                                           </span>
                                        )}
-                                       <span className={`text-xs  ${std.topic_count ? "text-mainColor font-bold" : "text-slate-400"}`}>{std.topic_count} skills</span>
+                                       <span className={`text-xs  ${std.topic_count ? "font-bold text-mainColor" : "text-slate-400"}`}>
+                                          {std.topic_count} skills
+                                       </span>
                                        <button
                                           className={`rounded-md border px-2 py-0.5 text-xs font-medium transition-colors ${
                                              allPicked
@@ -239,11 +236,7 @@ export default function SkillPickerModal({ selectedTopics, onConfirm, onClose, g
                                                    onChange={() => toggleTopic(topic)}
                                                    className="h-4 w-4 cursor-pointer rounded border-slate-300 accent-blue-600"
                                                 />
-                                                <span
-                                                   className={`ml-3 text-sm ${
-                                                      checked ? "font-medium text-blue-700" : "text-slate-700"
-                                                   }`}
-                                                >
+                                                <span className={`ml-3 text-sm ${checked ? "font-medium text-blue-700" : "text-slate-700"}`}>
                                                    {topic.name}
                                                 </span>
                                              </label>
@@ -265,9 +258,7 @@ export default function SkillPickerModal({ selectedTopics, onConfirm, onClose, g
                </span>
                <button
                   className={`rounded-lg px-6 py-2 text-sm font-bold text-white transition-all ${
-                     localMap.size === 0
-                        ? "cursor-not-allowed bg-blue-300"
-                        : "cursor-pointer bg-blue-600 hover:bg-blue-700 active:scale-95"
+                     localMap.size === 0 ? "cursor-not-allowed bg-blue-300" : "cursor-pointer bg-blue-600 hover:bg-blue-700 active:scale-95"
                   }`}
                   disabled={localMap.size === 0}
                   onClick={() => onConfirm(Array.from(localMap.entries()).map(([id, name]) => ({ id, name })))}
