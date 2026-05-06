@@ -20,16 +20,13 @@ interface SkillPickerModalProps {
 
 const SUBJECT_MAP = {
    block: [
-      { label: "Math", value: "math" },
       { label: "Logic", value: "logic" },
-      { label: "Science", value: "science" },
    ],
    line: [
-      { label: "Computer Science", value: "cs" },
-      { label: "AI Literacy", value: "ai" },
-      { label: "Python Basics", value: "python" },
+      { label: "Science", value: "science" },
    ],
 };
+
 
 export default function SkillPickerModal({ selectedTopics, onConfirm, onClose, gameType }: SkillPickerModalProps) {
    const [grade, setGrade] = useState("");
@@ -40,8 +37,12 @@ export default function SkillPickerModal({ selectedTopics, onConfirm, onClose, g
    const [localMap, setLocalMap] = useState<Map<number, string>>(() => new Map(selectedTopics.map((t) => [t.id, t.name])));
    const classId = useSelector((state: RootState) => state.currentClass?.id);
 
-   const currentSubjects = SUBJECT_MAP[gameType];
+ const currentSubjects = SUBJECT_MAP[gameType];
    const [subject, setSubject] = useState(currentSubjects[0].value);
+
+   useEffect(() => {
+      setSubject(currentSubjects[0].value);
+   }, [gameType]);
 
    useEffect(() => {
       setLoading(true);
@@ -53,10 +54,7 @@ export default function SkillPickerModal({ selectedTopics, onConfirm, onClose, g
          })
          .catch(console.error)
          .finally(() => setLoading(false));
-      if (!currentSubjects.find((s) => s.value === subject)) {
-         setSubject(currentSubjects[0].value);
-      }
-   }, [classId, grade, gameType, subject, currentSubjects]);
+   }, [grade, gameType, subject]);
 
    const filtered = standards.filter((s) => {
       if (!search) return true;
@@ -132,7 +130,7 @@ export default function SkillPickerModal({ selectedTopics, onConfirm, onClose, g
                   <div className="mb-5">
                      <div className="mb-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400">Curriculum</div>
                      <div className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm">
-                        Common Core
+                        CSTA
                      </div>
                   </div>
 
