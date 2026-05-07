@@ -448,9 +448,10 @@ const DataPrivacyAgreement = ({ onAccept, accepted }: IAcceptButton) => (
             <strong>Directly from Schools:</strong>
          </p>
          <ul className="ml-6 list-disc">
-            <li>Student first names or usernames (NOT full names)</li>
+            <li>Student first names, initial, or usernames (NOT full names)</li>
             <li>Grade level or class assignment</li>
             <li>School and teacher information</li>
+            <li>Teacher can provide student's school email</li>
          </ul>
 
          <p className="mt-3">
@@ -464,7 +465,7 @@ const DataPrivacyAgreement = ({ onAccept, accepted }: IAcceptButton) => (
 
          <p className="mt-3 font-semibold">We do NOT collect:</p>
          <ul className="ml-6 list-disc">
-            <li>Student email addresses, phone numbers, or home addresses</li>
+            <li>Student phone numbers, or home addresses</li>
             <li>Social security numbers or government identifiers</li>
             <li>Biometric data</li>
             <li>Precise geolocation</li>
