@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FileText, Shield, Users, CheckCircle } from "lucide-react";
+import { FileText, Shield, Users, CheckCircle, Info } from "lucide-react";
 import Navbar from "@/components/navbar/home/Navbar";
 
 interface IType {
@@ -83,6 +83,25 @@ const CodeAlgoLegalDocs = () => {
                {activeTab === "dpa" && <DataPrivacyAgreement onAccept={() => handleAccept("dpa")} accepted={acceptedDocs.dpa} />}
                {activeTab === "parental" && <ParentalConsent onAccept={() => handleAccept("parental")} accepted={acceptedDocs.parental} />}
             </div>
+              <div className="mt-16 border-t border-gray-100 pt-10 text-center">
+                  <div className="mx-auto max-w-2xl">
+                     <Info className="mx-auto h-8 w-8 text-gray-400 mb-4" />
+                     <h4 className="text-lg font-bold text-gray-900 mb-2">Legal Acknowledgement</h4>
+                     <p className="text-gray-600 leading-relaxed">
+                        By using our site and accessing CodeAlgo Academy services, you acknowledge that you have read, 
+                        understood, and agree to be bound by our 
+                        <span className="font-semibold text-gray-900"> Terms of Service</span>, 
+                        <span className="font-semibold text-gray-900"> Privacy Policy</span>, and 
+                        <span className="font-semibold text-gray-900"> COPPA Compliance Statement</span>. 
+                        Formal consent for student data collection is required during the account registration process.
+                     </p>
+                     <div className="mt-6">
+                        <a href="/signup" className="inline-block rounded-full bg-red-600 px-8 py-3 font-semibold text-white hover:bg-red-700 transition-colors">
+                           Get Started with CodeAlgo
+                        </a>
+                     </div>
+                  </div>
+               </div>
          </div>
       </div>
    );
@@ -95,19 +114,6 @@ const Section = ({ title, children, isSubsection = false }: ISection) => (
    </div>
 );
 
-const AcceptButton = ({ onAccept, accepted, docType }: IAcceptButton) => (
-   <div className="mt-8 border-t pt-6">
-      <button
-         onClick={onAccept}
-         disabled={accepted}
-         className={`rounded-lg px-6 py-3 font-semibold ${
-            accepted ? "cursor-not-allowed bg-green-600 text-white" : "bg-red-600 text-white hover:bg-red-700"
-         }`}
-      >
-         {accepted ? "✓ Accepted" : `Accept ${docType}`}
-      </button>
-   </div>
-);
 
 const PrivacyPolicy = ({ onAccept, accepted }: IAcceptButton) => (
    <div>
@@ -305,7 +311,6 @@ const PrivacyPolicy = ({ onAccept, accepted }: IAcceptButton) => (
       <Section title="">
          <p>Contact Us If you have any questions about this Privacy Policy, please contact us at info@codealgoacademy.com.</p>
       </Section>
-      {/* <AcceptButton onAccept={onAccept} accepted={accepted} docType="Privacy Policy" /> */}
    </div>
 );
 
@@ -328,7 +333,7 @@ const COPPACompliance = ({ onAccept, accepted }: IAcceptButton) => (
             COPPA is a federal law that protects the privacy of children under 13 years of age. It requires operators of websites and online services
             to obtain verifiable parental consent before collecting, using, or disclosing personal information from children under 13.
          </p>
-         <p className="mt-2">
+         <p className="">
             For more information about COPPA, visit{" "}
             <a href="https://www.coppa.org" target="_blank" rel="noopener noreferrer" className="text-red-600 hover:underline">
                www.coppa.org
@@ -338,7 +343,7 @@ const COPPACompliance = ({ onAccept, accepted }: IAcceptButton) => (
 
       <Section title="Data Deletion">
          <p>
-            If we learn we have collected personal information beyond what is permitted (such as a child's full name or contact details), we will
+            If we learn, we have collected personal information beyond what is permitted (such as a child's full name or contact details), we will
             delete it promptly upon discovery or notification.
          </p>
          <p className="mt-2">
@@ -349,7 +354,7 @@ const COPPACompliance = ({ onAccept, accepted }: IAcceptButton) => (
          </p>
       </Section>
 
-      <Section title="If You Believe We Have Collected Improper Information">
+      <Section title="">
          <div className="border-l-4 border-amber-600 bg-amber-50 p-4">
             <p className="font-semibold text-amber-900">
                If you believe we have inadvertently collected personal information from a child under 13 without proper parental consent, please
@@ -381,8 +386,6 @@ const COPPACompliance = ({ onAccept, accepted }: IAcceptButton) => (
             </p>
          </div>
       </Section>
-
-      {/* <AcceptButton onAccept={onAccept} accepted={accepted} docType="COPPA Compliance" /> */}
    </div>
 );
 
@@ -445,9 +448,10 @@ const DataPrivacyAgreement = ({ onAccept, accepted }: IAcceptButton) => (
             <strong>Directly from Schools:</strong>
          </p>
          <ul className="ml-6 list-disc">
-            <li>Student first names or usernames (NOT full names)</li>
+            <li>Student first names, initial, or usernames (NOT full names)</li>
             <li>Grade level or class assignment</li>
             <li>School and teacher information</li>
+            <li>Teacher can provide student's school email</li>
          </ul>
 
          <p className="mt-3">
@@ -461,7 +465,7 @@ const DataPrivacyAgreement = ({ onAccept, accepted }: IAcceptButton) => (
 
          <p className="mt-3 font-semibold">We do NOT collect:</p>
          <ul className="ml-6 list-disc">
-            <li>Student email addresses, phone numbers, or home addresses</li>
+            <li>Student phone numbers, or home addresses</li>
             <li>Social security numbers or government identifiers</li>
             <li>Biometric data</li>
             <li>Precise geolocation</li>
@@ -588,7 +592,6 @@ const DataPrivacyAgreement = ({ onAccept, accepted }: IAcceptButton) => (
          </div>
       </Section>
 
-      {/* <AcceptButton onAccept={onAccept} accepted={accepted} docType="Data Privacy Agreement" /> */}
    </div>
 );
 
@@ -620,7 +623,7 @@ const ParentalConsent = ({ onAccept, accepted }: IAcceptButton) => (
          <ul className="ml-6 list-disc space-y-1">
             <li>Your name and email address</li>
             <li>Payment information (if subscribing)</li>
-            <li>Your child's first name or nickname</li>
+            <li>Your child's full name with first name and last initials or nickname</li>
          </ul>
 
          <p className="mt-4">
@@ -635,7 +638,6 @@ const ParentalConsent = ({ onAccept, accepted }: IAcceptButton) => (
 
          <p className="mt-4 font-semibold">We DO NOT collect from your child:</p>
          <ul className="ml-6 list-disc space-y-1">
-            <li>Full name</li>
             <li>Home address</li>
             <li>School name (unless provided by you)</li>
             <li>Photographs or videos</li>
@@ -737,8 +739,6 @@ const ParentalConsent = ({ onAccept, accepted }: IAcceptButton) => (
             </ul>
          </div>
       </Section>
-
-      {/* <AcceptButton onAccept={onAccept} accepted={accepted} docType="Parental Consent" /> */}
    </div>
 );
 
@@ -1083,8 +1083,6 @@ const TermsOfService = ({ onAccept, accepted }: IAcceptButton) => (
             </p>
          </div>
       </Section>
-
-      {/* <AcceptButton onAccept={onAccept} accepted={accepted} docType="Terms of Service" /> */}
    </div>
 );
 
@@ -1115,10 +1113,7 @@ const EULA = ({ onAccept, accepted }: IAcceptButton) => (
          <p>
             The CodeAlgo Game is licensed, not sold. CodeAlgo grants you a personal, non-transferable, and non-exclusive limited license to install
             and use the CodeAlgo Game for your personal use.
-         </p>
-         <p className="mt-2">
-            he CodeAlgo Game is licensed, not sold. CodeAlgo grants to You a personal, non transferable, and non-exclusive limited license to install
-            and use the CodeAlgo Game for your personal use. This license does not give you any title or ownership in the CodeAlgo Game, and should
+            This license does not give you any title or ownership in the CodeAlgo Game, and should
             not be construed as a sale or transfer of any intellectual property or other rights to the CodeAlgo Game. All rights not specifically
             granted under this EULA are hereby reserved by CodeAlgo and, as applicable, by its licensors
          </p>
@@ -1145,7 +1140,7 @@ const EULA = ({ onAccept, accepted }: IAcceptButton) => (
             </li>
             <li>Rent, lease, license, sell, or lend the CodeAlgo Game.</li>
             <li>
-               odify, adapt, or translate the CodeAlgo Game, incorporate the CodeAlgo Game into or with other software, or create derivative works
+               modify, adapt, or translate the CodeAlgo Game, incorporate the CodeAlgo Game into or with other software, or create derivative works
                based upon any part of the CodeAlgo Game, including, but not limited to, any database or other content contained in the CodeAlgo Game
                without the prior written permission of CodeAlgo in each instance.
             </li>
@@ -1239,7 +1234,6 @@ const EULA = ({ onAccept, accepted }: IAcceptButton) => (
          </p>
       </div>
 
-      {/* <AcceptButton onAccept={onAccept} accepted={accepted} docType="EULA" /> */}
    </div>
 );
 

@@ -67,7 +67,7 @@ const links = [
    {
       name: "Help",
       icon: "❓",
-      url: "/teachers/help",
+      url: "/contact",
    },
 ];
 
