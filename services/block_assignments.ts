@@ -93,6 +93,20 @@ export const getAssignmentResults = async (
   return response.data;
 };
 
+export const getStudentTopicAnswers = async (
+  class_id: string | number,
+  record_id: string | number,
+  topic_id?: string | number
+) => {
+  return await http.get(
+    `/academics/class/${class_id}/assignments/record/${record_id}/student-answers/`,
+    {
+      params: { topic_id },
+      headers: { Authorization: `Bearer ${getAccessToken()}` },
+    }
+  );
+};
+
 
 export const updateAssignment = async (
   class_id: string | number,
@@ -116,6 +130,7 @@ const assignmentServices = {
   getAssignmentResults,
   updateAssignment,
   getSinglAssignment,
+  getStudentTopicAnswers,
 };
  
 export default assignmentServices;

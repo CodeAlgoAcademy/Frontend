@@ -25,10 +25,7 @@ export default function AssignmentDetailView({ classId, assignmentId, onBack, on
    const [viewMode, setViewMode] = useState<ViewMode>("numeric");
 
    useEffect(() => {
-      Promise.all([
-         assignmentServices.getAssignmentResults(classId, assignmentId), 
-         assignmentServices.getSinglAssignment(classId, assignmentId)
-      ])
+      Promise.all([assignmentServices.getAssignmentResults(classId, assignmentId), assignmentServices.getSinglAssignment(classId, assignmentId)])
          .then(([results, detail]) => {
             const studentRecords = results.assignment?.student_records || [];
             const topicStats = results.topic_breakdown || [];
@@ -121,6 +118,7 @@ export default function AssignmentDetailView({ classId, assignmentId, onBack, on
          <LegendAndViewToggle viewMode={viewMode} onViewModeChange={setViewMode} />
 
          <ResultsTable
+            classId={classId}
             columns={allCols}
             students={data.student_records || []}
             viewMode={viewMode}

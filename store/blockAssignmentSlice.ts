@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import assignmentServices from "services/block_assignments";
+import { DetailedAnswersResponse } from "types/interfaces";
 import {
   AssignmentListItem,
   BlockStandardWithTopics,
@@ -11,6 +12,7 @@ interface AssignmentState {
   skillPickerStandards: BlockStandardWithTopics[];
   loading: boolean;
   error: string | null;
+ detailedAnswers: DetailedAnswersResponse | null;
 }
 
 const initialState: AssignmentState = {
@@ -18,6 +20,7 @@ const initialState: AssignmentState = {
   skillPickerStandards: [],
   loading: false,
   error: null,
+  detailedAnswers: null,
 };
 
 export const fetchSkillPicker = createAsyncThunk(
@@ -68,6 +71,23 @@ export const archiveAssignment = createAsyncThunk(
     return assignmentId;
   }
 );
+
+export const fetchStudentTopicAnswers = createAsyncThunk(
+  "assignments/fetchStudentTopicAnswers",
+  async ({ 
+    classId, 
+    recordId, 
+    topicId 
+  }: { 
+    classId: string | number; 
+    recordId: string | number; 
+    topicId?: string | number 
+  }) => {
+    const response = await assignmentServices.getStudentTopicAnswers(classId, recordId, topicId);
+    return response.data; 
+  }
+);
+
 
 const assignmentSlice = createSlice({
   name: "assignments",
@@ -120,6 +140,18 @@ const assignmentSlice = createSlice({
         state.assignments = state.assignments.filter(
           (a) => a.id !== action.payload
         );
+      })
+      builder
+      .addCase(fetchStudentTopicAnswers.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchStudentTopicAnswers.fulfilled, (state, action) => {
+        state.loading = false;
+        state.detailedAnswers = action.payload; 
+      })
+      .addCase(fetchStudentTopicAnswers.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || "Failed to fetch answers";
       });
   },
 });

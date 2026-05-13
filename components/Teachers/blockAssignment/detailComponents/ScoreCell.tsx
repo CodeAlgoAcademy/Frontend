@@ -20,11 +20,14 @@ interface ScoreCellProps {
   viewMode: ViewMode;
 }
 
-export function ScoreCell({ correct, total, viewMode }: ScoreCellProps) {
-  const { bg, text } = scoreColor(correct, total);
-  return (
-    <div className={`${bg} ${text} rounded-md py-1.5 px-1 text-[13px] font-semibold min-w-[52px] text-center`}>
-      {formatValue(correct, total, viewMode)}
-    </div>
-  );
+export function ScoreCell({ correct, total, viewMode, onClick }: ScoreCellProps & { onClick?: () => void }) {
+   const { bg, text } = scoreColor(correct, total);
+   return (
+      <div 
+         onClick={onClick}
+         className={`${bg} ${text} rounded-md py-1.5 px-1 text-[13px] font-semibold min-w-[52px] text-center cursor-pointer hover:opacity-80 transition-all active:scale-95`}
+      >
+         {formatValue(correct, total, viewMode)}
+      </div>
+   );
 }
