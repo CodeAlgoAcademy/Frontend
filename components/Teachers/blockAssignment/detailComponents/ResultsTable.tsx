@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { ScoreCell } from "./ScoreCell";
 import { StatusBadge } from "./StatusBadge";
+import AnswerDetailModal from "./AnswerDetailModal";
 
 type ViewMode = "numeric" | "percentage";
 
@@ -27,12 +29,14 @@ interface ResultsTableProps {
    currentPage: number;
    totalPages: number;
    onPageChange: (page: number) => void;
+   classId: string | number;
 }
 
 const COLS_PER_PAGE = 5;
 
-export function ResultsTable({ columns, students, viewMode, currentPage, totalPages, onPageChange }: ResultsTableProps) {
+export function ResultsTable({ columns, students, viewMode, currentPage, totalPages, onPageChange, classId }: ResultsTableProps) {
    const visibleCols = columns.slice(currentPage * COLS_PER_PAGE, (currentPage + 1) * COLS_PER_PAGE);
+   const [modalInfo, setModalInfo] = useState<any>(null);
 
    return (
       <div className="mt-4 overflow-x-auto ">
@@ -69,7 +73,20 @@ export function ResultsTable({ columns, students, viewMode, currentPage, totalPa
 
                         return (
                            <td key={`${student.id}-${col.topic_id}`} className="py-1">
-                              <ScoreCell correct={studentTopic.correct} total={studentTopic.total} viewMode={viewMode} />
+                              <ScoreCell
+                                 correct={studentTopic.correct}
+                                 total={studentTopic.total}
+                                 viewMode={viewMode}
+                                 onClick={() =>
+                                    setModalInfo({
+                                       classId: classId,
+                                       recordId: student.id,
+                                       topicId: col.topic_id,
+                                       topicName: col.topic_name,
+                                       standardCode: col.standard_code,
+                                    })
+                                 }
+                              />
                            </td>
                         );
                      })}
@@ -85,6 +102,7 @@ export function ResultsTable({ columns, students, viewMode, currentPage, totalPa
                ))}
             </tbody>
          </table>
+         {modalInfo && <AnswerDetailModal {...modalInfo} onClose={() => setModalInfo(null)} />}
       </div>
    );
 }
