@@ -8,6 +8,7 @@ import { errorResolver } from "utils/errorResolver";
 import { closePreloader, openPreloader } from "./fetchSlice";
 import { setTimeLimit } from "utils/useMultiForm";
 import { SkillData } from "@/components/parents/student/Skills";
+import teachersClassBaseServices from "services/teachersClassServices";
 
 interface FetchStudentBlockGameProgressArgs {
    classId: string | number;
@@ -277,6 +278,28 @@ export const fetchDiagnosticSummary = createAsyncThunk(
       }
    }
 );
+export const fetchStudentLineProgress = createAsyncThunk(
+   "teacher/student/line-progress",
+   async ({ studentId, classId }: { studentId: string; classId: string }, thunkAPI) => {
+      try {
+         return await teachersClassBaseServices.getStudentLineProgressByTeacher(studentId, classId);
+      } catch (error: any) {
+         return thunkAPI.rejectWithValue(errorResolver(error));
+      }
+   }
+);
+
+export const fetchStudentLineCodingSkills = createAsyncThunk(
+   "teacher/student/line-skills",
+   async ({ studentId, classId }: { studentId: string; classId: string }, thunkAPI) => {
+      try {
+         return await teachersClassBaseServices.getStudentLinecodingSkillsByTeacher(studentId, classId);
+      } catch (error: any) {
+         return thunkAPI.rejectWithValue(errorResolver(error));
+      }
+   }
+);
+
 
 
 export const teacherStudentSlice = createSlice({
@@ -382,6 +405,13 @@ export const teacherStudentSlice = createSlice({
 
 .addCase(fetchDiagnosticSummary.fulfilled, (state, action) => {
    state.diagnosticSummary = action.payload.students;
+})
+
+.addCase(fetchStudentLineCodingSkills.fulfilled, (state, action) => {
+   if (state.currentStudent) {
+      state.currentStudent.skills = action.payload; // Assuming payload is the array of topics/skills
+   }
+   // state.loading = false;
 });
 
    },
