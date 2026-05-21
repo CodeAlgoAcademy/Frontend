@@ -8,7 +8,7 @@ import { getStudents } from "store/studentSlice";
 import StudentBarChart from "@/components/Teachers/students/screentime/BarChart";
 import { useRouter } from "next/router";
 import StudentLevelChart from "@/components/Teachers/students/level-threshold/BarChart";
-import { fetchStudentBlockGameProgress } from "store/teacherStudentSlice";
+import { fetchStudentBlockGameProgress, fetchStudentLineProgress } from "store/teacherStudentSlice";
 import TeacherStudentSkills from "@/components/Teachers/students/studentsprogress/skills";
 import TeacherStudentCompletedStandard from "@/components/Teachers/students/studentsprogress/standard";
 import TeacherStudentProgress from "@/components/Teachers/students/studentsprogress/progress";
@@ -49,29 +49,39 @@ const Dashboard = () => {
    }, [classId, dispatch]);
 
    useEffect(() => {
-      const studentId = currentStudent?.student_id;
+      const studentId = currentStudent?.student_id || currentStudent?.id;
+      const dob = currentStudent?.dob;
 
-      if (classId && studentId) {
+      if (classId && studentId && dob) {
          setIsLoading(true);
+         const age = calculateAge(dob);
+         const isUnder14 = age < 14;
+         setIsBlockProgress(isUnder14);
 
-         dispatch(fetchStudentBlockGameProgress({ classId, studentId }))
+         const action = isUnder14 
+            ? fetchStudentBlockGameProgress({ classId, studentId }) 
+            : fetchStudentLineProgress({ classId: classId.toString(), studentId: studentId.toString() });
+            dispatch(action)
             .unwrap()
             .then((res: any) => {
-               setProgressData(res);
-               console.log(progressData, "student progress")
+               if (isUnder14) {
+                  setProgressData(Array.isArray(res) ? res : []);
+               } else {
+                  setProgressData(res?.topic || []);
+               }
             })
-            .catch((err: any) => {
-            })
-            .finally(() => {
-               setIsLoading(false);
-            });
+            .catch(err => console.error(err))
+            .finally(() => setIsLoading(false));
       }
-   }, [classId, currentStudent?.student_id, dispatch]);
+   }, [classId, currentStudent?.student_id, currentStudent?.dob]);
 
    const allProgressItems = Array.isArray(progressData) ? progressData : [];
-   console.log(allProgressItems, "allstudebt")
-   const inProgressItems = allProgressItems.filter((item) => item.progress < 1.0);
-   const completedItems = allProgressItems.filter((item) => item.progress === 1.0);
+   const inProgressItems = allProgressItems.filter((item) => (item.progress || 0) < 1.0);
+   const completedItems = allProgressItems.filter((item) => (item.progress || 0) >= 1.0);
+
+
+   
+
    const filteredCompletedItems = completedItems.filter((item) => {
       const hasNoCurriculum =
          item.iready_math_desc?.includes("(No direct curriculum unit)") && item.common_core_math_desc?.includes("(No direct curriculum unit)");

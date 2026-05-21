@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { AppDispatch, RootState } from "store/store";
 import { BiCheck } from "react-icons/bi";
-import { fetchStudentBlockGameSkill } from "store/teacherStudentSlice";
+import { fetchStudentBlockGameSkill, fetchStudentLineCodingSkills } from "store/teacherStudentSlice"; // Ensure both are imported
 import ContentBox from "@/components/parents/UI/ContentBox";
 
 interface ISkillProps {
@@ -31,37 +31,56 @@ const TeacherStudentSkills = ({ size, allProgressItems }: ISkillProps) => {
 
   const dispatch = useDispatch<AppDispatch>();
 
-  useEffect(() => {
-    if (classId && currentStudent?.student_id) {
-      dispatch(
-        fetchStudentBlockGameSkill({
-          classId,
-          studentId: currentStudent.student_id,
-        })
-      );
+  // Age calculation helper
+  const calculateAge = (dob: string): number => {
+    if (!dob) return 0;
+    const birthDate = new Date(dob);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
     }
-  }, [classId, currentStudent?.student_id, dispatch]);
+    return age;
+  };
+
+  useEffect(() => {
+    const studentId = currentStudent?.student_id || currentStudent?.id;
+    const dob = currentStudent?.dob;
+
+    if (classId && studentId && dob) {
+      const age = calculateAge(dob);
+      const isUnder14 = age < 14;
+
+      if (isUnder14) {
+        dispatch(fetchStudentBlockGameSkill({ 
+            classId: classId.toString(), 
+            studentId: studentId.toString() 
+        }));
+      } else {
+        dispatch(fetchStudentLineCodingSkills({ 
+            classId: classId.toString(), 
+            studentId: studentId.toString() 
+        }));
+      }
+    }
+  }, [classId, currentStudent?.student_id, currentStudent?.dob, dispatch]);
 
   const hasSkills = skills && skills.length > 0;
+
+  // Normalize filtering for both Block and Line items
   const standardsWithProgress = allProgressItems.filter(item => 
-    item.standard_code !== "default_standard"
+    item.standard_code !== "default_standard" && (item.standard_name || item.name)
   );
 
-  // Get proficiency color function
   const getProficiencyColor = (proficiency: string) => {
     switch (proficiency) {
-      case "No Evidence":
-        return "bg-gray-100 text-gray-800";
-      case "Beginning":
-        return "bg-yellow-100 text-yellow-800";
-      case "Developing":
-        return "bg-blue-100 text-blue-800";
-      case "Proficient":
-        return "bg-green-100 text-green-800";
-      case "Exceeds Expectations":
-        return "bg-purple-100 text-purple-800";
-      default:
-        return "bg-gray-100 text-gray-800";
+      case "No Evidence": return "bg-gray-100 text-gray-800";
+      case "Beginning": return "bg-yellow-100 text-yellow-800";
+      case "Developing": return "bg-blue-100 text-blue-800";
+      case "Proficient": return "bg-green-100 text-green-800";
+      case "Exceeds Expectations": return "bg-purple-100 text-purple-800";
+      default: return "bg-gray-100 text-gray-800";
     }
   };
 
@@ -85,7 +104,8 @@ const TeacherStudentSkills = ({ size, allProgressItems }: ISkillProps) => {
                       className="mr-2 mt-0.5 flex-shrink-0 text-[1.2rem] font-bold"
                     />
                     <p className="inline-block capitalize text-sm">
-                      {skill.title}: {skill.level}
+                      {/* Fallback for Line Coding which might use 'name' or 'title' */}
+                      {skill.title || skill.name}: {skill.level || "Mastered"}
                     </p>
                   </div>
                 ))}
@@ -107,11 +127,12 @@ const TeacherStudentSkills = ({ size, allProgressItems }: ISkillProps) => {
               {standardsWithProgress.map((standard, index) => (
                 <div key={index} className="flex items-center justify-between p-2 m-1 border rounded-lg">
                   <div className="flex-1">
-                    <p className="text-xs text-gray-500">{standard.standard_name}</p>
+                    {/* Line coding uses 'name', Block coding uses 'standard_name' */}
+                    <p className="text-xs text-gray-500">{standard.standard_name || standard.name}</p>
                   </div>
                   <div className="flex gap-2">
                     <>
-                    {standard.progress !== null && (
+                    {standard.progress !== null && standard.progress !== undefined && (
                       <p className="text-xs text-gray-500 mt-1">
                         {t("percentComplete", { pct: Math.round(standard.progress * 100) })}
                       </p>
@@ -121,7 +142,8 @@ const TeacherStudentSkills = ({ size, allProgressItems }: ISkillProps) => {
                       {t(PROFICIENCY_LABEL_KEYS[standard.proficiency] ?? standard.proficiency)}
                     </span>
                   </div>
-                </div>
+
+                  </div>
               ))}
             </div>
           </div>
