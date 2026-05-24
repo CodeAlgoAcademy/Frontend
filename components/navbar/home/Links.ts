@@ -17,6 +17,8 @@ export const links: NavbarLink[] = [
          { name: "Contact Us", link: "/contact" },
       ],
    },
+      { name: "Case Studies", 
+      route: "/case-studies" },
 
    { name: "Case Studies", 
       route: "/case-studies" },
