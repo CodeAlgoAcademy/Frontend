@@ -35,12 +35,6 @@ const teacherStories = [
     achievement: "CodeAlgo provides opportunities, mentorship, life skills, and positive alternatives for young people.",
     videoId: "FeqPkL8WKU8"
     },
-     {
-      name: "Mr. Foster",
-      role: "Executive Director",
-      achievement: "More Than Coding: The Math Transformation We Didn’t Expect",
-      videoId: "urRhcvGxbFU"
-    },
 
   ];
 

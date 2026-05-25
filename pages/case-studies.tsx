@@ -257,6 +257,27 @@ const CaseStudies = () => (
           <p className="text-xs text-gray-400 mt-4">Source: Partner School iReady Assessment Report, 2024–2026</p>
         </div>
 
+        <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
+          <div className="mb-4">
+            <span className="text-xs font-bold px-3 py-1 rounded-full bg-amber-200 text-amber-900">
+               More Than Coding
+            </span>
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-1">
+          The Math Transformation We Didn't Expect
+          </h2>
+          <p className="text-sm text-gray-400 font-medium mb-4">Mr. Foster — Executive Director</p>
+          <div className="relative w-full rounded-xl overflow-hidden" style={{ paddingBottom: "56.25%" }}>
+            <iframe
+              className="absolute top-0 left-0 w-full h-full"
+              src="https://www.youtube.com/embed/urRhcvGxbFU"
+              title="More Than Coding: The Math Transformation We Didn't Expect"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+        </div>
+
         {/* YouTube embed */}
         <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
           <div className="mb-6">
