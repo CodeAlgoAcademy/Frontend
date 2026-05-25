@@ -20,9 +20,6 @@ export const links: NavbarLink[] = [
       { name: "Case Studies", 
       route: "/case-studies" },
 
-   { name: "Case Studies", 
-      route: "/case-studies" },
-
    {
       name: "Parents",
       subMenu: true,

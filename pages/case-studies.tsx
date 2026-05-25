@@ -153,6 +153,18 @@ const CaseStudies = () => (
           Here is CodeAlgo's role in making that happen — for Black, Latino, and low-income
           students through math, AI literacy, and workforce development.
         </p>
+        <div className="mt-10 mx-auto max-w-4xl grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-6">
+          {[
+            { value: "3%", label: "Key pillars addressed" },
+            { value: "Math & College", label: "Primary barrier removed" },
+            { value: "Internships", label: "Direct workforce pathway" },
+          ].map(({ value, label }) => (
+            <div key={label} className="text-center">
+              <p className="text-3xl font-black text-amber-400">{value}</p>
+              <p className="text-xs text-gray-300 mt-1">{label}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* Stats bar */}
