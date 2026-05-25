@@ -4,7 +4,7 @@ import Marquee from "react-marquee-slider";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 
-const images = ["subset1.webp", "subset9.jpg", "subset2.jpg", "subset13.jpg", "subset3.jpg", "subset12.jpg", "subset11.jpg", "subset4.JPG",  "subset10.jpg", "subset7.jpg", "subset8.jpg"];
+const images = ["subset1.webp", "subset9.jpg", "subset6.png", "subset2.jpg", "subset13.jpg", "subset3.jpg", "subset16.png", "subset12.jpg", "subset5.png", "subset11.jpg", "subset4.JPG", "subset14.png",  "subset10.jpg", "subset7.jpg", "subset15.png", "subset8.jpg","subset17.png",];
 
 const LetsLearnTogether = () => {
    const isMobile = useMediaQuery("(max-width: 768px)");

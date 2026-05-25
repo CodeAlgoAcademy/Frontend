@@ -28,7 +28,20 @@ const teacherStories = [
       role: "Executive Director",
       achievement: "Entire school K-8 participating and building projects",
       videoId: "0MbxPAUDvww"
-    }
+    },
+   {
+    name: "Mrs. Ragsdale",
+    role: "2nd Grade Teacher",
+    achievement: "CodeAlgo provides opportunities, mentorship, life skills, and positive alternatives for young people.",
+    videoId: "FeqPkL8WKU8"
+    },
+     {
+      name: "Mr. Foster",
+      role: "Executive Director",
+      achievement: "More Than Coding: The Math Transformation We Didn’t Expect",
+      videoId: "urRhcvGxbFU"
+    },
+
   ];
 
   return (
@@ -44,7 +57,7 @@ const teacherStories = [
         </div>
         
        <div className="mb-10">
-  <div className="grid gap-8 md:grid-cols-2">
+  <div className="grid gap-8 md:grid-cols-2 ">
     {teacherStories.map((story, idx) => (
       <div key={idx} className="bg-gray-50 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow font-thabit">
         <div className="aspect-video w-full">

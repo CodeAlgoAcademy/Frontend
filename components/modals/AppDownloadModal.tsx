@@ -11,7 +11,7 @@ interface AppDownloadModalProps {
 const AppDownloadModal: React.FC<AppDownloadModalProps> = ({ isOpen, onClose }) => {
   const appStoreLinks = {
     apple: "https://apps.apple.com/us/app/codealgo/id6753643848",
-    google: "https://play.google.com/store/apps/details?id=com.your.app"
+    google: "https://play.google.com/store/apps/details?id=com.DevAlgo.codealgoacademy"
   };
 
   return (
@@ -68,7 +68,7 @@ const AppDownloadModal: React.FC<AppDownloadModalProps> = ({ isOpen, onClose }) 
                   </div>
                 </a>
 
-                <div
+                {/* <div
                   className="flex cursor-not-allowed items-center justify-center gap-3 rounded-xl bg-gray-600/40 px-6 py-4 text-white opacity-60"
                   title="Coming soon"
                 >
@@ -77,13 +77,13 @@ const AppDownloadModal: React.FC<AppDownloadModalProps> = ({ isOpen, onClose }) 
                     <div className="text-xs">Coming soon on</div>
                     <div className="text-lg font-bold">Google Play</div>
                   </div>
-                </div>
+                </div> */}
 
-                {/* <a
+                <a
                   href={appStoreLinks.google}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-blue-500 to-green-500 px-6 py-4 text-white transition-all hover:scale-[1.02] hover:from-blue-600 hover:to-green-600 active:scale-[0.98]"
+                  className="flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-blue-500 to-red-500 px-6 py-4 text-white transition-all hover:scale-[1.02] hover:from-blue-600 hover:to-red-600 active:scale-[0.98]"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <FaGooglePlay size={24} />
@@ -91,7 +91,7 @@ const AppDownloadModal: React.FC<AppDownloadModalProps> = ({ isOpen, onClose }) 
                     <div className="text-xs">Get it on</div>
                     <div className="text-lg font-bold">Google Play</div>
                   </div>
-                </a> */}
+                </a>
               </div>
             </div>
           </motion.div>
