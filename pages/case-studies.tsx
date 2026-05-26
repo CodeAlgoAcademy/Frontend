@@ -197,7 +197,7 @@ const CaseStudies = () => (
 
         {/* iReady Growth Data */}
         <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
-          <div className="mb-6">
+          <div className="mb-3">
             <span className="text-xs font-bold px-3 py-1 rounded-full bg-blue-200 text-blue-900">
               Partner School Data
             </span>
@@ -258,7 +258,7 @@ const CaseStudies = () => (
         </div>
 
         <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
-          <div className="mb-4">
+          <div className="mb-3">
             <span className="text-xs font-bold px-3 py-1 rounded-full bg-amber-200 text-amber-900">
                More Than Coding
             </span>
@@ -266,7 +266,6 @@ const CaseStudies = () => (
           <h2 className="text-2xl font-bold text-gray-900 mb-1">
           The Math Transformation We Didn't Expect
           </h2>
-          <p className="text-sm text-gray-400 font-medium mb-4">Mr. Foster — Executive Director</p>
           <div className="relative w-full rounded-xl overflow-hidden" style={{ paddingBottom: "56.25%" }}>
             <iframe
               className="absolute top-0 left-0 w-full h-full"
@@ -280,7 +279,7 @@ const CaseStudies = () => (
 
         {/* YouTube embed */}
         <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
-          <div className="mb-6">
+          <div className="mb-3">
             <span className="text-xs font-bold px-3 py-1 rounded-full bg-emerald-200 text-emerald-900">
               Real-World Learning
             </span>
