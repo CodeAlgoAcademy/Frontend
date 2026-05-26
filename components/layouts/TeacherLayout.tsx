@@ -17,6 +17,14 @@ import { FiActivity } from "react-icons/fi";
 import PrintLoginsButton from "../UI/printlogins";
 import GeneratingModal from "../Teachers/students/generatingModal";
 import SuccessModal from "../modals/SuccessModal";
+import { PiStudentDuotone } from "react-icons/pi";
+import { TbLivePhoto } from "react-icons/tb";
+import { SlGameController } from "react-icons/sl";
+import { SlSettings } from "react-icons/sl";
+import { MdOutlineReportGmailerrorred } from "react-icons/md";
+import { MdOutlineAssignment } from "react-icons/md";
+
+
 
 interface Props {
    children?: ReactNode;
@@ -24,57 +32,47 @@ interface Props {
 }
 
 const links = [
-   // {
-   //    name: "Classes",
-   //    icon: <MdClass />,
-   //    url: "/teachers/addClass",
-   // },
    {
-      name: "dashboard",
+      name: "Dashboard",
       icon: <TbLayoutDashboard />,
       url: "/teachers",
    },
-   // {
-   //    name: "Activity",
-   //    icon: <FiActivity />,
-   //    url: "/teachers/activities",
-   // },
    {
-      name: "Lesson plan",
-      icon: <TbClipboardText />,
-      url: "/teachers/curriculum",
+      name: "Classroom",
+      icon: "🎓", 
+      subLinks: [
+         { name: "Lesson Plan", url: "/teachers/curriculum" },
+         { name: "Live Class", url: "/teachers/overview" },
+         { name: "Assignments", url: "/teachers/assignments" },
+      ],
    },
    {
-      name: "students",
-      icon: <FaUserGraduate />,
+      name: "Reports & Settings",
+      icon: "📊",
+      subLinks: [
+         { name: "Class Report", url: "/teachers/report" },
+         { name: "Class Settings", url: "/teachers/classbulksettings" },
+      ],
+   },
+   {
+      name: "Students",
+      icon: "👥",
       url: "/teachers/students",
    },
    {
-      name: "Live Class",
-      icon: <FaUserGraduate />,
-      url: "/teachers/overview",
-   },
-   {
-      name: "Class Settings",
-      icon: <FaUserGraduate />,
-      url: "/teachers/classbulksettings",
-   },
-   {
-      name: "organizations",
-      icon: <SlOrganization />,
+      name: "Organization",
+      icon: "🏢",
       url: "/teachers/organization",
    },
-   // {
-   //    name: "calendar",
-   //    icon: <HiOutlineCalendar />,
-   //    url: "/teachers/calendar",
-   // },
-   // {
-   //    name: "messages",
-   //    icon: <BiMessageRounded />,
-   //    url: "/teachers/messages",
-   // },
+   {
+      name: "Help",
+      icon: "❓",
+      url: "/contact",
+   },
 ];
+
+
+
 
 const TeacherLayout = ({ children, className }: Props) => {
    const [sidebarOpened, setSidebarOpened] = useState<boolean>(false);
@@ -96,11 +94,13 @@ const TeacherLayout = ({ children, className }: Props) => {
    return (
       <section className="h-screen w-full bg-white md:flex md:px-4">
          <TeacherSidebar links={links} isOpen={sidebarOpened} close={() => setSidebarOpened(false)} />
-         <section className={`
+         <section
+            className={`
        flex h-screen max-h-screen w-full flex-col items-center overflow-hidden
        transition-all duration-500
        w820:ml-[300px]
-     `}>
+     `}
+         >
             <nav className="flex w-full items-center justify-between gap-2 py-2 px-4 md:py-6 md:px-0">
                <div className="flex items-center gap-2">
                   <div className="md:hidden">
@@ -122,7 +122,7 @@ const TeacherLayout = ({ children, className }: Props) => {
                </div>
             </nav>
 
-            <div className={`w-full flex-1 bg-[#ecedf3] p-[1rem] md:h-full overflow-y-scroll md:rounded-[30px] md:p-[2rem] ${className}`}>
+            <div className={`w-full flex-1 overflow-y-scroll bg-[#ecedf3] p-[1rem] md:h-full md:rounded-[30px] md:p-[2rem] ${className}`}>
                <div className="flex items-center justify-end md:hidden">
                   <ClassSelector />
                </div>

@@ -135,6 +135,24 @@ const deleteChild = async (child_id: string | number) => {
   return response.data;
 };
 
+const getChildCodingAccess = async (student_id: string | number) => {
+   const response = await http.get(`/academics/block_game/coding-access/${student_id}/`, {
+      headers: { Authorization: `Bearer ${getAccessToken()}` },
+   });
+   return response.data;
+};
+
+const updateChildCodingAccess = async (
+   student_id: string | number, 
+   data: { line_coding_locked?: boolean; block_coding_max_level?: string }
+) => {
+   const response = await http.patch(`/academics/block_game/coding-access/${student_id}/`, data, {
+      headers: { Authorization: `Bearer ${getAccessToken()}` },
+   });
+   return response.data;
+};
+
+
 const parentService = {
    addChild,
    addChildFriends,
@@ -150,6 +168,8 @@ const parentService = {
    getChildBlockGameProgress,
    getChildBlockGameSkill,
    deleteChild,
+   getChildCodingAccess,
+   updateChildCodingAccess,
 };
 
 export default parentService;

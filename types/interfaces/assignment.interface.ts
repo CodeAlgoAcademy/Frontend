@@ -32,3 +32,21 @@ export interface AssignmentSkill {
 export interface IAllAssignments {
    assignments: AssignmentDetails[];
 }
+
+
+interface AnswerDetail {
+  id: number;
+  is_correct: boolean;
+  student_answer: { order?: string[] };
+  answered_at: string;
+  question_text: string;
+  question_type: string;
+  standard_code: string;
+  topic_name: string;
+  duration:number
+}
+export interface DetailedAnswersResponse {
+  student_username: string;
+  assignment_title: string;
+  answers: AnswerDetail[];
+}

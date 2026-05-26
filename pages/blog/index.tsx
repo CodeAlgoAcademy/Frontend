@@ -12,10 +12,10 @@ const Press = () => {
          <Navbar />
          <Header
             body=""
-            title={`2024 Startups to Watch: CodeAlgo Academy gamifies coding to build equity into new wave of software engineers`}
-            image="/assets/blog/2024-startups-to-watch.jpg"
-            date="January 2024"
-            detailPage="/blog/2024-startups-to-watch"
+            title={`How Coding Helps Kids with Math and Problem-Solving. Many parents see coding as a technical skill, but it is actually one of the most effective ways to sharpen a child's brain for math and logic.`}
+            image="/assets/blog/codinghelp2.png"
+            date="March 2026"
+            detailPage="/blog/How-coding-helps-kids"
          />
 
          <section className="mx-auto mt-12 mb-12 w-full max-w-[1100px] px-6">

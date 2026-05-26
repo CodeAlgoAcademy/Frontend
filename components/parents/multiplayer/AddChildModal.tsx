@@ -1,5 +1,6 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { MdClose } from "react-icons/md";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { closeAddChildModal } from "store/modalSlice";
 import { addChild, getChildren, resetChild, resetScreenTime, updateChild } from "store/parentChildSlice";
@@ -7,6 +8,7 @@ import { RootState } from "store/store";
 
 const AddChildModal = () => {
    const { fullName, codingExperience, dob, password, username } = useSelector((state: RootState) => state.parentChild);
+   const [showPassword, setShowPassword] = useState<boolean>(false);
 
    const dispatch = useDispatch();
    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -70,15 +72,26 @@ const AddChildModal = () => {
                      <label htmlFor="" className="mb-2 block">
                         Password
                      </label>
-                     <input
-                        type="password"
-                        className={styles.input}
-                        name="password"
-                        placeholder="Enter Child's Password"
-                        value={password}
-                        required
-                        onChange={onChange}
-                     />
+                     <div className="relative flex items-center">
+                        <input
+                           type={showPassword ? "text" : "password"}
+                           className={`${styles.input} pr-10`}
+                           name="password"
+                           placeholder="Enter Child's Password"
+                           value={password}
+                           required
+                           onChange={onChange}
+                        />
+                        <button
+                           type="button"
+                           onClick={() => setShowPassword((prev) => !prev)}
+                           className="absolute right-3 text-gray-500 hover:text-gray-700"
+                           tabIndex={-1}
+                           aria-label={showPassword ? "Hide password" : "Show password"}
+                        >
+                           {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+                        </button>
+                     </div>
                   </div>
 
                   <div>

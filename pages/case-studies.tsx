@@ -50,6 +50,33 @@ const CaseStudyCard = ({
   </div>
 );
 
+const iReadyRows = [
+  {
+    bg: "bg-white",
+    third: { n: 6, pct: "40.0%" },
+    fourth: { n: 10, pct: "62.5%" },
+    fifth: { n: 1, pct: "6.25%" },
+    sixth: { n: 7, pct: "41.2%" },
+    totals: { n: 24, pct: "36.9%" },
+  },
+  {
+    bg: "bg-green-100",
+    third: { n: 10, pct: "66.7%" },
+    fourth: { n: 12, pct: "75.0%" },
+    fifth: { n: 3, pct: "18.75%" },
+    sixth: { n: 11, pct: "64.7%" },
+    totals: { n: 36, pct: "55.4%" },
+  },
+  {
+    bg: "bg-orange-100",
+    third: { n: 15, pct: "100.0%" },
+    fourth: { n: 16, pct: "94.1%" },
+    fifth: { n: 13, pct: "81.25%" },
+    sixth: { n: 16, pct: "94.1%" },
+    totals: { n: 60, pct: "92.3%" },
+  },
+];
+
 const caseStudies: CaseStudyCardProps[] = [
   {
     eyebrow: "Kansas City, 2024–2026",
@@ -114,7 +141,7 @@ const CaseStudies = () => (
       <Navbar />
 
       {/* Hero */}
-            <section className="bg-mainBlack py-14 px-4 sm:px-6 text-center">
+      <section className="bg-mainBlack py-14 px-4 sm:px-6 text-center">
         <p className="text-base font-bold uppercase tracking-widest text-amber-400 mb-3">
           Equitable Economic Mobility for Kansas City
         </p>
@@ -141,7 +168,7 @@ const CaseStudies = () => (
       </section>
 
       {/* Stats bar */}
-      <section className="bg-white border-y border-gray-200 shadow-sm max-w-4xl mx-auto py-16">
+      <section className="bg-white border-y border-gray-200 shadow-sm">
         <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-3">
           <StatCard
             value="+16,000"
@@ -167,6 +194,113 @@ const CaseStudies = () => (
         {caseStudies.map((cs) => (
           <CaseStudyCard key={cs.title} {...cs} />
         ))}
+
+        {/* iReady Growth Data */}
+        <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
+          <div className="mb-3">
+            <span className="text-xs font-bold px-3 py-1 rounded-full bg-blue-200 text-blue-900">
+              Partner School Data
+            </span>
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            Schools Math iReady Growth Data
+          </h2>
+          <p className="text-sm text-gray-500 leading-relaxed mb-8 max-w-2xl">
+            The following data reflects math assessment growth outcomes shared by a partner school,
+            showing how the percentage of students meeting growth benchmarks increases across tiers,
+            reaching over 92% by the highest level across grades 3–6.
+          </p>
+
+          {/* Table — matches exact iReady layout */}
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm border border-gray-300 border-collapse">
+              <thead>
+                <tr className="bg-gray-200 text-gray-800">
+                  <th colSpan={2} className="text-center px-4 py-2 font-bold border border-gray-300">Third</th>
+                  <th colSpan={2} className="text-center px-4 py-2 font-bold border border-gray-300">Fourth</th>
+                  <th colSpan={2} className="text-center px-4 py-2 font-bold border border-gray-300">Fifth</th>
+                  <th colSpan={2} className="text-center px-4 py-2 font-bold border border-gray-300">Sixth</th>
+                  <th colSpan={2} className="text-center px-4 py-2 font-bold border border-gray-300 bg-gray-300">3-6 Totals</th>
+                </tr>
+              </thead>
+              <tbody>
+                {iReadyRows.map((row, i) => (
+                  <tr key={i} className={row.bg}>
+                    <td className="px-3 py-2 text-center border border-gray-300 font-medium">{row.third.n}</td>
+                    <td className="px-3 py-2 text-center border border-gray-300 font-semibold">{row.third.pct}</td>
+                    <td className="px-3 py-2 text-center border border-gray-300 font-medium">{row.fourth.n}</td>
+                    <td className="px-3 py-2 text-center border border-gray-300 font-semibold">{row.fourth.pct}</td>
+                    <td className="px-3 py-2 text-center border border-gray-300 font-medium">{row.fifth.n}</td>
+                    <td className="px-3 py-2 text-center border border-gray-300 font-semibold">{row.fifth.pct}</td>
+                    <td className="px-3 py-2 text-center border border-gray-300 font-medium">{row.sixth.n}</td>
+                    <td className="px-3 py-2 text-center border border-gray-300 font-semibold">{row.sixth.pct}</td>
+                    <td className="px-3 py-2 text-center border border-gray-300 font-medium bg-gray-50">{row.totals.n}</td>
+                    <td className="px-3 py-2 text-center border border-gray-300 font-bold bg-gray-50">{row.totals.pct}</td>
+                  </tr>
+                ))}
+                {/* Totals row */}
+                <tr className="bg-white">
+                  <td className="px-3 py-2 text-center border border-gray-300 font-bold">15</td>
+                  <td className="px-3 py-2 border border-gray-300" />
+                  <td className="px-3 py-2 text-center border border-gray-300 font-bold">17</td>
+                  <td className="px-3 py-2 border border-gray-300" />
+                  <td className="px-3 py-2 text-center border border-gray-300 font-bold">16</td>
+                  <td className="px-3 py-2 border border-gray-300" />
+                  <td className="px-3 py-2 text-center border border-gray-300 font-bold">17</td>
+                  <td className="px-3 py-2 border border-gray-300" />
+                  <td className="px-3 py-2 text-center border border-gray-300 font-bold bg-gray-50">65</td>
+                  <td className="px-3 py-2 border border-gray-300 bg-gray-50" />
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-xs text-gray-400 mt-4">Source: Partner School iReady Assessment Report, 2024–2026</p>
+        </div>
+
+        <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
+          <div className="mb-3">
+            <span className="text-xs font-bold px-3 py-1 rounded-full bg-amber-200 text-amber-900">
+               More Than Coding
+            </span>
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-1">
+          The Math Transformation We Didn't Expect
+          </h2>
+          <div className="relative w-full rounded-xl overflow-hidden" style={{ paddingBottom: "56.25%" }}>
+            <iframe
+              className="absolute top-0 left-0 w-full h-full"
+              src="https://www.youtube.com/embed/urRhcvGxbFU"
+              title="More Than Coding: The Math Transformation We Didn't Expect"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+        </div>
+
+        {/* YouTube embed */}
+        <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
+          <div className="mb-3">
+            <span className="text-xs font-bold px-3 py-1 rounded-full bg-emerald-200 text-emerald-900">
+              Real-World Learning
+            </span>
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            Inside a Client Project Simulation
+          </h2>
+          <p className="text-sm text-gray-500 leading-relaxed mb-6">
+            Watch how CodeAlgo students tackle real client briefs — building technical skills,
+            professional communication, and problem-solving in a simulated workplace environment.
+          </p>
+          <div className="relative w-full rounded-xl overflow-hidden" style={{ paddingBottom: "56.25%" }}>
+            <iframe
+              className="absolute top-0 left-0 w-full h-full"
+              src="https://www.youtube.com/embed/sETsh94bcfk"
+              title="Real-World Learning: Inside a Client Project Simulation"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+        </div>
       </section>
 
       {/* Economic case */}
