@@ -56,10 +56,25 @@ export default function SkillPickerModal({ selectedTopics, onConfirm, onClose, g
          .finally(() => setLoading(false));
    }, [grade, gameType, subject]);
 
-   const filtered = standards.filter((s) => {
+const filtered = standards
+   .filter((s) => {
       if (!search) return true;
       const q = search.toLowerCase();
-      return s.code.toLowerCase().includes(q) || s.name.toLowerCase().includes(q) || s.topics.some((t) => t.name.toLowerCase().includes(q));
+      return (
+         s.code.toLowerCase().includes(q) || 
+         s.name.toLowerCase().includes(q) || 
+         s.topics.some((t) => t.name.toLowerCase().includes(q))
+      );
+   })
+   .sort((a, b) => {
+      const aHasSkills = a.topic_count > 0;
+      const bHasSkills = b.topic_count > 0;
+
+      if (aHasSkills && !bHasSkills) return -1;
+      
+      if (!aHasSkills && bHasSkills) return 1;
+
+      return a.code.localeCompare(b.code);
    });
 
    const toggleExpand = (id: number) =>
