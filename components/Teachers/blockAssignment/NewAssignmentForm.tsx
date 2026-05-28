@@ -86,24 +86,35 @@ const handleGameTypeChange = (type: "block" | "line") => {
          scheduled_at: startNow ? null : scheduledAt || null,
          student_ids: selectedStudents.map((s) => s.id),
       };
-
-      try {
-         if (editData) {
-            await assignmentServices.updateAssignment(classId, editData.id, payload);
-         } else {
-            await assignmentServices.createAssignment(classId, payload);
-         }
-         onSuccess();
-      } catch (err: any) {
-         const serverError = err?.response?.data;
-         if (serverError?.details && typeof serverError.details[0] === "object") {
-            setError(serverError.details[0].message || "A server error occurred.");
-         } else {
-            setError(serverError?.detail || "Failed to save assignment. Please try again.");
-         }
-      } finally {
-         setSubmitting(false);
+ try {
+      if (editData) {
+         await assignmentServices.updateAssignment(classId, editData.id, payload);
+      } else {
+         await assignmentServices.createAssignment(classId, payload);
       }
+      onSuccess();
+   } catch (err: any) {
+      const serverError = err?.response?.data;
+
+      if (serverError?.details && Array.isArray(serverError.details) && serverError.details.length > 0) {
+         const firstErrorObj = serverError.details[0];
+         
+         const firstKey = Object.keys(firstErrorObj)[0];
+         const firstMessage = firstErrorObj[firstKey];
+
+         if (Array.isArray(firstMessage)) {
+            setError(firstMessage[0]);
+         } else {
+            setError(firstMessage || "A validation error occurred.");
+         }
+      } else if (serverError?.detail) {
+         setError(serverError.detail);
+      } else {
+         setError("Failed to save assignment. Please try again.");
+      }
+   } finally {
+      setSubmitting(false);
+   }
    };
 
    return (
