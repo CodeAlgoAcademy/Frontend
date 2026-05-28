@@ -57,11 +57,42 @@ const getStudentLinecodingSkillsByTeacher = async (studentId: string, classId: s
 };
 
 
+const getStudentLineProgressNewByTeacher = async (studentId: string, classId: string) => {
+    try {
+      const response = await http.get(`/academics/class/${classId}/student/${studentId}/line-standards/`, {
+         headers: { Authorization: `Bearer ${getAccessToken()}` },
+      });
+      // Always return an array or object, never undefined
+      return response?.data || []; 
+   } catch (error) {
+      console.error(error);
+      return []; // Return empty array on error
+   }
+};
+
+const getStudentLinecodingSkillsNewByTeacher = async (studentId: string, classId: string) => {
+   try {
+      const response = await http.get(
+         `/academics/class/${classId}/student/${studentId}/line-skills/`, 
+         {
+            headers: { Authorization: `Bearer ${getAccessToken()}` },
+         }
+      );
+      return response.data; 
+   } catch (error) {
+      console.error("Error fetching Python Skills:", error);
+   }
+};
+
+
+
 const teachersClassBaseServices = {
   bulkUpdateClassLevelThreshold,
   bulkUpdateClassScreenTime,
   getStudentLineProgressByTeacher,
   getStudentLinecodingSkillsByTeacher,
+  getStudentLinecodingSkillsNewByTeacher,
+  getStudentLineProgressNewByTeacher
 };
 
 export default teachersClassBaseServices;

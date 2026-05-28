@@ -212,27 +212,27 @@ const TeacherStudentSkills = ({ size, allProgressItems }: ISkillProps) => {
           <div className="flex-1 overflow-y-auto">
             <h4 className="mb-3 text-sm font-semibold text-gray-700">Mastered Skills</h4>
             {hasSkills ? (
-              <div className="grid grid-cols-2 gap-3">
-                {skills.map((skill, index) => (
-                  <div key={index} className="flex items-start">
-                    <BiCheck
-                      color="rgba(251, 87, 176, 1)"
-                      className="mr-2 mt-0.5 flex-shrink-0 text-[1.2rem] font-bold"
-                    />
-                    <p className="inline-block capitalize text-sm">
-                      {/* Fallback for Line Coding which might use 'name' or 'title' */}
-                      {skill.title || skill.name}: {skill.level || "Mastered"}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="flex h-20 items-center justify-center rounded-lg border-2 border-dashed border-gray-200">
-                <p className="text-center text-gray-500 text-sm">
-                  {currentStudent?.firstName} has no skills awarded yet.
-                </p>
-              </div>
-            )}
+  <div className="grid grid-cols-2 gap-3">
+    {skills.map((skill, index) => (
+      <div key={index} className="flex items-start bg-blue-50/50 p-2 rounded-lg">
+        <BiCheck
+          color="#2073fa" // Blue check for Python
+          className="mr-2 mt-0.5 flex-shrink-0 text-[1.2rem] font-bold"
+        />
+        <div>
+          <p className="text-xs font-bold text-gray-400 uppercase">Proficiency</p>
+          <p className="capitalize text-sm font-semibold">
+            {skill.title}: {skill.level} XP
+          </p>
+        </div>
+      </div>
+    ))}
+  </div>
+) : (
+  <div className="text-center text-gray-500 text-sm">
+    No Python skills acquired yet.
+  </div>
+)}
           </div>
 
           {/* Proficiency Section - Bottom */}

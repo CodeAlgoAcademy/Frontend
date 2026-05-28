@@ -59,23 +59,20 @@ const TeacherStudentProgress = ({
               <h3 className="font-semibold">Comprehension Tracking</h3>
               <div className="mt-3 flex flex-col gap-5">
                 {hasProgressData ? (
-                  progressItems.map((lesson, index) => (
-                    <ProgressBar
-                    key={`inprogress-${index}`}
-                    color="red"
-                    percentage={lesson.progress}
-                    // Fallback: Line coding might use standard_name or name
-                    title={lesson.standard_code || lesson.name || lesson.title || "Lesson"} 
-                    level={lesson.unit_level || lesson.level}
-                    titleSize="base"
-                    containerSize={size} 
-                  />
-                  ))
-                ) : (
-                  <p className="text-sm text-gray-500">
-                    No in-progress items to show.
-                  </p>
-                )}
+  progressItems.map((lesson, index) => (
+    <ProgressBar
+      key={`inprogress-${index}`}
+      color={isBlockProgress ? "red" : "green"}
+      percentage={lesson.progress}
+      title={lesson.standard_name || lesson.title || lesson.standard_code} 
+      level={lesson.unit_level || `Grade ${lesson.grade}`}
+      titleSize="base"
+      containerSize={size} 
+    />
+  ))
+) : (
+  <p className="text-sm text-gray-500">No in-progress items to show.</p>
+)}
               </div>
 
               {hasCompletedData && (
