@@ -25,7 +25,7 @@ export interface IChildProgress {
 }
 
 export interface IChildTopics {
-   current: IChildProgress;
+   current: IChildProgress | null; 
    topic: IChildProgress[];
 }
 

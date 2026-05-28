@@ -1,6 +1,6 @@
 import { LevelThresholdInputProps } from "@/components/parents/UI/levelthreshold";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { screentimeTypes } from "types/interfaces/parent.interface";
+import { IChildProgress, IChildTopics, screentimeTypes } from "types/interfaces/parent.interface";
 import { BaseStudent, ITeacherStudentsState } from "types/interfaces/teacherstudent.interface";
 import { getStudents } from "./studentSlice";
 import teachersStudentServices from "services/teachersStudentservices";
@@ -300,6 +300,28 @@ export const fetchStudentLineCodingSkills = createAsyncThunk(
    }
 );
 
+export const fetchStudentLineProgressNew = createAsyncThunk(
+   "teacher/student/line-progresss",
+   async ({ studentId, classId }: { studentId: string; classId: string }, thunkAPI) => {
+      try {
+         return await teachersClassBaseServices.getStudentLineProgressByTeacher(studentId, classId);
+      } catch (error: any) {
+         return thunkAPI.rejectWithValue(errorResolver(error));
+      }
+   }
+);
+
+export const fetchStudentLineCodingSkillsNew = createAsyncThunk(
+   "teacher/student/line-skillss",
+   async ({ studentId, classId }: { studentId: string; classId: string }, thunkAPI) => {
+      try {
+         return await teachersClassBaseServices.getStudentLinecodingSkillsByTeacher(studentId, classId);
+      } catch (error: any) {
+         return thunkAPI.rejectWithValue(errorResolver(error));
+      }
+   }
+);
+
 
 
 export const teacherStudentSlice = createSlice({
@@ -412,7 +434,42 @@ export const teacherStudentSlice = createSlice({
       state.currentStudent.skills = action.payload; // Assuming payload is the array of topics/skills
    }
    // state.loading = false;
-});
+})
+
+.addCase(fetchStudentLineProgressNew.pending, (state) => {
+   state.isLoading = true;
+})
+.addCase(fetchStudentLineProgressNew.fulfilled, (state, action) => {
+    state.isLoading = false;
+   
+   if (state.currentStudent && action.payload) {
+      const data = action.payload;
+
+      if (Array.isArray(data)) {
+         state.currentStudent.progress = {
+            current: null,
+            topic: data as IChildProgress[] 
+         };
+      } else {
+         const topicsObj = data as IChildTopics;
+         
+         state.currentStudent.progress = {
+            current: topicsObj.current || null,
+            topic: topicsObj.topic || []
+         };
+      }
+   }
+})
+.addCase(fetchStudentLineCodingSkillsNew.fulfilled, (state, action: PayloadAction<any[]>) => {
+   if (state.currentStudent) {
+      state.currentStudent.skills = action.payload.map((skill, index) => ({
+         id: index,
+         title: skill.name,
+         level: skill.value,
+      }));
+   }
+   state.isLoading = false;
+})
 
    },
 });
