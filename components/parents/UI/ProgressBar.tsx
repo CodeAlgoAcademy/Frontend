@@ -6,7 +6,7 @@ interface Props {
    percentage: number;
    color: "red" | "green";
    containerSize: "large" | "base";
-   level?: string;
+   level: string | number;
 }
 
 const ProgressBar = ({ title, titleSize, percentage, color, containerSize, level }: Props) => {

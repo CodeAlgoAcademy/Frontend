@@ -20,10 +20,11 @@ export interface IChildProgress {
    common_core_math_desc?:string;
    unit_level?:string;
    grade?:string;
+   name?:string;
 }
 
 export interface IChildTopics {
-   current: IChildProgress;
+   current: IChildProgress | null; 
    topic: IChildProgress[];
 }
 

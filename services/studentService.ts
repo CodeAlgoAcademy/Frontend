@@ -40,20 +40,6 @@ const getSingleStudent = async (classId: number, studentId: number) => {
    return response.data?.student;
 };
 
-const getStudentProgressByTeacher = async (studentId: string, classId:string) => {
-   try {
-      const response = await http.get<IChildTopics>(`/academics/class/${classId}/student/${studentId}/progress`, {
-         headers: {
-            Authorization: `Bearer ${getAccessToken()}`,
-         },
-      });
-
-      console.log(response?.data);
-      return response?.data;
-   } catch (error) {
-      // throw error;
-   }
-};
 const getStudentBlockProgressByTeacher = async (studentId: string) => {
    try {
       const response = await http.get<IChildTopics>(`/academics/class/student/${studentId}/progress`, {
@@ -73,8 +59,8 @@ const studentService = {
    addStudent,
    getStudents,
    getSingleStudent,
-   getStudentProgressByTeacher,
    getClassProgressSummary,
+
 };
 
 export default studentService;

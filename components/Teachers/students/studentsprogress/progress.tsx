@@ -9,6 +9,7 @@ interface ILevelProps {
   progressItems?: IChildProgress[];
   completedItems?: IChildProgress[];
   isLoading?: boolean;
+  isBlockProgress?: boolean
 }
 
 const TeacherStudentProgress = ({
@@ -17,6 +18,7 @@ const TeacherStudentProgress = ({
   progressItems,
   isLoading,
   completedItems,
+  isBlockProgress,
 }: ILevelProps) => {
   const hasProgressData = progressItems && progressItems.length > 0;
   const hasCompletedData = completedItems && completedItems.length > 0;
@@ -57,23 +59,20 @@ const TeacherStudentProgress = ({
               <h3 className="font-semibold">Comprehension Tracking</h3>
               <div className="mt-3 flex flex-col gap-5">
                 {hasProgressData ? (
-                  progressItems.map((lesson, index) => (
-                    <ProgressBar
-                      key={`inprogress-${index}`}
-                      color="red"
-                      percentage={lesson.progress}
-                      title={lesson.standard_code}
-                      level={lesson.unit_level}
-                      // grade={lesson.grade}
-                      titleSize="base"
-                      containerSize={size} 
-                    />
-                  ))
-                ) : (
-                  <p className="text-sm text-gray-500">
-                    No in-progress items to show.
-                  </p>
-                )}
+  progressItems.map((lesson, index) => (
+    <ProgressBar
+      key={`inprogress-${index}`}
+      color={isBlockProgress ? "red" : "green"}
+      percentage={lesson.progress}
+      title={lesson.standard_name || lesson.title || lesson.standard_code} 
+      level={lesson.unit_level || `Grade ${lesson.grade}`}
+      titleSize="base"
+      containerSize={size} 
+    />
+  ))
+) : (
+  <p className="text-sm text-gray-500">No in-progress items to show.</p>
+)}
               </div>
 
               {hasCompletedData && (
@@ -88,7 +87,7 @@ const TeacherStudentProgress = ({
                         title={lesson.standard_code}
                         titleSize="base"
                         containerSize={size} 
-                        level={lesson.unit_level}
+                    level={lesson.unit_level || lesson.level}
                         // grade={lesson.grade}
                   />
                     ))}
