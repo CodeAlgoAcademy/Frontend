@@ -18,13 +18,15 @@ export default function ParentSidebar({ onClose, isOpen }: Props) {
     const iconSize = 20;
    return (
       <aside
-         className={`${
-            isOpen ? "translate-x-0" : "translate-x-[100%]"}
-         fixed top-0 right-0 z-[5]  h-full max-h-full w-full 
-         overflow-y-scroll bg-white p-2 transition-all duration-500 md:left-0 
-         md:!w-[300px] md:!translate-x-0 md:py-9 max-w820:hidden
-      `}
-      >
+  className={`
+    ${isOpen ? "translate-x-0" : "-translate-x-full"}
+    fixed top-0 left-0 z-[50]
+    h-full w-full bg-white
+    transition-transform duration-300
+    md:w-[300px]
+    md:translate-x-0
+  `}
+>
          <header className="flex items-center justify-between gap-2 md:justify-center">
             <Image src={"/assets/CodeAlgo_Logo.png"} className="h-9 md:cursor-pointer" alt="logo" loading="lazy" width={90} height={45} />
             <MdClose size={26} cursor={"pointer"} onClick={onClose} className="md:hidden" />

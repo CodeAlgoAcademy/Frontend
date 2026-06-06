@@ -34,7 +34,7 @@ const StudentProfile = () => {
 
    return (
       <ContentBox padding="small" size="large" title="Child's Profile" style={{ minWidth: "100%", maxWidth: "100%", marginBottom: "1.5rem" }}>
-         <div className="flex h-[240px] w-full flex-col gap-[2rem] p-8 lg:flex-row lg:gap-[3rem] relative">
+         <div className="flex w-full flex-col gap-[2rem] p-8 lg:flex-row lg:gap-[3rem] relative">
             <div className="h-full w-full min-w-fit max-w-fit">
                <img
                   src="/assets/no user.png"
