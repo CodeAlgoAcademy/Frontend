@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { AppDispatch, RootState } from "store/store";
 import { BiCheck } from "react-icons/bi";
-import { fetchStudentBlockGameSkill, fetchStudentLineCodingSkills } from "store/teacherStudentSlice"; // Ensure both are imported
+import { fetchStudentBlockGameSkill, fetchStudentLineCodingSkillsNew } from "store/teacherStudentSlice";
 import ContentBox from "@/components/parents/UI/ContentBox";
 
 interface ISkillProps {
@@ -44,27 +44,27 @@ const TeacherStudentSkills = ({ size, allProgressItems }: ISkillProps) => {
     return age;
   };
 
-  useEffect(() => {
-    const studentId = currentStudent?.student_id || currentStudent?.id;
-    const dob = currentStudent?.dob;
+useEffect(() => {
+  const studentId = currentStudent?.student_id || currentStudent?.id;
+  const dob = currentStudent?.dob;
 
-    if (classId && studentId && dob) {
-      const age = calculateAge(dob);
-      const isUnder14 = age < 14;
+  if (classId && studentId && dob) {
+    const age = calculateAge(dob);
+    const isUnder14 = age < 14;
 
-      if (isUnder14) {
-        dispatch(fetchStudentBlockGameSkill({ 
-            classId: classId.toString(), 
-            studentId: studentId.toString() 
-        }));
-      } else {
-        dispatch(fetchStudentLineCodingSkills({ 
-            classId: classId.toString(), 
-            studentId: studentId.toString() 
-        }));
-      }
+    if (isUnder14) {
+      dispatch(fetchStudentBlockGameSkill({ 
+        classId: classId.toString(), 
+        studentId: studentId.toString() 
+      }));
+    } else {
+      dispatch(fetchStudentLineCodingSkillsNew({ 
+        classId: classId.toString(), 
+        studentId: studentId.toString() 
+      }));
     }
-  }, [classId, currentStudent?.student_id, currentStudent?.dob, dispatch]);
+  }
+}, [classId, currentStudent?.student_id, currentStudent?.id, currentStudent?.dob, dispatch]);
 
   const hasSkills = skills && skills.length > 0;
 
@@ -104,9 +104,8 @@ const TeacherStudentSkills = ({ size, allProgressItems }: ISkillProps) => {
           className="mr-2 mt-0.5 flex-shrink-0 text-[1.2rem] font-bold"
         />
         <div>
-          <p className="text-xs font-bold text-gray-400 uppercase">Proficiency</p>
           <p className="capitalize text-sm font-semibold">
-            {skill.title}: {skill.level} XP
+            {skill.title}: {skill.level}
           </p>
         </div>
       </div>

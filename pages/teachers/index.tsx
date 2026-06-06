@@ -8,7 +8,7 @@ import { getStudents } from "store/studentSlice";
 import StudentBarChart from "@/components/Teachers/students/screentime/BarChart";
 import { useRouter } from "next/router";
 import StudentLevelChart from "@/components/Teachers/students/level-threshold/BarChart";
-import { fetchStudentBlockGameProgress, fetchStudentLineProgress } from "store/teacherStudentSlice";
+import { fetchStudentBlockGameProgress, fetchStudentLineProgress, fetchStudentLineProgressNew } from "store/teacherStudentSlice";
 import TeacherStudentSkills from "@/components/Teachers/students/studentsprogress/skills";
 import TeacherStudentCompletedStandard from "@/components/Teachers/students/studentsprogress/standard";
 import TeacherStudentProgress from "@/components/Teachers/students/studentsprogress/progress";
@@ -48,32 +48,7 @@ const Dashboard = () => {
       }
    }, [classId, dispatch]);
 
-   // useEffect(() => {
-   //    const studentId = currentStudent?.student_id || currentStudent?.id;
-   //    const dob = currentStudent?.dob;
 
-   //    if (classId && studentId && dob) {
-   //       setIsLoading(true);
-   //       const age = calculateAge(dob);
-   //       const isUnder14 = age < 14;
-   //       setIsBlockProgress(isUnder14);
-
-   //       const action = isUnder14 
-   //          ? fetchStudentBlockGameProgress({ classId, studentId }) 
-   //          : fetchStudentLineProgress({ classId: classId.toString(), studentId: studentId.toString() });
-   //          dispatch(action)
-   //          .unwrap()
-   //          .then((res: any) => {
-   //             if (isUnder14) {
-   //                setProgressData(Array.isArray(res) ? res : []);
-   //             } else {
-   //                setProgressData(res?.topic || []);
-   //             }
-   //          })
-   //          .catch(err => console.error(err))
-   //          .finally(() => setIsLoading(false));
-   //    }
-   // }, [classId, currentStudent?.student_id, currentStudent?.dob]);
 
 
    // Update the useEffect in teachers/index.tsx
@@ -84,27 +59,45 @@ useEffect(() => {
 
    if (classId && studentId && dob) {
       setIsLoading(true);
-      const age = calculateAge(dob);
-      const isUnder14 = age < 14;
-      setIsBlockProgress(isUnder14);
 
-      const action = isUnder14 
-         ? fetchStudentBlockGameProgress({ classId, studentId }) 
-         : fetchStudentLineProgress({ classId: classId.toString(), studentId: studentId.toString() });
+      const age = calculateAge(dob);
+
+      const is14AndAbove = age >= 14;
+      setIsBlockProgress(!is14AndAbove);
+
+      const action = is14AndAbove
+         ? fetchStudentLineProgressNew({
+              classId: classId.toString(),
+              studentId: studentId.toString(),
+           })
+         : fetchStudentBlockGameProgress({
+              classId,
+              studentId,
+           });
 
       dispatch(action)
          .unwrap()
          .then((res: any) => {
-            // NORMALIZATION:
-            // Block returns an array directly.
-            // Python returns an array of standards.
-            const normalizedData = Array.isArray(res) ? res : res?.topic || [];
+            const normalizedData = Array.isArray(res)
+               ? res
+               : res?.topic || [];
+
             setProgressData(normalizedData);
          })
-         .catch(err => console.error("Progress Fetch Error:", err))
-         .finally(() => setIsLoading(false));
+         .catch((err) => {
+            console.error("Progress Fetch Error:", err);
+         })
+         .finally(() => {
+            setIsLoading(false);
+         });
    }
-}, [classId, currentStudent?.student_id, currentStudent?.dob, dispatch]);
+}, [
+   classId,
+   currentStudent?.student_id,
+   currentStudent?.id,
+   currentStudent?.dob,
+   dispatch,
+]);
 
 
    const allProgressItems = Array.isArray(progressData) ? progressData : [];

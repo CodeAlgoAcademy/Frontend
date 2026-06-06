@@ -56,7 +56,7 @@ const getStudentBlockGameSkill = async (class_id: string | number, student_id:st
    return response.data;
 };
 const getStudentBlockGameStandard = async (class_id: string | number, student_id:string | number) => {
-   const response = await http.get(`/academics/class/${class_id}/student/${student_id}/block-standards/`, {
+   const response = await http.get(`/academics/class/${class_id}/student/${student_id}/block-progress/`, {
       headers: {
          Authorization: `Bearer ${getAccessToken()}`,
       },

@@ -304,7 +304,7 @@ export const fetchStudentLineProgressNew = createAsyncThunk(
    "teacher/student/line-progresss",
    async ({ studentId, classId }: { studentId: string; classId: string }, thunkAPI) => {
       try {
-         return await teachersClassBaseServices.getStudentLineProgressByTeacher(studentId, classId);
+         return await teachersClassBaseServices.getStudentLineProgressNewByTeacher(studentId, classId);
       } catch (error: any) {
          return thunkAPI.rejectWithValue(errorResolver(error));
       }
@@ -312,10 +312,10 @@ export const fetchStudentLineProgressNew = createAsyncThunk(
 );
 
 export const fetchStudentLineCodingSkillsNew = createAsyncThunk(
-   "teacher/student/line-skillss",
+   "teacher/students/line-skillss",
    async ({ studentId, classId }: { studentId: string; classId: string }, thunkAPI) => {
       try {
-         return await teachersClassBaseServices.getStudentLinecodingSkillsByTeacher(studentId, classId);
+         return await teachersClassBaseServices.getStudentLinecodingSkillsNewByTeacher(studentId, classId);
       } catch (error: any) {
          return thunkAPI.rejectWithValue(errorResolver(error));
       }
@@ -460,15 +460,16 @@ export const teacherStudentSlice = createSlice({
       }
    }
 })
-.addCase(fetchStudentLineCodingSkillsNew.fulfilled, (state, action: PayloadAction<any[]>) => {
-   if (state.currentStudent) {
-      state.currentStudent.skills = action.payload.map((skill, index) => ({
-         id: index,
-         title: skill.name,
-         level: skill.value,
-      }));
-   }
-   state.isLoading = false;
+.addCase(fetchStudentLineCodingSkillsNew.fulfilled, (state, action: PayloadAction<any>) => {
+  if (state.currentStudent) {
+    const payload = Array.isArray(action.payload) ? action.payload : [];
+    state.currentStudent.skills = payload.map((skill, index) => ({
+      id: index,
+      title: skill.name,
+      level: skill.value,
+    }));
+  }
+  state.isLoading = false;
 })
 
    },
