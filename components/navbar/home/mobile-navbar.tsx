@@ -7,6 +7,8 @@ import { cn } from "utils";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Variant, motion } from "framer-motion";
+import AppDownloadModal from "@/components/modals/AppDownloadModal";
+import { CustomButton } from "@/components/UI/Button";
 
 interface NavbarProps {
    close(): void;
@@ -25,6 +27,8 @@ const variants: Record<string, Variant> = {
 
 const MobileNavbar: FC<NavbarProps> = ({ close }) => {
    const router = useRouter();
+   const [showAppModal, setShowAppModal] = useState(false);
+   const { push } = useRouter();
 
    return (
       <motion.aside
@@ -47,6 +51,41 @@ const MobileNavbar: FC<NavbarProps> = ({ close }) => {
                return <SingleMobileLink link={link} ref={ref} key={index} />;
             })}
          </div>
+
+         {/* ✅ Buttons moved here, outside the links loop, no max-md:hidden */}
+         <div className="flex flex-col gap-3 mt-6 pb-4">
+            <CustomButton
+               onClick={() => { push("/login"); close(); }}
+               variant="filled"
+               size="medium"
+               className="w-full h-[44px] bg-mainRed font-bold !text-white flex items-center justify-center hover:bg-mainRed/80"
+            >
+               <span className="no-contrast-adjust">Login</span>
+            </CustomButton>
+
+            <CustomButton
+               onClick={() => setShowAppModal(true)}
+               variant="outline"
+               size="medium"
+               className="w-full h-[44px] font-bold !text-white flex items-center justify-center"
+            >
+               <span className="no-contrast-adjust">Get App</span>
+            </CustomButton>
+
+            <CustomButton
+               onClick={() => { push("https://play.codealgoacademy.com"); close(); }}
+               variant="filled"
+               size="medium"
+               className="w-full h-[44px] bg-mainRed font-bold !text-white flex items-center justify-center hover:bg-mainRed/80"
+            >
+               <span className="no-contrast-adjust">Play Game</span>
+            </CustomButton>
+         </div>
+
+         <AppDownloadModal
+            isOpen={showAppModal}
+            onClose={() => setShowAppModal(false)}
+         />
       </motion.aside>
    );
 };
