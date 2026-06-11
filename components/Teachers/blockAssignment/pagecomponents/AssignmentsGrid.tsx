@@ -1,7 +1,8 @@
 import React from "react";
-
+import Image from "next/image";
 import { AssignmentListItem } from "types/interfaces/assignments";
 import AssignmentCard from "../AssignmentCard";
+import empty from "../../../../public/assets/teachers/emptystate.jpeg"
 
 interface AssignmentsGridProps {
   assignments: AssignmentListItem[];
@@ -33,7 +34,10 @@ export default function AssignmentsGrid({
   if (assignments.length === 0) {
     return (
       <div className="text-center py-16">
-        <div className="text-gray-400 text-sm">
+        <div className="w-[20%] flex justify-center items-center mx-auto ">
+        <Image src={empty} alt="" className="rounded-full" />   
+        </div>
+        <div className="text-black-400 text-sm pt-5">
           No {activeTab} assignments found.
         </div>
       </div>

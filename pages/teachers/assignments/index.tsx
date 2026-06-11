@@ -11,8 +11,11 @@ import HeaderSection from "@/components/Teachers/blockAssignment/pagecomponents/
 import StudentDropdown from "@/components/Teachers/blockAssignment/pagecomponents/StudentDropdown";
 import TabsSection from "@/components/Teachers/blockAssignment/pagecomponents/TabsSection";
 import AssignmentsGrid from "@/components/Teachers/blockAssignment/pagecomponents/AssignmentsGrid";
+import AssignmentsHub from "@/components/Teachers/blockAssignment/pagecomponents/AssignmentsHub";
+import MathFactsPage from "@/components/Teachers/math_fact/mathfact";
 
 type Tab = "active" | "completed" | "archived";
+type View = "hub" | "list" | "new" | "edit" | "detail" | "mathfacts";
 
 export default function AssignmentsPage() {
    const classId = useSelector((state: RootState) => state.currentClass?.id);
@@ -23,7 +26,7 @@ export default function AssignmentsPage() {
       username: s.username ?? "",
    }));
 
-   const [view, setView] = useState<"list" | "new" | "edit" | "detail">("list");
+   const [view, setView] = useState<View>("hub");
    const [activeTab, setActiveTab] = useState<Tab>("active");
    const [assignments, setAssignments] = useState<AssignmentListItem[]>([]);
    const [loading, setLoading] = useState(false);
@@ -52,8 +55,8 @@ export default function AssignmentsPage() {
    }, [classId]);
 
    useEffect(() => {
-      load();
-   }, [load]);
+      if (view === "list") load();
+   }, [view, load]);
 
    const filteredAssignments = assignments.filter((a) => {
       if (activeTab === "active") return a.status === "active" || a.status === "scheduled";
@@ -76,26 +79,25 @@ export default function AssignmentsPage() {
       }
    };
 
+   const handleEdit = async (id: number) => {
+      setLoading(true);
+      try {
+         const fullData = await assignmentServices.getSinglAssignment(classId, id);
+         const assignedStudentIds = fullData.student_records?.map((r: any) => r.student_id) || [];
 
-const handleEdit = async (id: number) => {
-   setLoading(true);
-   try {
-      const fullData = await assignmentServices.getSinglAssignment(classId, id);
-      const assignedStudentIds = fullData.student_records?.map((r: any) => r.student_id) || [];
-
-      setEditingAssignment({
-         ...fullData,
-         topics: fullData.topics?.map((t: any) => ({ id: t.id, name: t.name })) ?? [],
-         student_ids: assignedStudentIds, 
-         student_records: fullData.student_records 
-      });
-      setView("edit");
-   } catch (err) {
-      console.error("Failed to fetch details for edit:", err);
-   } finally {
-      setLoading(false);
-   }
-};
+         setEditingAssignment({
+            ...fullData,
+            topics: fullData.topics?.map((t: any) => ({ id: t.id, name: t.name })) ?? [],
+            student_ids: assignedStudentIds,
+            student_records: fullData.student_records,
+         });
+         setView("edit");
+      } catch (err) {
+         console.error("Failed to fetch details for edit:", err);
+      } finally {
+         setLoading(false);
+      }
+   };
 
    const handleArchive = async (id: number) => {
       try {
@@ -106,6 +108,33 @@ const handleEdit = async (id: number) => {
          alert("Failed to archive assignment.");
       }
    };
+
+   if (view === "hub") {
+      return (
+         <TeacherLayout>
+            <AssignmentsHub onGoToCoding={() => setView("list")} onGoToMathFacts={() => setView("mathfacts")} />
+         </TeacherLayout>
+      );
+   }
+
+   if (view === "mathfacts") {
+      return (
+         <TeacherLayout>
+            <div className="relative">
+               <button
+                  onClick={() => setView("hub")}
+                  className=" flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-gray-800"
+               >
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                  </svg>
+                  Back to Assignments
+               </button>
+               <MathFactsPage />
+            </div>
+         </TeacherLayout>
+      );
+   }
 
    if (view === "detail" && selectedId) {
       return (
@@ -144,13 +173,24 @@ const handleEdit = async (id: number) => {
       );
    }
 
+   // ── Assignment list ─────────────────────────────────────────────────────
    return (
       <TeacherLayout>
          <div className="mx-auto max-w-7xl px-6 py-8">
+            <button
+               onClick={() => setView("hub")}
+               className="mb-4 flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-gray-800"
+            >
+               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+               </svg>
+               Assignments
+            </button>
+
             <HeaderSection onRefresh={load} onNewAssignment={() => setView("new")} lastUpdated={lastUpdated} />
 
-            <div className="mb-6 flex flex-col gap-4  sm:flex-row sm:items-center">
-               <StudentDropdown classId={classId} selectedStudentId={selectedStudentId} onSelectStudent={setSelectedStudentId} />{" "}
+            <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center">
+               <StudentDropdown classId={classId} selectedStudentId={selectedStudentId} onSelectStudent={setSelectedStudentId} />
                <TabsSection activeTab={activeTab} onTabChange={setActiveTab} />
             </div>
 
