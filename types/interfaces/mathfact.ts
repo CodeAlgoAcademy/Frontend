@@ -59,14 +59,22 @@ export interface MathFactAssignmentDetail {
 
 }
 
-
+export interface CreateAssignmentBulkPayload {
+  fact_set_ids: number[]; 
+  student_ids?: number[];
+  question_count: number;
+  time_limit_seconds: number | null;
+  target_accuracy: number;
+  target_avg_time: number;
+  status: string;
+}
 
 export interface CreateAssignmentPayload {
-  fact_set: number;
+  fact_set_ids: number[];
+  student_ids?: number[];
   question_count: number;
   time_limit_seconds?: number | null;
-  target_accuracy?: number;
-  target_avg_time?: number;
-  student_ids?: number[];
-  status: string
+  target_accuracy: number;
+  target_avg_time: number;
+  status: string;
 }

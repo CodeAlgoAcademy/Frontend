@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import mathFactsService from "services/mathfact";
 import studentService from "services/studentService";
-import { MathFactSet, MathFactAssignmentDetail, CreateAssignmentPayload } from "types/interfaces/mathfact";
+import { MathFactSet, MathFactAssignmentDetail } from "types/interfaces/mathfact";
 
 interface Student {
    id: number;
@@ -27,12 +27,10 @@ export default function MathFactAssignModal({ classId, isOpen, isEditing, assign
    const [factSets, setFactSets] = useState<MathFactSet[]>([]);
    const [localStudents, setLocalStudents] = useState<Student[]>([]);
 
-   // Selection States
    const [selectedFactSetIds, setSelectedFactSetIds] = useState<number[]>([]);
    const [isAdaptive, setIsAdaptive] = useState(false);
    const [isTurningOff, setIsTurningOff] = useState(false);
 
-   // Form States
    const [selectedStudentIds, setSelectedStudentIds] = useState<number[]>([]);
    const [questionCount, setQuestionCount] = useState(20);
    const [timeLimit, setTimeLimit] = useState<number | null>(null);
@@ -44,28 +42,33 @@ export default function MathFactAssignModal({ classId, isOpen, isEditing, assign
 
    const isBulk = assignmentData?.studentId === -1;
 
-   useEffect(() => {
-      if (isOpen) {
-         loadFactSets();
-         fetchStudents();
-         setStep(isBulk ? 1 : 2);
+useEffect(() => {
+   if (isOpen) {
+      loadFactSets();
+      fetchStudents();
+      setStep(isBulk ? 1 : 2);
 
-         if (!isBulk && assignmentData?.studentId) {
-            setSelectedStudentIds([Number(assignmentData.studentId)]);
-         }
-
-         if (assignmentData?.assignments && assignmentData.assignments.length > 0) {
-            const data = assignmentData.assignments[0];
-            setSelectedFactSetIds(assignmentData.assignments.map((a) => a.fact_set.id));
-            setQuestionCount(data.question_count);
-            setTimeLimit(data.time_limit_seconds);
-            setTargetAccuracy(data.target_accuracy);
-            setTargetAvgTime(data.target_avg_time);
-         } else {
-            resetFormFields();
-         }
+      if (!isBulk && assignmentData?.studentId) {
+         setSelectedStudentIds([Number(assignmentData.studentId)]);
       }
-   }, [isOpen, assignmentData]);
+
+      if (assignmentData?.assignments && assignmentData.assignments.length > 0) {
+         const data = assignmentData.assignments[0];
+         
+         const ids = assignmentData.assignments.map((a: any) => {
+            return a.fact_set_id || a.fact_set?.id;
+         }).filter(id => id !== undefined); 
+         setSelectedFactSetIds(ids);
+         
+         setQuestionCount(data.question_count || 20);
+         setTimeLimit(data.time_limit_seconds || null);
+         setTargetAccuracy(data.target_accuracy || 0.9);
+         setTargetAvgTime(data.target_avg_time ? data.target_avg_time / 60 : 1.0);
+      } else {
+         resetFormFields();
+      }
+   }
+}, [isOpen, assignmentData]);
 
    const resetFormFields = () => {
       setSelectedFactSetIds([]);
@@ -74,7 +77,7 @@ export default function MathFactAssignModal({ classId, isOpen, isEditing, assign
       setQuestionCount(20);
       setTimeLimit(null);
       setTargetAccuracy(0.9);
-      setTargetAvgTime(5.0);
+      setTargetAvgTime(1.0);
    };
 
    const fetchStudents = async () => {
@@ -109,107 +112,48 @@ export default function MathFactAssignModal({ classId, isOpen, isEditing, assign
       setSelectedFactSetIds((prev) => (prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]));
    };
 
-   const handleSubmit = async () => {
-      setLoading(true);
-      setError(null);
 
-      try {
-         // ─── TURN OFF LOGIC (DELETE) ──────────────────────────────────────────
-         // ─── TURN OFF LOGIC ──────────────────────────────────────────
-         if (isTurningOff) {
-            if (selectedStudentIds.length === 0) {
-               setError("Please select at least one student.");
-               setLoading(false);
-               return;
-            }
+const handleSubmit = async () => {
+   setLoading(true);
+   setError(null);
 
-            const allSummaries = await mathFactsService.getAssignments(classId);
-            if (!allSummaries || allSummaries.length === 0) {
-               onSuccess();
-               return;
-            }
-
-            const targetIds = selectedStudentIds.map(Number);
-
-            // 1. Fetch full detail for every assignment (parallel)
-            const detailedAssignments = await Promise.all(allSummaries.map((a) => mathFactsService.getAssignment(classId, a.id)));
-
-            const updatePromises: Promise<MathFactAssignmentDetail | void>[] = [];
-
-            for (const detail of detailedAssignments) {
-               // Which selected students are currently in this assignment?
-               const existingStudentIds: number[] = detail.student_records.map((r) => r.student_id);
-
-               const affected = targetIds.some((sid) => existingStudentIds.includes(sid));
-               if (!affected) continue; // assignment not linked to selected students
-
-               // New list = all current students EXCEPT the ones being turned off
-               const remainingStudentIds = existingStudentIds.filter((sid) => !targetIds.includes(sid));
-
-               if (remainingStudentIds.length === 0) {
-                  // No students left → delete the whole assignment
-                  updatePromises.push(mathFactsService.deleteAssignment(classId, detail.id).then(() => undefined));
-               } else {
-                  // Update the assignment with the reduced list
-                  updatePromises.push(
-                     mathFactsService.updateAssignment(classId, detail.id, {
-                        student_ids: remainingStudentIds,
-                     })
-                  );
-               }
-            }
-
-            await Promise.all(updatePromises);
-            onSuccess();
-            return;
-         }
-
-         // ─── CREATE / UPDATE LOGIC ─────────────────────────────────────────────
-         const factSetIds = isAdaptive ? factSets.map((f) => f.id) : selectedFactSetIds;
-
-         if (factSetIds.length === 0 && !isEditing) {
-            setError("Please select at least one operation set.");
-            setLoading(false);
-            return;
-         }
-
-         const studentIds = selectedStudentIds.length > 0 ? selectedStudentIds.map((id) => Number(id)) : undefined;
-
-         if (isEditing && assignmentData?.assignments && !isBulk) {
-            for (const assignment of assignmentData.assignments) {
-               const payload: Partial<CreateAssignmentPayload> = {
-                  fact_set: assignment.fact_set.id,
-                  question_count: questionCount,
-                  time_limit_seconds: timeLimit,
-                  target_accuracy: targetAccuracy,
-                  target_avg_time: targetAvgTime,
-                  student_ids: studentIds,
-               };
-               await mathFactsService.updateAssignment(classId, assignment.id, payload);
-            }
-         } else {
-            for (const factSetId of factSetIds) {
-               const payload: CreateAssignmentPayload = {
-                  fact_set: factSetId,
-                  question_count: questionCount,
-                  time_limit_seconds: timeLimit,
-                  target_accuracy: targetAccuracy,
-                  target_avg_time: targetAvgTime,
-                  student_ids: studentIds,
-                  status: "active",
-               };
-               await mathFactsService.createAssignment(classId, payload);
-            }
-         }
-
-         onSuccess();
-      } catch (err: any) {
-         setError(err.response?.data?.detail || "Submission failed.");
-      } finally {
-         setLoading(false);
+   try {
+      let factSetIds: number[] = [];
+      
+      if (isTurningOff) {
+         factSetIds = [];
+      } else if (isAdaptive) {
+         factSetIds = factSets.map((f) => f.id);
+      } else {
+         factSetIds = selectedFactSetIds;
       }
-   };
 
+      if (!isTurningOff && factSetIds.length === 0 && !isEditing) {
+         setError("Please select at least one operation set.");
+         setLoading(false);
+         return;
+      }
+
+      const studentIds = selectedStudentIds.map(Number);
+
+      const payload = {
+         fact_set_ids: factSetIds,
+         student_ids: studentIds,
+         question_count: questionCount,
+         target_accuracy: targetAccuracy,
+         target_avg_time: targetAvgTime * 60,
+         status: "active",
+      };
+
+      await mathFactsService.createAssignment(classId, payload);
+
+      onSuccess();
+   } catch (err: any) {
+      setError(err.response?.data?.message || "Failed to save settings.");
+   } finally {
+      setLoading(false);
+   }
+};
    if (!isOpen) return null;
 
    const isLastStep = step === 3 || (step === 2 && isTurningOff);
@@ -217,18 +161,16 @@ export default function MathFactAssignModal({ classId, isOpen, isEditing, assign
    return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
          <div className="flex max-h-[90vh] w-full max-w-xl flex-col overflow-hidden rounded-3xl bg-white shadow-2xl">
-            {/* Header */}
             <div className="border-b border-gray-100 bg-white px-8 py-6">
                <div className="mb-4 flex items-center justify-between">
                   <h2 className="text-xl font-bold text-slate-800">
-                     Edit Math Facts for {isBulk ? "Multiple Students" : assignmentData?.studentName}
+                     {isEditing ? "Edit" : "Create"} Math Facts for {isBulk ? "Multiple Students" : assignmentData?.studentName}
                   </h2>
                   <button onClick={onClose} className="text-2xl text-gray-400 hover:text-gray-600">
                      ×
                   </button>
                </div>
 
-               {/* Stepper */}
                <div className="flex items-center justify-center py-2">
                   <div className="flex w-full max-w-xs items-center">
                      {isBulk && (
@@ -328,9 +270,6 @@ export default function MathFactAssignModal({ classId, isOpen, isEditing, assign
                                     {fs.name} ({fs.operation_display})
                                  </span>
                               </div>
-                              <span className="rounded bg-slate-50 px-2 py-1 font-mono text-xs text-slate-400">
-                                 x {fs.operation === "add" ? "+" : "*"} y
-                              </span>
                            </label>
                         ))}
                      </div>
@@ -349,7 +288,6 @@ export default function MathFactAssignModal({ classId, isOpen, isEditing, assign
                               onChange={() => {
                                  setIsAdaptive(!isAdaptive);
                                  setIsTurningOff(false);
-                                 if (!isAdaptive) setSelectedFactSetIds([]);
                               }}
                               className="h-5 w-5 accent-blue-600"
                            />
@@ -367,7 +305,6 @@ export default function MathFactAssignModal({ classId, isOpen, isEditing, assign
                               onChange={() => {
                                  setIsTurningOff(!isTurningOff);
                                  setIsAdaptive(false);
-                                 if (!isTurningOff) setSelectedFactSetIds([]);
                               }}
                               className="h-5 w-5 accent-red-600"
                            />
@@ -396,7 +333,6 @@ export default function MathFactAssignModal({ classId, isOpen, isEditing, assign
                               className="w-full accent-blue-500"
                            />
                         </div>
-
                         <div className="grid grid-cols-2 gap-4">
                            <div className="space-y-1">
                               <label className="text-[10px] font-black uppercase text-slate-400">Min. Accuracy (%)</label>
@@ -408,7 +344,7 @@ export default function MathFactAssignModal({ classId, isOpen, isEditing, assign
                               />
                            </div>
                            <div className="space-y-1">
-                              <label className="text-[10px] font-black uppercase text-slate-400">Max. Time (sec)</label>
+                              <label className="text-[10px] font-black uppercase text-slate-400">Max. Time (min)</label>
                               <input
                                  type="number"
                                  value={targetAvgTime}
@@ -422,14 +358,12 @@ export default function MathFactAssignModal({ classId, isOpen, isEditing, assign
                )}
             </div>
 
-            {/* Error Message */}
             {error && (
                <div className="border-t border-red-100 bg-red-50 px-8 py-3">
                   <p className="text-xs font-semibold text-red-600">{error}</p>
                </div>
             )}
 
-            {/* Footer Buttons */}
             <div className="flex gap-4 border-t border-slate-100 bg-white p-8">
                <button
                   type="button"
@@ -438,7 +372,6 @@ export default function MathFactAssignModal({ classId, isOpen, isEditing, assign
                >
                   {step === (isBulk ? 1 : 2) ? "Cancel" : "Back"}
                </button>
-
                <button
                   type="button"
                   disabled={
@@ -454,7 +387,7 @@ export default function MathFactAssignModal({ classId, isOpen, isEditing, assign
                      isTurningOff ? "bg-red-500 shadow-red-100" : "bg-blue-600 shadow-blue-100 hover:scale-[1.01]"
                   }`}
                >
-                  {loading ? "Processing..." : isLastStep ? "Finish Editing" : "Next Step"}
+                  {loading ? "Processing..." : isLastStep ? "Finish" : "Next Step"}
                </button>
             </div>
          </div>

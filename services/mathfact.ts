@@ -1,5 +1,5 @@
 import http from "axios.config";
-import { CreateAssignmentPayload, MathFactAssignmentDetail, MathFactAssignmentList, MathFactSet } from "types/interfaces/mathfact";
+import { CreateAssignmentBulkPayload, CreateAssignmentPayload, MathFactAssignmentDetail, MathFactAssignmentList, MathFactSet } from "types/interfaces/mathfact";
 import { getAccessToken } from "utils/getTokens";
 
 const mathFactsService = {
@@ -30,18 +30,34 @@ const mathFactsService = {
     return res.data;
   },
  
-  createAssignment: async (
-    classId: string | number,
-    payload: CreateAssignmentPayload
-  ): Promise<MathFactAssignmentDetail> => {
-    const res = await http.post(`/academics/class/${classId}/math-facts/assignments/`, payload, {
-        headers: {
+ createAssignment: async (
+  classId: string | number,
+  payload: {
+    fact_set_ids: number[];
+    student_ids: number[];
+    question_count: number;
+    target_accuracy: number;
+    target_avg_time: number;
+    status: string;
+  }
+): Promise<any> => {
+  const res = await http.post(`/academics/class/${classId}/math-facts/assignments/`, payload, {
+    headers: {
+      Authorization: `Bearer ${getAccessToken()}`,
+    },
+  });
+  return res.data;
+},
+
+  getStudentOverview: async (classId: string | number): Promise<any[]> => {
+    const res = await http.get(`/academics/class/${classId}/math-facts/assignments/`, {
+      headers: {
         Authorization: `Bearer ${getAccessToken()}`,
       },
     });
     return res.data;
   },
- 
+
   updateAssignment: async (
     classId: string | number,
     pk: number,
