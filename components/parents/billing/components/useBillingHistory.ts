@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useAppDispatch } from "store/hooks";
+import { RootState } from "store/store";
 import { 
-  cancelSubscription, 
+  cancelSubscription as cancelSubscriptionThunk, 
   getBillingHistory, 
   reactivateSubscription,
   getActiveSubscription
@@ -10,6 +12,8 @@ import { toast } from "sonner";
 
 export const useBillingHistory = () => {
    const dispatch = useAppDispatch();
+   const { billing_history } = useSelector((state: RootState) => state.pricing);
+
    const [reactivatingId, setReactivatingId] = useState<number | null>(null);
    const [cancelModalOpen, setCancelModalOpen] = useState(false);
    const [reactivateModalOpen, setReactivateModalOpen] = useState(false);
@@ -37,20 +41,27 @@ export const useBillingHistory = () => {
 
    const handleCancel = async () => {
       if (!selectedSubscriptionId) return;
+      
       const idToCancel = selectedSubscriptionId;
+
+      const subDetails = billing_history?.find(sub => sub.id === idToCancel);
+      
+      const isFree = !(subDetails as any)?.stripe_subscription_id || (subDetails as any)?.plan_amount === 0;
+
       closeCancelModal(); 
       
       try {
-         const result = await dispatch(cancelSubscription(idToCancel));
+         const result = await dispatch(cancelSubscriptionThunk({ id: idToCancel, isFree }));
          
-         if (cancelSubscription.fulfilled.match(result)) {
+         if (cancelSubscriptionThunk.fulfilled.match(result)) {
             toast.success("Subscription cancelled successfully");
             await Promise.all([
                dispatch(getBillingHistory()),
                dispatch(getActiveSubscription()) 
             ]);
          } else {
-            toast.error("Failed to cancel subscription");
+            const errorMsg = (result.payload as string) || "Failed to cancel subscription";
+            toast.error(errorMsg);
          }
       } catch (error) {
          toast.error("An error occurred");
@@ -59,14 +70,12 @@ export const useBillingHistory = () => {
 
    const handleReactivate = async () => {
       if (!selectedSubscriptionId) return;
-      
       const idToReactivate = selectedSubscriptionId;
       setReactivatingId(idToReactivate);
       closeReactivateModal();
 
       try {
          const result = await dispatch(reactivateSubscription(idToReactivate));
-         
          if (reactivateSubscription.fulfilled.match(result)) {
             toast.success("Subscription reactivated successfully!");
             await Promise.all([

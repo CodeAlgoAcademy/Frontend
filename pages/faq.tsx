@@ -90,7 +90,8 @@ const FAQ = () => {
                />
                <SingleAccordion
                   question="Can I cancel my subscription at any time?"
-                  answer="Yes, subscriptions can be canceled at any time. You retain full control over your subscription, ensuring a flexible and user-friendly experience."
+                  answer="Yes, subscriptions can be canceled at any time. To cancel, go to your Billing page, find your active subscription, and click 'Cancel'. Watch the video below for a step-by-step guide."
+                  videoUrl="/videos/cancel_guide.mp4" // Replace with your actual video path or URL
                />
             </section>
 
@@ -133,34 +134,59 @@ const FAQ = () => {
 interface AccordionProps {
    question: string;
    answer?: string;
+   videoUrl?: string; // Added optional videoUrl
 }
 
-const SingleAccordion: FC<AccordionProps> = ({ question, answer }) => {
+const SingleAccordion: FC<AccordionProps> = ({ question, answer, videoUrl }) => {
    const [isOpen, setIsOpen] = useState(false);
    const [height, setHeight] = useState(0);
-   const ref = useRef<HTMLParagraphElement>();
+   
+   // We use a div ref instead of p ref to capture the height of BOTH text and video
+   const contentRef = useRef<HTMLDivElement>(null);
 
    useEffect(() => {
-      if (ref) {
-         setHeight(ref?.current?.getBoundingClientRect().height ?? 0);
+      if (contentRef.current) {
+         // Re-calculate height whenever isOpen changes
+         setHeight(contentRef.current.scrollHeight);
       }
-   }, [ref]);
+   }, [isOpen]);
+
    return (
-      <article>
-         <header className="mb-5 flex items-center justify-between gap-3 px-4">
-            <h1 className="flex-1 font-thabit font-bold">{question}</h1>
+      <article className="border-b border-gray-100 pb-4">
+         <header className="mb-2 flex items-center justify-between gap-3 px-4">
+            <h1 className="flex-1 font-thabit font-bold text-gray-800">{question}</h1>
             <span
                onClick={() => setIsOpen(!isOpen)}
-               className="flex h-[30px] w-[30px] max-w-[30px] flex-1 cursor-pointer items-center justify-center rounded-full bg-mainRed text-black"
+               className="flex h-[30px] w-[30px] min-w-[30px] cursor-pointer items-center justify-center rounded-full bg-mainRed text-white transition-transform active:scale-90"
             >
-               {isOpen ? <BiMinus size={25} /> : <BiPlus size={25} />}
+               {isOpen ? <BiMinus size={20} /> : <BiPlus size={20} />}
             </span>
          </header>
 
-         <div className={cn("overflow-hidden transition-all duration-300")} style={{ height: isOpen ? height : 0 }}>
-            <p ref={ref as MutableRefObject<HTMLParagraphElement>} className="px-3 py-1 text-[.9rem]">
-               {answer}
-            </p>
+         <div 
+            className={cn("overflow-hidden transition-all duration-500 ease-in-out")} 
+            style={{ height: isOpen ? height : 0 }}
+         >
+            <div ref={contentRef} className="px-4 py-2">
+               {answer && (
+                  <p className="text-[.9rem] leading-relaxed text-gray-600">
+                     {answer}
+                  </p>
+               )}
+               
+               {videoUrl && (
+                  <div className="mt-4 overflow-hidden rounded-xl border border-gray-200 bg-black shadow-md">
+                     <video 
+                        controls 
+                        className="w-full aspect-video"
+                        poster="/images/video-placeholder.jpg" // Optional: add a thumbnail
+                     >
+                        <source src={videoUrl} type="video/mp4" />
+                        Your browser does not support the video tag.
+                     </video>
+                  </div>
+               )}
+            </div>
          </div>
       </article>
    );

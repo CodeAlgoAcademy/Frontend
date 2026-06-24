@@ -224,12 +224,30 @@ export const verifyPayment: any = createAsyncThunk(
 );
 
 
+// export const cancelSubscription: any = createAsyncThunk(
+//   "pricingService/cancelSubscription",
+//   async (id: number | string, thunkApi) => {
+//     try {
+//       const response = await http.post(
+//         `/payment/subscription/${id}/cancel/`,
+//         {},
+//         authHeader()
+//       );
+//       return response.data;
+//     } catch (error) {
+//       return thunkApi.rejectWithValue(errorResolver(error));
+//     }
+//   }
+// );
+
 export const cancelSubscription: any = createAsyncThunk(
   "pricingService/cancelSubscription",
-  async (id: number | string, thunkApi) => {
+  async ({ id, isFree }: { id: number | string; isFree: boolean }, thunkApi) => {
     try {
+      const url = `/payment/subscription/${id}/cancel/${isFree ? '?local_only=true' : ''}`;
+      
       const response = await http.post(
-        `/payment/subscription/${id}/cancel/`,
+        url,
         {},
         authHeader()
       );
