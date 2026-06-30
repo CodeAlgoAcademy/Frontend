@@ -13,9 +13,11 @@ import TabsSection from "@/components/Teachers/blockAssignment/pagecomponents/Ta
 import AssignmentsGrid from "@/components/Teachers/blockAssignment/pagecomponents/AssignmentsGrid";
 import AssignmentsHub from "@/components/Teachers/blockAssignment/pagecomponents/AssignmentsHub";
 import MathFactsPage from "@/components/Teachers/math_fact/mathfact";
+import MathReportsView from "@/components/Teachers/math_fact/components/mathReportsView";
 
 type Tab = "active" | "completed" | "archived";
-type View = "hub" | "list" | "new" | "edit" | "detail" | "mathfacts";
+type View = "hub" | "list" | "new" | "edit" | "detail" | "mathfacts" | "mathreports";
+
 
 export default function AssignmentsPage() {
    const classId = useSelector((state: RootState) => state.currentClass?.id);
@@ -112,10 +114,37 @@ export default function AssignmentsPage() {
    if (view === "hub") {
       return (
          <TeacherLayout>
-            <AssignmentsHub onGoToCoding={() => setView("list")} onGoToMathFacts={() => setView("mathfacts")} />
+            <AssignmentsHub onGoToCoding={() => setView("list")}
+             onGoToMathFacts={() => setView("mathfacts")} 
+            onGoToMathReports={() => setView("mathreports")}/>
          </TeacherLayout>
       );
    }
+
+if (view === "mathreports") {
+   return (
+      <TeacherLayout>
+         <div className="mx-auto max-w-7xl px-6 py-8">
+            <button
+               onClick={() => setView("hub")}
+               className="mb-4 flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-gray-800"
+            >
+               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+               </svg>
+               Back to Assignments
+            </button>
+            
+            <div className="mb-8">
+               <h1 className="text-3xl font-bold text-slate-900">Math Mastery Reports</h1>
+               <p className="text-slate-500">Visualizing class-wide struggle points and logic gaps.</p>
+            </div>
+
+            <MathReportsView classId={classId} />
+         </div>
+      </TeacherLayout>
+   );
+}
 
    if (view === "mathfacts") {
       return (
@@ -130,7 +159,7 @@ export default function AssignmentsPage() {
                   </svg>
                   Back to Assignments
                </button>
-               <MathFactsPage />
+               <MathFactsPage onViewReport={() => setView("mathreports")}/>
             </div>
          </TeacherLayout>
       );
@@ -173,7 +202,6 @@ export default function AssignmentsPage() {
       );
    }
 
-   // ── Assignment list ─────────────────────────────────────────────────────
    return (
       <TeacherLayout>
          <div className="mx-auto max-w-7xl px-6 py-8">

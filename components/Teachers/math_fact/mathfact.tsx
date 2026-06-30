@@ -5,7 +5,11 @@ import MathFactAssignModal from "./components/mathfactAssignmentModal";
 import MathFactsList from "./components/mathlist";
 import { MathFactAssignmentDetail } from "types/interfaces/mathfact";
 
-export default function MathFactsPage() {
+interface MathFactsPageProps {
+   onViewReport: () => void;
+}
+
+export default function MathFactsPage({ onViewReport }: MathFactsPageProps) {
    const classId = useSelector((state: RootState) => state.currentClass?.id);
    const classStudents = useSelector((state: RootState) => (state as any).teacherStudentSlice?.students ?? []);
 
@@ -55,10 +59,18 @@ export default function MathFactsPage() {
 
    return (
       <div className="mx-auto max-w-7xl px-6 py-8">
-         <div className="mb-8">
+            <div className="mb-8">
             <div className="flex items-center justify-between">
                <div>
-                  <h1 className="text-3xl font-bold text-gray-900">Computational Math</h1>
+                  <div className="flex items-center gap-4">
+                     <h1 className="text-3xl font-bold text-gray-900">Computational Math</h1>
+                     <button 
+                        onClick={onViewReport}
+                        className="px-4 py-1.5 text-sm font-semibold text-emerald-600 bg-emerald-50 rounded-full hover:bg-emerald-100 transition-colors border border-emerald-200"
+                     >
+                        📊 View Mastery Reports
+                     </button>
+                  </div>
                   <p className="mt-1 text-gray-500">
                      Manage variable-based math drills using dynamic problem generation (x + y)
                   </p>
@@ -71,7 +83,6 @@ export default function MathFactsPage() {
             classId={classId}
             students={students}
             onEdit={handleEdit}
-            onRefresh={handleRefresh}
          />
 
          <MathFactAssignModal

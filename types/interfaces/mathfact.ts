@@ -69,6 +69,14 @@ export interface CreateAssignmentBulkPayload {
   status: string;
 }
 
+export interface MathFactAnalyticsPair {
+  operand_a: number;
+  operand_b: number;
+  operation: string;
+  total: number;
+  errors: number;
+}
+
 export interface CreateAssignmentPayload {
   fact_set_ids: number[];
   student_ids?: number[];
@@ -77,4 +85,32 @@ export interface CreateAssignmentPayload {
   target_accuracy: number;
   target_avg_time: number;
   status: string;
+}
+
+export interface MathFactActiveAssignment {
+  id: number;
+  fact_set_id: number;
+  fact_set_name: string;
+  operation: MathOperation;
+  operation_display: string;
+  question_count: number;
+  target_accuracy: number;
+  target_avg_time: number;
+  status: string;
+  is_mastered: boolean;
+}
+
+export interface StudentMathOverview {
+  id: number;
+  username: string;
+  full_name: string;
+  active_assignments: MathFactActiveAssignment[];
+}
+
+export interface ErrorPair {
+  operand_a: number;
+  operand_b: number;
+  operation: string;
+  total: number;
+  errors: number;
 }

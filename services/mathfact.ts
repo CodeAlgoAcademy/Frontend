@@ -1,5 +1,5 @@
 import http from "axios.config";
-import { CreateAssignmentBulkPayload, CreateAssignmentPayload, MathFactAssignmentDetail, MathFactAssignmentList, MathFactSet } from "types/interfaces/mathfact";
+import { CreateAssignmentBulkPayload, CreateAssignmentPayload, MathFactAnalyticsPair, MathFactAssignmentDetail, MathFactAssignmentList, MathFactSet, StudentMathOverview } from "types/interfaces/mathfact";
 import { getAccessToken } from "utils/getTokens";
 
 const mathFactsService = {
@@ -12,14 +12,14 @@ const mathFactsService = {
     return res.data;
   },
  
-  getAssignments: async (classId: string | number): Promise<MathFactAssignmentList[]> => {
+getAssignments: async (classId: string | number): Promise<StudentMathOverview[]> => {
     const res = await http.get(`/academics/class/${classId}/math-facts/assignments/`, {
       headers: {
         Authorization: `Bearer ${getAccessToken()}`,
       },
     });
     return res.data;
-  },
+},
  
   getAssignment: async (classId: string | number, pk: number): Promise<MathFactAssignmentDetail> => {
     const res = await http.get(`/academics/class/${classId}/math-facts/assignments/${pk}/`,{
@@ -78,6 +78,23 @@ const mathFactsService = {
       },
     });
   },
+
+  getAnalytics: async (
+  classId: string | number,
+  studentId?: string | number,
+  operation?: string
+): Promise<MathFactAnalyticsPair[]> => {
+  const params = new URLSearchParams();
+  if (studentId && studentId !== "all") params.set("student_id", String(studentId));
+  if (operation && operation !== "all") params.set("operation", operation);
+
+  const res = await http.get(
+    `/academics/class/${classId}/math-facts/analytics/?${params.toString()}`,
+    { headers: { Authorization: `Bearer ${getAccessToken()}` } }
+  );
+  return res.data;
+},
+
 };
  
 export default mathFactsService;

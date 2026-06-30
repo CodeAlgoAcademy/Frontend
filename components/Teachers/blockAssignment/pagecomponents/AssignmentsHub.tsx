@@ -3,9 +3,10 @@ import React from "react";
 interface AssignmentsHubProps {
   onGoToCoding: () => void;
   onGoToMathFacts: () => void;
+  onGoToMathReports: () => void;
 }
 
-export default function AssignmentsHub({ onGoToCoding, onGoToMathFacts }: AssignmentsHubProps) {
+export default function AssignmentsHub({ onGoToCoding, onGoToMathFacts, onGoToMathReports }: AssignmentsHubProps) {
   return (
     <div className="mx-auto max-w-7xl px-6 py-8">
       <div className="mb-8">
@@ -60,11 +61,11 @@ export default function AssignmentsHub({ onGoToCoding, onGoToMathFacts }: Assign
               Manage Math Facts
             </button>
             <button
-              onClick={onGoToMathFacts}
-              className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"
-            >
-              View Mastery Reports
-            </button>
+     onClick={onGoToMathReports} 
+     className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+  >
+     View Mastery Reports
+  </button>
           </div>
         </div>
       </div>
