@@ -3,14 +3,12 @@ import { CreateAssignmentBulkPayload, CreateAssignmentPayload, MathFactAnalytics
 import { getAccessToken } from "utils/getTokens";
 
 const mathFactsService = {
-  getFactSets: async (classId: string | number): Promise<MathFactSet[]> => {
-    const res = await http.get(`/academics/class/${classId}/math-facts/fact-sets/`, {
-        headers: {
-        Authorization: `Bearer ${getAccessToken()}`,
-      },
+  getFactSets: async (classId: string | number) => {
+    const res = await http.get(`/academics/math_facts/fact-sets/?class_id=${classId}`, {
+      headers: { Authorization: `Bearer ${getAccessToken()}` },
     });
     return res.data;
-  },
+},
  
 getAssignments: async (classId: string | number): Promise<StudentMathOverview[]> => {
     const res = await http.get(`/academics/class/${classId}/math-facts/assignments/`, {
