@@ -70,13 +70,13 @@ export default function MathFactAssignModal({ classId, isOpen, isEditing, assign
    };
 
    const loadFactSets = async () => {
-      try {
-         const data = await mathFactsService.getFactSets(classId);
-         setFactSets(data);
-      } catch (err) {
-         setError("Failed to load sets");
-      }
-   };
+   try {
+      const data = await mathFactsService.getFactSets(classId); 
+      setFactSets(data);
+   } catch (err) {
+      setError("Failed to load sets");
+   }
+};
 
    const toggleFactSet = (id: number) => {
       if (isAdaptive || isTurningOff) return;
