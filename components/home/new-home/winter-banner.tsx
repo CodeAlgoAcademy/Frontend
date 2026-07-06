@@ -3,7 +3,7 @@ export const WinterBanner = () => {
   return (
      <div className="relative z-40 bg-mainRed px-4 py-3 flex justify-center text-center text-white">
       <p className="text-sm font-semibold md:text-2xl">
-        Winter Sale 20% OFF Premium subscriptions! For a limited time only.
+        Summer Sale 20% OFF Premium subscriptions! For a limited time only.
      <span className="bg-mainGreen text-white rounded-full px-3 mx-2 py-1 text-sm font-bold">
           SALE
         </span>

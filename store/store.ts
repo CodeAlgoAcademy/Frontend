@@ -26,6 +26,8 @@ import teacherStudentReducer  from "./teacherStudentSlice";
 import teacherClassReducer from "./teachersClassSlice";
 import studentInfoReducer from "./usersStudentslice"; 
 import assignmentReducer from "./blockAssignmentSlice"
+import mathFactsReducer from "./mathFactsSlice";
+
 
 export const store = configureStore({
    reducer: {
@@ -55,6 +57,7 @@ export const store = configureStore({
       studentInfo: studentInfoReducer,
       teacherClassSlice: teacherClassReducer,
       assignments: assignmentReducer,
+      mathFacts: mathFactsReducer,
       
    },
 });
