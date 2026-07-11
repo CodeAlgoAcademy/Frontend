@@ -181,7 +181,7 @@ const CaseStudies = () => (
             source="Partner School Outcomes, 2024–2026"
           />
           <StatCard
-            value="500+"
+            value="800+"
             label="Students actively on a college or high-wage career track through CodeAlgo programs."
             source="CodeAlgo Program Records"
             isLast
