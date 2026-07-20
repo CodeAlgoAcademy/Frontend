@@ -31,16 +31,16 @@ const Dashboard = () => {
    const toggleTab = (key: keyof TeachersTabs, open: boolean) => {
       setTabs({ students: open });
    };
-   const calculateAge = (dob: string): number => {
-      const birthDate = new Date(dob);
-      const today = new Date();
-      let age = today.getFullYear() - birthDate.getFullYear();
-      const monthDiff = today.getMonth() - birthDate.getMonth();
-      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-         age--;
-      }
-      return age;
-   };
+   // const calculateAge = (dob: string): number => {
+   //    const birthDate = new Date(dob);
+   //    const today = new Date();
+   //    let age = today.getFullYear() - birthDate.getFullYear();
+   //    const monthDiff = today.getMonth() - birthDate.getMonth();
+   //    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+   //       age--;
+   //    }
+   //    return age;
+   // };
 
    useEffect(() => {
       if (classId) {
@@ -53,56 +53,94 @@ const Dashboard = () => {
 
    // Update the useEffect in teachers/index.tsx
 
+// useEffect(() => {
+//    const studentId = currentStudent?.student_id || currentStudent?.id;
+//    const dob = currentStudent?.dob;
+
+//    if (classId && studentId && dob) {
+//       setIsLoading(true);
+
+//       const age = calculateAge(dob);
+
+//       const is14AndAbove = age >= 14;
+//       setIsBlockProgress(!is14AndAbove);
+
+//       const action = is14AndAbove
+//          ? fetchStudentLineProgressNew({
+//               classId: classId.toString(),
+//               studentId: studentId.toString(),
+//            })
+//          : fetchStudentBlockGameProgress({
+//               classId,
+//               studentId,
+//            });
+
+//       dispatch(action)
+//          .unwrap()
+//          .then((res: any) => {
+//             const normalizedData = Array.isArray(res)
+//                ? res
+//                : res?.topic || [];
+
+//             setProgressData(normalizedData);
+//          })
+//          .catch((err) => {
+//             console.error("Progress Fetch Error:", err);
+//          })
+//          .finally(() => {
+//             setIsLoading(false);
+//          });
+//    }
+// }, [
+//    classId,
+//    currentStudent?.student_id,
+//    currentStudent?.id,
+//    currentStudent?.dob,
+//    dispatch,
+// ]);
+
+
+
+const calculateAge = (dob: string): number => {
+   if (!dob) return 0;
+   const birthDate = new Date(dob);
+   const today = new Date();
+   let age = today.getFullYear() - birthDate.getFullYear();
+   if (today < new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate())) {
+      age--;
+   }
+   return age;
+};
+
 useEffect(() => {
    const studentId = currentStudent?.student_id || currentStudent?.id;
    const dob = currentStudent?.dob;
 
    if (classId && studentId && dob) {
       setIsLoading(true);
+      setProgressData([]);
 
       const age = calculateAge(dob);
+      const isPythonStudent = age >= 14; 
+      setIsBlockProgress(!isPythonStudent);
 
-      const is14AndAbove = age >= 14;
-      setIsBlockProgress(!is14AndAbove);
-
-      const action = is14AndAbove
-         ? fetchStudentLineProgressNew({
-              classId: classId.toString(),
-              studentId: studentId.toString(),
-           })
-         : fetchStudentBlockGameProgress({
-              classId,
-              studentId,
-           });
+      const action = isPythonStudent
+         ? fetchStudentLineProgressNew({ classId: classId.toString(), studentId: studentId.toString() })
+         : fetchStudentBlockGameProgress({ classId, studentId });
 
       dispatch(action)
          .unwrap()
          .then((res: any) => {
-            const normalizedData = Array.isArray(res)
-               ? res
-               : res?.topic || [];
-
+            const normalizedData = Array.isArray(res) ? res : res?.topic || [];
             setProgressData(normalizedData);
          })
-         .catch((err) => {
-            console.error("Progress Fetch Error:", err);
-         })
-         .finally(() => {
-            setIsLoading(false);
-         });
+         .finally(() => setIsLoading(false));
    }
-}, [
-   classId,
-   currentStudent?.student_id,
-   currentStudent?.id,
-   currentStudent?.dob,
-   dispatch,
-]);
+}, [classId, currentStudent?.id, currentStudent?.dob]);
 
-
-   const allProgressItems = Array.isArray(progressData) ? progressData : [];
-   const inProgressItems = allProgressItems.filter((item) => (item.progress || 0) < 1.0);
-   const completedItems = allProgressItems.filter((item) => (item.progress || 0) >= 1.0);
+const allProgressItems = Array.isArray(progressData) ? progressData : [];
+const inProgressItems = allProgressItems.filter((item) => (item.progress || 0) < 1.0);
+const completedItems = allProgressItems.filter((item) => (item.progress || 0) >= 1.0);
 
 
    

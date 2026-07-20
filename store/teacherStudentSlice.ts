@@ -1,7 +1,7 @@
 import { LevelThresholdInputProps } from "@/components/parents/UI/levelthreshold";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IChildProgress, IChildTopics, screentimeTypes } from "types/interfaces/parent.interface";
-import { BaseStudent, ITeacherStudentsState } from "types/interfaces/teacherstudent.interface";
+import { BaseStudent, ITeacherStudentsState, ILineDiagnosticRecord } from "types/interfaces/teacherstudent.interface";
 import { getStudents } from "./studentSlice";
 import teachersStudentServices from "services/teachersStudentservices";
 import { errorResolver } from "utils/errorResolver";
@@ -47,6 +47,7 @@ const initialState: ITeacherStudentsState = {
       student_id: "",
    },
    diagnosticSummary: [], 
+   lineDiagnosticSummary: [],
    isLoading: false,
    error: undefined,
 };
@@ -278,6 +279,32 @@ export const fetchDiagnosticSummary = createAsyncThunk(
       }
    }
 );
+
+export const fetchLineDiagnosticSummary = createAsyncThunk(
+   "teacher/fetchLineDiagnosticSummary",
+   async (classId: string | number, thunkAPI) => {
+      try {
+         const result = await teachersStudentServices.getLineDiagnosticSummary(classId);
+         return result;
+      } catch (error: any) {
+         console.error("[LineDiagnosticSummary] API error:", error?.response?.status, error?.response?.data);
+         return thunkAPI.rejectWithValue(error.response?.data);
+      }
+   }
+);
+
+export const fetchLineStudentDiagnostics = createAsyncThunk(
+   "teacher/fetchLineStudentDiagnostics",
+   async (studentId: string | number, thunkAPI) => {
+      try {
+         const result = await teachersStudentServices.getLineStudentDiagnostics(studentId);
+         return result;
+      } catch (error: any) {
+         console.error("[LineStudentDiagnostics] API error:", error?.response?.status, error?.response?.data);
+         return thunkAPI.rejectWithValue(error.response?.data);
+      }
+   }
+);
 export const fetchStudentLineProgress = createAsyncThunk(
    "teacher/student/line-progress",
    async ({ studentId, classId }: { studentId: string; classId: string }, thunkAPI) => {
@@ -427,6 +454,10 @@ export const teacherStudentSlice = createSlice({
 
 .addCase(fetchDiagnosticSummary.fulfilled, (state, action) => {
    state.diagnosticSummary = action.payload.students;
+})
+
+.addCase(fetchLineDiagnosticSummary.fulfilled, (state, action) => {
+   state.lineDiagnosticSummary = action.payload.students;
 })
 
 .addCase(fetchStudentLineCodingSkills.fulfilled, (state, action) => {

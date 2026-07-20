@@ -50,9 +50,8 @@ useEffect(() => {
 
   if (classId && studentId && dob) {
     const age = calculateAge(dob);
-    const isUnder14 = age < 14;
-
-    if (isUnder14) {
+    
+    if (age < 14) {
       dispatch(fetchStudentBlockGameSkill({ 
         classId: classId.toString(), 
         studentId: studentId.toString() 
@@ -64,11 +63,10 @@ useEffect(() => {
       }));
     }
   }
-}, [classId, currentStudent?.student_id, currentStudent?.id, currentStudent?.dob, dispatch]);
+}, [classId, currentStudent?.id, currentStudent?.dob]);
 
   const hasSkills = skills && skills.length > 0;
 
-  // Normalize filtering for both Block and Line items
   const standardsWithProgress = allProgressItems.filter(item => 
     item.standard_code !== "default_standard" && (item.standard_name || item.name)
   );

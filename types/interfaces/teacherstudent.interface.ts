@@ -43,6 +43,7 @@ export interface ITeacherStudentsState{
   students: BaseStudent[];
   currentStudent: BaseStudent;
   diagnosticSummary: IDiagnosticSummary[]; 
+  lineDiagnosticSummary: ILineDiagnosticSummary[];
   isLoading: boolean;
   error?: string;
 }
@@ -54,6 +55,47 @@ export interface IDiagnosticSummary {
    mastery_band: "remediation" | "developing" | "proficient" | "advanced";
    persistence_band: "low" | "moderate" | "high";
    independence_band: "guided" | "independent";
+   recommended_action: string;
+   flags: string[];
+}
+
+export interface ILineDiagnosticRecord {
+   id: number;
+   student: number;
+   standard: number;
+   standard_code?: string;
+   standard_name?: string;
+   unit_level: string;
+   level_name: string;
+   status: string;
+   started_at: string;
+   completed_at: string | null;
+   duration_seconds: number;
+   attempts: number;
+   pass_count: number;
+   fail_count: number;
+   hint_uses: number;
+   code_snapshot: string;
+   ai_feedback: string;
+   resilience_flag: boolean;
+   innovation_flag: boolean;
+   communication_flag: boolean;
+   critical_thinking_flag: boolean;
+   mastery_band: string;
+   persistence_band: string;
+   independence_band: string;
+   recommended_action: string;
+   teacher_flagged: boolean;
+   teacher_notes: string;
+}
+
+export interface ILineDiagnosticSummary {
+   student_id: number;
+   student_name: string;
+   last_completed_unit_level: string;
+   mastery_band: string;
+   persistence_band: string;
+   independence_band: string;
    recommended_action: string;
    flags: string[];
 }

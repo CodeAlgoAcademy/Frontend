@@ -117,6 +117,20 @@ const getStudentDiagnosticDetail = async (studentId: string | number) => {
    return response.data;
 };
 
+const getLineDiagnosticSummary = async (classId: string | number) => {
+   const response = await http.get(`/academics/line-diagnostics/class/${classId}/summary/`, {
+      headers: { Authorization: `Bearer ${getAccessToken()}` },
+   });
+   return response.data;
+};
+
+const getLineStudentDiagnostics = async (studentId: string | number) => {
+   const response = await http.get(`/academics/line-diagnostics/student/${studentId}/?latest_only=true&limit=20`, {
+      headers: { Authorization: `Bearer ${getAccessToken()}` },
+   });
+   return response.data;
+};
+
 
 const teachersStudentServices={
     createStudentLevelThresHold,
@@ -129,6 +143,8 @@ const teachersStudentServices={
     updateCodingAccess,
     getCodingAccess,
    getClassDiagnosticSummary,
-   getStudentDiagnosticDetail
+   getStudentDiagnosticDetail,
+   getLineDiagnosticSummary,
+   getLineStudentDiagnostics
 }
 export default teachersStudentServices;
