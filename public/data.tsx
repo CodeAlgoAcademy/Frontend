@@ -24,6 +24,13 @@ export interface IArticle {
 }
 
 export const articles: IArticle[] = [
+   {
+   title: "Her startup needed a user test lab: Access to KC’s World Cup marketplace opened door to rapid, live iteration",
+   body: "CodeAlgo Academy left Union Station with more than just new customers. The edtech startup wrapped its FIFA World Cup-timed residency with a new product roadmap shaped by thousands of conversations throughout the five-week City of Entrepreneurs marketplace.",
+   date: "July 16, 2026",            
+   image: "/assets/press/1.jpg",
+   detailPage: "/her-start-up-needed-a-user-test-lab",
+},
   {
    title: "CodeAlgo Academy hits classrooms as the edtech platform (and founder) proves independence.",
    body: "After years of putting the building blocks together, Triumfia Houmbie Fulks’ edtech startup has officially entered the game, the founder said, noting she launched the coding platform into area schools this fall.",
