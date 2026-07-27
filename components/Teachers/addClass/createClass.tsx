@@ -19,34 +19,36 @@ import { addClass, getAllClasses, updateClass } from "services/classesService";
 import SelectOrganization from "./organizations";
 import { getOrgIBelongTo } from "services/organizersService";
 import { openErrorModal } from "store/fetchSlice";
-
-const inputFields: IInputFields[] = [
-   {
-      type: "text",
-      name: "className",
-      placeholder: "Enter Class Name*",
-   },
-   {
-      type: "text",
-      name: "subject",
-      placeholder: "Enter Subject*",
-   },
-   {
-      type: "text",
-      name: "roomNumber",
-      placeholder: "Enter Room Number*",
-   },
-];
+import { useTranslation } from "react-i18next";
 
 const CreateClass = () => {
+   const { t } = useTranslation("teacher");
    const dispatch = useDispatch();
    const { colorsModalOpen, selectOrganizationOpen, isEditMode, editingClassId } = useSelector((state: RootState) => state.modal);
    const classInfo = useSelector((state: RootState) => state.addClass.class);
 
+   const inputFields: IInputFields[] = [
+      {
+         type: "text",
+         name: "className",
+         placeholder: t("enterClassName"),
+      },
+      {
+         type: "text",
+         name: "subject",
+         placeholder: t("enterSubject"),
+      },
+      {
+         type: "text",
+         name: "roomNumber",
+         placeholder: t("enterRoomNumber"),
+      },
+   ];
+
    const handleSubmit = async (event: ChangeEvent<HTMLFormElement>) => {
       event.preventDefault();
       if (!classInfo?.grade) {
-         return dispatch(openErrorModal({ errorText: ["Select Grade"] }));
+                return dispatch(openErrorModal({ errorText: [t("selectGrade")] }));
       }
       
       if (isEditMode && editingClassId) {
@@ -80,7 +82,7 @@ const CreateClass = () => {
    return (
       <form className="h-full flex-[0.9] p-8" onSubmit={handleSubmit}>
          <header className="mb-6 w-full">
-            <h1 className="text-[20px] font-bold text-mainColor md:text-[30px]">Create New Class</h1>
+            <h1 className="text-[20px] font-bold text-mainColor md:text-[30px]">{t("createNewClass")}</h1>
          </header>
          <section className="grid items-start gap-[1rem] md:grid-cols-2">
             {inputFields?.map((inputField: IInputFields, index: number) => {
@@ -108,7 +110,7 @@ const CreateClass = () => {
                   dispatch(openGradesModal());
                }}
             >
-               <p>{classInfo?.grade || "Select Grade"}</p>
+                <p>{classInfo?.grade || t("selectGrade")}</p>
                <span>
                   <FaChevronDown />
                </span>
@@ -121,7 +123,7 @@ const CreateClass = () => {
                      dispatch(toggleSelectOrg());
                   }}
                >
-                  <p>{classInfo?.organization || "Select Organization"}</p>
+                   <p>{classInfo?.organization || t("selectOrganization")}</p>
                   <span>
                      <FaChevronDown />
                   </span>
@@ -172,11 +174,11 @@ const CreateClass = () => {
                <span className="font-lighter flex h-[30px] w-[30px] items-center justify-center rounded-full border-2 border-black text-[20px] text-black">
                   <FaPlus />
                </span>
-               <h3 className="text-[16px] font-bold">Add New Student</h3>
+                <h3 className="text-[16px] font-bold">{t("addNewStudentBtn")}</h3>
             </div>
-            <button type="submit" className="w-[150px] rounded-[30px] bg-mainColor py-3 text-[16px] text-white hover:shadow-md">
-               Create
-            </button>
+             <button type="submit" className="w-[150px] rounded-[30px] bg-mainColor py-3 text-[16px] text-white hover:shadow-md">
+                {t("createBtn")}
+             </button>
          </section>
       </form>
    );

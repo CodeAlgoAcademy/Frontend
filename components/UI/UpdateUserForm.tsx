@@ -4,6 +4,7 @@ import { RootState } from "../../store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "store/authSlice";
 import { updateEmail, updateFirstname, updateLastname } from "services/authService";
+import { useTranslation } from "react-i18next";
 
 export const UpdateUserForms = ({ setUserDropDown }: { setUserDropDown?: any }) => {
    const dispatch = useDispatch();
@@ -17,6 +18,7 @@ export const UpdateUserForms = ({ setUserDropDown }: { setUserDropDown?: any }) 
    };
 
    const auth = useSelector((state: RootState) => state.user?.auth);
+   const { t } = useTranslation("common");
    return (
       <>
          <form
@@ -28,7 +30,7 @@ export const UpdateUserForms = ({ setUserDropDown }: { setUserDropDown?: any }) 
             <input
                type="text"
                className="h-full w-full border-none text-[14px] tracking-wider text-black outline-none placeholder:text-gray-500"
-               placeholder="Update firstname"
+               placeholder={t("firstName")}
                value={auth?.firstname}
                onChange={(e: ChangeEvent<HTMLInputElement>) => {
                   dispatch(
@@ -52,7 +54,7 @@ export const UpdateUserForms = ({ setUserDropDown }: { setUserDropDown?: any }) 
             <input
                type="text"
                className="h-full w-full border-none text-[14px] tracking-wider text-black outline-none placeholder:text-gray-500"
-               placeholder="Update lastname"
+               placeholder={t("lastName")}
                value={auth?.lastname}
                onChange={(e: ChangeEvent<HTMLInputElement>) => {
                   dispatch(updateUser({ key: "lastname", value: e.target.value }));

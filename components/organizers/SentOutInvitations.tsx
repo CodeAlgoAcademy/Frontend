@@ -3,9 +3,11 @@ import ContentBox from "../parents/UI/ContentBox";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { getAllInvitations } from "services/organizersService";
+import { useTranslation } from "react-i18next";
 
 const SentOutInvitation = () => {
    const invitations = useSelector((state: RootState) => state?.organizer?.invitations);
+   const { t } = useTranslation("organizer");
 
    const dispatch = useDispatch();
 
@@ -14,7 +16,7 @@ const SentOutInvitation = () => {
    }, []);
 
    return (
-      <ContentBox size="base" title="Pending Invitations" padding="small">
+      <ContentBox size="base" title={t("pendingInvitations")} padding="small">
          <div className="h-[220px] w-full overflow-hidden overflow-y-scroll rounded-xl bg-[#eeeeee] py-2 px-4">
             {invitations?.map((invite, index: number) => {
                return (

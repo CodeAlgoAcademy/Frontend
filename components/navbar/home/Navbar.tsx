@@ -11,6 +11,8 @@ import { useRouter } from "next/router";
 import { useMediaQuery } from "@mui/material";
 import AppDownloadModal from "@/components/modals/AppDownloadModal";
 import TawkToWidget from "public/TawkToWidget";
+import LanguageSwitcher from "@/components/UI/LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
   const [heading, setHeading] = useState("");
@@ -18,11 +20,13 @@ const Navbar = () => {
   const [showMobileNav, setShowMobileNav] = useState(false);
   const [showAppModal, setShowAppModal] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const { push } = useRouter();
+   const { push } = useRouter();
+   const { t } = useTranslation("common");
+   const { t: tHome } = useTranslation("home");
 
-  return (
-    <>
-      <nav className="sticky top-0 left-0 z-[1001] bg-mainBlack px-6 py-4 font-workSans">
+   return (
+      <>
+         <nav className="sticky top-0 left-0 z-[1001] bg-mainBlack px-6 py-4 font-workSans">
         <div className="mx-auto flex items-center justify-between">
           <ul className="flex items-center gap-6">
             <Link href={"/"}>
@@ -64,7 +68,7 @@ const Navbar = () => {
                       }}
                     >
                       <p className="text-white">
-                        <Link href={link.route || "/"}>{link.name}</Link>
+                        <Link href={link.route || "/"}>{tHome(link.name)}</Link>
                       </p>
 
                       <div
@@ -76,7 +80,7 @@ const Navbar = () => {
                         {link.sublinks?.map((slinks, index) => (
                           <Link key={index} href={slinks.link}>
                             <p className="z-[400] p-2 text-[.85rem] hover:bg-mainRed/20">
-                              {slinks.name}
+                              {tHome(slinks.name)}
                             </p>
                           </Link>
                         ))}
@@ -93,22 +97,23 @@ const Navbar = () => {
           </ul>
 
           <div className="flex items-center gap-4 max-md:hidden">
+            <LanguageSwitcher variant="navbar" />
             <CustomButton
               onClick={() => push("/login")}
               variant="filled"
               size="medium"
               className="w-[100px] h-[44px] bg-mainRed font-bold !text-white flex items-center justify-center hover:bg-mainRed/80"
             >
-              <span className="no-contrast-adjust">Login</span>
+              <span className="no-contrast-adjust">{t("login")}</span>
             </CustomButton>
 
             <CustomButton
               onClick={() => setShowAppModal(true)}
               variant="outline"
               size="medium"
-              className="w-[100px] h-[44px] font-bold !text-white flex items-center justify-center"
+              className="min-w-[100px] px-4 h-[44px] font-bold !text-white flex items-center justify-center"
             >
-              <span className="no-contrast-adjust">Get App</span>
+              <span className="no-contrast-adjust">{t("getApp")}</span>
             </CustomButton>
 
             <CustomButton
@@ -117,7 +122,7 @@ const Navbar = () => {
               size="medium"
               className="w-[100px] h-[44px] bg-mainRed font-bold !text-white flex items-center justify-center hover:bg-mainRed/80"
             >
-              <span className="no-contrast-adjust">Play Game</span>
+              <span className="no-contrast-adjust">{t("playGame")}</span>
             </CustomButton>
           </div>
           <BiMenu

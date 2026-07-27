@@ -5,20 +5,22 @@ import { updateUser } from "store/authSlice";
 import UsernameButton2 from "../../signup/usernameButton2";
 import { useRouter } from "next/router";
 import { PasswordInput } from "@/components/UI/input";
+import { useTranslation } from "react-i18next";
 
 const ParentSignUp3 = () => {
    const dispatch = useDispatch();
    const { password, username, organization_code } = useSelector((state: RootState) => state.user.auth);
    const router = useRouter();
+   const { t } = useTranslation("auth");
 
    return (
       <div key={3}>
-         <label className="mt-6 block text-xl font-semibold">Username</label>
+          <label className="mt-6 block text-xl font-semibold">{t("username")}</label>
          <input
             type="text"
             value={username}
             className="auth-input"
-            placeholder="Enter your username"
+            placeholder={t("enterYourUsername")}
             onChange={(e) => {
                dispatch(updateUser({ key: "username", value: e.target.value }));
             }}
@@ -29,7 +31,7 @@ const ParentSignUp3 = () => {
          {/* don't display for the organizers */}
          {!router.pathname.includes("/organizer") && (
             <>
-               <label className="mt-6 block text-xl font-semibold">Organization Code (optional)</label>
+               <label className="mt-6 block text-xl font-semibold">{t("organizationCodeOptional")}</label>
                <input
                   className="auth-input"
                   value={organization_code}
@@ -38,12 +40,12 @@ const ParentSignUp3 = () => {
                   }}
                   minLength={6}
                   type="text"
-                  placeholder="Enter organization code"
+                   placeholder={t("enterOrganizationCode")}
                />
             </>
          )}
 
-         <label className="mt-6 block text-xl font-semibold">Password</label>
+          <label className="mt-6 block text-xl font-semibold">{t("password")}</label>
          <PasswordInput
             value={password ?? ""}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {

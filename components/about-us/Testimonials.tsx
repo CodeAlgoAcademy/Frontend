@@ -3,6 +3,7 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { A11y, EffectFlip, Navigation, Pagination, Scrollbar } from "swiper";
 import { ImQuotesLeft, ImQuotesRight } from "react-icons/im";
+import { useTranslation } from "react-i18next";
 
 const testimonials = [
    {
@@ -47,9 +48,10 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
+   const { t } = useTranslation("pages");
    return (
       <section className="relative mx-auto w-[92vw] max-w-6xl py-20">
-         <h2 className="z-[5] mb-10 text-center text-4xl font-bold">What Our Customers Are Saying</h2>
+         <h2 className="z-[5] mb-10 text-center text-4xl font-bold">{t("whatOurCustomersAreSaying")}</h2>
          <img src="/assets/0021_1.png" alt="" className="absolute -left-20 top-0 z-[0] hidden h-[300px] w-[300px] object-contain md:block" />
          <Swiper
             modules={[Navigation, Pagination, Scrollbar, A11y, EffectFlip]}

@@ -7,11 +7,14 @@ import pdf from "../../public/assets/teachers/pdf.png";
 import Image from "next/image";
 import { IClass, CurrentClassState } from "types/interfaces";
 import { getAccessToken } from "utils/getTokens";
+import { useTranslation } from "react-i18next";
 
 const SuccessModal = () => {
    const successModal = useSelector((state: RootState) => state.modal?.successModal);
    const dispatch = useDispatch();
    const closeModal = () => dispatch(closeSuccessModal());
+   const { t } = useTranslation("modals");
+   const { t: tCommon } = useTranslation("common");
    
    const currentClass = useSelector((state: RootState): CurrentClassState => state.currentClass);
    
@@ -99,12 +102,12 @@ const SuccessModal = () => {
                         <Image src={pdf} alt="pdf" />
                      </div>
                      <div className="flex flex-col gap-4 m-3">
-                        <button 
-                           className={styles.pdfButton}
-                           onClick={handleViewPDF}
-                        >
-                           {isStudentAdded ? "View Class PDF List" : "View PDF"}
-                        </button>
+                         <button 
+                            className={styles.pdfButton}
+                            onClick={handleViewPDF}
+                         >
+                            {t("downloadPdf")}
+                         </button>
                      </div>
                      <p className="mt-2 text-xs text-gray-500">
                         <strong>Note:</strong> The PDF will open in a new tab where you can view, print, or download it.

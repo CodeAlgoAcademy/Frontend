@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaChevronDown, FaChevronRight, FaChevronUp } from "react-icons/fa";
 import { allSKills } from "utils/allSkill";
 import { IMainAssignment, SkillDetails } from "types/interfaces";
+import { useTranslation } from "react-i18next";
 
 const SingleAssignment = ({
    assignment,
@@ -10,6 +11,7 @@ const SingleAssignment = ({
    assignment: IMainAssignment;
    setEditAssignment: (assignment: any, id: string | number) => void;
 }) => {
+   const { t } = useTranslation("teacher");
    const [accordionOpen, setAccordionOpen] = useState<boolean>(false);
    const getSkill = (id: string): SkillDetails => {
       return allSKills.find((skill) => {
@@ -36,7 +38,7 @@ const SingleAssignment = ({
                <div className="mb-2">
                   <div className="my-2 flex flex-wrap items-center justify-between gap-2">
                      <div className="flex items-center justify-start gap-2">
-                        <p className="text-mainColor text-[17px] font-bold">Due Date:</p>
+                         <p className="text-mainColor text-[17px] font-bold">{t("dueDate")}</p>
                         <p className="text-[17px]">{assignment.end_date}</p>
                      </div>
                      {assignment.status === "draft" && (
@@ -46,11 +48,11 @@ const SingleAssignment = ({
                               setEditAssignment(assignment, assignment.id as string);
                            }}
                         >
-                           Edit Assignment
+                           {t("editAssignment")}
                         </button>
                      )}
                   </div>
-                  <h1 className={styles.title}>Skills</h1>
+                   <h1 className={styles.title}>{t("skills")}</h1>
 
                   <div className="flex flex-col gap-2">
                      {skills.map((skill, index: number) => {
@@ -69,7 +71,7 @@ const SingleAssignment = ({
                   </div>
                </div>
                <div>
-                  <h1 className={styles.title}>Students</h1>
+                   <h1 className={styles.title}>{t("students")}</h1>
                   {assignment.students.map((student, index: number) => {
                      return (
                         <article key={index} className="flex items-start gap-2">

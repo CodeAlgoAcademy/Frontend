@@ -3,6 +3,7 @@ import { BiChevronDown } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { days, screentimeTypes } from "types/interfaces";
+import { useTranslation } from "react-i18next";
 
 const hours: Array<number | "No Limit"> = ["No Limit", 0, 1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -19,6 +20,7 @@ const ScreenTimeComponent = ({
 }) => {
    const { username, currentChild } = useSelector((state: RootState) => state.parentChild);
    const student = useSelector((state: RootState) => state.students?.currentStudent);
+   const { t } = useTranslation("parent");
 
    const [hoursListOpen, setHoursListOpen] = useState<boolean>(false);
 
@@ -54,7 +56,7 @@ const ScreenTimeComponent = ({
                toggleHoursList();
             }}
          >
-            {time.timeLimit === "" ? "Select" : time.timeLimit === "No Limit" ? time.timeLimit : time.timeLimit + " hr"}
+            {time.timeLimit === "" ? t("select") : time.timeLimit === "No Limit" ? t("noLimit") : time.timeLimit + " hr"}
             <span className="text-[20px]">
                <BiChevronDown />
             </span>

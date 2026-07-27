@@ -9,6 +9,8 @@ import { useRouter } from "next/router";
 import { Variant, motion } from "framer-motion";
 import AppDownloadModal from "@/components/modals/AppDownloadModal";
 import { CustomButton } from "@/components/UI/Button";
+import LanguageSwitcher from "@/components/UI/LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 
 interface NavbarProps {
    close(): void;
@@ -29,6 +31,8 @@ const MobileNavbar: FC<NavbarProps> = ({ close }) => {
    const router = useRouter();
    const [showAppModal, setShowAppModal] = useState(false);
    const { push } = useRouter();
+   const { t } = useTranslation("common");
+   const { t: tHome } = useTranslation("home");
 
    return (
       <motion.aside
@@ -54,13 +58,14 @@ const MobileNavbar: FC<NavbarProps> = ({ close }) => {
 
          {/* ✅ Buttons moved here, outside the links loop, no max-md:hidden */}
          <div className="flex flex-col gap-3 mt-6 pb-4">
+            <LanguageSwitcher variant="compact" className="self-start" />
             <CustomButton
                onClick={() => { push("/login"); close(); }}
                variant="filled"
                size="medium"
                className="w-full h-[44px] bg-mainRed font-bold !text-white flex items-center justify-center hover:bg-mainRed/80"
             >
-               <span className="no-contrast-adjust">Login</span>
+               <span className="no-contrast-adjust">{t("login")}</span>
             </CustomButton>
 
             <CustomButton
@@ -69,7 +74,7 @@ const MobileNavbar: FC<NavbarProps> = ({ close }) => {
                size="medium"
                className="w-full h-[44px] font-bold !text-white flex items-center justify-center"
             >
-               <span className="no-contrast-adjust">Get App</span>
+               <span className="no-contrast-adjust">{t("getApp")}</span>
             </CustomButton>
 
             <CustomButton
@@ -78,7 +83,7 @@ const MobileNavbar: FC<NavbarProps> = ({ close }) => {
                size="medium"
                className="w-full h-[44px] bg-mainRed font-bold !text-white flex items-center justify-center hover:bg-mainRed/80"
             >
-               <span className="no-contrast-adjust">Play Game</span>
+               <span className="no-contrast-adjust">{t("playGame")}</span>
             </CustomButton>
          </div>
 
@@ -98,6 +103,7 @@ const SingleMobileLink = forwardRef<HTMLDivElement, Props>(({ link }, ref) => {
    const [isOpen, setIsOpen] = useState(false);
    const [height, setHeight] = useState(0);
    const router = useRouter();
+   const { t: tHome } = useTranslation("home");
 
    const innerRef = useRef<HTMLUListElement>(null);
 
@@ -122,7 +128,7 @@ const SingleMobileLink = forwardRef<HTMLDivElement, Props>(({ link }, ref) => {
             }}
             className="flex items-center justify-between p-4 hover:bg-black/10"
          >
-            <h1 className="text-[1.3rem]">{link.name}</h1>
+            <h1 className="text-[1.3rem]">{tHome(link.name)}</h1>
             {link.sublinks && <span className="text-white">{isOpen ? <BiChevronUp size={25} /> : <BiChevronDown size={25} />}</span>}
          </header>
 
@@ -133,7 +139,7 @@ const SingleMobileLink = forwardRef<HTMLDivElement, Props>(({ link }, ref) => {
                      <li key={index} onClick={close}>
                         <Link href={link.link}>
                            <p className="rounded-md p-2 text-[.9rem] transition-all duration-300 hover:bg-mainRed hover:text-white" key={index}>
-                              {link.name}
+                              {tHome(link.name)}
                            </p>
                         </Link>
                      </li>

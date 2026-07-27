@@ -1,5 +1,6 @@
 import React from 'react'
 import { FaPlus } from 'react-icons/fa'
+import { useTranslation } from 'react-i18next'
 
 interface Iprops{
     onClick?:()=>void;
@@ -8,6 +9,7 @@ interface Iprops{
 }
 
 export default function EmptyState({onClick, title, description}:Iprops) {
+  const { t } = useTranslation('teacher');
   return (
    <div className="flex flex-col items-center w-full max-w-[600px] m-auto px-2 justify-center py-16 text-center bg-white rounded-2xl shadow-sm">
                           <div className="mb-6 text-gray-300">
@@ -24,7 +26,7 @@ export default function EmptyState({onClick, title, description}:Iprops) {
                              className="bg-mainColor text-white px-8 py-4 rounded-xl font-semibold hover:bg-blue-700 transition-colors flex items-center gap-3 text-lg shadow-lg hover:shadow-xl"
                           >
                              <FaPlus className="text-lg" />
-                             Create Your First Class
+                             {t("createYourFirstClass")}
                           </button>
                        </div>
   )

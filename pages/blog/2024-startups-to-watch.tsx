@@ -7,141 +7,123 @@ import ImagesContainer from "@/components/press/ImagesContainer";
 import Link from "@/components/press/Link";
 import RelatedArticles from "@/components/press/RelatedArticles";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 export default function StartupsToWatch() {
+   const { t } = useTranslation("blog");
    return (
       <section className="press-page min-h-screen w-full bg-[#f7f8ff] font-thabit">
          <Navbar />
 
          <div className="mx-auto mb-14 mt-8 max-w-[1100px] rounded-md bg-white p-3 px-6 shadow-md">
             <BlogTitle
-               title="2024 Startups to Watch: CodeAlgo Academy gamifies coding to build equity into new wave of software engineers"
-               date="November 15, 2023"
+               title={t("startupsToWatch.title")}
+               date={t("startupsToWatch.date")}
             />
             <ImagesContainer
                imageHeight={450}
                image="/assets/blog/2024-startups-to-watch.jpg"
-               imageDetail="Sedric Hibler and Triumfia Houmbie Fulks, CodeAlgo Academy"
+               imageDetail={t("startupsToWatch.imageDetail")}
             />
             <i>
-               Editor’s note: Startland News editors selected 10 Kansas City scaling businesses to spotlight for its annual Startups to Watch list.
-               Now in its ninth year, this feature recognizes founders and startups that editors believe will make some of the biggest, most
-               compelling news in the coming 12 months. The following is one of 2024’s companies.
+               {t("startupsToWatch.editorNote")}
             </i>
             <main className="mt-6">
                <section className="my-4">
-                  <DropCapsParagraph text="When Triumfia Houmbie Fulks noticed a lack of Black and female software engineers, it gave the CodeAlgo Academy co-founder pause, she said. " />
+                  <DropCapsParagraph text={t("startupsToWatch.dropCaps")} />
                   <p className="mt-3">
-                     “You start asking yourself, why aren’t there a lot of us in this field that is so lucrative — you can literally start making six
-                     figures right out of high school; Are people just not pursuing it?” asked Fulks.
+                     {t("startupsToWatch.content.introQuote")}
                   </p>
                </section>
                <section className="my-4 flex flex-col flex-wrap gap-[1rem] md:flex-row">
                   <div className="flex-[.75]">
                      <p>
-                        <Link link="https://codealgoacademy.com/" text="CodeAlgo Academy" /> uses gamification to teach coding skills to students in
-                        kindergarten through eighth grade, so they can develop their technology literacy and enter the workforce better prepared for
-                        STEM careers.
+                        <Link link="https://codealgoacademy.com/" text="CodeAlgo Academy" /> {t("startupsToWatch.content.gamification")}
                      </p>
 
                      <p className="mt-3">
-                        With the beta platform launched this year, Fulks and co-founder{" "}
-                        <Link link="https://www.linkedin.com/in/sedric-hibler/" text="Sedric Hibler" /> aim to dispel misconceptions surrounding
-                        coding—such as the belief that the field is overly challenging, tedious, and that individuals lack access to coding platforms
-                        that are user-friendly and easy to use.
+                        {t("startupsToWatch.content.betaLaunch")}
                      </p>
 
                      <p className="mt-3">
-                        “We decided to create CodeAlgo to bridge that gap and enable more underrepresented people to enter the field, providing them
-                        with the opportunity to secure an internship or job right out of high school,” said Fulks.
+                        {t("startupsToWatch.content.mission")}
                      </p>
 
                      <p className="mt-3">
-                        Both founders feel lucky for their own long-term career growth in software engineering, and want to extend that success in
-                        STEM career paths to others, they said
+                        {t("startupsToWatch.content.founders")}
                      </p>
 
                      <p className="mt-3">
-                        “Being an immigrant in the U.S. and searching for a job after graduation with a non-STEM degree can be quite challenging,”
-                        said Fulks. “The chances of securing something like that are very slim.”
+                        {t("startupsToWatch.content.immigrantStory")}
                      </p>
 
                      <p className="mt-3">
-                        Last-minute pivoting to pursue a STEM degree without a mentor or coach, Fulks taught herself coding to secure a job in
-                        software engineering. Recognizing the challenges she faced, Fulks aspires to streamline the path to success.
+                        {t("startupsToWatch.content.pivot")}
                      </p>
 
                      <p className="mt-3">
-                        “We want to ensure that we provide opportunities to youth so they can see it as a viable path. We know not everyone can be a
-                        software engineer, but let’s broaden the perspective,” said Hibler.
+                        {t("startupsToWatch.content.youthFocus")}
                      </p>
 
                      <p className="mt-3">
-                        Fulks challenges the idea that coding is inherently difficult, she said, emphasizing that, like any new skill, patience is
-                        crucial in the learning process.
+                        {t("startupsToWatch.content.challengingCoding")}
                      </p>
 
-                     <p className="mt-3">“What you don’t know is always going to be hard because you don’t know anything about it,” she said.</p>
+                     <p className="mt-3">{t("startupsToWatch.content.hardQuote")}</p>
 
                      <p className="mt-3">
-                        Because of the startup’s focus on youth, particularly middle school-aged students, Fulks believes it’s important to avoid
-                        traditional coding’s intimidating nature, where a combination of a bunch of random-seeming letters and instructions might
-                        deter young learners.
+                        {t("startupsToWatch.content.gamificationApproach")}
                      </p>
 
                      <p className="mt-3">
-                        “I can see a kid getting bored with it pretty quickly. So how do we make that fun and engaging? That’s how the gamification
-                        came into play,” said Fulks.
+                        {t("startupsToWatch.content.funQuote")}
                      </p>
 
                      <p className="mt-3">
-                        With CodeAlgo Academy, the duo developed a more accessible approach to coding education to make it more inclusive, and also
-                        fun to play for K-8 students.
+                        {t("startupsToWatch.content.accessibleApproach")}
                      </p>
                   </div>
                   <div className="flex-[.25]">
                      <img src="/assets/blog/2024-startups-to-watch-1.jpg" className="h-[300px] w-full object-contain object-center" alt="" />
 
                      <i className="mt-2 block">
-                        <b>Elevator pitch</b>: CodeAlgo began with a simple idea: Early exposure to programming is crucial to creating the programmers
-                        of our next generation. Our mission is to provide an in class and online programming gaming platform where parents and
-                        teachers can help their K-12 students become great problem solvers.
+                        <b>Elevator pitch</b>: {t("startupsToWatch.sidebar.elevatorPitch")}
                      </i>
 
                      <ul className="list-disc pl-2">
                         <li>
                            <i>
-                              <b>Founder:</b> Triumfia Houmbie Fulks, Sedric Hibler
+                              <b>Founder:</b> {t("startupsToWatch.sidebar.founder")}
                            </i>
                         </li>
 
                         <li>
                            <i>
-                              <b>Founding year:</b> 2022
+                              <b>Founding year:</b> {t("startupsToWatch.sidebar.foundingYear")}
                            </i>
                         </li>
 
                         <li>
                            <i>
-                              <b>Current employee count:</b> 2
+                              <b>Current employee count:</b> {t("startupsToWatch.sidebar.employeeCount")}
                            </i>
                         </li>
 
                         <li>
                            <i>
-                              <b>Funding to date:</b> $100,000+
+                              <b>Funding to date:</b> {t("startupsToWatch.sidebar.funding")}
                            </i>
                         </li>
 
                         <li>
                            <i>
-                              <b>Noteworthy investors:</b> Polsinelli Law Firm, CommunityAmerica Credit Union
+                              <b>Noteworthy investors:</b> {t("startupsToWatch.sidebar.investors")}
                            </i>
                         </li>
 
                         <li>
                            <i>
-                              <b>Noteworthy programs completed:</b> LaunchKC, Pipeline Pathfinders, AltCapYourBiz, Goodie Nation, Pure Pitch Rally
+                              <b>Noteworthy programs completed:</b> {t("startupsToWatch.sidebar.programs")}
                            </i>
                         </li>
                      </ul>
@@ -152,34 +134,30 @@ export default function StartupsToWatch() {
                   <ImagesContainer
                      imageHeight={450}
                      image="/assets/blog/2024-startups-to-watch-2.jpg"
-                     imageDetail="Triumfia Houmbie Fulks, CodeAlgo Academy, LaunchKC; photo by Tommy Felts, Startland News"
+                     imageDetail={t("startupsToWatch.imageDetail")}
                   />
 
                   <p className="mt-3">
-                     In the founders eyes’, getting people to sign up for the CodeAlgo Academy beta platform was one the biggest achievements of 2023.
-                     They slowly added people on their waitlist to the site to test it and provide them with feedback.
+                     {t("startupsToWatch.conclusion.betaAchievement")}
                   </p>
 
                   <p className="mt-3">
-                     Now CodeAlgo Academy is getting to a point where it needs to be easy for anyone to sign up and play immediately, the duo said,
-                     noting that taking the platform fully live is their main goal for 2024.
+                     {t("startupsToWatch.conclusion.liveGoal")}
                   </p>
 
                   <p className="mt-3">
-                     “We were able to get as many more users than we initially anticipated,” said Fulks. “So fingers crossed for making the actual
-                     program live to a larger public audience for next year.”
+                     {t("startupsToWatch.conclusion.usersQuote")}
                   </p>
 
                   <p className="mt-3">
-                     The team also wants to increase its staff — looking to hire an additional developer — as well as ramp up marketing to be able to
-                     increase the number of users on the platform, and finalize pending patents.
+                     {t("startupsToWatch.conclusion.expansion")}
                   </p>
 
                   <hr className="my-4 border-[1.5px]" />
 
                   <i>
-                     Click <Link text="here" link="https://www.startlandnews.com/2024/01/2024-startups-to-watch/" /> to view the full list of Startups
-                     to Watch — presented with support from the Ewing Marion Kauffman Foundation, and independently produced by Startland News.
+                     {t("startupsToWatch.conclusion.fullList")}{" "}
+                     <Link text="here" link="https://www.startlandnews.com/2024/01/2024-startups-to-watch/" />
                   </i>
                </section>
             </main>

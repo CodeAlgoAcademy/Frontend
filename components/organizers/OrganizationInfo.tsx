@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 import ContentBox from "../parents/UI/ContentBox";
 import { OrganizationStats } from "types/interfaces/organization.interface";
+import { useTranslation } from "react-i18next";
 
 interface Props {
    organizationStats: OrganizationStats | undefined;
@@ -13,6 +14,7 @@ interface Props {
 const OrganizationInfo = (props: Props) => {
    const organization = useSelector((state: RootState) => state?.organizer?.selectedOrganization);
    const [isCopied, setIsCopied] = useState(false);
+   const { t } = useTranslation("organizer");
 
    const handleCopyCode = async () => {
       const codeToCopy = organization?.invite_code || '';
@@ -37,7 +39,7 @@ const OrganizationInfo = (props: Props) => {
    if (props.loading) {
       return (
          <ContentBox 
-            title="Organization Info" 
+            title={t("organizationInfo")} 
             size="large"
             padding="small"
             style={{
@@ -63,9 +65,9 @@ const OrganizationInfo = (props: Props) => {
    }
 
    return (
-      <ContentBox 
-         title="Organization Info" 
-         size="large"
+       <ContentBox 
+          title={t("organizationInfo")} 
+          size="large"
          padding="small"
          style={{
             minWidth: "100%",
@@ -77,7 +79,7 @@ const OrganizationInfo = (props: Props) => {
          <h3 className="text-[1.1rem] font-bold">{organization?.name}</h3>
 
          <div className="mt-3 max-h-[200px] overflow-y-scroll">
-            <h5 className="font-bold text-[#333]">Organization Code</h5>
+             <h5 className="font-bold text-[#333]">{t("inviteCode")}</h5>
             <header className="mt-2 mb-4 flex justify-between items-center text-[0.9rem]">
                <p className="font-mono bg-gray-100 px-2 py-1 rounded">
                   {organization?.invite_code}
@@ -86,9 +88,9 @@ const OrganizationInfo = (props: Props) => {
                <button
                   onClick={handleCopyCode}
                   className="flex items-center text-mainColor cursor-pointer hover:opacity-80 transition-opacity"
-                  title="Copy invite code"
+                    title={t("copy")}
                >
-                  {isCopied ? 'Copied!' : 'Copy Code'}
+                  {isCopied ? t("copied") : t("copy")}
                   <span className="ml-2 inline-block">
                      {isCopied ? (
                         <BiCheck className="w-4 h-4 text-green-500" />
@@ -99,21 +101,21 @@ const OrganizationInfo = (props: Props) => {
                </button>
             </header>
 
-            {isCopied && (
-               <p className="text-sm text-green-600 mb-2">✓ Copied to clipboard!</p>
-            )}
+             {isCopied && (
+                <p className="text-sm text-green-600 mb-2">✓ {t("copied")}</p>
+             )}
 
-            <h5 className="font-bold text-[#333] mt-4">Description</h5>
+             <h5 className="font-bold text-[#333] mt-4">{t("description")}</h5>
             <p className="mt-2 text-[0.9rem] text-gray-700 bg-gray-50 p-2 rounded">
-               {organization?.description || "No description provided"}
+               {organization?.description || t("noDescriptionProvided")}
             </p>
             
             <div className="mt-4 space-y-2">
                <p className="font-bold text-[#333]">
-                  Total Accounts: <span className="text-mainColor">{props.organizationStats?.total_accounts || 0}</span>
+                  {t("totalAccounts")} <span className="text-mainColor">{props.organizationStats?.total_accounts || 0}</span>
                </p>
                <p className="font-bold text-[#333]">
-                  New Accounts Today: <span className="text-mainColor">{props.organizationStats?.new_accounts_today || 0}</span>
+                  {t("newAccountsToday")} <span className="text-mainColor">{props.organizationStats?.new_accounts_today || 0}</span>
                </p>
             </div>
          </div>

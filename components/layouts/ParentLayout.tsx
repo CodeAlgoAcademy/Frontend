@@ -16,6 +16,7 @@ import { getChildProgress, getChildSkills, getChildren } from "store/parentChild
 import { BsChevronDown } from "react-icons/bs";
 import { getUserFromLocalStorage } from "utils/getTokens";
 import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
+import LanguageSwitcher from "../UI/LanguageSwitcher";
 
 interface ParentTabs {
    user: boolean;
@@ -82,6 +83,7 @@ const ParentLayout = ({ children, title, showChildrenList}: Props) => {
             <header className="mb-8 flex items-center justify-between gap-2">
                <h1 className="text-[1.2rem] font-medium text-mainColor md:text-[1.4rem] lg:text-[1.6rem]">{title}</h1>
                <div className="flex items-center gap-2">
+                  <LanguageSwitcher variant="sidebar" />
                   <BetaButton />
                   <div className="relative">
                      <div className="flex cursor-pointer border items-center gap-1 text-mainColor" onClick={() => toggleTab("user", !tabs.user)}>

@@ -2,6 +2,7 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AiOutlineClose } from "react-icons/ai";
 import { FaApple, FaGooglePlay } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 interface AppDownloadModalProps {
   isOpen: boolean;
@@ -9,6 +10,7 @@ interface AppDownloadModalProps {
 }
 
 const AppDownloadModal: React.FC<AppDownloadModalProps> = ({ isOpen, onClose }) => {
+  const { t } = useTranslation("modals");
   const appStoreLinks = {
     apple: "https://apps.apple.com/us/app/codealgo/id6753643848",
     google: "https://play.google.com/store/apps/details?id=com.DevAlgo.codealgoacademy"
@@ -41,7 +43,7 @@ const AppDownloadModal: React.FC<AppDownloadModalProps> = ({ isOpen, onClose }) 
             </button>
             <div className="text-center">
               <h2 className="mb-2 text-2xl font-bold text-white">
-                Select Your device
+                {t("selectYourDevice")}
               </h2>
               <div className="mb-8 flex justify-center">
                 <div className="rounded-2xl bg-white/5 p-6 backdrop-blur-sm">
@@ -63,7 +65,7 @@ const AppDownloadModal: React.FC<AppDownloadModalProps> = ({ isOpen, onClose }) 
                 >
                   <FaApple size={24} />
                   <div className="text-left">
-                    <div className="text-xs">Download on the</div>
+                    <div className="text-xs">{t("downloadOnAppStore")}</div>
                     <div className="text-lg font-bold">App Store</div>
                   </div>
                 </a>
@@ -88,7 +90,7 @@ const AppDownloadModal: React.FC<AppDownloadModalProps> = ({ isOpen, onClose }) 
                 >
                   <FaGooglePlay size={24} />
                   <div className="text-left">
-                    <div className="text-xs">Get it on</div>
+                    <div className="text-xs">{t("getItOnGooglePlay")}</div>
                     <div className="text-lg font-bold">Google Play</div>
                   </div>
                 </a>

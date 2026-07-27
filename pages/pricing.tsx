@@ -16,12 +16,14 @@ import { openSuccessModal } from "store/modalSlice";
 import { RootState } from "store/store";
 import { InstitutionInquiryDto, IPlan } from "types/interfaces";
 import Head from "next/head";
+import { useTranslation } from "react-i18next";
 
 
 const Pricing = () => {
    const { handlers: pricingHandlers, plans } = useSelector((state: RootState) => state.pricing);
    const dispatch = useDispatch();
    const { push } = useRouter();
+   const { t } = useTranslation("pages");
 
    const [selectedPriceId, setSelectedPriceId] = useState<number | null>(null);
 
@@ -30,7 +32,7 @@ const Pricing = () => {
    }, []);
 
    const handleGetStarted = () => {
-      toast.success("Login to your dashboard to complete payment");
+      toast.success(t("loginToCompletePayment"));
       push(`/login/parent`);
    };
 
@@ -45,7 +47,7 @@ const Pricing = () => {
          <section className="mt-20 px-6 py-16">
             <div className="mx-auto max-w-[1200px]">
                <h1 className="text-center text-[1.8rem] font-bold text-[#0B2C4A]">
-                  Choose the plan that is right for you
+                  {t("choosePlan")}
                </h1>
 
                {pricingHandlers.loading ? (
@@ -53,7 +55,7 @@ const Pricing = () => {
                      <PricingShimmer />
                   </div>
                ) : plans.length === 0 ? (
-                  <p className="mt-16 text-center text-[1.2rem] text-gray-500">No Plan</p>
+                   <p className="mt-16 text-center text-[1.2rem] text-gray-500">{t("noPlan")}</p>
                ) : (
                   <div className="mt-16">
                      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2 max-w-[900px] mx-auto">
@@ -71,11 +73,11 @@ const Pricing = () => {
             price={17.3}
             originalPrice={(monthlyPrice.amount_in_cent / 100)}
             interval="mo"
-            trialText="7-Day Free Trial"
+            trialText={t("sevenDayFreeTrial")}
             billingText={`$ ${yearlyPrice.amount_in_cent / 100} Billed yearly`}
-            badge="Save 20%"
+            badge={t("save20Percent")}
             showButton={true}
-            buttonText="Try For Free"
+            buttonText={t("tryForFree")}
             onSelect={() => {
               setSelectedPriceId(yearlyPrice.id);
               handleGetStarted();
@@ -90,10 +92,10 @@ const Pricing = () => {
             title={`${plan.name} Monthly Plan`}
             price={monthlyPrice.amount_in_cent / 100}
             interval="mo"
-            trialText="7-Day Free Trial"
+            trialText={t("sevenDayFreeTrial")}
             billingText={`$${(monthlyPrice.amount_in_cent / 100)} Billed monthly`}
             showButton={true}
-            buttonText="Try For Free"
+            buttonText={t("tryForFree")}
             onSelect={() => {
               setSelectedPriceId(monthlyPrice.id);
               handleGetStarted();
@@ -130,6 +132,7 @@ const PricingShimmer = () => {
 
 const InstitutionInquiry = () => {
    const dispatch = useDispatch();
+   const { t } = useTranslation("pages");
    const initialValues: InstitutionInquiryDto = {
       category: "",
       email: "",
@@ -159,30 +162,30 @@ const InstitutionInquiry = () => {
    return (
       <div className="mx-auto mb-24 max-w-[1200px] md:mt-12">
          <div className="w-full bg-gray-50 p-7 md:rounded-[2rem] md:p-20">
-            <h1 className="text-center text-[1.5rem] font-bold">Institution Inquiry</h1>
+            <h1 className="text-center text-[1.5rem] font-bold">{t("institutionInquiry")}</h1>
             <p className="mt-2 text-center text-[1.1rem] text-gray-600">
-               Organization, School, and District bulk prices vary with bigger savings on larger orders.
+               {t("institutionDescription")}
             </p>
 
             <form onSubmit={onSubmit} className="mt-14 space-y-5">
                <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
-                  <div className="max-w-fit font-bold md:min-w-[250px]">
-                     <p>Name</p>
-                  </div>
+                   <div className="max-w-fit font-bold md:min-w-[250px]">
+                      <p>{t("name")}</p>
+                   </div>
 
-                  <div className="w-full flex-1">
-                     <input
-                        value={requestBody.name}
-                        onChange={(e) => updateRequestBody("name", e.target.value)}
-                        required
-                        className="w-full rounded-md border border-gray-300 bg-white p-3 outline-none focus:border-mainRed focus:ring-1 focus:ring-mainRed"
-                     />
-                  </div>
-               </div>
+                   <div className="w-full flex-1">
+                      <input
+                         value={requestBody.name}
+                         onChange={(e) => updateRequestBody("name", e.target.value)}
+                         required
+                         className="w-full rounded-md border border-gray-300 bg-white p-3 outline-none focus:border-mainRed focus:ring-1 focus:ring-mainRed"
+                      />
+                   </div>
+                </div>
 
-               <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
-                  <div className="max-w-fit font-bold md:min-w-[250px]">
-                     <p>Email</p>
+                <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
+                   <div className="max-w-fit font-bold md:min-w-[250px]">
+                      <p>{t("email")}</p>
                   </div>
 
                   <div className="w-full flex-1">
@@ -197,8 +200,8 @@ const InstitutionInquiry = () => {
                </div>
 
                <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
-                  <div className="max-w-fit font-bold md:min-w-[250px]">
-                     <p>Select a category</p>
+                   <div className="max-w-fit font-bold md:min-w-[250px]">
+                      <p>{t("selectCategory")}</p>
                   </div>
 
                   <div className="w-full flex-1">
@@ -241,17 +244,17 @@ const InstitutionInquiry = () => {
                         }}
                         onChange={(e) => updateRequestBody("category", e.target.value)}
                      >
-                        <MenuItem value={"unselected"}>Please select a category</MenuItem>
-                        <MenuItem value={"organization"}>Organization</MenuItem>
-                        <MenuItem value={"school"}>School</MenuItem>
-                        <MenuItem value={"district"}>District</MenuItem>
+                        <MenuItem value={"unselected"}>{t("pleaseSelectCategory")}</MenuItem>
+                         <MenuItem value={"organization"}>{t("organization")}</MenuItem>
+                         <MenuItem value={"school"}>School</MenuItem>
+                         <MenuItem value={"district"}>District</MenuItem>
                      </Select>
                   </div>
                </div>
 
                <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
-                  <div className="max-w-fit font-bold md:min-w-[250px]">
-                     <p>Your Institution name</p>
+                   <div className="max-w-fit font-bold md:min-w-[250px]">
+                      <p>{t("institutionName")}</p>
                   </div>
 
                   <div className="w-full flex-1">
@@ -265,8 +268,8 @@ const InstitutionInquiry = () => {
                </div>
 
                <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
-                  <div className="max-w-fit font-bold md:min-w-[250px]">
-                     <p>Number of classrooms</p>
+                   <div className="max-w-fit font-bold md:min-w-[250px]">
+                      <p>{t("numberOfClassrooms")}</p>
                   </div>
 
                   <div className="w-full flex-1">
@@ -281,8 +284,8 @@ const InstitutionInquiry = () => {
                </div>
 
                <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
-                  <div className="max-w-fit font-bold md:min-w-[250px]">
-                     <p>Any other details?</p>
+                   <div className="max-w-fit font-bold md:min-w-[250px]">
+                      <p>{t("anyOtherDetails")}</p>
                   </div>
 
                   <div className="w-full flex-1">
@@ -301,7 +304,7 @@ const InstitutionInquiry = () => {
                   variant="filled"
                   className="mx-auto !mt-10 justify-center !px-2 font-thabit text-[1.1rem] font-bold text-white max-md:w-full md:min-w-[250px]"
                >
-                  Get a quote
+                   {t("getAQuote")}
                </CustomButton>
             </form>
          </div>

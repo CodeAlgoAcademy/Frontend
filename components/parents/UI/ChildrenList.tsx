@@ -4,6 +4,7 @@ import { GoChevronDown } from "react-icons/go";
 import { useDispatch, useSelector } from "react-redux";
 import { changeCurrentChild } from "store/parentChildSlice";
 import { RootState } from "store/store";
+import { useTranslation } from "react-i18next";
 
 interface Props {
    close(): void;
@@ -14,6 +15,7 @@ interface Props {
 export default function ChildrenList({ close, open, isOpen }: Props) {
    const parent = useSelector((state: RootState) => state.parentChild);
    const dispatch = useDispatch();
+   const { t } = useTranslation("parent");
 
    if (parent.children?.length === 0) {
       return <></>;
@@ -49,7 +51,7 @@ export default function ChildrenList({ close, open, isOpen }: Props) {
 
          {parent?.currentChild && (
             <a href={"https://play.codealgoacademy.com"} target="_blank">
-               <button className="min-w-fit rounded-md border-none bg-mainColor px-[.8rem] py-[5px] text-white outline-none">Play</button>
+               <button className="min-w-fit rounded-md border-none bg-mainColor px-[.8rem] py-[5px] text-white outline-none">{t("play")}</button>
             </a>
          )}
       </div>

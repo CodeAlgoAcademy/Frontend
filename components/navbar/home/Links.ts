@@ -7,49 +7,45 @@ export interface NavbarLink {
 
 export const links: NavbarLink[] = [
    {
-      name: "About",
+      name: "about",
       subMenu: true,
       sublinks: [
-         { name: "About Us", link: "/about" },
-         { name: "Press", link: "/press" },
-         { name: "Blog", link: "/blog" },
-         { name: "Learn More", link: "/learn-more" },
-         { name: "Contact Us", link: "/contact" },
+         { name: "aboutUs", link: "/about" },
+         { name: "press", link: "/press" },
+         { name: "blog", link: "/blog" },
+         { name: "learnMore", link: "/learn-more" },
+         { name: "contactUs", link: "/contact" },
       ],
    },
-      { name: "Case Studies", 
+      { name: "caseStudies",
       route: "/case-studies" },
 
    {
-      name: "Parents",
+      name: "parents",
       subMenu: true,
       sublinks: [
-         // { name: "Parent's Page", link: '/parents' },
-         // { name: 'FAQ', link: '/parents/faq' },
-         { name: "Login", link: "/login/parent" },
-         { name: "SignUp", link: "/signup/parent" },
+         { name: "login", link: "/login/parent" },
+         { name: "signUp", link: "/signup/parent" },
           {
-            name: "Resources",
+            name: "resources",
             link: "/for-parents",
          },
       ],
    },
    {
-      name: "Educators",
+      name: "educators",
       subMenu: true,
       sublinks: [
-         // { name: "Teacher's Page", link: '/teachers' },
-         // { name: 'Resources', link: '/teachers/resources' },
-         { name: "Login", link: "/login/teacher" },
-         { name: "SignUp", link: "/signup/teacher" },
+         { name: "login", link: "/login/teacher" },
+         { name: "signUp", link: "/signup/teacher" },
          {
-            name: "Resources",
+            name: "resources",
             link: "/for-educators",
          },
       ],
    },
    {
-      name: "Pricing",
+      name: "pricing",
       route: "/pricing",
    },
 ];

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { UpdateUserForms } from "@/components/UI/UpdateUserForm";
 import { logout } from "services/authService";
+import { useTranslation } from "react-i18next";
 
 interface Props {
    isOpen: boolean;
@@ -18,6 +19,7 @@ export default function UserDropDown({ isOpen }: Props) {
    const router = useRouter();
    const userState = useSelector((state: RootState) => state.user);
    const dispatch = useDispatch();
+   const { t } = useTranslation("common");
 
    useEffect(() => {
       setUser(getUserFromLocalStorage());
@@ -55,7 +57,7 @@ export default function UserDropDown({ isOpen }: Props) {
                   <BiLogOut />
                </span>
 
-               <h5 className="ml-2 text-[1rem] font-bold">Logout</h5>
+               <h5 className="ml-2 text-[1rem] font-bold">{t("logoutButton")}</h5>
             </motion.div>
          </div>
       </div>

@@ -6,12 +6,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { changeTimeLimit } from "utils/timelimit";
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
 interface ScreentimeProps {
    size: "large" | "base";
 }
 const Screentime = ({ size }: ScreentimeProps) => {
    const { currentChild } = useSelector((state: RootState) => state.parentChild);
    const router = useRouter();
+   const { t } = useTranslation("parent");
    const [timeLimits, setTimeLimits] = useState<screentimeTypes[]>([
       { id: 1, dayOfTheWeek: "Monday", timeLimit: 0 },
       { id: 1, dayOfTheWeek: "Tuesday", timeLimit: 0 },
@@ -29,7 +31,7 @@ const Screentime = ({ size }: ScreentimeProps) => {
    return (
       <ContentBox
          size={size}
-         title="Screen Time"
+         title={t("screenTime")}
          padding="large"
          showSublink={router.pathname === "/parents"}
          link={"/parents/screen-time"}

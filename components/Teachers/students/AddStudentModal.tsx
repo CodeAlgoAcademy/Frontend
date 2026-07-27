@@ -12,6 +12,7 @@ import BulkImportModal from "@/components/Teachers/addClass/bulkImportModal";
 import { openSuccessModal, openGeneratingModal, closeGeneratingModal } from "store/modalSlice";
 import { RootState } from "store/store";
 import GeneratingModal from "./generatingModal";
+import { useTranslation } from "react-i18next";
 
 export const defaultTimeLimits: screentimeTypes[] = [
    {dayOfTheWeek: "Monday", timeLimit: "No Limit"},
@@ -24,6 +25,7 @@ export const defaultTimeLimits: screentimeTypes[] = [
 ];
 
 const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
+   const { t } = useTranslation("teacher");
    const dispatch = useDispatch();
    const router = useRouter();
    const [formData, setFormData] = useState<ISingleStudent>({
@@ -52,37 +54,37 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
       {
          type: "text",
          name: "firstName",
-         placeholder: "Enter Student First Name",
+         placeholder: t("enterStudentFirstName"),
          value: firstName,
       },
       {
          type: "text",
          name: "lastName",
-         placeholder: "Enter Student Last Initial Name",
+         placeholder: t("enterStudentLastNameInitial"),
          value: lastName,
       },
       {
          type: "email",
          name: "email",
-         placeholder: "Enter Student Email",
+         placeholder: t("enterStudentEmailPlaceholder"),
          value: email,
       },
       {
          type: "date",
          name: "dob",
-         placeholder: "Enter date of birth",
+         placeholder: t("enterDob"),
          value: dob,
       },
       {
          type: "password",
          name: "password",
-         placeholder: "Enter password",
+         placeholder: t("enterPasswordPlaceholder"),
          value: password,
       },
       {
          type: "text",
          name: "username",
-         placeholder: "Enter Username",
+         placeholder: t("enterUsernamePlaceholder"),
          value: username,
       },
    ];
@@ -101,14 +103,14 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
             timeLimits: defaultTimeLimits,
             id: ""
          };
-         dispatch(openGeneratingModal("Generating..."));
+         dispatch(openGeneratingModal(t("generating")));
 
          try {
             const result = await dispatch(addStudent(data)).unwrap();
             
             setIsOpen(false);
             dispatch(openSuccessModal({
-               message: "Your student's login credentials has been sent to the email address you provided!",
+               message: t("credentialsEmailSent"),
                studentId: result.id
             }));
             dispatch(getStudents());
@@ -124,7 +126,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
 
    const handleFileInputChange = (e: any) => {
       if (!e.target.files[0].type.includes("csv")) {
-         dispatch(openErrorModal({ errorText: ["Uploaded file is not a csv file"] }));
+            dispatch(openErrorModal({ errorText: [t("csvFileError")] }));
       } else {
          setFile(e.target.files[0]);
       }
@@ -135,7 +137,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
 
     const formDataObj = new FormData();
     formDataObj.append("file", file, file.name);
-    dispatch(openGeneratingModal("Importing Students..."));
+         dispatch(openGeneratingModal(t("importingStudents")));
 
     try {
         await dispatch(studentsBulkImport(formDataObj)).unwrap();
@@ -180,7 +182,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
                      >
                         <FaChevronLeft />
                      </span>
-                     <h1 className="text-[20px] font-bold md:text-[30px]">Add new student(s)</h1>
+                     <h1 className="text-[20px] font-bold md:text-[30px]">{t("addNewStudentTitle")}</h1>
                   </header>
                   <section className="grid gap-[1rem] px-8 md:grid-cols-2">
                      {inputFields?.map((inputField: IInputFields, index: number) => {
@@ -236,8 +238,8 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
                            }
                         }}
                      >
-                        Generate Username
-                     </button>
+                         {t("generateUsername")}
+                      </button>
                   </section>
                   <section className="mt-8 border-t-2 px-8 pt-5">
                      <button
@@ -247,7 +249,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
                            setBulkImportModalOpen(true);
                         }}
                      >
-                        View Bulk Import Instructions
+                        {t("viewBulkImport")}
                      </button>
                   </section>
                   <section className="flex w-full flex-col items-end justify-between gap-y-4 px-8 pt-2 md:flex-row md:items-center md:gap-y-0">
@@ -265,7 +267,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
                            <span className="font-lighter flex h-[30px] w-[30px] items-center justify-center rounded-full border-2 border-black text-[20px] text-black">
                               <FaPlus />
                            </span>
-                           <h3 className="text-[16px] font-bold">{file ? "File Added, click add student button to finish upload" : "Bulk Import"}</h3>
+                            <h3 className="text-[16px] font-bold">{file ? t("fileAddedUpload") : t("bulkImport")}</h3>
                         </label>
                      </div>
                      <button
@@ -278,7 +280,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
                         }}
                         disabled={generatingPDFModal.isOpen}
                      >
-                        {generatingPDFModal.isOpen ? "Processing..." : "Add Student(s)"}
+                        {generatingPDFModal.isOpen ? t("processing") : t("addStudentBtn")}
                      </button>
                   </section>
                   {file && (
@@ -292,7 +294,7 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
                            <span className="cursor-pointer text-[22px] text-red-600">
                               <FaTimes />
                            </span>
-                           <p>Delete Uploaded file</p>
+                           <p>{t("deleteUploadedFile")}</p>
                         </div>
                      </div>
                   )}

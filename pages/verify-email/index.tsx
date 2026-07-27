@@ -8,10 +8,12 @@ import { resendEmail } from "services/authService";
 import { closePreloader, openPreloader } from "store/fetchSlice";
 import { RootState } from "store/store";
 import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
+import { useTranslation } from "react-i18next";
 
 const EmailVerification = () => {
    const dispatch = useDispatch();
    const { email } = useSelector((state: RootState) => state.user.auth);
+   const { t } = useTranslation("pages");
 
    // store the email temporarily in locastorage
    useEffect(() => {
@@ -26,12 +28,12 @@ const EmailVerification = () => {
                   <FiCheckCircle />
                </span>
                <p className="text-center text-[20px]">
-                  An email verification link has been sent to your email address <span className="font-[800]">{email}</span>
+                  {t("verifyEmailSent")} <span className="font-[800]">{email}</span>
                </p>
             </div>
             <footer className="w-full border-t-2 pt-4 text-center">
                <button onClick={() => dispatch(resendEmail(email))} className="mt-2 w-[150px] rounded-md bg-mainRed p-3 text-white shadow-md">
-                  Resend link
+                  {t("resendLink")}
                </button>
             </footer>
          </div>

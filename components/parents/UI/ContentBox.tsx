@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React, { CSSProperties, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 
 interface Props {
    children?: ReactNode;
@@ -13,6 +14,7 @@ interface Props {
 }
 // Note: The title parameter should alao be the same name as the path of the sublink & spacing is replaced with '-' for the link href
 const ContentBox = ({ children, title, subtitle, showSublink, padding, size, link, style }: Props) => {
+   const { t } = useTranslation("parent");
    return (
       <div
          className="short-scroll-thumb relative max-w-full  flex-1 self-center overflow-x-auto overflow-y-clip xl:overflow-x-hidden"
@@ -36,7 +38,7 @@ const ContentBox = ({ children, title, subtitle, showSublink, padding, size, lin
             {showSublink && (
                <Link href={`${link}`}>
                   <span className="mt-3 ml-auto block w-fit cursor-pointer text-sm font-light underline hover:text-mainColor">
-                     Edit {title} Settings
+                     {t("editSettings", { title })}
                   </span>
                </Link>
             )}

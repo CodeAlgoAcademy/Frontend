@@ -1,9 +1,9 @@
 import { ReactNode } from "react";
-import { GiConcentricCrescents, GiPsychicWaves, GiSoundWaves } from "react-icons/gi";
-import { IoContrast, IoEyeOutline } from "react-icons/io5";
+import { GiConcentricCrescents, GiSoundWaves } from "react-icons/gi";
+import {  IoEyeOutline } from "react-icons/io5";
 import { MdInvertColors, MdLink, MdOutlineInvertColors } from "react-icons/md";
 import { RiCursorLine, RiFontSize, RiFontSize2, RiWheelchairFill } from "react-icons/ri";
-import { CiImageOff, CiImageOn, CiLineHeight } from "react-icons/ci";
+import { CiImageOff, CiLineHeight } from "react-icons/ci";
 import { LuBrain } from "react-icons/lu";
 import { TbPuzzle } from "react-icons/tb";
 import { AccessibilityFeatures, AccessibilitySlice } from "types/interfaces/accessibility.interface";
@@ -23,148 +23,26 @@ export interface IArticle {
    detailPage?: string;
 }
 
-export const articles: IArticle[] = [
-   {
-   title: "Her startup needed a user test lab: Access to KC’s World Cup marketplace opened door to rapid, live iteration",
-   body: "CodeAlgo Academy left Union Station with more than just new customers. The edtech startup wrapped its FIFA World Cup-timed residency with a new product roadmap shaped by thousands of conversations throughout the five-week City of Entrepreneurs marketplace.",
-   date: "July 16, 2026",            
-   image: "/assets/press/1.jpg",
-   detailPage: "/her-start-up-needed-a-user-test-lab",
-},
-  {
-   title: "CodeAlgo Academy hits classrooms as the edtech platform (and founder) proves independence.",
-   body: "After years of putting the building blocks together, Triumfia Houmbie Fulks’ edtech startup has officially entered the game, the founder said, noting she launched the coding platform into area schools this fall.",
-   date: "February 03, 2026",            
-   image: "/assets/blog/press/codealgopoto.jpg",
-   detailPage: "/codeAlgo-academy-hits-as-edtech-platform",
-},
-  {
-   title: "Real, live astronaut’ preaches courage for unlimited imagination to LINC, CodeAlgo students.",
-   body: "The 11 -year-old LINC student knew that he and his King Elementary classmates were special invitees because they were in an after-school coding program. He knew the bus had delivered them to an engineering firm — Burns & McDonnell.",
-   date: "January 13, 2026",            
-   image: "/assets/blog/press/demarris.webp",
-   detailPage: "/codeAlgoStudents",
-},
-  {
-   title: "2025 Black Ambition Semifinalists Announcement",
-   body: "Black Ambition unveils the 177 visionaries selected as the 2025 Semifinalists, a pioneering class of founders who are defying gravity and shaping the future of innovation across industries.",
-   date: "June 2025",
-   image: "/assets/blog/press/blackam.png",
-   detailPage: "/blackambition"
-},
-    {
-      title: "Success code: LINC student create online games, spark future aspirations",
-      body: "LINC students at King Elementary in the Kansas City Public Schools pose with teachers and suppoerters as they display certificates from the CodeAlgo Academy coding program.",
-      date: "May 2025",
-      image: "/assets/blog/press/linc.png",
-      detailPage: "/linc-student",
-   },
-    {
-      title: "Viruses vs. Bacteria—Made Fun for Kids!",
-      body: "We’ve partnered with the Kansas Department of Health to teach kids the difference between viruses and bacteria in a fun, interactive way—empowering them to understand their bodies and health!",
-      date: "Apirl 2025",
-      image: "/assets/blog/press/save.PNG",
-      detailPage: "/linkedin",
-   },
-   {
-      title: "2024 Startups to Watch: CodeAlgo Academy Gamifies Coding for Equity",
-      body: "Why aren’t more people entering this lucrative field—you can make six figures right out of high school. Are they just not pursuing it?” — Fulks",
-      date: "January 03, 2024",
-      image: "/assets/blog/press/triumfia.jpg",
-      detailPage: "/gamification",
-   },
-   {
-      title: "Pipeline's New Cohorts Highlight Power of Diversity",
-      body: "More than two dozen founders have joined Pipeline’s 2024 Fellowship and Pathfinder Program, expanding the elite network of high-growth Midwest entrepreneurs.",
-      date: "February 01, 2024",
-      image: "/assets/blog/press/pipeline.jpg",
-      detailPage: "/pipeline",
-   },
-   {
-      title: "LaunchKC awards $300K",
-      body: "Six new startups enter the winners' circle with KC investments",
-      date: "November 2023",
-      image: "/assets/blog/launch-kc-award.jpg",
-      detailPage: "/launch-kc-awards",
-   },
-   {
-      title: "Big winner at GEWKC",
-      body: "AltCap Your Biz turns The Next Paige with $42K+ in prizes",
-      date: "November 2023",
-      image: "/assets/blog/altcap-your-biz6.jpg",
-      detailPage: "/altcap-your-biz",
-   },
-   {
-      title: "CodeAlgo Academy's Beta Platform is Live!",
-      body: "Unlock the World of Coding Adventures: CodeAlgo Academy's Beta Platform is Now Live!",
-      date: "November 2023",
-      image: "/assets/blog/codealgo-beta-live.png",
-      detailPage: "/codealgo-beta-live",
-   },
-   {
-      title: "Triumfia fulks will be hosting a workshop at the All Girls Matter conference",
-      body: "Workshop at the All Girls Matter Conference hosted by triumfia fulks",
-      date: "October 7, 2023",
-      image: "/assets/blog/all-girls-matter-conference.jpeg",
-      detailPage: "/all-girls-matter-conference",
-   },
-   {
-      title: "🌟 CodeAlgo Academy Wins the Rockstar Business Award! 🌟",
-      body: "We are thrilled and deeply honored to announce that our team at CodeAlgo Academy have been awarded the prestigious Rockstar Business Award.",
-      date: "August 2023",
-      image: "/assets/blog/codealgo-wins-rockstar-business-award.jpeg",
-      detailPage: "/codealgo-wins-rockstar-business-award",
-   },
-   {
-      title: "CodeAlgo at ProX Hiring Fair – Connecting with Future Innovators!",
-      body: "We're thrilled to announce our active participation in the ProX Hiring Fair, an exceptional event hosted by Pro X, where more than 90 employers converge to interview over 1,000 talented students, paving the way for transformative summer internships. ",
-      image: "/assets/blog/codealgo-at-proX.jpeg",
-      detailPage: "/codealgo-at-proX",
-      date: "March 18, 2023",
-   },
-   {
-      title: "CodeAlgo Academy wins $13,000 from the PurePitch Rally",
-      body: "CodeAlgo Academy wins $13,000 from the PurePitch Rally",
-      date: "October 2022",
-      detailPage: "/pure-pitch-rally",
-      image: "/assets/blog/article1.jpg",
-   },
-   {
-      title: "Familiestogether: Together We Can Learn Conference",
-      body: "CodeAlgo Academy invited to the Together We Can Learn Conference to discuss the importance of dream big, overcoming challenges and setting Goals",
-      image: "/assets/blog/article6.png",
-      detailPage: "/families-together-conference",
-      date: "September 2022",
-   },
-   {
-      title: "Visibile Hands Twitter Pitch Winner",
-      body: "CodeAlgo Academy selected as 1 of the winners",
-      image: "/assets/blog/article5.png",
-      detailPage: "/twitter-pitch-winner",
-      date: "April 2022",
-   },
-   {
-      title: "Co-design research program with LeanLab",
-      body: "CodeAlgo Academy was selected to participate in a Co-design research program with LeanLab",
-      image: "/assets/blog/article3.png",
-      detailPage: "/codesign-research-program",
-      date: "April 2022",
-   },
-
-   {
-      title: "CodeAlgo Academy Selected to join Goodie Nation",
-      body: "Goodie Nation has chosen CodeAlgo Academy as one of the eight founders to be a part of their community, recognizing their exceptional potential for growth and impact in the industry.",
-      image: "/assets/blog/article4.png",
-      detailPage: "/codealgo-joins-goodie-nation",
-      date: "March 2022",
-   },
-   // {
-   //    title: "Pipeline has selected CodeAlgo Academy to join their Pathfinder ",
-   //    body: "Pipeline has extended an exclusive invitation to CodeAlgo Academy to join their Pathfinder program, marking a significant milestone in our journey toward excellence!",
-   //    image: "/assets/blog/article2.jpg",
-   //    detailPage: "/pipeline-selected-codealgo",
-   //    date: "January 2022",
-   // },
+export const articles = [
+  { id: "herStartup", image: "/assets/press/1.jpg", detailPage: "/her-start-up-needed-a-user-test-lab" },
+  { id: "edtechPlatform", image: "/assets/blog/press/codealgopoto.jpg", detailPage: "/codeAlgo-academy-hits-as-edtech-platform" },
+  { id: "codealgoStudents", image: "/assets/blog/press/demarris.webp", detailPage: "/codeAlgoStudents" },
+  { id: "blackAmbition", image: "/assets/blog/press/blackam.png", detailPage: "/blackambition" },
+  { id: "lincStudent", image: "/assets/blog/press/linc.png", detailPage: "/linc-student" },
+  { id: "virusesBacteria", image: "/assets/blog/press/save.PNG", detailPage: "/linkedin" },
+  { id: "gamification", image: "/assets/blog/press/triumfia.jpg", detailPage: "/gamification" },
+  { id: "pipeline", image: "/assets/blog/press/pipeline.jpg", detailPage: "/pipeline" },
+  { id: "launchKcAwards", image: "/assets/blog/launch-kc-award.jpg", detailPage: "/launch-kc-awards" },
+  { id: "altcapYourBiz", image: "/assets/blog/altcap-your-biz6.jpg", detailPage: "/altcap-your-biz" },
+  { id: "codealgoBetaLive", image: "/assets/blog/codealgo-beta-live.png", detailPage: "/codealgo-beta-live" },
+  { id: "allGirlsMatter", image: "/assets/blog/all-girls-matter-conference.jpeg", detailPage: "/all-girls-matter-conference" },
+  { id: "rockstarAward", image: "/assets/blog/codealgo-wins-rockstar-business-award.jpeg", detailPage: "/codealgo-wins-rockstar-business-award" },
+  { id: "proxHiringFair", image: "/assets/blog/codealgo-at-proX.jpeg", detailPage: "/codealgo-at-proX" },
+  { id: "purePitchRally", image: "/assets/blog/article1.jpg", detailPage: "/pure-pitch-rally" },
+  { id: "familiesTogether", image: "/assets/blog/article6.png", detailPage: "/families-together-conference" },
+  { id: "twitterPitch", image: "/assets/blog/article5.png", detailPage: "/twitter-pitch-winner" },
+  { id: "codesignResearch", image: "/assets/blog/article3.png", detailPage: "/codesign-research-program" },
+  { id: "goodieNation", image: "/assets/blog/article4.png", detailPage: "/codealgo-joins-goodie-nation" },
 ];
 
 export const accessibility_profiles: {

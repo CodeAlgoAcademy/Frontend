@@ -1,102 +1,97 @@
 import Link from "next/link";
 import React from "react";
 import { BsFacebook, BsInstagram, BsLinkedin, BsTwitter, BsTwitterX, BsYoutube } from "react-icons/bs";
-
-const links = [
-   {
-      header: "Resources",
-      sublinks: [
-         {
-            title: "Parents Resource",
-            href: "/parents-resources",
-         },
-         {
-            title: "Teachers Resource",
-            href: "/teachers-resources",
-         },
-         {
-            title: "Corporate Partnership",
-            href: "https://forms.monday.com/forms/ef8bc548d5f5846d9f5c23baa615b924?r=use1",
-         },
-         {
-            title: "Professional Development",
-            href: "/dev-forum",
-         },
-         {
-            title: "Pricing",
-            href: "/pricing",
-         },
-      ],
-   },
-
-   {
-      header: "Support",
-      sublinks: [
-         {
-            title: "Support Center",
-            href: "/contact",
-         },
-         {
-            title: "FAQs",
-            href: "/faq",
-         },
-         {
-            title: "Getting Set Up",
-            href: "/signup",
-         },
-      ],
-   },
-
-   {
-      header: "Legal",
-      sublinks: [
-         {
-            title: "Terms",
-            href: "/privacy-policy",
-         },
-         {
-            title: "Privacy",
-            href: "/privacy-policy",
-         },
-         {
-            title: "Kids & Online Safety",
-            href: "/privacy-policy",
-         },
-      ],
-   },
-
-   {
-      header: "Codealgo",
-      sublinks: [
-         {
-            title: "About Us",
-            href: "/about-us",
-         },
-         {
-            title: "Press",
-            href: "/press",
-         },
-         {
-            title: "Blog",
-            href: "/blog",
-         },
-         {
-            title: "Contact Us",
-            href: "/contact",
-         },
-      ],
-   },
-];
-
-export const socials = [
-   { link: "https://www.youtube.com/@codealgoacademy6800", icon: <BsYoutube /> },
-   { link: "https://linkedin.com/company/codealgo", icon: <BsLinkedin /> },
-   { link: "https://facebook.com/stcodealgo", icon: <BsFacebook /> },
-   { link: "https://instagram.com/stcodealgo", icon: <BsInstagram /> },
-   { link: "https://twitter.com/stcodealgo", icon: <BsTwitterX /> },
-];
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
+   const { t } = useTranslation("home");
+
+   const links = [
+      {
+         header: t("resourcesHeader"),
+         sublinks: [
+            {
+               title: t("parentsResource"),
+               href: "/parents-resources",
+            },
+            {
+               title: t("teachersResource"),
+               href: "/teachers-resources",
+            },
+            {
+               title: t("corporatePartnership"),
+               href: "https://forms.monday.com/forms/ef8bc548d5f5846d9f5c23baa615b924?r=use1",
+            },
+            {
+               title: t("professionalDevelopment"),
+               href: "/dev-forum",
+            },
+            {
+               title: t("pricing"),
+               href: "/pricing",
+            },
+         ],
+      },
+
+      {
+         header: t("support"),
+         sublinks: [
+            {
+               title: t("supportCenter"),
+               href: "/contact",
+            },
+            {
+               title: t("faqs"),
+               href: "/faq",
+            },
+            {
+               title: t("gettingSetUp"),
+               href: "/signup",
+            },
+         ],
+      },
+
+      {
+         header: t("legal"),
+         sublinks: [
+            {
+               title: t("terms"),
+               href: "/privacy-policy",
+            },
+            {
+               title: t("privacy"),
+               href: "/privacy-policy",
+            },
+            {
+               title: t("kidsOnlineSafety"),
+               href: "/privacy-policy",
+            },
+         ],
+      },
+
+      {
+         header: t("codealgo"),
+         sublinks: [
+            {
+               title: t("aboutUs"),
+               href: "/about-us",
+            },
+            {
+               title: t("press"),
+               href: "/press",
+            },
+            {
+               title: t("blog"),
+               href: "/blog",
+            },
+            {
+               title: t("contactUs"),
+               href: "/contact",
+            },
+         ],
+      },
+   ];
+
    return (
       <footer className="min-h-[150px] bg-mainBlack p-12 font-thabit text-white max-md:px-6">
          <div className="grid grid-cols-1 gap-8 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -136,12 +131,20 @@ const Footer = () => {
                })}
             </div>
 
-            <p className="text-[.9rem]">Copyright &copy; {new Date().getFullYear()} CodeAlgo</p>
+            <p className="text-[.9rem]">{t("copyright", { year: new Date().getFullYear() })}</p>
 
             <p className="text-[.9rem] font-semibold">800 E 18th St, Kansas City, MO 64108</p>
          </div>
       </footer>
    );
 };
+
+export const socials = [
+   { link: "https://www.youtube.com/@codealgoacademy6800", icon: <BsYoutube /> },
+   { link: "https://linkedin.com/company/codealgo", icon: <BsLinkedin /> },
+   { link: "https://facebook.com/stcodealgo", icon: <BsFacebook /> },
+   { link: "https://instagram.com/stcodealgo", icon: <BsInstagram /> },
+   { link: "https://twitter.com/stcodealgo", icon: <BsTwitterX /> },
+];
 
 export default Footer;

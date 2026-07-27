@@ -11,6 +11,7 @@ import { getAllClasses, deleteClass } from "services/classesService";
 import DeleteConfirmationModal from "../UI/common/DeleteConfirmationModal";
 import { openEditClassModal } from "../../../store/modalSlice";
 import { populateClassForEdit } from "../../../store/addClassSlice";
+import { useTranslation } from "react-i18next";
 
 const SingleClass: FC<IClass> = ({ 
   id, 
@@ -23,6 +24,7 @@ const SingleClass: FC<IClass> = ({
   roomNumber,
   teacher
 }) => {
+   const { t } = useTranslation("teacher");
    const dispatch = useDispatch();
    const [isOpen, setIsOpen] = useState<boolean>(false);
    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
@@ -99,22 +101,22 @@ const SingleClass: FC<IClass> = ({
                      <div className="flex">
                      {isOrganizationClass ? (
                         <p className="text-sm text-gray-600 mt-1">
-                          Org Name: {organization?.name} • Room {roomNumber}
+                           {t("orgName")}: {organization?.name} • {t("room")} {roomNumber}
                         </p>
                      ) : (
                         <p className="text-sm text-gray-600 mt-1">
-                           Private Class • Room {roomNumber}
+                           {t("privateClass")} • {t("room")} {roomNumber}
                         </p>
                      )}
                      </div>
                   </div>
                   
                   <div className="relative" ref={dropdownRef}>
-                     <button
-                        onClick={toggleDropdown}
-                        className="rounded-md p-2 text-gray-600 hover:bg-gray-100 transition-colors duration-200"
-                        title="More options"
-                     >
+                      <button
+                         onClick={toggleDropdown}
+                         className="rounded-md p-2 text-gray-600 hover:bg-gray-100 transition-colors duration-200"
+                         title={t("moreOptions")}
+                      >
                         <RiMore2Fill className="text-lg" />
                      </button>
 
@@ -125,16 +127,16 @@ const SingleClass: FC<IClass> = ({
                                  onClick={handleEditClick}
                                  className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200"
                               >
-                                 <RiEditLine className="mr-2 text-gray-500" />
-                                 Edit Class
-                              </button>
-                              <button
-                                 onClick={handleDeleteClick}
-                                 className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors duration-200"
-                              >
-                                 <RiDeleteBin6Line className="mr-2" />
-                                 Delete Class
-                              </button>
+                            <RiEditLine className="mr-2 text-gray-500" />
+                                  {t("editClass")}
+                               </button>
+                               <button
+                                  onClick={handleDeleteClick}
+                                  className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors duration-200"
+                               >
+                                  <RiDeleteBin6Line className="mr-2" />
+                                  {t("deleteClass")}
+                               </button>
                            </div>
                         </div>
                      )}
@@ -142,9 +144,9 @@ const SingleClass: FC<IClass> = ({
                </div>
             </header>
             <main className="mt-4 flex flex-col justify-between space-y-2">
-               <h2 className="font-bold">Grade {grade}</h2>
-               <h2 className="font-bold">{subject}</h2>
-               <h2 className="font-bold">{totalStudent} Student(s)</h2>
+                <h2 className="font-bold">{t("grade")}: {grade}</h2>
+                <h2 className="font-bold">{subject}</h2>
+                <h2 className="font-bold">{t("studentCount", { count: totalStudent })}</h2>
             </main>
             <footer className="mt-[16px] flex justify-between pb-2">
                <div
@@ -160,7 +162,7 @@ const SingleClass: FC<IClass> = ({
                      }));
                   }}
                >
-                  Add Students
+                   {t("addStudents")}
                   <span className="text-[18px] font-bold">
                      <BiPlus />
                   </span>
@@ -179,7 +181,7 @@ const SingleClass: FC<IClass> = ({
                      }}
                      data-testid="dashboard-button"
                   >
-                     <p className="text-[16px] font-semibold">Dashboard</p>
+                      <p className="text-[16px] font-semibold">{t("dashboard")}</p>
                      <span className="flex h-[30px] w-[30px] items-center justify-center rounded-full border-2 border-black text-[18px]">
                         <FaChevronRight />
                      </span>
@@ -193,12 +195,12 @@ const SingleClass: FC<IClass> = ({
             isOpen={isDeleteModalOpen}
             onClose={handleDeleteCancel}
             onConfirm={handleDeleteConfirm}
-            title="Delete Class"
+            title={t("deleteClass")}
             itemName={className}
             isLoading={isDeleting}
             warningMessage={
                isOrganizationClass 
-                  ? "This is an organization class. You may need special permissions to delete it."
+                  ? t("orgClassPermissionWarning")
                   : undefined
             }
          />

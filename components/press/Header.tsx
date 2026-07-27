@@ -2,9 +2,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { IArticle } from "public/data";
 import React, { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 const Header: FC<IArticle> = (props) => {
    const router = useRouter();
+   const { t } = useTranslation("common");
    return (
       <header className={"mx-auto max-w-[1100px] px-6"}>
          <div className="flex flex-col flex-wrap items-start gap-x-[2rem] gap-y-[1rem] pt-14 md:flex-row">
@@ -18,7 +20,7 @@ const Header: FC<IArticle> = (props) => {
                   <p>{props.date}</p>
                   {(router.pathname === "/press" || router.pathname === "/blog") && props.detailPage && (
                      <Link href={props.detailPage as string}>
-                        <button className="min-w-[200px] rounded-[30px] bg-mainRed px-3 py-2 text-white">Read More</button>
+                        <button className="min-w-[200px] rounded-[30px] bg-mainRed px-3 py-2 text-white">{t("readMore")}</button>
                      </Link>
                   )}
                </div>

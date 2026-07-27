@@ -6,17 +6,18 @@ import { FaChevronDown, FaPlus } from "react-icons/fa";
 import { FaInfo } from "react-icons/fa";
 import { updateUnits } from "store/unitsSlice";
 import { BiChevronRight } from "react-icons/bi";
-
-const hints: string[] = [
-   "Kindly ensure you set a start date and end date for the units you are selecting",
-   "The selected end date must be greater than the start date",
-   "If the unit selected is current, ensure the start date is today's date",
-   "If it is upcoming, ensure the start date is a future date",
-];
+import { useTranslation } from "react-i18next";
 
 const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
+   const { t } = useTranslation("teacher");
    const dispatch = useDispatch();
    const { units, levels } = useSelector((state: RootState) => state.unit.addUnit);
+   const hints: string[] = [
+      t("hintDateRange"),
+      t("hintEndDateGreater"),
+      t("hintCurrentStartDate"),
+      t("hintUpcomingStartDate"),
+   ];
    return (
       <article className="relative flex flex-col gap-2 md:flex-row">
          {openedModal === "unit" && levels !== "" && (
@@ -26,14 +27,14 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
             >
                <div className="flex max-h-[95vh] w-[90vw] max-w-[1000px] flex-col overflow-hidden rounded-md bg-white md:flex-row">
                   <aside className="hidden flex-[0.25] flex-col justify-between gap-4 border-gray-300 py-6 px-4 md:flex md:border-r-2 md:py-8">
-                     <h1 className="hidden text-[22px] font-bold md:block">Add Unit(s)</h1>
+                         <h1 className="hidden text-[22px] font-bold md:block">{t("addUnits")}</h1>
                      {levels !== "" && (
                         <div className="flex flex-col">
                            <h1 className="flex flex-row items-center gap-x-3 text-[19px] font-bold">
                               <i className="bg-mainColor flex h-[28px] w-[28px] items-center justify-center rounded-full text-white">
                                  <FaInfo />
                               </i>
-                              Hints
+                              {t("hints")}
                            </h1>
                            <main className="mt-2 max-h-[350px] w-full overflow-hidden overflow-y-scroll rounded-md border py-4 shadow-inner">
                               <ul className="mt-2 flex flex-col gap-y-3">
@@ -57,12 +58,12 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                         }}
                         className="bg-mainColor rounded-[40px] px-3 py-2 font-bold text-white hover:bg-[royalblue]"
                      >
-                        Done
+                        {t("done")}
                      </button>
                   </aside>
                   <div className="flex max-h-[90vh] flex-[0.75] flex-col gap-y-4 overflow-hidden overflow-y-scroll py-8">
                      {levels === "" && (
-                        <div className="flex h-full items-center justify-center px-4 text-center text-[22px] font-bold">Please Select a level</div>
+                        <div className="flex h-full items-center justify-center px-4 text-center text-[22px] font-bold">{t("pleaseSelectLevel")}</div>
                      )}
                      {units.map((unit: any, index: number) => {
                         const elementWithCurrentProperty: any = units.find((unit: any) => unit.isCurrent && unit.isChosen);
@@ -98,14 +99,14 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                                  >
                                     {elementWithCurrentProperty && elementWithCurrentProperty?.id !== unit.id ? (
                                        <>
-                                          <p className="hoverElement">Current</p>
-                                          <div className="hoverText bg-mainColor after:bg-mainColor right-[0] -top-[70px] min-w-fit">
-                                             You can only have one current unit
-                                          </div>
-                                       </>
-                                    ) : (
-                                       "Current"
-                                    )}
+                                       <p className="hoverElement">{t("current")}</p>
+                                        <div className="hoverText bg-mainColor after:bg-mainColor right-[0] -top-[70px] min-w-fit">
+                                           {t("youCanOnlyHaveOneCurrent")}
+                                        </div>
+                                     </>
+                                  ) : (
+                                     t("current")
+                                  )}
                                  </button>
                                  <button
                                     className={`${styles.button} ${
@@ -120,7 +121,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                                        );
                                     }}
                                  >
-                                    Upcoming
+                                    {t("upcoming")}
                                  </button>
                                  {/* input container */}
                                  <div className="relative">
@@ -143,7 +144,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                                           );
                                        }}
                                     />
-                                    <div className="hoverText bg-mainColor after:bg-mainColor right-[0] -top-[40px]">Start Date</div>
+                                     <div className="hoverText bg-mainColor after:bg-mainColor right-[0] -top-[40px]">{t("startDateLabel")}</div>
                                  </div>
                                  <div className="relative">
                                     <input
@@ -165,7 +166,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                                           );
                                        }}
                                     />
-                                    <div className="hoverText bg-mainColor right-[0] -top-[40px]">End Date</div>
+                                     <div className="hoverText bg-mainColor right-[0] -top-[40px]">{t("endDateLabel")}</div>
                                  </div>
                               </div>
                            </div>
@@ -179,7 +180,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                         }}
                         className="bg-mainColor hover:bg-mainColor rounded-[40px] px-3 py-2 font-bold text-white"
                      >
-                        Done
+                        {t("done")}
                      </button>
                   </footer>
                </div>
@@ -192,19 +193,19 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
             }}
             data-testid="unit-modal-controller"
          >
-            <h1>Unit(s)</h1>
+             <h1>{t("unit")}</h1>
             <i>
                <FaChevronDown />
             </i>
             {openedModal === "unit" && (
                <div className={`${styles.preview} z-[5]`}>
-                  {levels === "" && <h1 className="font-lg p-2 text-center font-bold">Please select a level</h1>}
+                  {levels === "" && <h1 className="font-lg p-2 text-center font-bold">{t("pleaseSelectLevel")}</h1>}
                </div>
             )}
          </div>
          <div className={styles.numbersSelectedContainer}>
             {units.filter((unit: any) => unit.isChosen).length === 0
-               ? `0 units selected`
+               ? t("unitsSelected")
                : units
                     .filter((unit: any) => unit.isChosen)
                     .map((unit: any, index: number) => {

@@ -12,6 +12,7 @@ import Link from "next/link";
 import ResendVerificationEmailModal from "../modals/ResendVerificationEmailModal";
 import { ILoginReducerArg } from "types/interfaces";
 import { PasswordInput } from "../UI/input";
+import { useTranslation } from "react-i18next";
 
 const Login = ({ route }: { route?: any }) => {
    const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const Login = ({ route }: { route?: any }) => {
    const credentials = useSelector((state: RootState) => state.user?.auth);
    const [recaptchaVerified, setRecaptchaVerified] = useState(false);
    const [verificationModalOpened, setVerificationModalOpened] = useState<boolean>(false);
+   const { t } = useTranslation("auth");
 
    const accountType = router.pathname.includes("teacher")
       ? "teacher"
@@ -38,7 +40,7 @@ const Login = ({ route }: { route?: any }) => {
             if (data?.payload?.is_teacher) {
                router?.push("/teachers/addClass");
             } else {
-               dispatch(openErrorModal({ errorText: ["Invalid credentials"] }));
+               dispatch(openErrorModal({ errorText: [t("invalidCredentials")] }));
                return;
             }
          } else if (router.pathname.includes("/login/parent")) {
@@ -49,14 +51,14 @@ const Login = ({ route }: { route?: any }) => {
                   router?.push("/parents");
                }
             } else {
-               dispatch(openErrorModal({ errorText: ["Invalid credentials"] }));
+               dispatch(openErrorModal({ errorText: [t("invalidCredentials")] }));
                return;
             }
          } else if (router.pathname.includes("/login/organizer")) {
             if (data?.payload?.is_organizer) {
                router.push("/organizers");
             } else {
-               dispatch(openErrorModal({ errorText: ["Invalid credentials"] }));
+               dispatch(openErrorModal({ errorText: [t("invalidCredentials")] }));
                return;
             }
          }
@@ -92,10 +94,10 @@ const Login = ({ route }: { route?: any }) => {
          <AuthLayout>
             <>
                <h1 className="text-center text-[25px] font-bold md:text-left md:text-[32px]">
-                  Log in to your account <span className="capitalize">{`(${accountType})`}</span>
+                  {t("logInToYourAccount")} <span className="capitalize">{`(${accountType})`}</span>
                </h1>
                <form onSubmit={login}>
-                  <label className="mt-6 block text-xl font-semibold">Your email/username</label>
+                  <label className="mt-6 block text-xl font-semibold">{t("yourEmailOrUsername")}</label>
                   <input
                      value={credentials?.email}
                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -103,10 +105,10 @@ const Login = ({ route }: { route?: any }) => {
                      }}
                      type="text"
                      className="auth-input"
-                     placeholder={`Enter your email or username`}
+                     placeholder={t("enterEmailOrUsername")}
                      required
                   />
-                  <label className="mt-6 block text-xl font-semibold">Password</label>
+                  <label className="mt-6 block text-xl font-semibold">{t("password")}</label>
 
                   <PasswordInput
                      value={credentials?.password ?? ""}
@@ -116,14 +118,14 @@ const Login = ({ route }: { route?: any }) => {
                   />
                   <div className="mt-2 flex items-center justify-between">
                      <Link href="/change-password">
-                        <p className="max-w-fit cursor-pointer font-bold text-[#222] underline">Forgot password</p>
+                         <p className="max-w-fit cursor-pointer font-bold text-[#222] underline">{t("forgotPassword")}</p>
                      </Link>
 
                      <p className="max-w-fit cursor-pointer font-bold text-[#222] underline" onClick={() => setVerificationModalOpened(true)}>
-                        Verify Account
+                         {t("verifyAccount")}
                      </p>
                   </div>
-                  <AuthButton text="Login" />
+                  <AuthButton text={t("logIn")} />
                   <GoogleBtn />
                </form>
             </>

@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { getAllCurriculums } from "services/curriculumService";
 import { Icurriculum } from "types/interfaces";
+import { useTranslation } from "react-i18next";
 
 const SummaryBox = () => {
+   const { t } = useTranslation("teacher");
    const { curriculum } = useSelector((state: RootState) => state.allCurriculum);
    const { id } = useSelector((state: RootState) => state.currentClass);
    const [currentLesson, setCurrentLesson] = useState<Icurriculum>({
@@ -47,7 +49,7 @@ const SummaryBox = () => {
       <div className="flex w-[380px] max-w-full flex-col justify-between rounded-md bg-white p-6 shadow-lg">
          <div>
             <h3 className="text-mainColor mb-2 text-[20px] font-bold">
-               Lesson - <span>{currentLesson.title || ""}</span>
+               {t("lesson")} - <span>{currentLesson.title || ""}</span>
             </h3>
             <p className="mb-4 text-base leading-normal tracking-tight">{currentLesson.description || ""}</p>
          </div>

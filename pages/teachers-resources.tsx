@@ -5,8 +5,11 @@ import Footer from "@/components/about-us/aoc";
 import { howToGuides, teacherResources } from "@/components/home/const";
 import Link from "next/link";
 import { SimpleAccordion } from "@/components/home/accordion";
+import { useTranslation } from "react-i18next";
 
 const TeachersResources = () => {
+       const { t } = useTranslation("pages");
+   
    return (
       <div className="min-h-screen font-thabit">
          <Navbar />
@@ -123,13 +126,13 @@ const TeachersResources = () => {
                            <resource.icon className="h-6 w-6 text-white" />
                         </div>
 
-                        <h3 className="mb-2 text-xl font-bold text-mainBlack">{resource.title}</h3>
+                        <h3 className="mb-2 text-xl font-bold text-mainBlack">{t(resource.id)}</h3>
 
-                        <p className="mb-4 text-gray-600">{resource.description}</p>
+                        <p className="mb-4 text-gray-600">{t(`${resource.id}Desc`)}</p>
 
                         <Link href="/login" className="inline-flex items-center">
                            <span className="inline-flex h-auto cursor-pointer items-center gap-1 p-0 text-mainColor transition-all group-hover:gap-2">
-                              Explore
+                               {t("explore")}
                               <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                            </span>
                         </Link>

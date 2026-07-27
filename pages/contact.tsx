@@ -12,6 +12,7 @@ import { BiEnvelopeOpen, BiMapPin } from "react-icons/bi";
 import { TbThumbUp } from "react-icons/tb";
 import { useDispatch } from "react-redux";
 import { closePreloader, openErrorModal, openPreloader } from "store/fetchSlice";
+import { useTranslation } from "react-i18next";
 
 const Contact = () => {
    const [email, setEmail] = useState("");
@@ -21,10 +22,11 @@ const Contact = () => {
    const [lastName, setLastName] = useState("");
    const [modalOpened, setModalOpened] = useState(false);
    const dispatch = useDispatch();
+   const { t } = useTranslation("pages");
 
    const sendAMessage = async (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
-      dispatch(openPreloader({ loadingText: "Sending message" }));
+      dispatch(openPreloader({ loadingText: t("sendingMessage") }));
       try {
          const { data } = await http.post("/contact/message/", {
             email,
@@ -54,7 +56,7 @@ const Contact = () => {
             <div className="mx-auto max-w-[1200px] p-6">
                {modalOpened && <ContactModal />}
 
-               <h1 className="mt-20 text-center font-thabit text-[2.1rem] font-bold max-md:text-[1.5rem]">We are here to help!</h1>
+               <h1 className="mt-20 text-center font-thabit text-[2.1rem] font-bold max-md:text-[1.5rem]">{t("weAreHereToHelp")}</h1>
 
                <div className="mt-40 mb-12 flex items-start gap-8 max-md:flex-col">
                   <div className="flex-1">
@@ -63,7 +65,7 @@ const Contact = () => {
                            <span>
                               <BiMapPin className="text-mainBlack" size={30} />
                            </span>
-                           Kansas City, MO, USA
+                           {t("kansasCityAddress")}
                         </li>
 
                         <li className="flex items-center gap-3 font-thabit">
@@ -98,9 +100,9 @@ const Contact = () => {
                      <form onSubmit={sendAMessage} className="relative z-[2] bg-white">
                         <div className="flex items-center gap-2">
                            <div className="mb-2 flex-1">
-                              <label htmlFor="" className="mb-1 block font-thabit text-[.85rem]">
-                                 First Name
-                              </label>
+                            <label htmlFor="" className="mb-1 block font-thabit text-[.85rem]">
+                                  {t("firstName")}
+                               </label>
                               <input
                                  type="text"
                                  value={firstName}
@@ -112,9 +114,9 @@ const Contact = () => {
                            </div>
 
                            <div className="mb-2 flex-1">
-                              <label htmlFor="" className="mb-1 block font-thabit text-[.85rem]">
-                                 Last Name
-                              </label>
+                            <label htmlFor="" className="mb-1 block font-thabit text-[.85rem]">
+                                  {t("lastName")}
+                               </label>
                               <input
                                  type="text"
                                  value={lastName}
@@ -127,8 +129,8 @@ const Contact = () => {
                         </div>
 
                         <div className="mb-2">
-                           <label htmlFor="" className="mb-1 block font-thabit text-[.85rem]">
-                              Email<sup>*</sup>
+                            <label htmlFor="" className="mb-1 block font-thabit text-[.85rem]">
+                               {t("email")}<sup>*</sup>
                            </label>
                            <input
                               required
@@ -142,8 +144,8 @@ const Contact = () => {
                         </div>
 
                         <div className="mb-2">
-                           <label htmlFor="" className="mb-1 block font-thabit text-[.85rem]">
-                              Subject<sup>*</sup>
+                            <label htmlFor="" className="mb-1 block font-thabit text-[.85rem]">
+                               {t("subject")}<sup>*</sup>
                            </label>
                            <input
                               required
@@ -157,8 +159,8 @@ const Contact = () => {
                         </div>
 
                         <div className="mb-2">
-                           <label htmlFor="" className="mb-1 block font-thabit text-[.85rem]">
-                              Message<sup>*</sup>
+                            <label htmlFor="" className="mb-1 block font-thabit text-[.85rem]">
+                               {t("message")}<sup>*</sup>
                            </label>
                            <textarea
                               required
@@ -171,9 +173,9 @@ const Contact = () => {
                            type="submit"
                            variant="filled"
                            className="ml-auto min-w-[120px] justify-center text-center font-thabit font-bold text-white"
-                        >
-                           Send
-                        </CustomButton>
+                         >
+                            {t("sendMessage")}
+                         </CustomButton>
                      </form>
                   </div>
                </div>

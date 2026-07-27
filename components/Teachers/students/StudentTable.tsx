@@ -1,6 +1,7 @@
 import { LinearProgress } from "@mui/material";
 import React from "react";
 import { AssignmentDetails, IChildProgress, IChildTopics, ISingleStudent } from "types/interfaces";
+import { useTranslation } from "react-i18next";
 
 interface StudentTableProps {
    details?: AssignmentDetails[];
@@ -9,15 +10,16 @@ interface StudentTableProps {
 }
 
 const StudentTable = ({ details, student, progress }: StudentTableProps) => {
+   const { t } = useTranslation("teacher");
    return (
       <div className="max-h-[300px] w-full overflow-x-scroll overflow-y-scroll md:max-h-fit">
          <header className="flex items-center gap-x-2 px-[17px] pt-3" data-testid="student-table">
-            <p className="text-[14px]">
-               <span className="font-bold">Email: </span> {student.email}
-            </p>
-            <p className="text-[14px]">
-               <span className="font-bold">Username: </span> {student.username}
-            </p>
+             <p className="text-[14px]">
+                <span className="font-bold">{t("email")}</span> {student.email}
+             </p>
+             <p className="text-[14px]">
+                <span className="font-bold">{t("username")}</span> {student.username}
+             </p>
          </header>
          <div className="max-h-[200px] overflow-y-scroll">
             <table className={styles.table}>
@@ -30,9 +32,9 @@ const StudentTable = ({ details, student, progress }: StudentTableProps) => {
                   </thead> */}
               <thead>
   <tr className={styles.headingRow}>
-    <th className={styles.headingColumn}>Standard Name</th>
-    <th className={styles.headingColumn}>Standard Code</th>
-    <th className={styles.headingColumn}>Progress</th>
+    <th className={styles.headingColumn}>{t("standardName")}</th>
+    <th className={styles.headingColumn}>{t("standardCode")}</th>
+    <th className={styles.headingColumn}>{t("progress")}</th>
   </tr>
 </thead>
 
@@ -44,9 +46,9 @@ const StudentTable = ({ details, student, progress }: StudentTableProps) => {
       <tr key={index} className={styles.bodyRow}>
         <td className={styles.bodyColumn}>
           <div>
-            <div className={styles.levelGrade}>
-              Level: {course.grade}_{course.unit_level}
-            </div>
+               <div className={styles.levelGrade}>
+                  {t("levelLabel")} {course.grade}_{course.unit_level}
+               </div>
             <div>{course?.standard_name}</div>
           </div>
         </td>

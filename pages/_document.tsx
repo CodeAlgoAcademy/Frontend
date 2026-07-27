@@ -10,7 +10,7 @@ class MyDocument extends Document {
 
    render() {
       return (
-         <Html>
+         <Html lang="en" suppressHydrationWarning>
             <Head>
                <meta
                   name="description"

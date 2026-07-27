@@ -12,6 +12,7 @@ import { openErrorModal, openPreloader, closePreloader } from "store/fetchSlice"
 import { RootState } from "store/store";
 import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
 import { errorResolver } from "utils/errorResolver";
+import { useTranslation } from "react-i18next";
 
 const VerifyWithKey = () => {
    const [email, setEmail] = useState<string>("");
@@ -20,6 +21,7 @@ const VerifyWithKey = () => {
    const dispatch = useDispatch();
    const router = useRouter();
    const key = router?.query?.key;
+   const { t } = useTranslation("pages");
 
    const verify = async () => {
       if (key) {
@@ -62,9 +64,9 @@ const VerifyWithKey = () => {
                      className="h-[50px] w-[50px] animate-spin rounded-full border-[6px] border-[#e6bfad] border-t-mainRed"
                      data-testid="loader"
                   ></div>
-                  <p className="text-[21px] font-bold" data-testid="loading-message">
-                     Verifying your email address
-                  </p>
+                   <p className="text-[21px] font-bold" data-testid="loading-message">
+                      {t("verifyingYourEmail")}
+                   </p>
                </div>
             )}
             {!loading && !error && (
