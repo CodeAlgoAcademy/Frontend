@@ -4,8 +4,10 @@ import { RootState } from "store/store";
 import { Props, styles, standards } from ".";
 import { updateStandard } from "store/unitsSlice";
 import { FaChevronDown } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const Standard: FC<Props> = ({ openedModal, updateOpenedModal }) => {
+   const { t } = useTranslation("teacher");
    const dispatch = useDispatch();
    const { standard } = useSelector((state: RootState) => state.unit.addUnit);
    return (
@@ -19,7 +21,7 @@ const Standard: FC<Props> = ({ openedModal, updateOpenedModal }) => {
             }}
             data-testid="standard"
          >
-            <h1>Standard</h1>
+             <h1>{t("standard")}</h1>
             <i>
                <FaChevronDown />
             </i>
@@ -50,7 +52,7 @@ const Standard: FC<Props> = ({ openedModal, updateOpenedModal }) => {
             )}
          </div>
          <div className={styles.numbersSelectedContainer}>
-            <p>{standard === "" ? "0 standards selected" : <span className={styles.selectedItems}>{standard}</span>}</p>
+             <p>{standard === "" ? t("standardsSelected") : <span className={styles.selectedItems}>{standard}</span>}</p>
          </div>
       </article>
    );

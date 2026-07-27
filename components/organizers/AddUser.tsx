@@ -5,12 +5,14 @@ import { addUserToOrganization, getAllInvitations, getAllRoles } from "services/
 import { RootState } from "store/store";
 import { IRole } from "types/interfaces/organization.interface";
 import ContentBox from "../parents/UI/ContentBox";
+import { useTranslation } from "react-i18next";
 
 const AddUser = () => {
    const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
    const [email, setEmail] = useState<string>("");
    const [role, setRole] = useState<IRole | undefined>(undefined);
    const [message, setMessage] = useState<string>("");
+   const { t } = useTranslation("organizer");
 
    const dispatch = useDispatch();
 
@@ -21,7 +23,7 @@ const AddUser = () => {
 
       const data = await dispatch(addUserToOrganization({ email, role: role?.id }));
       if (!data?.error) {
-         setMessage("Invite sent!");
+         setMessage(t("inviteSent"));
          setEmail("");
          dispatch(getAllInvitations());
       }
@@ -47,7 +49,7 @@ const AddUser = () => {
    }, [message]);
 
    return (
-      <ContentBox title="Add User" size="large" padding="large">
+      <ContentBox title={t("addUser")} size="large" padding="large">
          <form action="" onSubmit={submit}>
             <div className="flex justify-end">
                <header className="relative">
@@ -78,11 +80,11 @@ const AddUser = () => {
                <input
                   type="text"
                   className={`${style.input}`}
-                  placeholder="Enter user email"
+                   placeholder={t("enterEmail")}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                />
-               <button className={style.button}>Send Request</button>
+                <button className={style.button}>{t("sendInvite")}</button>
 
                {message && <p className="text-green-500">{message}</p>}
             </div>

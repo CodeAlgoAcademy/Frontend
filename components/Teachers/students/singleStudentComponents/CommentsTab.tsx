@@ -9,6 +9,7 @@ import {
    deleteStudentComment as deleteComment,
    getStudentComment as getComment,
  } from "store/studentSlice";
+import { useTranslation } from "react-i18next";
 
 interface CommentsTabProps {
   student: ISingleStudent;
@@ -23,6 +24,7 @@ const CommentsTab = ({ student,
   comment,
   setComment
  }: CommentsTabProps) => {
+  const { t } = useTranslation("teacher");
   const dispatch = useAppDispatch();
   const { students, studentComments } = useSelector((state: any) => state.students);
   const [editingComment, setEditingComment] = useState<string>("");
@@ -69,7 +71,7 @@ const getStudentComment = (id: string) => {
     <section className="fixed top-0 left-0 z-20 flex min-h-screen w-full items-center justify-center bg-[rgba(0,0,0,0.5)]">
       <div className="scale-up comment-tab w-[90vw] max-w-[400px] rounded-md bg-white py-2 px-3 shadow-md">
         <h2 className="text-[20px] font-bold">
-          Comments on {student.firstName} {student.lastName}'s performance
+          {t("commentsOnPerformance", { name: `${student.firstName} ${student.lastName}` })}
         </h2>
         <div
           className={`mt-3 flex h-[90vh] max-h-[230px] flex-col gap-y-2 overflow-y-scroll ${
@@ -77,7 +79,7 @@ const getStudentComment = (id: string) => {
           }`}
         >
           {studentComments?.length === 0 && (
-            <h1 className="text-[17px] font-bold">No comment added for this student</h1>
+             <h1 className="text-[17px] font-bold">{t("noCommentAdded")}</h1>
           )}
           {studentComments?.map((comment: any, index: number) => (
             <article key={index} className="flex items-center justify-between gap-x-2">
@@ -86,7 +88,7 @@ const getStudentComment = (id: string) => {
                   value={editingComment}
                   onChange={(e: ChangeEvent<HTMLInputElement>) => updateEditingComment(e.target.value)}
                   type="text"
-                  placeholder="Max. of 100 characters"
+                   placeholder={t("max100Chars")}
                   className="flex-1 rounded-md border-2 border-mainColor px-4 py-2 outline-none"
                   maxLength={100}
                 />
@@ -140,7 +142,7 @@ const getStudentComment = (id: string) => {
               setStudentCommentsTabOpen("");
             }}
           >
-            Close
+             {t("close")}
           </button>
         </div>
       </div>

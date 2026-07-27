@@ -4,10 +4,12 @@ import { FaExclamationTriangle } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { closeErrorModal } from "store/fetchSlice";
 import { RootState } from "store/store";
+import { useTranslation } from "react-i18next";
 
 const ErrorModal = () => {
    const { errorModalOpen, errors } = useSelector((state: RootState) => state.fetch);
    const dispatch = useDispatch();
+   const { t } = useTranslation("common");
 
    if (!errorModalOpen) {
       return null;
@@ -22,7 +24,7 @@ const ErrorModal = () => {
                   <span>
                      <FaExclamationTriangle />
                   </span>
-                  Error
+                   {t("error")}
                </h1>
             </header>
             <div className="bg-white p-4">
@@ -38,14 +40,14 @@ const ErrorModal = () => {
                   ))}
                </ul>
                <footer className="border-t pt-4 text-right">
-                  <button
-                     className="min-w-[150px] rounded-full bg-red-600 py-3 text-white"
-                     onClick={() => {
-                        dispatch(closeErrorModal());
-                     }}
-                  >
-                     Close
-                  </button>
+                   <button
+                      className="min-w-[150px] rounded-full bg-red-600 py-3 text-white"
+                      onClick={() => {
+                         dispatch(closeErrorModal());
+                      }}
+                   >
+                      {t("close")}
+                   </button>
                </footer>
             </div>
          </div>

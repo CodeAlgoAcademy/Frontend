@@ -2,6 +2,7 @@ import React from "react";
 import { FaSpinner } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
+import { useTranslation } from "react-i18next";
 
 interface GeneratingModalProps {
   isOpen?: boolean; 
@@ -12,9 +13,10 @@ const GeneratingModal: React.FC<GeneratingModalProps> = ({
   isOpen, 
   message 
 }) => {
+  const { t } = useTranslation("teacher");
   const generatingModal = useSelector((state: RootState) => state.modal.generatingModal);
   const modalIsOpen = isOpen !== undefined ? isOpen : generatingModal.isOpen;
-  const modalMessage = message || generatingModal.message || "Generating...";
+  const modalMessage = message || generatingModal.message || t("generating");
 
   if (!modalIsOpen) {
     return <></>;
@@ -26,8 +28,7 @@ const GeneratingModal: React.FC<GeneratingModalProps> = ({
         <h2 className="text-xl font-bold text-gray-800 mb-4">{modalMessage}</h2>
         <div className="flex flex-col items-center justify-center">
           <p className="text-gray-600 mb-2">
-            A pdf featuring a student list and log-in cards is being generated.
-            Each student log-in card features a custom QR code along with username and password.
+            {t("pdfGeneratingDescription")}
           </p>
            <FaSpinner className="animate-spin text-3xl text-blue-600 mb-4" />
         </div>

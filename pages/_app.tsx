@@ -12,12 +12,21 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-
-// import "../styles/SyncfusionMaterial.min.css";
+import "../i18n";
+import { useEffect } from "react";
+import i18n from "../i18n";
+import { detectLanguage } from "../i18n";
 
 registerLicense(`${process.env.NEXT_PUBLIC_SYNC_FUSION_LICENSE}`);
 
 function MyApp({ Component, pageProps }: AppProps) {
+   useEffect(() => {
+      const detected = detectLanguage();
+      if (detected !== i18n.language) {
+         i18n.changeLanguage(detected);
+      }
+   }, []);
+
    return (
       <Provider store={store}>
          <Layout>

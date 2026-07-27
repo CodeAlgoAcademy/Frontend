@@ -1,17 +1,19 @@
 import Link from "next/link";
 import React, { Dispatch, SetStateAction } from "react";
 import { MdClose } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 interface CorrectCodeModalProps {
    setModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const CorrectCodeModal = (props: CorrectCodeModalProps) => {
+   const { t } = useTranslation("modals");
    return (
       <main className={styles.modalOverlay}>
          <div className={styles.modal}>
             <header className="mb-6 flex items-center justify-between gap-3">
-               <p className="cursor-pointer text-[1.2rem] font-bold text-mainRed">Congratulations</p>
+               <p className="cursor-pointer text-[1.2rem] font-bold text-mainRed">{t("congratulations")}</p>
                <i
                   className="cursor-pointer text-[1.5rem] text-red-600"
                   onClick={() => {

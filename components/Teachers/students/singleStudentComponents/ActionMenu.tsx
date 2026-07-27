@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { deleteStudent } from "store/teacherStudentSlice";
 import {getStudents,} from "store/studentSlice";
 import DeleteConfirmationModal from "./DeleteConfirmationModal";
+import { useTranslation } from "react-i18next";
 
 
 interface ActionMenuProps {
@@ -16,6 +17,7 @@ interface ActionMenuProps {
 }
 
 const ActionMenu = ({ student, isOpen, setIsOpen, setStudentCommentsTabOpen }: ActionMenuProps) => {
+   const { t } = useTranslation("teacher");
    const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
    const dispatch = useAppDispatch();
    const classId = useSelector((state: any) => state.currentClass.id);
@@ -35,18 +37,18 @@ const ActionMenu = ({ student, isOpen, setIsOpen, setStudentCommentsTabOpen }: A
                      setConfirmDeleteOpen(true);
                   }}
                >
-                  Delete student
-               </button>
+                   {t("deleteStudent")}
+                </button>
 
-               <button
-                  className="block w-full px-4 py-2 text-left text-sm hover:bg-gray-100"
-                  onClick={() => {
-                     setIsOpen(false);
-                     setStudentCommentsTabOpen(student.firstName + student.email);
-                  }}
-               >
-                  View Comments
-               </button>
+                <button
+                   className="block w-full px-4 py-2 text-left text-sm hover:bg-gray-100"
+                   onClick={() => {
+                      setIsOpen(false);
+                      setStudentCommentsTabOpen(student.firstName + student.email);
+                   }}
+                >
+                   {t("viewComments")}
+                </button>
             </div>
          )}
 

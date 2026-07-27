@@ -2,10 +2,12 @@ import React, { ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateChild } from "store/parentChildSlice";
 import { RootState } from "store/store";
+import { useTranslation } from "react-i18next";
 
 export default function ParentSignUp4() {
    const dispatch = useDispatch();
    const child = useSelector((state: RootState) => state.parentChild);
+   const { t } = useTranslation("auth");
 
    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
       dispatch(updateChild({ key: "fullName", value: e.target.value }));
@@ -13,22 +15,22 @@ export default function ParentSignUp4() {
 
    return (
       <div key={3}>
-         <h1 className="text-[32px] font-bold">Add your student account(s)</h1>
+          <h1 className="text-[32px] font-bold">{t("addStudentAccounts")}</h1>
          <div className="mt-6">
             <div className="relative">
                <input
                   type="text"
                   name="name"
                   id="name"
-                  placeholder="Name"
+                   placeholder={t("studentsName")}
                   className={styles.input}
                   value={child?.fullName}
                   onChange={onChange}
                   required
                />
-               <label htmlFor="name" className={styles.label}>
-                  Student{`'`}s Name
-               </label>
+                <label htmlFor="name" className={styles.label}>
+                   {t("studentsName")}
+                </label>
             </div>
          </div>
       </div>

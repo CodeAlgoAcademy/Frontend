@@ -10,33 +10,35 @@ import styles from "../../styles/styles";
 import { v4 } from "uuid";
 import { generateUsername } from "../../utils/generateUsername";
 import UsernameButton from "./usernameButton";
+import { useTranslation } from "react-i18next";
 
 const Students = () => {
    const dispatch = useDispatch();
    const { grade, firstname, lastname, email, password, username } = useSelector((state: RootState) => state.user.auth);
+   const { t } = useTranslation("auth");
    const inputFields: IInputFields[] = [
       {
          type: "text",
          name: "firstname",
-         placeholder: "Enter First Name*",
+         placeholder: t("enterFirstName"),
          value: firstname,
       },
       {
          type: "text",
          name: "lastname",
-         placeholder: "Enter Last Name*",
+         placeholder: t("enterLastName"),
          value: lastname,
       },
       {
          type: "email",
          name: "email",
-         placeholder: "Enter Email*",
+         placeholder: t("enterEmailAsterisk"),
          value: email,
       },
       {
          type: "password",
          name: "password",
-         placeholder: "Enter Password*",
+         placeholder: t("enterPasswordAsterisk"),
          value: password as string,
       },
    ];
@@ -67,7 +69,7 @@ const Students = () => {
                dispatch(updateUser({ key: "country", value }));
             }}
          >
-            <option value="Select Country">Select Country</option>
+             <option value="Select Country">{t("selectCountry")}</option>
             {countryList.map((countryOption: string, index: number): ReactNode => {
                return (
                   <option value={countryOption} key={index}>
@@ -83,7 +85,7 @@ const Students = () => {
                dispatch(openGradesModal());
             }}
          >
-            <p>{grade === "" ? "Select Grade" : grade}</p>
+             <p>{grade === "" ? t("selectGrade") : grade}</p>
             <span>
                <FaChevronDown />
             </span>
@@ -91,7 +93,7 @@ const Students = () => {
 
          <input
             type="text"
-            placeholder={"Enter Username"}
+            placeholder={t("enterUsername")}
             name="username"
             value={username}
             required

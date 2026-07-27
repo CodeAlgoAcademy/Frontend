@@ -2,10 +2,12 @@ import React, { ChangeEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { createRole, getAllRoles } from "services/organizersService";
 import ContentBox from "../parents/UI/ContentBox";
+import { useTranslation } from "react-i18next";
 
 const CreateRoles = () => {
    const [name, setName] = useState<string>("");
    const [description, setDescription] = useState<string>("");
+   const { t } = useTranslation("organizer");
 
    const dispatch = useDispatch();
 
@@ -22,11 +24,11 @@ const CreateRoles = () => {
    };
 
    return (
-      <ContentBox title="Create Role" size="base" padding="small">
+      <ContentBox title={t("createRole")} size="base" padding="small">
          <form action="" onSubmit={submit}>
             <div className="flex flex-col gap-[1rem]">
                <div>
-                  <p className="font-500 text-[0.98rem]">Name</p>
+                  <p className="font-500 text-[0.98rem]">{t("name")}</p>
                   <input
                      type="text"
                      placeholder="Enter Role Name"
@@ -38,7 +40,7 @@ const CreateRoles = () => {
                </div>
 
                <div>
-                  <p className="font-500 text-[0.98rem]">Description</p>
+                  <p className="font-500 text-[0.98rem]">{t("description")}</p>
                   <input
                      type="text"
                      placeholder="Enter Role Description"
@@ -51,7 +53,7 @@ const CreateRoles = () => {
             </div>
 
             <button className={style.button} type="submit">
-               Create Role
+               {t("createRole")}
             </button>
          </form>
       </ContentBox>

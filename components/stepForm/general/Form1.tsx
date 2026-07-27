@@ -3,11 +3,13 @@ import React, { ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "store/authSlice";
 import { RootState } from "store/store";
+import { useTranslation } from "react-i18next";
 
 export default function ParentSignUp1() {
    const dispatch = useDispatch();
    const auth = useSelector((state: RootState) => state.user?.auth);
    const router = useRouter();
+   const { t } = useTranslation("auth");
 
    const accountType = router.pathname.includes("teacher")
       ? "teacher"
@@ -19,8 +21,8 @@ export default function ParentSignUp1() {
 
    return (
       <div key={1}>
-         <h1 className="text-[32px] font-bold">Create Your Account</h1>
-         <label className="mt-6 block text-xl font-semibold">Your email</label>
+          <h1 className="text-[32px] font-bold">{t("createYourAccount")}</h1>
+          <label className="mt-6 block text-xl font-semibold">{t("yourEmail")}</label>
          <input
             value={auth?.email}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {

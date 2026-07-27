@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateChild } from "store/parentChildSlice";
 import { RootState } from "store/store";
 import { generateUsername } from "utils/generateUsername";
+import { useTranslation } from "react-i18next";
 
 export default function ParentSignUp5() {
    const dispatch = useDispatch();
    const child = useSelector((state: RootState) => state.parentChild);
+   const { t } = useTranslation("auth");
 
    const onChange = (e: any) => {
       dispatch(updateChild({ key: e.target.name, value: e.target.value }));
@@ -15,14 +17,13 @@ export default function ParentSignUp5() {
 
    return (
       <div key={5}>
-         <h1 className="text-[28px] font-bold">
-            It{"’"}s time to create {child?.fullName}
-            {"’"}s log in
-         </h1>
+          <h1 className="text-[28px] font-bold">
+             {t("itsTimeToCreateLogIn", { name: child?.fullName })}
+          </h1>
          <p className="mt-3 block text-[14px] font-[400]">
             You and your student will have separate log ins on CodeAlgo. Don{"’"}t worry, you will still have access to your student{"’"}s account.{" "}
          </p>
-         <label className="mt-6 block text-xl font-semibold">Username</label>
+          <label className="mt-6 block text-xl font-semibold">{t("username")}</label>
          <input className="auth-input" name="username" type="text" autoFocus required value={child?.username} onChange={onChange} />
          <button
             type="button"
@@ -34,11 +35,11 @@ export default function ParentSignUp5() {
                }
             }}
          >
-            Generate Username
+             {t("generateUsername")}
          </button>
-         <label className="mt-6 block text-xl font-semibold">Password</label>
+          <label className="mt-6 block text-xl font-semibold">{t("password")}</label>
          <PasswordInput className="auth-input" type="password" name="password" required value={child?.password ?? ""} onChange={onChange} />
-         <label className="mt-6 block text-xl font-semibold">Verify Password</label>
+          <label className="mt-6 block text-xl font-semibold">{t("verifyPassword")}</label>
          <div className="mb-[2.5rem]">
             <PasswordInput
                className="auth-input"
@@ -49,7 +50,7 @@ export default function ParentSignUp5() {
                onChange={onChange}
             />
             {child?.confirmPassword && child?.password && child?.confirmPassword !== child?.password && (
-               <p className="mt-2 text-red-500">Passwords do not match</p>
+                <p className="mt-2 text-red-500">{t("passwordsDoNotMatch")}</p>
             )}
          </div>
       </div>

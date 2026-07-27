@@ -6,13 +6,15 @@ import Footer from "@/components/about-us/aoc";
 import { howToGuides, teacherResources } from "@/components/home/const";
 import Link from "next/link";
 import { SimpleAccordion } from "@/components/home/accordion";
+import { useTranslation } from "react-i18next";
 
 const TeachersResources = () => {
+   const { t } = useTranslation("pages");
    return (
       <div className="min-h-screen font-thabit">
   <Head>
-        <title>For Educators | Coding for Schools | CodeAlgo Academy</title>
-        <meta name="description" content="Bring CodeAlgo Academy to your classroom. Resources and tools for teachers." />
+        <title>{t("forEducatorsTitle")}</title>
+        <meta name="description" content={t("forEducatorsDescription")} />
       </Head>
 
          <Navbar />
@@ -21,8 +23,8 @@ const TeachersResources = () => {
             <div className="container mx-auto px-4 ">
                <div className="flex flex-col items-center gap-12 lg:flex-row">
                   <div className="lg:w-1/2">
-                     <h2 className="mb-4 text-3xl font-black text-mainBlack md:text-5xl">STEM resources for your classroom</h2>
-                     <p className="tex-lg text-lg text-gray-600">Teaching technology is easier with the right tools.</p>
+                     <h2 className="mb-4 text-3xl font-black text-mainBlack md:text-5xl">{t("stemResourcesForClassroom")}</h2>
+                     <p className="tex-lg text-lg text-gray-600">{t("teachingTechnologyEasier")}</p>
                   </div>
                   <div className="lg:w-1/2">
                      <div className="relative overflow-hidden rounded-xl">
@@ -41,30 +43,29 @@ const TeachersResources = () => {
             <div>
                <div className="mb-12 text-center">
                   <span className="mb-4 inline-block rounded-full bg-mainColor/10 px-4 py-2 text-[0.75rem] font-semibold uppercase tracking-wide text-mainColor">
-                     Quick Start
+                     {t("quickStart")}
                   </span>
-                  <h2 className="mb-4 text-3xl font-bold text-mainBlack md:text-4xl">Set up your classroom in minutes</h2>
+                  <h2 className="mb-4 text-3xl font-bold text-mainBlack md:text-4xl">{t("setupClassroomInMinutes")}</h2>
                   <p className="mx-auto max-w-2xl text-lg text-gray-600">
-                     Go from sign-up to your first lesson without complicated setup or technical overhead.
+                     {t("goFromSignupToLesson")}
                   </p>
                </div>
                <div className="mx-auto grid max-w-5xl gap-12 md:grid-cols-3">
                   {[
                      {
                         step: "01",
-                        title: "Create Teacher Account",
-                        description: "Sign up once to unlock educator tools, lesson plans, and classroom management features.",
+                        title: t("createTeacherAccount"),
+                        description: t("createTeacherAccountDesc"),
                      },
                      {
                         step: "02",
-                        title: "Set Up Your Classroom",
-                        description:
-                           "Set up your classes in minutes, invite students by filling their details, and monitor learning progress from the dashboard.",
+                        title: t("setUpYourClassroom"),
+                        description: t("setUpYourClassroomDesc"),
                      },
                      {
                         step: "03",
-                        title: "Start Teaching",
-                        description: "Deliver engaging, hands-on coding lessons that build problem-solving skills and confidence for all learners.",
+                        title: t("startTeaching"),
+                        description: t("startTeachingDesc"),
                      },
                   ].map((item, index) => (
                      <div key={index} className="group relative text-center">
@@ -87,28 +88,27 @@ const TeachersResources = () => {
          <section className="bg-white py-16 lg:py-24">
             <div className="container mx-auto px-4">
                <div className="mb-12 text-center">
-                  <h2 className="mb-4 text-3xl font-bold text-mainBlack md:text-4xl">Why CodeAlgo Matters for Your Students</h2>
+                  <h2 className="mb-4 text-3xl font-bold text-mainBlack md:text-4xl">{t("whyCodealgoMattersForStudents")}</h2>
                   <p className="text-gray/600 mx-auto max-w-3xl text-lg">
-                     CodeAlgo Academy is built to expand access to high-quality coding education and prepare students—especially those
-                     underrepresented in tech—for real opportunities beyond the classroom.
+                     {t("whyCodealgoStudentsDesc")}
                   </p>
                </div>
 
                <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-3">
                   <div className="rounded-2xl border p-6 text-center">
                      <CheckCircle className="mx-auto mb-4 text-mainColor "/>
-                     <h3 className="mb-2 text-xl font-bold">Real Programming Skills</h3>
-                     <p className="text-gray-600">Hands-on projects that teach real-world coding concepts students can build on.</p>
+                     <h3 className="mb-2 text-xl font-bold">{t("realProgrammingSkills")}</h3>
+                     <p className="text-gray-600">{t("realProgrammingSkillsDesc")}</p>
                   </div>
                   <div className="rounded-2xl border p-6 text-center">
                      <CheckCircle className="mx-auto mb-4 text-mainColor" />
-                     <h3 className="mb-2 text-xl font-bold">Confidence & Representation</h3>
-                     <p className="text-gray-600">Inclusive learning experiences that help Black and Brown students see themselves in tech.</p>
+                     <h3 className="mb-2 text-xl font-bold">{t("confidenceAndRepresentation")}</h3>
+                     <p className="text-gray-600">{t("confidenceAndRepresentationDesc")}</p>
                   </div>
                   <div className="rounded-2xl border p-6 text-center">
                      <CheckCircle className="mx-auto mb-4 text-mainColor" />
-                     <h3 className="mb-2 text-xl font-bold">Career Readiness</h3>
-                     <p className="text-gray-600">Pathways to internships, mentorship, and in-demand tech careers for older students.</p>
+                     <h3 className="mb-2 text-xl font-bold">{t("careerReadiness")}</h3>
+                     <p className="text-gray-600">{t("careerReadinessDesc")}</p>
                   </div>
                </div>
             </div>
@@ -117,25 +117,25 @@ const TeachersResources = () => {
          <section className="bg-background py-16 lg:py-24">
             <div className="container mx-auto px-4">
                <div className="mb-12 text-center">
-                  <h2 className="text-foreground mb-4 text-3xl font-bold md:text-4xl">Teaching resources built for real classrooms</h2>
+                  <h2 className="text-foreground mb-4 text-3xl font-bold md:text-4xl">{t("teachingResourcesForClassrooms")}</h2>
                   <p className="text-muted-foreground mx-auto max-w-xl text-lg">
-                     Everything you need to successfully teach coding in your classroom.
+                     {t("everythingYouNeedToTeach")}
                   </p>
                </div>
                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                   {teacherResources.map((resource, index) => (
-                     <div className="group rounded-2xl border border-gray-200 bg-white p-6 transition hover:shadow-xl">
+                     <div key={index} className="group rounded-2xl border border-gray-200 bg-white p-6 transition hover:shadow-xl">
                         <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-mainColor transition group-hover:scale-110">
                            <resource.icon className="h-6 w-6 text-white" />
                         </div>
 
-                        <h3 className="mb-2 text-xl font-bold text-mainBlack">{resource.title}</h3>
+                        <h3 className="mb-2 text-xl font-bold text-mainBlack">{t(resource.id)}</h3>
 
-                        <p className="mb-4 text-gray-600">{resource.description}</p>
+                        <p className="mb-4 text-gray-600">{t(`${resource.id}Desc`)}</p>
 
                         <Link href="/login" className="inline-flex items-center">
                            <span className="inline-flex h-auto cursor-pointer items-center gap-1 p-0 text-mainColor transition-all group-hover:gap-2">
-                              Explore
+                              {t("explore")}
                               <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                            </span>
                         </Link>
@@ -148,9 +148,9 @@ const TeachersResources = () => {
          <section className="bg-muted/30 bg-background py-16 lg:py-24">
             <div className="container mx-auto px-4">
                <div className="mb-12 text-center">
-                  <h2 className="text-foreground mb-4 text-3xl font-bold md:text-5xl">Your Frequently Asked Questions… Answered!</h2>
+                  <h2 className="text-foreground mb-4 text-3xl font-bold md:text-5xl">{t("faqTitle")}</h2>
                   <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
-                     Step-by-step instructions for getting the most out of CodeAlgo Academy in your classroom.
+                     {t("faqEducatorsDesc")}
                   </p>
                </div>
                </div>

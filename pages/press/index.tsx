@@ -5,63 +5,57 @@ import Header from "@/components/press/Header";
 import Link from "next/link";
 import { articles } from "public/data";
 import React from "react";
+import { useTranslation } from "react-i18next";
+
 
 const Press = () => {
+   const { t } = useTranslation("pages");
+   const { t: tp } = useTranslation("press");
    return (
       <section className="min-h-screen w-full bg-[#ffffff] font-thabit">
-        <Head>
-  <title>Press & Media | CodeAlgo Academy</title>
-  <meta name="description" content="CodeAlgo Academy in the news. Read our latest press coverage, media features, and announcements about kids coding education." />
-</Head>
+         <Head>
+            <title>{t("pressTitle")}</title>
+            <meta name="description" content={t("pressDescription")} />
+         </Head>
          <Navbar />
          <Header
-            body= ""
-            title= "Her startup needed a user test lab: Access to KC’s World Cup marketplace opened door to rapid, live iteration"           
-            date="July 16, 2026"            
+            body=""
+            title={tp("pressIndex.featuredTitle")}
+            date={tp("pressIndex.featuredDate")}
             image="/assets/press/1.jpg"
             detailPage="/press/her-start-up-needed-a-user-test-lab"
          />
 
-       <section className="mx-auto mt-12 mb-12 w-full max-w-[1100px] px-4 sm:px-6">
-    <div className="mt-8 grid grid-cols-1 items-start justify-center gap-4 md:grid-cols-2 md:gap-[1rem] xl:grid-cols-3">
-        {articles.map((article, index: number) => (
-            <article
-                key={index}
-                className="mx-auto flex h-full w-full max-w-[350px] flex-col overflow-hidden rounded-[10px] border-[1.5px] bg-white p-4 shadow-sm transition-all hover:shadow-md"
-            >
-                <div className="aspect-video w-full overflow-hidden rounded-[10px]">
-                    <img 
-                        src={article.image} 
-                        alt={article.title} 
-                        className="h-full w-full object-cover object-center" 
-                    />
-                </div>
-                
-                <div className="mt-3 flex flex-1 flex-col justify-between">
-                    <div className="space-y-2">
-                        <h2 className="text-base font-bold text-[#222] line-clamp-2">
-                            {article.title}
-                        </h2>
-                        <p className="text-sm text-[#444] line-clamp-3">
-                            {article.body}
-                        </p>
-                    </div>
-                    
-                    <div className="mt-4 flex items-center justify-between">
-                        <p className="text-xs text-[#444] sm:text-[14px]">
-                            {article.date}
-                        </p>
-                        <Link href={`/press${article.detailPage}`}>
-                            <button className="min-w-[100px] rounded-[20px] bg-mainRed py-1 px-4 text-sm text-white">
-                                Press
-                            </button>
-                        </Link>
-                    </div>
-                </div>
-            </article>
-        ))}
-    </div>
-</section>
+         <section className="mx-auto mt-12 mb-12 w-full max-w-[1100px] px-4 sm:px-6">
+            <div className="mt-8 grid grid-cols-1 items-start justify-center gap-4 md:grid-cols-2 md:gap-[1rem] xl:grid-cols-3">
+               {articles.map((article, index: number) => (
+                  <article
+                     key={index}
+                     className="mx-auto flex h-full w-full max-w-[350px] flex-col overflow-hidden rounded-[10px] border-[1.5px] bg-white p-4 shadow-sm transition-all hover:shadow-md"
+                  >
+                     <div className="aspect-video w-full overflow-hidden rounded-[10px]">
+                        <img src={article.image} 
+                        alt={tp(`articleSummaries.${article.id}.title`)}
+                        className="h-full w-full object-cover object-center" />
+                     </div>
+
+                     <div className="mt-3 flex flex-1 flex-col justify-between">
+                        <div className="space-y-2">
+                           <h2 className="line-clamp-2 text-base font-bold text-[#222]">{tp(`articleSummaries.${article.id}.title`)}</h2>
+                           <p className="line-clamp-3 text-sm text-[#444]">{tp(`articleSummaries.${article.id}.body`)}</p>
+                        </div>
+
+                        <div className="mt-4 flex items-center justify-between">
+                           <p className="text-xs text-[#444] sm:text-[14px]">{tp(`articleSummaries.${article.id}.date`)}</p>
+                           <Link href={`/press${article.detailPage}`}>
+                              <button className="min-w-[100px] rounded-[20px] bg-mainRed py-1 px-4 text-sm text-white">{t("pressButton")}</button>
+                           </Link>
+                        </div>
+                     </div>
+                  </article>
+               ))}
+            </div>
+         </section>
          <Footer />
       </section>
    );

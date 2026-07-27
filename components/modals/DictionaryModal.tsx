@@ -12,6 +12,7 @@ import { TbError404 } from "react-icons/tb";
 import { BsChevronLeft, BsChevronRight, BsSoundwave } from "react-icons/bs";
 import { useScreenReader } from "hooks/useScreenReader";
 import { cn } from "utils";
+import { useTranslation } from "react-i18next";
 
 const DictionaryModal = () => {
    const modal = useSelector((state: RootState) => state.modal.dictionaryModal);
@@ -23,6 +24,7 @@ const DictionaryModal = () => {
    const [currentDefinition, setCurrentDefinition] = useState<number>(0);
    const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null);
    const [speechMode, setSpeechMode] = useState<"read" | "spell" | undefined>(undefined);
+   const { t } = useTranslation("modals");
 
    const definition = useMemo(() => definitions[currentDefinition], [currentDefinition, definitions]);
 
@@ -126,7 +128,7 @@ const DictionaryModal = () => {
                   value={word}
                   onChange={(e) => setWord(e.target.value)}
                   className="w-full rounded-md border-[1.5px] border-gray-600 p-2 text-[.85rem] outline-none focus:border-2 focus:border-mainRed"
-                  placeholder="Search definition..."
+                   placeholder={t("searchForWord")}
                />
 
                <span className="absolute right-4 top-[50%] -translate-y-[50%]">
@@ -144,9 +146,9 @@ const DictionaryModal = () => {
                </div>
             ) : definitions.length === 0 ? (
                <div className="flex h-[150px] flex-col items-center justify-center space-y-2 text-center">
-                  <TbError404 size={100} />
+                   <TbError404 size={100} />
 
-                  <p className="max-w-[80%] text-center text-[.8rem] text-gray-600">Word not found.</p>
+                   <p className="max-w-[80%] text-center text-[.8rem] text-gray-600">{t("noDefinitionsFound")}.</p>
                </div>
             ) : (
                <div className="mt-4">
@@ -159,8 +161,8 @@ const DictionaryModal = () => {
 
                   <div className="mt-4 flex items-center justify-between gap-4">
                      <div className="flex items-center gap-2">
-                        <Capsule text={"Read"} inProgress={speechMode === "read"} onClick={read} />
-                        <Capsule text={"Spell"} inProgress={speechMode == "spell"} onClick={spell} />
+                      <Capsule text={t("read")} inProgress={speechMode === "read"} onClick={read} />
+                         <Capsule text={t("spell")} inProgress={speechMode == "spell"} onClick={spell} />
                      </div>
 
                      <span className="flex items-center gap-2">

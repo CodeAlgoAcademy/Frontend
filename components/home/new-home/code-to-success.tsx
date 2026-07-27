@@ -1,24 +1,24 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const CodeToSuccess = () => {
+   const { t } = useTranslation("home");
+
    const steps = [
       {
-         title: "Thinking",
+         title: t("thinking"),
          image: "/assets/landing/revamp/thinkingg.png",
-         description:
-            "Learning how to break down problems, ask the right questions, and make smart decisions, the same skills doctors, scientists, engineers, and architects use every day.",
+         description: t("thinkingDescription"),
       },
       {
-         title: "Coding",
+         title: t("coding"),
          image: "/assets/landing/revamp/coding.png",
-         description:
-            "Using that thinking to create real programs, build projects, and gain hands-on experience—the kind of skills that prepare students for high-demand, respected careers.",
+         description: t("codingDescription"),
       },
       {
-         title: "Experience",
+         title: t("experience"),
          image: "/assets/landing/revamp/experince.png",
-         description:
-            "Putting these skills to work through real internships with companies in the U.S. and around the world—giving students a head start toward becoming professionals they can be proud of.",
+         description: t("experienceDescription"),
       },
    ];
 
@@ -26,7 +26,7 @@ const CodeToSuccess = () => {
       <section className="bg-[#040404] px-6 pb-28 pt-12 text-white md:pb-48">
          <div className="mx-auto max-w-[1200px]">
             <h1 className="mx-auto mt-6 max-w-fit rounded-md bg-mainRed py-3 px-5 text-center font-tiltWarp text-[1.9rem] font-bold shadow-md max-md:text-[1.3rem]">
-               CODE YOUR WAY TO SUCCESS
+               {t("codeYourWayToSuccess")}
             </h1>
 
             <div className="mt-12 grid gap-8 md:grid-cols-3">

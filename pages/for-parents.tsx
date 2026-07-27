@@ -5,14 +5,16 @@ import Footer from "@/components/about-us/aoc";
 import { SimpleAccordion } from "@/components/home/accordion";
 import { parentResources, howToGuidesParent } from "@/components/home/const";
 import Navbar from "@/components/navbar/home/Navbar";
+import { useTranslation } from "react-i18next";
 
 
 const ParentsResources = () => {
+  const { t } = useTranslation("pages");
   return (
     <div className="min-h-screen font-thabit">
         <Head>
-        <title>For Parents | Kids Coding Curriculum | CodeAlgo Academy</title>
-        <meta name="description" content="Track your child's coding progress and view our curriculum designed for ages 5-14." />
+        <title>{t("forParentsTitle")}</title>
+        <meta name="description" content={t("forParentsDescription")} />
       </Head>
       <Navbar />
 
@@ -21,10 +23,10 @@ const ParentsResources = () => {
           <div className="flex flex-col items-center gap-12 lg:flex-row">
             <div className="lg:w-1/2">
               <h2 className="mb-4 text-3xl font-black text-gray-900 md:text-5xl">
-                Supporting your child's coding journey
+                {t("supportingYourChild")}
               </h2>
               <p className="text-lg text-gray-600">
-                Empowering parents with the tools and knowledge to help their children succeed in tech.
+                {t("empoweringParents")}
               </p>
             </div>
             <div className="lg:w-1/2">
@@ -44,31 +46,31 @@ const ParentsResources = () => {
         <div>
           <div className="mb-12 text-center">
             <span className="mb-4 inline-block rounded-full bg-mainColor/10 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-mainColor">
-              Quick Start
+              {t("quickStart")}
             </span>
             <h2 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">
-              Get your child started in minutes
+              {t("getStartedInMinutes")}
             </h2>
             <p className="mx-auto max-w-2xl text-lg text-gray-600">
-              Simple steps to begin your child's coding adventure with confidence and ease.
+              {t("simpleStepsToBegin")}
             </p>
           </div>
           <div className="mx-auto grid max-w-5xl gap-12 md:grid-cols-3">
             {[
               {
                 step: "01",
-                title: "Create Parent Account",
-                description: "Sign up to access parental controls, progress tracking, and support resources for your child's learning.",
+                title: t("createParentAccount"),
+                description: t("createParentAccountDesc"),
               },
               {
                 step: "02",
-                title: "Set Up Child Profile",
-                description: "Add your child's profile with age-appropriate settings and choose a learning path that matches their interests.",
+                title: t("setUpChildProfile"),
+                description: t("setUpChildProfileDesc"),
               },
               {
                 step: "03",
-                title: "Start Learning Together",
-                description: "Watch your child explore coding through fun, interactive lessons while you monitor their progress from your dashboard.",
+                title: t("startLearningTogether"),
+                description: t("startLearningTogetherDesc"),
               },
             ].map((item, index) => (
               <div key={index} className="group relative text-center">
@@ -93,33 +95,33 @@ const ParentsResources = () => {
         <div className="container mx-auto px-4">
           <div className="mb-12 text-center">
             <h2 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">
-              Why CodeAlgo Matters for Your Child
+              {t("whyCodealgoMattersForChild")}
             </h2>
             <p className="mx-auto max-w-3xl text-lg text-gray-600">
-              CodeAlgo Academy provides a safe, engaging environment where children develop critical thinking skills, creativity, and confidence through hands-on coding experiences.
+              {t("whyCodealgoChildDesc")}
             </p>
           </div>
 
           <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-3">
             <div className="rounded-2xl border p-6 text-center">
               <CheckCircle className="mx-auto mb-4 text-mainColor" size={48} />
-              <h3 className="mb-2 text-xl font-bold">Age-Appropriate Learning</h3>
+              <h3 className="mb-2 text-xl font-bold">{t("ageAppropriateLearning")}</h3>
               <p className="text-gray-600">
-                Carefully designed curriculum that grows with your child's abilities and interests.
+                {t("ageAppropriateLearningDesc")}
               </p>
             </div>
             <div className="rounded-2xl border p-6 text-center">
               <CheckCircle className="mx-auto mb-4 text-mainColor" size={48} />
-              <h3 className="mb-2 text-xl font-bold">Safe Learning Environment</h3>
+              <h3 className="mb-2 text-xl font-bold">{t("safeLearningEnvironment")}</h3>
               <p className="text-gray-600">
-                Robust parental controls and monitored content ensure a secure online experience.
+                {t("safeLearningEnvironmentDesc")}
               </p>
             </div>
             <div className="rounded-2xl border p-6 text-center">
               <CheckCircle className="mx-auto mb-4 text-mainColor" size={48} />
-              <h3 className="mb-2 text-xl font-bold">Future-Ready Skills</h3>
+              <h3 className="mb-2 text-xl font-bold">{t("futureReadySkills")}</h3>
               <p className="text-gray-600">
-                Build problem-solving abilities and computational thinking that prepare kids for tomorrow's world.
+                {t("futureReadySkillsDesc")}
               </p>
             </div>
           </div>
@@ -131,10 +133,10 @@ const ParentsResources = () => {
         <div className="container mx-auto px-4">
           <div className="mb-12 text-center">
             <h2 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">
-              Resources to support your child at home
+              {t("resourcesToSupportChild")}
             </h2>
             <p className="mx-auto max-w-xl text-lg text-gray-600">
-              Everything you need to guide, encourage, and celebrate your child's coding journey.
+              {t("everythingYouNeed")}
             </p>
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -144,13 +146,13 @@ const ParentsResources = () => {
                   <resource.icon className="h-6 w-6 text-white" />
                 </div>
 
-                <h3 className="mb-2 text-xl font-bold text-gray-900">{resource.title}</h3>
+                <h3 className="mb-2 text-xl font-bold text-gray-900">{t(resource.id)}</h3>
 
-                <p className="mb-4 text-gray-600">{resource.description}</p>
+                <p className="mb-4 text-gray-600">{t(`${resource.id}Desc`)}</p>
 
                 <a href="/login" className="inline-flex items-center">
                   <span className="inline-flex h-auto cursor-pointer items-center gap-1 p-0 text-mainColor transition-all group-hover:gap-2">
-                    Explore
+                    {t("explore")}
                     <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </span>
                 </a>
@@ -165,15 +167,15 @@ const ParentsResources = () => {
         <div className="container mx-auto px-4">
           <div className="mb-12 text-center">
             <h2 className="mb-4 text-3xl font-bold text-gray-900 md:text-5xl">
-              Your Frequently Asked Questions… Answered!
+              {t("faqTitle")}
             </h2>
             <p className="mx-auto max-w-2xl text-lg text-gray-600">
-              Quick answers to help you support your child's coding education with confidence.
+              {t("faqDesc")}
             </p>
           </div>
           <div className="mx-auto max-w-3xl space-y-4">
-            {howToGuidesParent.map((guide, index) => (
-              <SimpleAccordion key={index} guide={guide} index={index} />
+            {howToGuidesParent.map((n, index) => (
+              <SimpleAccordion key={index} guide={{ question: t(`parentFaqQ${n}`), answer: t(`parentFaqA${n}`) }} index={index} />
             ))}
           </div>
         </div>

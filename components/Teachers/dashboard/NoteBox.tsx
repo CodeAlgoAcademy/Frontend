@@ -6,8 +6,10 @@ import { INotes } from "../../../types/interfaces";
 import { handleChange, sanitizeNotes, resetNotes } from "../../../store/notesSlice";
 import { getNotes, updateNotes } from "services/notesService";
 import { FaSyncAlt } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const NoteBox = () => {
+   const { t } = useTranslation("teacher");
    const contentEditableRef = React.createRef<HTMLElement>();
    const dispatch = useDispatch();
    const contentEditableState = useSelector((state: RootState): INotes => state.notes);
@@ -30,7 +32,7 @@ const NoteBox = () => {
       <div className="max-h-[212px] max-w-[380px] overflow-y-auto rounded-md bg-white p-6 shadow-lg">
          <div className="min-h-[114px]">
             <div className="align-center text-mainColor flex justify-between">
-               <h3 className="mb-3 text-[20px] font-bold">Notes</h3>
+                <h3 className="mb-3 text-[20px] font-bold">{t("notes")}</h3>
                <span className="animate-pulse cursor-pointer text-lg">
                   <FaSyncAlt />
                </span>

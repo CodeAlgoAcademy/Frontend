@@ -10,6 +10,7 @@ import { SkillDetails, DynamicChechbox } from "../../../../types/interfaces";
 
 import { useDispatch } from "react-redux";
 import { updateSkills, searchSkills } from "../../../../store/skillsSlice";
+import { useTranslation } from "react-i18next";
 
 const SkillModal = ({
    skills,
@@ -22,6 +23,7 @@ const SkillModal = ({
    handleSkillCheckboxChange: ChangeEventHandler;
    skillCheckbox: DynamicChechbox;
 }) => {
+   const { t } = useTranslation("teacher");
    const [grade, setGrade] = useState("Grade 1");
    const [skillType, setSkillType] = useState("CTSA");
    const [searchParams, setSearchParams] = useState("");
@@ -42,10 +44,10 @@ const SkillModal = ({
          <div className="mb-auto flex h-full  grow flex-col items-stretch gap-8 pl-12 md:flex-row">
             <div className="flex w-[180px] flex-col justify-between gap-4">
                <div>
-                  <h3 className="text-2xl font-semibold">Select Skill</h3>
+                   <h3 className="text-2xl font-semibold">{t("selectSkill")}</h3>
                   <div className="mt-12 flex w-full flex-row flex-wrap items-center justify-center gap-4 md:flex-col md:justify-start">
                      <div className="mx-auto flex h-[46px] min-w-[180px] max-w-fit items-center justify-between rounded-lg bg-gray-100 px-4 py-2 drop-shadow-md md:mx-0 md:min-w-fit">
-                        <p className="text-sm font-semibold opacity-60">Computer</p>
+                         <p className="text-sm font-semibold opacity-60">{t("computer")}</p>
                      </div>
                      <div className="z-top relative mx-auto flex h-[46px] w-full min-w-[180px] max-w-fit flex-1 items-center justify-between rounded-lg bg-gray-100 px-4 py-2 drop-shadow-md md:mx-0 md:min-w-fit">
                         <p className="... truncate text-sm font-semibold opacity-60">{skillType}</p>
@@ -125,7 +127,7 @@ const SkillModal = ({
                      name="search"
                      value={searchParams}
                      onChange={handleSearchInput}
-                     placeholder="Search skill"
+                      placeholder={t("searchSkill")}
                   />
                   <span className="absolute left-4 top-3 text-2xl text-gray-400">
                      <HiMagnifyingGlass />{" "}
@@ -149,9 +151,9 @@ const SkillModal = ({
                                  </p>
                               </div>
                            </div>
-                           <span className="... bg-mainColor/70 absolute right-5 top-4 truncate rounded-2xl py-1 px-4 text-xs font-bold opacity-70">
-                              {tests.length} {tests.length > 1 ? "skills" : "skill"}
-                           </span>
+                            <span className="... bg-mainColor/70 absolute right-5 top-4 truncate rounded-2xl py-1 px-4 text-xs font-bold opacity-70">
+                               {tests.length} {tests.length > 1 ? t("skillsPlural") : t("skillSingular")}
+                            </span>
                         </div>
                         <div className="divide-y">
                            {tests.map(({ testTitle, testId }) => (

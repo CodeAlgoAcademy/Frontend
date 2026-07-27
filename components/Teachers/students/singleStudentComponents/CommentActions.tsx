@@ -3,6 +3,7 @@ import { useAppDispatch } from "store/hooks";
 import { BiEdit } from "react-icons/bi";
 import { ISingleStudent } from "types/interfaces";
 import {addStudentComment as addComment,} from "store/studentSlice";
+import { useTranslation } from "react-i18next";
 
 interface CommentActionsProps {
   student: ISingleStudent;
@@ -17,6 +18,7 @@ const CommentActions = ({
   setComment,
   setStudentCommentOpen,
 }: CommentActionsProps) => {
+  const { t } = useTranslation("teacher");
   const dispatch = useAppDispatch();
 
   const updateComment = (text: string): void => {
@@ -43,7 +45,7 @@ const CommentActions = ({
                   <input
                      type="text"
                      className="flex-[0.8] rounded-l-md border-2 border-mainColor px-2 py-2 text-black outline-none"
-                     placeholder={`Max. of 100 characters`}
+                     placeholder={t("max100Chars")}
                      value={comment}
                      onChange={(e: ChangeEvent<HTMLInputElement>) => updateComment(e.target.value)}
                   />

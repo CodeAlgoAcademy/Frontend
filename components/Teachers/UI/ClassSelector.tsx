@@ -9,8 +9,10 @@ import { resetAuthUser, updateUser } from "store/authSlice";
 import { updateEmail, updateFirstname, updateLastname } from "services/authService";
 import { getAllClasses } from "services/classesService";
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
 
 export default function ClassSelector() {
+   const { t } = useTranslation("common");
    const [isOpen, setIsOpen] = useState<boolean>(false);
    const dispatch = useDispatch();
    const router = useRouter();
@@ -41,7 +43,7 @@ export default function ClassSelector() {
          >
             <div className="flex items-center gap-2">
                {currentClass?.className && <span className="h-[24px] w-[24px] rounded-full" style={{ background: currentClass?.color }} />}
-               <p className="font-medium">{currentClass?.className || "Select Class"}</p>
+               <p className="font-medium">{currentClass?.className || t("selectClass")}</p>
             </div>
             {
                <span>
@@ -54,7 +56,7 @@ export default function ClassSelector() {
             <div className="small-scroll-thumb fade-in absolute top-[110%] left-0 z-[5] h-[190px] w-[90vw] max-w-[200px] overflow-y-scroll rounded-[20px] border border-[#bdbdbd] bg-white shadow-md">
                {!otherClassDetails?.length ? (
                   <div className="flex h-full w-full items-center p-[1rem]">
-                     <p className="text-center font-medium leading-[1.2]">No other classes available</p>
+                     <p className="text-center font-medium leading-[1.2]">{t("noOtherClassesAvailable")}</p>
                   </div>
                ) : (
                   otherClassDetails?.map((singleClass, index) => {

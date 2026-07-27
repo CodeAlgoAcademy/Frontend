@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface DeleteConfirmationModalProps {
   isOpen: boolean;
@@ -19,6 +20,9 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
   isLoading = false,
   warningMessage
 }) => {
+  const { t } = useTranslation("modals");
+  const { t: tCommon } = useTranslation("common");
+
   if (!isOpen) return null;
 
   return (
@@ -28,8 +32,8 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
         
         <div className="mt-4">
           <p className="text-gray-600">
-            Are you sure you want to delete <span className="font-semibold">"{itemName}"</span>? 
-            This action cannot be undone.
+            {t("areYouSureDelete")} <span className="font-semibold">"{itemName}"</span>? 
+            {t("thisActionCannotBeUndone")}
           </p>
           {warningMessage && (
             <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
@@ -44,14 +48,14 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
             disabled={isLoading}
             className="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
           >
-            Cancel
+            {tCommon("cancel")}
           </button>
           <button
             onClick={onConfirm}
             disabled={isLoading}
             className="rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 disabled:opacity-50"
           >
-            {isLoading ? 'Deleting...' : 'Delete'}
+            {isLoading ? tCommon("deleting") : tCommon("delete")}
           </button>
         </div>
       </div>

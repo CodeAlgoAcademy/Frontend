@@ -4,8 +4,11 @@ import { getSchedule } from "services/scheduleService";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
 import { Schedule } from "types/interfaces";
+import { useTranslation } from "react-i18next";
+import { getMonthNames } from "utils/formatLocale";
 
 const ScheduleBox = () => {
+   const { t } = useTranslation("teacher");
    const scheduleData: Schedule = useSelector((state: RootState) => state.schedule);
    const [currentSchedule, setCurrentSchedule] = useState([]);
    const [allSchedule] = useState(scheduleData.allSchedule);
@@ -36,7 +39,7 @@ const ScheduleBox = () => {
       return strTime;
    }
 
-   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+   const months = getMonthNames();
    const fullDate = new Date();
    const date = fullDate.getDate();
    const month = fullDate.getMonth();

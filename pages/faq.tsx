@@ -5,15 +5,17 @@ import Image from "next/image";
 import React, { FC, MutableRefObject, useEffect, useRef, useState } from "react";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { cn } from "utils";
+import { useTranslation } from "react-i18next";
 
 const FAQ = () => {
+   const { t } = useTranslation("pages");
    return (
       <div className="relative overflow-x-hidden bg-white font-thabit">
          <Navbar />
          <Banner />
 
          <div className="mx-auto mt-5 mb-12 max-w-[1200px] p-6">
-            <h1 className="text-center  font-thabit text-[2.4rem] font-bold">CodeAlgo FAQ</h1>
+            <h1 className="text-center  font-thabit text-[2.4rem] font-bold">{t("codealgoFaq")}</h1>
 
             <section className="mx-auto mt-10 max-w-[700px] space-y-3">
                <h1 className="!mb-6 font-thabit text-[1.5rem] font-bold">Account</h1>

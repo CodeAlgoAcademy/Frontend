@@ -1,16 +1,20 @@
+import { useTranslation } from "react-i18next";
+
 const ValuePropositions = () => {
+  const { t } = useTranslation("home");
+
   const features = [
     {
-      title: "Interactive Coding",
-      description: "Game-based lessons that make learning to code fun and engaging."
+      title: t("interactiveCoding"),
+      description: t("interactiveCodingDescription")
     },
     {
-      title: "Real Projects",
-      description: "Build actual games, apps, and websites as you learn."
+      title: t("realProjects"),
+      description: t("realProjectsDescription")
     },
     {
-      title: "Progress Tracking",
-      description: "Watch your child’s confidence and skills grow over time."
+      title: t("progressTracking"),
+      description: t("progressTrackingDescription")
     }
   ];
 
@@ -19,11 +23,11 @@ const ValuePropositions = () => {
       <div className="container mx-auto px-6">
 
          <h2 className="mb-4 text-center text-3xl font-extrabold md:text-4xl">
-          Everything Your Child Needs to Succeed in Coding
+          {t("everythingYourChildNeeds")}
         </h2>
 
         <p className="mx-auto mb-12 max-w-2xl text-center text-gray-600">
-          A complete learning experience designed to build real skills.
+          {t("completeLearningExperience")}
         </p>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">

@@ -7,39 +7,41 @@ import { IInputFields, IUser } from "../../types/interfaces";
 import { countryList } from "./countries";
 import { generateUsername } from "../../utils/generateUsername";
 import UsernameButton from "./usernameButton";
+import { useTranslation } from "react-i18next";
 
 const Teachers = () => {
    const dispatch = useDispatch();
    const { firstname, lastname, email, password, schoolName, username } = useSelector((state: RootState) => state.user.auth);
+   const { t } = useTranslation("auth");
    const inputFields: IInputFields[] = [
       {
          name: "firstname",
          type: "text",
-         placeholder: "Enter Firstname*",
+         placeholder: t("enterFirstName"),
          value: firstname,
       },
       {
          name: "lastname",
          type: "text",
-         placeholder: "Enter Lastname*",
+         placeholder: t("enterLastName"),
          value: lastname,
       },
       {
          name: "email",
          type: "email",
-         placeholder: "Enter Email*",
+         placeholder: t("enterEmailAsterisk"),
          value: email,
       },
       {
          name: "password",
          type: "password",
-         placeholder: "Enter Password*",
+         placeholder: t("enterPasswordAsterisk"),
          value: password as string,
       },
       {
          name: "schoolName",
          type: "text",
-         placeholder: "Enter School Name*",
+         placeholder: t("enterSchoolName"),
          value: schoolName,
       },
    ];
@@ -71,7 +73,7 @@ const Teachers = () => {
                dispatch(updateUser({ key: "country", value }));
             }}
          >
-            <option value="Select School Country">Select School Country</option>
+             <option value="Select School Country">{t("selectSchoolCountry")}</option>
             {countryList.map((countryOption: string, index: number): ReactNode => {
                return (
                   <option value={countryOption} key={index}>
@@ -82,7 +84,7 @@ const Teachers = () => {
          </select>
          <input
             type="text"
-            placeholder={"Enter Username"}
+            placeholder={t("enterUsername")}
             name="username"
             value={username}
             required

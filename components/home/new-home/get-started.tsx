@@ -4,10 +4,12 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React from "react";
 import { cn } from "utils";
+import { useTranslation } from "react-i18next";
 
 const GetStarted = () => {
    const isMobile = useMediaQuery("(max-width:768px)");
    const { push } = useRouter();
+   const { t } = useTranslation("home");
 
    const buttonClassName = cn(
       "!bg-white !text-black !shadow-md absolute bottom-10 left-[40%] max-md:left-[40%] -translate-x-[50%] max-w-fit min-w-fit min-w-[150px] !mx-auto font-thabit font-bold text-[1.1rem] max-md:text-[.9rem] justify-center"
@@ -22,7 +24,7 @@ const GetStarted = () => {
                className="mx-auto block cursor-pointer rounded-3xl bg-white px-6 py-2 text-center font-tiltWarp text-[1.8rem] text-black max-md:text-[1.5rem]"
                onClick={toSignUp}
             >
-               SIGN UP TODAY!
+               {t("signUpToday")}
             </button>
          </div>
 
@@ -33,7 +35,7 @@ const GetStarted = () => {
                   className="h-[550px] w-[450px]" 
                   alt="Kids learning to code on CodeAlgo platform"/>
                   <CustomButton onClick={toSignUp} className={buttonClassName} variant="filled" size="medium">
-                     CREATE YOUR AVATAR
+                     {t("createYourAvatar")}
                   </CustomButton>
                </article>
             )}
@@ -43,7 +45,7 @@ const GetStarted = () => {
                className="h-[650px] w-full object-cover max-md:h-[300px]"
                alt="Kids learning to code on CodeAlgo platform" />
                <CustomButton onClick={toSignUp} className={cn(buttonClassName)} variant="filled" size={isMobile ? "extra-small" : "medium"}>
-                  LEARN BY PLAYING
+                  {t("learnByPlaying")}
                </CustomButton>
             </article>
 
@@ -59,7 +61,7 @@ const GetStarted = () => {
                   variant="filled"
                   size={isMobile ? "extra-small" : "medium"}
                >
-                  CODE YOUR WORLD
+                  {t("codeYourWorld")}
                </CustomButton>
             </article>
          </div>

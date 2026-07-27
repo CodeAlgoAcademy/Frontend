@@ -5,6 +5,7 @@ import { MdClose, MdKeyboardArrowRight, MdKeyboardArrowDown } from "react-icons/
 import Image from "next/image";
 
 export interface ILink {
+   key: string;
    name: string;
    icon: ReactElement | string;
    url?: string;
@@ -19,7 +20,7 @@ interface Props {
 
 const TeacherSidebar = ({ links, isOpen, close }: Props) => {
    const router = useRouter();
-   const [expandedMenus, setExpandedMenus] = useState<string[]>(["Classroom", "Reports & Settings"]);
+   const [expandedMenus, setExpandedMenus] = useState<string[]>(["classroom", "reportsAndSettings"]);
 
    const toggleMenu = (name: string) => {
       setExpandedMenus((prev) =>
@@ -48,15 +49,15 @@ const TeacherSidebar = ({ links, isOpen, close }: Props) => {
 
          <div className="flex flex-col gap-1">
             {links.map((link) => {
-               const isExpanded = expandedMenus.includes(link.name);
+               const isExpanded = expandedMenus.includes(link.key);
                const hasSubLinks = !!link.subLinks;
                const isActive = router.pathname === link.url || link.subLinks?.some(s => s.url === router.pathname);
 
                return (
-                  <div key={link.name} className="w-full">
+                  <div key={link.key} className="w-full">
                      {hasSubLinks ? (
                         <button
-                           onClick={() => toggleMenu(link.name)}
+                           onClick={() => toggleMenu(link.key)}
                            className="flex w-full items-center justify-between px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-xl transition-colors"
                         >
                            <div className="flex items-center gap-4">

@@ -11,50 +11,53 @@ import {
   Clock,
   Sparkles
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const HomepageContent = () => {
+ const { t } = useTranslation("home");
+
  const learningPaths = [
     {
       icon: <Brain className="h-6 w-6 text-blue-600" />,
-      title: "Algorithms & Problem Solving",
-      description: "Kids learn to think like engineers, breaking problems into steps and building logical solutions.",
+      title: t("algorithmsAndProblemSolving"),
+      description: t("algorithmsDescription"),
       color: "blue",
-      keyword: "coding for kids"
+      keyword: t("codingForKids")
     },
     {
       icon: <Code2 className="h-6 w-6 text-green-600" />,
-      title: "Python for Kids",
-      description: "One of the world's most in-demand languages, taught through interactive challenges designed specifically for young learners.",
+      title: t("pythonForKidsTitle"),
+      description: t("pythonDescription"),
       color: "green",
-      keyword: "Python for kids"
+      keyword: t("pythonForKidsKeyword")
     },
     {
       icon: <Blocks className="h-6 w-6 text-purple-600" />,
-      title: "Block-Based Coding",
-      description: "Perfect for ages 6–14, giving a visual introduction to programming logic through our specialized kids coding courses.",
+      title: t("blockBasedCoding"),
+      description: t("blockBasedDescription"),
       color: "purple",
-      keyword: "kids coding courses"
+      keyword: t("kidsCodingCourses")
     },
     {
       icon: <Globe className="h-6 w-6 text-orange-600" />,
-      title: "Online Coding Classes",
-      description: "Self-paced online coding classes that kids can access anytime, anywhere from the comfort of home.",
+      title: t("onlineCodingClasses"),
+      description: t("onlineClassesDescription"),
       color: "orange",
-      keyword: "online coding classes"
+      keyword: t("onlineCodingClassesKeyword")
     },
     {
       icon: <GraduationCap className="h-6 w-6 text-indigo-600" />,
-      title: "For Kids Ages 6-14",
-      description: "Age-appropriate curriculum designed specifically for young minds, from elementary to early middle school.",
+      title: t("forKidsAges6to14"),
+      description: t("kidsAgesDescription"),
       color: "indigo",
-      keyword: "kids ages 6-14"
+      keyword: t("kidsAges6to14Keyword")
     },
     {
       icon: <Gamepad2 className="h-6 w-6 text-pink-600" />,
-      title: "Learn Through Games",
-      description: "Turn coding into play! Our game-based approach keeps kids engaged while they master programming concepts.",
+      title: t("learnThroughGames"),
+      description: t("learnThroughGamesDescription"),
       color: "pink",
-      keyword: "learn programming through games"
+      keyword: t("learnProgrammingThroughGames")
     }
   ];
 
@@ -63,13 +66,10 @@ const HomepageContent = () => {
       <div className="mx-auto max-w-7xl">
         <div className="mb-16 text-center">
           <h1 className="mb-6 text-4xl font-extrabold text-gray-900 md:text-5xl lg:text-6xl">
-            The #1 Coding Platform for Kids
+            {t("codingPlatformForKids")}
           </h1>
           <p className="mx-auto max-w-3xl text-md text-gray-600 md:text-xl">
-            CodeAlgo Academy makes learning to code genuinely fun. Our game-based
-            platform turns coding for kids into an adventure, where every lesson
-            is a level, every project is a quest, and every child becomes a
-            builder.
+            {t("heroDescription")}
           </p>
         </div>
 

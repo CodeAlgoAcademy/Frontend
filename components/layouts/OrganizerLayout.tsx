@@ -13,6 +13,7 @@ import OrganizationsList from "../organizers/UI/OrganizationsList";
 import { BsChevronDown } from "react-icons/bs";
 import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
 import { IUser } from "types/interfaces";
+import LanguageSwitcher from "../UI/LanguageSwitcher";
 
 interface OrganizerTabs {
    user: boolean;
@@ -67,6 +68,7 @@ const OrganizerLayout = ({ children }: Props) => {
          <div className="min-h-full w-full flex-1 bg-[#ecedf3] p-[1rem] md:ml-[300px] md:h-full md:overflow-y-scroll md:rounded-[30px] md:p-[2rem]">
             <header className="mb-8 flex items-center justify-end gap-2">
                <div className="flex items-center gap-2">
+                  <LanguageSwitcher variant="sidebar" />
                   <BetaButton />
                   <div className="relative">
                      <div className="flex cursor-pointer items-center gap-1 text-mainColor" onClick={() => toggleTab("user", !tabs.user)}>

@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "store/authSlice";
 import { RootState } from "store/store";
 import { generateUsername } from "utils/generateUsername";
+import { useTranslation } from "react-i18next";
 const UsernameButton2 = () => {
    const dispatch = useDispatch();
    const { firstname, lastname } = useSelector((state: RootState) => state.user.auth);
+   const { t } = useTranslation("auth");
    return (
       <button
          type="button"
@@ -17,7 +19,7 @@ const UsernameButton2 = () => {
             }
          }}
       >
-         Generate Username
+         {t("generateUsername")}
       </button>
    );
 };

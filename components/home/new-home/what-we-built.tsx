@@ -5,12 +5,14 @@ import { RootState } from "store/store";
 import { cn } from "utils";
 import LetsLearnTogether from "./lets-learn-together";
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
 
 const WhatWeBuilt = () => {
     const { push } = useRouter();
    const [mounted, setMounted] = useState<boolean>(false);
    const [playing, setPlaying] = useState<boolean>(false);
    const features = useSelector((state: RootState) => state.accessibility.features);
+   const { t } = useTranslation("home");
 
    const animationsPaused = useMemo(() => features["pause animations"], [features]);
    const toggle = () => {
@@ -23,7 +25,7 @@ const WhatWeBuilt = () => {
    return (
       <section className="w-full bg-blueToBlackGradient pt-12 pb-1">
          <h1 onClick={toSignUp} className="mx-auto max-w-fit cursor-pointer rounded-md bg-mainRed py-2 px-5 text-center font-tiltWarp text-[2rem] font-bold text-white shadow-md max-md:text-[1.5rem]">
-            {"LET'S HAVE FUN TOGETHER!"}
+            {t("letsHaveFunTogether")}
          </h1>
 
 <div className="relative mx-auto mt-12 h-[200px] w-[700px] max-w-[90vw] overflow-hidden rounded-[2rem] bg-white object-contain shadow-xl shadow-mainBlack md:h-[400px]">
