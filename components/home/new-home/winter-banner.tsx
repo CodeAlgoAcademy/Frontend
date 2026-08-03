@@ -4,22 +4,25 @@ export const WinterBanner = () => {
   const { t } = useTranslation("home");
 
   return (
-     <div className="relative z-40 bg-mainRed px-4 py-3 flex justify-center text-center text-white">
-      <p className="text-sm font-semibold md:text-2xl">
-        {t("summerSale20Off")}
-     <span className="bg-mainGreen text-white rounded-full px-3 mx-2 py-1 text-sm font-bold">
+    <div className="relative z-40 bg-mainRed px-4 py-3 flex items-center justify-center text-center text-white">
+      <div className="flex flex-wrap items-center justify-center gap-2 text-sm font-semibold md:text-2xl">
+        <span>{t("summerSale20Off")}</span>
+        
+        <span className="inline-flex items-center bg-mainGreen text-white rounded-full px-3 py-0.5 text-xs md:text-sm font-bold white-space-nowrap">
           {t("sale")}
         </span>
+        
         <a
           href="/login"
-          className="text-white text-sm md:text-2xl underline font-bold"
+          className="text-white underline font-bold ml-1 hover:text-opacity-90"
         >
           {t("getStartedNow")}
         </a>
-         </p>
+      </div>
     </div>
   );
 };
+
 
 
 export const PromoBanner = () => {
