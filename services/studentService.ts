@@ -31,7 +31,7 @@ const getClassProgressSummary = async (class_id: string) => {
       },
    });
    return response.data;
-}; 
+};
 
 const getSingleStudent = async (classId: number, studentId: number) => {
    console.log(classId, studentId);
@@ -40,7 +40,7 @@ const getSingleStudent = async (classId: number, studentId: number) => {
    return response.data?.student;
 };
 
-const getStudentProgressByTeacher = async (studentId: string, classId:string) => {
+const getStudentProgressByTeacher = async (studentId: string, classId: string) => {
    try {
       const response = await http.get<IChildTopics>(`/academics/class/${classId}/student/${studentId}/progress`, {
          headers: {
@@ -69,12 +69,52 @@ const getStudentBlockProgressByTeacher = async (studentId: string) => {
    }
 };
 
+const moveStudents = async (payload: { studentIds: Array<string | number>; sourceClassId: string | number; targetClassId: string | number }) => {
+   const response = await http.post(`/academics/class/move-students`, payload, {
+      headers: {
+         Authorization: `Bearer ${getAccessToken()}`,
+      },
+   });
+   return response.data;
+};
+
+const transferStudentsOwner = async (payload: { studentIds: Array<string | number>; sourceClassId: string | number; newTeacherId: string | number; newClassId: string | number }) => {
+   const response = await http.patch(`/academics/student/transfer-owner`, payload, {
+      headers: {
+         Authorization: `Bearer ${getAccessToken()}`,
+      },
+   });
+   return response.data;
+};
+
+const getOrganizationTeachers = async (orgId: string | number) => {
+   const response = await http.get(`/organization/${orgId}/teachers`, {
+      headers: {
+         Authorization: `Bearer ${getAccessToken()}`,
+      },
+   });
+   return response.data;
+};
+
+const getTeacherClasses = async (teacherId: string | number) => {
+   const response = await http.get(`/academics/teacher/${teacherId}/classes`, {
+      headers: {
+         Authorization: `Bearer ${getAccessToken()}`,
+      },
+   });
+   return response.data;
+};
+
 const studentService = {
    addStudent,
    getStudents,
    getSingleStudent,
    getStudentProgressByTeacher,
    getClassProgressSummary,
+   moveStudents,
+   transferStudentsOwner,
+   getOrganizationTeachers,
+   getTeacherClasses,
 };
 
 export default studentService;
