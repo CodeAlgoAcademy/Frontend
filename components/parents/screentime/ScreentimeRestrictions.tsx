@@ -5,10 +5,12 @@ import { changeTimeLimit } from "utils/timelimit";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { editScreentime, getChildren } from "store/parentChildSlice";
+import { useTranslation } from "react-i18next";
 
 const ScreentimeRestrictions = () => {
    const { currentChild } = useSelector((state: RootState) => state.parentChild);
    const dispatch = useDispatch();
+   const { t } = useTranslation("parent");
 
    const [timeLimits, setTimeLimits] = useState<screentimeTypes[]>([
       { id: 1, dayOfTheWeek: "Monday", timeLimit: 0 },
@@ -37,8 +39,8 @@ const ScreentimeRestrictions = () => {
 
    return (
       <div className="relative min-h-[340px] max-w-fit rounded-2xl bg-white px-8 py-10 md:w-full md:min-w-[420px]">
-         <h1 className="text-[1.3rem] font-semibold text-mainColor">Current screen time restrictions</h1>
-         <h2 className="mt-2 mb-10 text-[14px] font-medium">Make edits to screen time restrictions below</h2>
+         <h1 className="text-[1.3rem] font-semibold text-mainColor">{t("currentScreenTimeRestrictions")}</h1>
+         <h2 className="mt-2 mb-10 text-[14px] font-medium">{t("makeEditsBelow")}</h2>
          <div className="mt-4 flex flex-wrap items-center justify-center gap-4 md:justify-start">
             {timeLimits?.map((time, index: number) => {
                return <ScreenTimeComponent updateScreenTimeForChild={updateTime} time={time} key={index} />;

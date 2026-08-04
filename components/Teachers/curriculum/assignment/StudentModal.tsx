@@ -4,6 +4,7 @@ import Button from "@/components/UI/Button";
 import { ISingleStudent, DynamicChechbox } from "types/interfaces";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
+import { useTranslation } from "react-i18next";
 
 const StudentModal = ({
    students,
@@ -20,10 +21,11 @@ const StudentModal = ({
    allStudentCheckbox: { isChecked: boolean };
    studentCheckbox: DynamicChechbox;
 }) => {
+   const { t } = useTranslation("teacher");
    const { className, color } = useSelector((state: RootState) => state.currentClass);
    return (
       <div className="h-[500px] min-w-[800px] py-12" data-testid="students-modal">
-         <h3 className="pl-12 text-2xl font-semibold text-mainColor">Student(s)</h3>
+         <h3 className="pl-12 text-2xl font-semibold text-mainColor">{t("studentHeading")}</h3>
          <div className="flex items-center justify-between border-b px-12 py-4">
             <div className="flex items-center gap-4">
                <div className="checkbox-container bottom-1">
@@ -36,7 +38,7 @@ const StudentModal = ({
                   />
                   <label htmlFor="allStudents" className="checkmark big-checkmark"></label>
                </div>
-               <p className="font-semibold">{allStudentCheckbox.isChecked ? "Unselect all Students" : "Select all Students"}</p>
+                <p className="font-semibold">{allStudentCheckbox.isChecked ? t("unselectAllStudents") : t("selectAllStudents")}</p>
             </div>
             <div className="flex items-center gap-4 rounded-md border px-3 py-1">
                <span className="h-[25px] w-[25px] rounded-full" style={{ backgroundColor: color }}></span>
@@ -69,7 +71,7 @@ const StudentModal = ({
          </div>
          <div className="flex flex-row-reverse px-12 py-4">
             <span onClick={hideModal} className="">
-               <Button color="#2073fa" text="Confirm" />
+                <Button color="#2073fa" text={t("confirm")} />
             </span>
          </div>
       </div>

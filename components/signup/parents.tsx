@@ -7,40 +7,42 @@ import { countryList } from "./countries";
 import { updateUser } from "../../store/authSlice";
 import { generateUsername } from "../../utils/generateUsername";
 import UsernameButton from "./usernameButton";
+import { useTranslation } from "react-i18next";
 
 const Parents = () => {
    const dispatch = useDispatch();
    const { firstname, lastname, email, password, username } = useSelector((state: RootState) => state.user.auth);
+   const { t } = useTranslation("auth");
 
    const inputFields: IInputFields[] = [
       {
          name: "firstname",
          type: "text",
-         placeholder: "Enter Firstname",
+         placeholder: t("enterFirstname"),
          value: firstname,
       },
       {
          name: "lastname",
          type: "text",
-         placeholder: "Enter Lastname",
+         placeholder: t("enterLastname"),
          value: lastname,
       },
       {
          name: "email",
          type: "email",
-         placeholder: "Enter Email",
+         placeholder: t("enterEmail"),
          value: email,
       },
       {
          name: "password",
          type: "password",
-         placeholder: "Enter Password",
+         placeholder: t("enterPassword"),
          value: password as string,
       },
       {
          name: "username",
          type: "text",
-         placeholder: "Enter Username",
+         placeholder: t("enterUsername"),
          value: username,
       },
    ];
@@ -73,7 +75,7 @@ const Parents = () => {
                dispatch(updateUser({ key: "country", value }));
             }}
          >
-            <option value="Select Country">Select Country</option>
+             <option value="Select Country">{t("selectCountry")}</option>
             {countryList.map((countryOption: string, index: number): ReactNode => {
                return (
                   <option value={countryOption} key={index}>

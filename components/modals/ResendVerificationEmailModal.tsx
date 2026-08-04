@@ -4,6 +4,7 @@ import { MdClose } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { resendEmail } from "services/authService";
 import { openSuccessModal } from "store/modalSlice";
+import { useTranslation } from "react-i18next";
 
 interface Props {
    closeModal(): void;
@@ -11,6 +12,7 @@ interface Props {
 
 const ResendVerificationEmailModal = ({ closeModal }: Props) => {
    const [email, setEmail] = useState<string>("");
+   const { t } = useTranslation("modals");
 
    const dispatch = useDispatch();
 
@@ -19,7 +21,7 @@ const ResendVerificationEmailModal = ({ closeModal }: Props) => {
       const data = await dispatch(resendEmail(email));
       if (!data?.error) {
          closeModal();
-         dispatch(openSuccessModal({ message: "Verification email sent" }));
+         dispatch(openSuccessModal({ message: t("verificationEmailSent") }));
       }
    };
 
@@ -27,14 +29,14 @@ const ResendVerificationEmailModal = ({ closeModal }: Props) => {
       <div className={styles.modalOverlay}>
          <form className={styles.modal} onSubmit={submit}>
             <header className="mb-6 flex items-center justify-between gap-3">
-               <p className="cursor-pointer text-[1.2rem] font-bold text-mainRed">Resend Email</p>
+               <p className="cursor-pointer text-[1.2rem] font-bold text-mainRed">{t("resendEmail")}</p>
                <i className="cursor-pointer text-[1.5rem] text-red-600" onClick={closeModal}>
                   <MdClose />
                </i>
             </header>
             <div>
                <div className="mx-auto mb-8 flex h-[64px] max-w-[400px] flex-col items-center justify-center text-center text-[1rem]  text-gray-900">
-                  <p className="mb-2 font-medium">Enter your email to verify your account</p>
+                  <p className="mb-2 font-medium">{t("enterEmailToVerify")}</p>
                   <input
                      className="w-full max-w-[300px] rounded-md border-[1.5px] border-mainRed p-2 font-medium outline-none placeholder:font-medium"
                      placeholder="Enter Email"
@@ -45,7 +47,7 @@ const ResendVerificationEmailModal = ({ closeModal }: Props) => {
                </div>
                <div className="flex justify-center">
                   <button className={styles.button} type="submit">
-                     Send Verification Link 📨
+                     {t("resendEmail")} 📨
                   </button>
                </div>
             </div>

@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
 import ContentBox from "../parents/UI/ContentBox";
+import { useTranslation } from "react-i18next";
 
 const allRoles = [
    {
@@ -42,9 +43,10 @@ const allRoles = [
 const AllRoles = () => {
    const dispatch = useDispatch();
    const roles = useSelector((state: RootState) => state?.organizer?.roles);
+   const { t } = useTranslation("organizer");
 
    return (
-      <ContentBox title="All Roles" size="base" padding="small">
+      <ContentBox title={t("allRoles")} size="base" padding="small">
          <div className="max-h-[250px] overflow-y-scroll">
             {roles?.map((role, index) => {
                return (

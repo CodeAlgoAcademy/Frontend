@@ -8,12 +8,14 @@ import { useDispatch } from "react-redux";
 import { openErrorModal } from "store/fetchSlice";
 import { editLesson, getAllLessons } from "services/lessonService";
 import { updateLessonOpened } from "store/lessonsSlice";
+import { useTranslation } from "react-i18next";
+import { getMonthNames } from "utils/formatLocale";
 
 const getLessonDate = (date: string) => {
    const dates = date.split("-");
    const month = parseInt(dates[1]);
    const day = parseInt(dates[2]);
-   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+   const months = getMonthNames();
    return `${months[month < 10 && month.toString().length === 2 ? parseInt(month.toString()[1]) : month]} ${day}`;
 };
 
@@ -38,6 +40,7 @@ const SingleLesson = ({
    aboutToEditStudent: boolean;
    cancelPresence: () => void;
 }) => {
+   const { t } = useTranslation("teacher");
    const dispatch = useDispatch();
    const [studentsUpdatedBefore, setStudentsUpdatedBefore] = useState<boolean>(true);
    const [editDateOpened, setEditDateOpened] = useState<boolean>(false);
@@ -60,11 +63,11 @@ const SingleLesson = ({
          const errors: string[] = [];
 
          if (new Date(editDateDetails.start_date).getTime() < today_date) {
-            errors.push("Start date can't be before today's date");
-         }
-         if (new Date(editDateDetails.start_date).getTime() > new Date(data.end_date).getTime()) {
-            errors.push("Start date can't be after / on the same day with end date");
-         }
+             errors.push(t("startDateCantBeBeforeToday"));
+          }
+          if (new Date(editDateDetails.start_date).getTime() > new Date(data.end_date).getTime()) {
+             errors.push(t("startCantBeAfterEnd"));
+          }
          if (errors.length === 0) {
             const newLesson = { ...data };
             newLesson.start_date = editDateDetails.start_date;
@@ -81,18 +84,18 @@ const SingleLesson = ({
       dispatch(updateLessonOpened(data));
       if (data.end_date !== editDateDetails.end_date) {
          const errors: string[] = [];
-         if (new Date(editDateDetails.end_date).getTime() < today_date) {
-            errors.push("End date can't be before today's date");
-         }
-         if (new Date(editDateDetails.start_date).getTime() !== new Date(data.start_date).getTime()) {
-            if (new Date(editDateDetails.end_date).getTime() < new Date(editDateDetails.start_date).getTime()) {
-               errors.push("End date can't be less than start date");
-            }
-         } else {
-            if (new Date(editDateDetails.end_date).getTime() < new Date(data.start_date).getTime()) {
-               errors.push("End date can't be less than start date");
-            }
-         }
+          if (new Date(editDateDetails.end_date).getTime() < today_date) {
+             errors.push(t("endDateCantBeBeforeToday"));
+          }
+          if (new Date(editDateDetails.start_date).getTime() !== new Date(data.start_date).getTime()) {
+             if (new Date(editDateDetails.end_date).getTime() < new Date(editDateDetails.start_date).getTime()) {
+                errors.push(t("endCantBeLessThanStart"));
+             }
+          } else {
+             if (new Date(editDateDetails.end_date).getTime() < new Date(data.start_date).getTime()) {
+                errors.push(t("endCantBeLessThanStart"));
+             }
+          }
          if (errors.length === 0) {
             const newLesson = { ...data };
             newLesson.end_date = editDateDetails.end_date;
@@ -133,7 +136,7 @@ const SingleLesson = ({
                         onClick={() => setShowPreview(true)}
                         className="block cursor-pointer text-[#A0A0A0] transition duration-200 ease-out hover:text-black hover:underline sm:ml-3 sm:text-[14px] lg:text-[18px]"
                      >
-                        Preview
+                        {t("preview")}
                      </p>
                   )}
                </div>
@@ -144,9 +147,9 @@ const SingleLesson = ({
                      ) : (
                         <BsCircle className="text-[9px] text-[#B0B0B0]" />
                      )}
-                     <p className="font-semibold md:text-[15px] lg:text-[18px]">
-                        {data.status.toLowerCase() !== "published" ? "Unpublished" : "Published"}
-                     </p>
+                      <p className="font-semibold md:text-[15px] lg:text-[18px]">
+                         {data.status.toLowerCase() !== "published" ? t("unpublished") : t("published")}
+                      </p>
                   </div>
                </div>
             </div>

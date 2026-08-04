@@ -1,25 +1,33 @@
+import { useTranslation } from "react-i18next";
 
 export const WinterBanner = () => {
+  const { t } = useTranslation("home");
+
   return (
-     <div className="relative z-40 bg-mainRed px-4 py-3 flex justify-center text-center text-white">
-      <p className="text-sm font-semibold md:text-2xl">
-        Summer Sale 20% OFF Premium subscriptions! For a limited time only.
-     <span className="bg-mainGreen text-white rounded-full px-3 mx-2 py-1 text-sm font-bold">
-          SALE
+    <div className="relative z-40 bg-mainRed px-4 py-3 flex items-center justify-center text-center text-white">
+      <div className="flex flex-wrap items-center justify-center gap-2 text-sm font-semibold md:text-2xl">
+        <span>{t("summerSale20Off")}</span>
+        
+        <span className="inline-flex items-center bg-mainGreen text-white rounded-full px-3 py-0.5 text-xs md:text-sm font-bold white-space-nowrap">
+          {t("sale")}
         </span>
+        
         <a
           href="/login"
-          className="text-white text-sm md:text-2xl underline font-bold"
+          className="text-white underline font-bold ml-1 hover:text-opacity-90"
         >
-          Get Started now
+          {t("getStartedNow")}
         </a>
-         </p>
+      </div>
     </div>
   );
 };
 
 
+
 export const PromoBanner = () => {
+  const { t } = useTranslation("home");
+
   return (
     <div className="w-full bg-mainRed text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -30,12 +38,12 @@ export const PromoBanner = () => {
               <span className="text-red-600 font-bold text-sm">🔥</span>
             </span>
             <span className="text-white font-bold text-lg">
-              DISCOUNT APPLIED! Winter Sale! Now 20% OFF all Yearly Subscriptions
+              {t("discountApplied")}
             </span>
           </div>
           <div className="flex items-center gap-2">
             <span className="text-white text-sm opacity-90">
-              Limited time
+              {t("limitedTime")}
             </span>
           </div>
 

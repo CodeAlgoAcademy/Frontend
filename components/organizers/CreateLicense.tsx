@@ -2,12 +2,14 @@ import React, { ChangeEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { createLicense, getAllLicenses } from "services/organizersService";
 import ContentBox from "../parents/UI/ContentBox";
+import { useTranslation } from "react-i18next";
 
 const CreateLicense = () => {
    const [name, setName] = useState<string>("");
    const [description, setDescription] = useState<string>("");
    const [price, setPrice] = useState<string>("");
    const [duration, setDuration] = useState<string>("");
+   const { t } = useTranslation("organizer");
 
    const dispatch = useDispatch();
 
@@ -26,14 +28,14 @@ const CreateLicense = () => {
    };
 
    return (
-      <ContentBox title="Create License" size="base" padding="small">
+      <ContentBox title={t("createLicense")} size="base" padding="small">
          <form action="" onSubmit={submit} className="max-h-[250px] overflow-y-scroll">
             <div className="flex flex-col gap-[1rem] text-slate-700">
                <div>
-                  <p className="font-500 text-[0.98rem]">Name</p>
+                  <p className="font-500 text-[0.98rem]">{t("name")}</p>
                   <input
                      type="text"
-                     placeholder="Enter License Name"
+                     placeholder={t("enterLicenseName")}
                      className={style.input}
                      value={name}
                      onChange={(e) => setName(e.target.value)}
@@ -42,10 +44,10 @@ const CreateLicense = () => {
                </div>
 
                <div>
-                  <p className="font-500 text-[0.98rem]">Description</p>
+                  <p className="font-500 text-[0.98rem]">{t("description")}</p>
                   <input
                      type="text"
-                     placeholder="Enter License Description"
+                     placeholder={t("enterLicenseDescription")}
                      className={style.input}
                      value={description}
                      onChange={(e) => setDescription(e.target.value)}
@@ -54,10 +56,10 @@ const CreateLicense = () => {
                </div>
 
                <div>
-                  <p className="font-500 text-[0.98rem]">Price</p>
+                  <p className="font-500 text-[0.98rem]">{t("price")}</p>
                   <input
                      type="text"
-                     placeholder="Enter License price"
+                     placeholder={t("enterLicensePrice")}
                      className={style.input}
                      value={price}
                      onChange={(e) => setPrice(e.target.value)}
@@ -66,11 +68,11 @@ const CreateLicense = () => {
                </div>
 
                <div>
-                  <p className="font-500 text-[0.98rem]">Duration (months)</p>
+                  <p className="font-500 text-[0.98rem]">{t("duration")}</p>
                   <input
                      type="number"
                      min={1}
-                     placeholder="Enter License Duration"
+                     placeholder={t("enterLicenseDuration")}
                      className={style.input}
                      value={duration}
                      onChange={(e) => setDuration(e.target.value)}
@@ -80,7 +82,7 @@ const CreateLicense = () => {
             </div>
 
             <button className={style.button} type="submit">
-               Create License
+               {t("createLicense")}
             </button>
          </form>
       </ContentBox>

@@ -7,11 +7,13 @@ import { FcGoogle } from "react-icons/fc";
 import { loginWithGoogle, signUpWithGoogle, updateAccountType, confirmAddRole } from "services/authService";
 import { openErrorModal } from "store/fetchSlice";
 import RoleConfirmationModal from "../modals/RoleConfirmationModal";
+import { useTranslation } from "react-i18next";
 
 const GoogleBtn: FC = () => {
    const credentials = useSelector((state: RootState) => state.user?.auth);
    const dispatch = useDispatch();
    const router = useRouter();
+   const { t } = useTranslation("common");
 
    const [confirmationData, setConfirmationData] = useState<{
       confirmation_token: string;
@@ -122,7 +124,7 @@ const GoogleBtn: FC = () => {
             <i className="text-[22px]">
                <FcGoogle />
             </i>
-            <span>{router.pathname.includes("/login") ? "Sign in" : "Sign up"} with Google</span>
+             <span>{router.pathname.includes("/login") ? t("login") : t("signUp")} with Google</span>
          </button>
 
          {confirmationData && (

@@ -7,8 +7,10 @@ import { useDispatch } from "react-redux";
 import { getAllCurriculums, updateCurriculumToCurrent, updateCurriculumToPast } from "../../../services/curriculumService";
 import { updateUnitInView } from "store/unitsSlice";
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
 
 const SingleCurriculum = ({ curriculum, active }: { curriculum: Icurriculum; active: string }) => {
+   const { t } = useTranslation("teacher");
    const dispatch = useDispatch();
    const router = useRouter();
    const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -33,8 +35,8 @@ const SingleCurriculum = ({ curriculum, active }: { curriculum: Icurriculum; act
                <span>
                   <BiArrowBack />
                </span>
-               Move to past
-            </aside>
+                {t("moveToPast")}
+             </aside>
          )}
          {modalOpen && active === "upcoming" && (
             <aside
@@ -48,8 +50,8 @@ const SingleCurriculum = ({ curriculum, active }: { curriculum: Icurriculum; act
                <span>
                   <BiArrowBack />
                </span>
-               Move to current
-            </aside>
+                {t("moveToCurrent")}
+             </aside>
          )}
          <div className="flex items-center justify-center rounded-l-xl p-8" style={{ background: curriculum.level }}></div>
          <div className="flex-1 rounded-r-xl bg-white p-8">
@@ -78,7 +80,7 @@ const SingleCurriculum = ({ curriculum, active }: { curriculum: Icurriculum; act
                         );
                      }}
                   >
-                     view unit
+                     {t("viewUnit")}
                   </p>
                </Link>
             </div>

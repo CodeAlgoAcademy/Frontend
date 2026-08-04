@@ -3,18 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { addChildFriend, getChildren, updateChild } from "store/parentChildSlice";
 import { RootState } from "store/store";
 import ContentBox from "../UI/ContentBox";
+import { useTranslation } from "react-i18next";
 
 const AddAFriend = () => {
    const { friend, currentChild } = useSelector((state: RootState) => state.parentChild);
    const dispatch = useDispatch();
+   const { t } = useTranslation("parent");
    return (
-      <ContentBox size="large" title="Add a friend" padding="large">
+      <ContentBox size="large" title={t("addAFriend")} padding="large">
          <section className="small-scroll-thumb blue-scroll-thumb" data-testid="add-a-friend-container">
             <p className="mb-4 text-sm font-light">
-               CodeAlgo allows parents to limit students multiplayer interactions. Please enter the email or username of your student{"'"}s friend
-               below. A request will be sent to the linked parent account. They can accept and decline the request
+               {t("addFriendDescription")}
             </p>
-            <h2 className="text-[15px] font-bold">Friend email or username</h2>
+            <h2 className="text-[15px] font-bold">{t("friendEmailOrUsername")}</h2>
             <input
                type="text"
                className="focus:border-mainColor mb-5 w-full max-w-[400px] rounded-xl border-2 px-3 py-1 text-[15px] outline-none placeholder:text-gray-500"
@@ -33,9 +34,9 @@ const AddAFriend = () => {
                }}
                className="bg-mainColor mb-4 w-full max-w-[400px] rounded-xl py-1 px-3 font-light text-white"
             >
-               Send Request
+               {t("addFriend")}
             </button>
-            <p className="text-[14px]">Requests will be accepted or denied by the student{"'"}s parent</p>
+            <p className="text-[14px]">{t("friendRequestInfo")}</p>
          </section>
       </ContentBox>
    );

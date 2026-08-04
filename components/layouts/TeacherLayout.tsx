@@ -23,6 +23,8 @@ import { SlGameController } from "react-icons/sl";
 import { SlSettings } from "react-icons/sl";
 import { MdOutlineReportGmailerrorred } from "react-icons/md";
 import { MdOutlineAssignment } from "react-icons/md";
+import LanguageSwitcher from "../UI/LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -31,53 +33,60 @@ interface Props {
    className?: string;
 }
 
-const links = [
-   {
-      name: "Dashboard",
-      icon: <TbLayoutDashboard />,
-      url: "/teachers",
-   },
-   {
-      name: "Classroom",
-      icon: "🎓", 
-      subLinks: [
-         { name: "Lesson Plan", url: "/teachers/curriculum" },
-         { name: "Live Class", url: "/teachers/overview" },
-         { name: "Assignments", url: "/teachers/assignments" },
-      ],
-   },
-   {
-      name: "Reports & Settings",
-      icon: "📊",
-      subLinks: [
-         { name: "Class Report", url: "/teachers/report" },
-         { name: "Class Settings", url: "/teachers/classbulksettings" },
-      ],
-   },
-   {
-      name: "Students",
-      icon: "👥",
-      url: "/teachers/students",
-   },
-   {
-      name: "Organization",
-      icon: "🏢",
-      url: "/teachers/organization",
-   },
-   {
-      name: "Help",
-      icon: "❓",
-      url: "/contact",
-   },
-];
-
-
 
 
 const TeacherLayout = ({ children, className }: Props) => {
    const [sidebarOpened, setSidebarOpened] = useState<boolean>(false);
    const router = useRouter();
    const dispatch = useDispatch();
+   const { t } = useTranslation("common");
+   const { t: tTeacher } = useTranslation("teacher");
+
+   const links = [
+      {
+         key: "dashboard",
+         name: tTeacher("dashboard"),
+         icon: <TbLayoutDashboard />,
+         url: "/teachers",
+      },
+      {
+         key: "classroom",
+         name: tTeacher("classroom"),
+         icon: "🎓",
+         subLinks: [
+            { name: tTeacher("lessonPlan"), url: "/teachers/curriculum" },
+            { name: tTeacher("liveClass"), url: "/teachers/overview" },
+            { name: tTeacher("assignments"), url: "/teachers/assignments" },
+         ],
+      },
+      {
+         key: "reportsAndSettings",
+         name: tTeacher("reportsAndSettings"),
+         icon: "📊",
+         subLinks: [
+            { name: tTeacher("classReport"), url: "/teachers/report" },
+            { name: tTeacher("classSettings"), url: "/teachers/classbulksettings" },
+         ],
+      },
+      {
+         key: "students",
+         name: tTeacher("students"),
+         icon: "👥",
+         url: "/teachers/students",
+      },
+      {
+         key: "organization",
+         name: tTeacher("organization"),
+         icon: "🏢",
+         url: "/teachers/organization",
+      },
+      {
+         key: "help",
+         name: tTeacher("help"),
+         icon: "❓",
+         url: "/contact",
+      },
+   ];
 
    useEffect(() => {
       // const stringedToken = localStorage.getItem(ILocalStorageItems.token);
@@ -115,8 +124,9 @@ const TeacherLayout = ({ children, className }: Props) => {
                </div>
 
                <div className="flex items-center gap-2">
+                  <LanguageSwitcher variant="sidebar" />
                   <PrintLoginsButton />
-                  <BetaButton />
+                  {/* <BetaButton /> */}
                   <UserInfo />
                   <MdMenu cursor={"pointer"} size={26} className="md:hidden" onClick={() => setSidebarOpened(true)} />
                </div>

@@ -1,11 +1,10 @@
 import Header from "@/components/press/Header";
 import Navbar from "@/components/navbar/home/Navbar";
 import React from "react";
-import RelatedArticles from "@/components/press/RelatedArticles";
 import ImagesContainer from "@/components/press/ImagesContainer";
-import DropCapsParagraph from "@/components/press/DropCapsParagraph";
 import BlogTitle from "@/components/press/BlogTitle";
 import Footer from "@/components/home/new-home/footer";
+import { useTranslation } from "react-i18next";
 
 const newMembers = [
    {
@@ -17,7 +16,7 @@ const newMembers = [
       desc: "A global marketplace that uses AI to standardize software development pricing for app founders. Fractional CTOs available 24/7.",
    },
    {
-      name: "•	Nic Bianchi",
+      name: "\u2022\tNic Bianchi",
       company: "Bianchi Candle Co",
       link: "https://bianchicandleco.com/",
       linkedin: "https://www.linkedin.com/in/nic-bianchi-609b9217b/",
@@ -46,7 +45,7 @@ const newMembers = [
       link: "https://ebsystems.co/",
       linkedin: "https://www.linkedin.com/in/jon-ruiz-47063373/",
       location: "Kansas City",
-      desc: " An industry leader in mobile apps, Bluetooth technology, and proprietary Beacon Reader technology that help to drive the “Internet of Things” (IoT) industry for a range of industries and clients. ",
+      desc: " An industry leader in mobile apps, Bluetooth technology, and proprietary Beacon Reader technology that help to drive the \u201cInternet of Things\u201d (IoT) industry for a range of industries and clients. ",
    },
    {
       name: "Robert Disberger ",
@@ -62,7 +61,7 @@ const newMembers = [
       link: "https://www.tryhaelium.com",
       linkedin: "https://www.linkedin.com/in/sarahhill1/",
       location: "Columbia",
-      desc: "An interactive immersive media company that specializes in biometrically controlled content powered by the user’s wearables. In five peer-reviewed journals, Healium has been shown to reduce anxiety and improve mood in as little as four minutes.",
+      desc: "An interactive immersive media company that specializes in biometrically controlled content powered by the user\u2019s wearables. In five peer-reviewed journals, Healium has been shown to reduce anxiety and improve mood in as little as four minutes.",
    },
    {
       name: "Scott Campbell",
@@ -78,7 +77,7 @@ const newMembers = [
       link: "https://www.getmoodspark.com/",
       linkedin: "https://www.linkedin.com/in/campbellscottf/",
       location: "Kansas City, Kansas",
-      desc: "The world’s first mood improving digital companion: detects sadness and uplifts with conversation, memories and video visits from friends and family.",
+      desc: "The world\u2019s first mood improving digital companion: detects sadness and uplifts with conversation, memories and video visits from friends and family.",
    },
    {
       name: "Tashara Earl",
@@ -89,7 +88,7 @@ const newMembers = [
       desc: "Provides a diverse, equitable, and inclusive global platform to empower beauty entrepreneurs and consumers with personalized solutions to buy and sell products for their unique needs, culture, and lifestyle.",
    },
    {
-      name: "Molly O’Neil",
+      name: "Molly O\u2019Neil",
       company: "Superb",
       link: "https://www.superbshifts.com/",
       linkedin: "https://www.linkedin.com/in/molly-o%E2%80%99neil-43555b86/",
@@ -106,7 +105,7 @@ const newMembers = [
    },
    {
       name: "Audra Dinell",
-      company: "The Thread: Women’s Leadership Collective",
+      company: "The Thread: Women\u2019s Leadership Collective",
       link: "https://www.thethreadwlc.com/",
       linkedin: "https://www.linkedin.com/in/audradinell/",
       location: "Wichita",
@@ -161,7 +160,7 @@ const cohortMembers = [
       link: "https://dataappraisal.ai/",
       linkedin: ["https://www.linkedin.com/in/tamtranio/", "https://www.linkedin.com/in/roger-ngo-47254b3/"],
       location: "Overland Park",
-      desc: "Unlocking enterprise data’s monetary value — using an automated proprietary approach — to allow companies to monetize their enterprise data assets.",
+      desc: "Unlocking enterprise data\u2019s monetary value \u2014 using an automated proprietary approach \u2014 to allow companies to monetize their enterprise data assets.",
    },
    {
       name: "Melissa Weed",
@@ -218,47 +217,37 @@ const cohortMembers = [
 ];
 
 const PipelineSelectedCodeAlgo = () => {
+   const { t } = useTranslation("press");
    return (
       <section className="press-page min-h-screen w-full bg-[#f7f8ff] font-thabit">
          <Navbar />
          <Header
-            body="Pipeline has extended an exclusive invitation to CodeAlgo Academy to join their Pathfinder program, marking a significant milestone in our journey toward excellence!"
-            title={`Pipeline has selected CodeAlgo Academy to join their Pathfinder`}
+            body={t("pipelineSelectedCodealgo.headerBody")}
+            title={t("pipelineSelectedCodealgo.headerTitle")}
             image="/assets/blog/article2.jpg"
             date="January 2022"
          />
          <div className="mx-auto mb-14 mt-8 max-w-[1100px] rounded-md bg-white p-3 px-6 shadow-md">
             <BlogTitle
-               title="Meet the Midwest’s future serial entrepreneurs: Pipeline reveals 2023 fellowship, Pathfinder cohort"
+               title={t("pipelineSelectedCodealgo.title")}
                link="https://www.startlandnews.com/author/tfelts/"
                by="Tommy Felts"
-               date="January 31, 2023"
+               date={t("pipelineSelectedCodealgo.date")}
             />
             <ImagesContainer imageHeight={450} image="/assets/blog/article2-1.jpg" imageDetail="" />
             <main className="mt-6">
                <section className="my-4 flex flex-col flex-wrap gap-[1rem] md:flex-row">
                   <div className="mt-6 flex-1">
-                     <p className="mt-3">
-                        2023 Pipeline fellows: top, Audra Dinell, The Thread: Women’s Leadership Collective; Scott Campbell, KBS Service; Tashara
-                        Earl, Shades of Color; Robert Disbenger, GovBuilt; middle, Eliot Arnold, Mood Spark AI; Megan Orear, Celerity Enterprises; Lee
-                        Zuvanich, Appsta; Sarah Hill, Healium; Jon Broek, Tenfold Security; bottom, Jonathan Ruiz, EB Systems; Mandy Shoemaker,
-                        Dementia Engagement Solutions; Nic Bianchi, Bianchi Candle Co; Molly O’Neil, Superb
-                     </p>
-                     <p className="mt-3">
-                        Nearly 30 of the region’s most promising founders now have access to an industry-agnostic network that focuses solely on
-                        serial high-growth entrepreneurs — without taking equity in the startups it serves, said Melissa Vincent.
-                     </p>
+                     <p className="mt-3">{t("pipelineSelectedCodealgo.p1")}</p>
+                     <p className="mt-3">{t("pipelineSelectedCodealgo.p2")}</p>
                   </div>
                   <div className="flex-[0.7]">
-                     <ImagesContainer image="/assets/blog/article2-3.jpg" imageDetail="Melissa Vincent, Pipeline Entrepreneurs" imageHeight={300} />
+                     <ImagesContainer image="/assets/blog/article2-3.jpg" imageDetail={t("pipelineSelectedCodealgo.caption1")} imageHeight={300} />
                   </div>
                </section>
 
                <section className="mt-3">
-                  <p className="mt-5">
-                     Pipeline Entrepreneurs on Tuesday officially announced its new roster of high-profile fellows, as well as members of its latest
-                     Pipeline Pathfinder cohort, which provides programming specifically for minority, women, and rural based entrepreneurs.
-                  </p>
+                  <p className="mt-5">{t("pipelineSelectedCodealgo.p3")}</p>
                   <p className="mt-5">
                      <i>
                         Click{" "}
@@ -275,23 +264,15 @@ const PipelineSelectedCodeAlgo = () => {
                   </p>
 
                   <p className="mt-5">
-                     <i className="#444">
-                        {" "}
-                        “Our hope for the future with these two cohorts is that as they go through the program there continues to be an amazing
-                        continuum of resources specifically for high-growth entrepreneurs who are in the Midwest,”
-                     </i>{" "}
+                     <i className="#444"> {t("pipelineSelectedCodealgo.p4")}</i>{" "}
                      said Vincent, executive director of Pipeline.{" "}
-                     <i className="#444">
-                        “And because we have that unique purpose, when you see these new cohorts going through the program, it’s incredibly exciting
-                        to think about the impact that they’re going to have not just economically on the region but also because they carry forward
-                        that Pipeline spirit.”
-                     </i>
+                     <i className="#444">{t("pipelineSelectedCodealgo.p5")}</i>
                   </p>
                </section>
                <section className="mt-3">
-                  <ImagesContainer image="/assets/blog/article2-2.jpg" imageDetail="2023 Pipeline Fellows and Pathfinders" imageHeight={450} />
+                  <ImagesContainer image="/assets/blog/article2-2.jpg" imageDetail={t("pipelineSelectedCodealgo.caption2")} imageHeight={450} />
                   <div className="mt-5">
-                     <h3 className="mb-3 font-bold">New members of Pipeline’s elite fellowship class include: </h3>
+                     <h3 className="mb-3 font-bold">{t("pipelineSelectedCodealgo.h1")}</h3>
                      <ul className="flex flex-col gap-y-4">
                         {newMembers.map((member, index) => {
                            return (
@@ -325,18 +306,10 @@ const PipelineSelectedCodeAlgo = () => {
                   <ImagesContainer
                      imageHeight={450}
                      image="/assets/blog/article2-4.jpg"
-                     imageDetail={
-                        <>
-                           <span className="font-bold">2023 Pipeline Pathfinder cohort: </span>
-                           top, Dr. Brandy Archie, AskSAMIE; Brian Roberts, Black Pantry KC; Chelsey M, KC Black Owned; JQ Sirls, PageMaster; middle,
-                           LaToya Bass, Alignment Business Solutions; Shapree Marshall, A Traveled Path Homes; Melissa Weed, Honey Does LLC; Jenifer
-                           Fennell, J.R. Allen Consulting; bottom, Sedric Hibler and Triumfia Houmbie Fulks, CodeAlgo Academy; Tam Tran and Roger Ngo,
-                           Data Appraisal
-                        </>
-                     }
+                     imageDetail={t("pipelineSelectedCodealgo.caption3")}
                   />
                   <div className="mt-5">
-                     <h3 className="mb-3 font-bold">Members of the Pathfinder cohort include: </h3>
+                     <h3 className="mb-3 font-bold">{t("pipelineSelectedCodealgo.h2")}</h3>
                      <ul className="flex flex-col gap-y-4">
                         {cohortMembers.map((member, index) => {
                            return (
@@ -415,36 +388,12 @@ const PipelineSelectedCodeAlgo = () => {
                   </div>
                </section>
                <section className="mt-3">
-                  <p className="mt-5">
-                     The two new groups of fellows and <i>“Pathfinders”</i> gathered Jan. 26 in Kansas City for New Fellow Orientation to experience
-                     their first taste of Pipeline together before being split apart throughout their fellowship year to go through their own
-                     development in their respective cohorts.
-                  </p>
+                  <p className="mt-5">{t("pipelineSelectedCodealgo.p6")}</p>
+                  <p className="mt-3">{t("pipelineSelectedCodealgo.p7")}</p>
                   <p className="mt-3">
-                     Many of the fellows and Pathfinders expressed a similar sentiment of eagerness and readiness to be in their position, Vincent
-                     said, whereas others expressed how alert and grateful they were to be sitting amongst some of the best in the Midwest.
+                     <i>{t("pipelineSelectedCodealgo.p8")}</i>
                   </p>
-                  <p className="mt-3">
-                     <i>
-                        “Pipeline is excited to be able to create programming that bridges the gap between existing resources while also collaborating
-                        and partnering with other community builders to create an equal playing field within our entrepreneurial ecosystem,”
-                     </i>{" "}
-                     said Vincent.{" "}
-                     <i>
-                        {" "}
-                        “The goal being to continue to build our network and provide the best resources, programming, and opportunities possible to
-                        both our Pipeline Fellowship and the Pathfinder Program.”
-                     </i>
-                  </p>
-                  <RelatedArticles
-                     link="https://www.startlandnews.com/2022/05/pipeline-innovators-gala-2022/"
-                     title="Pipeline Innovators gala adds glamour, top honors back into the mix for celebration of fellows"
-                  />
-                  <p className="mt-3">
-                     Pipeline boasts a community of 180 members, which in the fellowship’s 16 years have generated more than $2.5 billion in revenues;
-                     employed more than 4,000 people in Kansas, Nebraska and Missouri; are doing business in more than 85 countries; and have raised
-                     more than $900 million in outside capital since joining Pipeline, according to the fellowship.
-                  </p>
+                  <p className="mt-3">{t("pipelineSelectedCodealgo.p9")}</p>
                </section>
             </main>
          </div>

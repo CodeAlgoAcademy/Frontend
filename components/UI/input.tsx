@@ -1,6 +1,7 @@
 import React, { FC, ChangeEvent, useState, DetailedHTMLProps, InputHTMLAttributes } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { cn } from "utils";
+import { useTranslation } from "react-i18next";
 
 interface PasswordInputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
    value: string;
@@ -9,6 +10,7 @@ interface PasswordInputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLI
 
 export const PasswordInput: FC<PasswordInputProps> = ({ value, onChange, className, ...props }) => {
    const [showPassword, setShowPassword] = useState<boolean>(false);
+   const { t } = useTranslation("common");
 
    const togglePassword = () => setShowPassword((prev) => !prev);
 
@@ -21,7 +23,7 @@ export const PasswordInput: FC<PasswordInputProps> = ({ value, onChange, classNa
                onChange(e);
             }}
             type={showPassword ? "text" : "password"}
-            placeholder="Enter Password"
+            placeholder={t("enterPassword")}
             required
             {...props}
          />

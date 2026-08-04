@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 
 interface Props {
    children?: ReactNode;
@@ -8,6 +9,7 @@ interface Props {
 }
 
 const DashboardBox = ({ children, title, showSublink, padding }: Props) => {
+   const { t } = useTranslation("parent");
    return (
       <div className="self-center">
          <div
@@ -25,7 +27,7 @@ const DashboardBox = ({ children, title, showSublink, padding }: Props) => {
             {children}
          </div>
          {showSublink && (
-            <span className="hover:text-mainColor mt-3 ml-auto block w-fit cursor-pointer text-sm font-light underline">Edit {title} Settings</span>
+            <span className="hover:text-mainColor mt-3 ml-auto block w-fit cursor-pointer text-sm font-light underline">{t("editSettings", { title })}</span>
          )}
       </div>
    );

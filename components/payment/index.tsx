@@ -7,10 +7,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { verifyPayment } from "services/pricingService";
 import { RootState } from "store/store";
 import Button from "../UI/Button";
+import { useTranslation } from "react-i18next";
 
 const ConfirmPaymentPage = () => {
    const paymentStatus = useSelector((state: RootState) => state.pricing.payment_verification_status);
    const router = useRouter();
+   const { t } = useTranslation("parent");
 
    const payment_intent_client_secret: string = useMemo(() => router.query.payment_intent_client_secret as string, [router]);
    const paymentIntent = payment_intent_client_secret?.split("_secret_")?.[0];
@@ -47,16 +49,16 @@ const ConfirmPaymentPage = () => {
             <div>
                {paymentStatus == "failed" ? (
                   <>
-                     <p className="text-[1.3rem] font-bold text-red-600">Payment Failed</p>
-                     <Button text="Back to dashboard" onClick={() => router.push("/parents")} />
+                     <p className="text-[1.3rem] font-bold text-red-600">{t("paymentFailed")}</p>
+                     <Button text={t("backToDashboard")} onClick={() => router.push("/parents")} />
                   </>
                ) : paymentStatus == "succeeded" ? (
                   <>
-                     <p className="mb-3 text-[1.3rem] font-bold text-green-600">Payment Successful</p>
-                     <Button text="Back to dashboard" onClick={() => router.push("/parents")} />
+                     <p className="mb-3 text-[1.3rem] font-bold text-green-600">{t("paymentSuccessful")}</p>
+                     <Button text={t("backToDashboard")} onClick={() => router.push("/parents")} />
                   </>
                ) : (
-                  <p className="animate-pulse text-[1.3rem] text-gray-800">Verifying Payment</p>
+                  <p className="animate-pulse text-[1.3rem] text-gray-800">{t("verifyingPayment")}</p>
                )}
             </div>
          </div>

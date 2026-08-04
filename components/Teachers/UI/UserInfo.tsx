@@ -11,8 +11,10 @@ import { UpdateUserForms } from "@/components/UI/UpdateUserForm";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
 import { BsGear } from "react-icons/bs";
+import { useTranslation } from "react-i18next";
 
 export default function UserInfo() {
+   const { t } = useTranslation("common");
    const [isOpen, setIsOpen] = useState<boolean>(false);
    const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
    const [user, setUser] = useState<IUser | null>(null);
@@ -52,7 +54,7 @@ export default function UserInfo() {
                <div className="flex cursor-pointer items-center justify-between gap-2" onClick={() => setSettingsOpen((prev) => !prev)}>
                   <div className="flex items-center gap-2">
                      <BsGear size={24} color="#2073fa" />
-                     <p className="text-[.9rem] font-medium text-mainColor">Settings</p>
+                      <p className="text-[.9rem] font-medium text-mainColor">{t("settings")}</p>
                   </div>
                   <span>{settingsOpen ? <IoChevronUp /> : <IoChevronDown />}</span>
                </div>
@@ -70,7 +72,7 @@ export default function UserInfo() {
                   }}
                >
                   <BiLogOut size={24} />
-                  <p>Logout</p>{" "}
+                   <p>{t("logout")}</p>{" "}
                </div>
             </div>
          )}

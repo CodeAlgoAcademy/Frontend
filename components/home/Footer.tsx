@@ -1,14 +1,17 @@
 import Image from "next/image";
 import React from "react";
 import { socials } from "./new-home/footer";
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
+   const { t } = useTranslation("home");
+
    return (
       <footer className="mt-6 border-t-[1.5px] bg-mainRed py-4 px-6">
          <div className="mx-auto max-w-[1100px]">
             <div className="flex flex-col-reverse justify-between gap-4 sm:flex-row">
                <p className="block text-center font-bold text-white md:hidden">
-                  Copyright &copy; {new Date().getFullYear()} CodeAlgo Academy - All Rights Reserved
+                  {t("copyright", { year: new Date().getFullYear() })}
                </p>
                <div className="flex items-center justify-center gap-3">
                   {socials.map((social, index) => {
@@ -26,7 +29,7 @@ const Footer = () => {
                   })}
                </div>
                <p className="hidden text-center font-bold text-white md:block">
-                  Copyright &copy; {new Date().getFullYear()} CodeAlgo Academy - All Rights Reserved
+                  {t("copyright", { year: new Date().getFullYear() })}
                </p>
 
                <p className="text-center font-bold text-white">800 E 18th St, Kansas City, MO 64108</p>

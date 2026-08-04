@@ -3,11 +3,14 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { BiHome } from "react-icons/bi";
+import { useTranslation } from "react-i18next";
 
 export default function SelectAccountType() {
    const slug = useRouter();
    const isLoginPage = slug.pathname.includes("/login");
    const isSignupPage = slug.pathname.includes("/signup");
+   const { t } = useTranslation("auth");
+   const { t: tCommon } = useTranslation("common");
    
    // Calculate the number of items to determine grid layout
    const itemCount = isLoginPage ? 4 : 3;
@@ -20,9 +23,9 @@ export default function SelectAccountType() {
             </Link>
          </div>
 
-         <h1 className="text-mainRedmd:mt-[2rem] mt-[2rem] text-center text-xl font-bold md:text-3xl">
-            Who are you {isLoginPage ? "logging in" : "signing up"} as?
-         </h1>
+          <h1 className="text-mainRedmd:mt-[2rem] mt-[2rem] text-center text-xl font-bold md:text-3xl">
+             {t("whoAreYou")}
+          </h1>
          <div className={`mx-6 mt-[2rem] grid items-center justify-center gap-y-6 md:mt-[7rem] md:gap-x-[5rem] 
             ${itemCount === 4 
                ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4" 
@@ -39,7 +42,7 @@ export default function SelectAccountType() {
                         data-testid="accountType"
                         className="text-black-500 mt-[.4rem] cursor-pointer text-center text-[1.3rem] font-[500] md:mt-[2rem] md:text-3xl md:font-bold"
                      >
-                        Admin
+                         {t("admin")}
                      </h2>
                   </div>
                </Link>
@@ -54,7 +57,7 @@ export default function SelectAccountType() {
                      data-testid="accountType"
                      className="text-black-500 mt-[.4rem] cursor-pointer text-center text-[1.3rem] font-[500] md:mt-[2rem] md:text-3xl md:font-bold"
                   >
-                     Guardian
+                      {t("guardian")}
                   </h2>
                </div>
             </Link>
@@ -68,7 +71,7 @@ export default function SelectAccountType() {
                      data-testid="accountType"
                      className="text-black-500 mt-[.4rem] cursor-pointer text-center text-[1.3rem] font-[500] md:mt-[2rem] md:text-3xl md:font-bold"
                   >
-                     Teacher
+                     {tCommon("teacher")}
                   </h2>
                </div>
             </Link> 
@@ -82,7 +85,7 @@ export default function SelectAccountType() {
                      data-testid="accountType"
                      className="text-black-500 mt-[.4rem] cursor-pointer text-center text-[1.3rem] font-[500] md:mt-[2rem] md:text-3xl md:font-bold"
                   >
-                     Student
+                     {tCommon("student")}
                   </h2>
                </div>
             </a>

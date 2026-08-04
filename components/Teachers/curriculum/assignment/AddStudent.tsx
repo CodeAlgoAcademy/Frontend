@@ -3,6 +3,7 @@ import { GiCancel } from "react-icons/gi";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
+import { useTranslation } from "react-i18next";
 
 type modalProps = {
    showModal: boolean;
@@ -19,6 +20,7 @@ type modalProps = {
 // this is the modal that pops up when add Student is clicked
 
 export default function AddStudent(props: modalProps) {
+   const { t } = useTranslation("teacher");
    const backdropVariant = {
       hidden: {
          opacity: 0,
@@ -50,7 +52,7 @@ export default function AddStudent(props: modalProps) {
                   <div className="cursor-pointer" onClick={(event) => props.cancelPresence(event)}>
                      <GiCancel className="ml-auto text-[2rem]" />
                   </div>
-                  <h1 className="px-4 text-3xl font-bold text-black">Add Student</h1>
+                   <h1 className="px-4 text-3xl font-bold text-black">{t("addStudent")}</h1>
                   <div>
                      <div className="mt-10 flex items-center justify-between border-b-2 px-4">
                         <p className="text-2xl font-bold">{className}</p>
@@ -67,9 +69,9 @@ export default function AddStudent(props: modalProps) {
                                  }
                               }}
                            />
-                           <label htmlFor="select-all-students" className="inline-block text-[1rem]">
-                              Select All Student
-                           </label>
+                            <label htmlFor="select-all-students" className="inline-block text-[1rem]">
+                               {t("selectAllStudents")}
+                            </label>
                         </div>
                      </div>
                   </div>
@@ -123,7 +125,7 @@ export default function AddStudent(props: modalProps) {
                            }
                         }}
                      >
-                        Add Student(s)
+                         {t("addStudentBtn")}
                      </button>
                   </div>
                </div>

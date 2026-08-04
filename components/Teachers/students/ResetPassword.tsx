@@ -2,6 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { openSuccessModal } from "store/modalSlice";
 import { updateStudentPassword } from "store/teacherStudentSlice";
+import { useTranslation } from "react-i18next";
 
 interface Props {
    closeModal(): void;
@@ -11,6 +12,7 @@ interface Props {
 }
 
 const TeacherResetPassword = ({ closeModal, studentId, classId, studentName }: Props) => {
+   const { t } = useTranslation("teacher");
    const dispatch = useDispatch();
    const [password, setPassword] = useState<string>("");
    const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,10 +46,10 @@ const TeacherResetPassword = ({ closeModal, studentId, classId, studentName }: P
          className="max-w-screen  absolute bottom-[60%] z-[4] 
          w-[300px] rounded-md bg-gray-100 p-6 shadow-md hover:shadow-lg"
       >
-         <h4 className="text-[.9rem] font-medium mb-3">Reset {studentName}'s password</h4>
+         <h4 className="text-[.9rem] font-medium mb-3">{t("resetPasswordTitle", { name: studentName })}</h4>
          <input
             className={styles?.input}
-            placeholder="Enter new password"
+            placeholder={t("enterNewPassword")}
             value={password}
             type="password"
             onChange={(e) => setPassword(e.target.value)}
@@ -61,7 +63,7 @@ const TeacherResetPassword = ({ closeModal, studentId, classId, studentName }: P
             disabled={isSubmitting}
             className="mt-4 ml-auto block rounded-md border-none bg-mainColor px-6 py-[8px] text-white outline-none disabled:opacity-50 disabled:cursor-not-allowed"
          >
-            {isSubmitting ? 'Submitting...' : 'Submit'}
+            {isSubmitting ? t("processing") : t("submit")}
          </button>
       </form>
    );

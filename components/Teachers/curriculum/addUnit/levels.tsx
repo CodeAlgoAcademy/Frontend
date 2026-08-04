@@ -5,8 +5,10 @@ import { Props, styles, availableLevels } from ".";
 import { ILevels } from "types/interfaces";
 import { updateLevels } from "store/unitsSlice";
 import { FaChevronDown, FaPlus } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const Levels: FC<Props> = ({ openedModal, updateOpenedModal }) => {
+   const { t } = useTranslation("teacher");
    const { levels, standard } = useSelector((state: RootState) => state.unit.addUnit);
    return (
       <article className="relative flex flex-col gap-2 md:flex-row">
@@ -19,7 +21,7 @@ const Levels: FC<Props> = ({ openedModal, updateOpenedModal }) => {
             }}
             data-testid="level"
          >
-            <h1>Level(s)</h1>
+             <h1>{t("level")}</h1>
             <i>
                <FaChevronDown />
             </i>
@@ -39,7 +41,7 @@ const Levels: FC<Props> = ({ openedModal, updateOpenedModal }) => {
             )}
          </div>
          <div className={styles.numbersSelectedContainer}>
-            {levels === "" ? `0 levels selected` : <span className={styles.selectedItems}>{levels}</span>}
+             {levels === "" ? t("levelsSelected") : <span className={styles.selectedItems}>{levels}</span>}
          </div>
       </article>
    );

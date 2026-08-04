@@ -3,6 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Footer from "../home/new-home/footer";
+import LanguageSwitcher from "../UI/LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 
 type AuthLayoutProps = {
    children: ReactElement;
@@ -10,6 +12,7 @@ type AuthLayoutProps = {
 
 const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
    const router = useRouter();
+   const { t } = useTranslation("auth");
 
    return (
       <>
@@ -18,19 +21,20 @@ const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
                <Link data-testid="logo" href="/">
                   <Image alt="logo" src="/assets/CodeAlgo_Logo.png" className={"h-9 md:cursor-pointer"} width={110} height={55} />
                </Link>
-               <div className="flex flex-wrap gap-2">
+               <div className="flex flex-wrap items-center gap-2">
+                  <LanguageSwitcher variant="compact" />
                   {router?.pathname.includes("/login") ? (
                      <>
-                        <span className="hidden font-semibold sm:block">New here?</span>
+                        <span className="hidden font-semibold sm:block">{t("newHere")}</span>
                         <Link href="/signup">
-                           <span className="ml-3 cursor-pointer font-semibold text-mainRed">Register</span>
+                           <span className="ml-3 cursor-pointer font-semibold text-mainRed">{t("signUp")}</span>
                         </Link>
                      </>
                   ) : (
                      <>
-                        <span className="hidden font-semibold sm:block">Already have an account?</span>
+                        <span className="hidden font-semibold sm:block">{t("alreadyHaveAccount")}</span>
                         <Link href="/login">
-                           <span className="ml-3 cursor-pointer font-semibold text-mainRed">Log in</span>
+                           <span className="ml-3 cursor-pointer font-semibold text-mainRed">{t("logIn")}</span>
                         </Link>
                      </>
                   )}

@@ -5,25 +5,27 @@ import { openGradesModal } from "store/modalSlice";
 import { RootState } from "store/store";
 import Grades from "../../Teachers/addClass/grades";
 import { countryList } from "../../signup/countries";
+import { useTranslation } from "react-i18next";
 
 export default function OtherInfoStudent() {
    const dispatch = useDispatch();
    const { grade, dob, country } = useSelector((state: RootState) => state.user.auth);
+   const { t } = useTranslation("auth");
    return (
       <>
          <div>
-            <label className="mt-6 block text-xl font-semibold">Grade</label>
+             <label className="mt-6 block text-xl font-semibold">{t("grade")}</label>
             <div
                className="mt-3 block h-[2.5rem] w-full rounded-xl bg-white px-4 py-2 focus:outline-0"
                onClick={() => {
                   dispatch(openGradesModal());
                }}
             >
-               {grade || "Select Grade"}
+                {grade || t("selectGrade")}
             </div>
          </div>
          <div>
-            <label className="mt-6 block text-xl font-semibold">Date of birth</label>
+             <label className="mt-6 block text-xl font-semibold">{t("dateOfBirth")}</label>
             <input
                type="date"
                required
@@ -35,7 +37,7 @@ export default function OtherInfoStudent() {
             />
          </div>
 
-         <label className="mt-6 block text-xl font-semibold">Select Country</label>
+          <label className="mt-6 block text-xl font-semibold">{t("selectCountry")}</label>
          <select
             className="auth-input"
             onChange={(event: ChangeEvent<HTMLSelectElement>) => {
@@ -43,8 +45,8 @@ export default function OtherInfoStudent() {
                dispatch(updateUser({ key: "country", value }));
             }}
          >
-            <option value="Select School Country" disabled>
-               Select Country
+             <option value="Select School Country" disabled>
+                {t("selectCountry")}
             </option>
             {countryList?.map((countryOption: string, index: number): ReactNode => {
                return (

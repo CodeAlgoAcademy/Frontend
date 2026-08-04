@@ -7,31 +7,32 @@ import NavButton from "components/parents/UI/NavButton";
 import { FcOrganization } from "react-icons/fc";
 import { GrOrganization } from "react-icons/gr";
 import { SlOrganization } from "react-icons/sl";
-
-const links = [
-   {
-      name: "dashboard",
-      icon: <TbLayoutDashboard />,
-      url: "/organizers",
-   },
-   {
-      name: "Create Organization",
-      icon: <SlOrganization />,
-      url: "/organizers/create-organization",
-   },
-   {
-      name: "Roles",
-      icon: <BiUserPin />,
-      url: "/organizers/roles",
-   },
-   {
-      name: "Users",
-      icon: <HiUsers />,
-      url: "/organizers/users",
-   },
-];
+import { useTranslation } from "react-i18next";
 
 const OrganizerMobileNav = ({ className }: { className?: string }) => {
+   const { t } = useTranslation("organizer");
+   const links = [
+      {
+         name: t("dashboard"),
+         icon: <TbLayoutDashboard />,
+         url: "/organizers",
+      },
+      {
+         name: t("createOrganization"),
+         icon: <SlOrganization />,
+         url: "/organizers/create-organization",
+      },
+      {
+         name: t("roles"),
+         icon: <BiUserPin />,
+         url: "/organizers/roles",
+      },
+      {
+         name: t("users"),
+         icon: <HiUsers />,
+         url: "/organizers/users",
+      },
+   ];
    return (
       <div className={`sticky top-0 z-20 mr-[3%] flex h-full min-w-[50px] flex-col gap-4 divide-y py-2 first:pt-0 xl:hidden ${className}`}>
          <div className="flex flex-col justify-between gap-3 pt-4">

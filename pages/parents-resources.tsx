@@ -4,9 +4,12 @@ import Footer from "@/components/about-us/aoc";
 import { SimpleAccordion } from "@/components/home/accordion";
 import { parentResources, howToGuidesParent } from "@/components/home/const";
 import Navbar from "@/components/navbar/home/Navbar";
+import { useTranslation } from "react-i18next";
 
 
 const ParentsResources = () => {
+    const { t } = useTranslation("pages");
+  
   return (
     <div className="min-h-screen font-thabit">
       <Navbar />
@@ -133,24 +136,21 @@ const ParentsResources = () => {
             </p>
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {parentResources.map((resource, index) => (
-              <div key={index} className="group rounded-2xl border border-gray-200 bg-white p-6 transition hover:shadow-xl">
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-mainColor transition group-hover:scale-110">
-                  <resource.icon className="h-6 w-6 text-white" />
-                </div>
-
-                <h3 className="mb-2 text-xl font-bold text-gray-900">{resource.title}</h3>
-
-                <p className="mb-4 text-gray-600">{resource.description}</p>
-
-                <a href="/login" className="inline-flex items-center">
-                  <span className="inline-flex h-auto cursor-pointer items-center gap-1 p-0 text-mainColor transition-all group-hover:gap-2">
-                    Explore
-                    <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </span>
-                </a>
-              </div>
-            ))}
+            {parentResources.map((resource) => (
+  <div key={resource.id} className="group rounded-2xl border border-gray-200 bg-white p-6 transition hover:shadow-xl">
+    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-mainColor transition group-hover:scale-110">
+      <resource.icon className="h-6 w-6 text-white" />
+    </div>
+    <h3 className="mb-2 text-xl font-bold text-gray-900">{t(resource.id)}</h3>
+    <p className="mb-4 text-gray-600">{t(`${resource.id}Desc`)}</p>
+    <a href="/login" className="inline-flex items-center">
+      <span className="inline-flex h-auto cursor-pointer items-center gap-1 p-0 text-mainColor transition-all group-hover:gap-2">
+        {t("explore")}
+        <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+      </span>
+    </a>
+  </div>
+))}
           </div>
         </div>
       </section>
