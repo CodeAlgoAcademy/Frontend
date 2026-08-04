@@ -126,7 +126,7 @@ const TeacherLayout = ({ children, className }: Props) => {
                <div className="flex items-center gap-2">
                   <LanguageSwitcher variant="sidebar" />
                   <PrintLoginsButton />
-                  <BetaButton />
+                  {/* <BetaButton /> */}
                   <UserInfo />
                   <MdMenu cursor={"pointer"} size={26} className="md:hidden" onClick={() => setSidebarOpened(true)} />
                </div>
