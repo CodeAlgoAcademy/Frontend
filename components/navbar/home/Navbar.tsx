@@ -38,7 +38,7 @@ const Navbar = () => {
               />
             </Link>
 
-            <div className="flex items-center gap-6 max-md:hidden">
+            <div className="flex items-center gap-4 xl:gap-6 max-lg:hidden">
               {links.map((link, index) => {
                 return (
                   <Fragment key={index}>
@@ -67,7 +67,7 @@ const Navbar = () => {
                         }
                       }}
                     >
-                      <p className="text-white">
+                      <p className="whitespace-nowrap text-white">
                         <Link href={link.route || "/"}>{tHome(link.name)}</Link>
                       </p>
 
@@ -96,13 +96,13 @@ const Navbar = () => {
             </AnimatePresence>
           </ul>
 
-          <div className="flex items-center gap-4 max-md:hidden">
+          <div className="flex items-center gap-2 xl:gap-4 max-lg:hidden">
             <LanguageSwitcher variant="navbar" />
             <CustomButton
               onClick={() => push("/login")}
               variant="filled"
               size="medium"
-              className="w-[100px] h-[44px] bg-mainRed font-bold !text-white flex items-center justify-center hover:bg-mainRed/80"
+              className="h-[44px] whitespace-nowrap bg-mainRed px-4 font-bold !text-white flex items-center justify-center hover:bg-mainRed/80"
             >
               <span className="no-contrast-adjust">{t("login")}</span>
             </CustomButton>
@@ -111,7 +111,7 @@ const Navbar = () => {
               onClick={() => setShowAppModal(true)}
               variant="outline"
               size="medium"
-              className="min-w-[100px] px-4 h-[44px] font-bold !text-white flex items-center justify-center"
+              className="h-[44px] whitespace-nowrap px-4 font-bold !text-white flex items-center justify-center"
             >
               <span className="no-contrast-adjust">{t("getApp")}</span>
             </CustomButton>
@@ -120,13 +120,13 @@ const Navbar = () => {
               onClick={() => push("https://play.codealgoacademy.com")}
               variant="filled"
               size="medium"
-              className="w-[100px] h-[44px] bg-mainRed font-bold !text-white flex items-center justify-center hover:bg-mainRed/80"
+              className="h-[44px] whitespace-nowrap bg-mainRed px-4 font-bold !text-white flex items-center justify-center hover:bg-mainRed/80"
             >
               <span className="no-contrast-adjust">{t("playGame")}</span>
             </CustomButton>
           </div>
           <BiMenu
-            className="text-white md:hidden"
+            className="text-white lg:hidden"
             size={28}
             onClick={() => setShowMobileNav(true)}
           />
