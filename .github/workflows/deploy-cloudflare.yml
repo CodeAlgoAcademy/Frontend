@@ -1,14 +1,17 @@
 name: Deploy to Cloudflare
 
-# main -> codealgo-web -> codealgoacademy.com + www.codealgoacademy.com
+# prod -> codealgo-web -> codealgoacademy.com + www.codealgoacademy.com
 #
-# One environment. The Vercel deploys this replaces had a branch per
-# environment (dev / staging / beta / prod, all of which had their own
-# hostname); those hostnames are being dropped, so this only watches main.
+# One environment, and `prod` to match the Backend repo. The Vercel deploys this
+# replaces had a branch per environment (dev / staging / beta / prod, each with
+# its own hostname); those hostnames are gone, so this only watches prod.
+#
+# Nothing deploys from dev. dev branches off prod, and reaches production by
+# pull request - which is what runs ci.yml.
 
 on:
   push:
-    branches: [main]
+    branches: [prod]
   workflow_dispatch:
 
 concurrency:
@@ -35,7 +38,6 @@ jobs:
         env:
           API_URL: ${{ vars.NEXT_PUBLIC_API_URL }}
           STRIPE_PK: ${{ vars.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY }}
-          SYNCFUSION: ${{ vars.NEXT_PUBLIC_SYNC_FUSION_LICENSE }}
         run: |
           if [ -z "$API_URL" ]; then
             echo "NEXT_PUBLIC_API_URL variable is not set on this repo."
@@ -45,7 +47,6 @@ jobs:
           {
             echo "NEXT_PUBLIC_API_URL=$API_URL"
             echo "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=$STRIPE_PK"
-            echo "NEXT_PUBLIC_SYNC_FUSION_LICENSE=$SYNCFUSION"
           } > .env.production
           echo "wrote .env.production:"
           sed 's/=.*/=<set>/' .env.production

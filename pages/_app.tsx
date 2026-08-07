@@ -2,10 +2,13 @@ import { Provider } from "react-redux";
 import { store } from "../store/store";
 import Layout from "@/components/layouts/Layout";
 import type { AppProps } from "next/app";
-import { registerLicense } from "@syncfusion/ej2-base";
 import "../styles/globals.css";
 import "../styles/GeneralNav.css";
 import "../styles/Calendar.css";
+// react-big-calendar ships its own stylesheet. Next only allows a global
+// CSS import from _app, so it lives here rather than next to the page.
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import Head from "next/head";
 import "swiper/css";
 import "swiper/css";
@@ -16,8 +19,6 @@ import "../i18n";
 import { useEffect } from "react";
 import i18n from "../i18n";
 import { detectLanguage } from "../i18n";
-
-registerLicense(`${process.env.NEXT_PUBLIC_SYNC_FUSION_LICENSE}`);
 
 function MyApp({ Component, pageProps }: AppProps) {
    useEffect(() => {

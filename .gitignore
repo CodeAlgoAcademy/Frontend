@@ -42,3 +42,8 @@ deploy/cloudflare/.wrangler
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# One lockfile. The Dockerfile and CI both use `npm ci`, so package-lock.json
+# is the source of truth; a second, stale yarn.lock only produces a different
+# dependency tree for anyone who runs yarn out of habit.
+yarn.lock
