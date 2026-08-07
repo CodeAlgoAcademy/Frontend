@@ -1,5 +1,6 @@
   import React, { useEffect, useState } from "react";
   import { days, screentimeTypes } from "types/interfaces";
+  import { useTranslation } from "react-i18next";
   import { changeTimeLimit } from "utils/timelimit";
   import { useDispatch, useSelector } from "react-redux";
   import { RootState } from "store/store";
@@ -8,6 +9,7 @@
   import { getStudents } from "store/studentSlice";
 
   const ScreentimeRestrictions = () => {
+    const { t } = useTranslation("teacher");
     const classId = useSelector((state: RootState) => state.currentClass?.id);
     const currentStudent = useSelector(
       (state: RootState) => state.teacherStudentSlice.currentStudent          
@@ -59,10 +61,10 @@
     return (
       <div className="relative min-h-[340px] max-w-fit rounded-2xl bg-white px-8 py-10 md:w-full md:min-w-[420px]">
         <h1 className="text-[1.3rem] font-semibold text-mainColor">
-          Current screen time restrictions
+          {t("currentScreenTimeRestrictions")}
         </h1>
         <h2 className="mt-2 mb-10 text-[14px] font-medium">
-          Make edits to screen time restrictions below
+          {t("editScreenTimeRestrictionsHint")}
         </h2>
         <div className="mt-4 flex flex-wrap items-center justify-center gap-4 md:justify-start">
           {timeLimits?.map((time, index: number) => (

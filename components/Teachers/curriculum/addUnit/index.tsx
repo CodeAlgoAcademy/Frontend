@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, MouseEvent } from "react";
 import { FaTimes } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { clearAddUnitsParams, displayUnitsAndGradesBasedOnLevels, rearrangeUnits, verifyUnits } from "store/unitsSlice";
@@ -213,6 +214,7 @@ function AddUnit() {
    const { levels } = useSelector((state: RootState) => state.unit.addUnit);
    const addUnit = useSelector((state: RootState) => state.unit.addUnit);
    const [openedModal, setOpenedModal] = useState<string>("");
+   const { t } = useTranslation("teacher");
 
    const dispatch = useDispatch();
    const updateOpenedModal = (modalToOpen: string) => {
@@ -271,9 +273,8 @@ function AddUnit() {
                   updateOpenedModal("");
                }}
             >
-               Clear All Fields
-            </button>
-            <button
+               {t("clearAllFields")}
+            </button>            <button
                className={styles.mainButton}
                onClick={async () => {
                   updateOpenedModal("");
@@ -287,7 +288,7 @@ function AddUnit() {
                   }
                }}
             >
-               Submit
+               {t("submit")}
             </button>
          </div>
       </section>

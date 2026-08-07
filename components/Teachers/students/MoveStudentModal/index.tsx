@@ -1,5 +1,6 @@
 import React from "react";
 import { FaTimes } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 import { useMoveStudents } from "./useMoveStudents";
 import SelectedBadge from "./SelectedBadge";
 import StudentSelectStep from "./StudentSelectStep";
@@ -10,14 +11,15 @@ import ClassroomSelect from "./ClassroomSelect";
 import ModalFooter from "./ModalFooter";
 
 const MoveStudentModal = ({ setIsOpen }: { setIsOpen: (value: boolean) => void }) => {
+   const { t } = useTranslation("teacher");
    const close = () => setIsOpen(false);
    const m = useMoveStudents(close);
 
    const stepTitles: Record<number, string> = {
-      1: "Move Students",
-      2: "How would you like to move your students?",
-      3: m.destinationType === "own" ? "Select a classroom" : "Select a teacher",
-      4: "Select a classroom",
+      1: t("moveStudents"),
+      2: t("moveHowQuestion"),
+      3: m.destinationType === "own" ? t("selectAClassroom") : t("selectATeacher"),
+      4: t("selectAClassroom"),
    };
 
    return (
@@ -48,20 +50,20 @@ const MoveStudentModal = ({ setIsOpen }: { setIsOpen: (value: boolean) => void }
 
                {m.step === 3 && m.destinationType === "own" && (
                   <div>
-                     <ClassroomSelect
-                        value={m.targetClassId}
-                        onChange={m.setTargetClassId}
-                        options={m.targetClasses}
-                        placeholder="Select a classroom"
-                        testId="target-class-select"
-                     />
+                      <ClassroomSelect
+                         value={m.targetClassId}
+                         onChange={m.setTargetClassId}
+                         options={m.targetClasses}
+                         placeholder={t("selectAClassroom")}
+                         testId="target-class-select"
+                      />
                      {m.targetClasses.length === 0 && (
-                        <p className="mt-3 text-[13px] text-gray-500">You don&apos;t have any other classrooms yet.</p>
+                        <p className="mt-3 text-[13px] text-gray-500">{t("noOtherClassrooms")}</p>
                      )}
                      <ModalFooter
                         onBack={m.goBack}
                         onPrimary={m.handleMove}
-                        primaryLabel={m.isSubmitting ? "Moving..." : "Move Students"}
+                        primaryLabel={m.isSubmitting ? t("moving") : t("moveStudents")}
                         primaryDisabled={!m.targetClassId || m.isSubmitting}
                         testId="move-students-confirm"
                      />

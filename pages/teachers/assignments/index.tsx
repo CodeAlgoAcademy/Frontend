@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import TeacherLayout from "@/components/layouts/TeacherLayout";
 import assignmentServices from "services/block_assignments";
 import { AssignmentListItem } from "types/interfaces/assignments";
@@ -20,6 +21,7 @@ type View = "hub" | "list" | "new" | "edit" | "detail" | "mathfacts" | "mathrepo
 
 
 export default function AssignmentsPage() {
+   const { t } = useTranslation("teacher");
    const classId = useSelector((state: RootState) => state.currentClass?.id);
    const classStudents = useSelector((state: RootState) => (state as any).teacherStudentSlice?.students ?? []);
    const students = classStudents.map((s: any) => ({
@@ -75,7 +77,7 @@ export default function AssignmentsPage() {
          setDeleteModal({ isOpen: false, id: null, title: "" });
       } catch (err) {
          console.error("Delete failed:", err);
-         alert("Failed to delete assignment.");
+         alert(t("failedToDeleteAssignment"));
       } finally {
          setDeleting(false);
       }
@@ -107,7 +109,7 @@ export default function AssignmentsPage() {
          await load();
       } catch (err) {
          console.error("Failed to archive:", err);
-         alert("Failed to archive assignment.");
+         alert(t("failedToArchiveAssignment"));
       }
    };
 
@@ -132,12 +134,12 @@ if (view === "mathreports") {
                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                </svg>
-               Back to Assignments
+               {t("backToAssignments")}
             </button>
             
             <div className="mb-8">
-               <h1 className="text-3xl font-bold text-slate-900">Math Mastery Reports</h1>
-               <p className="text-slate-500">Visualizing class-wide struggle points and logic gaps.</p>
+               <h1 className="text-3xl font-bold text-slate-900">{t("mathMasteryReports")}</h1>
+               <p className="text-slate-500">{t("mathReportsDescription")}</p>
             </div>
 
             <MathReportsView classId={classId} />
@@ -154,10 +156,10 @@ if (view === "mathreports") {
                   onClick={() => setView("hub")}
                   className=" flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-gray-800"
                >
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                   </svg>
-                  Back to Assignments
+                  {t("backToAssignments")}
                </button>
                <MathFactsPage onViewReport={() => setView("mathreports")}/>
             </div>
@@ -212,7 +214,7 @@ if (view === "mathreports") {
                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                </svg>
-               Assignments
+               {t("assignments")}
             </button>
 
             <HeaderSection onRefresh={load} onNewAssignment={() => setView("new")} lastUpdated={lastUpdated} />

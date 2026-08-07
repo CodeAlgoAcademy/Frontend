@@ -163,11 +163,11 @@ const SingleLesson = ({
                   {/* first division */}
                   <div className="flex-[.60] border-[#E6E6E6] py-[1rem] sm:border-r-2 sm:pr-[1rem]">
                      <div className="gap-[3rem] md:flex-col lg:flex-row">
-                        <p className=" text-mainColor  font-bold md:text-[12px] lg:text-[18px]">Description</p>
+                        <p className=" text-mainColor  font-bold md:text-[12px] lg:text-[18px]">{t("description")}</p>
                         <p className="md:text-[12px] lg:text-[16px] ">{data.topic.description}</p>
                      </div>
                      <div className="mt-4 flex items-center gap-[1rem]">
-                        <p className="text-mainColor  font-bold md:text-[12px] lg:text-[18px]">Date Range</p>
+                        <p className="text-mainColor  font-bold md:text-[12px] lg:text-[18px]">{t("dateRange")}</p>
                         <div className="flex items-center gap-[1rem]">
                            <p className="sm:text-[12px] lg:text-[16px] ">
                               {getLessonDate(data.start_date)} - {getLessonDate(data.end_date)}
@@ -181,7 +181,7 @@ const SingleLesson = ({
                                  setEditDateOpened((prev) => !prev);
                               }}
                            >
-                              {editDateOpened ? "Cancel Editing" : "Edit"}
+                              {editDateOpened ? t("cancelEditing") : t("edit")}
                            </p>
                         </div>
                      </div>
@@ -196,7 +196,7 @@ const SingleLesson = ({
                                     updateScheduleDate("start_date", e.target.value);
                                  }}
                               />
-                              <div className="hoverText bg-mainColor after:bg-mainColor right-[0] -top-[56px]">Start date</div>
+                              <div className="hoverText bg-mainColor after:bg-mainColor right-[0] -top-[56px]">{t("startDate")}</div>
                            </div>
                            <div className="relative max-w-fit">
                               <input
@@ -207,7 +207,7 @@ const SingleLesson = ({
                                     updateScheduleDate("end_date", e.target.value);
                                  }}
                               />
-                              <div className="hoverText bg-mainColor after:bg-mainColor right-[0] -top-[56px]">End date</div>
+                              <div className="hoverText bg-mainColor after:bg-mainColor right-[0] -top-[56px]">{t("endDate")}</div>
                            </div>
                         </div>
                      )}
@@ -216,7 +216,7 @@ const SingleLesson = ({
                   {/* second division */}
                   <div className=" flex  flex-[.40] flex-col justify-between sm:py-5 sm:pl-[1rem]">
                      <div className="flex  items-center gap-[4rem]">
-                        <p className="text-mainColor  font-bold md:text-[12px] lg:text-[18px]">Status</p>
+                        <p className="text-mainColor  font-bold md:text-[12px] lg:text-[18px]">{t("status")}</p>
                         {!statusContainerOpened && (
                            <div
                               className="flex items-center gap-[6px] border-2 border-[#E6E6E6] px-3 py-1"
@@ -229,9 +229,9 @@ const SingleLesson = ({
                               ) : (
                                  <BsCircle className="text-[9px] text-[#B0B0B0]" />
                               )}
-                              <p className="cursor-pointer  font-semibold md:text-[12px] lg:text-[18px]">
-                                 {data.status.toLowerCase() !== "published" ? "Unpublished" : "Published"}
-                              </p>
+                                 <p className="cursor-pointer  font-semibold md:text-[12px] lg:text-[18px]">
+                                    {data.status.toLowerCase() !== "published" ? t("unpublished") : t("published")}
+                                 </p>
                               <FiChevronDown />
                            </div>
                         )}
@@ -246,19 +246,19 @@ const SingleLesson = ({
                                        setStatusContainerOpened(false);
                                     }}
                                  >
-                                    {data.status.toLowerCase() !== "published" ? "Unpublished" : "Published"}
-                                 </p>
-                                 <p
-                                    className={`cursor-pointer  px-5 font-semibold md:text-[14px] ${
-                                       data.status.toLowerCase() !== "published" ? "text-green-500" : "text-red-500"
-                                    }`}
-                                    onClick={(e: any) => {
-                                       dispatch(updateLessonOpened(data));
-                                       editStatus(e.target.textContent);
-                                    }}
-                                 >
-                                    {data.status.toLowerCase() !== "published" ? "Published" : "Unpublished"}
-                                 </p>
+                                     {data.status.toLowerCase() !== "published" ? t("unpublished") : t("published")}
+                                  </p>
+                                  <p
+                                     className={`cursor-pointer  px-5 font-semibold md:text-[14px] ${
+                                        data.status.toLowerCase() !== "published" ? "text-green-500" : "text-red-500"
+                                     }`}
+                                     onClick={() => {
+                                        dispatch(updateLessonOpened(data));
+                                        editStatus(data.status.toLowerCase() !== "published" ? "published" : "unpublished");
+                                     }}
+                                  >
+                                     {data.status.toLowerCase() !== "published" ? t("published") : t("unpublished")}
+                                  </p>
                               </div>
                               <span
                                  className="cursor-pointer text-[15px] font-light text-red-600"
@@ -272,7 +272,7 @@ const SingleLesson = ({
                         )}
                      </div>
                      <div className="mt-4  flex items-center gap-[3rem]">
-                        <p className="text-mainColor  font-bold md:text-[12px] lg:text-[18px]">Assign To</p>
+                        <p className="text-mainColor  font-bold md:text-[12px] lg:text-[18px]">{t("assignTo")}</p>
                         <div
                            className="text-mainColor flex cursor-pointer items-center gap-[1rem]"
                            onClick={() => {
@@ -282,7 +282,7 @@ const SingleLesson = ({
                            }}
                         >
                            <IoIosAddCircleOutline className="md:text[10px] lg:text-[1.6rem]" />
-                           <p className="md:text-[10px]  lg:text-[16px]">Add Student</p>
+                           <p className="md:text-[10px]  lg:text-[16px]">{t("addStudent")}</p>
                         </div>
                      </div>
                   </div>

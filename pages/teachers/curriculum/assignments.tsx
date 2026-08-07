@@ -17,9 +17,11 @@ import { SkillDetails, AssignmentDetails, AssignmentSkill, ISingleStudent, Dynam
 import { addNewAssignments, getAssignments, updateAssignment } from "services/assignmentService";
 import { getDate } from "utils/getDate";
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
 import TeacherLayout from "@/components/layouts/TeacherLayout";
 
 const Assignments = () => {
+   const { t } = useTranslation("teacher");
    const modalDefaults = {
       saveResponse: false,
       createResponse: false,
@@ -219,7 +221,7 @@ const Assignments = () => {
                      <FaChevronLeft />
                   </span>
                   <h2 className="text-[28px] font-bold" data-testid="curriculum-assignment-heading">
-                     New Assignment
+                     {t("newAssignment")}
                   </h2>
                </div>
                <span className="flex cursor-pointer items-center gap-3 text-mainColor hover:opacity-80">
@@ -232,7 +234,7 @@ const Assignments = () => {
                         showModal("historyResponse");
                      }}
                   >
-                     Assignment History
+                     {t("assignmentHistory")}
                   </span>
                </span>
             </div>
@@ -242,14 +244,14 @@ const Assignments = () => {
                   name="title"
                   id="assignmentTitle"
                   className="h-[44px] w-[400px] rounded-md py-2 px-4 outline-none"
-                  placeholder="Assignment Title"
+                  placeholder={t("assignmentTitle")}
                   value={assignmentDetails.title}
                   onChange={handleInputChange}
                />
                <div className="mt-4 flex flex-col gap-4 border-t border-[#BDBDBD] pt-4">
                   <div className="flex h-[58px] items-center overflow-y-hidden rounded-md bg-white">
                      <div className="shadow-right flex h-full w-[180px] items-center justify-between rounded-r-md px-4">
-                        <span className="font-bold">Skill(s)</span>
+                        <span className="font-bold">{t("skillsLabel")}</span>
                         <span
                            className="animate-pulse cursor-pointer rounded-full border p-1 text-2xl transition-all ease-in-out hover:scale-125 hover:animate-none hover:opacity-80"
                            onClick={() => {
@@ -260,17 +262,16 @@ const Assignments = () => {
                            <TbMedal />{" "}
                         </span>
                      </div>
-                     <div className="px-14">
-                        <span className="font-medium">
-                           {assignmentDetails.skills?.length} skill
-                           {assignmentDetails.skills?.length === 1 ? "" : "(s)"} selected
-                        </span>{" "}
-                        value
-                     </div>
+                      <div className="px-14">
+                         <span className="font-medium">
+                            {t("skillsSelectedCount", { count: assignmentDetails.skills?.length })}
+                         </span>{" "}
+                         value
+                      </div>
                   </div>
                   <div className="flex h-[58px] items-center overflow-y-hidden rounded-md bg-white">
                      <div className="shadow-right flex h-full w-[180px] items-center justify-between rounded-r-md px-4">
-                        <span className="font-bold">Student{"(s)"}</span>
+                        <span className="font-bold">{t("studentsLabel")}</span>
                         <span
                            className="animate-pulse cursor-pointer rounded-full border p-1 text-2xl transition-all ease-in-out hover:scale-125 hover:animate-none hover:opacity-80"
                            onClick={() => {
@@ -282,15 +283,14 @@ const Assignments = () => {
                         </span>
                      </div>
                      <div className="px-14">
-                        <span className="font-medium">
-                           {assignmentDetails.students?.length} student
-                           {assignmentDetails.students?.length === 1 ? "" : "(s)"} selected
-                        </span>
+                         <span className="font-medium">
+                            {t("studentsSelectedCount", { count: assignmentDetails.students?.length })}
+                         </span>
                      </div>
                   </div>
                   <div className="flex h-[58px] items-center rounded-md bg-white">
                      <div className="shadow-right flex h-full min-w-[180px] items-center justify-between rounded-r-md px-4">
-                        <span className="font-bold">Scheduling</span>
+                        <span className="font-bold">{t("scheduling")}</span>
                      </div>
                      <div className="pl-14 pr-8">
                         <div className="flex items-center gap-4">
@@ -308,7 +308,7 @@ const Assignments = () => {
                                  }}
                               />
                               <label className="form-check-label inline-block font-medium text-gray-800" htmlFor="now-schedule">
-                                 Start Now
+                                 {t("startAssignmentNow")}
                               </label>
                            </div>
                            <div className="form-check flex items-center gap-2">
@@ -322,7 +322,7 @@ const Assignments = () => {
                                  onChange={() => updateAssignmentSchedule(false)}
                               />
                               <label className="form-check-label inline-block font-medium text-gray-800" htmlFor="later-schedule">
-                                 Schedule for later
+                                 {t("scheduleForLater")}
                               </label>
                            </div>
 
@@ -336,7 +336,7 @@ const Assignments = () => {
                                        updateScheduleDate("start_date", e.target.value);
                                     }}
                                  />
-                                 <div className="hoverText right-[0] -top-[56px] bg-mainColor after:bg-mainColor">Start date</div>
+                                 <div className="hoverText right-[0] -top-[56px] bg-mainColor after:bg-mainColor">{t("startDate")}</div>
                               </div>
                            )}
                            <div className="relative max-w-fit">
@@ -348,14 +348,14 @@ const Assignments = () => {
                                     updateScheduleDate("end_date", e.target.value);
                                  }}
                               />
-                              <div className="hoverText right-[0] -top-[56px] bg-mainColor after:bg-mainColor">End date</div>
+                               <div className="hoverText right-[0] -top-[56px] bg-mainColor after:bg-mainColor">{t("endDate")}</div>
                            </div>
                         </div>
                      </div>
                   </div>
                   <div className="flex h-[58px] items-center overflow-y-hidden rounded-md bg-white">
                      <div className="shadow-right flex h-full w-[180px] items-center justify-between rounded-r-md px-4">
-                        <span className="font-bold">No. of questions</span>
+                        <span className="font-bold">{t("numberOfQuestions")}</span>
                      </div>
                      <div className="flex items-center gap-8 px-14">
                         <input
@@ -380,7 +380,7 @@ const Assignments = () => {
                   </div>
                   <div className="flex h-[58px] items-center overflow-y-hidden rounded-md bg-white">
                      <div className="shadow-right flex h-full w-[180px] items-center justify-between rounded-r-md px-4">
-                        <span className="font-bold">Order of questions</span>
+                        <span className="font-bold">{t("orderOfQuestions")}</span>
                      </div>
                      <div className="flex items-center gap-8 px-14">
                         <div className="flex items-center gap-14">
@@ -395,7 +395,7 @@ const Assignments = () => {
                                  onChange={handleInputChange}
                               />
                               <label className="form-check-label inline-block font-medium text-gray-800" htmlFor="random-order">
-                                 Random
+                                 {t("random")}
                               </label>
                            </div>
                            <div className="form-check flex items-center gap-2">
@@ -409,7 +409,7 @@ const Assignments = () => {
                                  onChange={handleInputChange}
                               />
                               <label className="form-check-label inline-block font-medium text-gray-800" htmlFor="sequence-order">
-                                 Sequence
+                                 {t("inSequence")}
                               </label>
                            </div>
                         </div>
@@ -442,14 +442,14 @@ const Assignments = () => {
                            }
                         }}
                      >
-                        <Button color="#2073fa" text="Create" />
+                        <Button color="#2073fa" text={t("create")} />
                      </span>
                      <span
                         onClick={() => {
                            showModal("cancelResponse");
                         }}
                      >
-                        <Button color="#2073fa" text="Cancel" />
+                        <Button color="#2073fa" text={t("cancel")} />
                      </span>
                      <div className="mr-4">
                         <span
@@ -478,7 +478,7 @@ const Assignments = () => {
                               }
                            }}
                         >
-                           <Button color="#2073fa" text={isEditing ? "Edit" : "Save"} />
+                           <Button color="#2073fa" text={isEditing ? t("edit") : t("save")} />
                         </span>
                      </div>
                   </div>
@@ -501,42 +501,42 @@ const Assignments = () => {
                      </span>
                      {modalItemsDisplay.saveResponse && (
                         <div className="w-full py-20 px-24 text-center text-xl font-semibold">
-                           <p>You have successfully saved an assignment</p>
+                           <p>{t("assignmentSaved")}</p>
                            <p>
-                              Click on{" "}
+                              {t("clickOn")}{" "}
                               <span
                                  className="cursor-pointer font-bold text-mainColor"
                                  onClick={() => {
                                     switchModal("historyResponse");
                                  }}
                               >
-                                 ASSIGNMENT HISTORY
+                                 {t("assignmentHistory").toUpperCase()}
                               </span>{" "}
-                              to view your Assignment.
+                              {t("toViewAssignment")}.
                            </p>
                         </div>
                      )}
                      {modalItemsDisplay.createResponse && (
                         <div className="w-full py-20 px-24 text-center text-xl font-semibold">
-                           <p>You have successfully created an assignment</p>
+                           <p>{t("assignmentCreated")}</p>
                            <p>
-                              Click on{" "}
+                              {t("clickOn")}{" "}
                               <span
                                  className="cursor-pointer font-bold text-mainColor"
                                  onClick={() => {
                                     switchModal("historyResponse");
                                  }}
                               >
-                                 ASSIGNMENT HISTORY
+                                 {t("assignmentHistory").toUpperCase()}
                               </span>{" "}
-                              to view your Assignment.
+                              {t("toViewAssignment")}.
                            </p>
                         </div>
                      )}
                      {modalItemsDisplay.cancelResponse && (
                         <div className="w-full py-20 px-24 text-xl font-bold">
                            <p className="text-xl">
-                              Are you sure you want to <span className="text-center text-[#E30F0F]">Cancel?</span>
+                              {t("sureCancel")} <span className="text-center text-[#E30F0F]">{t("cancel")}?</span>
                            </p>
                            <div className="mt-4 flex flex-row-reverse gap-4">
                               <span
@@ -544,7 +544,7 @@ const Assignments = () => {
                                     hideModal();
                                  }}
                               >
-                                 <Button color="#2073fa" text="No" />
+                                  <Button color="#2073fa" text={t("no")} />
                               </span>
                               <Link href="/teachers/curriculum/">
                                  <span
@@ -553,7 +553,7 @@ const Assignments = () => {
                                        setEditId("");
                                     }}
                                  >
-                                    <Button color="#2073fa" text="Yes" />
+                                    <Button color="#2073fa" text={t("yes")} />
                                  </span>
                               </Link>
                            </div>
@@ -561,7 +561,7 @@ const Assignments = () => {
                      )}
                      {modalItemsDisplay.historyResponse && (
                         <div className="min-h-[500px] min-w-[800px] p-12">
-                           <h3 className="text-2xl font-semibold">Assignment History</h3>
+                           <h3 className="text-2xl font-semibold">{t("assignmentHistory")}</h3>
                            <div className="mt-8 flex items-center gap-6">
                               <span
                                  className="cursor-pointer border-b-[3px] pb-2 font-bold text-black/50"
@@ -570,7 +570,7 @@ const Assignments = () => {
                                  }}
                                  onClick={() => setHistoryType((prev) => "active")}
                               >
-                                 Active
+                                 {t("active")}
                               </span>
                               <span
                                  className="cursor-pointer border-b-[3px] pb-2 font-bold text-black/50"
@@ -579,7 +579,7 @@ const Assignments = () => {
                                  }}
                                  onClick={() => setHistoryType((prev) => "completed")}
                               >
-                                 Completed
+                                 {t("completed")}
                               </span>
                               <span
                                  className="cursor-pointer border-b-[3px] pb-2 font-bold text-black/50"
@@ -588,7 +588,7 @@ const Assignments = () => {
                                  }}
                                  onClick={() => setHistoryType((prev) => "draft")}
                               >
-                                 Draft
+                                 {t("draft")}
                               </span>
                            </div>
                            <div className="mt-3 flex flex-col gap-3">

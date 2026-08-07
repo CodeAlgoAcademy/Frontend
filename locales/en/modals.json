@@ -24,5 +24,16 @@
   "errorTitle": "Error",
   "successTitle": "Success",
   "areYouSureDelete": "Are you sure you want to delete",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "curriculumStatements": "Curriculum Statements",
+  "lessonDescription": "Lesson Description",
+  "lessonIntroText": "In this lesson students will learn the basics of loops and how to apply loops into their programs.",
+  "viewQuiz": "View quiz",
+  "readyToView": "Ready to view!",
+  "pdfLoginCardPrompt": "Get your students logged in quickly and easily by viewing and printing the login cards in the PDF below",
+  "pdfReadyPrompt": "Your student login credentials PDF is ready to view and print",
+  "pdfNoteLabel": "Note",
+  "pdfNoteText": "The PDF will open in a new tab where you can view, print, or download it.",
+  "allowPopupsForPdf": "Please allow popups for this site to view the PDF",
+  "pdfGenerationFailed": "Failed to generate PDF. Please try again."
 }

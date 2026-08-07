@@ -1,6 +1,7 @@
 import ContentBox from "@/components/parents/UI/ContentBox";
 import ProgressBar from "@/components/parents/UI/ProgressBar";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { IChildProgress } from "types/interfaces/parent.interface";
 
 interface ILevelProps {
@@ -18,13 +19,14 @@ const TeacherStudentProgress = ({
   isLoading,
   completedItems,
 }: ILevelProps) => {
+  const { t } = useTranslation("teacher");
   const hasProgressData = progressItems && progressItems.length > 0;
   const hasCompletedData = completedItems && completedItems.length > 0;
 
   return (
     <ContentBox
       size="large"
-      title="Progress"
+      title={t("progress")}
       padding="small"
       style={{
         minWidth: "100%",
@@ -37,24 +39,24 @@ const TeacherStudentProgress = ({
         <div className="ml-4">
           {isLoading ? (
             <>
-              <h3 className="font-semibold">Comprehension Tracking</h3>
+              <h3 className="font-semibold">{t("comprehensionTracking")}</h3>
               <div className="mt-3 flex flex-col gap-5">
                 <p className="text-sm text-gray-400 animate-pulse">
-                  Loading progress...
+                  {t("loadingProgress")}
                 </p>
               </div>
 
-              <h3 className="font-semibold mt-6">Completed</h3>
+              <h3 className="font-semibold mt-6">{t("completed")}</h3>
               <div className="mt-3 flex flex-col gap-5">
                 <p className="text-sm text-gray-400 animate-pulse">
-                  Loading completed items...
+                  {t("loadingCompletedItems")}
                 </p>
               </div>
             </>
           ) : (
             <>
               {/* In Progress Section */}
-              <h3 className="font-semibold">Comprehension Tracking</h3>
+              <h3 className="font-semibold">{t("comprehensionTracking")}</h3>
               <div className="mt-3 flex flex-col gap-5">
                 {hasProgressData ? (
                   progressItems.map((lesson, index) => (
@@ -71,14 +73,14 @@ const TeacherStudentProgress = ({
                   ))
                 ) : (
                   <p className="text-sm text-gray-500">
-                    No in-progress items to show.
+                    {t("noInProgressItems")}
                   </p>
                 )}
               </div>
 
               {hasCompletedData && (
                 <>
-                  <h3 className="font-semibold mt-6">Completed</h3>
+                  <h3 className="font-semibold mt-6">{t("completed")}</h3>
                   <div className="mt-3 flex flex-col gap-5">
                     {completedItems.map((lesson, index) => (
                       <ProgressBar

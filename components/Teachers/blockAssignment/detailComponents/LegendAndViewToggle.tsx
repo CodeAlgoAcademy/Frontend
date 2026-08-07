@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 type ViewMode = "numeric" | "percentage";
 
@@ -8,6 +9,7 @@ interface LegendAndViewToggleProps {
 }
 
 export function LegendAndViewToggle({ viewMode, onViewModeChange }: LegendAndViewToggleProps) {
+  const { t } = useTranslation("teacher");
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -23,10 +25,10 @@ export function LegendAndViewToggle({ viewMode, onViewModeChange }: LegendAndVie
   }, [showDropdown]);
 
   const legendItems = [
-    { color: "bg-slate-300", label: "Not Started" },
-    { color: "bg-red-500", label: "Below 50%" },
-    { color: "bg-amber-400", label: "50% - 80%" },
-    { color: "bg-green-500", label: "Above 80%" },
+    { color: "bg-slate-300", label: t("notStarted") },
+    { color: "bg-red-500", label: t("below50") },
+    { color: "bg-amber-400", label: t("percent50to80") },
+    { color: "bg-green-500", label: t("above80") },
   ];
 
   return (
@@ -45,7 +47,7 @@ export function LegendAndViewToggle({ viewMode, onViewModeChange }: LegendAndVie
           onClick={() => setShowDropdown(!showDropdown)}
           className="flex items-center gap-2 border border-slate-200 rounded-lg px-3.5 py-2 text-sm text-slate-600 hover:bg-slate-50 transition-colors"
         >
-          <span>{viewMode === "numeric" ? "View Numerically" : "View Percentage"}</span>
+          <span>{viewMode === "numeric" ? t("viewNumerically") : t("viewPercentage")}</span>
           <span className="text-slate-400">▾</span>
         </button>
 
@@ -57,7 +59,7 @@ export function LegendAndViewToggle({ viewMode, onViewModeChange }: LegendAndVie
               }`}
               onClick={() => { onViewModeChange("numeric"); setShowDropdown(false); }}
             >
-              View Numerically
+              {t("viewNumerically")}
             </button>
             <button
               className={`w-full px-4 py-2.5 text-left text-sm transition-colors hover:bg-slate-50 border-t border-slate-100 ${
@@ -65,7 +67,7 @@ export function LegendAndViewToggle({ viewMode, onViewModeChange }: LegendAndVie
               }`}
               onClick={() => { onViewModeChange("percentage"); setShowDropdown(false); }}
             >
-              View Percentage
+              {t("viewPercentage")}
             </button>
           </div>
         )}

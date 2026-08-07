@@ -14,12 +14,11 @@ const SuccessModal = () => {
    const dispatch = useDispatch();
    const closeModal = () => dispatch(closeSuccessModal());
    const { t } = useTranslation("modals");
-   const { t: tCommon } = useTranslation("common");
    
    const currentClass = useSelector((state: RootState): CurrentClassState => state.currentClass);
    
-   const isStudentAdded = successModal?.message?.includes("student's login credentials");
-   const isPDFReady = successModal?.message?.includes("PDF is ready");
+   const isStudentAdded = successModal?.type === "studentAdded";
+   const isPDFReady = successModal?.type === "pdf";
 
    // const handleViewPDF = () => {
    //    if (currentClass.id) {
@@ -62,7 +61,7 @@ const SuccessModal = () => {
       
       const newWindow = window.open(pdfUrl, '_blank');
       if (!newWindow) {
-        alert('Please allow popups for this site to view the PDF');
+        alert(t('allowPopupsForPdf'));
       }
       
       // Clean up the URL object after the window is closed
@@ -71,7 +70,7 @@ const SuccessModal = () => {
       
     } catch (error) {
       console.error('Error generating PDF:', error);
-      alert('Failed to generate PDF. Please try again.');
+      alert(t('pdfGenerationFailed'));
     }
   }
 };
@@ -84,7 +83,7 @@ const SuccessModal = () => {
       <main className={styles.modalOverlay}>
          <div className={styles.modal}>
             <header className="mb-6 flex items-center justify-between gap-3">
-               <p className="flex-1 text-center text-[1.2rem] font-bold text-mainRed">Ready to view!</p>
+               <p className="flex-1 text-center text-[1.2rem] font-bold text-mainRed">{t("readyToView")}</p>
                <i className="cursor-pointer text-[1.5rem] text-red-600" onClick={closeModal}>
                   <MdClose />
                </i>
@@ -94,8 +93,8 @@ const SuccessModal = () => {
                   <div className="mb-6 text-center">
                      <p className="mb-3 text-sm text-gray-600">
                         {isStudentAdded 
-                           ? "Get your students logged in quickly and easily by viewing and printing the login cards in the PDF below"
-                           : "Your student login credentials PDF is ready to view and print"
+                           ? t("pdfLoginCardPrompt")
+                           : t("pdfReadyPrompt")
                         }
                      </p>
                      <div className="m-auto h-[120px] w-[120px] p-3">
@@ -110,7 +109,7 @@ const SuccessModal = () => {
                          </button>
                      </div>
                      <p className="mt-2 text-xs text-gray-500">
-                        <strong>Note:</strong> The PDF will open in a new tab where you can view, print, or download it.
+                        <strong>{t("pdfNoteLabel")}:</strong> {t("pdfNoteText")}
                      </p>
                   </div>
                )}

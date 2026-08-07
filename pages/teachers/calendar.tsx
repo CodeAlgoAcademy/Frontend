@@ -34,11 +34,13 @@ import { FiAlertTriangle } from "react-icons/fi";
 import { Schedule } from "types/interfaces";
 import { useGoogleLogin } from "@react-oauth/google";
 import TeacherLayout from "@/components/layouts/TeacherLayout";
+import { useTranslation } from "react-i18next";
 import Head from "next/head";
 
 const PropertyPane = (props: PropsWithChildren) => <div className="mt-5">{props.children}</div>;
 
 function Calendar() {
+   const { t } = useTranslation("teacher");
    let scheduleObj: ScheduleComponent;
    const dispatch = useDispatch<AppDispatch>();
    const scheduleData: Schedule = useSelector((state: RootState) => state.schedule);
@@ -139,7 +141,7 @@ function Calendar() {
                   </section>
                   <section className="flex h-full flex-col items-center justify-end gap-1">
                      <h1 className="text-sm font-semibold text-zinc-800 antialiased">
-                        {eventNotificationType ? "Updates saved!" : "Error Saving Updates"}
+                        {eventNotificationType ? t("updatesSaved") : t("errorSavingUpdates")}
                      </h1>
                   </section>
                   <div
@@ -151,7 +153,7 @@ function Calendar() {
             <div className="absolute left-[6px] top-8 flex justify-center space-x-2 pl-[2%]">
                <motion.button className="tooltip border border-gray-400 text-3xl" onClick={() => fetchGoogle()}>
                   <FcGoogle />
-                  <span className="tooltiptext text-sm font-semibold">Connect Google Calendar</span>
+                  <span className="tooltiptext text-sm font-semibold">{t("connectGoogleCalendar")}</span>
                </motion.button>
             </div>
             <div className="mx-auto mt-24 max-w-[1200px] rounded-xl bg-white p-4">
@@ -194,7 +196,7 @@ function Calendar() {
                               <DatePickerComponent
                                  value={new Date()}
                                  showClearButton={false}
-                                 placeholder="Current Date"
+                                 placeholder={t("currentDate")}
                                  floatLabelType="Always"
                                  change={(args: ChangeEventArgs) => {
                                     scheduleObj.selectedDate = args.value!;

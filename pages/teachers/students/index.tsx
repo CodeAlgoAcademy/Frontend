@@ -12,8 +12,10 @@ import NoItem from "@/components/UI/NoItem";
 import { ISingleStudent } from "types/interfaces";
 import { getStudents } from "store/studentSlice";
 import MoveStudentModal from "@/components/Teachers/students/MoveStudentModal";
+import { useTranslation } from "react-i18next";
 
 const Index = () => {
+   const { t } = useTranslation("teacher");
    const dispatch = useDispatch();
    const [isOpen, setIsOpen] = useState<boolean>(false);
    const [isMoveStudentModalOpen, setIsMoveStudentModalOpen] = useState<boolean>(false);
@@ -74,7 +76,7 @@ const Index = () => {
       // },
 
       {
-         label: "Move Students",
+         label: t("moveStudents"),
          icon: <HiOutlineArrowsExpand size={18} className="text-gray-500" />,
          onClick: () => {
             setIsSettingsOpen(false);
@@ -97,7 +99,7 @@ const Index = () => {
       <div onClick={closeCommentTabs}>
          <TeacherLayout className={styles.container}>
             <div className={styles.containerHeader}>
-               <p className={styles.headerTitle}>Students</p>
+               <p className={styles.headerTitle}>{t("students")}</p>
                <div className="flex items-center">
                   <div className="relative" ref={settingsRef}>
                      <div
@@ -106,7 +108,7 @@ const Index = () => {
                         data-testid="settings-dropdown"
                      >
                         <FiSettings size={20} className={styles.settingsIcon} />
-                        <p className="sm:block">Settings</p>
+                        <p className="sm:block">{t("settings")}</p>
                         <FiChevronDown
                            size={16}
                            className={`ml-1 text-gray-400 transition-transform duration-200 ${
@@ -117,7 +119,7 @@ const Index = () => {
                      {isSettingsOpen && (
                         <div className="absolute right-0 z-10 mt-2 w-64 rounded-xl border border-gray-100 bg-white py-2 shadow-xl">
                            <p className="px-4 pb-2 pt-1 text-xs font-semibold tracking-wide text-gray-400">
-                              SETTINGS
+                              {t("settings").toUpperCase()}
                            </p>
                            {settingsMenuItems.map((item) => (
                               <button
@@ -136,7 +138,7 @@ const Index = () => {
                   </div>
                   <div className={styles.addDiv} onClick={() => setIsOpen(true)}>
                      <FiPlus size={25} className={styles.plusIcon} />
-                     <p className="sm:block">Add Student</p>
+                     <p className="sm:block">{t("addStudent")}</p>
                   </div>
                </div>
             </div>
@@ -151,7 +153,7 @@ const Index = () => {
                   <FaSearch className="text-slate-400" />
                   <input
                      className="bg-transparent py-1 text-slate-800 outline-none"
-                     placeholder="Search students"
+                     placeholder={t("searchStudents")}
                      onChange={(e) => {
                         filterStudents(e.target.value);
                      }}
@@ -161,7 +163,7 @@ const Index = () => {
                </form>
             </div>
             {!students || students?.length === 0 ? (
-               <NoItem text="You have not added any student" />
+               <NoItem text={t("noStudentsAdded")} />
             ) : (
                <Students commentTabsOpened={commentTabsOpened} students={filteredStudents} />
             )}

@@ -1,6 +1,7 @@
 import React from "react";
 import { BsChevronDown } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { RootState } from "store/store";
 import { changeCurrentStudent } from "store/teacherStudentSlice";
 
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default function TeacherStudentsList({ close, open, isOpen }: Props) {
+   const { t } = useTranslation("teacher");
    const teacherStudents = useSelector((state: RootState) => state.teacherStudentSlice);
    const dispatch = useDispatch();
 
@@ -23,7 +25,7 @@ export default function TeacherStudentsList({ close, open, isOpen }: Props) {
          <div className="relative">
             {/* header */}
             <header className="flex cursor-pointer items-center gap-2" onClick={() => (isOpen ? close() : open())}>
-               <h2 className="text-lg font-medium text-mainColor">{teacherStudents?.currentStudent?.firstName || "Select Student"}</h2>
+               <h2 className="text-lg font-medium text-mainColor">{teacherStudents?.currentStudent?.firstName || t("selectStudent")}</h2>
                <BsChevronDown size={24} color="#2073fa" />
             </header>
 

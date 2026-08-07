@@ -13,7 +13,7 @@ export default function PrintLoginsButton() {
       
       if (!currentClass.id) {
          console.error(t("noClassSelected"));
-         alert("Please select a class first");
+         alert(t("pleaseSelectClassFirst"));
          return;
       }
       dispatch(openGeneratingModal(t("generating")));
@@ -22,7 +22,8 @@ export default function PrintLoginsButton() {
          dispatch(closeGeneratingModal());
          dispatch(openSuccessModal({
             message: t("generatedPdfReady"),
-            studentId: ""
+            studentId: "",
+            type: "pdf"
          }));
          
       } catch (error) {

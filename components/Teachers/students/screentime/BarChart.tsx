@@ -2,6 +2,7 @@ import BarChart from "@/components/parents/UI/BarChart";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { screentimeTypes } from "types/interfaces";
@@ -12,6 +13,7 @@ interface StudentBarChartProps {
 }
 
 const StudentBarChart = ({ showEditLink = true }) => {
+   const { t } = useTranslation("teacher");
    const router = useRouter();
    const [timeLimits, setTimeLimits] = useState<screentimeTypes[]>([]);
   const { currentStudent } = useSelector((state: RootState) => state.teacherStudentSlice);
@@ -32,7 +34,7 @@ const StudentBarChart = ({ showEditLink = true }) => {
             className=" w-full overflow-y-auto rounded-2xl bg-white p-6"
             style={{ minWidth: "100%", maxWidth: "100%", height: "400px", }}
          >
-            <h1 className="text-2xl font-semibold text-mainColor">Screen Time</h1>
+            <h1 className="text-2xl font-semibold text-mainColor">{t("screenTime")}</h1>
             <BarChart
                data={(timeLimits || []).map((time) =>
                   time.timeLimit === "No Limit" ? 8 : parseInt(time.timeLimit as string)
@@ -40,7 +42,7 @@ const StudentBarChart = ({ showEditLink = true }) => {
                barSpace={9.6}
                barWidth={4.3}
                maxHours={8}
-               unitLabel="h"
+               unitLabel={t("hr")}
             />
          </div>
 
@@ -51,7 +53,7 @@ const StudentBarChart = ({ showEditLink = true }) => {
           className="mt-4 ml-auto block max-w-fit cursor-pointer text-[.9rem] font-medium underline"
         >
           <span className="mt-3 ml-auto block w-fit cursor-pointer text-sm font-light underline hover:text-mainColor">
-            Edit Screentime Settings
+            {t("editScreenTimeSettings")}
           </span>
         </Link>
       )}

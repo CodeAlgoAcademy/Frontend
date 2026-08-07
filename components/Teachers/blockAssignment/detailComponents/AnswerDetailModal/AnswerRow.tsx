@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { formatTime, formatDate } from "./utils";
 
 interface AnswerRowProps {
@@ -6,6 +7,7 @@ interface AnswerRowProps {
 }
 
 export default function AnswerRow({ ans }: AnswerRowProps) {
+  const { t } = useTranslation("teacher");
   const selectedOption = ans.student_answer?.selected_option ?? ans.student_answer?.order?.join(", ");
 
   return (
@@ -40,7 +42,7 @@ export default function AnswerRow({ ans }: AnswerRowProps) {
             {selectedOption}
           </span>
         ) : (
-          <span className="text-xs text-slate-400 italic">No answer recorded</span>
+          <span className="text-xs text-slate-400 italic">{t("noAnswerRecorded")}</span>
         )}
         <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide">
           {ans.question_type?.replace(/_/g, " ")}

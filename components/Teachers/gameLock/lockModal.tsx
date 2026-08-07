@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useAppDispatch } from "store/hooks";
 import { updateCodingAccess, fetchCodingAccess } from "store/teacherStudentSlice";
 import { BLOCK_CURRICULUM } from "constants/blockCurriculum";
 import { updateChildCodingAccess } from "store/parentChildSlice";
 
 export default function LockModal({ student, onClose }: { student: any; onClose: () => void }) {
+   const { t } = useTranslation("teacher");
    const dispatch = useAppDispatch();
    const [lineLocked, setLineLocked] = useState(student?.codingAccess?.line_coding_locked || false);
    const [blockLevel, setBlockLevel] = useState(student?.codingAccess?.block_coding_max_level || "");
@@ -36,17 +38,17 @@ export default function LockModal({ student, onClose }: { student: any; onClose:
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-sm">
          <div className="animate-in zoom-in w-full max-w-lg overflow-hidden rounded-[2.5rem] bg-white shadow-2xl duration-200">
             <div className="flex items-center justify-between p-8 pb-4">
-               <h2 className="text-xl font-bold text-slate-800">Edit Settings: {student?.firstName}</h2>
+               <h2 className="text-xl font-bold text-slate-800">{t("editSettings", { name: student?.firstName })}</h2>
                <button onClick={onClose} className="text-3xl text-slate-300 hover:text-slate-500">
                   &times;
                </button>
             </div>
 
             <div className="space-y-10 p-10 pt-4">
-               <div className="flex items-center justify-between rounded-3xl border border-slate-100 bg-slate-50 p-6">
+                <div className="flex items-center justify-between rounded-3xl border border-slate-100 bg-slate-50 p-6">
                   <div>
-                     <h3 className="text-lg font-bold text-slate-800">Line Coding Mode</h3>
-                     <p className="text-sm text-slate-400">Allow student to use the Python editor</p>
+                     <h3 className="text-lg font-bold text-slate-800">{t("lineCodingMode")}</h3>
+                     <p className="text-sm text-slate-400">{t("allowPythonEditor")}</p>
                   </div>
                   <button
                      onClick={() => setLineLocked(!lineLocked)}
@@ -57,10 +59,10 @@ export default function LockModal({ student, onClose }: { student: any; onClose:
                      />
                   </button>
                </div>
-               <div className="space-y-4">
-                  <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Block Game Progress Limit</label>
+                <div className="space-y-4">
+                  <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{t("blockGameProgressLimit")}</label>
                   <select value={blockLevel} onChange={(e) => setBlockLevel(e.target.value)} className="...">
-                     <option value="">No Limit (Unrestricted)</option>
+                     <option value="">{t("noLimitUnrestricted")}</option>
 
                      {/* <optgroup label="Kindergarten">
                         {BLOCK_CURRICULUM.filter((l) => l.code.startsWith("K")).map((lvl) => (
@@ -70,7 +72,7 @@ export default function LockModal({ student, onClose }: { student: any; onClose:
                         ))}
                      </optgroup> */}
 
-                     <optgroup label="Grade 1">
+                     <optgroup label={t("gradeN", { n: 1 })}>
                         {BLOCK_CURRICULUM.filter((l) => l.code.startsWith("1")).map((lvl) => (
                            <option key={lvl.code} value={lvl.code}>
                               {lvl.name}
@@ -78,7 +80,7 @@ export default function LockModal({ student, onClose }: { student: any; onClose:
                         ))}
                      </optgroup>
 
-                     <optgroup label="Grade 2">
+                     <optgroup label={t("gradeN", { n: 2 })}>
                         {BLOCK_CURRICULUM.filter((l) => l.code.startsWith("2")).map((lvl) => (
                            <option key={lvl.code} value={lvl.code}>
                               {lvl.name}
@@ -87,21 +89,21 @@ export default function LockModal({ student, onClose }: { student: any; onClose:
                      </optgroup>
                   </select>
                   <p className="px-2 text-[11px] font-medium italic leading-relaxed text-slate-400">
-                     Students will be padlocked from levels following your selection.
+                     {t("padlockedFromLevels")}
                   </p>
                </div>
             </div>
 
             <div className="flex gap-4 bg-slate-50/50 p-8">
                <button onClick={onClose} className="flex-1 rounded-2xl py-4 font-bold text-slate-400 transition hover:bg-slate-200">
-                  Cancel
+                  {t("cancel")}
                </button>
                <button
                   onClick={handleSave}
                   disabled={loading}
                   className="flex-1 rounded-2xl bg-blue-600 py-4 font-bold text-white shadow-xl shadow-blue-200 transition-all hover:bg-blue-700 disabled:opacity-50"
                >
-                  {loading ? "Saving..." : "Save Settings"}
+                  {loading ? t("saving") : t("saveSettings")}
                </button>
             </div>
          </div>

@@ -171,5 +171,7 @@
   "users": "Utilisateurs",
   "price": "Prix",
   "duration": "Durée",
-  "readMore": "Lire la suite"
+  "readMore": "Lire la suite",
+  "pleaseSelectClassFirst": "Veuillez d'abord sélectionner une classe",
+  "credentialsEmailSent": "Les identifiants de connexion des élèves ont été envoyés à leur adresse e-mail"
 }

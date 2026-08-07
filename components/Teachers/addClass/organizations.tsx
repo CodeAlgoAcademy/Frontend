@@ -1,10 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { updateClassDetails } from "store/addClassSlice";
 import { closeSelectOrg } from "store/modalSlice";
 import { RootState } from "store/store";
 
 const SelectOrganization = () => {
+   const { t } = useTranslation("teacher");
    const modalOpen = useSelector((state: RootState) => state.modal.selectOrganizationOpen);
 
    const organizations = useSelector((state: RootState) => state.organizer.userOrganizations);
@@ -34,7 +36,7 @@ const SelectOrganization = () => {
                   </p>
                );
             })}
-         {organizations.length <= 0 && <p className="cursor-pointer p-2 text-center text-[12px] font-bold">You do not belong to any organization</p>}
+         {organizations.length <= 0 && <p className="cursor-pointer p-2 text-center text-[12px] font-bold">{t("noOrganizationMembership")}</p>}
       </div>
    );
 };

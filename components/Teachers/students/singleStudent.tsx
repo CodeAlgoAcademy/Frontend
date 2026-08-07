@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import StudentTable from "./StudentTable";
 import { AssignmentDetails, ISingleStudent } from "types/interfaces";
 import { useAppDispatch } from "store/hooks";
@@ -34,6 +35,7 @@ const SingleStudent = ({
    setEditStudentModalOpened,
    index,
 }: SingleStudentProps) => {
+   const { t } = useTranslation("teacher");
    const dispatch = useAppDispatch();
    const { id: classId } = useSelector((state: any) => state.currentClass);
    const [headings, setHeadings] = useState<number[]>([]);
@@ -109,7 +111,7 @@ const SingleStudent = ({
          {/* Student Table */}
          {students?.assignments?.length === 0 ? (
             <p className="grid h-full w-full place-content-center">
-               <span>No lesson available</span>
+               <span>{t("noLessonAvailable")}</span>
             </p>
          ) : (
             headings.includes(parseInt(student?.id as string)) && (

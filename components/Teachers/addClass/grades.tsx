@@ -1,5 +1,6 @@
 import React, { ReactElement, FC, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { updateClassDetails } from "../../../store/addClassSlice";
 import { updateUser } from "../../../store/authSlice";
 import { closeGradesModal } from "../../../store/modalSlice";
@@ -13,6 +14,7 @@ type gradesType = {
 const availableGrades: Array<string> = ["K", "1", "2", "3", "4", "5", "6", "7", "8+"];
 
 const Grades: FC<gradesType> = ({ addStudents }) => {
+   const { t } = useTranslation("teacher");
    const [chosenGrade, setChosenGrade] = useState<string>("");
    const { gradesModalOpen } = useSelector((state: RootState) => state.modal);
    const grade = useSelector((state: RootState) => {
@@ -30,7 +32,7 @@ const Grades: FC<gradesType> = ({ addStudents }) => {
    return (
       <section className={`fixed top-0 left-0 z-[999] flex min-h-screen w-[100vw] items-center justify-center bg-[rgba(0,0,0,.25)]`}>
          <div className="mx-auto w-[90vw] max-w-[350px] rounded-md bg-white py-6 px-4">
-            <h2 className="mb-2 text-center text-lg font-bold">Which grade are you in?</h2>
+            <h2 className="mb-2 text-center text-lg font-bold">{t("whichGrade")}</h2>
 
             <div className="mt-4 grid grid-cols-4 gap-3">
                {availableGrades.map((availableGrade: string, index: number): ReactElement => {
@@ -69,7 +71,7 @@ const Grades: FC<gradesType> = ({ addStudents }) => {
                      dispatch(closeGradesModal());
                   }}
                >
-                  Back
+                  {t("back")}
                </button>
             </div>
          </div>

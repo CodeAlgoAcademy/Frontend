@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { days, screentimeTypes } from "types/interfaces";
+import { Trans, useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import { days, screentimeTypes } from "types/interfaces";
 import { RootState } from "store/store";
 import { bulkUpdateClassScreenTime } from "store/teachersClassSlice";
 import TeacherScreenTimeComponent from "../UI/screenTimeComponent";
@@ -10,6 +11,7 @@ import {  setClassBaseTimeLimit } from "utils/useMultiForm";
 import { changeTimeLimit } from "utils/timelimit";
 
 const ClassScreenTimeBulk = () => {
+  const { t } = useTranslation("teacher");
   const classId = useSelector((state: RootState) => state.currentClass?.id);
   const students = useSelector((state: RootState) => state.students?.students);
   const dispatch = useDispatch();
@@ -52,7 +54,7 @@ const updateTime = async (
   day: days,
   hour: number | "No Limit"
 ) => {
-  if (!classId) return toast.error("No class selected");
+  if (!classId) return toast.error(t("noClassSelected"));
 
   setIsLoading(true);
   const data = {
@@ -68,9 +70,9 @@ const updateTime = async (
       )
     );
     await dispatch(getStudents(classId) as any);
-    toast.success("Screen time updated successfully");
+    toast.success(t("screenTimeUpdated"));
   } catch {
-    toast.error("Failed to update screen time");
+    toast.error(t("failedToUpdateScreenTime"));
   } finally {
     setIsLoading(false);
   }
@@ -79,15 +81,15 @@ const updateTime = async (
   return (
     <div className="relative min-h-[340px] max-w-fit rounded-2xl bg-white px-8 py-10 md:w-full md:min-w-[420px]">
       <h1 className="text-[1.3rem] font-semibold text-mainColor">
-        Bulk Screen Time Restrictions
+        {t("bulkScreenTimeRestrictions")}
       </h1>
       <h2 className="mt-2 mb-10 text-[14px] font-medium">
-        Set screen time for all students in class
+        {t("setScreenTimeAllStudents")}
       </h2>
 
       {isLoading && (
         <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-80 z-10">
-          <div className="text-mainColor">Updating...</div>
+          <div className="text-mainColor">{t("updating")}</div>
         </div>
       )}
 
@@ -102,13 +104,15 @@ const updateTime = async (
             />
           ))
         ) : (
-          <div className="text-gray-500">Loading time limits...</div>
+          <div className="text-gray-500">{t("loadingTimeLimits")}</div>
         )}
       </div>
 
       <div className="mt-6 text-center">
         <p className="text-xs text-gray-500">
-          Changes will apply to <strong>all students</strong> in the class
+          <Trans ns="teacher" i18nKey="changesApplyAllStudents" components={{ strong: <strong /> }}>
+            Changes will apply to <strong>all students</strong> in the class
+          </Trans>
         </p>
       </div>
     </div>

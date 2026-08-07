@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import teachersStudentServices from 'services/teachersStudentservices';
 
-const ACTION_CONFIG: Record<string, { label: string; color: string; bg: string; border: string; icon: string }> = {
-    ready_to_accelerate: { label: 'Ready to Accelerate', color: '#065f46', bg: '#ecfdf5', border: '#6ee7b7', icon: '🚀' },
-    needs_review:        { label: 'Needs Review',         color: '#92400e', bg: '#fffbeb', border: '#fcd34d', icon: '📝' },
-    remediation_needed:  { label: 'Remediation Needed',   color: '#991b1b', bg: '#fef2f2', border: '#fca5a5', icon: '🔄' },
-    on_track:            { label: 'On Track',              color: '#1d4ed8', bg: '#eff6ff', border: '#93c5fd', icon: '✅' },
+const ACTION_CONFIG: Record<string, { labelKey: string; color: string; bg: string; border: string; icon: string }> = {
+    ready_to_accelerate: { labelKey: 'readyToAccelerate', color: '#065f46', bg: '#ecfdf5', border: '#6ee7b7', icon: '🚀' },
+    needs_review:        { labelKey: 'needsReview',         color: '#92400e', bg: '#fffbeb', border: '#fcd34d', icon: '📝' },
+    remediation_needed:  { labelKey: 'remediationNeeded',   color: '#991b1b', bg: '#fef2f2', border: '#fca5a5', icon: '🔄' },
+    on_track:            { labelKey: 'onTrack',              color: '#1d4ed8', bg: '#eff6ff', border: '#93c5fd', icon: '✅' },
 };
 
 function ActionBadge({ action }: { action: string }) {
+    const { t } = useTranslation("teacher");
     const key = action?.toLowerCase().replace(/\s+/g, '_');
     const cfg = ACTION_CONFIG[key];
     if (!cfg) return (
         <span className="text-xs font-semibold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-200 capitalize">
-            {action?.replace(/_/g, ' ') || 'N/A'}
+            {action?.replace(/_/g, ' ') || t("na")}
         </span>
     );
     return (
         <span style={{ color: cfg.color, background: cfg.bg, border: `1px solid ${cfg.border}` }}
             className="inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-lg">
             <span>{cfg.icon}</span>
-            {cfg.label}
+            {t(cfg.labelKey)}
         </span>
     );
 }
@@ -53,6 +55,7 @@ export default function DiagnosticDetailModal({
 }: {
     studentId: number; onClose: () => void;
 }) {
+    const { t } = useTranslation("teacher");
     const [details, setDetails] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -70,9 +73,9 @@ export default function DiagnosticDetailModal({
                 <div className="bg-white px-6 py-4 border-b border-slate-100 flex items-center justify-between flex-shrink-0">
                     <div>
                         <p className="text-[10px] font-black uppercase tracking-[0.18em] text-indigo-400 mb-0.5">
-                            Student Report
+                            {t("studentReport")}
                         </p>
-                        <h2 className="text-lg font-black text-slate-800">Diagnostic Level History</h2>
+                        <h2 className="text-lg font-black text-slate-800">{t("diagnosticLevelHistory")}</h2>
                     </div>
                     <button onClick={onClose}
                         className="w-8 h-8 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors text-xl font-light">
@@ -83,12 +86,12 @@ export default function DiagnosticDetailModal({
                     {loading ? (
                         <div className="flex flex-col items-center justify-center py-20 gap-3">
                             <div className="w-8 h-8 border-4 border-indigo-200 border-t-indigo-500 rounded-full animate-spin" />
-                            <p className="text-sm text-slate-400 font-medium">Loading diagnostic data…</p>
+                            <p className="text-sm text-slate-400 font-medium">{t("loadingDiagnosticData")}</p>
                         </div>
                     ) : details.length === 0 ? (
                         <div className="text-center py-20 text-slate-400">
                             <p className="text-3xl mb-2">📊</p>
-                            <p className="font-semibold">No diagnostic records yet</p>
+                            <p className="font-semibold">{t("noDiagnosticRecords")}</p>
                         </div>
                     ) : (
                         <div className="space-y-3">
@@ -115,17 +118,17 @@ export default function DiagnosticDetailModal({
                                         <div className="flex flex-wrap gap-2">
                                             <StatPill
                                                 icon="⏱"
-                                                label="Duration"
+                                                label={t("duration")}
                                                 value={`${record.duration_seconds}s`}
                                             />
                                             <StatPill
                                                 icon="❌"
-                                                label="Fail Count"
+                                                label={t("failCount")}
                                                 value={record.fail_count}
                                             />
                                             <StatPill
                                                 icon="💡"
-                                                label="Hints Used"
+                                                label={t("hintsUsed")}
                                                 value={record.hint_uses}
                                             />
                                         </div>
@@ -139,11 +142,11 @@ export default function DiagnosticDetailModal({
                 {/* Footer */}
                 <div className="bg-white border-t border-slate-100 px-6 py-3 flex justify-between items-center flex-shrink-0">
                     <p className="text-xs text-slate-400">
-                        {details.length} level{details.length !== 1 ? 's' : ''} recorded
+                        {t("levelsRecorded", { count: details.length })}
                     </p>
                     <button onClick={onClose}
                         className="text-xs font-bold text-slate-500 hover:text-slate-700 bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-xl transition-colors">
-                        Close
+                        {t("close")}
                     </button>
                 </div>
             </div>
