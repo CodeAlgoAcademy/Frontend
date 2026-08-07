@@ -26,7 +26,11 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          # 22, not 20: wrangler refuses to run on anything older
+          # ("Wrangler requires at least Node.js v22.0.0"). The app itself is
+          # still built on node:20 inside the Docker image, so this only
+          # governs the tooling on the runner.
+          node-version: '22'
           cache: npm
 
       # `npm ci` rather than `npm install`: it fails when package.json and
@@ -70,7 +74,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          # 22, not 20: wrangler refuses to run on anything older
+          # ("Wrangler requires at least Node.js v22.0.0"). The app itself is
+          # still built on node:20 inside the Docker image, so this only
+          # governs the tooling on the runner.
+          node-version: '22'
       - name: Install wrangler
         working-directory: deploy/cloudflare
         run: npm ci || npm install
