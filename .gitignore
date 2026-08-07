@@ -28,9 +28,22 @@ yarn-error.log*
 # local env files
 .env*.local
 
+# Build-time config for the Cloudflare container image. Written by CI from
+# GitHub Actions variables, or by hand from .env.production.example locally.
+.env.production
+
+# cloudflare
+deploy/cloudflare/node_modules
+deploy/cloudflare/.wrangler
+
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# One lockfile. The Dockerfile and CI both use `npm ci`, so package-lock.json
+# is the source of truth; a second, stale yarn.lock only produces a different
+# dependency tree for anyone who runs yarn out of habit.
+yarn.lock

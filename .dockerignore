@@ -1,0 +1,22 @@
+# Docker reads this from the build context root, which is the repo root - see
+# image_build_context in deploy/cloudflare/wrangler.jsonc. A copy of this file
+# next to the Dockerfile would be ignored.
+#
+# NOTE: .env.production is deliberately NOT excluded. next build inlines
+# NEXT_PUBLIC_* from it, so excluding it produces a bundle that points at
+# nothing and looks completely healthy while doing it.
+node_modules
+.next
+out
+.git
+.github
+cypress
+tests
+coverage
+.nyc_output
+deploy/cloudflare/node_modules
+deploy/cloudflare/.wrangler
+*.log
+.DS_Store
+.vscode
+.idea

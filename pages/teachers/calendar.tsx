@@ -1,18 +1,12 @@
-import React, { useState, PropsWithChildren, useEffect, useCallback } from "react";
-import {
-   ScheduleComponent,
-   ViewsDirective,
-   ViewDirective,
-   Day,
-   Week,
-   WorkWeek,
-   Month,
-   Agenda,
-   ActionEventArgs,
-   Inject,
-   Resize,
-} from "@syncfusion/ej2-react-schedule";
-import { DatePickerComponent, ChangeEventArgs } from "@syncfusion/ej2-react-calendars";
+import React, { useState, PropsWithChildren, useEffect, useCallback, useMemo } from "react";
+import { Calendar as BigCalendar, dateFnsLocalizer, View, Views, SlotInfo } from "react-big-calendar";
+import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
+// Named imports from the package root. date-fns v4 (which this repo is on) is
+// ESM-first and its submodules no longer carry default exports, so the older
+// `import format from "date-fns/format"` style fails typechecking with
+// "has no call signatures".
+import { format, parse, startOfWeek, getDay } from "date-fns";
+import { enUS } from "date-fns/locale";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "store/store";
 import { FcGoogle } from "react-icons/fc";
@@ -27,7 +21,6 @@ import {
    putGoogleCalendar,
    putSchedule,
 } from "services/scheduleService";
-import { extend } from "@syncfusion/ej2-base";
 import { BsHandThumbsUp } from "react-icons/bs";
 import { motion, useCycle } from "framer-motion";
 import { FiAlertTriangle } from "react-icons/fi";
@@ -35,18 +28,48 @@ import { Schedule } from "types/interfaces";
 import { useGoogleLogin } from "@react-oauth/google";
 import TeacherLayout from "@/components/layouts/TeacherLayout";
 import Head from "next/head";
+import { CalendarEvent, toApiEvent, toCalendarEvents } from "utils/scheduleAdapter";
+
+// react-big-calendar is MIT. It replaced Syncfusion's ScheduleComponent, which
+// was a paid component used on this one page and nowhere else in the app - it
+// cost a licence key, a licence banner without one, and a runtime stylesheet
+// fetched from cdn.syncfusion.com.
+//
+// The five views below are the same five the Syncfusion version registered
+// (Day, Week, WorkWeek, Month, Agenda), so the UI is a like-for-like swap.
+const localizer = dateFnsLocalizer({
+   format,
+   parse,
+   startOfWeek: (date: Date) => startOfWeek(date, { weekStartsOn: 0 }),
+   getDay,
+   locales: { "en-US": enUS },
+});
+
+const DnDCalendar = withDragAndDrop<CalendarEvent, object>(BigCalendar as any);
 
 const PropertyPane = (props: PropsWithChildren) => <div className="mt-5">{props.children}</div>;
 
-function Calendar() {
-   let scheduleObj: ScheduleComponent;
+/** Local date -> the yyyy-MM-dd an <input type="date"> expects. */
+const toInputValue = (d: Date) => format(d, "yyyy-MM-dd");
+
+function CalendarPage() {
    const dispatch = useDispatch<AppDispatch>();
    const scheduleData: Schedule = useSelector((state: RootState) => state.schedule);
-   const data: Record<string, any>[] = extend([], scheduleData.allSchedule as Record<string, any>, null!, true) as Record<string, any>[];
+
+   // Replaces Syncfusion's `extend([], data, null, true)` deep clone.
+   const events = useMemo(
+      () => toCalendarEvents(scheduleData.allSchedule as any),
+      [scheduleData.allSchedule]
+   );
+
+   // Was scheduleObj.selectedDate + dataBind(). Controlled state instead, which
+   // is why the ref to the calendar instance is gone.
+   const [date, setDate] = useState<Date>(new Date());
+   const [view, setView] = useState<View>(Views.MONTH);
+
    const [eventNotificationType, setEventNotificationType] = useState(true);
    const [eventNotification, setEventNotification] = useState(false);
-   const [eventSuccess, setEventSuccess] = useState(true);
-   const [positionY, cycleY] = useCycle(-1000, 0);
+   const [, setEventSuccess] = useState(true);
    const [positionX, cycleX] = useCycle(500, 0);
 
    const triggerNotificationClose = () => {
@@ -54,10 +77,11 @@ function Calendar() {
    };
 
    const showEventNotification = (status: boolean) => {
-      status ? setEventNotificationType((prev) => true) : setEventNotificationType((prev) => false);
+      setEventNotificationType(status);
       cycleX(1);
       setTimeout(triggerNotificationClose, 5000);
    };
+
    const fetchSchedule = useCallback(async () => {
       if (scheduleData.googleConnect) {
          await dispatch(getGoogleCalendar());
@@ -65,47 +89,46 @@ function Calendar() {
          await dispatch(getSchedule());
       }
    }, [dispatch, scheduleData.googleConnect]);
-   const changeSchedule = async (args: any) => {
-      let data;
-      if (scheduleData.googleConnect) {
-         data = await dispatch(putGoogleCalendar(args));
-      } else {
-         data = await dispatch(putSchedule(args));
-      }
+
+   // These three still send and receive Syncfusion-shaped records, because that
+   // is what the API speaks. See utils/scheduleAdapter.ts.
+   const changeSchedule = async (records: any[]) => {
+      const data = scheduleData.googleConnect
+         ? await dispatch(putGoogleCalendar(records))
+         : await dispatch(putSchedule(records));
       const status = "error" in data;
       showEventNotification(!status);
       return !status;
    };
-   const addSchedule = async (args: any) => {
-      let data;
-      if (scheduleData.googleConnect) {
-         data = await dispatch(postGoogleCalendar(args));
-      } else {
-         data = await dispatch(postSchedule(args));
-      }
+
+   const addSchedule = async (records: any[]) => {
+      const data = scheduleData.googleConnect
+         ? await dispatch(postGoogleCalendar(records))
+         : await dispatch(postSchedule(records));
       const status = "error" in data;
-      status ? setEventSuccess((prev) => false) : setEventSuccess((prev) => true);
+      setEventSuccess(!status);
       showEventNotification(!status);
       return !status;
    };
-   const popSchedule = async (args: any) => {
-      let data;
-      if (scheduleData.googleConnect) {
-         data = await dispatch(deleteGoogleCalendar(args));
-      } else {
-         data = await dispatch(deleteSchedule(args));
-      }
+
+   const popSchedule = async (records: any[]) => {
+      const data = scheduleData.googleConnect
+         ? await dispatch(deleteGoogleCalendar(records))
+         : await dispatch(deleteSchedule(records));
       const status = "error" in data;
-      status ? setEventSuccess((prev) => false) : setEventSuccess((prev) => true);
+      setEventSuccess(!status);
       showEventNotification(!status);
       return !status;
    };
+
    const hideEventNotification = useCallback(() => {
       cycleX(0);
    }, [cycleX]);
+
    useEffect(() => {
       hideEventNotification();
    }, [eventNotification, hideEventNotification]);
+
    useEffect(() => {
       fetchSchedule();
    }, [fetchSchedule]);
@@ -118,14 +141,69 @@ function Calendar() {
       scope: "https://www.googleapis.com/auth/calendar",
    });
 
+   /**
+    * Drag to a new time, or resize. Both are the same update as far as the API
+    * is concerned, so one handler serves both.
+    *
+    * Typed locally rather than with withDragAndDropProps["onEventDrop"]: the
+    * drop callback carries `isAllDay` and the resize callback does not, so the
+    * two signatures do not unify. Everything here is optional and read
+    * defensively.
+    */
+   const onEventChange = async (args: {
+      event: CalendarEvent;
+      start: Date | string;
+      end: Date | string;
+      isAllDay?: boolean;
+   }) => {
+      if (!navigator.onLine) return;
+      const { event, start, end, isAllDay } = args;
+      await changeSchedule([
+         toApiEvent({
+            ...event,
+            start: new Date(start),
+            end: new Date(end),
+            allDay: isAllDay ?? event.allDay,
+         }),
+      ]);
+      await fetchSchedule();
+   };
+
+   /** Drag across empty space to create. */
+   const onSelectSlot = async (slot: SlotInfo) => {
+      if (!navigator.onLine) return;
+      const title = window.prompt("New event");
+      if (!title) return;
+      await addSchedule([
+         toApiEvent({
+            title,
+            start: new Date(slot.start),
+            end: new Date(slot.end),
+            allDay: slot.slots?.length === 1,
+         }),
+      ]);
+      await fetchSchedule();
+   };
+
+   /** Click an existing event to rename or delete it. */
+   const onSelectEvent = async (event: CalendarEvent) => {
+      if (!navigator.onLine) return;
+      const title = window.prompt("Rename this event, or clear the box to delete it", event.title);
+      if (title === null) return;
+      if (title.trim() === "") {
+         await popSchedule([toApiEvent(event)]);
+      } else {
+         await changeSchedule([toApiEvent({ ...event, title })]);
+      }
+      await fetchSchedule();
+   };
+
    return (
       <>
+         <Head>
+            <title>Calendar | CodeAlgo Academy</title>
+         </Head>
          <TeacherLayout className="relative">
-            {/* <style jsx>
-               {`
-                  @import url("https://cdn.syncfusion.com/ej2/material.css");
-               `}
-            </style> */}
             <div className="absolute right-[6px] top-8 flex items-center justify-center overflow-clip pr-[2%]">
                <motion.div
                   animate={{ x: positionX }}
@@ -148,107 +226,56 @@ function Calendar() {
                   ></div>
                </motion.div>
             </div>
+
             <div className="absolute left-[6px] top-8 flex justify-center space-x-2 pl-[2%]">
                <motion.button className="tooltip border border-gray-400 text-3xl" onClick={() => fetchGoogle()}>
                   <FcGoogle />
                   <span className="tooltiptext text-sm font-semibold">Connect Google Calendar</span>
                </motion.button>
             </div>
+
             <div className="mx-auto mt-24 max-w-[1200px] rounded-xl bg-white p-4">
-               <ScheduleComponent
-                  height="650px"
-                  selectedDate={new Date()}
-                  ref={(schedule) => (scheduleObj = schedule!)}
-                  eventSettings={{ dataSource: data }}
-                  actionComplete={async (args: ActionEventArgs) => {
-                     const { requestType, changedRecords, addedRecords, deletedRecords } = args;
-                     let performAction: any = false;
-                     let isOnLine = navigator.onLine;
-                     if (requestType === "eventCreated") {
-                        if (addedRecords?.length) performAction = await addSchedule(addedRecords);
-                     } else if (requestType === "eventChanged") {
-                        if (addedRecords?.length) performAction = await addSchedule(addedRecords);
-                        if (changedRecords?.length) performAction = await changeSchedule(changedRecords);
-                        if (deletedRecords?.length) performAction = await popSchedule(deletedRecords);
-                     } else if (requestType === "eventRemoved") {
-                        if (deletedRecords?.length) performAction = await popSchedule(deletedRecords);
-                     }
-                     let isEventRequest = requestType === "eventChanged" || requestType === "eventRemoved" || requestType === "eventCreated";
-                     if (!performAction && isEventRequest && !isOnLine) args.cancel = true;
-                  }}
-               >
-                  <ViewsDirective>
-                     <ViewDirective option="Day" />
-                     <ViewDirective option="Week" />
-                     <ViewDirective option="WorkWeek" />
-                     <ViewDirective option="Month" />
-                     <ViewDirective option="Agenda" />
-                  </ViewsDirective>
-                  <Inject services={[Day, Week, WorkWeek, Month, Agenda, Resize]} />
-               </ScheduleComponent>
+               <DnDCalendar
+                  localizer={localizer}
+                  events={events}
+                  date={date}
+                  onNavigate={(d: Date) => setDate(d)}
+                  view={view}
+                  onView={(v: View) => setView(v)}
+                  views={[Views.DAY, Views.WEEK, Views.WORK_WEEK, Views.MONTH, Views.AGENDA]}
+                  startAccessor="start"
+                  endAccessor="end"
+                  style={{ height: 650 }}
+                  selectable
+                  resizable
+                  popup
+                  onEventDrop={onEventChange}
+                  onEventResize={onEventChange}
+                  onSelectSlot={onSelectSlot}
+                  onSelectEvent={onSelectEvent}
+               />
+
                <PropertyPane>
-                  <table style={{ width: "100%", background: "white" }}>
-                     <tbody>
-                        <tr style={{ height: "50px" }}>
-                           <td style={{ width: "100%" }}>
-                              <DatePickerComponent
-                                 value={new Date()}
-                                 showClearButton={false}
-                                 placeholder="Current Date"
-                                 floatLabelType="Always"
-                                 change={(args: ChangeEventArgs) => {
-                                    scheduleObj.selectedDate = args.value!;
-                                    scheduleObj.dataBind();
-                                 }}
-                              />
-                           </td>
-                        </tr>
-                     </tbody>
-                  </table>
+                  <label className="block text-sm font-medium text-zinc-600">
+                     Current Date
+                     <input
+                        type="date"
+                        className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 outline-none focus:border-slate-500"
+                        value={toInputValue(date)}
+                        onChange={(e) => {
+                           if (!e.target.value) return;
+                           // Parse as local time. `new Date("2026-08-07")` is
+                           // parsed as UTC midnight, which lands on the previous
+                           // day for anyone west of Greenwich.
+                           setDate(parse(e.target.value, "yyyy-MM-dd", new Date()));
+                        }}
+                     />
+                  </label>
                </PropertyPane>
             </div>
          </TeacherLayout>
-
-         {/* <motion.div
-        className={`w-full h-full backdrop-blur-sm bg-gray-100/50 fixed left-0 z-50 flex justify-center items-center top-0`}
-        animate={{ y: positionY }}
-        transition={{ duration: 0.2 }}
-      >
-        <div className="bg-white rounded-2xl border shadow-xl p-10 relative max-w-lg">
-          <motion.span
-            onTap={() => cycleY(0)}
-            className="text-[22px] absolute right-8 top-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all ease-out opacity-60"
-          >
-            <FaTimes />
-          </motion.span>
-          <div className="flex flex-col items-center space-y-4">
-            <span className="w-4/6 text-center">
-              <Image
-                alt="google-calendar"
-                src="/assets/google-calendar.svg"
-                width={80}
-                height={80}
-              />
-            </span>
-            <p className="text-sm text-gray-500 text-center w-5/6">
-              Hello, enter your gmail address to connect your Google Calendar.
-            </p>
-            <input
-              type="email"
-              placeholder="example@gmail.com"
-              className="border-2 rounded-lg w-full h-12 px-4 outline-none"
-            />
-            <motion.button
-              className="bg-[#f28e2c] text-white rounded-md font-semibold px-4 py-3 w-full"
-              onTap={() => cycleY(0)}
-            >
-              Connect
-            </motion.button>
-          </div>
-        </div>
-      </motion.div> */}
       </>
    );
 }
 
-export default Calendar;
+export default CalendarPage;
