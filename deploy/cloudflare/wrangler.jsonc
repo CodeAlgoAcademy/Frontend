@@ -1,0 +1,68 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "codealgo-web",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-01",
+  "compatibility_flags": ["nodejs_compat"],
+
+  // Escape hatch. If the custom domain is wrong or the zone is mid-move,
+  // codealgo-web.<subdomain>.workers.dev still answers, which is how you tell
+  // "the Worker is broken" apart from "DNS is broken".
+  "workers_dev": true,
+
+  "observability": {
+    "enabled": true
+  },
+
+  // Apex and www both land here. Cloudflare creates and owns these DNS records
+  // because of custom_domain: true - do not also hand-create them in the
+  // dashboard or the deploy fails on a conflict.
+  //
+  // www is a route rather than a redirect on purpose. Next serves both fine and
+  // a Bulk Redirect rule is one more thing to forget exists.
+  "routes": [
+    { "pattern": "codealgoacademy.com", "custom_domain": true },
+    { "pattern": "www.codealgoacademy.com", "custom_domain": true }
+  ],
+
+  // Keep-warm only. A marketing site that takes eight seconds to answer the
+  // first request of the morning is worse than the container cost.
+  "triggers": {
+    "crons": ["*/5 * * * *"]
+  },
+
+  "containers": [
+    {
+      "class_name": "WebContainer",
+      "image": "./Dockerfile",
+      "image_build_context": "../..",
+      // 1 GiB memory, 4 GB disk. The standalone image lands well inside that.
+      // If `wrangler deploy` ever rejects the image for size, the fix is one
+      // word: bump this to "standard-1" for 8 GB.
+      "instance_type": "basic",
+      // Next is stateless here - no sessions on the server, no in-memory cache
+      // anyone reads twice - so this could scale out later. One instance keeps
+      // the bill and the behaviour predictable for now.
+      "max_instances": 1
+    }
+  ],
+
+  "durable_objects": {
+    "bindings": [{ "name": "WEB_CONTAINER", "class_name": "WebContainer" }]
+  },
+
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["WebContainer"]
+    }
+  ],
+
+  "vars": {
+    "NODE_ENV": "production",
+    // Read server-side by pages/api/teachers/class/[classId]/print-student-logins,
+    // which builds the QR login URLs on the student handout. Not a NEXT_PUBLIC_
+    // value, so it is genuinely runtime config and belongs here.
+    "URL_GAME": "https://play.codealgoacademy.com"
+  }
+}

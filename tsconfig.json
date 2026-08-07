@@ -39,5 +39,15 @@
       "cypress/e2e/pages/login.cy.js",
       "cypress/e2e/pages/signup.cy.js"
    ],
-   "exclude": ["node_modules", "**/*.jsx"]
+   "exclude": [
+      "node_modules",
+      "**/*.jsx",
+      // The Cloudflare Worker in deploy/cloudflare is a separate TypeScript
+      // project with its own tsconfig, its own package.json and its own
+      // dependencies. "**/*.ts" above sweeps it into the app's compilation,
+      // where `import ... from "@cloudflare/containers"` cannot resolve and
+      // `next build` dies on a type error in code Next never bundles.
+      // Typecheck the Worker with `npm --prefix deploy/cloudflare run typecheck`.
+      "deploy"
+   ]
 }
