@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiPlus, FiSettings, FiChevronDown, FiEdit2, FiFileText, FiTrash2 } from "react-icons/fi";
 import { FaSearch } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -13,6 +13,7 @@ import { ISingleStudent } from "types/interfaces";
 import { getStudents } from "store/studentSlice";
 import MoveStudentModal from "@/components/Teachers/students/MoveStudentModal";
 import { useTranslation } from "react-i18next";
+import useClickOutside from "hooks/useClickOutside";
 
 const Index = () => {
    const { t } = useTranslation("teacher");
@@ -20,7 +21,7 @@ const Index = () => {
    const [isOpen, setIsOpen] = useState<boolean>(false);
    const [isMoveStudentModalOpen, setIsMoveStudentModalOpen] = useState<boolean>(false);
    const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
-   const settingsRef = useRef<HTMLDivElement>(null);
+   const settingsRef = useClickOutside<HTMLDivElement>(() => setIsSettingsOpen(false));
    const { id } = useSelector((state: RootState) => state.currentClass);
    const [commentTabsOpened, setCommentTabsOpened] = useState<boolean>(false);
    const students = useSelector((state: RootState) => state?.students?.students);
@@ -35,19 +36,6 @@ const Index = () => {
    useEffect(() => {
       setFilteredStudents(students);
    }, [students]);
-
-   useEffect(() => {
-      const handleClickOutside = (event: MouseEvent) => {
-         if (settingsRef.current && !settingsRef.current.contains(event.target as Node)) {
-            setIsSettingsOpen(false);
-         }
-      };
-
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-         document.removeEventListener("mousedown", handleClickOutside);
-      };
-   }, []);
 
    const closeCommentTabs = (event: any) => {
       if (event.target.classList.contains("students-container")) {

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUserToOrganization, getAllInvitations, getAllRoles } from "services/organizersService";
 import { RootState } from "store/store";
 import { IRole } from "types/interfaces/organization.interface";
+import useClickOutside from "hooks/useClickOutside";
 
 interface AddUserModalProps {
   isOpen: boolean;
@@ -16,6 +17,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ isOpen, onClose }) => {
    const [email, setEmail] = useState<string>("");
    const [role, setRole] = useState<IRole | undefined>(undefined);
    const [message, setMessage] = useState<string>("");
+   const roleDropdownRef = useClickOutside<HTMLDivElement>(() => setDropdownOpen(false));
 
    const dispatch = useDispatch();
    const roles = useSelector((state: RootState) => state.organizer?.roles);
@@ -89,7 +91,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ isOpen, onClose }) => {
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                      Role
                   </label>
-                  <div className="relative">
+                  <div className="relative" ref={roleDropdownRef}>
                      <div
                         onClick={() => setDropdownOpen((prev) => !prev)}
                         className="flex items-center justify-between w-full px-3 py-2 border border-gray-300 rounded-md cursor-pointer"

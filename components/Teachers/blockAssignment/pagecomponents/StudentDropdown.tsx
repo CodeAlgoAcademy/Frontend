@@ -1,6 +1,7 @@
-import React, { useState, useMemo, useRef, useEffect } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import studentService from "services/studentService";
+import useClickOutside from "hooks/useClickOutside";
 
 interface Student {
   id: number;
@@ -14,20 +15,6 @@ interface StudentDropdownProps {
   onSelectStudent: (id: number | null) => void;
 }
 
-function useClickOutside<T extends HTMLElement>(handler: () => void) {
-  const ref = useRef<T>(null);
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
-        handler();
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [handler]);
-  return ref;
-}
-
 export default function StudentDropdown({ 
   classId,
   selectedStudentId, 
@@ -39,7 +26,6 @@ export default function StudentDropdown({
   const [showDropdown, setShowDropdown] = useState(false);
   const [search, setSearch] = useState("");
   const dropdownRef = useClickOutside<HTMLDivElement>(() => setShowDropdown(false));
-
   useEffect(() => {
     const fetchStudents = async () => {
       setLoading(true);

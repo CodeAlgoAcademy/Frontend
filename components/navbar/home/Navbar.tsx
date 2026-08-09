@@ -13,6 +13,7 @@ import AppDownloadModal from "@/components/modals/AppDownloadModal";
 import TawkToWidget from "public/TawkToWidget";
 import LanguageSwitcher from "@/components/UI/LanguageSwitcher";
 import { useTranslation } from "react-i18next";
+import useClickOutside from "hooks/useClickOutside";
 
 const Navbar = () => {
   const [heading, setHeading] = useState("");
@@ -20,13 +21,14 @@ const Navbar = () => {
   const [showMobileNav, setShowMobileNav] = useState(false);
   const [showAppModal, setShowAppModal] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const navbarRef = useClickOutside<HTMLElement>(() => setHeading(""));
    const { push } = useRouter();
    const { t } = useTranslation("common");
    const { t: tHome } = useTranslation("home");
 
    return (
       <>
-         <nav className="sticky top-0 left-0 z-[1001] bg-mainBlack px-6 py-4 font-workSans">
+         <nav className="sticky top-0 left-0 z-[1001] bg-mainBlack px-6 py-4 font-workSans" ref={navbarRef}>
         <div className="mx-auto flex items-center justify-between">
           <ul className="flex items-center gap-6">
             <Link href={"/"}>

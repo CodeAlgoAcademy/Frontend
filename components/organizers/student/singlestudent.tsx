@@ -20,6 +20,7 @@ import studentService from "services/studentService";
 import { deleteStudent, fetchStudentBlockGameProgress } from "store/teacherStudentSlice";
 import { useAppDispatch } from "store/hooks";
 import StudentTable from "@/components/Teachers/students/StudentTable";
+import useClickOutside from "hooks/useClickOutside";
 
 const SingleOrganizationStudent = ({
    student,
@@ -54,6 +55,7 @@ const SingleOrganizationStudent = ({
    const [isEditingComment, setIsEditingComment] = useState<string>("");
    const [isActionMenuOpen, setIsActionMenuOpen] = useState(false);
    const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+   const actionMenuRef = useClickOutside<HTMLDivElement>(() => setIsActionMenuOpen(false));
 
    const [editingStudentDetails, setEditingStudentDetails] = useState({
       firstName: student?.firstName,
@@ -371,7 +373,7 @@ const SingleOrganizationStudent = ({
                   <IoChatbubblesOutline className={styles.pointer} />
                </span>
 
-               <div className="relative">
+               <div className="relative" ref={actionMenuRef}>
                   <span onClick={() => setIsActionMenuOpen((prev) => !prev)}>
                      <HiOutlineDotsHorizontal className={styles.pointer} />
                   </span>

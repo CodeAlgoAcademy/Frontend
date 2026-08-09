@@ -10,12 +10,14 @@ import { updateEmail, updateFirstname, updateLastname } from "services/authServi
 import { getAllClasses } from "services/classesService";
 import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
+import useClickOutside from "hooks/useClickOutside";
 
 export default function ClassSelector() {
    const { t } = useTranslation("common");
    const [isOpen, setIsOpen] = useState<boolean>(false);
    const dispatch = useDispatch();
    const router = useRouter();
+   const classSelectorRef = useClickOutside<HTMLDivElement>(() => setIsOpen(false));
    const classes = useSelector((state: RootState): IClass[] => state.allClasses.classes);
    const currentClass = useSelector((state: RootState): CurrentClassState => state.currentClass);
 
@@ -36,7 +38,7 @@ export default function ClassSelector() {
    }, [router?.pathname]);
 
    return (
-      <div className="relative">
+      <div className="relative" ref={classSelectorRef}>
          <div
             className="flex w-[200px] cursor-pointer items-center justify-between gap-2 rounded-[20px] border border-[#bdbdbd] bg-white p-2"
             onClick={() => setIsOpen(!isOpen)}

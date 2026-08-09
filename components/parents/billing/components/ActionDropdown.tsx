@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { MoreVertical, CreditCard, Trash2, AlertCircle, RefreshCw } from "lucide-react";
 import { cn } from "utils";
+import useClickOutside from "hooks/useClickOutside";
 
 export interface ActionDropdownProps {
    subscriptionId: number;
@@ -24,17 +25,9 @@ const ActionDropdown: React.FC<ActionDropdownProps> = ({
    isActive,
    isReactivating = false,
 }) => {
-   const dropdownRef = useRef<HTMLDivElement>(null);
-
-   useEffect(() => {
-      const handleClickOutside = (event: MouseEvent) => {
-         if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-            if (isOpen) onToggle();
-         }
-      };
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => document.removeEventListener("mousedown", handleClickOutside);
-   }, [isOpen, onToggle]);
+   const dropdownRef = useClickOutside<HTMLDivElement>(() => {
+      if (isOpen) onToggle();
+   });
 
    return (
       <div ref={dropdownRef} className="relative inline-block">

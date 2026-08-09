@@ -8,6 +8,7 @@ import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { useAppDispatch } from "store/hooks";
 import { deleteChild } from "store/parentChildSlice";
 import ConfirmDeleteModal from "@/components/modals/ConfirmDeleteModal";
+import useClickOutside from "hooks/useClickOutside";
 
 
 const StudentProfile = () => {
@@ -17,6 +18,7 @@ const StudentProfile = () => {
    const dispatch = useAppDispatch();
    const [resetPasswordOpen, setResetPasswordOpen] = useState<boolean>(false);
    const [isDeleting, setIsDeleting] = useState(false);
+   const actionMenuRef = useClickOutside<HTMLDivElement>(() => setIsActionMenuOpen(false));
 
    const handleDeleteStudent = async () => {
       if (!currentChild?.id) return;
@@ -50,7 +52,7 @@ const StudentProfile = () => {
             </div>
             
             <div className="absolute top-8 right-8">
-               <div className="relative">
+               <div className="relative" ref={actionMenuRef}>
                   <span onClick={() => setIsActionMenuOpen((prev) => !prev)}>
                      <HiOutlineDotsHorizontal className={styles.pointer} />
                   </span>

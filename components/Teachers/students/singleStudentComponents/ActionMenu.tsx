@@ -7,6 +7,7 @@ import { deleteStudent } from "store/teacherStudentSlice";
 import {getStudents,} from "store/studentSlice";
 import DeleteConfirmationModal from "./DeleteConfirmationModal";
 import { useTranslation } from "react-i18next";
+import useClickOutside from "hooks/useClickOutside";
 
 
 interface ActionMenuProps {
@@ -21,9 +22,10 @@ const ActionMenu = ({ student, isOpen, setIsOpen, setStudentCommentsTabOpen }: A
    const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
    const dispatch = useAppDispatch();
    const classId = useSelector((state: any) => state.currentClass.id);
+   const actionMenuRef = useClickOutside<HTMLDivElement>(() => setIsOpen(false));
 
    return (
-      <div className="relative">
+      <div className="relative" ref={actionMenuRef}>
          <span onClick={() => setIsOpen(!isOpen)}>
             <HiOutlineDotsHorizontal className="cursor-pointer" />
          </span>

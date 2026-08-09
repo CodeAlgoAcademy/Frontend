@@ -12,12 +12,17 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
 import { BsGear } from "react-icons/bs";
 import { useTranslation } from "react-i18next";
+import useClickOutside from "hooks/useClickOutside";
 
 export default function UserInfo() {
    const { t } = useTranslation("common");
    const [isOpen, setIsOpen] = useState<boolean>(false);
    const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
    const [user, setUser] = useState<IUser | null>(null);
+   const userInfoRef = useClickOutside<HTMLDivElement>(() => {
+      setIsOpen(false);
+      setSettingsOpen(false);
+   });
 
    const dispatch = useDispatch();
 
@@ -26,7 +31,7 @@ export default function UserInfo() {
    }, []);
 
    return (
-      <div className="relative w-full max-w-fit flex-1">
+      <div className="relative w-full max-w-fit flex-1" ref={userInfoRef}>
          <div className={` ease-in- z-[3] box-border rounded-[30px] border border-[#bdbdbd] p-2`}>
             <div className="flex flex-1 items-center justify-between">
                <img

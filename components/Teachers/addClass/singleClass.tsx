@@ -1,4 +1,4 @@
-import React, { FC, useState, useRef, useEffect } from "react";
+import React, { FC, useState } from "react";
 import Link from "next/link";
 import { IClass } from "../../../types/interfaces";
 import { FaChevronRight } from "react-icons/fa";
@@ -12,6 +12,7 @@ import DeleteConfirmationModal from "../UI/common/DeleteConfirmationModal";
 import { openEditClassModal } from "../../../store/modalSlice";
 import { populateClassForEdit } from "../../../store/addClassSlice";
 import { useTranslation } from "react-i18next";
+import useClickOutside from "hooks/useClickOutside";
 
 const SingleClass: FC<IClass> = ({ 
   id, 
@@ -30,21 +31,8 @@ const SingleClass: FC<IClass> = ({
    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
    const [isDeleting, setIsDeleting] = useState<boolean>(false);
    const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
-   const dropdownRef = useRef<HTMLDivElement>(null);
+   const dropdownRef = useClickOutside<HTMLDivElement>(() => setIsDropdownOpen(false));
    const isOrganizationClass = organization !== null;
-
-   useEffect(() => {
-      const handleClickOutside = (event: MouseEvent) => {
-         if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-            setIsDropdownOpen(false);
-         }
-      };
-
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-         document.removeEventListener("mousedown", handleClickOutside);
-      };
-   }, []);
 
    const handleDeleteClick = () => {
       setIsDeleteModalOpen(true);

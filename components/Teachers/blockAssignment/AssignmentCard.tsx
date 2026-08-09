@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
 import { AssignmentListItem } from "types/interfaces/assignments";
 import { IoSettingsOutline } from "react-icons/io5";
+import useClickOutside from "hooks/useClickOutside";
 
 interface AssignmentCardProps {
    assignment: AssignmentListItem;
@@ -30,7 +31,7 @@ export default function AssignmentCard({ assignment, onArchive, onEdit, onDelete
    const { t } = useTranslation("teacher");
    const [showMenu, setShowMenu] = useState(false);
    const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
-   const menuRef = useRef<HTMLDivElement>(null);
+   const menuRef = useClickOutside<HTMLDivElement>(() => setShowMenu(false));
    const gearBtnRef = useRef<HTMLButtonElement>(null);
 
    const bannerBg = BANNER_GRADIENTS[assignment.id % BANNER_GRADIENTS.length];
@@ -114,7 +115,7 @@ export default function AssignmentCard({ assignment, onArchive, onEdit, onDelete
                {extraTopics > 0 && <span className="rounded-md bg-white/90 px-2.5 py-1 text-xs font-semibold text-blue-800">+{extraTopics}</span>}
             </div>
 
-            <div className="absolute top-2.5 right-2.5 z-30" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+            <div className="absolute top-2.5 right-2.5 z-30" ref={menuRef} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                <button
                   ref={gearBtnRef}
                   className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white/95 text-base shadow-sm transition-all duration-300 hover:bg-white 
@@ -129,7 +130,6 @@ export default function AssignmentCard({ assignment, onArchive, onEdit, onDelete
 
                {showMenu && (
                   <div
-                     ref={menuRef}
                      className="absolute top-full right-0 z-20 mt-2 min-w-[220px] origin-top-right animate-slideDown rounded-lg bg-white shadow-lg"
                   >
                      <div className="py-1">

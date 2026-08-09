@@ -2,6 +2,7 @@ import React from "react";
 import { FaSearch } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import ModalFooter from "./ModalFooter";
+import useClickOutside from "hooks/useClickOutside";
 
 interface TeacherSelectStepProps {
    teachers: any[];
@@ -29,9 +30,10 @@ const TeacherSelectStep = ({
    onNext,
 }: TeacherSelectStepProps) => {
    const { t } = useTranslation("teacher");
+   const teacherSelectRef = useClickOutside<HTMLDivElement>(() => setIsDropdownOpen(false));
    return (
    <div>
-      <div className="relative">
+      <div className="relative" ref={teacherSelectRef}>
          <button
             type="button"
             className="flex w-full items-center gap-x-2 rounded-full border border-gray-200 bg-white px-5 py-3.5 text-left outline-none focus:border-blue-400"
