@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoChatbubblesOutline } from "react-icons/io5";
+import { useTranslation } from "react-i18next";
 import { ISingleStudent } from "types/interfaces";
 import ActionMenu from "./ActionMenu";
 import { useSelector } from "react-redux";
@@ -28,6 +29,7 @@ const StudentHeader = ({
    studentCommentOpen,
    studentCommentsTabOpen,
 }: StudentHeaderProps) => {
+   const { t } = useTranslation("teacher");
    const [isActionMenuOpen, setIsActionMenuOpen] = useState(false);
    const { id: classId } = useSelector((state: RootState) => state.currentClass);
    const lastInitial = student.lastName ? `${student.lastName[0]}.` : "";
@@ -51,8 +53,8 @@ const StudentHeader = ({
          </div>
 
          <span className="ml-4 flex-1 cursor-pointer underline" onClick={() => setEditStudentModalOpened(student.id as string)}>
-            <span className="hidden md:block">Edit student's details</span>
-            <span className="block md:hidden">Edit</span>
+            <span className="hidden md:block">{t("editStudentDetails")}</span>
+            <span className="block md:hidden">{t("edit")}</span>
          </span>
 
          <div className="flex space-x-5 text-[20px] text-slate-500">

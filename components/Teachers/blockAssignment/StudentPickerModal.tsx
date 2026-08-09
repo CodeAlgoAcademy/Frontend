@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import studentService from "services/studentService";
 
 interface Student {
@@ -14,6 +15,7 @@ interface StudentPickerModalProps {
    onClose: () => void;
 }
 export default function StudentPickerModal({ classId, selectedIds, onConfirm, onClose }: StudentPickerModalProps) {
+   const { t } = useTranslation("teacher");
    const [students, setStudents] = useState<Student[]>([]);
    const [loading, setLoading] = useState(true);
    const [error, setError] = useState<string | null>(null);
@@ -39,7 +41,7 @@ export default function StudentPickerModal({ classId, selectedIds, onConfirm, on
 
             setStudents(mappedStudents);
          } catch (err) {
-            setError("Could not load students. Please try again.");
+            setError(t("couldNotLoadStudents"));
          } finally {
             setLoading(false);
          }
@@ -66,7 +68,7 @@ export default function StudentPickerModal({ classId, selectedIds, onConfirm, on
             onClick={(e) => e.stopPropagation()}
          >
             <div className="flex items-center justify-between border-b border-slate-100 px-7 py-5">
-               <h2 className="m-0 text-xl font-bold text-slate-900">Select Student(s)</h2>
+               <h2 className="m-0 text-xl font-bold text-slate-900">{t("selectStudentsBtn")}</h2>
                <button
                   className="cursor-pointer border-none bg-none p-1 text-lg text-slate-400 transition-colors hover:text-slate-600"
                   onClick={onClose}
@@ -77,11 +79,11 @@ export default function StudentPickerModal({ classId, selectedIds, onConfirm, on
 
             <div className="flex-1 overflow-y-auto">
                {loading ? (
-                  <div className="p-8 text-center text-slate-400">Loading students...</div>
+                  <div className="p-8 text-center text-slate-400">{t("loadingStudents")}</div>
                ) : error ? (
                   <div className="p-8 text-center text-red-500">{error}</div>
                ) : students.length === 0 ? (
-                  <div className="p-8 text-center text-sm text-slate-400">No students in this class.</div>
+                  <div className="p-8 text-center text-sm text-slate-400">{t("noStudentsInThisClass")}</div>
                ) : (
                   <table className="w-full border-collapse">
                      <thead>
@@ -94,8 +96,8 @@ export default function StudentPickerModal({ classId, selectedIds, onConfirm, on
                                  onChange={() => setLocal(allChecked ? new Set() : new Set(students.map((s) => s.id)))}
                               />
                            </th>
-                           <th className="border-b border-slate-200 px-4 py-3 text-left text-[13px] font-semibold text-slate-700">Student</th>
-                           <th className="border-b border-slate-200 px-4 py-3 text-left text-[13px] font-semibold text-slate-700">Username</th>
+                           <th className="border-b border-slate-200 px-4 py-3 text-left text-[13px] font-semibold text-slate-700">{t("student")}</th>
+                           <th className="border-b border-slate-200 px-4 py-3 text-left text-[13px] font-semibold text-slate-700">{t("usernameColumn")}</th>
                         </tr>
                      </thead>
                      <tbody>
@@ -133,18 +135,18 @@ export default function StudentPickerModal({ classId, selectedIds, onConfirm, on
                   className="cursor-pointer rounded-lg border-[1.5px] border-slate-200 bg-white px-6 py-2.5 text-sm font-semibold text-slate-700 transition-colors hover:bg-gray-50"
                   onClick={onClose}
                >
-                  Back
-               </button>
-               <button
-                  className="cursor-pointer rounded-lg border-none bg-blue-600 px-7 py-2.5 text-sm font-bold text-white transition-all hover:bg-blue-700 active:scale-95"
-                  onClick={() => {
-                     const selectedObjects = students.filter((s) => local.has(s.id));
-                     onConfirm(selectedObjects);
-                  }}
-                  disabled={loading}
-               >
-                  Confirm
-               </button>
+                   {t("back")}
+                </button>
+                <button
+                   className="cursor-pointer rounded-lg border-none bg-blue-600 px-7 py-2.5 text-sm font-bold text-white transition-all hover:bg-blue-700 active:scale-95"
+                   onClick={() => {
+                      const selectedObjects = students.filter((s) => local.has(s.id));
+                      onConfirm(selectedObjects);
+                   }}
+                   disabled={loading}
+                >
+                   {t("confirm")}
+                </button>
             </div>
          </div>
       </div>

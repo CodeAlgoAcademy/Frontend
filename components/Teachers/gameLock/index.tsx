@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"; // Added useEffect
 import { useSelector, useDispatch } from "react-redux"; // Added useDispatch
+import { useTranslation } from "react-i18next";
 import { RootState } from "store/store";
 import { getStudents } from "store/studentSlice"; // Import your fetch action
 import LockModal from "./lockModal";
@@ -8,6 +9,7 @@ import { BaseStudent } from "types/interfaces/teacherstudent.interface";
 import { fetchAllClassAccess } from "store/teacherStudentSlice";
 
 export default function GameLocksPage() {
+   const { t } = useTranslation("teacher");
    const dispatch = useAppDispatch();
    const { students, isLoading } = useSelector((state: RootState) => state.teacherStudentSlice);
    const { id: classId } = useSelector((state: RootState) => state.currentClass);
@@ -36,12 +38,12 @@ useEffect(() => {
    return (
       <div className="min-h-screen bg-[#f8fafc] p-8">
          <header className="mb-8">
-            <h1 className="text-3xl font-bold text-[#1e293b]">Classroom Game Access</h1>
-            <p className="text-slate-500">Control feature access and progress limits for your students.</p>
+            <h1 className="text-3xl font-bold text-[#1e293b]">{t("classroomGameAccess")}</h1>
+            <p className="text-slate-500">{t("gameAccessDescription")}</p>
          </header>
          {students.length === 0 ? (
             <div className="rounded-3xl bg-white p-12 text-center shadow-sm">
-               <p className="text-slate-400">No students found in this class.</p>
+               <p className="text-slate-400">{t("noStudentsInThisClass")}</p>
             </div>
          ) : (
             <div className="overflow-hidden rounded-3xl border border-slate-100 bg-white p-2 shadow-sm">
@@ -72,15 +74,15 @@ useEffect(() => {
 
                         <div className="flex items-center gap-12">
                            <div className="text-right">
-                              <p className="mb-1 text-[10px] font-black uppercase tracking-widest text-slate-300">Line Coding</p>
+                              <p className="mb-1 text-[10px] font-black uppercase tracking-widest text-slate-300">{t("lineCoding")}</p>
                               <p className={`text-sm font-bold ${access?.line_coding_locked ? "text-red-400" : "text-green-500"}`}>
-                                 {access?.line_coding_locked ? "Locked" : "Active"}
+                                 {access?.line_coding_locked ? t("locked") : t("active")}
                               </p>
                            </div>
                            <div className="border-l border-slate-100 pl-12 text-right">
-                              <p className="mb-1 text-[10px] font-black uppercase tracking-widest text-slate-300">Block Game access</p>
+                              <p className="mb-1 text-[10px] font-black uppercase tracking-widest text-slate-300">{t("blockGameAccess")}</p>
                               <p className="text-sm font-bold text-slate-600">
-                                 {access?.block_coding_max_level ? access.block_coding_max_level.replace("_", " Level ") : "No Limit"}
+                                 {access?.block_coding_max_level ? access.block_coding_max_level.replace("_", " Level ") : t("noLimit")}
                               </p>
                            </div>
                            <button
@@ -90,7 +92,7 @@ useEffect(() => {
                               }}
                               className="rounded-xl border-2 border-slate-100 bg-white px-6 py-2 font-bold text-blue-600 shadow-sm transition-all hover:border-blue-200 hover:bg-blue-50"
                            >
-                              Edit
+                              {t("edit")}
                            </button>
                         </div>
                      </div>

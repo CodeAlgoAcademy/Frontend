@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 interface ErrorPair {
   operand_a: number;
@@ -13,11 +14,11 @@ interface Props {
 }
 
 const LEGEND = [
-  { label: "Mastered (90–100%)",  bg: "bg-green-500" },
-  { label: "Improving (70–89%)",  bg: "bg-yellow-300" },
-  { label: "Struggling (50–69%)", bg: "bg-orange-400" },
-  { label: "Critical Gap (<50%)", bg: "bg-red-500" },
-  { label: "Not Attempted",       bg: "bg-gray-200" },
+  { labelKey: "legendMastered",  bg: "bg-green-500" },
+  { labelKey: "legendImproving",  bg: "bg-yellow-300" },
+  { labelKey: "legendStruggling", bg: "bg-orange-400" },
+  { labelKey: "legendCriticalGap", bg: "bg-red-500" },
+  { labelKey: "legendNotAttempted",       bg: "bg-gray-200" },
 ];
 
 const RANGE = Array.from({ length: 11 }, (_, i) => i);
@@ -46,6 +47,7 @@ function getOperatorSymbol(operation: string): string {
 }
 
 export default function MasteryHeatmap({ data, operation }: Props) {
+  const { t } = useTranslation("teacher");
   const symbol = getOperatorSymbol(operation);
 
   const cellMap: Record<string, ErrorPair> = {};
@@ -56,7 +58,7 @@ export default function MasteryHeatmap({ data, operation }: Props) {
   return (
     <div className="bg-white p-4 rounded-xl border border-slate-200">
       <h3 className="font-semibold text-slate-700 mb-4 capitalize">
-        {operation} Mastery Heatmap
+        {t("masteryHeatmapTitle", { operation })}
       </h3>
 
       <div
@@ -90,8 +92,9 @@ export default function MasteryHeatmap({ data, operation }: Props) {
                   <span className="hidden group-hover:block absolute bottom-full left-1/2 -translate-x-1/2 bg-gray-900 text-white text-[10px] px-2 py-1 rounded whitespace-nowrap z-10 pointer-events-none">
                     {row} {symbol} {col}
                     {cell
-                      ? ` · ${accuracy}% accuracy · ${attempts} attempt${attempts !== 1 ? "s" : ""}`
-                      : " · not attempted"}
+                      ? t("accuracyAttempts", { accuracy, attempts })
+                      : t("notAttempted")
+                    }
                   </span>
                 </div>
               );
@@ -101,10 +104,10 @@ export default function MasteryHeatmap({ data, operation }: Props) {
       </div>
 
       <div className="mt-4 flex flex-wrap gap-3">
-        {LEGEND.map(({ label, bg }) => (
-          <div key={label} className="flex items-center gap-1.5 text-xs text-gray-500">
+        {LEGEND.map(({ labelKey, bg }) => (
+          <div key={labelKey} className="flex items-center gap-1.5 text-xs text-gray-500">
             <div className={`h-3 w-3 rounded-sm ${bg}`} />
-            {label}
+            {t(labelKey)}
           </div>
         ))}
       </div>

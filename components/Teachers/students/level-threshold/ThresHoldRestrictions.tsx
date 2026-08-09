@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { RootState } from "store/store";
 import LevelThresholdInput from "@/components/parents/UI/levelthreshold";
 import { toast } from "sonner";
@@ -14,6 +15,7 @@ interface LevelThresholdRestrictionsProps {
 }
 
 const LevelThresholdRestrictions = ({ onEditSuccess }: LevelThresholdRestrictionsProps) => {
+   const { t } = useTranslation("teacher");
    const dispatch = useDispatch();
    const classId = useSelector((state: RootState) => state.currentClass?.id);
    const { currentStudent } = useSelector((state: RootState) => state.teacherStudentSlice);
@@ -32,7 +34,7 @@ const LevelThresholdRestrictions = ({ onEditSuccess }: LevelThresholdRestriction
 
    const updateLevel = useDebouncedCallback(async (id: number, level: number, grade: string) => {
       if (!studentId || !classId) {
-         toast.error("Invalid level threshold");
+         toast.error(t("invalidLevelThreshold"));
          return;
       }
 
@@ -45,18 +47,18 @@ const LevelThresholdRestrictions = ({ onEditSuccess }: LevelThresholdRestriction
             })
          );
          await dispatch(getStudents(classId));
-         toast.success("Level threshold updated successfully");
+         toast.success(t("levelThresholdUpdatedSuccess"));
          if (onEditSuccess) onEditSuccess();
       } catch (err) {
-         toast.error("Failed to update level threshold");
+         toast.error(t("failedToUpdateLevelThreshold"));
          console.error("Update error:", err);
       }
    }, 800);
 
    return (
       <div className="relative mt-[3rem] min-h-[340px] max-w-fit rounded-md bg-white px-8 py-10 md:w-full md:min-w-[420px]">
-         <h1 className="text-[1.3rem] font-semibold text-mainColor">Level Threshold Settings</h1>
-         <h2 className="mt-2 mb-10 text-[14px] font-medium">Set thresholds required to progress through each level.</h2>
+         <h1 className="text-[1.3rem] font-semibold text-mainColor">{t("levelThresholdSettings")}</h1>
+         <h2 className="mt-2 mb-10 text-[14px] font-medium">{t("setThresholdsPerLevel")}</h2>
          <div className="mt-4 flex flex-wrap items-center justify-center gap-4 md:justify-start">
             {thresholds.map((t, i) => (
                <LevelThresholdInput key={i} threshold={t} updateLevelThreshold={updateLevel} />

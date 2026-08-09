@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { BlockStandardWithTopics, BlockTopic } from "types/interfaces/assignments";
 import { RootState } from "store/store";
 import assignmentServices from "services/block_assignments";
@@ -20,15 +21,16 @@ interface SkillPickerModalProps {
 
 const SUBJECT_MAP = {
    block: [
-      { label: "Logic", value: "logic" },
+      { labelKey: "logic", value: "logic" },
    ],
    line: [
-      { label: "Science", value: "science" },
+      { labelKey: "science", value: "science" },
    ],
 };
 
 
 export default function SkillPickerModal({ selectedTopics, onConfirm, onClose, gameType }: SkillPickerModalProps) {
+   const { t } = useTranslation("teacher");
    const [grade, setGrade] = useState("");
    const [search, setSearch] = useState("");
    const [standards, setStandards] = useState<BlockStandardWithTopics[]>([]);
@@ -112,9 +114,9 @@ const filtered = standards
          >
             <div className="flex items-center justify-between border-b border-slate-100 px-6 py-5">
                <div>
-                  <h2 className="text-xl font-bold text-slate-900">Select Skills</h2>
+                  <h2 className="text-xl font-bold text-slate-900">{t("selectSkillsTitle")}</h2>
                   <p className="mt-1 text-xs font-medium uppercase tracking-wider text-blue-600">
-                     {gameType === "block" ? "Block Coding Mode" : "Line Coding Mode"}
+                     {gameType === "block" ? t("blockCodingMode") : t("lineCodingMode")}
                   </p>
                </div>
                <button
@@ -128,7 +130,7 @@ const filtered = standards
             <div className="flex flex-1 overflow-hidden">
                <div className="w-56 flex-shrink-0 overflow-y-auto border-r border-slate-100 bg-slate-50/40 p-5">
                   <div className="mb-5">
-                     <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-slate-400">Subject</label>
+                      <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-slate-400">{t("subject")}</label>
                      <select
                         className="w-full cursor-pointer rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm outline-none transition-all focus:border-blue-400 focus:ring-1 focus:ring-blue-200"
                         value={subject}
@@ -136,21 +138,21 @@ const filtered = standards
                      >
                         {currentSubjects.map((s) => (
                            <option key={s.value} value={s.value}>
-                              {s.label}
+                              {t(s.labelKey)}
                            </option>
                         ))}
                      </select>
                   </div>
 
                   <div className="mb-5">
-                     <div className="mb-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400">Curriculum</div>
+                     <div className="mb-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400">{t("curriculum")}</div>
                      <div className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm">
                         CSTA
                      </div>
                   </div>
 
                   <div>
-                     <div className="mb-2 text-[11px] font-bold uppercase tracking-wider text-slate-400">Grade</div>
+                     <div className="mb-2 text-[11px] font-bold uppercase tracking-wider text-slate-400">{t("gradeLabel")}</div>
                      <div className="grid grid-cols-2 gap-1.5">
                         {GRADES.map((g) => (
                            <button
@@ -160,7 +162,7 @@ const filtered = standards
                               }`}
                               onClick={() => setGrade((p) => (p === g.value ? "" : g.value))}
                            >
-                              {g.label}
+                              {g.value === "K" ? t("kindergarten") : t("gradeN", { n: g.value })}
                            </button>
                         ))}
                      </div>
@@ -172,21 +174,21 @@ const filtered = standards
                      <span className="text-slate-400">🔍</span>
                      <input
                         className="flex-1 border-none bg-transparent py-1.5 text-sm text-slate-700 outline-none placeholder:text-slate-400"
-                        placeholder="Search for skills by code, name, or topic..."
+                        placeholder={t("searchForSkillsPlaceholder")}
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                      />
                      {search && (
                         <button className="text-xs text-slate-400 hover:text-slate-600" onClick={() => setSearch("")}>
-                           Clear
+                           {t("clear")}
                         </button>
                      )}
                   </div>
 
                   {loading ? (
-                     <div className="flex flex-1 items-center justify-center text-slate-400">Loading skills…</div>
+                     <div className="flex flex-1 items-center justify-center text-slate-400">{t("loadingSkills")}</div>
                   ) : filtered.length === 0 ? (
-                     <div className="flex flex-1 items-center justify-center text-slate-400">No matching skills found.</div>
+                     <div className="flex flex-1 items-center justify-center text-slate-400">{t("noMatchingSkills")}</div>
                   ) : (
                      <div className="flex-1 overflow-y-auto p-4">
                         {filtered.map((std) => {
@@ -207,14 +209,14 @@ const filtered = standards
                                        </div>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                       {selCount > 0 && (
-                                          <span className="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-700">
-                                             {selCount} selected
-                                          </span>
-                                       )}
-                                       <span className={`text-xs  ${std.topic_count ? "font-bold text-mainColor" : "text-slate-400"}`}>
-                                          {std.topic_count} skills
-                                       </span>
+                                        {selCount > 0 && (
+                                           <span className="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-700">
+                                              {t("selectedCount", { count: selCount })}
+                                           </span>
+                                        )}
+                                        <span className={`text-xs  ${std.topic_count ? "font-bold text-mainColor" : "text-slate-400"}`}>
+                                           {t("skillsCount", { count: std.topic_count })}
+                                        </span>
                                        <button
                                           className={`rounded-md border px-2 py-0.5 text-xs font-medium transition-colors ${
                                              allPicked
@@ -226,7 +228,7 @@ const filtered = standards
                                              toggleAll(std);
                                           }}
                                        >
-                                          {allPicked ? "Deselect all" : "Select all"}
+                                          {allPicked ? t("deselectAll") : t("selectAll")}
                                        </button>
                                        <span className="text-xs text-slate-400">{isOpen ? "▲" : "▼"}</span>
                                     </div>
@@ -267,7 +269,7 @@ const filtered = standards
 
             <div className="flex items-center justify-between border-t border-slate-100 bg-slate-50/50 px-6 py-4">
                <span className="text-sm font-medium text-slate-600">
-                  {localMap.size} skill{localMap.size !== 1 ? "s" : ""} selected
+                  {t("skillsSelectedCount", { count: localMap.size })}
                </span>
                <button
                   className={`rounded-lg px-6 py-2 text-sm font-bold text-white transition-all ${
@@ -276,8 +278,8 @@ const filtered = standards
                   disabled={localMap.size === 0}
                   onClick={() => onConfirm(Array.from(localMap.entries()).map(([id, name]) => ({ id, name })))}
                >
-                  Done
-               </button>
+                   {t("done")}
+                </button>
             </div>
          </div>
       </div>

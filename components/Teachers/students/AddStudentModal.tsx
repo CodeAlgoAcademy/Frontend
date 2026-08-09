@@ -111,7 +111,8 @@ const AddStudentModal = ({ setIsOpen }: { setIsOpen: any }) => {
             setIsOpen(false);
             dispatch(openSuccessModal({
                message: t("credentialsEmailSent"),
-               studentId: result.id
+               studentId: result.id,
+               type: "studentAdded"
             }));
             dispatch(getStudents());
             

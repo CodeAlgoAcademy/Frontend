@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo } from "react";
+import { Trans, useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
 import LevelThresholdInput from "@/components/parents/UI/levelthreshold";
@@ -14,6 +15,7 @@ interface ClassLevelThresholdBulkProps {
 }
 
 const ClassLevelThresholdBulk = ({ onEditSuccess }: ClassLevelThresholdBulkProps) => {
+  const { t } = useTranslation("teacher");
   const dispatch = useDispatch();
   const classId = useSelector((state: RootState) => state.currentClass?.id);
   const students = useSelector((state: RootState) => state.students.students);
@@ -34,7 +36,7 @@ const ClassLevelThresholdBulk = ({ onEditSuccess }: ClassLevelThresholdBulkProps
 
   const updateLevel = useDebouncedCallback(async (id: number, level: number, grade: string) => {
     if (!classId) {
-      toast.error("Invalid class");
+      toast.error(t("invalidClass"));
       return;
     }
 
@@ -47,10 +49,10 @@ const ClassLevelThresholdBulk = ({ onEditSuccess }: ClassLevelThresholdBulkProps
       );
       
       await dispatch(getStudents(classId));
-      toast.success(`Level threshold updated for Grade ${grade}`);
+      toast.success(t("levelThresholdUpdated", { grade }));
       if (onEditSuccess) onEditSuccess();
     } catch (err) {
-      toast.error("Failed to update level threshold");
+      toast.error(t("failedToUpdateLevelThreshold"));
       console.error("Update error:", err);
     }
   }, 800);
@@ -63,9 +65,9 @@ const ClassLevelThresholdBulk = ({ onEditSuccess }: ClassLevelThresholdBulkProps
 
   return (
     <div className="relative mt-[3rem] min-h-[340px] max-w-fit rounded-md bg-white px-8 py-10 md:w-full md:min-w-[420px]">
-      <h1 className="text-[1.3rem] font-semibold text-mainColor">Bulk Level Threshold Settings</h1>
+      <h1 className="text-[1.3rem] font-semibold text-mainColor">{t("bulkLevelThresholdSettings")}</h1>
       <h2 className="mt-2 mb-10 text-[14px] font-medium">
-        Set thresholds for all students in the class.
+        {t("setThresholdsAllStudents")}
       </h2>
 
       <div className="mt-4 flex flex-wrap items-center justify-center gap-4 md:justify-start">
@@ -80,7 +82,9 @@ const ClassLevelThresholdBulk = ({ onEditSuccess }: ClassLevelThresholdBulkProps
 
       <div className="mt-4 text-center">
         <p className="text-xs text-gray-500">
-          Changes will apply to <strong>all students</strong> in each grade level
+          <Trans ns="teacher" i18nKey="changesApplyAllGradeLevels" components={{ strong: <strong /> }}>
+            Changes will apply to <strong>all students</strong> in each grade level
+          </Trans>
         </p>
       </div>
     </div>

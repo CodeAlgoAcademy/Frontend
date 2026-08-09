@@ -1,18 +1,20 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { getStudentsClassProgresss } from "store/studentSlice";
 import { RootState } from "store/store";
 import { StudentProgressCards } from "./StudentProgressCards ";
 
 const TIME_RANGE_OPTIONS = [
-   { value: "today", label: "Today" },
-   { value: "week", label: "This Week" },
-   { value: "month", label: "This Month" },
-   { value: "all", label: "All Time" },
+   { value: "today", labelKey: "today" },
+   { value: "week", labelKey: "thisWeek" },
+   { value: "month", labelKey: "thisMonth" },
+   { value: "all", labelKey: "allTime" },
 ];
 
 
 export default function Reports() {
+   const { t } = useTranslation("teacher");
    const dispatch = useDispatch();
    const progressSummary = useSelector((state: RootState) => state.students.progressSummary);
    const loading = useSelector((state: RootState) => state.students.loading);
@@ -95,10 +97,10 @@ export default function Reports() {
       });
    }, [filteredStudents, sortBy]);
 
-   if (loading) {
+    if (loading) {
       return (
          <div className="flex h-screen items-center justify-center bg-gray-50">
-            <div className="text-xl text-gray-600">Loading student data...</div>
+            <div className="text-xl text-gray-600">{t("loadingStudentData")}</div>
          </div>
       );
    }
@@ -109,14 +111,14 @@ export default function Reports() {
          <div className="mx-auto">
             <div className="mb-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                <h1 className="text-2xl font-medium text-mainColor sm:text-[30px] lg:mb-0">
-                  Classroom Insights: Progress & Skills
+                  {t("classroomInsights")}
                </h1>
                
                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
                   {/* Filter by Time Range */}
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
                      <label htmlFor="time-range" className="whitespace-nowrap text-sm font-medium text-gray-700 sm:text-base">
-                        Filter By:
+                        {t("filterBy")}
                      </label>
                      <div className="relative w-full sm:w-40">
                         <select
@@ -127,7 +129,7 @@ export default function Reports() {
                         >
                            {TIME_RANGE_OPTIONS.map((option) => (
                               <option key={option.value} value={option.value}>
-                                 {option.label}
+                                 {t(option.labelKey)}
                               </option>
                            ))}
                         </select>
@@ -144,11 +146,11 @@ export default function Reports() {
             {!hasStudents ? (
                <div className="flex h-64 items-center justify-center bg-gray-50">
                   <div className="text-center">
-                     <div className="mb-2 text-xl text-gray-600">No students found</div>
+                     <div className="mb-2 text-xl text-gray-600">{t("noStudentsFound")}</div>
                      <div className="text-gray-500">
                         {selectedRange !== "all" 
-                           ? `No students have activity in the selected time range` 
-                           : "No students found in this class"}
+                           ? t("noActivityInRange")
+                           : t("noStudentsInThisClass")}
                      </div>
                   </div>
                </div>

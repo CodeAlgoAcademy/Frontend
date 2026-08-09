@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { AppDispatch, RootState } from "store/store";
 import mathFactsService from "services/mathfact";
 import { MathFactSet } from "types/interfaces/mathfact";
@@ -19,6 +20,7 @@ interface ModalProps {
 }
 
 export default function MathFactAssignModal({ classId, isOpen, isEditing, assignmentData, onClose, onSuccess }: ModalProps) {
+   const { t } = useTranslation("teacher");
    const dispatch = useDispatch<AppDispatch>();
    
    const globalStudents = useSelector((state: RootState) => (state as any).teacherStudentSlice?.students ?? []);
@@ -74,7 +76,7 @@ export default function MathFactAssignModal({ classId, isOpen, isEditing, assign
       const data = await mathFactsService.getFactSets(classId); 
       setFactSets(data);
    } catch (err) {
-      setError("Failed to load sets");
+      setError(t("failedToLoadSets"));
    }
 };
 
@@ -104,7 +106,7 @@ export default function MathFactAssignModal({ classId, isOpen, isEditing, assign
          
          onSuccess();
       } catch (err: any) {
-         setError(err.response?.data?.message || "Failed to save settings.");
+         setError(err.response?.data?.message || t("failedToSaveSettings"));
       } finally {
          setLoading(false);
       }
@@ -120,10 +122,10 @@ export default function MathFactAssignModal({ classId, isOpen, isEditing, assign
                {step === 1 && (
                   <div className="space-y-4">
                      <div className="flex items-end justify-between border-b border-slate-100 pb-2">
-                        <label className="text-sm font-bold text-slate-700">Select Students:</label>
+                        <label className="text-sm font-bold text-slate-700">{t("selectStudentsLabel")}</label>
                         <div className="flex gap-4">
-                           <button type="button" onClick={() => setSelectedStudentIds(globalStudents.map((s: any) => s.student_id))} className="text-xs font-bold text-blue-600 hover:underline">Select All</button>
-                           <button type="button" onClick={() => setSelectedStudentIds([])} className="text-xs font-bold text-blue-600 hover:underline">Select None</button>
+                           <button type="button" onClick={() => setSelectedStudentIds(globalStudents.map((s: any) => s.student_id))} className="text-xs font-bold text-blue-600 hover:underline">{t("selectAll")}</button>
+                           <button type="button" onClick={() => setSelectedStudentIds([])} className="text-xs font-bold text-blue-600 hover:underline">{t("selectNone")}</button>
                         </div>
                      </div>
                      <div className="max-h-60 divide-y overflow-y-auto rounded-2xl border bg-white shadow-sm">
@@ -145,10 +147,10 @@ export default function MathFactAssignModal({ classId, isOpen, isEditing, assign
                {step === 2 && (
                   <div className="space-y-6">
                      <div className="flex items-end justify-between border-b border-slate-100 pb-2">
-                        <label className="text-sm font-bold uppercase tracking-tight text-slate-800">Set Operations:</label>
+                        <label className="text-sm font-bold uppercase tracking-tight text-slate-800">{t("setOperations")}</label>
                         <div className="flex gap-4">
-                           <button type="button" onClick={() => setSelectedFactSetIds(factSets.map(f => f.id))} className="text-xs font-bold text-blue-600 hover:underline">Select All</button>
-                           <button type="button" onClick={() => setSelectedFactSetIds([])} className="text-xs font-bold text-blue-600 hover:underline">Select None</button>
+                           <button type="button" onClick={() => setSelectedFactSetIds(factSets.map(f => f.id))} className="text-xs font-bold text-blue-600 hover:underline">{t("selectAll")}</button>
+                           <button type="button" onClick={() => setSelectedFactSetIds([])} className="text-xs font-bold text-blue-600 hover:underline">{t("selectNone")}</button>
                         </div>
                      </div>
                      <div className="space-y-2">
@@ -161,15 +163,15 @@ export default function MathFactAssignModal({ classId, isOpen, isEditing, assign
                            </label>
                         ))}
                      </div>
-                     <div className="text-center text-lg font-bold text-slate-300">OR</div>
+                     <div className="text-center text-lg font-bold text-slate-300">{t("or")}</div>
                      <div className="space-y-3 border-t border-slate-100 pt-4">
                         <label className={`flex cursor-pointer items-center gap-3 rounded-2xl border bg-white p-4 transition-all ${isAdaptive ? "border-blue-500 bg-blue-50" : ""}`}>
                            <input type="checkbox" checked={isAdaptive} onChange={() => { setIsAdaptive(!isAdaptive); setIsTurningOff(false); }} className="h-5 w-5 accent-blue-600" />
-                           <span className="text-sm font-bold text-slate-700">Adaptive math facts ✨</span>
+                           <span className="text-sm font-bold text-slate-700">{t("adaptiveMathFacts")}</span>
                         </label>
                         <label className={`flex cursor-pointer items-center gap-3 rounded-2xl border p-4 transition-all ${isTurningOff ? "border-red-500 bg-red-50" : "border-gray-200 bg-white"}`}>
                            <input type="checkbox" checked={isTurningOff} onChange={() => { setIsTurningOff(!isTurningOff); setIsAdaptive(false); }} className="h-5 w-5 accent-red-600" />
-                           <span className={`text-sm font-bold ${isTurningOff ? "text-red-600" : "text-slate-700"}`}>Turn off math facts (Clear assignments)</span>
+                           <span className={`text-sm font-bold ${isTurningOff ? "text-red-600" : "text-slate-700"}`}>{t("turnOffMathFacts")}</span>
                         </label>
                      </div>
                   </div>
@@ -178,12 +180,12 @@ export default function MathFactAssignModal({ classId, isOpen, isEditing, assign
                {step === 3 && (
                   <div className="space-y-8 py-4">
                      <div className="space-y-6 rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
-                        <div><div className="mb-3 flex justify-between text-xs font-bold uppercase text-slate-500">Problems per session: {questionCount}</div>
+                        <div><div className="mb-3 flex justify-between text-xs font-bold uppercase text-slate-500">{t("problemsPerSession", { count: questionCount })}</div>
                         <input type="range" min="5" max="50" step="5" value={questionCount} onChange={(e) => setQuestionCount(Number(e.target.value))} className="w-full accent-blue-500" /></div>
                         <div className="grid grid-cols-2 gap-4">
-                           <div className="space-y-1"><label className="text-[10px] font-black uppercase text-slate-400">Min. Accuracy (%)</label>
+                           <div className="space-y-1"><label className="text-[10px] font-black uppercase text-slate-400">{t("minAccuracy")}</label>
                            <input type="number" value={targetAccuracy * 100} onChange={(e) => setTargetAccuracy(Number(e.target.value) / 100)} className="w-full rounded-xl border border-slate-100 bg-slate-50 p-3 font-bold text-blue-600 outline-none" /></div>
-                           <div className="space-y-1"><label className="text-[10px] font-black uppercase text-slate-400">Max. Time (sec)</label>
+                           <div className="space-y-1"><label className="text-[10px] font-black uppercase text-slate-400">{t("maxTime")}</label>
                            <input type="number" value={targetAvgTime} onChange={(e) => setTargetAvgTime(Number(e.target.value))} className="w-full rounded-xl border border-slate-100 bg-slate-50 p-3 font-bold text-blue-600 outline-none" /></div>
                         </div>
                      </div>
@@ -194,9 +196,9 @@ export default function MathFactAssignModal({ classId, isOpen, isEditing, assign
             {error && <div className="border-t border-red-100 bg-red-50 px-8 py-3"><p className="text-xs font-semibold text-red-600">{error}</p></div>}
 
             <div className="flex gap-4 border-t border-slate-100 bg-white p-8">
-               <button type="button" onClick={() => (step === (isBulk ? 1 : 2) ? onClose() : setStep((s) => s - 1))} className="flex-1 rounded-2xl border border-slate-200 py-3 text-sm font-bold text-slate-400 transition-all hover:bg-slate-50">{step === (isBulk ? 1 : 2) ? "Cancel" : "Back"}</button>
+               <button type="button" onClick={() => (step === (isBulk ? 1 : 2) ? onClose() : setStep((s) => s - 1))} className="flex-1 rounded-2xl border border-slate-200 py-3 text-sm font-bold text-slate-400 transition-all hover:bg-slate-50">{step === (isBulk ? 1 : 2) ? t("cancel") : t("back")}</button>
                <button type="button" disabled={loading || (step === 1 && selectedStudentIds.length === 0) || (step === 2 && !isAdaptive && !isTurningOff && selectedFactSetIds.length === 0)} onClick={() => isLastStep ? handleSubmit() : setStep((s) => s + 1)} className={`flex-[2] rounded-2xl py-3 text-sm font-black text-white shadow-xl transition-all disabled:opacity-50 ${isTurningOff ? "bg-red-500 shadow-red-100" : "bg-blue-600 shadow-blue-100 hover:scale-[1.01]"}`}>
-                  {loading ? "Processing..." : isLastStep ? "Finish" : "Next Step"}
+                  {loading ? t("processing") : isLastStep ? t("finish") : t("nextStep")}
                </button>
             </div>
          </div>

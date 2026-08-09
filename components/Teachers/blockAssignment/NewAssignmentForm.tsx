@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 import assignmentServices from "services/block_assignments";
 import SkillPickerModal from "./SkillPickerModal";
 import StudentPickerModal from "./StudentPickerModal";
@@ -26,6 +27,7 @@ interface NewAssignmentFormProps {
 }
 
 export default function NewAssignmentForm({ classId, students, onSuccess, onCancel, editData }: NewAssignmentFormProps) {
+   const { t } = useTranslation("teacher");
    const [questionOrder, setQuestionOrder] = useState<"random" | "in_sequence">(editData?.question_order || "in_sequence");
    const [questionCount, setQuestionCount] = useState(editData?.question_count || 0);
    const [startNow, setStartNow] = useState(true);
@@ -69,9 +71,9 @@ const handleGameTypeChange = (type: "block" | "line") => {
    }, [editData, students]);
 
    const handleSubmit = async () => {
-      if (!title.trim()) return setError("Title is required.");
-      if (selectedTopics.length === 0) return setError("Select at least one skill.");
-      if (!startNow && !scheduledAt) return setError("Pick a scheduled date.");
+      if (!title.trim()) return setError(t("titleRequired"));
+      if (selectedTopics.length === 0) return setError(t("selectAtLeastOneSkill"));
+      if (!startNow && !scheduledAt) return setError(t("pickScheduledDate"));
 
       setError("");
       setSubmitting(true);
@@ -105,12 +107,12 @@ const handleGameTypeChange = (type: "block" | "line") => {
          if (Array.isArray(firstMessage)) {
             setError(firstMessage[0]);
          } else {
-            setError(firstMessage || "A validation error occurred.");
+            setError(firstMessage || t("validationErrorOccurred"));
          }
       } else if (serverError?.detail) {
          setError(serverError.detail);
       } else {
-         setError("Failed to save assignment. Please try again.");
+         setError(t("failedToSaveAssignment"));
       }
    } finally {
       setSubmitting(false);
@@ -150,17 +152,17 @@ const handleGameTypeChange = (type: "block" | "line") => {
                   className="cursor-pointer border-none bg-none p-0 text-sm font-medium text-blue-600 transition-colors hover:text-blue-700"
                   onClick={onCancel}
                >
-                  ← Go Back
+                  ← {t("goBack")}
                </button>
                <button className="cursor-pointer rounded-lg border border-slate-200 bg-none px-3.5 py-1.5 text-[13px] text-slate-600 transition-colors hover:bg-gray-50">
-                  🕐 Assignment History
+                  🕐 {t("assignmentHistory")}
                </button>
             </div>
 
-            <h1 className="mb-7 text-[28px] font-bold text-slate-900">{editData ? "Edit Assignment" : "New Assignment"}</h1>
+            <h1 className="mb-7 text-[28px] font-bold text-slate-900">{editData ? t("editAssignment") : t("newAssignment")}</h1>
 
    <div className="mb-10">
-               <label className="mb-2 block text-sm text-slate-600">Assignment title</label>
+               <label className="mb-2 block text-sm text-slate-600">{t("assignmentTitle")}</label>
                <div className="flex max-w-[460px] items-center overflow-hidden rounded-lg border border-slate-200 bg-white">
                   <input
                      className="flex-1 border-none bg-transparent px-3.5 py-3 text-sm text-slate-900 outline-none"
@@ -173,29 +175,27 @@ const handleGameTypeChange = (type: "block" | "line") => {
             </div>
 
             <div className="mb-7 rounded-xl ">
-               <div className="mb-3 text-sm font-bold uppercase tracking-wider text-slate-900">Select Game Type</div>
+               <div className="mb-3 text-sm font-bold uppercase tracking-wider text-slate-900">{t("selectGameType")}</div>
                <div className="max-w-xs">
                   <select
                      value={gameType}
                      onChange={(e) => handleGameTypeChange(e.target.value as "block" | "line")}
                      className="w-full cursor-pointer rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 shadow-sm outline-none transition-colors focus:border-blue-600"
                   >
-                     <option value="block">Block Coding</option>
-                     <option value="line">Line Coding</option>
+                     <option value="block">{t("blockCoding")}</option>
+                     <option value="line">{t("lineCoding")}</option>
                   </select>
                </div>
                <p className="mt-2 text-xs text-slate-400">
-                  {gameType === "block"
-                     ? "Best for younger students using visual blocks."
-                     : "Advanced coding challenges and AI Literacy for older students."}
+                  {gameType === "block" ? t("blockGameDescription") : t("lineGameDescription")}
                </p>
             </div>
          
 
             <div className="mb-10">
-               <div className="mb-3.5 text-lg font-bold text-slate-900">Skill</div>
+               <div className="mb-3.5 text-lg font-bold text-slate-900">{t("skill")}</div>
                {selectedTopics.length > 0 && (
-                  <div className="mb-2.5 text-[13px] font-semibold text-blue-600">{selectedTopics.length} skill(s) selected</div>
+                  <div className="mb-2.5 text-[13px] font-semibold text-blue-600">{t("skillsSelectedCount", { count: selectedTopics.length })}</div>
                )}
                <div className="flex flex-wrap items-center gap-2">
                   {selectedTopics.map((topic) => (
@@ -218,15 +218,15 @@ const handleGameTypeChange = (type: "block" | "line") => {
                      className="inline-flex cursor-pointer items-center rounded-lg border-[1.5px] border-dashed border-slate-300 bg-white px-3.5 py-1.5 text-[13px] font-semibold text-slate-600 transition-colors hover:bg-gray-50"
                      onClick={() => setShowSkillPicker(true)}
                   >
-                     <span className="mr-1 text-base">⊕</span> Select Skill(s)
+                     <span className="mr-1 text-base">⊕</span> {t("selectSkills")}
                   </button>
                </div>
             </div>
 
             <div className="mb-10">
-               <div className="mb-3.5 text-lg font-bold text-slate-900">Student(s)</div>
+               <div className="mb-3.5 text-lg font-bold text-slate-900">{t("studentHeading")}</div>
                {selectedStudents.length > 0 && (
-                  <div className="mb-2.5 text-[13px] font-semibold text-blue-600">{selectedStudents.length} student(s) selected</div>
+                  <div className="mb-2.5 text-[13px] font-semibold text-blue-600">{t("studentsSelectedCount", { count: selectedStudents.length })}</div>
                )}
                <div className="flex flex-wrap items-center gap-2">
                   {selectedStudents.map((s) => (
@@ -249,15 +249,15 @@ const handleGameTypeChange = (type: "block" | "line") => {
                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg border-[1.5px] border-dashed border-slate-300 bg-white px-3.5 py-1.5 text-[13px] font-semibold text-slate-600 transition-colors hover:bg-gray-50"
                      onClick={() => setShowStudentPicker(true)}
                   >
-                     <span className="mr-1 text-base">⊕</span> Select Student(s)
+                     <span className="mr-1 text-base">⊕</span> {t("selectStudentsBtn")}
                   </button>
                </div>
             </div>
 
             <div className="mb-10">
-               <div className="mb-3.5 text-lg font-bold text-slate-900">Parameters</div>
+               <div className="mb-3.5 text-lg font-bold text-slate-900">{t("parameters")}</div>
                <div className="mb-5">
-                  <div className="mb-2.5 text-sm font-medium text-slate-700">Order of questions</div>
+                  <div className="mb-2.5 text-sm font-medium text-slate-700">{t("orderOfQuestions")}</div>
                   <div className="flex gap-6">
                      <label className="flex cursor-pointer items-center text-sm text-slate-700">
                         <input
@@ -267,7 +267,7 @@ const handleGameTypeChange = (type: "block" | "line") => {
                            onChange={() => setQuestionOrder("random")}
                            className="mr-1.5 accent-blue-600"
                         />
-                        Random
+                        {t("random")}
                      </label>
                      <label className="flex cursor-pointer items-center text-sm text-slate-700">
                         <input
@@ -277,12 +277,12 @@ const handleGameTypeChange = (type: "block" | "line") => {
                            onChange={() => setQuestionOrder("in_sequence")}
                            className="mr-1.5 accent-blue-600"
                         />
-                        In Sequence
+                        {t("inSequence")}
                      </label>
                   </div>
                </div>
                <div>
-                  <div className="mb-2.5 text-sm font-medium text-slate-700">Number of questions to complete</div>
+                   <div className="mb-2.5 text-sm font-medium text-slate-700">{t("numberOfQuestions")}</div>
                   <div className="mt-1 flex items-center gap-3">
                      <input
                         type="number"
@@ -300,21 +300,21 @@ const handleGameTypeChange = (type: "block" | "line") => {
                         onChange={(e) => setQuestionCount(Number(e.target.value))}
                         className="w-full max-w-[500px] flex-1 accent-blue-600"
                      />
-                     <span className="min-w-[28px] text-xs text-slate-400">{questionCount === 0 ? "All" : questionCount}</span>
+                     <span className="min-w-[28px] text-xs text-slate-400">{questionCount === 0 ? t("all") : questionCount}</span>
                   </div>
                </div>
             </div>
 
             <div className="mb-7">
-               <div className="mb-3.5 text-lg font-bold text-slate-900">Scheduling</div>
+               <div className="mb-3.5 text-lg font-bold text-slate-900">{t("scheduling")}</div>
                <div className="flex gap-6">
                   <label className="flex cursor-pointer items-center text-sm text-slate-700">
                      <input type="radio" name="schedule" checked={startNow} onChange={() => setStartNow(true)} className="mr-1.5 accent-blue-600" />
-                     Start assignment now
+                     {t("startAssignmentNow")}
                   </label>
                   <label className="flex cursor-pointer items-center text-sm text-slate-700">
                      <input type="radio" name="schedule" checked={!startNow} onChange={() => setStartNow(false)} className="mr-1.5 accent-blue-600" />
-                     Schedule for later date
+                     {t("scheduleForLater")}
                   </label>
                </div>
                {!startNow && (
@@ -334,7 +334,7 @@ const handleGameTypeChange = (type: "block" | "line") => {
                   className="cursor-pointer rounded-lg border-[1.5px] border-slate-200 bg-white px-6 py-2.5 text-sm font-semibold text-slate-700 transition-colors hover:bg-gray-50"
                   onClick={onCancel}
                >
-                  Cancel
+                  {t("cancel")}
                </button>
                <button
                   className={`cursor-pointer rounded-lg border-none bg-blue-600 px-8 py-2.5 text-sm font-bold text-white transition-all hover:bg-blue-700 active:scale-95 ${
@@ -343,7 +343,7 @@ const handleGameTypeChange = (type: "block" | "line") => {
                   disabled={submitting}
                   onClick={handleSubmit}
                >
-                  {submitting ? "Saving…" : editData ? "Save Changes" : "Create"}
+                  {submitting ? t("saving") : editData ? t("saveChanges") : t("create")}
                </button>
             </div>
          </div>

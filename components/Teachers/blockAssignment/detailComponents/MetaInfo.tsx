@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 interface MetaInfoProps {
   startDateRaw: string | null;
@@ -7,6 +8,7 @@ interface MetaInfoProps {
 }
 
 export function MetaInfo({ startDateRaw, questionCount, studentCount }: MetaInfoProps) {
+  const { t } = useTranslation("teacher");
   const startDate = startDateRaw
     ? format(new Date(startDateRaw), "MM/dd/yyyy, hh:mm aa").toUpperCase()
     : "N/A";
@@ -14,24 +16,24 @@ export function MetaInfo({ startDateRaw, questionCount, studentCount }: MetaInfo
   return (
     <div className="flex flex-wrap gap-8 mb-4">
       <div className="flex items-center gap-1.5">
-        <span className="text-[13px] text-slate-400">Start Date</span>
+        <span className="text-[13px] text-slate-400">{t("startDate")}</span>
         <span className="text-[13px] font-bold text-blue-600">{startDate}</span>
       </div>
       <div className="flex items-center gap-1.5">
-        <span className="text-[13px] text-slate-400">End Date</span>
-        <span className="text-[13px] font-bold text-slate-400">N/A</span>
+        <span className="text-[13px] text-slate-400">{t("endDate")}</span>
+        <span className="text-[13px] font-bold text-slate-400">{t("na")}</span>
       </div>
       <div className="flex items-center gap-1.5">
-        <span className="text-[13px] text-slate-400">Parameter</span>
-        <span className="text-[13px] font-bold text-blue-600">{questionCount || "All"} Questions</span>
+        <span className="text-[13px] text-slate-400">{t("parameter")}</span>
+        <span className="text-[13px] font-bold text-blue-600">{questionCount || t("all")} {t("questions")}</span>
       </div>
       <div className="flex items-center gap-1.5">
-        <span className="text-[13px] text-slate-400">Progress</span>
+        <span className="text-[13px] text-slate-400">{t("progress")}</span>
       </div>
       <div className="flex items-center gap-1.5">
-        <span className="text-[13px] text-slate-400">Students</span>
+        <span className="text-[13px] text-slate-400">{t("students")}</span>
         <span className="text-[13px] font-bold text-blue-600">
-          {studentCount} Student{studentCount !== 1 ? "s" : ""}
+          {studentCount} {studentCount !== 1 ? t("studentPlural") : t("studentSingular")}
         </span>
       </div>
     </div>

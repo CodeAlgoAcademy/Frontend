@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 import { AssignmentListItem } from "types/interfaces/assignments";
 import { IoSettingsOutline } from "react-icons/io5";
 
@@ -18,21 +19,22 @@ const BANNER_GRADIENTS = [
    "linear-gradient(135deg, #0c4a6e 0%, #0369a1 50%, #0ea5e9 100%)",
 ];
 
-const getGameTypeBadge = (gameType?: "block" | "line") => {
+const getGameTypeBadge = (gameType?: "block" | "line", t?: (key: string) => string) => {
    if (gameType === "block") {
-      return { label: "Block Game", bg: "bg-emerald-100", text: "text-emerald-700" };
+      return { label: t?.("blockGame") || "Block Game", bg: "bg-emerald-100", text: "text-emerald-700" };
    }
-   return { label: "Line Coding", bg: "bg-purple-100", text: "text-purple-700" };
+   return { label: t?.("lineCoding") || "Line Coding", bg: "bg-purple-100", text: "text-purple-700" };
 };
 
 export default function AssignmentCard({ assignment, onArchive, onEdit, onDelete, onClick }: AssignmentCardProps) {
+   const { t } = useTranslation("teacher");
    const [showMenu, setShowMenu] = useState(false);
    const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
    const menuRef = useRef<HTMLDivElement>(null);
    const gearBtnRef = useRef<HTMLButtonElement>(null);
 
    const bannerBg = BANNER_GRADIENTS[assignment.id % BANNER_GRADIENTS.length];
-   const gameTypeBadge = getGameTypeBadge(assignment.game_type);
+   const gameTypeBadge = getGameTypeBadge(assignment.game_type, t);
 
    const menuItems = useMemo(() => {
       const isArchived = assignment.status === "archived";
@@ -40,11 +42,11 @@ export default function AssignmentCard({ assignment, onArchive, onEdit, onDelete
       if (isArchived) {
          return [
             {
-               label: "Unarchive Assignment",
+               label: t("unarchiveAssignment"),
                action: () => onArchive(assignment.id),
             },
             {
-               label: "Delete Permanently",
+               label: t("deletePermanently"),
                action: () => onDelete?.(assignment.id),
                danger: true,
             },
@@ -52,15 +54,15 @@ export default function AssignmentCard({ assignment, onArchive, onEdit, onDelete
       }
 
       return [
-         { label: "Edit Assignment", action: () => onEdit?.(assignment.id) },
-         { label: "Archive Assignment", action: () => onArchive(assignment.id) },
+         { label: t("editAssignment"), action: () => onEdit?.(assignment.id) },
+         { label: t("archiveAssignment"), action: () => onArchive(assignment.id) },
          {
-            label: "Delete Permanently",
+            label: t("deletePermanently"),
             action: () => onDelete?.(assignment.id),
             danger: true,
          },
       ];
-   }, [assignment.status, assignment.id, onArchive, onEdit, onDelete]);
+   }, [assignment.status, assignment.id, onArchive, onEdit, onDelete, t]);
 
    const handleMouseEnter = () => {
       if (hoverTimeout) clearTimeout(hoverTimeout);
@@ -164,21 +166,21 @@ export default function AssignmentCard({ assignment, onArchive, onEdit, onDelete
                   <span>{gameTypeBadge.label}</span>
                </span>
                <span className="text-slate-500">·</span>
-               <span className="text-slate-500">{assignment.standards?.length ?? 0} Skills</span>
+               <span className="text-slate-500">{t("skillsCountCapital", { count: assignment.standards?.length ?? 0 })}</span>
                <span className="text-slate-500">·</span>
                <span className="text-slate-500">
-                  <strong>{assignment.question_count || "All"}</strong> Questions
+                  <strong>{assignment.question_count || t("all")}</strong> {t("questions")}
                </span>
             </div>
 
             <div className="mb-2.5 grid grid-cols-2 gap-1">
                <div>
-                  <div className="mb-0.5 text-[11px] text-slate-400">Start Date</div>
+                  <div className="mb-0.5 text-[11px] text-slate-400">{t("startDate")}</div>
                   <div className="text-[13px] font-bold text-blue-600">{startDate}</div>
                </div>
 
                <div>
-                  <div className="mb-1.5 text-[11px] font-medium uppercase tracking-wider text-slate-400">Progress</div>
+                  <div className="mb-1.5 text-[11px] font-medium uppercase tracking-wider text-slate-400">{t("progress")}</div>
                   <div className="flex items-center gap-2">
                      <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-slate-100">
                         <div className="h-full rounded-full bg-blue-600 transition-all duration-300" style={{ width: `${pct}%` }} />
@@ -190,16 +192,16 @@ export default function AssignmentCard({ assignment, onArchive, onEdit, onDelete
 
             <div className="mt-2 grid grid-cols-2 items-end gap-4">
                <div>
-                  <div className="mb-0.5 text-[11px] text-slate-400">Status</div>
+                  <div className="mb-0.5 text-[11px] text-slate-400">{t("status")}</div>
                   <div className={`text-[13px] font-bold capitalize ${assignment.status === "archived" ? "text-amber-600" : "text-green-600"}`}>
-                     {assignment.status}
+                     {t(`status${assignment.status.charAt(0).toUpperCase()}${assignment.status.slice(1)}`)}
                   </div>
                </div>
 
                <div className="pl-2">
-                  <div className="mb-1 text-[11px] font-medium uppercase tracking-wider text-slate-400">Students</div>
+                  <div className="mb-1 text-[11px] font-medium uppercase tracking-wider text-slate-400">{t("students")}</div>
                   <div className="text-[13px] font-bold text-blue-600">
-                     {assignment.student_count} {assignment.student_count === 1 ? "Student" : "Students"}
+                     {assignment.student_count} {assignment.student_count === 1 ? t("studentSingular") : t("studentPlural")}
                   </div>
                </div>
             </div>

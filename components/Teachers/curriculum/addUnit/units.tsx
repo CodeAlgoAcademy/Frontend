@@ -127,7 +127,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                                  <div className="relative">
                                     <input
                                        type="date"
-                                       placeholder="start date"
+                                       placeholder={t("startDate")}
                                        id="date"
                                        name="start date"
                                        className={`hoverElement flex w-[120px] items-center justify-evenly gap-2 rounded-md border-2 py-[12px] text-[13px]  font-normal md:w-[150px] ${
@@ -149,7 +149,7 @@ const Unit: FC<Props> = ({ openedModal, updateOpenedModal }) => {
                                  <div className="relative">
                                     <input
                                        type="date"
-                                       placeholder="end date"
+                                       placeholder={t("endDate")}
                                        name="end date"
                                        id="date"
                                        className={`hoverElement flex w-[120px] items-center justify-evenly gap-2 rounded-md border-2 py-[12px] text-[13px]  font-normal md:w-[150px] ${

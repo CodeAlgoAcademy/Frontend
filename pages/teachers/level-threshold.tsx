@@ -5,10 +5,12 @@ import AddStudentModal from '@/components/Teachers/students/AddStudentModal';
 import React, { useState } from 'react';
 import { FiPlus } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { RootState } from 'store/store';
 import { styles } from './students';
 
 export default function TeacherLevelsThreshold() {
+    const { t } = useTranslation('teacher');
     const { students } = useSelector((state: RootState) => state.students);
     const [isOpen, setIsOpen] = useState<boolean>(false);
  
@@ -16,7 +18,7 @@ export default function TeacherLevelsThreshold() {
        return(
           <div className={styles.addDiv} onClick={() => setIsOpen(true)}>
              <FiPlus size={25} className={styles.plusIcon} />
-             <p className="sm:block">Add Student</p>
+             <p className="sm:block">{t('addStudent')}</p>
           </div>
        )
     }

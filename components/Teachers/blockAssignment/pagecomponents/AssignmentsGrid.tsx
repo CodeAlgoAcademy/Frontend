@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 import { AssignmentListItem } from "types/interfaces/assignments";
 import AssignmentCard from "../AssignmentCard";
 import empty from "../../../../public/assets/teachers/emptystate.jpeg"
@@ -23,10 +24,19 @@ export default function AssignmentsGrid({
   onDelete,
   onCardClick
 }: AssignmentsGridProps) {
+  const { t } = useTranslation("teacher");
+
+  const emptyTabKeys: Record<string, string> = {
+    active: "noActiveAssignments",
+    completed: "noCompletedAssignments",
+    archived: "noArchivedAssignments",
+  };
+  const emptyTabKey = emptyTabKeys[activeTab] || "noActiveAssignments";
+
   if (loading) {
     return (
       <div className="flex justify-center items-center py-16">
-        <div className="text-gray-400">Loading assignments...</div>
+        <div className="text-gray-400">{t("loadingAssignments")}</div>
       </div>
     );
   }
@@ -38,7 +48,7 @@ export default function AssignmentsGrid({
         <Image src={empty} alt="" className="rounded-full" />   
         </div>
         <div className="text-black-400 text-sm pt-5">
-          No {activeTab} assignments found.
+          {t(emptyTabKey)}
         </div>
       </div>
     );

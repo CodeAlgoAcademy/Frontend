@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 interface ModalHeaderProps {
   assignmentTitle?: string;
@@ -6,13 +7,14 @@ interface ModalHeaderProps {
 }
 
 export default function ModalHeader({ assignmentTitle, onClose }: ModalHeaderProps) {
+  const { t } = useTranslation("teacher");
   return (
     <div className="flex items-center justify-between px-6 pt-5 pb-0">
       <button
         onClick={onClose}
         className="flex items-center gap-1.5 text-sm font-semibold text-white bg-teal-500 hover:bg-teal-600 transition-colors px-4 py-1.5 rounded-full shadow-sm"
       >
-        ← Back to {assignmentTitle ?? "Assignment"}
+        ← {t("backToAssignment", { title: assignmentTitle ?? t("assignment") })}
       </button>
       <button
         onClick={onClose}

@@ -14,7 +14,8 @@ export interface IModal {
    successModal: {
       message: string;
       isOpen: boolean;
-      studentId?:string;
+      studentId?: string;
+      type?: string;
    };
    generatingModal: {
     isOpen: boolean;

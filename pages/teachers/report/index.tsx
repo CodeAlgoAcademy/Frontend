@@ -3,28 +3,29 @@ import TeacherLayout from '@/components/layouts/TeacherLayout';
 import { useSelector } from 'react-redux';
 import { RootState } from "store/store";
 import { useAppDispatch } from "store/hooks";
+import { useTranslation } from 'react-i18next';
 import { fetchDiagnosticSummary } from 'store/teacherStudentSlice';
 import DiagnosticDetailModal from '@/components/Teachers/report/modal';
 
 
 const MASTERY_CONFIG: Record<string, {
-    label: string; color: string; bg: string; border: string; dot: string; pct: number;
+    labelKey: string; color: string; bg: string; border: string; dot: string; pct: number;
 }> = {
-    advanced:    { label: 'Advanced',    color: '#065f46', bg: '#ecfdf5', border: '#6ee7b7', dot: '#10b981', pct: 100 },
-    proficient:  { label: 'Proficient',  color: '#1d4ed8', bg: '#eff6ff', border: '#93c5fd', dot: '#3b82f6', pct: 80  },
-    secure:      { label: 'Secure',      color: '#5b21b6', bg: '#f5f3ff', border: '#c4b5fd', dot: '#8b5cf6', pct: 65  },
-    developing:  { label: 'Developing',  color: '#92400e', bg: '#fffbeb', border: '#fcd34d', dot: '#f59e0b', pct: 45  },
-    emerging:    { label: 'Emerging',    color: '#9a3412', bg: '#fff7ed', border: '#fdba74', dot: '#f97316', pct: 25  },
-    remediation: { label: 'Remediation', color: '#991b1b', bg: '#fef2f2', border: '#fca5a5', dot: '#ef4444', pct: 10  },
+    advanced:    { labelKey: 'masteryAdvanced',    color: '#065f46', bg: '#ecfdf5', border: '#6ee7b7', dot: '#10b981', pct: 100 },
+    proficient:  { labelKey: 'masteryProficient',  color: '#1d4ed8', bg: '#eff6ff', border: '#93c5fd', dot: '#3b82f6', pct: 80  },
+    secure:      { labelKey: 'masterySecure',      color: '#5b21b6', bg: '#f5f3ff', border: '#c4b5fd', dot: '#8b5cf6', pct: 65  },
+    developing:  { labelKey: 'masteryDeveloping',  color: '#92400e', bg: '#fffbeb', border: '#fcd34d', dot: '#f59e0b', pct: 45  },
+    emerging:    { labelKey: 'masteryEmerging',    color: '#9a3412', bg: '#fff7ed', border: '#fdba74', dot: '#f97316', pct: 25  },
+    remediation: { labelKey: 'masteryRemediation', color: '#991b1b', bg: '#fef2f2', border: '#fca5a5', dot: '#ef4444', pct: 10  },
 };
 
 const MASTERY_ORDER = ['advanced', 'proficient', 'secure', 'developing', 'emerging', 'remediation'];
 
-const PERSISTENCE_CONFIG: Record<string, { label: string; color: string; bg: string; border: string }> = {
-    high:     { label: 'High',     color: '#065f46', bg: '#ecfdf5', border: '#6ee7b7' },
-    medium:   { label: 'Medium',   color: '#92400e', bg: '#fffbeb', border: '#fcd34d' },
-    emerging: { label: 'Emerging', color: '#9a3412', bg: '#fff7ed', border: '#fdba74' },
-    low:      { label: 'Low',      color: '#991b1b', bg: '#fef2f2', border: '#fca5a5' },
+const PERSISTENCE_CONFIG: Record<string, { labelKey: string; color: string; bg: string; border: string }> = {
+    high:     { labelKey: 'persistenceHigh',     color: '#065f46', bg: '#ecfdf5', border: '#6ee7b7' },
+    medium:   { labelKey: 'persistenceMedium',   color: '#92400e', bg: '#fffbeb', border: '#fcd34d' },
+    emerging: { labelKey: 'persistenceEmerging', color: '#9a3412', bg: '#fff7ed', border: '#fdba74' },
+    low:      { labelKey: 'persistenceLow',      color: '#991b1b', bg: '#fef2f2', border: '#fca5a5' },
 };
 
 const AVATAR_COLORS = ['#6366f1','#8b5cf6','#ec4899','#0ea5e9','#10b981','#f59e0b','#14b8a6','#f43f5e'];
@@ -32,13 +33,14 @@ const AVATAR_COLORS = ['#6366f1','#8b5cf6','#ec4899','#0ea5e9','#10b981','#f59e0
 
 
 function MasteryCell({ band }: { band: string }) {
+    const { t } = useTranslation('teacher');
     const key = band?.toLowerCase();
     const cfg = MASTERY_CONFIG[key];
     if (!cfg) return (
         <div className="flex flex-col gap-1.5">
             <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wide text-slate-400">
                 <span className="w-2 h-2 rounded-full bg-slate-200 inline-block" />
-                Not Assessed
+                {t('notAssessed')}
             </span>
             <div className="h-1.5 w-28 rounded-full bg-slate-100" />
         </div>
@@ -48,7 +50,7 @@ function MasteryCell({ band }: { band: string }) {
             <span style={{ color: cfg.color, background: cfg.bg, border: `1px solid ${cfg.border}` }}
                 className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wide px-2.5 py-0.5 rounded-full w-fit">
                 <span style={{ background: cfg.dot }} className="w-2 h-2 rounded-full flex-shrink-0" />
-                {cfg.label}
+                {t(cfg.labelKey)}
             </span>
             <div className="flex items-center gap-2 w-28">
                 <div className="flex-1 h-1.5 rounded-full bg-slate-100 overflow-hidden">
@@ -62,12 +64,13 @@ function MasteryCell({ band }: { band: string }) {
 }
 
 function PersistencePill({ band }: { band: string }) {
+    const { t } = useTranslation('teacher');
     const cfg = PERSISTENCE_CONFIG[band?.toLowerCase()];
     if (!cfg || !band) return <span className="text-slate-300 font-medium">—</span>;
     return (
         <span style={{ color: cfg.color, background: cfg.bg, border: `1px solid ${cfg.border}` }}
             className="inline-block px-2.5 py-0.5 rounded-md text-[11px] font-bold uppercase tracking-wide">
-            {cfg.label}
+            {t(cfg.labelKey)}
         </span>
     );
 }
@@ -82,6 +85,7 @@ function StatCard({ value, label, accent }: { value: number | string; label: str
 }
 
 export default function DiagnosticReportPage() {
+    const { t } = useTranslation('teacher');
     const dispatch = useAppDispatch();
     const { diagnosticSummary } = useSelector((state: RootState) => state.teacherStudentSlice);
     const { id: classId } = useSelector((state: RootState) => state.currentClass);
@@ -101,25 +105,25 @@ export default function DiagnosticReportPage() {
                 <div className="mb-6 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                     <div>
                         <p className="text-[11px] font-black uppercase tracking-[0.2em] text-indigo-500 mb-1">
-                            Class Report
+                            {t('classReport')}
                         </p>
                         <h1 className="text-2xl sm:text-3xl font-black text-slate-800">
-                            Diagnostic Class Results
+                            {t('diagnosticClassResults')}
                         </h1>
                         <p className="text-sm text-slate-500 mt-1">
-                            Visual Scripting &amp; Block Coding · Progress Analysis
+                            {t('progressAnalysisSubtitle')}
                         </p>
                     </div>
                     <div className="flex gap-3 flex-shrink-0">
-                        <StatCard value={total} label="Students" />
-                        <StatCard value={assessed} label="Assessed" accent="text-indigo-600" />
-                        <StatCard value={`${pct}%`} label="Completion" accent="text-emerald-600" />
+                        <StatCard value={total} label={t('students')} />
+                        <StatCard value={assessed} label={t('assessed')} accent="text-indigo-600" />
+                        <StatCard value={`${pct}%`} label={t('completion')} accent="text-emerald-600" />
                     </div>
                 </div>
 
                 <div className="mb-4 flex flex-wrap items-center gap-x-5 gap-y-2 bg-white rounded-xl px-4 py-2.5 border border-slate-200 shadow-sm w-fit">
                     <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">
-                        Mastery Scale
+                        {t('masteryScale')}
                     </span>
                     {MASTERY_ORDER.map(key => {
                         const cfg = MASTERY_CONFIG[key];
@@ -127,7 +131,7 @@ export default function DiagnosticReportPage() {
                             <span key={key} className="flex items-center gap-1.5 text-[11px] font-semibold"
                                 style={{ color: cfg.color }}>
                                 <span style={{ background: cfg.dot }} className="w-2 h-2 rounded-full" />
-                                {cfg.label}
+                                {t(cfg.labelKey)}
                             </span>
                         );
                     })}
@@ -138,7 +142,7 @@ export default function DiagnosticReportPage() {
                         <table className="w-full text-left border-collapse min-w-[740px]">
                             <thead>
                                 <tr className="bg-slate-50 border-b-2 border-slate-100">
-                                    {['Student', 'Mastery Level', 'Persistence', 'Independence', 'Last Level', ''].map((h, i) => (
+                                    {[t('student'), t('masteryLevel'), t('persistence'), t('independence'), t('lastLevel'), ''].map((h, i) => (
                                         <th key={i}
                                             className={`px-5 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400
                                                 ${i === 2 || i === 3 || i === 4 ? 'text-center' : ''}
@@ -172,7 +176,7 @@ export default function DiagnosticReportPage() {
                                                         </div>
                                                     ) : (
                                                         <p className="text-[10px] text-slate-500 mt-0.5">
-                                                            Diagnostic pending
+                                                            {t('diagnosticPending')}
                                                         </p>
                                                     )}
                                                 </div>
@@ -211,7 +215,7 @@ export default function DiagnosticReportPage() {
                                             <button
                                                 onClick={() => setSelectedStudentId(student.student_id)}
                                                 className="inline-flex items-center gap-1 text-xs font-bold text-indigo-600 hover:text-white bg-white hover:bg-indigo-600 border border-indigo-200 hover:border-indigo-600 px-3 py-1.5 rounded-lg transition-all duration-150 shadow-sm">
-                                                View Details
+                                                {t('viewDetails')}
                                                 <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                                                 </svg>
@@ -224,7 +228,7 @@ export default function DiagnosticReportPage() {
                                     <tr>
                                         <td colSpan={6} className="text-center py-20 text-slate-400">
                                             <p className="text-3xl mb-2">📋</p>
-                                            <p className="font-semibold">No students found in this class</p>
+                                            <p className="font-semibold">{t('noStudentsFoundInClass')}</p>
                                         </td>
                                     </tr>
                                 )}
@@ -234,8 +238,8 @@ export default function DiagnosticReportPage() {
                     {total > 0 && (
                         <div className="px-6 py-3 border-t border-slate-100 flex items-center justify-between gap-4">
                             <p className="text-[11px] text-slate-400">
-                                <span className="font-bold text-slate-600">{assessed}</span> of{' '}
-                                <span className="font-bold text-slate-600">{total}</span> students assessed
+                                <span className="font-bold text-slate-600">{assessed}</span> {t('of')}{' '}
+                                <span className="font-bold text-slate-600">{total}</span> {t('studentsAssessed')}
                             </p>
                             <div className="flex items-center gap-2">
                                 <div className="w-36 h-1.5 rounded-full bg-slate-100 overflow-hidden">

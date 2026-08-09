@@ -7,9 +7,11 @@ import { closeAddClassModal, openAddClassModal } from "store/modalSlice";
 import Classes from "@/components/Teachers/addClass/classes";
 import { getAllClasses } from "services/classesService";
 import { RootState } from "store/store";
+import { useTranslation } from "react-i18next";
 import EmptyState from "@/components/Teachers/addClass/state/emptyState";
 
 const AddClass = () => {
+   const { t } = useTranslation("teacher");
    const dispatch = useDispatch();
    const { classes, loading } = useSelector((state: RootState) => state.allClasses);
 
@@ -27,13 +29,13 @@ const AddClass = () => {
    return (
       <main>
          <Head>
-            <title>CodeAlgo Academy | Add Class</title>
+            <title>CodeAlgo Academy | {t("addClass")}</title>
          </Head>
 
          <section className="min-h-screen w-full bg-[#ECEDF3]">
             <div className="mx-auto w-full max-w-[1250px] px-[16px] py-[30px]">
                <div className="flex w-full flex-wrap items-center justify-between">
-                  <h1 className="text-mainColor text-[2rem] font-bold">Home</h1>
+                  <h1 className="text-mainColor text-[2rem] font-bold">{t("home")}</h1>
                   <div
                      className="text-mainColor flex cursor-pointer flex-row items-center gap-x-2"
                      data-testid="open-modal"
@@ -44,7 +46,7 @@ const AddClass = () => {
                      <span className="font-lighter border-mainColor text-mainColor flex h-[30px] w-[30px] items-center justify-center rounded-full border-2 text-[20px]">
                         <FaPlus />
                      </span>
-                     <h3 className="text-[16px] font-bold">Add Class</h3>
+                     <h3 className="text-[16px] font-bold">{t("addClass")}</h3>
                   </div>
                </div>
 
@@ -55,8 +57,8 @@ const AddClass = () => {
                      </div>
                   ) : hasNoClasses ? (
                     <>
-                    <EmptyState onClick={() => dispatch(openAddClassModal())} title={"No Classes Created Yet"}  
-                    description={"Start by creating your first class to organize students and track their progress."}/>
+                    <EmptyState onClick={() => dispatch(openAddClassModal())} title={t("noClassesCreatedYet")}  
+                    description={t("startByCreatingFirstClass")}/>
                     </>
                   ) : (
                      <Classes />
