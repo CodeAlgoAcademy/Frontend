@@ -9,11 +9,21 @@ import TrialExpiryCard from "./TrialExpiryCard";
 import BillingStepper, { BillingStepperHandle } from "./Stepper/BillingStepper.tsx";
 import ActiveSubscriptionCard from "./Activesubscriptioncard";
 import ManageExistingChildren from "./ManageExistingChildren";
+import ConfirmationModal from "./components/ConfirmationModal";
+import { useBillingHistory } from "./components/useBillingHistory";
 
 const BillingPage = () => {
   const { current_subscription, billing_history } = useSelector(
     (state: RootState) => state.pricing
   );
+  
+  const {
+    openCancelModal,
+    cancelModalOpen,
+    closeCancelModal,
+    handleCancel
+  } = useBillingHistory();
+
   const dispatch = useDispatch();
   const router = useRouter();
   const stepperRef = useRef<BillingStepperHandle>(null);
@@ -49,7 +59,6 @@ const BillingPage = () => {
     }, 50);
   };
 
-  // --- FIXED LOGIC START ---
   const expiringTrial = useMemo(() => {
     if (current_subscription?.status?.toUpperCase() === "TRIALING") {
       return current_subscription;
@@ -80,6 +89,17 @@ const BillingPage = () => {
     <ParentLayout title="Billing">
       <div className="scrollbar-hide overflow-y-scroll px-4 py-6">
         
+        <ConfirmationModal
+          isOpen={cancelModalOpen}
+          onClose={closeCancelModal}
+          onConfirm={handleCancel}
+          title="Cancel Subscription"
+          message="Are you sure you want to cancel your subscription? You will keep access until the end of your current period."
+          confirmText="Yes, Cancel"
+          cancelText="No, Keep it"
+          type="cancel"
+        />
+        
         {expiringTrial && !showStepper && !showChildrenManager && (
           <TrialExpiryCard
             daysLeft={calculateDaysLeft(expiringTrial.expiration_date)}
@@ -96,9 +116,10 @@ const BillingPage = () => {
         )}
 
         {hasActiveSubscription && !showStepper && !showChildrenManager && (
-          <ActiveSubscriptionCard
+         <ActiveSubscriptionCard
             onChangePlan={handleChangePlan}
             onManageChildren={handleManageChildren}
+            onCancel={() => openCancelModal(current_subscription.id)} 
           />
         )}
 

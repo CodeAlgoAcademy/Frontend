@@ -1,21 +1,38 @@
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { RootState } from "store/store";
+import { useState, useRef, useEffect } from "react";
+import { HiDotsVertical } from "react-icons/hi";
 
 interface ActiveSubscriptionCardProps {
   onChangePlan: () => void;
   onManageChildren: () => void;
+  onCancel: () => void;
 }
 
 const ActiveSubscriptionCard: React.FC<ActiveSubscriptionCardProps> = ({
   onChangePlan,
   onManageChildren,
+  onCancel,
 }) => {
   const router = useRouter();
-  const { current_subscription, handlers } = useSelector(
+  const [showMenu, setShowMenu] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  const { current_subscription } = useSelector(
     (state: RootState) => state.pricing
   );
   const { children: allChildren } = useSelector((state: RootState) => state.parentChild);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setShowMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   if (!current_subscription) return null;
 
@@ -46,6 +63,8 @@ const ActiveSubscriptionCard: React.FC<ActiveSubscriptionCardProps> = ({
     router.push(`/parents/billing/payment?subscription_id=${current_subscription.id}`);
   };
 
+  const canCancel = !current_subscription.cancel_at_period_end && !current_subscription.id;
+
   return (
     <div className={`overflow-hidden rounded-2xl border shadow-sm ${isPastDue ? "border-red-200" : "border-gray-100 bg-white"}`}>
       
@@ -67,9 +86,44 @@ const ActiveSubscriptionCard: React.FC<ActiveSubscriptionCardProps> = ({
             {isPastDue ? "Action Required" : "Your Subscription"}
           </h3>
         </div>
-        <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${statusColor}`}>
-          {statusLabel}
-        </span>
+        
+        <div className="flex items-center gap-3">
+            <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${statusColor}`}>
+            {statusLabel}
+            </span>
+
+            {/* THREE DOTS MENU */}
+            <div className="relative" ref={menuRef}>
+                <button 
+                    onClick={() => setShowMenu(!showMenu)}
+                    className="p-1 hover:bg-gray-100 rounded-full transition-colors text-gray-500"
+                >
+                    <HiDotsVertical size={20} />
+                </button>
+
+                {showMenu && (
+                    <div className="absolute right-0 mt-2 w-48 origin-top-right rounded-xl bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+                        <div className="py-1">
+                            <button
+                                onClick={() => { onChangePlan(); setShowMenu(false); }}
+                                disabled={isPastDue}
+                                className="block w-full px-4 py-2.5 text-left text-sm text-mainColor hover:bg-gray-50 disabled:opacity-50"
+                            >
+                                Change Plan
+                            </button>
+                           {canCancel && (
+                              <button
+                                onClick={() => { onCancel(); setShowMenu(false); }}
+                                className="block w-full px-4 py-2.5 text-left text-sm text-red-600 hover:bg-red-50 font-medium"
+                            >
+                                Cancel Subscription
+                            </button>
+                           )}
+                        </div>
+                    </div>
+                )}
+            </div>
+        </div>
       </div>
 
       <div className="px-5 py-4 space-y-4">
@@ -78,8 +132,7 @@ const ActiveSubscriptionCard: React.FC<ActiveSubscriptionCardProps> = ({
           <div className="rounded-xl border border-red-100 bg-red-50 p-4">
             <h4 className="text-sm font-bold text-red-900">Outstanding Balance</h4>
             <p className="mt-1 text-xs text-red-700 leading-relaxed">
-              We attempted to update your subscription (add children or change plan), but the payment failed. 
-              Please pay the outstanding balance to activate your changes.
+              Payment failed. Please pay the outstanding balance to activate your changes.
             </p>
             <button
               onClick={handlePayNow}
@@ -101,16 +154,6 @@ const ActiveSubscriptionCard: React.FC<ActiveSubscriptionCardProps> = ({
               </span>
             </p>
           </div>
-          <button
-            onClick={onChangePlan}
-            disabled={isPastDue}
-            className={`rounded-lg border px-3 py-1.5 text-sm font-medium transition 
-              ${isPastDue 
-                ? "border-gray-100 bg-gray-50 text-gray-400 cursor-not-allowed" 
-                : "border-mainColor/30 bg-mainColor/5 text-mainColor hover:bg-mainColor/10"}`}
-          >
-            Change Plan
-          </button>
         </div>
 
         {/* Expiry */}
@@ -146,7 +189,7 @@ const ActiveSubscriptionCard: React.FC<ActiveSubscriptionCardProps> = ({
             </button>
           </div>
 
-          {subscribedChildren.length > 0 ? (
+          {subscribedChildren.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {subscribedChildren.map((child) => (
                 <span
@@ -160,31 +203,6 @@ const ActiveSubscriptionCard: React.FC<ActiveSubscriptionCardProps> = ({
                 </span>
               ))}
             </div>
-          ) : (
-            <button
-              onClick={onManageChildren}
-              className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-gray-200 bg-gray-50 py-3 text-sm text-gray-500 transition hover:border-mainColor/30 hover:bg-mainColor/5 hover:text-mainColor"
-            >
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-              </svg>
-              Add children to your plan
-            </button>
-          )}
-
-          {isPastDue && (
-             <p className="mt-3 text-xs text-red-600 italic">
-               Note: Recently added children will not appear here until payment is complete.
-             </p>
-          )}
-
-          {!isPastDue && unsubscribedChildren.length > 0 && (
-            <p className="mt-2 text-xs text-amber-600">
-              {unsubscribedChildren.length} child{unsubscribedChildren.length > 1 ? "ren" : ""} not yet on this plan.{" "}
-              <button onClick={onManageChildren} className="underline hover:no-underline">
-                Add them
-              </button>
-            </p>
           )}
         </div>
       </div>
