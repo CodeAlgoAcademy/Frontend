@@ -82,7 +82,7 @@ const CreateClass = () => {
    return (
       <form className="h-full flex-[0.9] p-8" onSubmit={handleSubmit}>
          <header className="mb-6 w-full">
-            <h1 className="text-[20px] font-bold text-mainColor md:text-[30px]">{t("createNewClass")}</h1>
+            <h1 className="text-[20px] font-bold text-mainColor md:text-[30px]">{isEditMode ? t("updateClass") : t("createNewClass")}</h1>
          </header>
          <section className="grid items-start gap-[1rem] md:grid-cols-2">
             {inputFields?.map((inputField: IInputFields, index: number) => {
@@ -177,7 +177,7 @@ const CreateClass = () => {
                 <h3 className="text-[16px] font-bold">{t("addNewStudentBtn")}</h3>
             </div>
              <button type="submit" className="w-[150px] rounded-[30px] bg-mainColor py-3 text-[16px] text-white hover:shadow-md">
-                {t("createBtn")}
+                {isEditMode ? t("updateClass") : t("createBtn")}
              </button>
          </section>
       </form>
