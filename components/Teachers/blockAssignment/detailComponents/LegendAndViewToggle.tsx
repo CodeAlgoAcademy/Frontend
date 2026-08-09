@@ -1,5 +1,6 @@
-import { useRef, useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import useClickOutside from "hooks/useClickOutside";
 
 type ViewMode = "numeric" | "percentage";
 
@@ -10,19 +11,8 @@ interface LegendAndViewToggleProps {
 
 export function LegendAndViewToggle({ viewMode, onViewModeChange }: LegendAndViewToggleProps) {
   const { t } = useTranslation("teacher");
-  const dropdownRef = useRef<HTMLDivElement>(null);
   const [showDropdown, setShowDropdown] = useState(false);
-
-  useEffect(() => {
-    if (!showDropdown) return;
-    const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setShowDropdown(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [showDropdown]);
+  const dropdownRef = useClickOutside<HTMLDivElement>(() => setShowDropdown(false));
 
   const legendItems = [
     { color: "bg-slate-300", label: t("notStarted") },

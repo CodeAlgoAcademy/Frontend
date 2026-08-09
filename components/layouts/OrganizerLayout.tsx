@@ -14,6 +14,7 @@ import { BsChevronDown } from "react-icons/bs";
 import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
 import { IUser } from "types/interfaces";
 import LanguageSwitcher from "../UI/LanguageSwitcher";
+import useClickOutside from "hooks/useClickOutside";
 
 interface OrganizerTabs {
    user: boolean;
@@ -36,9 +37,10 @@ const OrganizerLayout = ({ children }: Props) => {
    });
    const [user, setUser] = useState<IUser | null>(null);
    const dispatch = useDispatch();
+   const userMenuRef = useClickOutside<HTMLDivElement>(() => toggleTab("user", false));
 
    const toggleTab = async (key: keyof OrganizerTabs, open: boolean) => {
-      setTabs({ ...tabs, [key]: open });
+      setTabs({ user: false, organizations: false, sidebar: false, [key]: open });
    };
 
    useEffect(() => {
@@ -70,7 +72,7 @@ const OrganizerLayout = ({ children }: Props) => {
                <div className="flex items-center gap-2">
                   <LanguageSwitcher variant="sidebar" />
                   <BetaButton />
-                  <div className="relative">
+                  <div className="relative" ref={userMenuRef}>
                      <div className="flex cursor-pointer items-center gap-1 text-mainColor" onClick={() => toggleTab("user", !tabs.user)}>
                         <BiUserCircle size={24} />
                         <p className="hidden text-[1rem] md:block">{user?.username}</p>

@@ -6,6 +6,7 @@ import { RootState } from "store/store";
 import { IRole } from "types/interfaces/organization.interface";
 import ContentBox from "../parents/UI/ContentBox";
 import { useTranslation } from "react-i18next";
+import useClickOutside from "hooks/useClickOutside";
 
 const AddUser = () => {
    const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
@@ -13,6 +14,7 @@ const AddUser = () => {
    const [role, setRole] = useState<IRole | undefined>(undefined);
    const [message, setMessage] = useState<string>("");
    const { t } = useTranslation("organizer");
+   const roleDropdownRef = useClickOutside<HTMLDivElement>(() => setDropdownOpen(false));
 
    const dispatch = useDispatch();
 
@@ -52,7 +54,7 @@ const AddUser = () => {
       <ContentBox title={t("addUser")} size="large" padding="large">
          <form action="" onSubmit={submit}>
             <div className="flex justify-end">
-               <header className="relative">
+               <header className="relative" ref={roleDropdownRef}>
                   <div
                      onClick={() => {
                         setDropdownOpen((prev) => !prev);

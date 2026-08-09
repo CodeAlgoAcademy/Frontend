@@ -29,7 +29,7 @@ const Dashboard = () => {
    const [tabs, setTabs] = useState<TeachersTabs>({ students: false });
 
    const toggleTab = (key: keyof TeachersTabs, open: boolean) => {
-      setTabs({ ...tabs, [key]: open });
+      setTabs({ students: open });
    };
    const calculateAge = (dob: string): number => {
       const birthDate = new Date(dob);

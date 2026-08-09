@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { RootState } from "store/store";
 import { changeCurrentStudent } from "store/teacherStudentSlice";
+import useClickOutside from "hooks/useClickOutside";
 
 interface Props {
    close(): void;
@@ -15,6 +16,7 @@ export default function TeacherStudentsList({ close, open, isOpen }: Props) {
    const { t } = useTranslation("teacher");
    const teacherStudents = useSelector((state: RootState) => state.teacherStudentSlice);
    const dispatch = useDispatch();
+   const studentsListRef = useClickOutside<HTMLDivElement>(close);
 
    if (!teacherStudents?.students || teacherStudents?.students?.length === 0) {
       return <></>;
@@ -22,7 +24,7 @@ export default function TeacherStudentsList({ close, open, isOpen }: Props) {
 
    return (
       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-         <div className="relative">
+         <div className="relative" ref={studentsListRef}>
             {/* header */}
             <header className="flex cursor-pointer items-center gap-2" onClick={() => (isOpen ? close() : open())}>
                <h2 className="text-lg font-medium text-mainColor">{teacherStudents?.currentStudent?.firstName || t("selectStudent")}</h2>
