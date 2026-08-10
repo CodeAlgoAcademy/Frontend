@@ -27,6 +27,7 @@ import { FiAlertTriangle } from "react-icons/fi";
 import { Schedule } from "types/interfaces";
 import { useGoogleLogin } from "@react-oauth/google";
 import TeacherLayout from "@/components/layouts/TeacherLayout";
+import { useTranslation } from "react-i18next";
 import Head from "next/head";
 import { CalendarEvent, toApiEvent, toCalendarEvents } from "utils/scheduleAdapter";
 
@@ -49,10 +50,10 @@ const DnDCalendar = withDragAndDrop<CalendarEvent, object>(BigCalendar as any);
 
 const PropertyPane = (props: PropsWithChildren) => <div className="mt-5">{props.children}</div>;
 
-/** Local date -> the yyyy-MM-dd an <input type="date"> expects. */
 const toInputValue = (d: Date) => format(d, "yyyy-MM-dd");
 
 function CalendarPage() {
+   const { t } = useTranslation("teacher");
    const dispatch = useDispatch<AppDispatch>();
    const scheduleData: Schedule = useSelector((state: RootState) => state.schedule);
 
@@ -217,7 +218,7 @@ function CalendarPage() {
                   </section>
                   <section className="flex h-full flex-col items-center justify-end gap-1">
                      <h1 className="text-sm font-semibold text-zinc-800 antialiased">
-                        {eventNotificationType ? "Updates saved!" : "Error Saving Updates"}
+                        {eventNotificationType ? t("updatesSaved") : t("errorSavingUpdates")}
                      </h1>
                   </section>
                   <div
@@ -230,7 +231,7 @@ function CalendarPage() {
             <div className="absolute left-[6px] top-8 flex justify-center space-x-2 pl-[2%]">
                <motion.button className="tooltip border border-gray-400 text-3xl" onClick={() => fetchGoogle()}>
                   <FcGoogle />
-                  <span className="tooltiptext text-sm font-semibold">Connect Google Calendar</span>
+                  <span className="tooltiptext text-sm font-semibold">{t("connectGoogleCalendar")}</span>
                </motion.button>
             </div>
 
@@ -256,22 +257,20 @@ function CalendarPage() {
                />
 
                <PropertyPane>
-                  <label className="block text-sm font-medium text-zinc-600">
-                     Current Date
-                     <input
-                        type="date"
-                        className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 outline-none focus:border-slate-500"
-                        value={toInputValue(date)}
-                        onChange={(e) => {
-                           if (!e.target.value) return;
-                           // Parse as local time. `new Date("2026-08-07")` is
-                           // parsed as UTC midnight, which lands on the previous
-                           // day for anyone west of Greenwich.
-                           setDate(parse(e.target.value, "yyyy-MM-dd", new Date()));
-                        }}
-                     />
-                  </label>
-               </PropertyPane>
+   <label className="block text-sm font-medium text-zinc-600">
+      {t("currentDate")}
+      <input
+         type="date"
+         className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 outline-none focus:border-slate-500"
+         value={toInputValue(date)}
+         onChange={(e) => {
+            if (!e.target.value) return;
+
+            setDate(parse(e.target.value, "yyyy-MM-dd", new Date()));
+         }}
+      />
+   </label>
+</PropertyPane>
             </div>
          </TeacherLayout>
       </>

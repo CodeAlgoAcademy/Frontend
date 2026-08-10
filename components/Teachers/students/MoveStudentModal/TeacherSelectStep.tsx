@@ -1,6 +1,8 @@
 import React from "react";
 import { FaSearch } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 import ModalFooter from "./ModalFooter";
+import useClickOutside from "hooks/useClickOutside";
 
 interface TeacherSelectStepProps {
    teachers: any[];
@@ -26,9 +28,12 @@ const TeacherSelectStep = ({
    onSelectTeacher,
    onBack,
    onNext,
-}: TeacherSelectStepProps) => (
+}: TeacherSelectStepProps) => {
+   const { t } = useTranslation("teacher");
+   const teacherSelectRef = useClickOutside<HTMLDivElement>(() => setIsDropdownOpen(false));
+   return (
    <div>
-      <div className="relative">
+      <div className="relative" ref={teacherSelectRef}>
          <button
             type="button"
             className="flex w-full items-center gap-x-2 rounded-full border border-gray-200 bg-white px-5 py-3.5 text-left outline-none focus:border-blue-400"
@@ -42,7 +47,7 @@ const TeacherSelectStep = ({
                   {selectedTeacher.username ? ` (${selectedTeacher.username})` : ""}
                </span>
             ) : (
-               <span className="text-[15px] text-gray-400">Select a teacher</span>
+               <span className="text-[15px] text-gray-400">{t("selectATeacher")}</span>
             )}
          </button>
 
@@ -53,16 +58,16 @@ const TeacherSelectStep = ({
                   <input
                      autoFocus
                      className="w-full py-1 text-[15px] text-gray-800 outline-none"
-                     placeholder="Search by name, username or email"
+                     placeholder={t("searchByNameUsernameOrEmail")}
                      value={teacherQuery}
                      onChange={(e) => setTeacherQuery(e.target.value)}
                      data-testid="teacher-search-input"
                   />
                </div>
                <ul className="max-h-[220px] overflow-y-auto">
-                  {teachersLoading && <li className="px-4 py-3 text-[13px] text-gray-500">Loading teachers...</li>}
+                  {teachersLoading && <li className="px-4 py-3 text-[13px] text-gray-500">{t("loadingTeachers")}</li>}
                   {!teachersLoading && teachers.length === 0 && (
-                     <li className="px-4 py-3 text-[13px] text-gray-500">No teachers found in your organization.</li>
+                     <li className="px-4 py-3 text-[13px] text-gray-500">{t("noTeachersFound")}</li>
                   )}
                   {!teachersLoading &&
                      teachers.map((teacher: any) => (
@@ -87,8 +92,9 @@ const TeacherSelectStep = ({
          )}
       </div>
 
-      <ModalFooter onBack={onBack} onPrimary={onNext} primaryLabel="Next step" primaryDisabled={!selectedTeacher} testId="move-teacher-next" />
+      <ModalFooter onBack={onBack} onPrimary={onNext} primaryLabel={t("nextStep")} primaryDisabled={!selectedTeacher} testId="move-teacher-next" />
    </div>
-);
+   );
+};
 
 export default TeacherSelectStep;

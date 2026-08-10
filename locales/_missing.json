@@ -1,0 +1,17 @@
+[
+  {
+    "lang": "en",
+    "ns": "teacher",
+    "key": "generating"
+  },
+  {
+    "lang": "en",
+    "ns": "teacher",
+    "key": "processing"
+  },
+  {
+    "lang": "en",
+    "ns": "teacher",
+    "key": "refresh"
+  }
+]

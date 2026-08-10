@@ -24,5 +24,16 @@
   "errorTitle": "Erreur",
   "successTitle": "Succès",
   "areYouSureDelete": "Êtes-vous sûr de vouloir supprimer",
-  "cancel": "Annuler"
+  "cancel": "Annuler",
+  "curriculumStatements": "Énoncés du programme",
+  "lessonDescription": "Description de la leçon",
+  "lessonIntroText": "Dans cette leçon, les élèves apprendront les bases des boucles et comment les appliquer dans leurs programmes.",
+  "viewQuiz": "Voir le quiz",
+  "readyToView": "Prêt à afficher !",
+  "pdfLoginCardPrompt": "Connectez vos élèves rapidement et facilement en consultant et en imprimant les cartes de connexion dans le PDF ci-dessous",
+  "pdfReadyPrompt": "Votre PDF des identifiants de connexion des élèves est prêt à être consulté et imprimé",
+  "pdfNoteLabel": "Remarque",
+  "pdfNoteText": "Le PDF s'ouvrira dans un nouvel onglet où vous pourrez le consulter, l'imprimer ou le télécharger.",
+  "allowPopupsForPdf": "Veuillez autoriser les fenêtres pop-up pour ce site afin de consulter le PDF",
+  "pdfGenerationFailed": "Échec de la génération du PDF. Veuillez réessayer."
 }

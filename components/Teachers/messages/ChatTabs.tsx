@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { getTeachers } from "services/teacherService";
 import { open_a_message } from "store/messagesSlice";
@@ -8,6 +9,7 @@ import { getStudents } from "store/studentSlice";
 import { CurrentClassState, ISingleStudent, User } from "types/interfaces";
 
 const ChatTabs = () => {
+   const { t } = useTranslation("teacher");
    const [active, setActive] = useState<number | string>(0);
    const students = useSelector((state: RootState) => state.students.students);
    const { teachers } = useSelector((state: RootState) => state.allTeachers);
@@ -27,8 +29,8 @@ const ChatTabs = () => {
 
    return (
       <>
-         <div className={styles.singleTab} onClick={() => setOpenedStudent(!openedStudent)}>
-            <p className="text-[20px]">My Students</p>
+          <div className={styles.singleTab} onClick={() => setOpenedStudent(!openedStudent)}>
+            <p className="text-[20px]">{t("myStudents")}</p>
             <span className="text-[20px]">{openedStudent ? <BiChevronUp /> : <BiChevronDown />}</span>
          </div>
          <article className={openedStudent ? "max-h-full flex-1 overflow-y-auto bg-gray-100 p-0" : "overflow-y-auto bg-gray-100"}>
@@ -62,7 +64,7 @@ const ChatTabs = () => {
                setOpenedTeachers(!openedTeachers);
             }}
          >
-            <p className="text-[20px] font-bold">Teachers</p>
+            <p className="text-[20px] font-bold">{t("teachers")}</p>
             <span className="text-[20px]">{openedTeachers ? <BiChevronUp /> : <BiChevronDown />}</span>
          </div>
          <article className="flex-1 overflow-y-auto bg-gray-100">

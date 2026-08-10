@@ -1,11 +1,13 @@
 import { StudentProgress } from "types/interfaces/student.interface";
 import { GiLevelThreeAdvanced } from "react-icons/gi";
+import { useTranslation } from "react-i18next";
 
 interface StudentProgressCardsProps {
    students: StudentProgress[];
 }
 
 export const StudentProgressCards = ({ students }: StudentProgressCardsProps) => {
+   const { t } = useTranslation("teacher");
    const formatName = (name: string) => {
       if (!name) return "";
       return name
@@ -28,9 +30,9 @@ export const StudentProgressCards = ({ students }: StudentProgressCardsProps) =>
                   {formatName(student.student_username)}
                </h3>
 
-               <div className="mb-4">
+                <div className="mb-4">
                   <div className="mb-1 flex items-center justify-between">
-                     <span className="text-sm font-medium text-gray-700">Overall Progress</span>
+                     <span className="text-sm font-medium text-gray-700">{t("overallProgress")}</span>
                      <span className="text-sm font-bold text-gray-700 text-mainColor">{Math.round(student.overall_progress)}%</span>
                   </div>
                   <div className="h-4 w-full rounded-full bg-gray-200">
@@ -41,25 +43,25 @@ export const StudentProgressCards = ({ students }: StudentProgressCardsProps) =>
                <div className="grid grid-cols-3 gap-3 text-center">
                   <div className="rounded-lg bg-green-50 p-3">
                      <div className="text-2xl font-bold text-green-700">{student.completed_count}</div>
-                     <div className="text-xs text-green-600">Done</div>
+                     <div className="text-xs text-green-600">{t("done")}</div>
                   </div>
                   <div className="rounded-lg bg-yellow-50 p-3">
                      <div className="text-2xl font-bold text-yellow-700">{student.in_progress_count}</div>
-                     <div className="text-xs text-yellow-600">In Progress</div>
+                     <div className="text-xs text-yellow-600">{t("inProgress")}</div>
                   </div>
                   <div className="rounded-lg bg-red-50 p-3">
                      <div className="text-2xl font-bold text-red-700">{student.not_started_count}</div>
-                     <div className="text-xs text-red-600">Not Started</div>
+                     <div className="text-xs text-red-600">{t("notStarted")}</div>
                   </div>
                </div>
 
                <div className="mt-4 border-t border-gray-100 pt-3">
                   <div className="flex gap-1">
                      <GiLevelThreeAdvanced />
-                     <h4 className="mb-1 text-sm font-medium text-gray-700">Current Level</h4>
+                     <h4 className="mb-1 text-sm font-medium text-gray-700">{t("currentLevel")}</h4>
                   </div>
                   <div className="flex items-center justify-between ">
-                     <div className="text-sm text-gray-600">{student?.current_level?.level || "No active level"}</div>
+                     <div className="text-sm text-gray-600">{student?.current_level?.level || t("noActiveLevel")}</div>
                      <div className="mt-1 text-xs text-gray-500">
                         {student?.current_level?.status ? (
                            <>

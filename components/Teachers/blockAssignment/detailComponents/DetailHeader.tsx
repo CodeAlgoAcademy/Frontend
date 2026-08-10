@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { IoSettingsOutline } from "react-icons/io5";
+import useClickOutside from "hooks/useClickOutside";
 
 interface DetailHeaderProps {
   onBack: () => void;
@@ -16,9 +18,10 @@ export function DetailHeader({
   onDelete,
   assignmentStatus,
 }: DetailHeaderProps) {
+  const { t } = useTranslation("teacher");
   const [showMenu, setShowMenu] = useState(false);
   const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const menuRef = useClickOutside<HTMLDivElement>(() => setShowMenu(false));
   const gearBtnRef = useRef<HTMLButtonElement>(null);
 
   const handleMouseEnter = () => {
@@ -48,13 +51,13 @@ export function DetailHeader({
   const isArchived = assignmentStatus === "archived";
   const menuItems = isArchived
     ? [
-        { label: "Unarchive Assignment", action: onArchive, danger: false },
-        { label: "Delete Permanently", action: onDelete, danger: true },
+        { label: t("unarchiveAssignment"), action: onArchive, danger: false },
+        { label: t("deletePermanently"), action: onDelete, danger: true },
       ]
     : [
-        { label: "Edit Assignment", action: onEdit, danger: false },
-        { label: "Archive Assignment", action: onArchive, danger: false },
-        { label: "Delete Permanently", action: onDelete, danger: true },
+        { label: t("editAssignment"), action: onEdit, danger: false },
+        { label: t("archiveAssignment"), action: onArchive, danger: false },
+        { label: t("deletePermanently"), action: onDelete, danger: true },
       ];
 
   return (
@@ -63,11 +66,12 @@ export function DetailHeader({
         onClick={onBack}
         className="flex items-center gap-1.5 text-sm text-slate-600 font-medium hover:text-slate-900 transition-colors bg-none border-none cursor-pointer"
       >
-        ← Go Back
+        ← {t("goBack")}
       </button>
 
       <div
         className="relative"
+        ref={menuRef}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -86,7 +90,6 @@ export function DetailHeader({
 
         {showMenu && (
           <div
-            ref={menuRef}
             className="absolute right-0 top-full mt-2 bg-white rounded-lg shadow-lg min-w-[200px] z-20 animate-slideDown origin-top-right"
           >
             <div className="py-1">

@@ -4,6 +4,7 @@ import { GoChevronDown } from "react-icons/go";
 import { useDispatch, useSelector } from "react-redux";
 import { selectOrganization } from "store/organizersSlice";
 import { RootState } from "store/store";
+import useClickOutside from "hooks/useClickOutside";
 
 interface Props {
    close(): void;
@@ -14,11 +15,12 @@ interface Props {
 export default function OrganizationsList({ close, open, isOpen }: Props) {
    const organizer = useSelector((state: RootState) => state.organizer);
    const dispatch = useDispatch();
+   const organizationsListRef = useClickOutside<HTMLDivElement>(close);
 
    //    if (!organizer.organizations?.length) return <></>;
 
    return (
-      <div className="relative">
+      <div className="relative" ref={organizationsListRef}>
          <header className="flex cursor-pointer items-center gap-2" onClick={() => (isOpen ? close() : open())}>
             <h2 className="text-lg font-medium text-mainColor">{organizer?.selectedOrganization?.name}</h2>
             <BsChevronDown size={24} color="#2073fa" onClick={close} />

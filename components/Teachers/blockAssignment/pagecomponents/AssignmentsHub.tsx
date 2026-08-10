@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 interface AssignmentsHubProps {
   onGoToCoding: () => void;
@@ -7,12 +8,13 @@ interface AssignmentsHubProps {
 }
 
 export default function AssignmentsHub({ onGoToCoding, onGoToMathFacts, onGoToMathReports }: AssignmentsHubProps) {
+  const { t } = useTranslation("teacher");
   return (
     <div className="mx-auto max-w-7xl px-6 py-8">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Assignments</h1>
+        <h1 className="text-2xl font-bold text-gray-900">{t("assignments")}</h1>
         <p className="mt-1 text-sm text-gray-500">
-          Choose how you'd like to assign work to your students.
+          {t("chooseHowToAssign")}
         </p>
       </div>
 
@@ -25,17 +27,17 @@ export default function AssignmentsHub({ onGoToCoding, onGoToMathFacts, onGoToMa
                 <path strokeLinecap="round" strokeLinejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
               </svg>
             </div>
-            <h2 className="text-base font-semibold text-gray-900">Coding Assignments</h2>
+            <h2 className="text-base font-semibold text-gray-900">{t("codingAssignments")}</h2>
           </div>
           <p className="text-sm text-gray-500 mb-5">
-            Create and manage custom coding missions. Track student progress through your curriculum.
+            {t("codingAssignmentsDescription")}
           </p>
           <div className="flex flex-col gap-2 ">
             <button
               onClick={onGoToCoding}
               className="w-full rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
             >
-              View Assignments
+              {t("viewAssignments")}
             </button>
           </div>
         </div>
@@ -48,23 +50,23 @@ export default function AssignmentsHub({ onGoToCoding, onGoToMathFacts, onGoToMa
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 11h.01M12 11h.01M15 11h.01M4 19h16a2 2 0 002-2V7a2 2 0 00-2-2H4a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
             </div>
-            <h2 className="text-base font-semibold text-gray-900">Computational Math</h2>
+            <h2 className="text-base font-semibold text-gray-900">{t("computationalMath")}</h2>
           </div>
           <p className="text-sm text-gray-500 mb-5">
-            Automated drills using variable-based logic (x + y) to build math fluency in your students.
+            {t("computationalMathDescription")}
           </p>
           <div className="flex flex-col gap-2">
             <button
               onClick={onGoToMathFacts}
               className="w-full rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 transition-colors"
             >
-              Manage Math Facts
+              {t("manageMathFacts")}
             </button>
             <button
      onClick={onGoToMathReports} 
      className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"
   >
-     View Mastery Reports
+     {t("viewMasteryReports")}
   </button>
           </div>
         </div>

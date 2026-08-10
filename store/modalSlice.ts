@@ -5,6 +5,7 @@ const initialState: IModal = {
    successModal: {
       message: "",
       isOpen: false,
+      type: "",
    },
    generatingModal: {
       isOpen: false,
@@ -82,14 +83,16 @@ const modalSlice = createSlice({
       closeSelectOrg: (state: IModal) => {
          state.selectOrganizationOpen = false;
       },
-      openSuccessModal: (state: IModal, action: PayloadAction<{ message: string; studentId?: string }>) => {
+      openSuccessModal: (state: IModal, action: PayloadAction<{ message: string; studentId?: string; type?: string }>) => {
          state.successModal.isOpen = true;
          state.successModal.message = action.payload.message;
          state.successModal.studentId = action.payload.studentId;
+         state.successModal.type = action.payload.type || "";
       },
       closeSuccessModal: (state: IModal) => {
          state.successModal.isOpen = false;
          state.successModal.message = "";
+         state.successModal.type = "";
       },
       openGeneratingModal: (state, action: PayloadAction<string | undefined>) => {
          state.generatingModal.isOpen = true;

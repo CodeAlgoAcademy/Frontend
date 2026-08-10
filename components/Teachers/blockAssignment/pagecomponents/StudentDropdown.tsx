@@ -1,5 +1,7 @@
-import React, { useState, useMemo, useRef, useEffect } from "react";
+import React, { useEffect, useState, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import studentService from "services/studentService";
+import useClickOutside from "hooks/useClickOutside";
 
 interface Student {
   id: number;
@@ -13,31 +15,17 @@ interface StudentDropdownProps {
   onSelectStudent: (id: number | null) => void;
 }
 
-function useClickOutside<T extends HTMLElement>(handler: () => void) {
-  const ref = useRef<T>(null);
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
-        handler();
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [handler]);
-  return ref;
-}
-
 export default function StudentDropdown({ 
   classId,
   selectedStudentId, 
   onSelectStudent 
 }: StudentDropdownProps) {
+  const { t } = useTranslation("teacher");
   const [students, setStudents] = useState<Student[]>([]);
   const [loading, setLoading] = useState(true);
   const [showDropdown, setShowDropdown] = useState(false);
   const [search, setSearch] = useState("");
   const dropdownRef = useClickOutside<HTMLDivElement>(() => setShowDropdown(false));
-
   useEffect(() => {
     const fetchStudents = async () => {
       setLoading(true);
@@ -76,7 +64,7 @@ export default function StudentDropdown({
   if (loading) {
     return (
       <div className="inline-flex items-center justify-between gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg min-w-[180px]">
-        <span>Loading...</span>
+        <span>{t("loading")}</span>
       </div>
     );
   }
@@ -87,7 +75,7 @@ export default function StudentDropdown({
         onClick={() => setShowDropdown(!showDropdown)}
         className="inline-flex items-center justify-between gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:border-blue-400 transition-colors min-w-[180px]"
       >
-        <span>{selectedStudent ? selectedStudent.name : "All Students"}</span>
+        <span>{selectedStudent ? selectedStudent.name : t("allStudents")}</span>
         <svg className={`w-4 h-4 transition-transform ${showDropdown ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
@@ -98,7 +86,7 @@ export default function StudentDropdown({
           <div className="p-3 border-b border-gray-100">
             <input
               type="text"
-              placeholder="Search students..."
+              placeholder={t("searchStudentsPlaceholder")}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-blue-400 focus:outline-none transition-colors"
@@ -110,11 +98,11 @@ export default function StudentDropdown({
               onClick={() => handleSelect(null)}
               className={`px-3 py-2.5 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors ${!selectedStudentId ? 'bg-blue-50' : ''}`}
             >
-              <span className="text-sm font-medium">All Students</span>
+              <span className="text-sm font-medium">{t("allStudents")}</span>
               {!selectedStudentId && <span className="text-blue-600">✓</span>}
             </div>
             {filteredStudents.length === 0 ? (
-              <div className="px-3 py-8 text-center text-sm text-gray-400">No students found</div>
+              <div className="px-3 py-8 text-center text-sm text-gray-400">{t("noStudentsFound")}</div>
             ) : (
               filteredStudents.map((student) => (
                 <div

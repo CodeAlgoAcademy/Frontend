@@ -15,9 +15,11 @@ import { getDate } from "utils/getDate";
 import SingleLesson from "@/components/Teachers/curriculum/unit/singleLesson";
 import { getStudents } from "store/studentSlice";
 import { BiArrowBack } from "react-icons/bi";
+import { useTranslation } from "react-i18next";
 import TeacherLayout from "@/components/layouts/TeacherLayout";
 
 export default function Unit() {
+   const { t } = useTranslation("teacher");
    const [showModal, setShowModal] = useState(false);
    const [showPreview, setShowPreview] = useState<boolean>(false);
    const [active, setActive] = useState<number[]>([]);
@@ -98,10 +100,10 @@ export default function Unit() {
       const errors: string[] = [];
       if (!currentUnitInView.id) return;
       if (end_date <= today_date || end_date <= start_date) {
-         errors.push("Lesson's end date should not be / be before today's date and it's start date");
+         errors.push(t("lessonEndDateError"));
       }
       if (start_date < today_date) {
-         errors.push("Lesson's start date should be today or after");
+         errors.push(t("lessonStartDateError"));
       }
       if (errors.length === 0) {
          await dispatch(addLessons(lessonDetails));
@@ -135,8 +137,8 @@ export default function Unit() {
             {addLessonModalOpen && (
                <section className="fixed top-0 left-0 z-20 flex min-h-screen w-full items-center justify-center bg-[rgba(0,0,0,0.6)]">
                   <div className="max-h-[90vh] w-[90vw] max-w-[700px] overflow-hidden overflow-y-scroll rounded-md bg-white p-8 shadow-md">
-                     <header className="mb-6 flex w-full items-center justify-between">
-                        <h1 className="text-mainColor text-[26px] font-bold">Add Lesson</h1>
+                      <header className="mb-6 flex w-full items-center justify-between">
+                         <h1 className="text-mainColor text-[26px] font-bold">{t("addLesson")}</h1>
                         <span
                            className="text-[22px] text-[darkRed]"
                            onClick={() => {
@@ -151,7 +153,7 @@ export default function Unit() {
                            <input
                               type="text"
                               className="focus:border-mainColor w-full rounded-md border-2 p-3 outline-none"
-                              placeholder="Enter Lesson Title*"
+                              placeholder={t("enterLessonTitle")}
                               required
                               value={lessonDetails.topic.title}
                               onChange={(e) => {
@@ -163,7 +165,7 @@ export default function Unit() {
                            <textarea
                               className="focus:border-mainColor h-[200px] w-full resize-none rounded-md border-2 p-3 outline-none"
                               required
-                              placeholder="Enter Lesson Description*"
+                              placeholder={t("enterLessonDescription")}
                               value={lessonDetails.topic.description}
                               onChange={(e) => {
                                  updateDescription(e.target.value);
@@ -171,7 +173,7 @@ export default function Unit() {
                            ></textarea>
                         </div>
                         <div className="mb-2 w-full gap-4 text-center">
-                           <h1 className="text-mainColor text-center font-bold">Status</h1>
+                           <h1 className="text-mainColor text-center font-bold">{t("status")}</h1>
                         </div>
                         <div className="mb-4 flex gap-5">
                            <div className="w-full">
@@ -183,7 +185,7 @@ export default function Unit() {
                                     updateStatus("published");
                                  }}
                               >
-                                 Published
+                                 {t("published")}
                               </div>
                            </div>
                            <div className="w-full">
@@ -195,14 +197,14 @@ export default function Unit() {
                                     updateStatus("unpublished");
                                  }}
                               >
-                                 Unpublished
+                                 {t("unpublished")}
                               </div>
                            </div>
                         </div>
                         <div className="flex flex-col gap-4 md:flex-row">
                            <div className="flex w-full flex-col gap-y-2">
                               <label htmlFor="start_date" className="text-mainColor font-bold">
-                                 Start Date*
+                                 {t("startDate")}*
                               </label>
                               <input
                                  type="date"
@@ -217,7 +219,7 @@ export default function Unit() {
                            </div>
                            <div className="flex w-full flex-col gap-y-2">
                               <label htmlFor="end_date" className="text-mainColor font-bold">
-                                 End Date*
+                                 {t("endDate")}*
                               </label>
                               <input
                                  type="date"
@@ -232,7 +234,7 @@ export default function Unit() {
                            </div>
                         </div>
                         <button type="submit" className="bg-mainColor mt-4 w-full rounded-md p-3 text-center text-white">
-                           Add Lesson
+                           {t("addLesson")}
                         </button>
                      </form>
                   </div>
@@ -257,19 +259,19 @@ export default function Unit() {
                      }}
                   >
                      <IoIosAddCircleOutline className="text-4xl " />
-                     <h1 className="text-[1.2rem]">Add Lesson</h1>
+                     <h1 className="text-[1.2rem]">{t("addLesson")}</h1>
                   </div>
                   <Link href="/teachers/curriculum/assignments">
                      <div className="text-mainColor flex cursor-pointer items-center gap-2 rounded-lg px-2 hover:bg-gray-50">
                         <IoIosAddCircleOutline className="text-4xl " />
-                        <h1 className="text-[1.2rem]">Add Assignment</h1>
+                        <h1 className="text-[1.2rem]">{t("addAssignment")}</h1>
                      </div>
                   </Link>
                </div>
             </div>
          </div>
          <div className="mb-[1.5rem] mt-7 border-b-[1.3px] border-[#BDBDBD] pl-[1.5rem] pb-3 md:mb-[3rem]">
-            <h2 className="text-mainColor text-[1.2rem] font-bold md:text-[1.4rem]">Unit Control</h2>
+            <h2 className="text-mainColor text-[1.2rem] font-bold md:text-[1.4rem]">{t("unitControl")}</h2>
          </div>
          {/* curriculumn topic section */}
 

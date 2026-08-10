@@ -116,7 +116,7 @@ const TeacherLayout = ({ children, className }: Props) => {
                      <Image src="/assets/CodeAlgo_Logo.png" alt="logo" loading="lazy" className="md:cursor-pointer" width={90} height={45} />
                   </div>
                   <Link href={`/teachers/addClass`}>
-                     <BiHomeAlt size={24} color="#2073fa" title="Back to classes" cursor="pointer" />
+                      <BiHomeAlt size={24} color="#2073fa" title={tTeacher("backToClasses")} cursor="pointer" />
                   </Link>
                   <div className="hidden md:block">
                      <ClassSelector />

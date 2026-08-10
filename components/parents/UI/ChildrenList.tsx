@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeCurrentChild } from "store/parentChildSlice";
 import { RootState } from "store/store";
 import { useTranslation } from "react-i18next";
+import useClickOutside from "hooks/useClickOutside";
 
 interface Props {
    close(): void;
@@ -16,6 +17,7 @@ export default function ChildrenList({ close, open, isOpen }: Props) {
    const parent = useSelector((state: RootState) => state.parentChild);
    const dispatch = useDispatch();
    const { t } = useTranslation("parent");
+   const childrenListRef = useClickOutside<HTMLDivElement>(close);
 
    if (parent.children?.length === 0) {
       return <></>;
@@ -23,7 +25,7 @@ export default function ChildrenList({ close, open, isOpen }: Props) {
 
    return (
       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-         <div className="relative">
+         <div className="relative" ref={childrenListRef}>
             <header className="flex cursor-pointer items-center gap-2" onClick={() => (isOpen ? close() : open())}>
                <h2 className="text-lg font-medium text-mainColor">{parent?.currentChild?.fullName}</h2>
                <BsChevronDown size={24} color="#2073fa" />

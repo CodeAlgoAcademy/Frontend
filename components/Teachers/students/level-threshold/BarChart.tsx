@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import BarChart from "@/components/parents/UI/BarChart";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 
@@ -8,6 +9,7 @@ interface StudentBarChartProps {
   showEditLink?: boolean;
 }
 const StudentLevelChart = ({ showEditLink = true }: StudentBarChartProps) => {
+  const { t } = useTranslation("teacher");
   const { currentStudent } = useSelector(
     (state: RootState) => state.teacherStudentSlice
   );
@@ -53,7 +55,7 @@ const StudentLevelChart = ({ showEditLink = true }: StudentBarChartProps) => {
         className="w-full overflow-y-auto rounded-2xl bg-white p-6"
         style={{ minWidth: "100%", maxWidth: "100%", height: "400px" }}
       >
-        <h1 className="text-2xl font-semibold text-mainColor">Level Threshold</h1>
+        <h1 className="text-2xl font-semibold text-mainColor">{t("levelThreshold")}</h1>
         <BarChart
           data={chartData}
           labels={chartLabels}
@@ -69,7 +71,7 @@ const StudentLevelChart = ({ showEditLink = true }: StudentBarChartProps) => {
           className="mt-4 ml-auto max-w-fit cursor-pointer text-[.9rem] font-medium underline block"
         >
           <span className="mt-3 ml-auto block w-fit cursor-pointer text-sm font-light underline hover:text-mainColor">
-            Edit Level Threshold Settings
+            {t("editLevelThresholdSettings")}
           </span>
         </Link>
       )}

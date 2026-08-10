@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
+import { useTranslation } from "react-i18next";
 import { days, screentimeTypes } from "types/interfaces";
 
 const hours: Array<number | "No Limit"> = ["No Limit", 0, 1, 2, 3, 4, 5, 6, 7, 8];
@@ -13,6 +14,7 @@ const TeacherScreenTimeComponent = ({
    updateScreenTimeForChild: (id: string | number | undefined, day: days, hour: number | "No Limit") => void;
    index?: number;
 }) => {
+   const { t } = useTranslation("teacher");
    const [hoursListOpen, setHoursListOpen] = useState<boolean>(false);
 
    const toggleHoursList = () => setHoursListOpen((prev) => !prev);
@@ -46,10 +48,10 @@ const TeacherScreenTimeComponent = ({
             onClick={toggleHoursList}
          >
             {time.timeLimit === ""
-               ? "Select"
+               ? t("select")
                : time.timeLimit === "No Limit"
-               ? time.timeLimit
-               : time.timeLimit + " hr"}
+               ? t("noLimit")
+               : time.timeLimit + " " + t("hr")}
             <span className="text-[20px]">
                <BiChevronDown />
             </span>
@@ -67,7 +69,7 @@ const TeacherScreenTimeComponent = ({
                      }}
                      data-testid={`hour-${index}`}
                   >
-                     {hour} {typeof hour === "string" ? "" : "hr"}
+                     {hour} {typeof hour === "string" ? "" : t("hr")}
                   </span>
                ))}
             </div>

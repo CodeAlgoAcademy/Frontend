@@ -3,6 +3,7 @@ import { TbLayoutDashboard, TbClipboardText } from "react-icons/tb";
 import { FaUserGraduate } from "react-icons/fa";
 import { HiOutlineCalendar } from "react-icons/hi";
 import { BiLogOut, BiMessageRounded } from "react-icons/bi";
+import { useTranslation } from "react-i18next";
 import NavButton from "components/parents/UI/NavButton";
 import { GrOrganization } from "react-icons/gr";
 import { SlOrganization } from "react-icons/sl";
@@ -27,7 +28,7 @@ const links = [
       url: "/teachers/students",
    },
    {
-      name: "organizations",
+      name: "organization",
       icon: <SlOrganization />,
       url: "/teachers/organization",
    },
@@ -44,6 +45,7 @@ const links = [
 ];
 
 const TeacherMobileSideNav = ({ className }: { className?: string }) => {
+   const { t } = useTranslation("teacher");
    const dispatch = useDispatch();
    const router = useRouter();
 
@@ -58,11 +60,11 @@ const TeacherMobileSideNav = ({ className }: { className?: string }) => {
       <div className={`sticky top-0 z-20 mr-[3%] flex h-full min-w-[50px] flex-col gap-4 divide-y py-2 first:pt-0 xl:hidden ${className}`}>
          <div className="flex flex-col justify-between gap-3 pt-4">
             {links.map(({ name, icon, url }) => {
-               return <NavButton {...{ image: icon, url, title: name }} key={name} />;
+               return <NavButton {...{ image: icon, url, title: t(name) }} key={name} />;
             })}
 
             <div>
-               <NavButton onClick={logout} image={<BiLogOut />} url="" title="Log out" />
+               <NavButton onClick={logout} image={<BiLogOut />} url="" title={t("logOut")} />
             </div>
          </div>
       </div>

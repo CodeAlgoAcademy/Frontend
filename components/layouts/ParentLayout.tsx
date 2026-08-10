@@ -17,6 +17,7 @@ import { BsChevronDown } from "react-icons/bs";
 import { getUserFromLocalStorage } from "utils/getTokens";
 import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
 import LanguageSwitcher from "../UI/LanguageSwitcher";
+import useClickOutside from "hooks/useClickOutside";
 
 interface ParentTabs {
    user: boolean;
@@ -40,9 +41,10 @@ const ParentLayout = ({ children, title, showChildrenList}: Props) => {
    const modals = useSelector((state: RootState) => state.modal);
    const currentChild = useSelector((state: RootState) => state.parentChild?.currentChild);
    const dispatch = useDispatch();
+   const userMenuRef = useClickOutside<HTMLDivElement>(() => toggleTab("user", false));
 
    const toggleTab = async (key: keyof ParentTabs, open: boolean) => {
-      setTabs({ ...tabs, [key]: open });
+      setTabs({ user: false, children: false, sidebar: false, [key]: open });
    };
 
    useEffect(() => {
@@ -85,7 +87,7 @@ const ParentLayout = ({ children, title, showChildrenList}: Props) => {
                <div className="flex items-center gap-2">
                   <LanguageSwitcher variant="sidebar" />
                   <BetaButton />
-                  <div className="relative">
+                  <div className="relative" ref={userMenuRef}>
                      <div className="flex cursor-pointer border items-center gap-1 text-mainColor" onClick={() => toggleTab("user", !tabs.user)}>
                         <BiUserCircle size={24} />
                         <p className="hidden text-[1rem] md:block">{user?.username}</p>

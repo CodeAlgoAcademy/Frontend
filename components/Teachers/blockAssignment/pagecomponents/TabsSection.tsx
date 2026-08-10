@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 type Tab = "active" | "completed" | "archived";
 
@@ -9,7 +10,14 @@ interface TabsSectionProps {
 
 const tabs: Tab[] = ["active", "completed", "archived"];
 
+const tabLabelKeys: Record<Tab, string> = {
+  active: "tabActive",
+  completed: "tabCompleted",
+  archived: "tabArchived",
+};
+
 export default function TabsSection({ activeTab, onTabChange }: TabsSectionProps) {
+  const { t } = useTranslation("teacher");
   return (
     <div className="flex gap-1 border-b border-gray-200">
       {tabs.map((tab) => (
@@ -22,7 +30,7 @@ export default function TabsSection({ activeTab, onTabChange }: TabsSectionProps
               : 'text-gray-400 border-transparent hover:text-gray-600'
           }`}
         >
-          {tab.charAt(0).toUpperCase() + tab.slice(1)}
+          {t(tabLabelKeys[tab])}
         </button>
       ))}
     </div>

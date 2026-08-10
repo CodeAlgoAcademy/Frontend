@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { RootState } from "store/store";
 import MathFactAssignModal from "./components/mathfactAssignmentModal";
 import MathFactsList from "./components/mathlist";
@@ -10,6 +11,7 @@ interface MathFactsPageProps {
 }
 
 export default function MathFactsPage({ onViewReport }: MathFactsPageProps) {
+   const { t } = useTranslation("teacher");
    const classId = useSelector((state: RootState) => state.currentClass?.id);
    const classStudents = useSelector((state: RootState) => (state as any).teacherStudentSlice?.students ?? []);
 
@@ -49,10 +51,10 @@ export default function MathFactsPage({ onViewReport }: MathFactsPageProps) {
       setRefreshKey((prev) => prev + 1);
    };
 
-   if (!classId) {
+    if (!classId) {
       return (
          <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-4">
-            <p className="text-sm text-yellow-700">Please select a class first</p>
+            <p className="text-sm text-yellow-700">{t("pleaseSelectClassFirst")}</p>
          </div>
       );
    }
@@ -63,16 +65,16 @@ export default function MathFactsPage({ onViewReport }: MathFactsPageProps) {
             <div className="flex items-center justify-between">
                <div>
                   <div className="flex items-center gap-4">
-                     <h1 className="text-3xl font-bold text-gray-900">Computational Math</h1>
+                     <h1 className="text-3xl font-bold text-gray-900">{t("computationalMath")}</h1>
                      <button 
                         onClick={onViewReport}
                         className="px-4 py-1.5 text-sm font-semibold text-emerald-600 bg-emerald-50 rounded-full hover:bg-emerald-100 transition-colors border border-emerald-200"
                      >
-                        📊 View Mastery Reports
+                        📊 {t("viewMasteryReports")}
                      </button>
                   </div>
                   <p className="mt-1 text-gray-500">
-                     Manage variable-based math drills using dynamic problem generation (x + y)
+                     {t("mathDrillsDescription")}
                   </p>
                </div>
             </div>

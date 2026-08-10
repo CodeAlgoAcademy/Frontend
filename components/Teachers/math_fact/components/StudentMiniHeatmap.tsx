@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 interface ErrorPair {
    operand_a: number;
@@ -47,6 +48,7 @@ function getResult(op: string, a: number, b: number): string {
 }
 
 export default function StudentMiniHeatmap({ studentName, operation, data, onSelect }: Props) {
+   const { t } = useTranslation("teacher");
    const symbol = OP_SYMBOL[operation] ?? operation;
 
    const cellMap: Record<string, ErrorPair> = {};
@@ -61,7 +63,7 @@ export default function StudentMiniHeatmap({ studentName, operation, data, onSel
       >
          <div className="mb-2 flex items-center justify-between">
             <span className="text-sm font-semibold text-slate-700">{studentName}</span>
-            <span className="text-xs text-slate-400 hover:text-green-600">View detail →</span>
+            <span className="text-xs text-slate-400 hover:text-green-600">{t("viewDetail")} →</span>
          </div>
 
          <div className="overflow-x-auto">
@@ -85,8 +87,8 @@ export default function StudentMiniHeatmap({ studentName, operation, data, onSel
                            const result = getResult(operation, row, col);
                            const acc =
                               cell && cell.total > 0
-                                 ? Math.round(getAccuracy(cell)) + "% accuracy · " + cell.total + " attempt" + (cell.total !== 1 ? "s" : "")
-                                 : "not attempted";
+                                 ? t("accuracyAttempts", { accuracy: Math.round(getAccuracy(cell)), attempts: cell.total })
+                                 : t("notAttempted");
 
                            return (
                               <td key={col} className={getCellClasses(cell)} title={`${row}${symbol}${col}=${result} · ${acc}`}>

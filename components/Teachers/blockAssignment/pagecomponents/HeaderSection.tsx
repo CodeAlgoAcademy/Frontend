@@ -27,7 +27,7 @@ export default function HeaderSection({
        </button>
         {lastUpdated && (
           <span className="text-xs text-gray-400">
-            Updated {format(lastUpdated, "hh:mm aa")}
+            {t("updated")} {format(lastUpdated, "hh:mm aa")}
           </span>
         )}
       </div>

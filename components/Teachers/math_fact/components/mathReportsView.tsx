@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { RootState, AppDispatch } from "store/store";
 import { fetchMathAnalytics, fetchMathOverview } from "store/mathFactsSlice";
 import StudentMiniHeatmap from "./StudentMiniHeatmap";
@@ -20,24 +21,25 @@ interface StudentAnalytics {
    data: ErrorPair[];
 }
 
-const OPERATIONS: { value: Operation; label: string }[] = [
-   { value: "all", label: "All" },
-   { value: "multiply", label: "Multiplication" },
-   { value: "add", label: "Addition" },
-   { value: "subtract", label: "Subtraction" },
-   { value: "divide", label: "Division" },
+const OPERATIONS: { value: Operation; labelKey: string }[] = [
+   { value: "all", labelKey: "all" },
+   { value: "multiply", labelKey: "multiplication" },
+   { value: "add", labelKey: "addition" },
+   { value: "subtract", labelKey: "subtraction" },
+   { value: "divide", labelKey: "division" },
 ];
 
 const OP_DISPLAY_LABEL: Record<string, string> = {
-   multiply: "Multiplication",
-   add: "Addition",
-   subtract: "Subtraction",
-   divide: "Division",
+   multiply: "multiplication",
+   add: "addition",
+   subtract: "subtraction",
+   divide: "division",
 };
 
 const ACTIVE_OPS: Exclude<Operation, "all">[] = ["multiply", "add", "subtract", "divide"];
 
 export default function MathReportsView({ classId }: { classId: string | number }) {
+   const { t } = useTranslation("teacher");
    const dispatch = useDispatch<AppDispatch>();
 
    const { analytics, overview, analyticsLoading, loading } = useSelector((state: RootState) => state.mathFacts);
@@ -76,7 +78,7 @@ export default function MathReportsView({ classId }: { classId: string | number 
                onChange={(e) => setSelectedStudent(e.target.value)}
                disabled={loading}
             >
-               <option value="all">All Students</option>
+               <option value="all">{t("allStudents")}</option>
                {overview.map((s) => (
                   <option key={s.id} value={s.id}>
                      {s.full_name}
@@ -93,20 +95,20 @@ export default function MathReportsView({ classId }: { classId: string | number 
                         selectedOperation === op.value ? "bg-white font-semibold text-green-600 shadow-sm" : "text-slate-500 hover:text-slate-700"
                      }`}
                   >
-                     {op.label}
+                     {t(op.labelKey)}
                   </button>
                ))}
             </div>
          </div>
 
-         {analyticsLoading && <div className="py-10 text-center text-sm text-slate-400">Loading mastery data…</div>}
+         {analyticsLoading && <div className="py-10 text-center text-sm text-slate-400">{t("loadingMasteryData")}</div>}
 
          {!analyticsLoading && isAllStudents && (
             <div className="space-y-8">
                {activeOps.map((op) => (
                   <div key={op}>
                      {selectedOperation === "all" && (
-                        <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500">{OP_DISPLAY_LABEL[op]}</h3>
+                        <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500">{t(OP_DISPLAY_LABEL[op])}</h3>
                      )}
 
                      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
@@ -139,8 +141,8 @@ export default function MathReportsView({ classId }: { classId: string | number 
             <div className="rounded-3xl border border-dashed border-slate-300 bg-white py-20 text-center">
                <p className="text-slate-400">
                   {selectedStudent === "all"
-                     ? "No data recorded yet. Students need to complete sessions to generate reports."
-                     : "This student hasn't completed any sessions yet."}
+                     ? t("noDataRecordedYet")
+                     : t("studentNoSessionsYet")}
                </p>
             </div>
          )}

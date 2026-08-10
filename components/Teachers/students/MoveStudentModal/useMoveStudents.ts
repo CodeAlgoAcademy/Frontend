@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 import { RootState } from "store/store";
 import { ISingleStudent } from "types/interfaces";
 import studentService from "services/studentService";
@@ -9,6 +10,7 @@ import { getStudents } from "store/studentSlice";
 export type DestinationType = "" | "own" | "teacher";
 
 export function useMoveStudents(onClose: () => void) {
+   const { t } = useTranslation("teacher");
    const dispatch = useDispatch();
    const { id: sourceClassId } = useSelector((state: RootState) => state.currentClass);
    const students = useSelector((state: RootState) => state?.students?.students);
@@ -51,7 +53,7 @@ export function useMoveStudents(onClose: () => void) {
          const data = await studentService.getOrganizationTeachers(sourceOrgId);
          setTeachers(Array.isArray(data) ? data : []);
       } catch (error: any) {
-         toast.error(error?.response?.data?.message || error?.message || "Failed to load teachers. Please try again.");
+         toast.error(error?.response?.data?.message || error?.message || t("failedToLoadTeachers"));
          setTeachers([]);
       } finally {
          setTeachersLoading(false);
@@ -71,7 +73,7 @@ export function useMoveStudents(onClose: () => void) {
          const data = await studentService.getTeacherClasses(teacherId);
          setTeacherClasses(Array.isArray(data) ? data : []);
       } catch (error: any) {
-         toast.error(error?.response?.data?.message || error?.message || "Failed to load teacher's classes. Please try again.");
+         toast.error(error?.response?.data?.message || error?.message || t("failedToLoadTeachersClasses"));
          setTeacherClasses([]);
       } finally {
          setTeacherClassesLoading(false);
@@ -134,11 +136,11 @@ export function useMoveStudents(onClose: () => void) {
                newClassId,
             });
          }
-         toast.success(`${selectedIds.length} student(s) moved successfully`);
+         toast.success(t("studentsMovedSuccess", { count: selectedIds.length }));
          onClose();
          dispatch(getStudents());
       } catch (error: any) {
-         toast.error(error?.response?.data?.message || error?.message || "Failed to move students. Please try again.");
+         toast.error(error?.response?.data?.message || error?.message || t("failedToMoveStudents"));
       } finally {
          setIsSubmitting(false);
       }

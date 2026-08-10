@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { RootState, AppDispatch } from "store/store";
 import { fetchMathOverview } from "store/mathFactsSlice";
 
@@ -12,6 +13,7 @@ interface MathFactsListProps {
 const MAX_VISIBLE_BADGES = 2;
 
 export default function MathFactsList({ classId, onEdit }: MathFactsListProps) {
+  const { t } = useTranslation("teacher");
   const dispatch = useDispatch<AppDispatch>();
 
   const { overview, loading } = useSelector((state: RootState) => state.mathFacts);
@@ -23,16 +25,16 @@ export default function MathFactsList({ classId, onEdit }: MathFactsListProps) {
   }, [classId, dispatch]);
 
   if (loading && overview.length === 0) {
-    return <div className="p-16 text-center text-gray-400 font-medium animate-pulse">Syncing student records...</div>;
+    return <div className="p-16 text-center text-gray-400 font-medium animate-pulse">{t("syncingStudentRecords")}</div>;
   }
 
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-bold text-gray-800">Student Fluency Overview</h2>
+        <h2 className="text-xl font-bold text-gray-800">{t("studentFluencyOverview")}</h2>
         <div className="flex gap-2">
-          <button onClick={() => onEdit(-1, "Multiple Students", [])} className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700 shadow-sm">
-            Edit for multiple students
+          <button onClick={() => onEdit(-1, t("multipleStudents"), [])} className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700 shadow-sm">
+            {t("editForMultipleStudents")}
           </button>
 
           <button onClick={() => dispatch(fetchMathOverview(classId))} className="p-2 border rounded-lg hover:bg-gray-50 bg-white cursor-pointer">
@@ -43,7 +45,7 @@ export default function MathFactsList({ classId, onEdit }: MathFactsListProps) {
 
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
         {overview.length === 0 ? (
-            <div className="p-12 text-center text-gray-400 italic">No students found.</div>
+            <div className="p-12 text-center text-gray-400 italic">{t("noStudentsFound")}</div>
         ) : (
             <div className="divide-y divide-gray-100">
             {overview.map((row) => {
@@ -68,19 +70,19 @@ export default function MathFactsList({ classId, onEdit }: MathFactsListProps) {
                           >
                             <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${asm.is_mastered ? 'bg-green-500' : 'bg-blue-400 animate-pulse'}`}></span>
                             <span className="text-[10px] font-bold text-blue-700 uppercase truncate">
-                              {asm.fact_set_name} {asm.is_mastered ? '(Mastered)' : ''}
+                              {asm.fact_set_name} {asm.is_mastered ? t("mastered") : ''}
                             </span>
                           </div>
                         ))}
                         {remaining > 0 && (
                           <span className="shrink-0 text-xs font-bold text-gray-400">
-                            +{remaining} more
+                            {t("moreCount", { count: remaining })}
                           </span>
                         )}
                       </>
                     ) : (
                       <span className="text-[10px] font-bold text-gray-300 uppercase tracking-widest bg-gray-50 px-3 py-1 rounded-full border border-gray-100 shrink-0">
-                        Math logic off
+                        {t("mathLogicOff")}
                       </span>
                     )}
                   </div>
@@ -91,7 +93,7 @@ export default function MathFactsList({ classId, onEdit }: MathFactsListProps) {
                       className="inline-flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-blue-600 border border-gray-200 px-4 py-2 rounded-lg bg-white shadow-sm hover:border-blue-200 transition-all cursor-pointer"
                     >
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /></svg>
-                      Edit
+                      {t("edit")}
                     </button>
                   </div>
                 </div>

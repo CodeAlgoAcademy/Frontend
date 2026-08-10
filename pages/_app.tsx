@@ -17,8 +17,7 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "../i18n";
 import { useEffect } from "react";
-import i18n from "../i18n";
-import { detectLanguage } from "../i18n";
+import i18n, { detectLanguage, loadTranslations, syncLanguageToBackend } from "../i18n";
 
 function MyApp({ Component, pageProps }: AppProps) {
    useEffect(() => {
@@ -26,6 +25,18 @@ function MyApp({ Component, pageProps }: AppProps) {
       if (detected !== i18n.language) {
          i18n.changeLanguage(detected);
       }
+      loadTranslations(detected);
+   }, []);
+
+   useEffect(() => {
+      const handleLanguageChange = (lng: string) => {
+         loadTranslations(lng);
+         syncLanguageToBackend(lng);
+      };
+      i18n.on("languageChanged", handleLanguageChange);
+      return () => {
+         i18n.off("languageChanged", handleLanguageChange);
+      };
    }, []);
 
    return (

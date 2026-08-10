@@ -1,5 +1,6 @@
 import React from "react";
 import { ISingleStudent } from "types/interfaces";
+import { useTranslation } from "react-i18next";
 import ModalFooter from "./ModalFooter";
 
 interface StudentSelectStepProps {
@@ -11,10 +12,12 @@ interface StudentSelectStepProps {
    onNext: () => void;
 }
 
-const StudentSelectStep = ({ students, selectedIds, toggleStudent, toggleSelectAll, onCancel, onNext }: StudentSelectStepProps) => (
+const StudentSelectStep = ({ students, selectedIds, toggleStudent, toggleSelectAll, onCancel, onNext }: StudentSelectStepProps) => {
+   const { t } = useTranslation("teacher");
+   return (
    <div>
       {!students || students?.length === 0 ? (
-         <p className="grid h-40 place-content-center text-sm text-gray-500">There are no students to move.</p>
+         <p className="grid h-40 place-content-center text-sm text-gray-500">{t("noStudentsToMove")}</p>
       ) : (
          <div className="overflow-hidden rounded-xl border border-gray-100">
             <div className="grid grid-cols-[40px_1fr_1fr] items-center gap-x-3 bg-gray-50 px-4 py-3">
@@ -24,8 +27,8 @@ const StudentSelectStep = ({ students, selectedIds, toggleStudent, toggleSelectA
                   checked={selectedIds.length === students?.length && students.length > 0}
                   onChange={toggleSelectAll}
                />
-               <span className="text-[14px] font-semibold text-gray-700">Student</span>
-               <span className="text-[14px] font-semibold text-gray-700">Username</span>
+               <span className="text-[14px] font-semibold text-gray-700">{t("student")}</span>
+               <span className="text-[14px] font-semibold text-gray-700">{t("profileUsername")}</span>
             </div>
             <ul className="max-h-[45vh] overflow-y-auto">
                {students?.map((student) => {
@@ -51,8 +54,9 @@ const StudentSelectStep = ({ students, selectedIds, toggleStudent, toggleSelectA
          </div>
       )}
 
-      <ModalFooter onBack={onCancel} backLabel="Cancel" onPrimary={onNext} primaryLabel="Next step" primaryDisabled={selectedIds.length === 0} />
+      <ModalFooter onBack={onCancel} backLabel={t("cancel")} onPrimary={onNext} primaryLabel={t("nextStep")} primaryDisabled={selectedIds.length === 0} />
    </div>
-);
+   );
+};
 
 export default StudentSelectStep;

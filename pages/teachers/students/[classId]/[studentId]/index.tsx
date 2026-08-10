@@ -14,8 +14,10 @@ import { RootState } from "store/store";
 import { getSingleStudent, getStudentScreentime } from "store/studentSlice";
 import { changeCurrentStudent } from "store/teacherStudentSlice";
 import { BaseStudent } from "types/interfaces/teacherstudent.interface";
+import { useTranslation } from "react-i18next";
 
 export default function StudentProfile() {
+   const { t } = useTranslation("teacher");
    const dispatch = useDispatch();
    const router = useRouter();
    const { classId, studentId } = router.query;
@@ -48,23 +50,23 @@ export default function StudentProfile() {
             <Link href={"/teachers/students"}>
                <BsArrowLeftCircle className="cursor-pointer" />
             </Link>
-            <h1 className={styles.headerTitle}>Student Profile</h1>
+            <h1 className={styles.headerTitle}>{t("studentProfile")}</h1>
          </div>
 
          <header className="mt-6 flex flex-wrap justify-center gap-[3rem] relative">
             <div className="h-[200px] w-[200px] overflow-hidden rounded-full">
-               <Image width={200} height={200} src={"/assets/no user.png"} alt="Student profile" />
+                <Image width={200} height={200} src={"/assets/no user.png"} alt={t("studentProfile")} />
             </div>
             <div className="grid min-w-[200px] flex-1 grid-cols-2 gap-[1rem]">
-               <StudentProfileInfo header="Name" body={student?.firstName + " " + lastInitial} />
-               <StudentProfileInfo header="Username" body={student?.username} />
-               <StudentProfileInfo header="Email" body={student?.email} />
+               <StudentProfileInfo header={t("profileName")} body={student?.firstName + " " + lastInitial} />
+               <StudentProfileInfo header={t("profileUsername")} body={student?.username} />
+               <StudentProfileInfo header={t("profileEmail")} body={student?.email} />
             <div className="">
                <p 
                   className="cursor-pointer font-medium underline" 
                   onClick={() => setResetPasswordOpen(!resetPasswordOpen)}
                >
-                  Reset Password
+                  {t("resetPassword")}
                </p>
                
                {resetPasswordOpen && student && classId && (
@@ -81,13 +83,13 @@ export default function StudentProfile() {
          </header>
 
          <div>
-            <h2 className={styles.subheader}>Screentime</h2>
+            <h2 className={styles.subheader}>{t("screentime")}</h2>
             <div>
                <StudentBarChart />
             </div>
          </div>
          <div>
-            <h2 className={styles.subheader}>Level Threshold</h2>
+            <h2 className={styles.subheader}>{t("levelThreshold")}</h2>
             <div>
                <StudentLevelChart />
             </div>

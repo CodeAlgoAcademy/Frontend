@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Clock, BookOpen, Loader } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import TeacherLayout from '@/components/layouts/TeacherLayout';
 
 export default function LessonTab() {
+  const { t } = useTranslation('teacher');
   const [activeLesson, setActiveLesson] = useState<'60min' | '30min'>('60min');
   const [isLoading, setIsLoading] = useState(true);
   const [iframeLoaded, setIframeLoaded] = useState(false);
@@ -33,10 +35,10 @@ export default function LessonTab() {
               </div>
               <div>
                 <h1 className="text-lg font-semibold text-gray-900">
-                  Lesson Materials
+                  {t('lessonMaterials')}
                 </h1>
                 <p className="text-sm text-gray-500">
-                  Select your lesson duration
+                  {t('selectLessonDuration')}
                 </p>
               </div>
             </div>
@@ -51,7 +53,7 @@ export default function LessonTab() {
               }`}
             >
               <Clock className="w-4 h-4" />
-              <span>60 Minute Lesson</span>
+              <span>{t('sixtyMinuteLesson')}</span>
             </button>
 
             <button
@@ -63,7 +65,7 @@ export default function LessonTab() {
               }`}
             >
               <Clock className="w-4 h-4" />
-              <span>30 Minute Lesson</span>
+              <span>{t('thirtyMinuteLesson')}</span>
             </button>
           </div>
         </div>
@@ -73,7 +75,7 @@ export default function LessonTab() {
             <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
               <div className="flex flex-col items-center space-y-3">
                 <Loader className="w-8 h-8 text-blue-600 animate-spin" />
-                <p className="text-gray-600">Loading lesson content...</p>
+                <p className="text-gray-600">{t('loadingLessonContent')}</p>
               </div>
             </div>
           )}

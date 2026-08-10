@@ -5,6 +5,7 @@ import { MetaInfo } from "@/components/Teachers/blockAssignment/detailComponents
 import { ResultsTable } from "@/components/Teachers/blockAssignment/detailComponents/ResultsTable";
 import { TopicPills } from "@/components/Teachers/blockAssignment/detailComponents/TopicPills";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import assignmentServices from "services/block_assignments";
 
 interface Props {
@@ -19,6 +20,7 @@ type ViewMode = "numeric" | "percentage";
 const COLS_PER_PAGE = 5;
 
 export default function AssignmentDetailView({ classId, assignmentId, onBack, onEdit }: Props) {
+   const { t } = useTranslation("teacher");
    const [data, setData] = useState<any>(null);
    const [loading, setLoading] = useState(true);
    const [colPage, setColPage] = useState(0);
@@ -82,27 +84,27 @@ export default function AssignmentDetailView({ classId, assignmentId, onBack, on
          onBack();
       } catch (err) {
          console.error("Archive failed:", err);
-         alert("Failed to archive assignment.");
+         alert(t("failedToArchiveAssignment"));
       }
    };
 
    const handleDelete = async () => {
-      if (window.confirm("Are you sure? This action is permanent.")) {
+      if (window.confirm(t("permanentDeleteConfirm"))) {
          try {
             await assignmentServices.deleteAssignment(classId, assignmentId);
             onBack();
          } catch (err) {
             console.error("Delete failed:", err);
-            alert("Failed to delete assignment.");
+            alert(t("failedToDeleteAssignment"));
          }
       }
    };
 
    if (loading) {
-      return <div className="flex items-center justify-center py-20 text-slate-400">Loading results…</div>;
+      return <div className="flex items-center justify-center py-20 text-slate-400">{t("loadingResults")}</div>;
    }
    if (!data) {
-      return <div className="flex items-center justify-center py-20 text-slate-400">Failed to load results.</div>;
+      return <div className="flex items-center justify-center py-20 text-slate-400">{t("failedToLoadResults")}</div>;
    }
 
    const allCols = data.all_topics || [];

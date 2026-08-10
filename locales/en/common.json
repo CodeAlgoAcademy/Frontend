@@ -171,5 +171,7 @@
   "users": "Users",
   "price": "Price",
   "duration": "Duration",
-  "readMore": "Read More"
+  "readMore": "Read More",
+  "pleaseSelectClassFirst": "Please select a class first",
+  "credentialsEmailSent": "Student's login credentials have been sent to their email"
 }

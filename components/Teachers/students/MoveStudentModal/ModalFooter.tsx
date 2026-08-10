@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 interface ModalFooterProps {
    onBack?: () => void;
@@ -9,7 +10,9 @@ interface ModalFooterProps {
    testId?: string;
 }
 
-const ModalFooter = ({ onBack, backLabel = "Back", onPrimary, primaryLabel, primaryDisabled, testId }: ModalFooterProps) => (
+const ModalFooter = ({ onBack, backLabel, onPrimary, primaryLabel, primaryDisabled, testId }: ModalFooterProps) => {
+   const { t } = useTranslation("teacher");
+   return (
    <div className="mt-6 flex justify-start gap-x-3">
       {onBack && (
          <button
@@ -17,7 +20,7 @@ const ModalFooter = ({ onBack, backLabel = "Back", onPrimary, primaryLabel, prim
             className="rounded-full bg-gray-100 px-6 py-3 text-[15px] font-semibold text-gray-500 transition-colors hover:bg-gray-200"
             onClick={onBack}
          >
-            {backLabel}
+            {backLabel || t("back")}
          </button>
       )}
       {onPrimary && (
@@ -32,6 +35,7 @@ const ModalFooter = ({ onBack, backLabel = "Back", onPrimary, primaryLabel, prim
          </button>
       )}
    </div>
-);
+   );
+};
 
 export default ModalFooter;
