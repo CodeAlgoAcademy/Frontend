@@ -1,28 +1,39 @@
 import React, { useEffect, useState } from "react";
-import { FiPlus, FiSettings, FiChevronDown, FiEdit2, FiFileText, FiTrash2 } from "react-icons/fi";
+import { FiPlus, FiSettings, FiChevronDown } from "react-icons/fi";
 import { FaSearch } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
 import { HiOutlineArrowsExpand } from "react-icons/hi";
+import { RiEditLine, RiDeleteBin6Line } from "react-icons/ri";
+import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
 import TeacherLayout from "@/components/layouts/TeacherLayout";
 import AddStudentModal from "@/components/Teachers/students/AddStudentModal";
 import Students from "@/components/Teachers/students/Students";
 import NoItem from "@/components/UI/NoItem";
-import { ISingleStudent } from "types/interfaces";
+import { ISingleStudent, IClass } from "types/interfaces";
 import { getStudents } from "store/studentSlice";
 import MoveStudentModal from "@/components/Teachers/students/MoveStudentModal";
+import Modal from "@/components/Teachers/addClass/modal";
+import DeleteConfirmationModal from "@/components/Teachers/UI/common/DeleteConfirmationModal";
+import { deleteClass, getAllClasses } from "services/classesService";
+import { openEditClassModal } from "store/modalSlice";
+import { populateClassForEdit } from "store/addClassSlice";
 import { useTranslation } from "react-i18next";
 import useClickOutside from "hooks/useClickOutside";
 
 const Index = () => {
    const { t } = useTranslation("teacher");
    const dispatch = useDispatch();
+   const router = useRouter();
    const [isOpen, setIsOpen] = useState<boolean>(false);
    const [isMoveStudentModalOpen, setIsMoveStudentModalOpen] = useState<boolean>(false);
    const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
+   const [isDeleteClassModalOpen, setIsDeleteClassModalOpen] = useState<boolean>(false);
+   const [isDeletingClass, setIsDeletingClass] = useState<boolean>(false);
    const settingsRef = useClickOutside<HTMLDivElement>(() => setIsSettingsOpen(false));
    const { id } = useSelector((state: RootState) => state.currentClass);
+   const currentClass = useSelector((state: RootState) => state.currentClass);
+   const classes = useSelector((state: RootState) => state.allClasses.classes);
    const [commentTabsOpened, setCommentTabsOpened] = useState<boolean>(false);
    const students = useSelector((state: RootState) => state?.students?.students);
    const [filteredStudents, setFilteredStudents] = useState<ISingleStudent[]>([]);
@@ -52,17 +63,53 @@ const Index = () => {
          });
       });
    };
+
+   const handleEditClass = () => {
+      const current = classes?.find((cls: IClass) => String(cls.id) === String(id));
+      const classData = current
+         ? {
+              className: current.className,
+              grade: current.grade,
+              subject: current.subject,
+              roomNumber: current.roomNumber,
+              color: current.color,
+              organization: current.organization?.id || current.organization?.name || "",
+              coTeachers: current.coTeacher || "",
+           }
+         : {
+              className: currentClass.className,
+              grade: "",
+              subject: "",
+              roomNumber: "",
+              color: currentClass.color,
+              organization: "",
+              coTeachers: "",
+           };
+      dispatch(populateClassForEdit(classData));
+      dispatch(openEditClassModal(current?.id ?? id));
+      setIsSettingsOpen(false);
+   };
+
+   const handleDeleteClassClick = () => {
+      setIsSettingsOpen(false);
+      setIsDeleteClassModalOpen(true);
+   };
+
+   const handleDeleteClassConfirm = async () => {
+      setIsDeletingClass(true);
+      try {
+         await dispatch(deleteClass(id));
+         dispatch(getAllClasses());
+         setIsDeleteClassModalOpen(false);
+         router.push("/teachers/addClass");
+      } catch (error) {
+         console.error("Failed to delete class:", error);
+      } finally {
+         setIsDeletingClass(false);
+      }
+   };
+
    const settingsMenuItems = [
-
-      // {
-      //    label: "Edit Classroom Name",
-      //    icon: <FiEdit2 size={18} className="text-gray-500" />,
-      //    onClick: () => {
-      //       setIsSettingsOpen(false);
-      //    },
-      //    testId: "edit-classroom-name-option",
-      // },
-
       {
          label: t("moveStudents"),
          icon: <HiOutlineArrowsExpand size={18} className="text-gray-500" />,
@@ -72,15 +119,19 @@ const Index = () => {
          },
          testId: "move-students-option",
       },
-      // {
-      //    label: "Delete Classroom",
-      //    icon: <FiTrash2 size={18} className="text-gray-500" />,
-      //    onClick: () => {
-      //       setIsSettingsOpen(false);
-      //       // TODO: open delete-classroom confirmation
-      //    },
-      //    testId: "delete-classroom-option",
-      // },
+      {
+         label: t("editClass"),
+         icon: <RiEditLine size={18} className="text-gray-500" />,
+         onClick: handleEditClass,
+         testId: "edit-class-option",
+      },
+      {
+         label: t("deleteClass"),
+         icon: <RiDeleteBin6Line size={18} className="text-red-500" />,
+         danger: true,
+         onClick: handleDeleteClassClick,
+         testId: "delete-class-option",
+      },
    ];
 
    return (
@@ -114,10 +165,12 @@ const Index = () => {
                                  key={item.testId}
                                  type="button"
                                  onClick={item.onClick}
-                                 className="flex w-full items-center gap-3 px-4 py-2.5 text-left text-sm text-gray-700 transition-colors duration-200 hover:bg-gray-50"
+                                 className={`flex w-full items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors duration-200 ${
+                                    item.danger ? "text-red-600 hover:bg-red-50" : "text-gray-700 hover:bg-gray-50"
+                                 }`}
                                  data-testid={item.testId}
                               >
-                                 <span className="flex w-5 items-center justify-center">{item.icon}</span>
+                                 <span className={`flex w-5 items-center justify-center ${item.danger ? "text-red-500" : ""}`}>{item.icon}</span>
                                  {item.label}
                               </button>
                            ))}
@@ -157,6 +210,16 @@ const Index = () => {
             )}
             {isOpen && <AddStudentModal setIsOpen={setIsOpen} />}
             {isMoveStudentModalOpen && <MoveStudentModal setIsOpen={setIsMoveStudentModalOpen} />}
+            <DeleteConfirmationModal
+               isOpen={isDeleteClassModalOpen}
+               onClose={() => setIsDeleteClassModalOpen(false)}
+               onConfirm={handleDeleteClassConfirm}
+               title={t("deleteClass")}
+               itemName={currentClass.className}
+               isLoading={isDeletingClass}
+               warningMessage={currentClass.isOrganizationClass ? t("orgClassPermissionWarning") : undefined}
+            />
+            <Modal />
          </TeacherLayout>
       </div>
    );
