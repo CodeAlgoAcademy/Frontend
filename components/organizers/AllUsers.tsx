@@ -6,12 +6,14 @@ import { getOrganizationUsers } from "services/organizersService";
 import EmptyState from "./UI/emptystate";
 import LoadingSkeleton from "./UI/LoadingSkeleton";
 import UsersTable from "./UI/UsersTable";
+import { useTranslation } from "react-i18next";
 
 interface AllUsersProps {
   onAddUser: () => void;
 }
 
 const AllUsers: React.FC<AllUsersProps> = ({ onAddUser }) => {
+  const { t } = useTranslation("organizer");
   const dispatch = useDispatch();
   const { 
     users, 
@@ -28,18 +30,18 @@ const AllUsers: React.FC<AllUsersProps> = ({ onAddUser }) => {
   }, [dispatch, selectedOrganization?.id]);
 
   return (
-    <ContentBox title="All Users" size="large" padding="large">
+    <ContentBox title={t("allUsers")} size="large" padding="large">
       {loading ? (
         <LoadingSkeleton />
       ) : (
         <>
           <div className="mb-6 flex justify-between items-center">
-            <h2 className="text-xl font-semibold text-gray-800">Organization Users</h2>
+            <h2 className="text-xl font-semibold text-gray-800">{t("organizationUsers")}</h2>
             <button
               onClick={onAddUser}
               className="px-4 py-2 bg-mainColor text-white rounded-md hover:opacity-90 transition-opacity"
             >
-              Add User
+              {t("addUser")}
             </button>
           </div>
 
@@ -47,7 +49,7 @@ const AllUsers: React.FC<AllUsersProps> = ({ onAddUser }) => {
             <>
               <UsersTable users={users} />
               <div className="mt-4 text-sm text-gray-500">
-                Showing {users.length} user{users.length !== 1 ? 's' : ''}
+                {t("showingUsers", { count: users.length })}
               </div>
             </>
           ) : (

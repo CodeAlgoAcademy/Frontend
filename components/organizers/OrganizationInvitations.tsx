@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllInvitations } from "services/organizersService";
 import { RootState } from "store/store";
 import ContentBox from "../parents/UI/ContentBox";
+import { useTranslation } from "react-i18next";
 
 const OrganizationInvitations = () => {
+   const { t } = useTranslation("organizer");
    const { 
       invitations, 
       loading, 
@@ -31,9 +33,9 @@ const OrganizationInvitations = () => {
 
    if (!selectedOrganization) {
       return (
-         <ContentBox size="base" title="Received Invitations" padding="small">
+         <ContentBox size="base" title={t("receivedInvitations")} padding="small">
             <div className="h-[220px] w-full overflow-hidden rounded-xl bg-[#eeeeee] py-2 px-4 flex items-center justify-center">
-               <p className="text-gray-500">Please select an organization first</p>
+               <p className="text-gray-500">{t("selectOrganizationFirst")}</p>
             </div>
          </ContentBox>
       );
@@ -41,9 +43,9 @@ const OrganizationInvitations = () => {
 
    if (loading) {
       return (
-         <ContentBox size="base" title="Received Invitations" padding="small">
+         <ContentBox size="base" title={t("receivedInvitations")} padding="small">
             <div className="h-[220px] w-full overflow-hidden rounded-xl bg-[#eeeeee] py-2 px-4 flex items-center justify-center">
-               <p className="text-gray-500">Loading invitations...</p>
+               <p className="text-gray-500">{t("loadingInvitations")}</p>
             </div>
          </ContentBox>
       );
@@ -51,16 +53,16 @@ const OrganizationInvitations = () => {
 
    if (error) {
       return (
-         <ContentBox size="base" title="Received Invitations" padding="small">
+         <ContentBox size="base" title={t("receivedInvitations")} padding="small">
             <div className="h-[220px] w-full overflow-hidden rounded-xl bg-[#eeeeee] py-2 px-4 flex items-center justify-center">
-               <p className="text-red-500">Error: {error}</p>
+               <p className="text-red-500">{t("errorLabel", { message: error })}</p>
             </div>
          </ContentBox>
       );
    }
 
    return (
-      <ContentBox size="base" title="Received Invitations" padding="small">
+      <ContentBox size="base" title={t("receivedInvitations")} padding="small">
          <div className="h-[220px] w-full overflow-hidden overflow-y-auto rounded-xl bg-[#eeeeee] py-2 px-4">
             {organizationInvitations.length > 0 ? (
                organizationInvitations.map((invite, index: number) => (
@@ -70,17 +72,17 @@ const OrganizationInvitations = () => {
                      </span>
                      <div className="flex items-center gap-x-2">
                         <i className="text-mainColor cursor-pointer text-[12px] underline" onClick={async () => {}}>
-                           Accept
+                           {t("accept")}
                         </i>
                         <i className="text-mainColor cursor-pointer text-[12px] underline" onClick={async () => {}}>
-                           Decline
+                           {t("decline")}
                         </i>
                      </div>
                   </article>
                ))
             ) : (
                <div className="h-full flex items-center justify-center">
-                  <p className="text-gray-500">No invitations found for {selectedOrganization.name}</p>
+                  <p className="text-gray-500">{t("noInvitationsForOrg", { name: selectedOrganization.name })}</p>
                </div>
             )}
          </div>

@@ -5,8 +5,10 @@ import ContentBox from "../parents/UI/ContentBox";
 import { getAllLicenses, sendLicenseRequest } from "services/organizersService";
 import { openErrorModal } from "store/fetchSlice";
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
 
 const AllLicenses = () => {
+   const { t } = useTranslation("organizer");
    const dispatch = useDispatch();
    const router = useRouter();
    const licenses = useSelector((state: RootState) => state?.organizer?.licenses);
@@ -15,7 +17,7 @@ const AllLicenses = () => {
 
    const sendRequest = async () => {
       if (!selectedLicense) {
-         dispatch(openErrorModal({ errorText: ["Select a license"] }));
+         dispatch(openErrorModal({ errorText: [t("selectALicense")] }));
       }
 
       const data = await dispatch(sendLicenseRequest(selectedLicense));
@@ -29,7 +31,7 @@ const AllLicenses = () => {
    }, []);
 
    return (
-      <ContentBox title="All Licenses" size="base" padding="small" subtitle="Select a license and send a request">
+      <ContentBox title={t("allLicenses")} size="base" padding="small" subtitle={t("selectLicenseAndSendRequest")}>
          <div className="mb-4 max-h-[200px] overflow-y-scroll">
             {licenses?.map((license, index) => {
                return (
@@ -48,7 +50,7 @@ const AllLicenses = () => {
          </div>
          {licenses?.length > 0 && selectedLicense && (
             <button className="bg-mainColor rounded-md p-2 text-white" onClick={sendRequest}>
-               Send Request
+               {t("sendRequest")}
             </button>
          )}
       </ContentBox>

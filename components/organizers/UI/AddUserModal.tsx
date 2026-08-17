@@ -6,6 +6,7 @@ import { addUserToOrganization, getAllInvitations, getAllRoles } from "services/
 import { RootState } from "store/store";
 import { IRole } from "types/interfaces/organization.interface";
 import useClickOutside from "hooks/useClickOutside";
+import { useTranslation } from "react-i18next";
 
 interface AddUserModalProps {
   isOpen: boolean;
@@ -13,6 +14,7 @@ interface AddUserModalProps {
 }
 
 const AddUserModal: React.FC<AddUserModalProps> = ({ isOpen, onClose }) => {
+   const { t } = useTranslation("organizer");
    const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
    const [email, setEmail] = useState<string>("");
    const [role, setRole] = useState<IRole | undefined>(undefined);
@@ -27,7 +29,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ isOpen, onClose }) => {
 
       const data = await dispatch(addUserToOrganization({ email, role: role?.id }));
       if (!data?.error) {
-         setMessage("Invite sent!");
+         setMessage(t("inviteSent"));
          setEmail("");
          dispatch(getAllInvitations());
          setTimeout(() => {
@@ -63,7 +65,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ isOpen, onClose }) => {
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
          <div className="relative w-full max-w-md bg-white rounded-lg shadow-lg">
             <div className="flex items-center justify-between p-4 border-b">
-               <h3 className="text-lg font-semibold">Add User</h3>
+               <h3 className="text-lg font-semibold">{t("addUser")}</h3>
                <button
                   onClick={onClose}
                   className="p-1 text-gray-400 hover:text-gray-600"
@@ -75,12 +77,12 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ isOpen, onClose }) => {
             <form onSubmit={submit} className="p-6">
                <div className="mb-4">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                     User Email
+                     {t("userEmail")}
                   </label>
                   <input
                      type="email"
                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-mainColor"
-                     placeholder="Enter user email"
+                     placeholder={t("enterUserEmail")}
                      value={email}
                      onChange={(e) => setEmail(e.target.value)}
                      required
@@ -89,14 +91,14 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ isOpen, onClose }) => {
 
                <div className="mb-6">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                     Role
+                     {t("role")}
                   </label>
                   <div className="relative" ref={roleDropdownRef}>
                      <div
                         onClick={() => setDropdownOpen((prev) => !prev)}
                         className="flex items-center justify-between w-full px-3 py-2 border border-gray-300 rounded-md cursor-pointer"
                      >
-                        <p>{role?.name || "Select a role"}</p>
+                        <p>{role?.name || t("selectARole")}</p>
                         <i className="text-[1.2rem]">
                            {dropdownOpen ? <BiChevronUp /> : <BiChevronDown />}
                         </i>
@@ -127,13 +129,13 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ isOpen, onClose }) => {
                      onClick={onClose}
                      className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50"
                   >
-                     Cancel
+                     {t("cancel")}
                   </button>
                   <button
                      type="submit"
                      className="px-4 py-2 text-white bg-mainColor rounded-md hover:opacity-90"
                   >
-                     Send Invite
+                     {t("sendInvite")}
                   </button>
                </div>
 

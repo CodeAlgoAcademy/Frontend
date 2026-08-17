@@ -21,6 +21,7 @@ import { deleteStudent, fetchStudentBlockGameProgress } from "store/teacherStude
 import { useAppDispatch } from "store/hooks";
 import StudentTable from "@/components/Teachers/students/StudentTable";
 import useClickOutside from "hooks/useClickOutside";
+import { useTranslation } from "react-i18next";
 
 const SingleOrganizationStudent = ({
    student,
@@ -46,6 +47,7 @@ const SingleOrganizationStudent = ({
    setEditStudentModalOpened: Dispatch<SetStateAction<string>>;
    index: number;
 }) => {
+   const { t } = useTranslation("organizer");
    const dispatch = useAppDispatch();
    const { selectedOrganization } = useSelector((state: RootState) => state.organizer);
 
@@ -64,40 +66,6 @@ const SingleOrganizationStudent = ({
       username: student?.username,
    });
    const [studentProgress, setStudentProgress] = useState<IChildTopics>({ current: { title: "", level: 0, progress: 0 }, topic: [] });
-
-   // const getStudentProgress = async () => {
-   //   if (!student?.student_id || !classId) return;
-
-   //   const data = await studentService.getStudentProgressByTeacher(
-   //     student.student_id as string,
-   //     classId as string
-   //   );
-
-   //   if (data) setStudentProgress(data);
-   // };
-
-   //    const getStudentProgress = async () => {
-   //       if (!student?.student_id || !classId) return;
-
-   //       try {
-   //          const data = await dispatch(
-   //             fetchStudentBlockGameProgress({
-   //                classId,
-   //                studentId: student.student_id,
-   //             })
-   //          ).unwrap();
-
-   //          if (data) {
-   //             // blockgame progress comes back as a list
-   //             setStudentProgress({
-   //                current: { title: "", level: 0, progress: 0 },
-   //                topic: data,
-   //             });
-   //          }
-   //       } catch (error) {
-   //          console.error("Failed to fetch blockgame progress:", error);
-   //       }
-   //    };
 
    const updateComment = (text: string): void => {
       if (comment.length < 100) {
@@ -152,13 +120,6 @@ const SingleOrganizationStudent = ({
       });
    };
 
-   // const handleSubmittionOfEditDetails = async (e: ChangeEvent<HTMLFormElement>) => {
-   //    e.preventDefault();
-   //    await dispatch(editStudent({ id: student.id, ...editingStudentDetails }));
-   //    await dispatch(getStudents());
-   //    setEditStudentModalOpened("");
-   // };
-
    const handleSubmittionOfEditDetails = async (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
       const payload = { id: student.id, ...editingStudentDetails };
@@ -168,17 +129,13 @@ const SingleOrganizationStudent = ({
       setEditStudentModalOpened("");
    };
 
-      // useEffect(() => {
-      //    getStudentProgress();
-      // }, [student?.student_id, classId]);
-
    return (
       <div className="bg-[#fff] shadow-lg" data-testid={`single-student`}>
          {editStudentModalOpened === student.id && (
             <section className="fixed top-0 left-0 z-20 flex h-screen w-full items-center justify-center bg-[rgba(0,0,0,0.4)]">
                <div className="mx-auto w-[90vw] max-w-[350px] rounded-md bg-white p-6 shadow-md">
                   <header className="mb-3 flex items-center justify-between">
-                     <h1 className="font-bold text-mainColor">Edit {"Student's"} Details</h1>
+                     <h1 className="font-bold text-mainColor">{t("editStudentDetails")}</h1>
                      <span
                         className="text-[18px] font-bold text-[darkRed]"
                         onClick={() => {
@@ -195,7 +152,7 @@ const SingleOrganizationStudent = ({
                         className={styles.input}
                         name="firstName"
                         required
-                        placeholder="Enter Firstname*"
+                        placeholder={t("enterFirstname")}
                         onChange={updateEditingDetails}
                      />
                      <input
@@ -204,7 +161,7 @@ const SingleOrganizationStudent = ({
                         className={styles.input}
                         name="lastName"
                         required
-                        placeholder="Enter Lastname*"
+                        placeholder={t("enterLastname")}
                         onChange={updateEditingDetails}
                      />
                      <input
@@ -213,7 +170,7 @@ const SingleOrganizationStudent = ({
                         className={styles.input}
                         name="username"
                         required
-                        placeholder="Enter username*"
+                        placeholder={t("enterUsername")}
                         onChange={updateEditingDetails}
                      />
                      <input
@@ -222,12 +179,12 @@ const SingleOrganizationStudent = ({
                         className={styles.input}
                         name="email"
                         required
-                        placeholder="Enter email*"
+                        placeholder={t("enterEmailPlaceholder")}
                         onChange={updateEditingDetails}
                      />
 
                      <button type="submit" className="mt-3 w-full rounded-md bg-mainColor p-3 text-white active:scale-[0.98]">
-                        Edit Student Details
+                        {t("editStudentDetailsBtn")}
                      </button>
                   </form>
                </div>
@@ -244,7 +201,7 @@ const SingleOrganizationStudent = ({
                   <input
                      type="text"
                      className="flex-[0.8] rounded-l-md border-2 border-mainColor px-2 py-2 text-black outline-none"
-                     placeholder={`Max. of 100 characters`}
+                     placeholder={t("max100Characters")}
                      value={comment}
                      onChange={(e: ChangeEvent<HTMLInputElement>) => updateComment(e.target.value)}
                   />
@@ -257,15 +214,14 @@ const SingleOrganizationStudent = ({
                <section className="fixed top-0 left-0 z-20 flex min-h-screen w-full items-center justify-center bg-[rgba(0,0,0,0.5)]">
                   <form className="scale-up comment-tab w-[90vw] max-w-[400px] rounded-md bg-white py-2 px-3 shadow-md">
                      <h2 className="text-[20px] font-bold">
-                        Comments on {student.firstName} {student.lastName}
-                        {"'"}s performance
+                        {t("commentsOnPerformance", { name: `${student.firstName} ${student.lastName}` })}
                      </h2>
                      <div
                         className={`mt-3 flex h-[90vh] max-h-[230px] flex-col gap-y-2 overflow-y-scroll ${
                            studentComments?.length === 0 && "items-center justify-center"
                         }`}
                      >
-                        {studentComments?.length === 0 && <h1 className="text-[17px] font-bold">No comment added for this student</h1>}
+                        {studentComments?.length === 0 && <h1 className="text-[17px] font-bold">{t("noCommentAdded")}</h1>}
                         {studentComments?.map((comment: any, index: number) => {
                            return (
                               <article key={index} className="flex items-center justify-between gap-x-2">
@@ -275,7 +231,7 @@ const SingleOrganizationStudent = ({
                                        value={editingComment}
                                        onChange={(e: ChangeEvent<HTMLInputElement>) => updateEditingComment(e.target.value)}
                                        type="text"
-                                       placeholder="Max. of 100 characters"
+                                       placeholder={t("max100Characters")}
                                        className="flex-1 rounded-md border-2 border-mainColor px-4 py-2 outline-none"
                                     />
                                  ) : (
@@ -327,7 +283,7 @@ const SingleOrganizationStudent = ({
                               setStudentCommentsTabOpen("");
                            }}
                         >
-                           Close
+                           {t("close")}
                         </button>
                      </div>
                   </form>
@@ -337,7 +293,6 @@ const SingleOrganizationStudent = ({
             <div className="flex items-center">
                <div className={styles.cardHeaderName} onClick={() => handleStudents(parseInt(student.id as string))}>
                   <div className="flex w-[128px] flex-col gap-y-2 overflow-hidden text-ellipsis">
-                     {/* <Link href={`${selectedOrganization?.id}/users/students/${student.id}`}> */}
                      <Link href={`${selectedOrganization?.id}/users/students/${student.id}`}>
                         <p className={styles.studentName + " max-w-fit hover:underline"}>{`${student.firstName} ${student.lastName}`}</p>
                      </Link>
@@ -348,7 +303,7 @@ const SingleOrganizationStudent = ({
                </div>
                <div className="hidden px-2 text-[12px] md:block">
                   <span className={(student.active ? "bg-green-500" : "border-2") + styles.active}></span>
-                  {student.active ? `Active` : "Inactive"}
+                  {student.active ? t("active") : t("inactive")}
                </div>
             </div>
             <span
@@ -357,8 +312,8 @@ const SingleOrganizationStudent = ({
                   setEditStudentModalOpened(student.id as string);
                }}
             >
-               <span className="hidden md:block">Edit {"student's"} details</span>
-               <span className="block md:hidden">Edit</span>
+               <span className="hidden md:block">{t("editStudentsDetailsLink")}</span>
+               <span className="block md:hidden">{t("editStudentDetailsBtn")}</span>
             </span>
             <div className={styles.actions}>
                <span
@@ -387,7 +342,7 @@ const SingleOrganizationStudent = ({
                               setConfirmDeleteOpen(true);
                            }}
                         >
-                           Delete student
+                           {t("deleteStudent")}
                         </button>
 
                         <button
@@ -403,7 +358,7 @@ const SingleOrganizationStudent = ({
                               }
                            }}
                         >
-                           View Comments
+                           {t("viewComments")}
                         </button>
                      </div>
                   )}
@@ -412,7 +367,7 @@ const SingleOrganizationStudent = ({
                      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
                         <div className="rounded-lg bg-white p-6 shadow-lg">
                            <p className="mb-4 text-sm">
-                              Are you sure you want to delete{" "}
+                              {t("confirmDeleteStudent")}{" "}
                               <span className="font-semibold">
                                  {student.firstName} {student.lastName}
                               </span>
@@ -420,42 +375,23 @@ const SingleOrganizationStudent = ({
                            </p>
                            <div className="flex justify-end space-x-2">
                               <button className="rounded bg-gray-300 px-4 py-2" onClick={() => setConfirmDeleteOpen(false)}>
-                                 Cancel
+                                 {t("cancel")}
                               </button>
                               <button
                                  className="rounded bg-red-600 px-4 py-2 text-white"
-                                 //  onClick={async () => {
-                                 //     await dispatch(deleteStudent({ classId, studentId: student?.id }));
-                                 //     await dispatch(getStudents());
-                                 //     setConfirmDeleteOpen(false);
-                                 //  }}
                               >
-                                 Delete
+                                 {t("delete")}
                               </button>
                            </div>
                         </div>
                      </div>
                   )}
                </div>
-
-               {/* <span
-                  onClick={() => {
-                     setStudentCommentOpen("");
-                     if (studentCommentsTabOpen === student.firstName + student.email) {
-                        setStudentCommentsTabOpen("");
-                     } else {
-                        setStudentCommentsTabOpen(student.firstName + student.email);
-                        getStudentComment(student.id as string);
-                     }
-                  }}
-               >
-                  <HiOutlineDotsHorizontal className={styles.pointer} />
-               </span>{" "} */}
             </div>
          </div>
          {students?.assignments?.length === 0 ? (
             <p className="grid h-full w-full place-content-center">
-               <span>No lesson available</span>
+               <span>{t("noLessonAvailable")}</span>
             </p>
          ) : (
             <>

@@ -1,5 +1,6 @@
 import React from "react";
 import ContentBox from "../parents/UI/ContentBox";
+import { useTranslation } from "react-i18next";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -35,6 +36,8 @@ interface OrganizationUserStrenghtProps {
 }
 
 const OrganizationUserStrenght = ({ signupsData, loading }: OrganizationUserStrenghtProps) => {
+  const { t } = useTranslation("organizer");
+
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -44,7 +47,7 @@ const OrganizationUserStrenght = ({ signupsData, loading }: OrganizationUserStre
       },
       title: {
         display: true,
-        text: 'User Signups Trend',
+        text: t('userSignupsTrend'),
       },
     },
     scales: {
@@ -61,7 +64,7 @@ const OrganizationUserStrenght = ({ signupsData, loading }: OrganizationUserStre
     labels: signupsData?.labels || [],
     datasets: [
       {
-        label: 'Daily Signups',
+        label: t('dailySignups'),
         data: signupsData?.data || [],
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
         borderColor: 'rgba(75, 192, 192, 1)',
@@ -73,7 +76,7 @@ const OrganizationUserStrenght = ({ signupsData, loading }: OrganizationUserStre
   if (loading) {
     return (
       <ContentBox 
-        title="Users Strength"
+        title={t("usersStrength")}
         padding="small"
         style={{
           minWidth: "100%",
@@ -84,7 +87,7 @@ const OrganizationUserStrenght = ({ signupsData, loading }: OrganizationUserStre
         size={"large"}
       >
         <div className="flex h-[300px] items-center justify-center">
-          <p className="animate-pulse text-gray-500">Loading analytics...</p>
+          <p className="animate-pulse text-gray-500">{t("loadingAnalytics")}</p>
         </div>
       </ContentBox>
     );
@@ -92,7 +95,7 @@ const OrganizationUserStrenght = ({ signupsData, loading }: OrganizationUserStre
 
   return (
     <ContentBox 
-      title="Users Strength"
+      title={t("usersStrength")}
       padding="small"
       style={{
         minWidth: "100%",
@@ -107,7 +110,7 @@ const OrganizationUserStrenght = ({ signupsData, loading }: OrganizationUserStre
           <Bar data={chartData} options={chartOptions} />
         ) : (
           <div className="flex h-full items-center justify-center">
-            <p className="text-gray-500">No signup data available</p>
+            <p className="text-gray-500">{t("noSignupData")}</p>
           </div>
         )}
       </div>

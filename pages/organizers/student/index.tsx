@@ -11,8 +11,10 @@ import { mapUserResponseToISingleStudent } from "utils/transform";
 import { useRouter } from "next/router";
 import AddStudentModal from "@/components/Teachers/students/AddStudentModal";
 import OrganizationStudents from "@/components/organizers/student/students";
+import { useTranslation } from "react-i18next";
 
 const OrganizationStudentsPage = () => {
+   const { t } = useTranslation("organizer");
    const dispatch = useDispatch();
    const router = useRouter();
    const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -54,10 +56,10 @@ const OrganizationStudentsPage = () => {
       <div onClick={closeCommentTabs}>
          <OrganizerLayout>
             <div className={styles.containerHeader}>
-               <p className={styles.headerTitle}>Students</p>
+               <p className={styles.headerTitle}>{t("students")}</p>
                <div className={styles.addDiv} onClick={() => setIsOpen(true)}>
                   <FiPlus size={25} className={styles.plusIcon} />
-                  <p className="sm:block">Add Student</p>
+                  <p className="sm:block">{t("addStudent")}</p>
                </div>
             </div>
 
@@ -69,7 +71,7 @@ const OrganizationStudentsPage = () => {
                   <FaSearch className="text-slate-400" />
                   <input
                      className="bg-transparent py-1 text-slate-800 outline-none"
-                     placeholder="Search students"
+                     placeholder={t("searchStudents")}
                      onChange={(e) => filterStudents(e.target.value)}
                      data-testid="searchbox"
                   />
@@ -78,9 +80,9 @@ const OrganizationStudentsPage = () => {
             </div>
 
             {isLoadingStudents ? (
-               <p className="mt-4 text-center text-slate-500">Loading students...</p>
+               <p className="mt-4 text-center text-slate-500">{t("loadingStudents")}</p>
             ) : !studentUsers || studentUsers.length === 0 ? (
-               <NoItem text="This organization has no students yet" />
+               <NoItem text={t("noStudentsYet")} />
             ) : (
                <OrganizationStudents
                   commentTabsOpened={commentTabsOpened}
