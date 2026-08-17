@@ -1,5 +1,6 @@
 import ParentLayout from "@/components/layouts/ParentLayout";
 import React, { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchChildBlockGameProgress, getChildProgress } from "store/parentChildSlice";
 import { RootState } from "store/store";
@@ -13,6 +14,7 @@ import LevelsThresholdChart from "@/components/parents/threshold/LevelThreshold"
 
 const Dashboard = () => {
    const dispatch = useDispatch();
+   const { t } = useTranslation("parent");
    const parent = useSelector((state: RootState) => state.parentChild);
    const [progressData, setProgressData] = useState<IChildProgress[]>([]);
    const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -65,7 +67,7 @@ const Dashboard = () => {
    });
 
    return (
-      <ParentLayout title="Dashboard" showChildrenList>
+      <ParentLayout title={t("mainDashboard")} showChildrenList>
          <div className="relative bottom-14 mb-[-120px] scale-90 overflow-x-auto sm:bottom-0 sm:mb-0 sm:scale-100">
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4">
                <Level

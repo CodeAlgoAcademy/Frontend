@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { RootState } from "store/store";
+import { useTranslation } from "react-i18next";
 
 interface ActiveSubscriptionCardProps {
   onChangePlan: () => void;
@@ -12,6 +13,7 @@ const ActiveSubscriptionCard: React.FC<ActiveSubscriptionCardProps> = ({
   onManageChildren,
 }) => {
   const router = useRouter();
+  const { t } = useTranslation("parent");
   const { current_subscription, handlers } = useSelector(
     (state: RootState) => state.pricing
   );
@@ -28,17 +30,17 @@ const ActiveSubscriptionCard: React.FC<ActiveSubscriptionCardProps> = ({
     (c) => !subscribedChildren.some((sc) => sc.id === c.id)
   );
 
-  let statusLabel = "Active";
+  let statusLabel = t("active");
   let statusColor = "text-green-600 bg-green-50 border-green-200";
 
   if (isPastDue) {
-    statusLabel = "Payment Required";
+    statusLabel = t("paymentRequired");
     statusColor = "text-red-600 bg-red-50 border-red-200";
   } else if (isTrialing) {
-    statusLabel = "Free Trial";
+    statusLabel = t("freeTrial");
     statusColor = "text-blue-600 bg-blue-50 border-blue-200";
   } else if (isCancelling) {
-    statusLabel = "Cancels soon";
+    statusLabel = t("cancelsSoon");
     statusColor = "text-orange-600 bg-orange-50 border-orange-200";
   }
 
@@ -64,7 +66,7 @@ const ActiveSubscriptionCard: React.FC<ActiveSubscriptionCardProps> = ({
             )}
           </div>
           <h3 className={`font-semibold ${isPastDue ? "text-red-900" : "text-gray-900"}`}>
-            {isPastDue ? "Action Required" : "Your Subscription"}
+            {isPastDue ? t("actionRequired") : t("yourSubscription")}
           </h3>
         </div>
         <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${statusColor}`}>
@@ -76,16 +78,15 @@ const ActiveSubscriptionCard: React.FC<ActiveSubscriptionCardProps> = ({
         
         {isPastDue && (
           <div className="rounded-xl border border-red-100 bg-red-50 p-4">
-            <h4 className="text-sm font-bold text-red-900">Outstanding Balance</h4>
+            <h4 className="text-sm font-bold text-red-900">{t("outstandingBalance")}</h4>
             <p className="mt-1 text-xs text-red-700 leading-relaxed">
-              We attempted to update your subscription (add children or change plan), but the payment failed. 
-              Please pay the outstanding balance to activate your changes.
+              {t("pastDueMessage")}
             </p>
             <button
               onClick={handlePayNow}
               className="mt-3 w-full rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-700 transition"
             >
-              Pay Now & Activate
+              {t("payNowActivate")}
             </button>
           </div>
         )}
@@ -93,7 +94,7 @@ const ActiveSubscriptionCard: React.FC<ActiveSubscriptionCardProps> = ({
         {/* Plan info */}
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs text-gray-400 uppercase tracking-wide">Plan</p>
+            <p className="text-xs text-gray-400 uppercase tracking-wide">{t("plan")}</p>
             <p className="mt-0.5 font-semibold text-gray-900">
               {current_subscription.plan_name}{" "}
               <span className="text-sm font-normal text-gray-500">
@@ -109,14 +110,14 @@ const ActiveSubscriptionCard: React.FC<ActiveSubscriptionCardProps> = ({
                 ? "border-gray-100 bg-gray-50 text-gray-400 cursor-not-allowed" 
                 : "border-mainColor/30 bg-mainColor/5 text-mainColor hover:bg-mainColor/10"}`}
           >
-            Change Plan
+            {t("changePlan")}
           </button>
         </div>
 
         {/* Expiry */}
         {current_subscription.expiration_date && !isPastDue && (
           <div className="rounded-xl bg-gray-50 px-4 py-2.5 text-sm text-gray-600">
-            {isTrialing ? "Trial ends" : isCancelling ? "Access until" : "Renews on"}:{" "}
+            {isTrialing ? t("trialEnds") : isCancelling ? t("accessUntil") : t("renewsOn")}:{" "}
             <span className="font-semibold text-gray-900">
               {new Date(current_subscription.expiration_date).toLocaleDateString("en-GB", {
                 day: "numeric",
@@ -130,9 +131,9 @@ const ActiveSubscriptionCard: React.FC<ActiveSubscriptionCardProps> = ({
         <div className="border-t border-gray-50 pt-4">
           <div className="flex items-center justify-between mb-3">
             <p className="text-sm font-medium text-gray-700">
-              Children{" "}
+              {t("children")}{" "}
               <span className="ml-1 rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-500">
-                {subscribedChildren.length} active
+                {t("activeCount", { count: subscribedChildren.length })}
               </span>
             </p>
             <button
@@ -142,7 +143,7 @@ const ActiveSubscriptionCard: React.FC<ActiveSubscriptionCardProps> = ({
               <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
               </svg>
-              {isPastDue ? "View Details" : "Manage"}
+              {isPastDue ? t("viewDetails") : t("manage")}
             </button>
           </div>
 
@@ -168,21 +169,21 @@ const ActiveSubscriptionCard: React.FC<ActiveSubscriptionCardProps> = ({
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
               </svg>
-              Add children to your plan
+              {t("addChildrenToPlan")}
             </button>
           )}
 
           {isPastDue && (
              <p className="mt-3 text-xs text-red-600 italic">
-               Note: Recently added children will not appear here until payment is complete.
+               {t("noteRecentChildren")}
              </p>
           )}
 
           {!isPastDue && unsubscribedChildren.length > 0 && (
             <p className="mt-2 text-xs text-amber-600">
-              {unsubscribedChildren.length} child{unsubscribedChildren.length > 1 ? "ren" : ""} not yet on this plan.{" "}
+              {t("childrenNotOnPlan", { count: unsubscribedChildren.length })}{" "}
               <button onClick={onManageChildren} className="underline hover:no-underline">
-                Add them
+                {t("addThem")}
               </button>
             </p>
           )}

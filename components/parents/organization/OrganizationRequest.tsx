@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { acceptOrgRequest, declineOrgRequest, getMyInvitations, getOrgIBelongTo } from "services/organizersService";
 import { AnyAction } from "@reduxjs/toolkit";
+import { useTranslation } from "react-i18next";
 
 const OrganizationRequest = () => {
    const invitations = useSelector((state: RootState) => state.organizer.userInvitation);
    const dispatch = useDispatch();
+   const { t } = useTranslation("parent");
 
    const submit = async (func: AnyAction) => {
       await dispatch(func);
@@ -23,7 +25,7 @@ const OrganizationRequest = () => {
    const pendingInvitations = invitations?.filter(invite => invite.status === 0) || [];
 
    return (
-      <ContentBox title="Organization's Request" size="base" padding="small">
+      <ContentBox title={t("organizationRequest")} size="base" padding="small">
          <div className="h-[220px] w-full overflow-hidden overflow-y-scroll rounded-xl bg-[#eeeeee] py-2 px-4">
             {pendingInvitations.length > 0 ? (
                pendingInvitations.map((invite, index: number) => {
@@ -40,7 +42,7 @@ const OrganizationRequest = () => {
                                     submit(acceptOrgRequest(invite.id));
                                  }}
                               >
-                                 Accept
+                                 {t("accept")}
                               </i>
                               <i
                                  className="text-mainColor cursor-pointer text-[12px] underline"
@@ -48,7 +50,7 @@ const OrganizationRequest = () => {
                                     submit(declineOrgRequest(invite.id));
                                  }}
                               >
-                                 Decline
+                                 {t("decline")}
                               </i>
                            </div>
                         </div>
@@ -58,7 +60,7 @@ const OrganizationRequest = () => {
                })
             ) : (
                <div className="flex items-center justify-center h-full">
-                  <p className="text-gray-500 text-sm">No pending organization requests</p>
+                  <p className="text-gray-500 text-sm">{t("noPendingOrgRequests")}</p>
                </div>
             )}
          </div>

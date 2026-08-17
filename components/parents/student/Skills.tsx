@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { fetchChildBlockGameSkills, getChildSkills } from "store/parentChildSlice";
 import { BiCheck } from "react-icons/bi";
+import { useTranslation } from "react-i18next";
 
 interface ISkillProps {
    size: "large" | "base";
@@ -17,6 +18,7 @@ export interface SkillData {
 const Skills = ({ size }: ISkillProps) => {
    const parent = useSelector((state: RootState) => state.parentChild);
    const dispatch = useDispatch();
+   const { t } = useTranslation("parent");
    
     const [skills, setSkills] = useState<SkillData[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -52,11 +54,11 @@ const Skills = ({ size }: ISkillProps) => {
    // }, [parent?.currentChild?.id]);
 
    return (
-    <ContentBox size={size} title="Skills" padding="small" style={{ height: "400px" }}>
+    <ContentBox size={size} title={t("skills")} padding="small" style={{ height: "400px" }}>
   <div className="mt-2 grid h-full grid-cols-2 gap-5">
     {isLoading ? (
       <div className="flex h-full text-sm text-gray-400 animate-pulse">
-        Loading skills...
+        {t("loadingSkills")}
       </div>
     ) : hasSkills ? (
       skills.map((skill, index) => (
@@ -69,7 +71,7 @@ const Skills = ({ size }: ISkillProps) => {
       ))
     ) : (
       <div className="w-full items-center justify-center text-[1rem] text-center text-gray-500">
-        <p>{parent?.currentChild?.fullName} has no skills awarded.</p>
+        <p>{t("noSkillsAwarded", { name: parent?.currentChild?.fullName })}</p>
       </div>
     )}
   </div>

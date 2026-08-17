@@ -5,12 +5,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { FriendRequests } from "types/interfaces";
 import ContentBox from "../UI/ContentBox";
+import { useTranslation } from "react-i18next";
 
 const KidsFriend = () => {
    const currentChild = useSelector((state: RootState) => state.parentChild.currentChild);
+   const { t } = useTranslation("parent");
 
    return (
-      <ContentBox size="base" title="Friends" padding="large" link="parents/multiplayer">
+      <ContentBox size="base" title={t("friends")} padding="large" link="parents/multiplayer">
          <div className="h-[220px] w-full overflow-hidden overflow-y-scroll rounded-xl bg-[#eeeeee] py-2 px-4" data-testid="friends-container">
             {(currentChild?.pendingRequests as FriendRequests[])?.map((friend: FriendRequests, index: number) => {
                return (
@@ -21,7 +23,7 @@ const KidsFriend = () => {
                         </span>
                         <p className="font-lighter text-[12px]">{friend.to_user}</p>
                      </div>
-                     <i className="text-[12px] underline">Pending</i>
+                     <i className="text-[12px] underline">{t("pending")}</i>
                   </article>
                );
             })}

@@ -9,6 +9,7 @@ import TrialExpiryCard from "./TrialExpiryCard";
 import BillingStepper, { BillingStepperHandle } from "./Stepper/BillingStepper.tsx";
 import ActiveSubscriptionCard from "./Activesubscriptioncard";
 import ManageExistingChildren from "./ManageExistingChildren";
+import { useTranslation } from "react-i18next";
 
 const BillingPage = () => {
   const { current_subscription, billing_history } = useSelector(
@@ -16,6 +17,7 @@ const BillingPage = () => {
   );
   const dispatch = useDispatch();
   const router = useRouter();
+  const { t } = useTranslation("parent");
   const stepperRef = useRef<BillingStepperHandle>(null);
   
   const [showStepper, setShowStepper] = useState(false);
@@ -77,7 +79,7 @@ const BillingPage = () => {
   const pendingSubscription = current_subscription?.status === "PENDING" ? current_subscription : null;
 
   return (
-    <ParentLayout title="Billing">
+    <ParentLayout title={t("billing")}>
       <div className="scrollbar-hide overflow-y-scroll px-4 py-6">
         
         {expiringTrial && !showStepper && !showChildrenManager && (
@@ -116,19 +118,18 @@ const BillingPage = () => {
             <div className="flex items-center justify-between bg-red-50 px-5 py-4 border-b border-red-100">
               <div className="flex items-center gap-2">
                 <div className="bg-red-100 p-2 rounded-full text-red-600">⚠</div>
-                <h3 className="font-semibold text-red-900">Payment Required</h3>
+                <h3 className="font-semibold text-red-900">{t("paymentRequired")}</h3>
               </div>
             </div>
             <div className="px-5 py-5">
               <p className="text-gray-600 mb-4">
-                Your subscription to <strong>{pendingSubscription.plan_name}</strong> is pending payment.
-                Please complete the payment to activate your account.
+                {t("subscriptionPendingPayment", { plan: pendingSubscription.plan_name })}
               </p>
               <button
                 onClick={() => router.push(`/parents/billing/payment?subscription_id=${pendingSubscription.id}`)}
                 className="w-full rounded-xl bg-red-600 px-4 py-3 font-semibold text-white shadow-sm hover:bg-red-700 transition"
               >
-                Complete Payment Now
+                {t("completePaymentNow")}
               </button>
             </div>
           </div>
@@ -139,13 +140,13 @@ const BillingPage = () => {
             {showStepper && (
               <div className="mb-4 flex items-center justify-between">
                 <h2 className="text-base font-semibold text-gray-800">
-                  {stepperMode === "children" ? "Manage Children" : "Change Plan"}
+                  {stepperMode === "children" ? t("manageChildren") : t("changePlan")}
                 </h2>
                 <button
                   onClick={() => setShowStepper(false)}
                   className="rounded-lg border border-gray-200 bg-gray-50 px-3 py-1.5 text-sm text-gray-600 transition hover:bg-gray-100"
                 >
-                  ✕ Cancel
+                  ✕ {t("cancel")}
                 </button>
               </div>
             )}

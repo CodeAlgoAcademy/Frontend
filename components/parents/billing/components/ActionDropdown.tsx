@@ -2,6 +2,7 @@ import React from "react";
 import { MoreVertical, CreditCard, Trash2, AlertCircle, RefreshCw } from "lucide-react";
 import { cn } from "utils";
 import useClickOutside from "hooks/useClickOutside";
+import { useTranslation } from "react-i18next";
 
 export interface ActionDropdownProps {
    subscriptionId: number;
@@ -25,6 +26,7 @@ const ActionDropdown: React.FC<ActionDropdownProps> = ({
    isActive,
    isReactivating = false,
 }) => {
+   const { t } = useTranslation("parent");
    const dropdownRef = useClickOutside<HTMLDivElement>(() => {
       if (isOpen) onToggle();
    });
@@ -51,7 +53,7 @@ const ActionDropdown: React.FC<ActionDropdownProps> = ({
                      className="flex w-full items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                   >
                      <CreditCard className="h-4 w-4 text-gray-500" />
-                     <span>Add Payment Method</span>
+                     <span>{t("addPaymentMethod")}</span>
                   </button>
                   
                   {isCancelled && (
@@ -61,7 +63,7 @@ const ActionDropdown: React.FC<ActionDropdownProps> = ({
                         disabled={isReactivating}
                      >
                         <RefreshCw className={cn("h-4 w-4 text-green-500", isReactivating && "animate-spin")} />
-                        <span>{isReactivating ? "Reactivating..." : "Reactivate Subscription"}</span>
+                        <span>{isReactivating ? t("reactivating") : t("reactivateSubscription")}</span>
                      </button>
                   )}
 
@@ -71,14 +73,14 @@ const ActionDropdown: React.FC<ActionDropdownProps> = ({
                         className="flex w-full items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
                      >
                         <Trash2 className="h-4 w-4 text-red-500" />
-                        <span>Cancel Subscription</span>
+                        <span>{t("cancelSubscription")}</span>
                      </button>
                   )}
 
                   {!isActive && !isCancelled && (
                      <div className="flex w-full items-center gap-3 px-4 py-2 text-xs text-gray-400 italic">
                         <AlertCircle className="h-4 w-4 text-gray-300" />
-                        <span>Subscription Inactive</span>
+                        <span>{t("subscriptionInactive")}</span>
                      </div>
                   )}
                </div>

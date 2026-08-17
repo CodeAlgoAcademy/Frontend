@@ -7,8 +7,10 @@ import { useSelector } from "react-redux";
 import { open_a_message } from "store/messagesSlice";
 import { getAllParents } from "services/parentService";
 import { IFriendsParent } from "types/interfaces";
+import { useTranslation } from "react-i18next";
 
 const ChatTabs = () => {
+   const { t } = useTranslation("parent");
    const { email } = useSelector((state: RootState) => state.user);
    const { teachers } = useSelector((state: RootState) => state.allTeachers);
    const { parents } = useSelector((state: RootState) => state.parent);
@@ -30,7 +32,7 @@ const ChatTabs = () => {
                setParentTabOpened(!parentTabOpened);
             }}
          >
-            <p className="text-[20px] font-bold">Parents</p>
+            <p className="text-[20px] font-bold">{t("parents")}</p>
             <span className="text-[20px]">{parentTabOpened ? <BiChevronUp /> : <BiChevronDown />}</span>
          </div>
          <article className="flex-1 overflow-y-auto bg-gray-100">

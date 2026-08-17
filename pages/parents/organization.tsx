@@ -4,15 +4,17 @@ import OrganizationRequest from "@/components/parents/organization/OrganizationR
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getOrgIBelongTo } from "services/organizersService";
+import { useTranslation } from "react-i18next";
 
 const Organization = () => {
       const dispatch = useDispatch();
+      const { t } = useTranslation("parent");
    
       useEffect(() => {
          dispatch(getOrgIBelongTo());
       }, [dispatch]);
    return (
-      <ParentLayout title="Organizations" showChildrenList>
+      <ParentLayout title={t("organizations")} showChildrenList>
          <div className="relative  mb-[-120px] scale-90 overflow-x-auto sm:bottom-0 sm:mb-0 sm:scale-100">
             <div className=" mb-6 grid w-full grid-cols-1 justify-start gap-x-6 gap-y-8 lg:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4">
                <MyOrganizations />

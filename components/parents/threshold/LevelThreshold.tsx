@@ -4,6 +4,7 @@ import BarChart from "../UI/BarChart";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
+import { useTranslation } from "react-i18next";
 
 interface LevelThresholdProps {
   size: "large" | "base";
@@ -13,6 +14,7 @@ const ALL_GRADES = ["Kindergarten", "Grade 1", "Grade 2", "Grade 3", "Grade 4"] 
 
 const LevelsThresholdChart = ({ size }: LevelThresholdProps) => {
   const router = useRouter();
+  const { t } = useTranslation("parent");
   const { currentChild } = useSelector((state: RootState) => state.parentChild);
 
   const { chartData, chartLabels, maxLevel } = useMemo(() => {
@@ -30,7 +32,7 @@ const LevelsThresholdChart = ({ size }: LevelThresholdProps) => {
   return (
     <ContentBox
       size={size}
-      title="Level Thresholds"
+      title={t("levelThresholds")}
       padding="large"
       showSublink={router.pathname === "/parents"}
       link="/parents/LevelThreshold"

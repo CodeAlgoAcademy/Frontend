@@ -1,4 +1,5 @@
 import ContentBox from "@/components/parents/UI/ContentBox";
+import { useTranslation } from "react-i18next";
 import { IChildProgress } from "types/interfaces/parent.interface";
 
 interface ICompletedStandardProps {
@@ -7,6 +8,7 @@ interface ICompletedStandardProps {
 }
 
 const CompletedStandard = ({ completedItems, isLoading }: ICompletedStandardProps) => {
+  const { t } = useTranslation("parent");
   const filteredItems = completedItems?.filter(item => {
     const bothNoCurriculum = 
       item.iready_math_desc?.includes("(No direct curriculum unit)") && 
@@ -17,21 +19,21 @@ const CompletedStandard = ({ completedItems, isLoading }: ICompletedStandardProp
   const hasData = filteredItems.length > 0;
 
   return (
-    <ContentBox size="base" title="Completed Standards" padding="large" style={{
+    <ContentBox size="base" title={t("completedStandards")} padding="large" style={{
       minWidth: "100%", 
         maxWidth: "100%", 
         height: "400px",
         overflowY: "auto"}}>
       <div className="mt-6">
         {isLoading ? (
-          <p className="text-gray-500 animate-pulse">Loading completed standards...</p>
+          <p className="text-gray-500 animate-pulse">{t("loadingCompletedStandards")}</p>
         ) : hasData ? (
           <table className="w-full border-collapse">
             <thead>
               <tr className="border-b border-gray-200">
-                <th className="px-4 py-2 text-left font-medium w-[15%]">CS</th>
-                <th className="px-4 py-2 text-left font-medium w-[40%]">IR</th>
-                <th className="px-4 py-2 text-left font-medium w-[45%]">CC</th>
+                <th className="px-4 py-2 text-left font-medium w-[15%]">{t("cs")}</th>
+                <th className="px-4 py-2 text-left font-medium w-[40%]">{t("ir")}</th>
+                <th className="px-4 py-2 text-left font-medium w-[45%]">{t("cc")}</th>
               </tr>
             </thead>
             <tbody>
@@ -40,12 +42,12 @@ const CompletedStandard = ({ completedItems, isLoading }: ICompletedStandardProp
                   <td className="px-4 py-2 text-[0.75rem] w-[15%]">{item.standard_code || "N/A"}</td>
                   <td className="px-4 py-2 text-[0.75rem]">
                     <div className="max-h-20 overflow-y-auto">
-                      {item.iready_math_desc || "No description"}
+                      {item.iready_math_desc || t("noDescription")}
                     </div>
                   </td>
                   <td className="px-4 py-2 text-[0.75rem]">
                     <div className="max-h-20 overflow-y-auto">
-                      {item.common_core_math_desc || "No description"}
+                      {item.common_core_math_desc || t("noDescription")}
                     </div>
                   </td>
                 </tr>
@@ -53,7 +55,7 @@ const CompletedStandard = ({ completedItems, isLoading }: ICompletedStandardProp
             </tbody>
           </table>
         ) : (
-          <p className="text-gray-500">No standards completed yet.</p>
+          <p className="text-gray-500">{t("noStandardsCompleted")}</p>
         )}
       </div>
     </ContentBox>

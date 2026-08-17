@@ -86,7 +86,7 @@ const ParentLayout = ({ children, title, showChildrenList}: Props) => {
                <h1 className="text-[1.2rem] font-medium text-mainColor md:text-[1.4rem] lg:text-[1.6rem]">{title}</h1>
                <div className="flex items-center gap-2">
                   <LanguageSwitcher variant="sidebar" />
-                  <BetaButton />
+                  {/* <BetaButton /> */}
                   <div className="relative" ref={userMenuRef}>
                      <div className="flex cursor-pointer border items-center gap-1 text-mainColor" onClick={() => toggleTab("user", !tabs.user)}>
                         <BiUserCircle size={24} />

@@ -6,17 +6,18 @@ import { BiLogOut } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { resetAuthUser } from "store/authSlice";
+import { useTranslation } from "react-i18next";
 
 const linkDetails = [
-   [{ title: "Main Dashboard", image: "Dashboard.svg", url: "/parents" }],
+   [{ title: "mainDashboard", image: "Dashboard.svg", url: "/parents" }],
    // [{ title: "Messages", image: "message.svg", url: "/parents/messages" }],
    [
       // { title: "Billing", image: "Billing.svg", url: "/parents/billing" },
-      { title: "Student Accounts", image: "people.svg", url: "/parents/student" },
-      { title: "Organization", image: <SlOrganization />, url: "/parents/organization" },
+      { title: "studentAccounts", image: "people.svg", url: "/parents/student" },
+      { title: "organization", image: <SlOrganization />, url: "/parents/organization" },
    ],
    [
-      { title: "Screen Time", image: "screen-time.svg", url: "/parents/screen-time" },
+      { title: "screenTime", image: "screen-time.svg", url: "/parents/screen-time" },
       // { title: "Multiplayer", image: "game.svg", url: "/parents/multiplayer" },
    ],
 ];
@@ -24,6 +25,7 @@ const linkDetails = [
 const ParentMobileSideNav = ({ className }: { className?: string }) => {
    const dispatch = useDispatch();
    const router = useRouter();
+   const { t } = useTranslation("parent");
 
    const logout = () => {
       localStorage.removeItem("token");
@@ -40,13 +42,13 @@ const ParentMobileSideNav = ({ className }: { className?: string }) => {
             return (
                <div className="flex flex-col justify-between gap-3 pt-4" key={`${index}`}>
                   {links.map(({ title, url, image }) => {
-                     return <NavButton {...{ image, url, title }} key={title} />;
+                     return <NavButton {...{ image, url, title: t(title) }} key={title} />;
                   })}
                </div>
             );
          })}
 
-         <NavButton title="Log out" image={<BiLogOut />} url="" onClick={logout} />
+         <NavButton title={t("logOut")} image={<BiLogOut />} url="" onClick={logout} />
       </div>
    );
 };

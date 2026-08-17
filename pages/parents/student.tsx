@@ -11,17 +11,19 @@ import NoChild from "@/components/parents/UI/NoChild";
 import Skills from "@/components/parents/student/Skills";
 import Level from "@/components/parents/student/Level";
 import StudentProfile from "@/components/parents/student/StudentProfile";
+import { useTranslation } from "react-i18next";
 
 const Student = () => {
    const dispatch = useDispatch();
    const parent = useSelector((state: RootState) => state.parentChild);
+   const { t } = useTranslation("parent");
 
    if (!parent?.children || parent?.children?.length === 0) {
       return <NoChild />;
    }
 
    return (
-      <ParentLayout title="Student" showChildrenList>
+      <ParentLayout title={t("student")} showChildrenList>
          <div className="z-[5] mb-8 flex w-full items-center justify-end text-[1.2rem] text-mainColor">
             <div
                className="z-[5] max-w-fit cursor-pointer p-2"
@@ -33,7 +35,7 @@ const Student = () => {
                <span className="mr-2 inline-block align-middle">
                   <BiPlusCircle />
                </span>
-               Add Child
+               {t("addChild")}
             </div>
          </div>
          <div className="relative bottom-14 mb-[-120px] scale-90 overflow-x-auto sm:bottom-0 sm:mb-0 sm:scale-100">

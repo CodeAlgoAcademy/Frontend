@@ -2,6 +2,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { motion, useMotionValue, animate } from "framer-motion";
 import ContentBox from "../UI/ContentBox";
+import { useTranslation } from "react-i18next";
 
 interface Props {}
 
@@ -159,6 +160,7 @@ const recents = [
 ];
 
 const RecentInteraction = ({}: Props) => {
+   const { t } = useTranslation("parent");
    const [recentIndex, setRecentIndex] = useState(0);
    const [sliceStart, setSliceStart] = useState(recentIndex * 3);
    const [sliceEnd, setSliceEnd] = useState(recentIndex * 3 + 3);
@@ -169,9 +171,9 @@ const RecentInteraction = ({}: Props) => {
       setSliceEnd(() => recentIndex * 3 + 3);
    }, [recentIndex]);
    return (
-      <ContentBox size="base" title="Multiplayer" padding="large" showSublink={false} link="parents/multiplayer" style={{height:"400px"}}>
-         <p className="text-sm font-light">Recent interactions (last 30 days)</p>
-         <p className="grid h-40 place-content-center text-2xl italic text-slate-400">Coming soon...</p>
+      <ContentBox size="base" title={t("multiplayer")} padding="large" showSublink={false} link="parents/multiplayer" style={{height:"400px"}}>
+         <p className="text-sm font-light">{t("recentInteractions")}</p>
+         <p className="grid h-40 place-content-center text-2xl italic text-slate-400">{t("comingSoon")}</p>
          {/* UNCOMMENT BLOCK OF CODE WHEN NECESSARY DETAILS ARE READY */}
          {/* <div className="mt-5 w-[320px] overflow-hidden">
             <motion.ul className="flex gap-3" style={{ x: positionX }} transition={{ duration: 2 }}>
@@ -185,7 +187,7 @@ const RecentInteraction = ({}: Props) => {
             </motion.ul>
          </div> */}
          <p className="absolute bottom-5 left-0 w-full select-none text-center text-sm text-[#A8ABB0] opacity-80">
-            All mail communication will go to the user’s parent account.{" "}
+            {t("mailGoesToParent")}{" "}
          </p>
          {/* UNCOMMENT BLOCK OF CODE WHEN NECESSARY DETAILS ARE READY */}
          {/* {recentIndex !== maxIndex - 1 && (

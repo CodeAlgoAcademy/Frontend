@@ -11,10 +11,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { initiatePayment } from "services/pricingService";
 import { RootState } from "store/store";
 import PaymentPage from "@/components/parents/billing/PaymentPage";
+import { useTranslation } from "react-i18next";
 
 const Payment = () => {
+   const { t } = useTranslation("parent");
    return (
-      <ParentLayout title="Payment">
+      <ParentLayout title={t("payment")}>
          <PaymentPage />
       </ParentLayout>
    );
