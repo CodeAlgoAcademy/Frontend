@@ -9,10 +9,12 @@ import { useAppDispatch } from "store/hooks";
 import { deleteChild } from "store/parentChildSlice";
 import ConfirmDeleteModal from "@/components/modals/ConfirmDeleteModal";
 import useClickOutside from "hooks/useClickOutside";
+import { useTranslation } from "react-i18next";
 
 
 const StudentProfile = () => {
    const { currentChild } = useSelector((state: RootState) => state.parentChild);
+   const { t } = useTranslation("parent");
    const [isActionMenuOpen, setIsActionMenuOpen] = useState(false);
    const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
    const dispatch = useAppDispatch();
@@ -35,7 +37,7 @@ const StudentProfile = () => {
    };
 
    return (
-      <ContentBox padding="small" size="large" title="Child's Profile" style={{ minWidth: "100%", maxWidth: "100%", marginBottom: "1.5rem" }}>
+      <ContentBox padding="small" size="large" title={t("childProfile")} style={{ minWidth: "100%", maxWidth: "100%", marginBottom: "1.5rem" }}>
          <div className="flex w-full flex-col gap-[2rem] p-8 lg:flex-row lg:gap-[3rem] relative">
             <div className="h-full w-full min-w-fit max-w-fit">
                <img
@@ -45,10 +47,10 @@ const StudentProfile = () => {
                />
             </div>
             <div className="grid flex-1 grid-cols-2 gap-[1rem]">
-               <StudentProfileInfo header="Name" body={currentChild?.fullName} />
-               <StudentProfileInfo header="Username" body={currentChild?.username} />
-               <StudentProfileInfo header="Coding Experience" body={currentChild?.codingExperience} />
-               <StudentProfileInfo header="Date of birth" body={currentChild?.dob} />
+               <StudentProfileInfo header={t("name")} body={currentChild?.fullName} />
+               <StudentProfileInfo header={t("username")} body={currentChild?.username} />
+               <StudentProfileInfo header={t("codingExperience")} body={currentChild?.codingExperience} />
+               <StudentProfileInfo header={t("dateOfBirth")} body={currentChild?.dob} />
             </div>
             
             <div className="absolute top-8 right-8">
@@ -66,7 +68,7 @@ const StudentProfile = () => {
                               setConfirmDeleteOpen(true);
                            }}
                         >
-                           Delete student
+                           {t("deleteStudent")}
                         </button>
                      </div>
                   )}
@@ -77,17 +79,17 @@ const StudentProfile = () => {
             isOpen={confirmDeleteOpen}
             onClose={() => setConfirmDeleteOpen(false)}
             onConfirm={handleDeleteStudent}
-            title="Are you sure you want to delete"
+            title={t("areYouSureDelete")}
             itemName={currentChild?.fullName || ""}
             isDeleting={isDeleting}
-            confirmText="Delete"
-            cancelText="Cancel"
+            confirmText={t("delete")}
+            cancelText={t("cancel")}
          />
 
          {currentChild && (
             <div className="relative ml-auto max-w-fit">
                <p className="cursor-pointer font-medium underline" onClick={() => setResetPasswordOpen(!resetPasswordOpen)}>
-                  Reset Password
+                  {t("resetPassword")}
                </p>
                {resetPasswordOpen && <ResetPassword closeModal={() => setResetPasswordOpen(false)} />}
             </div>

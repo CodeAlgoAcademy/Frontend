@@ -4,12 +4,14 @@ import { RootState } from "store/store";
 import { createOrUpdateLevelThreshold, getChildren } from "store/parentChildSlice";
 import LevelThresholdInput, { LevelThresholdInputProps } from "../UI/levelthreshold";
 import NoChild from "../UI/NoChild";
+import { useTranslation } from "react-i18next";
 
 const ALL_GRADES = ["Kindergarten", "Grade 1", "Grade 2", "Grade 3", "Grade 4"] as const
 
 const LevelThresholdComponent = () => {
   const { currentChild, } = useSelector((state: RootState) => state.parentChild)
   const dispatch = useDispatch()
+  const { t } = useTranslation("parent")
 
   const thresholds: LevelThresholdInputProps[] = useMemo(() => {
     if (!ALL_GRADES || !Array.isArray(ALL_GRADES)) {
@@ -53,9 +55,9 @@ const LevelThresholdComponent = () => {
 
   return (
     <div className="relative mt-10 min-h-[340px] max-w-fit rounded-2xl bg-white px-8 py-10 md:w-full md:min-w-[420px]">
-      <h1 className="text-[1.3rem] font-semibold text-mainColor">Level Threshold Settings</h1>
+      <h1 className="text-[1.3rem] font-semibold text-mainColor">{t("levelThresholdSettings")}</h1>
       <h2 className="mt-2 mb-10 text-[14px] font-medium">
-        Set thresholds required to progress through each level.
+        {t("setThresholdsPerLevel")}
       </h2>
       <div className="mt-4 flex flex-wrap items-center justify-center gap-4 md:justify-start">
         {thresholds.map((t, i) => (

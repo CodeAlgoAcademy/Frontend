@@ -2,6 +2,7 @@ import { PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js"
 import React, { FormEvent, useState, useEffect } from "react";
 import { toast } from "sonner";
 import Loader from "@/components/UI/loader";
+import { useTranslation } from "react-i18next";
 
 interface PaymentFormProps {
   subscriptionId: number;
@@ -11,6 +12,7 @@ interface PaymentFormProps {
 const PaymentForm: React.FC<PaymentFormProps> = ({ subscriptionId, clientSecret }) => {
   const stripe = useStripe();
   const elements = useElements();
+  const { t } = useTranslation("parent");
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState<number | null>(null);
   const [currency, setCurrency] = useState<string>("usd");
@@ -34,12 +36,12 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ subscriptionId, clientSecret 
     }).format(val);
   };
 
-  if (!clientSecret) return <div className="p-4 text-center">Finalizing...</div>;
+  if (!clientSecret) return <div className="p-4 text-center">{t("finalizing")}</div>;
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!stripe || !elements) {
-      toast.error("Payment form not ready");
+      toast.error(t("paymentFormNotReady"));
       return;
     }
 
@@ -62,10 +64,10 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ subscriptionId, clientSecret 
           });
 
       if (result.error) {
-        toast.error(result.error.message || "Payment failed");
+        toast.error(result.error.message || t("paymentFailed"));
       } 
     } catch (error) {
-      toast.error("An unexpected error occurred");
+      toast.error(t("unexpectedError"));
     } finally {
       setIsLoading(false);
     }
@@ -75,7 +77,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ subscriptionId, clientSecret 
     <form onSubmit={handleSubmit} className="mt-8">
       {amount !== null && (
         <div className="mb-6 rounded-xl bg-gray-50 p-4 border border-gray-100 flex justify-between items-center">
-          <span className="text-sm font-medium text-gray-600">Total amount to pay:</span>
+          <span className="text-sm font-medium text-gray-600">{t("totalAmountToPay")}</span>
           <span className="text-xl font-bold text-mainColor">
             {formatPrice(amount, currency)}
           </span>
@@ -95,9 +97,9 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ subscriptionId, clientSecret 
           {isLoading ? (
             <Loader color="white" />
           ) : clientSecret?.startsWith("pi_") ? (
-            `Pay ${amount !== null ? formatPrice(amount, currency) : "Now"}`
+            `${t("pay")} ${amount !== null ? formatPrice(amount, currency) : t("now")}`
           ) : (
-            "Save Payment Method"
+            t("savePaymentMethod")
           )}
         </button>
       </div>

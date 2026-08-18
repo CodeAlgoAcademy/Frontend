@@ -8,11 +8,13 @@ import { createSetupIntent, getActiveSubscription } from "services/pricingServic
 import { toast } from "sonner";
 import { useInitStripe } from "hooks/useStripe";
 import PaymentForm from "./PaymentForm";
+import { useTranslation } from "react-i18next";
 
 const PaymentPage = () => {
   const router = useRouter();
   const { query, isReady, push } = router;
   const dispatch = useAppDispatch();
+  const { t } = useTranslation("parent");
   const { current_subscription } = useSelector((state: RootState) => state.pricing);
   
   const [clientSecret, setClientSecret] = useState<string>("");
@@ -54,7 +56,7 @@ const initPayment = async () => {
            if (activeSub.latest_client_secret) {
              setClientSecret(activeSub.latest_client_secret);
            } else if (activeSub.status === "ACTIVE") {
-             toast.success("No payment required.");
+             toast.success(t("noPaymentRequired"));
              push("/parents/billing");
              return;
            } else {
@@ -65,7 +67,7 @@ const initPayment = async () => {
            }
         }
       } catch (err) {
-        setError("An error occurred while loading payment form");
+        setError(t("errorLoadingPaymentForm"));
       } finally {
         setIsLoading(false);
       }
@@ -87,9 +89,9 @@ const initPayment = async () => {
   if (error || !clientSecret || !options) {
     return (
       <div className="mt-12 bg-white px-8 pt-6 pb-10 text-center">
-        <p className="text-red-600 mb-4">{error || "Failed to load payment form"}</p>
+        <p className="text-red-600 mb-4">{error || t("failedToLoadPaymentForm")}</p>
         <button onClick={() => push("/parents/billing")} className="rounded bg-mainColor px-6 py-2 text-white">
-          Back to Billing
+          {t("backToBilling")}
         </button>
       </div>
     );
@@ -98,11 +100,11 @@ const initPayment = async () => {
   return (
     <>
      <button onClick={() => push("/parents/billing")} className="rounded border-2 border-mainColor px-6 py-2 text-black ml-8 mt-4">
-          Back to Billing
+          {t("backToBilling")}
      </button>
     <div className="mt-8 bg-white px-8 pt-6 pb-10">
       <h4 className="border-b pb-2 text-lg font-semibold">
-        {clientSecret.startsWith("pi_") ? "Complete Payment" : "Add Payment Method"}
+        {clientSecret.startsWith("pi_") ? t("completePayment") : t("addPaymentMethodTitle")}
       </h4>
       <Elements stripe={stripePromise} options={options}>
         <PaymentForm subscriptionId={subscriptionId} clientSecret={clientSecret} />

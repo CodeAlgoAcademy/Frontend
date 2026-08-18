@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import { cn } from "utils";
 import ActionDropdown from "./ActionDropdown";
 import { Subscription } from "types/interfaces/pricing.interface";
+import { useTranslation } from "react-i18next";
 
 
 export interface BillingTableRowProps {
@@ -24,6 +25,7 @@ const BillingTableRow: React.FC<BillingTableRowProps> = ({
    onCancel,
    onReactivate
 }) => {
+   const { t } = useTranslation("parent");
    const isActive = data.is_active && !data.cancel_at_period_end;
    const isCancelled = data.cancel_at_period_end;
 
@@ -33,7 +35,7 @@ const BillingTableRow: React.FC<BillingTableRowProps> = ({
             {data.plan_name}
             {isCancelled && (
                <span className="block text-[10px] text-orange-600 font-bold">
-                  Cancels on {format(new Date(data.expiration_date), "MMM d, yyyy")}
+                  {t("cancelsOn", { date: format(new Date(data.expiration_date), "MMM d, yyyy") })}
                </span>
             )}
          </p>
@@ -43,7 +45,7 @@ const BillingTableRow: React.FC<BillingTableRowProps> = ({
          <p className="min-w-[150px] flex-1 text-sm">
             {data.activated_date 
                ? format(new Date(data.activated_date), "do MMMM, yyyy") 
-               : <span className="text-gray-400 italic">Pending</span>}
+               : <span className="text-gray-400 italic">{t("pending")}</span>}
          </p>
          <p className="min-w-[150px] flex-1 text-sm">
             {format(new Date(data.expiration_date), "do MMMM, yyyy")}
@@ -57,8 +59,8 @@ const BillingTableRow: React.FC<BillingTableRowProps> = ({
                      ? "border-orange-600 bg-orange-200 text-orange-600"
                      : "border-red-600 bg-red-200 text-red-600"
                )}>
-               {data.status === "TRIALING" ? "Free Trial" : data.status}
-               {isCancelled && " (Cancelled)"}
+               {data.status === "TRIALING" ? t("freeTrial") : data.status}
+               {isCancelled && ` ${t("cancelled")}`}
             </p>
          </div>
          <div className="min-w-[100px]">

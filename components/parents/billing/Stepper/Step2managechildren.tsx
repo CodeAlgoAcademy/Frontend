@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
+import { useTranslation } from "react-i18next";
 
 interface Step2ManageChildrenProps {
   selectedChildIds: number[];
@@ -15,9 +16,10 @@ const Step2ManageChildren: React.FC<Step2ManageChildrenProps> = ({
   setSelectedChildIds,
   goBack,
   goNext,
-  submitLabel = "Continue",
+  submitLabel = "",
   isProcessing = false
 }) => {
+  const { t } = useTranslation("parent");
   const { children } = useSelector((state: RootState) => state.parentChild);
   
   const handleToggle = (childId: number) => {
@@ -36,17 +38,17 @@ const Step2ManageChildren: React.FC<Step2ManageChildrenProps> = ({
   return (
     <div className="flex-1 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm">
       <div className="bg-mainColor px-4 py-5 text-white text-center">
-        <h2 className="text-lg font-bold">Select Children</h2>
+        <h2 className="text-lg font-bold">{t("selectChildren")}</h2>
       </div>
 
       <div className="px-6 py-6">
         <div className="mb-4 text-sm text-gray-500">
-          Select which children will be included in this subscription plan.
+          {t("selectWhichChildren")}
         </div>
 
         {!hasChildren ? (
            <div className="text-center py-8 text-gray-400">
-             No children found.
+             {t("noChildrenFound")}
            </div>
         ) : (
           <ul className="max-h-80 space-y-3 overflow-y-auto pr-1">
@@ -92,14 +94,14 @@ const Step2ManageChildren: React.FC<Step2ManageChildrenProps> = ({
             disabled={isProcessing}
             className="w-1/3 rounded-xl border border-gray-200 px-4 py-3 hover:bg-gray-50 disabled:opacity-50"
           >
-            Cancel
+            {t("cancel")}
           </button>
           <button
             onClick={goNext}
             disabled={isProcessing}
             className="flex-1 rounded-xl bg-mainColor px-4 py-3 font-semibold text-white hover:opacity-90 disabled:opacity-50"
           >
-            {isProcessing ? "Saving..." : submitLabel}
+            {isProcessing ? t("saving") : submitLabel || t("continue")}
           </button>
         </div>
       </div>

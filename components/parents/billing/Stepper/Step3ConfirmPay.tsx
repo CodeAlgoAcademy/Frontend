@@ -6,6 +6,7 @@ import { RootState } from "store/store";
 import { initiatePayment, changePlan, getBillingHistory, getActiveSubscription } from "services/pricingService";
 import { toast } from "sonner";
 import SubscriptionSuccessModal from "../TrialPaymentRequiredModal";
+import { useTranslation } from "react-i18next";
 
 interface Step3ConfirmProps {
    priceId: number;
@@ -18,6 +19,7 @@ interface Step3ConfirmProps {
 const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess, existingSubscriptionId, selectedChildIds }) => {
    const dispatch = useAppDispatch();
    const router = useRouter();
+   const { t } = useTranslation("parent");
    const { plans, coupon_validation, current_subscription, handlers } = useSelector((state: RootState) => state.pricing);
    const { children: allChildren } = useSelector((state: RootState) => state.parentChild);
 
@@ -28,13 +30,13 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess,
    const [isTrialSubscription, setIsTrialSubscription] = useState(false);
 
    const selectedChildrenNames = useMemo(() => {
-      if (!selectedChildIds || selectedChildIds.length === 0) return "None";
+      if (!selectedChildIds || selectedChildIds.length === 0) return t("none");
 
       return allChildren
          .filter((child) => selectedChildIds.includes(Number(child.id)))
-         .map((child) => child.fullName || child.username || "Child")
+         .map((child) => child.fullName || child.username || t("child"))
          .join(", ");
-   }, [allChildren, selectedChildIds]);
+   }, [allChildren, selectedChildIds, t]);
 
    const isPendingSubscription = useMemo(() => {
       return hasExistingSubscription && current_subscription?.status === "PENDING";
@@ -74,7 +76,7 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess,
          );
 
          if (!initiatePayment.fulfilled.match(result)) {
-            toast.error("Failed to create subscription.");
+            toast.error(t("failedToCreateSubscription"));
             return;
          }
 
@@ -93,7 +95,7 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess,
          setNewSubscriptionId(newSubId);
 
          if (status === "requires_payment_action") {
-            toast.success("Subscription created! Please complete payment.");
+            toast.success(t("subscriptionCreatedCompletePayment"));
             router.push(`/parents/billing/payment?subscription_id=${newSubId}`);
             return;
          }
@@ -102,7 +104,7 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess,
          setShowSuccessModal(true);
       } catch (error) {
          console.error(error);
-         toast.error("An unexpected error occurred. Please try again.");
+         toast.error(t("unexpectedErrorTryAgain"));
       } finally {
          setIsProcessing(false);
       }
@@ -118,19 +120,19 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess,
             const payload = result.payload as any;
 
             if (payload.client_secret) {
-               toast.success("Action required to complete plan change.");
+               toast.success(t("actionRequiredToComplete"));
                router.push(`/parents/billing/payment?subscription_id=${existingSubscriptionId}&client_secret=${payload.client_secret}`);
             } else {
-               toast.success("Plan updated successfully!");
+               toast.success(t("planUpdatedSuccessfully"));
                await dispatch(getActiveSubscription());
                await dispatch(getBillingHistory());
                onSuccess(existingSubscriptionId);
             }
          } else {
-            toast.error("Failed to change plan.");
+            toast.error(t("failedToChangePlan"));
          }
       } catch {
-         toast.error("An error occurred.");
+         toast.error(t("errorOccurred"));
       } finally {
          setIsProcessing(false);
       }
@@ -172,29 +174,29 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess,
             {/* Header */}
             <div className={`flex items-center justify-center gap-2 px-4 py-5 text-white ${isPendingSubscription ? "bg-red-500" : "bg-mainColor"}`}>
                {isPendingSubscription ? (
-                  <h2 className="text-lg font-bold">Payment Required</h2>
+                  <h2 className="text-lg font-bold">{t("paymentRequired")}</h2>
                ) : (
-                  <h2 className="text-lg font-bold">{hasExistingSubscription ? "Confirm Plan Change" : "Confirm & Start"}</h2>
+                  <h2 className="text-lg font-bold">{hasExistingSubscription ? t("confirmPlanChange") : t("confirmAndStart")}</h2>
                )}
             </div>
 
             <div className="px-6 py-6">
                {selectedPrice && priceDetails ? (
                   <div className="space-y-1">
-                     <SummaryRow label="Plan" value={`${selectedPrice.plan.name} – ${selectedPrice.price.interval.toLowerCase()}`} />
-                     <SummaryRow label="Price" value={`$${priceDetails.baseAmount.toFixed(2)} / ${selectedPrice.price.interval.toLowerCase()}`} />
+                     <SummaryRow label={t("plan")} value={`${selectedPrice.plan.name} – ${selectedPrice.price.interval.toLowerCase()}`} />
+                     <SummaryRow label={t("price")} value={`$${priceDetails.baseAmount.toFixed(2)} / ${selectedPrice.price.interval.toLowerCase()}`} />
 
-                     <SummaryRow label="Children Included" value={selectedChildrenNames} className="max-w-[50%] text-right" />
+                     <SummaryRow label={t("childrenIncluded")} value={selectedChildrenNames} className="max-w-[50%] text-right" />
 
                      {coupon_validation?.code && priceDetails.discount > 0 && (
-                        <SummaryRow label={`Discount (${coupon_validation.code})`} value={`-$${priceDetails.discount.toFixed(2)}`} accent="green" />
+                        <SummaryRow label={t("discount", { code: coupon_validation.code })} value={`-$${priceDetails.discount.toFixed(2)}`} accent="green" />
                      )}
 
                      {priceDetails.discount > 0 && (
                         <>
                            <div className="!my-4 border-t border-gray-100" />
                            <SummaryRow
-                              label="Total"
+                              label={t("total")}
                               value={`$${priceDetails.finalAmount.toFixed(2)} / ${selectedPrice.price.interval.toLowerCase()}`}
                               bold
                            />
@@ -211,7 +213,7 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess,
                                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
                               />
                            </svg>
-                           This plan is pending. Please complete the payment to activate.
+                           {t("planPendingPayment")}
                         </div>
                      )}
 
@@ -223,12 +225,12 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess,
                            <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                            </svg>
-                           {isGift ? "Your gift subscription will be activated immediately." : "Your 7-day free trial starts today."}
+                           {isGift ? t("giftActivatedImmediately") : t("trialStartsToday")}
                         </div>
                      )}
                   </div>
                ) : (
-                  <p className="py-6 text-center text-sm text-gray-400">Loading plan details…</p>
+                  <p className="py-6 text-center text-sm text-gray-400">{t("loadingPlanDetails")}</p>
                )}
 
                <div className="mt-8 flex gap-3">
@@ -238,7 +240,7 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess,
                      disabled={isLoading}
                      className="w-1/3 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-700 transition hover:bg-gray-100 disabled:opacity-50"
                   >
-                     ← Back
+                     ← {t("back")}
                   </button>
                   {/* // ${isPendingSubscription ? "bg-red-600 hover:bg-red-700" : "bg-mainColor"} */}
                   <button
@@ -249,7 +251,7 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess,
     ${isGift ? "bg-green-600 hover:bg-green-700" : isPendingSubscription ? "bg-red-600 hover:bg-red-700" : "bg-mainColor"}
   `}
                   >
-                     {isLoading ? "Processing..." : isGift ? "Redeem Gift Card →" : "Start Trial"}
+                     {isLoading ? t("processing") : isGift ? t("redeemGiftCard") : t("startTrial")}
                   </button>
                </div>
             </div>

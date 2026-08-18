@@ -5,9 +5,11 @@ import { useAppDispatch } from "store/hooks";
 import ParentLayout from "@/components/layouts/ParentLayout";
 import { fetchChildCodingAccess, getChildren } from "store/parentChildSlice";
 import LockModal from "@/components/Teachers/gameLock/lockModal";
+import { useTranslation } from "react-i18next";
 
 
 export default function GameLocksParentPage() {
+   const { t } = useTranslation("parent");
    const dispatch = useAppDispatch();
    const { children } = useSelector((state: RootState) => state.parentChild);
    const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,11 +24,11 @@ export default function GameLocksParentPage() {
    }, [dispatch]);
 
    return (
-      <ParentLayout title={"Game Access Control"}>
+      <ParentLayout title={t("gameAccessControl")}>
          <div className="p-6">
             <header className="mb-8">
-               <h1 className="text-2xl font-bold text-slate-800">Child Game Safety</h1>
-               <p className="text-slate-500 text-sm">Manage feature access and progression limits for your children.</p>
+               <h1 className="text-2xl font-bold text-slate-800">{t("childGameSafety")}</h1>
+               <p className="text-slate-500 text-sm">{t("manageFeatureAccess")}</p>
             </header>
 
             <div className="grid gap-6">
@@ -48,15 +50,15 @@ export default function GameLocksParentPage() {
 
                         <div className="flex items-center gap-10">
                            <div className="text-right">
-                              <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1">Line Coding</p>
+                              <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1">{t("lineCoding")}</p>
                               <p className={`text-sm font-bold ${access?.line_coding_locked ? 'text-red-400' : 'text-green-500'}`}>
-                                 {access?.line_coding_locked ? 'Disabled' : 'Enabled'}
+                                 {access?.line_coding_locked ? t("disabled") : t("enabled")}
                               </p>
                            </div>
                            <div className="text-right border-l pl-10">
-                              <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1">Max Level</p>
+                              <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1">{t("maxLevel")}</p>
                               <p className="text-sm font-bold text-slate-600">
-                                 {access?.block_coding_max_level ? access.block_coding_max_level.replace('_', ' Level ') : 'No Limit'}
+                                 {access?.block_coding_max_level ? access.block_coding_max_level.replace('_', ` ${t("level")} `) : t("noLimit")}
                               </p>
                            </div>
                            <button 
@@ -66,7 +68,7 @@ export default function GameLocksParentPage() {
                               }}
                               className="bg-blue-600 text-white px-8 py-2.5 rounded-2xl font-bold hover:bg-blue-700 shadow-lg shadow-blue-100 transition-all"
                            >
-                              Edit
+                              {t("edit")}
                            </button>
                         </div>
                      </div>

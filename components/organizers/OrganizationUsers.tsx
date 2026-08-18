@@ -1,5 +1,6 @@
 import React from "react";
 import ContentBox from "../parents/UI/ContentBox";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   users: any[];
@@ -8,12 +9,13 @@ interface Props {
 }
 
 const OrganizationUsers: React.FC<Props> = ({ users, onViewAll, loading }) => {
+  const { t } = useTranslation("organizer");
   const hasUsers = users && users.length > 0;
 
   if (loading) {
     return (
       <ContentBox
-        title="Users"
+        title={t("users")}
         padding="small"
         style={{
           minWidth: "100%",
@@ -43,7 +45,7 @@ const OrganizationUsers: React.FC<Props> = ({ users, onViewAll, loading }) => {
 
   return (
     <ContentBox
-      title="Users"
+      title={t("users")}
       padding="small"
       style={{
         minWidth: "100%",
@@ -54,7 +56,7 @@ const OrganizationUsers: React.FC<Props> = ({ users, onViewAll, loading }) => {
       size="large"
     >
       <div className="max-h-[250px] overflow-y-scroll">
-        <h1 className="mb-3 font-bold text-mainColor">Newest Accounts</h1>
+        <h1 className="mb-3 font-bold text-mainColor">{t("newestAccounts")}</h1>
 
         {hasUsers ? (
           users.map((user, index) => (
@@ -65,13 +67,13 @@ const OrganizationUsers: React.FC<Props> = ({ users, onViewAll, loading }) => {
               <p className="font-bold capitalize">
                 {user?.user
                   ? `${user.user.firstName ?? ""} ${user.user.lastName ?? ""}`
-                  : "Unknown User"}
+                  : t("unknownUser")}
               </p>
-              <p className="text-mainColor">{user?.role?.name ?? "No Role"}</p>
+              <p className="text-mainColor">{user?.role?.name ?? t("noRole")}</p>
             </div>
           ))
         ) : (
-          <p className="text-gray-500 italic">No recent users found</p>
+          <p className="text-gray-500 italic">{t("noRecentUsersFound")}</p>
         )}
       </div>
 
@@ -81,7 +83,7 @@ const OrganizationUsers: React.FC<Props> = ({ users, onViewAll, loading }) => {
             onClick={onViewAll}
             className="rounded-lg bg-mainColor px-8 py-4 text-sm text-white hover:opacity-90"
           >
-            View All
+            {t("viewAll")}
           </button>
         </div>
       )}

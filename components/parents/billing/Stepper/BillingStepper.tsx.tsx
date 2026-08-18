@@ -6,6 +6,7 @@ import { getActiveSubscription, getBillingHistory } from "services/pricingServic
 import Step1SelectPlan from "./Step1selectplan";
 import Step2ManageChildren from "./Step2managechildren";
 import Step3Confirm from "./Step3ConfirmPay";
+import { useTranslation } from "react-i18next";
 
 interface BillingStepperProps {
   onDone?: () => void;
@@ -20,6 +21,7 @@ type StepId = 1 | 2 | 3;
 
 const BillingStepper = forwardRef<BillingStepperHandle, BillingStepperProps>(({ onDone, onLockStepper }, ref) => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation("parent");
   const { current_subscription } = useSelector((state: RootState) => state.pricing);
 
   const hasExistingSubscription = !!current_subscription?.id;
@@ -55,13 +57,13 @@ const BillingStepper = forwardRef<BillingStepperHandle, BillingStepperProps>(({ 
   useImperativeHandle(ref, () => ({ resetToStepOne: reset }));
 
   const steps = [
-    { id: 1, label: hasExistingSubscription ? "Change Plan" : "Select Plan" },
-    { id: 2, label: "Select Children" }, 
-    { id: 3, label: hasExistingSubscription ? "Confirm" : "Subscribe" },
+    { id: 1, label: hasExistingSubscription ? t("changePlan") : t("selectPlan") },
+    { id: 2, label: t("selectChildren") }, 
+    { id: 3, label: hasExistingSubscription ? t("confirm") : t("subscribe") },
   ];
 
   if (!initialLoadDone && step === 1) {
-    return <div className="py-16 text-center text-gray-400">Loading...</div>;
+    return <div className="py-16 text-center text-gray-400">{t("loading")}</div>;
   }
 
   return (

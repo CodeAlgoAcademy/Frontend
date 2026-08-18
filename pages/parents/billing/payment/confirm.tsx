@@ -4,16 +4,18 @@ import { CheckCircle, XCircle, Loader2 } from "lucide-react";
 import { useAppDispatch } from "store/hooks";
 import { attachPaymentMethod, getActiveSubscription } from "services/pricingService";
 import { loadStripe } from "@stripe/stripe-js";
+import { useTranslation } from "react-i18next";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 const PaymentConfirmPage = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const { t } = useTranslation("parent");
   const { query, isReady } = router;
   const hasRunRef = useRef(false);
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
-  const [message, setMessage] = useState("Please wait while we confirm your payment details");
+  const [message, setMessage] = useState(t("confirmingPayment"));
 
   useEffect(() => {
     if (status === "success") {
@@ -45,13 +47,13 @@ const PaymentConfirmPage = () => {
 
         if (!paymentIntent || paymentIntent.status !== "succeeded") {
           setStatus("error");
-          setMessage("Payment could not be confirmed.");
+          setMessage(t("paymentNotConfirmed"));
           return;
         }
 
         await dispatch(getActiveSubscription());
         setStatus("success");
-        setMessage("Payment successful! Your subscription has been updated.");
+        setMessage(t("paymentUpdated"));
       }
 
       else if (query.setup_intent_client_secret) {
@@ -61,7 +63,7 @@ const PaymentConfirmPage = () => {
 
         if (!setupIntent || setupIntent.status !== "succeeded" || !setupIntent.payment_method) {
           setStatus("error");
-          setMessage("Failed to save payment method.");
+          setMessage(t("failedToSavePaymentMethod"));
           return;
         }
 
@@ -80,16 +82,16 @@ const PaymentConfirmPage = () => {
         if (attachPaymentMethod.fulfilled.match(result)) {
           await dispatch(getActiveSubscription());
           setStatus("success");
-          setMessage("Payment method saved! Redirecting...");
+          setMessage(t("paymentMethodSaved"));
         } else {
           setStatus("error");
-          setMessage("Could not attach payment method to subscription.");
+          setMessage(t("couldNotAttachPaymentMethod"));
         }
       }
 
       else {
         setStatus("error");
-        setMessage("Invalid payment confirmation details.");
+        setMessage(t("invalidPaymentConfirmation"));
       }
     };
 
@@ -102,7 +104,7 @@ const PaymentConfirmPage = () => {
         {status === "loading" && (
           <div className="text-center">
             <Loader2 className="mx-auto h-16 w-16 animate-spin text-mainColor" />
-            <h2 className="mt-4 text-xl font-semibold">Processing...</h2>
+            <h2 className="mt-4 text-xl font-semibold">{t("processing")}</h2>
             <p className="mt-2 text-gray-600">{message}</p>
           </div>
         )}
@@ -110,29 +112,29 @@ const PaymentConfirmPage = () => {
         {status === "success" && (
           <div className="text-center">
             <CheckCircle className="mx-auto h-16 w-16 text-green-500" />
-            <h2 className="mt-4 text-xl font-semibold text-green-700">Success!</h2>
+            <h2 className="mt-4 text-xl font-semibold text-green-700">{t("success")}</h2>
             <p className="mt-2 text-gray-600">{message}</p>
-            <p className="mt-4 text-sm text-gray-400">Redirecting to billing...</p>
+            <p className="mt-4 text-sm text-gray-400">{t("redirectingToBilling")}</p>
           </div>
         )}
 
         {status === "error" && (
           <div className="text-center">
             <XCircle className="mx-auto h-16 w-16 text-red-500" />
-            <h2 className="mt-4 text-xl font-semibold text-red-700">Failed</h2>
+            <h2 className="mt-4 text-xl font-semibold text-red-700">{t("failed")}</h2>
             <p className="mt-2 text-gray-600">{message}</p>
             <div className="mt-6 flex gap-4 justify-center">
               <button
                 onClick={() => router.back()}
                 className="rounded border border-gray-300 bg-white px-6 py-2 text-gray-700"
               >
-                Try Again
+                {t("tryAgain")}
               </button>
               <button
                 onClick={() => router.push("/parents/billing")}
                 className="rounded bg-mainColor px-6 py-2 text-white"
               >
-                Back to Billing
+                {t("backToBilling")}
               </button>
             </div>
           </div>

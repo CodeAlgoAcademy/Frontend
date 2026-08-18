@@ -3,12 +3,14 @@ import ContentBox from "../UI/ContentBox";
 import { RootState } from "store/store";
 import { useSelector } from "react-redux";
 import { SlOrganization } from "react-icons/sl";
+import { useTranslation } from "react-i18next";
 
 const MyOrganizations = () => {
    const organizations = useSelector((state: RootState) => state.organizer?.userOrganizations);
+   const { t } = useTranslation("parent");
 
    return (
-      <ContentBox title="My Organizations" size="base" padding="small">
+      <ContentBox title={t("myOrganizations")} size="base" padding="small">
          <div className="h-[220px] w-full overflow-hidden overflow-y-scroll rounded-xl bg-[#eeeeee] py-2 px-4" data-testid="organizations-container">
             {organizations && organizations.length > 0 ? (
                organizations.map((org, index: number) => {
@@ -27,8 +29,8 @@ const MyOrganizations = () => {
             ) : (
                <div className="flex h-full flex-col items-center justify-center text-gray-500">
                   <SlOrganization className="text-4xl mb-2 opacity-50" />
-                  <p className="text-sm">No organizations yet</p>
-                  <p className="text-xs mt-1">Organizations you join will appear here</p>
+                  <p className="text-sm">{t("noOrganizationsYet")}</p>
+                  <p className="text-xs mt-1">{t("orgsAppearHere")}</p>
                </div>
             )}
          </div>

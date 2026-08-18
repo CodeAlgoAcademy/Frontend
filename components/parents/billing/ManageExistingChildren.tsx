@@ -6,6 +6,7 @@ import { updateSubscriptionChild, getActiveSubscription } from "services/pricing
 import { useRouter } from "next/router";
 import { toast } from "sonner";
 import Step2ManageChildren from "./Stepper/Step2managechildren";
+import { useTranslation } from "react-i18next";
 
 interface ManageExistingChildrenProps {
   onCancel: () => void;
@@ -15,6 +16,7 @@ interface ManageExistingChildrenProps {
 const ManageExistingChildren: React.FC<ManageExistingChildrenProps> = ({ onCancel, onSuccess }) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const { t } = useTranslation("parent");
   const { current_subscription } = useSelector((state: RootState) => state.pricing);
   
   const [selectedChildIds, setSelectedChildIds] = useState<number[]>([]);
@@ -43,7 +45,7 @@ const ManageExistingChildren: React.FC<ManageExistingChildrenProps> = ({ onCance
     const childrenToAdd = selectedChildIds.filter(id => !currentIds.includes(id));
 
     if (childrenToRemove.length === 0 && childrenToAdd.length === 0) {
-      toast.info("No changes made.");
+      toast.info(t("noChangesMade"));
       setIsProcessing(false);
       onSuccess();
       return;
@@ -64,21 +66,21 @@ const ManageExistingChildren: React.FC<ManageExistingChildrenProps> = ({ onCance
         if (updateSubscriptionChild.fulfilled.match(result)) {
            const payload = result.payload as any;
            if ((payload.status === 'requires_payment' || payload.status === 'requires_payment_action') && payload.client_secret) {
-             toast.message("Payment Required", { description: "Please complete payment to activate this child." });
+             toast.message(t("paymentRequired"), { description: t("completePaymentToActivateChild") });
              router.push(`/parents/billing/payment?subscription_id=${current_subscription.id}&client_secret=${payload.client_secret}`);
              return; 
            }
         } else {
-           toast.error("Could not add child. Please check your billing status.");
+           toast.error(t("couldNotAddChild"));
            return;
         }
       }
 
-      toast.success("Subscription updated successfully");
+      toast.success(t("subscriptionUpdated"));
       await dispatch(getActiveSubscription());
       onSuccess();
     } catch (error) {
-      toast.error("An error occurred while updating.");
+      toast.error(t("errorOccurredUpdating"));
     } finally {
       setIsProcessing(false);
     }
@@ -87,13 +89,13 @@ const ManageExistingChildren: React.FC<ManageExistingChildrenProps> = ({ onCance
   if (isLocked) {
     return (
       <div className="mt-6 rounded-2xl border border-red-100 bg-red-50 p-6 text-center">
-        <h3 className="text-lg font-bold text-red-900">Payment Required</h3>
+        <h3 className="text-lg font-bold text-red-900">{t("paymentRequired")}</h3>
         <p className="mt-1 text-sm text-red-700">
-          Your subscription is currently <strong>Past Due</strong>. Please pay to continue.
+          {t("pleasePayToContinue")}
         </p>
         <div className="mt-6 flex justify-center gap-3">
-          <button onClick={onCancel} className="rounded-xl border border-red-200 bg-white px-4 py-2 text-sm font-semibold text-red-700">Cancel</button>
-          <button onClick={handlePayNow} className="rounded-xl bg-red-600 px-6 py-2 text-sm font-semibold text-white">Pay Outstanding Balance</button>
+          <button onClick={onCancel} className="rounded-xl border border-red-200 bg-white px-4 py-2 text-sm font-semibold text-red-700">{t("cancel")}</button>
+          <button onClick={handlePayNow} className="rounded-xl bg-red-600 px-6 py-2 text-sm font-semibold text-white">{t("payOutstandingBalance")}</button>
         </div>
       </div>
     )
@@ -106,7 +108,7 @@ const ManageExistingChildren: React.FC<ManageExistingChildrenProps> = ({ onCance
           setSelectedChildIds={setSelectedChildIds}
           goBack={onCancel}
           goNext={handleSaveChanges}
-          submitLabel="Save Changes"
+          submitLabel={t("saveChanges")}
           isProcessing={isProcessing}
        />
     </div>

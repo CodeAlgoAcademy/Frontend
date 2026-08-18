@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 interface PlanCardProps {
   title: string;
@@ -28,9 +29,10 @@ const PlanCard: React.FC<PlanCardProps> = ({
   disabled = false,
   activeSubscriptionBadge = false,
   showButton = false,
-  buttonText = "Select Plan",
+  buttonText = "",
   onSelect,
 }) => {
+  const { t } = useTranslation("parent");
   const isClickable = !disabled && !showButton;
 
   const containerClasses = `
@@ -59,7 +61,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
 
   {activeSubscriptionBadge && (
     <div className="absolute -top-2 -right-2 rotate-12 rounded-full bg-orange-500 px-3 py-1 text-xs font-bold text-white">
-      Active Subscription
+      {t("activeSubscription")}
     </div>
   )}
 
@@ -93,8 +95,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
   {activeSubscriptionBadge && (
     <div className="mt-4 rounded-md border border-orange-200 bg-orange-50 p-3">
       <p className="text-xs font-medium text-orange-700">
-        You already have an active subscription for this plan. You cannot
-        subscribe to the same plan twice.
+        {t("alreadyActiveSubscription")}
       </p>
     </div>
   )}
@@ -109,7 +110,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
       disabled={disabled}
       className="w-full rounded-lg bg-mainRed px-4 py-3 font-semibold text-white transition hover:bg-opacity-90 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
     >
-      {buttonText}
+      {buttonText || t("selectPlan")}
     </button>
   </div>
 )}

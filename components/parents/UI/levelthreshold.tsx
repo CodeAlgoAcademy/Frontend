@@ -1,5 +1,6 @@
 import { useDebouncedCallback } from "hooks/useDebounce";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export interface LevelThresholdInputProps {
   id: number;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 const LevelThresholdInput = ({ threshold, updateLevelThreshold, isLoading }: Props) => {
+  const { t } = useTranslation("parent");
   const [inputValue, setInputValue] = useState(threshold.level.toString());
   
   const debouncedUpdate = useDebouncedCallback(updateLevelThreshold, 1000);
@@ -43,7 +45,7 @@ const LevelThresholdInput = ({ threshold, updateLevelThreshold, isLoading }: Pro
 
   return (
     <div className="flex flex-col items-center rounded-md border p-3 shadow-sm w-[140px]">
-      <p className="text-sm font-medium">{threshold.grade}</p>
+      <p className="text-sm font-medium">{t(`grades.${threshold.grade.toLowerCase().replace(" ", "")}`)}</p>
       <input
         type="number"
         className={`mt-2 w-full rounded border px-2 py-1 text-center ${
@@ -55,7 +57,7 @@ const LevelThresholdInput = ({ threshold, updateLevelThreshold, isLoading }: Pro
         min="1"
         disabled={isLoading}
       />
-      <span className="mt-1 text-xs text-gray-400">Max Level Allowed</span>
+      <span className="mt-1 text-xs text-gray-400">{t("maxLevelAllowed")}</span>
       {isLoading && (
         <div className="mt-1 h-1 w-full bg-gray-200 rounded-full overflow-hidden">
           <div className="h-full bg-blue-500 animate-pulse" />

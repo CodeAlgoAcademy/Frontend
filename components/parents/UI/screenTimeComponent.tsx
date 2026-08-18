@@ -30,7 +30,7 @@ const ScreenTimeComponent = ({
 
    return (
       <div className="relative flex flex-col gap-y-2 text-[14px]" data-testid={"screentime-component-" + index}>
-         <p className="text-center">{time.dayOfTheWeek}</p>
+         <p className="text-center">{t(`days.${time.dayOfTheWeek.toLowerCase()}`)}</p>
          <div
             className="mx-auto h-[50px] w-[50px] rounded-[50%]"
             style={{

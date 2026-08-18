@@ -1,4 +1,5 @@
 import React, { StyleHTMLAttributes } from "react";
+import { useTranslation } from "react-i18next";
 
 interface Props {
    title?: string;
@@ -10,6 +11,7 @@ interface Props {
 }
 
 const ProgressBar = ({ title, titleSize, percentage, color, containerSize, level }: Props) => {
+   const { t } = useTranslation("parent");
    percentage = parseFloat((percentage * 100).toFixed(1));
    const progressBarStyle = {
       width: `${percentage <= 100 ? percentage : ""}%`,
@@ -21,9 +23,9 @@ const ProgressBar = ({ title, titleSize, percentage, color, containerSize, level
    return (
       <div className="flex flex-col">
          <div className="flex items-center mb-1">
-            <span className="text-xs font-bold text-gray-600">
-              Level: {level}
-            </span>
+             <span className="text-xs font-bold text-gray-600">
+               {t("levelLabel", { level })}
+             </span>
          </div>
          <div className="flex h-5 items-center">
             <p title={title} className={`w-full overflow-hidden truncate whitespace-nowrap ${titleSize === "large" ? largeTitle : baseTitle}`}>

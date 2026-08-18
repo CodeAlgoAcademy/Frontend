@@ -1,4 +1,5 @@
 import { CheckCircle, X, CreditCard } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface SubscriptionSuccessModalProps {
   open: boolean;
@@ -17,6 +18,7 @@ const SubscriptionSuccessModal: React.FC<SubscriptionSuccessModalProps> = ({
   isTrialSubscription,
   trialEndsAt,
 }) => {
+  const { t } = useTranslation("parent");
   if (!open) return null;
 
   const formatTrialDate = (dateString?: string) => {
@@ -39,7 +41,7 @@ const SubscriptionSuccessModal: React.FC<SubscriptionSuccessModalProps> = ({
               <CheckCircle className="h-6 w-6 text-green-600" />
             </div>
             <h3 className="text-lg font-semibold text-gray-900">
-              Subscription Successful!
+              {t("subscriptionSuccessful")}
             </h3>
           </div>
           <button
@@ -54,15 +56,11 @@ const SubscriptionSuccessModal: React.FC<SubscriptionSuccessModalProps> = ({
           {isTrialSubscription ? (
             <>
               <p className="text-sm text-gray-700">
-                Your subscription has been activated successfully. You're now on
-                a <span className="font-semibold">7-day free trial</span>.
+                {t("activatedSuccessfullyTrial")}
               </p>
               {trialEndsAt && (
                 <p className="mt-2 text-sm text-gray-600">
-                  Trial ends on{" "}
-                  <span className="font-medium">
-                    {formatTrialDate(trialEndsAt)}
-                  </span>
+                  {t("trialEndsOn", { date: formatTrialDate(trialEndsAt) })}
                 </p>
               )}
               <div className="mt-4 rounded-md bg-blue-50 p-3">
@@ -70,11 +68,10 @@ const SubscriptionSuccessModal: React.FC<SubscriptionSuccessModalProps> = ({
                   <CreditCard className="mt-0.5 h-4 w-4 text-blue-600" />
                   <div className="flex-1">
                     <p className="text-sm font-medium text-blue-900">
-                      Add payment method now
+                      {t("addPaymentMethodNow")}
                     </p>
                     <p className="mt-1 text-xs text-blue-700">
-                      Secure your subscription by adding a payment method. You
-                      won't be charged until your trial ends.
+                      {t("secureSubscription")}
                     </p>
                   </div>
                 </div>
@@ -82,8 +79,7 @@ const SubscriptionSuccessModal: React.FC<SubscriptionSuccessModalProps> = ({
             </>
           ) : (
             <p className="text-sm text-gray-700">
-              Your subscription has been activated successfully. You can now
-              enjoy all premium features.
+              {t("activatedSuccessfullyPremium")}
             </p>
           )}
         </div>
@@ -93,14 +89,14 @@ const SubscriptionSuccessModal: React.FC<SubscriptionSuccessModalProps> = ({
             onClick={onClose}
             className="flex-1 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
           >
-            Close
+            {t("close")}
           </button>
           {isTrialSubscription && (
             <button
               onClick={onAddPayment}
               className="flex-1 rounded-md bg-mainColor px-4 py-2 text-sm font-medium text-white hover:bg-opacity-90"
             >
-              Add Payment Method
+              {t("addPaymentMethod")}
             </button>
           )}
         </div>

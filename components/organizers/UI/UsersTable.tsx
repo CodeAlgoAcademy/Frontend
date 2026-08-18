@@ -2,6 +2,7 @@ import React from "react";
 import StatusBadge from "./StatusBadge";
 import UserAvatar from "./UserAvatar";
 import { IOrganizationUser } from "types/interfaces/organization.interface";
+import { useTranslation } from "react-i18next";
 
 interface User {
   user?: {
@@ -23,28 +24,29 @@ interface UsersTableProps {
 }
 
 const UsersTable: React.FC<UsersTableProps> = ({ users }) => {
+  const { t } = useTranslation("organizer");
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white border border-gray-200">
         <thead className="bg-gray-50">
           <tr>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              User
+              {t("user")}
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Email
+              {t("email")}
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Username
+              {t("username")}
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Role
+              {t("role")}
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Status
+              {t("status")}
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Joined Date
+              {t("joinedDate")}
             </th>
           </tr>
         </thead>
@@ -59,7 +61,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ users }) => {
                       {user.user?.firstName} {user.user?.lastName}
                     </div>
                     <div className="text-sm text-gray-500">
-                      ID: {user.user?.id}
+                      {t("idLabel")} {user.user?.id}
                     </div>
                   </div>
                 </div>

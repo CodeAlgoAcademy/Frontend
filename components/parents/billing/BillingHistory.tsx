@@ -11,9 +11,11 @@ import BillingTableHeader from "./components/BillingTableHeader";
 import BillingTableRow from "./components/BillingTableRow";
 import ConfirmationModal from "./components/ConfirmationModal";
 import HistorySkeleton from "./components/HistorySkeleton";
+import { useTranslation } from "react-i18next";
 
 const BillingHistory = () => {
    const { handlers, billing_history } = useSelector((state: RootState) => state.pricing);
+   const { t } = useTranslation("parent");
    const [showBill, setShowBill] = useState(true);
    const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
    
@@ -49,14 +51,14 @@ const BillingHistory = () => {
    return (
       <div className="mb-10">
          {/* Modals */}
-         <ConfirmationModal
+          <ConfirmationModal
             isOpen={cancelModalOpen}
             onClose={closeCancelModal}
             onConfirm={handleCancel}
-            title="Cancel Subscription"
-            message="Are you sure you want to cancel this subscription? You will lose access to all premium features at the end of your current billing period."
-            confirmText="Yes, Cancel"
-            cancelText="No, Keep It"
+            title={t("cancelSubscription")}
+            message={t("confirmCancelMessage")}
+            confirmText={t("yesCancel")}
+            cancelText={t("noKeepIt")}
             type="cancel"
          />
 
@@ -64,10 +66,10 @@ const BillingHistory = () => {
             isOpen={reactivateModalOpen}
             onClose={closeReactivateModal}
             onConfirm={handleReactivate}
-            title="Reactivate Subscription"
-            message="Are you sure you want to reactivate this subscription? Your payment method will be charged according to the plan terms."
-            confirmText="Yes, Reactivate"
-            cancelText="No, Go Back"
+            title={t("reactivateSubscription")}
+            message={t("confirmReactivateMessage")}
+            confirmText={t("yesReactivate")}
+            cancelText={t("noGoBack")}
             type="reactivate"
          />
 
@@ -76,7 +78,7 @@ const BillingHistory = () => {
                onClick={() => setShowBill(!showBill)} 
                className="flex items-center gap-2 text-lg font-semibold text-gray-800 focus:outline-none"
             >
-               Billing History
+               {t("billingHistory")}
                <BiChevronDown 
                   className={cn("h-5 w-5 text-gray-500 transition-transform duration-200", showBill && "rotate-180")} 
                />
@@ -106,8 +108,8 @@ const BillingHistory = () => {
                                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                        </svg>
                                     </div>
-                                    <p className="mt-3 text-sm font-medium text-gray-900">No billing history</p>
-                                    <p className="text-xs text-gray-500">Past invoices will appear here.</p>
+                                    <p className="mt-3 text-sm font-medium text-gray-900">{t("noBillingHistory")}</p>
+                                    <p className="text-xs text-gray-500">{t("pastInvoicesAppearHere")}</p>
                                  </div>
                               ) : (
                                  displayHistory.map((data) => (
