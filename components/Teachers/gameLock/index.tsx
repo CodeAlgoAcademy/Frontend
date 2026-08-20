@@ -49,7 +49,9 @@ useEffect(() => {
             <div className="overflow-hidden rounded-3xl border border-slate-100 bg-white p-2 shadow-sm">
                {students.map((student) => {
                   const access = student.codingAccess;
-                  const isLocked = access?.line_coding_locked || (access?.block_coding_max_level && access?.block_coding_max_level !== "");
+                  const relockedCount = access?.locked_levels?.length || 0;
+                  const isLocked =
+                     access?.line_coding_locked || (access?.block_coding_max_level && access?.block_coding_max_level !== "") || relockedCount > 0;
 
                   return (
                      <div
@@ -83,6 +85,12 @@ useEffect(() => {
                               <p className="mb-1 text-[10px] font-black uppercase tracking-widest text-slate-300">{t("blockGameAccess")}</p>
                               <p className="text-sm font-bold text-slate-600">
                                  {access?.block_coding_max_level ? access.block_coding_max_level.replace("_", " Level ") : t("noLimit")}
+                              </p>
+                           </div>
+                           <div className="border-l border-slate-100 pl-12 text-right">
+                              <p className="mb-1 text-[10px] font-black uppercase tracking-widest text-slate-300">{t("levelsToRedo")}</p>
+                              <p className={`text-sm font-bold ${relockedCount > 0 ? "text-amber-500" : "text-slate-600"}`}>
+                                 {relockedCount > 0 ? relockedCount : t("none")}
                               </p>
                            </div>
                            <button

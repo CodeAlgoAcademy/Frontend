@@ -26,9 +26,18 @@ export interface BaseStudent {
 
 }
 
+export interface IPlayedLevel {
+   unit_level: string;
+   sort_index: number;
+   completed: boolean;
+}
+
 export interface ICodingAccess {
    line_coding_locked: boolean;
    block_coding_max_level: string;
+   locked_levels?: string[];
+   // Only returned by the teacher / parent endpoint.
+   played_levels?: IPlayedLevel[];
 }
 export interface ITeacherStudentsState{
   students: BaseStudent[];

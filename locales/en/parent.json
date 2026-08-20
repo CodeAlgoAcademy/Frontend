@@ -115,6 +115,7 @@
   "lineCoding": "Line Coding",
   "disabled": "Disabled",
   "enabled": "Enabled",
+  "levelsToRedo": "Levels To Redo",
   "maxLevel": "Max Level",
   "edit": "Edit",
   "friends": "Friends",

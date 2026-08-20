@@ -34,7 +34,8 @@ export default function GameLocksParentPage() {
             <div className="grid gap-6">
                {children.map((child) => {
                   const access = child.codingAccess;
-                  const isLocked = access?.line_coding_locked || (access?.block_coding_max_level !== "");
+                  const relockedCount = access?.locked_levels?.length || 0;
+                  const isLocked = access?.line_coding_locked || (access?.block_coding_max_level !== "") || relockedCount > 0;
 
                   return (
                      <div key={child.id} className="bg-white rounded-3xl border border-slate-100 p-6 shadow-sm flex items-center justify-between transition-all hover:shadow-md">
@@ -59,6 +60,12 @@ export default function GameLocksParentPage() {
                               <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1">{t("maxLevel")}</p>
                               <p className="text-sm font-bold text-slate-600">
                                  {access?.block_coding_max_level ? access.block_coding_max_level.replace('_', ` ${t("level")} `) : t("noLimit")}
+                              </p>
+                           </div>
+                           <div className="text-right border-l pl-10">
+                              <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1">{t("levelsToRedo")}</p>
+                              <p className={`text-sm font-bold ${relockedCount > 0 ? 'text-amber-500' : 'text-slate-600'}`}>
+                                 {relockedCount > 0 ? relockedCount : t("none")}
                               </p>
                            </div>
                            <button 

@@ -115,6 +115,7 @@
   "lineCoding": "Programmation en ligne",
   "disabled": "Désactivé",
   "enabled": "Activé",
+  "levelsToRedo": "Niveaux à refaire",
   "maxLevel": "Niveau maximum",
   "edit": "Modifier",
   "friends": "Amis",

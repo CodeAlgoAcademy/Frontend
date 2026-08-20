@@ -1,4 +1,5 @@
 import { LevelThresholdInputProps } from "@/components/parents/UI/levelthreshold";
+import { IPlayedLevel } from "./teacherstudent.interface";
 
 export type days = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
 
@@ -30,6 +31,8 @@ export interface IChildTopics {
 export interface ICodingAccess {
    line_coding_locked: boolean;
    block_coding_max_level: string;
+   locked_levels?: string[];
+   played_levels?: IPlayedLevel[];
 }
 
 export interface IParentChild {
