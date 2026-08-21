@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
 import assignmentServices from "services/block_assignments";
@@ -51,18 +51,38 @@ const handleGameTypeChange = (type: "block" | "line") => {
 
    const removeTopic = (id: number) => setSelectedTopics((p) => p.filter((t) => t.id !== id));
 
+   // Which assignment this form has already been populated from. Without it the
+   // effect below re-ran on every parent render (the `students` prop is a fresh
+   // array each time) and threw away students the teacher had just picked, so
+   // saving an edit quietly dropped them from the assignment.
+   const initialisedFor = useRef<number | null>(null);
+
    useEffect(() => {
-      if (!editData) return;
+      if (!editData) {
+         initialisedFor.current = null;
+         return;
+      }
+      if (initialisedFor.current === editData.id) return;
+      initialisedFor.current = editData.id;
 
       setTitle(editData.title || today());
       setQuestionOrder(editData.question_order || "in_sequence");
       setQuestionCount(editData.question_count || 0);
       setSelectedTopics(editData.topics || []);
 
-      const assignedIdentifiers = new Set((editData.student_records || []).map((r: any) => r.student_id || r.id));
-      const assignedUsernames = new Set((editData.student_records || []).map((r: any) => r.username || r.student_username));
-
-      const initialStudents = students.filter((s) => assignedIdentifiers.has(s.id) || assignedUsernames.has(s.username));
+      // Built from the records themselves, not by intersecting with the class
+      // roster. The roster comes from redux and can still be empty when this
+      // runs, which used to show an edit form with nobody assigned.
+      const roster = new Map(students.map((s) => [s.id, s]));
+      const initialStudents: Student[] = (editData.student_records || [])
+         .map((r: any) => {
+            const id = r.student_id ?? r.student?.id;
+            if (id == null) return null;
+            const known = roster.get(id);
+            const username = r.student_username || known?.username || "";
+            return { id, name: known?.name || username, username };
+         })
+         .filter(Boolean) as Student[];
 
       setSelectedStudents(initialStudents);
 

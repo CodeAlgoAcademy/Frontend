@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import TeacherLayout from "@/components/layouts/TeacherLayout";
@@ -24,11 +24,17 @@ export default function AssignmentsPage() {
    const { t } = useTranslation("teacher");
    const classId = useSelector((state: RootState) => state.currentClass?.id);
    const classStudents = useSelector((state: RootState) => (state as any).teacherStudentSlice?.students ?? []);
-   const students = classStudents.map((s: any) => ({
-      id: s.student_id ?? s.id,
-      name: s.fullName ?? `${s.firstName ?? ""} ${s.lastName ?? ""}`.trim(),
-      username: s.username ?? "",
-   }));
+   // Memoised because NewAssignmentForm keys an effect on this array. Rebuilding
+   // it on every render made that effect re-run and reset the form.
+   const students = useMemo(
+      () =>
+         classStudents.map((s: any) => ({
+            id: s.student_id ?? s.id,
+            name: s.fullName ?? `${s.firstName ?? ""} ${s.lastName ?? ""}`.trim(),
+            username: s.username ?? "",
+         })),
+      [classStudents],
+   );
 
    const [view, setView] = useState<View>("hub");
    const [activeTab, setActiveTab] = useState<Tab>("active");
@@ -87,7 +93,9 @@ export default function AssignmentsPage() {
       setLoading(true);
       try {
          const fullData = await assignmentServices.getSinglAssignment(classId, id);
-         const assignedStudentIds = fullData.student_records?.map((r: any) => r.student_id) || [];
+         const assignedStudentIds = (fullData.student_records || [])
+            .map((r: any) => r.student_id)
+            .filter((sid: any) => sid != null);
 
          setEditingAssignment({
             ...fullData,
