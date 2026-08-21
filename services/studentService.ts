@@ -109,7 +109,6 @@ const studentService = {
    addStudent,
    getStudents,
    getSingleStudent,
-   getStudentProgressByTeacher,
    getClassProgressSummary,
    moveStudents,
    transferStudentsOwner,

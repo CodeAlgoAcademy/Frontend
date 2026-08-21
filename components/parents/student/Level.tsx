@@ -41,7 +41,7 @@ const Level = ({ size, level, progressItems, isLoading, isBlockProgress = false,
               title={currentProgress.title}
               titleSize="base"
               containerSize={size}
-              level={currentProgress.unit_level}
+              level={currentProgress.unit_level ?? ""}
             />
           </div>
         )}
@@ -73,8 +73,7 @@ const Level = ({ size, level, progressItems, isLoading, isBlockProgress = false,
                       title={isBlockProgress ? lesson.standard_code : lesson.title}
                       titleSize="base"
                       containerSize={size} 
-                      level={lesson.unit_level}
-                                         />
+                      level={lesson.unit_level ?? ""}                                         />
                   ))
                 ) : (
                   <p className="text-sm text-gray-500">{t("noInProgressItems")}</p>
@@ -94,7 +93,7 @@ const Level = ({ size, level, progressItems, isLoading, isBlockProgress = false,
                         title={isBlockProgress ? lesson.standard_code : lesson.title}
                         titleSize="base"
                         containerSize={size}
-                      level={lesson.unit_level}
+                      level={lesson.unit_level ?? ""}
                       />
                     ))}
                   </div>

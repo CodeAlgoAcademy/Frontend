@@ -37,13 +37,21 @@ export interface IAllAssignments {
 interface AnswerDetail {
   id: number;
   is_correct: boolean;
-  student_answer: { order?: string[] };
+  student_answer: { order?: string[]; selected_option?: string };
   answered_at: string;
   question_text: string;
   question_type: string;
   standard_code: string;
   topic_name: string;
-  duration:number
+  duration: number;
+  question_source?: "block" | "activity" | "compiler";
+  code?: string;
+  output?: string;
+  errors?: string;
+  ai_encouragement?: string;
+  ai_reasoning?: string;
+  ai_summary?: string;
+  ai_rating?: number;
 }
 export interface DetailedAnswersResponse {
   student_username: string;

@@ -77,8 +77,10 @@ const Dashboard = () => {
                   isLoading={isLoading}
                   isBlockProgress={isBlockProgress}
                   completedItems={completedItems}
-                  currentProgress={!isBlockProgress && parent?.currentChild?.progress?.current}
-               />
+                     currentProgress={
+                     !isBlockProgress && (parent?.currentChild?.progress?.current ?? false)
+                     }
+                     />
                <CompletedStandard completedItems={filteredCompletedItems} isLoading={isLoading} />
                <Skills size="base" />
                <Screentime size="base" />

@@ -8,7 +8,7 @@ import { getStudents } from "store/studentSlice";
 import StudentBarChart from "@/components/Teachers/students/screentime/BarChart";
 import { useRouter } from "next/router";
 import StudentLevelChart from "@/components/Teachers/students/level-threshold/BarChart";
-import { fetchStudentBlockGameProgress } from "store/teacherStudentSlice";
+import { fetchStudentBlockGameProgress, fetchStudentLineProgress, fetchStudentLineProgressNew } from "store/teacherStudentSlice";
 import TeacherStudentSkills from "@/components/Teachers/students/studentsprogress/skills";
 import TeacherStudentCompletedStandard from "@/components/Teachers/students/studentsprogress/standard";
 import TeacherStudentProgress from "@/components/Teachers/students/studentsprogress/progress";
@@ -31,16 +31,16 @@ const Dashboard = () => {
    const toggleTab = (key: keyof TeachersTabs, open: boolean) => {
       setTabs({ students: open });
    };
-   const calculateAge = (dob: string): number => {
-      const birthDate = new Date(dob);
-      const today = new Date();
-      let age = today.getFullYear() - birthDate.getFullYear();
-      const monthDiff = today.getMonth() - birthDate.getMonth();
-      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-         age--;
-      }
-      return age;
-   };
+   // const calculateAge = (dob: string): number => {
+   //    const birthDate = new Date(dob);
+   //    const today = new Date();
+   //    let age = today.getFullYear() - birthDate.getFullYear();
+   //    const monthDiff = today.getMonth() - birthDate.getMonth();
+   //    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+   //       age--;
+   //    }
+   //    return age;
+   // };
 
    useEffect(() => {
       if (classId) {
@@ -48,30 +48,103 @@ const Dashboard = () => {
       }
    }, [classId, dispatch]);
 
-   useEffect(() => {
-      const studentId = currentStudent?.student_id;
 
-      if (classId && studentId) {
-         setIsLoading(true);
 
-         dispatch(fetchStudentBlockGameProgress({ classId, studentId }))
-            .unwrap()
-            .then((res: any) => {
-               setProgressData(res);
-               console.log(progressData, "student progress")
-            })
-            .catch((err: any) => {
-            })
-            .finally(() => {
-               setIsLoading(false);
-            });
-      }
-   }, [classId, currentStudent?.student_id, dispatch]);
 
-   const allProgressItems = Array.isArray(progressData) ? progressData : [];
-   console.log(allProgressItems, "allstudebt")
-   const inProgressItems = allProgressItems.filter((item) => item.progress < 1.0);
-   const completedItems = allProgressItems.filter((item) => item.progress === 1.0);
+   // Update the useEffect in teachers/index.tsx
+
+// useEffect(() => {
+//    const studentId = currentStudent?.student_id || currentStudent?.id;
+//    const dob = currentStudent?.dob;
+
+//    if (classId && studentId && dob) {
+//       setIsLoading(true);
+
+//       const age = calculateAge(dob);
+
+//       const is14AndAbove = age >= 14;
+//       setIsBlockProgress(!is14AndAbove);
+
+//       const action = is14AndAbove
+//          ? fetchStudentLineProgressNew({
+//               classId: classId.toString(),
+//               studentId: studentId.toString(),
+//            })
+//          : fetchStudentBlockGameProgress({
+//               classId,
+//               studentId,
+//            });
+
+//       dispatch(action)
+//          .unwrap()
+//          .then((res: any) => {
+//             const normalizedData = Array.isArray(res)
+//                ? res
+//                : res?.topic || [];
+
+//             setProgressData(normalizedData);
+//          })
+//          .catch((err) => {
+//             console.error("Progress Fetch Error:", err);
+//          })
+//          .finally(() => {
+//             setIsLoading(false);
+//          });
+//    }
+// }, [
+//    classId,
+//    currentStudent?.student_id,
+//    currentStudent?.id,
+//    currentStudent?.dob,
+//    dispatch,
+// ]);
+
+
+
+const calculateAge = (dob: string): number => {
+   if (!dob) return 0;
+   const birthDate = new Date(dob);
+   const today = new Date();
+   let age = today.getFullYear() - birthDate.getFullYear();
+   if (today < new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate())) {
+      age--;
+   }
+   return age;
+};
+
+useEffect(() => {
+   const studentId = currentStudent?.student_id || currentStudent?.id;
+   const dob = currentStudent?.dob;
+
+   if (classId && studentId && dob) {
+      setIsLoading(true);
+      setProgressData([]);
+
+      const age = calculateAge(dob);
+      const isPythonStudent = age >= 14; 
+      setIsBlockProgress(!isPythonStudent);
+
+      const action = isPythonStudent
+         ? fetchStudentLineProgressNew({ classId: classId.toString(), studentId: studentId.toString() })
+         : fetchStudentBlockGameProgress({ classId, studentId });
+
+      dispatch(action)
+         .unwrap()
+         .then((res: any) => {
+            const normalizedData = Array.isArray(res) ? res : res?.topic || [];
+            setProgressData(normalizedData);
+         })
+         .finally(() => setIsLoading(false));
+   }
+}, [classId, currentStudent?.id, currentStudent?.dob]);
+
+const allProgressItems = Array.isArray(progressData) ? progressData : [];
+const inProgressItems = allProgressItems.filter((item) => (item.progress || 0) < 1.0);
+const completedItems = allProgressItems.filter((item) => (item.progress || 0) >= 1.0);
+
+
+   
+
    const filteredCompletedItems = completedItems.filter((item) => {
       const hasNoCurriculum =
          item.iready_math_desc?.includes("(No direct curriculum unit)") && item.common_core_math_desc?.includes("(No direct curriculum unit)");

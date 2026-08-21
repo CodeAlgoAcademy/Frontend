@@ -26,6 +26,7 @@ export interface CreateAssignmentPayload {
   start_now: boolean;
   scheduled_at?: string | null;
   student_ids?: number[];
+  game_type?: "block" | "line";
 }
  
 export interface AssignmentStandard {
