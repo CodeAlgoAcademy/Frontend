@@ -35,7 +35,7 @@
     {
       "class_name": "WebContainer",
       "image": "./Dockerfile",
-      "image_build_context": "..",
+      "image_build_context": "../..",
       // 1 GiB memory, 4 GB disk. The standalone image lands well inside that.
       // If `wrangler deploy` ever rejects the image for size, the fix is one
       // word: bump this to "standard-1" for 8 GB.
