@@ -78,13 +78,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const qrTokensData = qrTokensResponse.data;
 
     const students = studentsData?.students || [];
-    const qrLogins = qrTokensData || [];
+    const qrLogins = Array.isArray(qrTokensData)
+      ? qrTokensData
+      : (qrTokensData?.results || []);
 
-    if (students.length === 0) {
-      return res.status(404).json({ error: 'No students found' });
-    }
-
-    const mergedStudents = qrLogins.map((qr: any) => {
+    // The PDF is built from the QR endpoint (it carries qr_secret + login URL),
+    // so gate on that. Fall back to the class roster if the QR endpoint returned
+    // nothing, so the sheet still renders names/usernames.
+    let mergedStudents = qrLogins.map((qr: any) => {
       return {
         ...qr,
         loginUrl: `${BASE_URL}?token=${qr.qr_secret}`,
@@ -93,6 +94,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // loginUrl: `https://play.codealgoacademy.com/login/qrcode?token=${qr.qr_secret}`
       };
     });
+
+    if (mergedStudents.length === 0 && students.length > 0) {
+      mergedStudents = students.map((s: any) => ({
+        ...s,
+        qr_secret: s.qr_secret || '',
+        loginUrl: s.qr_secret ? `${BASE_URL}?token=${s.qr_secret}` : '',
+      }));
+    }
+
+    if (mergedStudents.length === 0) {
+      return res.status(404).json({
+        error: 'No students found',
+        details: `students=${students.length}, qrLogins=${qrLogins.length}`,
+      });
+    }
 
     const { jsPDF } = await import('jspdf');
     const QRCode = require('qrcode');
