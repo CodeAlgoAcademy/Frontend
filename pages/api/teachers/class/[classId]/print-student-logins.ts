@@ -77,6 +77,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const studentsData = studentsResponse.data;
     const qrTokensData = qrTokensResponse.data;
 
+    // TEMP DIAGNOSTIC (remove after root cause found)
+    const diag = {
+      baseURL: process.env.NEXT_PUBLIC_API_URL,
+      qrStatus: qrTokensResponse.status,
+      qrRaw: String(qrTokensResponse.data).slice(0, 300),
+      accessTokenPrefix: (accessToken || '').slice(0, 12),
+    };
+
     const students = studentsData?.students || [];
     const qrLogins = Array.isArray(qrTokensData)
       ? qrTokensData
@@ -107,6 +115,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(404).json({
         error: 'No students found',
         details: `students=${students.length}, qrLogins=${qrLogins.length}`,
+        diag,
       });
     }
 
