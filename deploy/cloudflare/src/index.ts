@@ -5,8 +5,14 @@ import { Container, getContainer } from "@cloudflare/containers";
  *
  * Thinner than the Backend Worker on purpose. Next is stateless here - no
  * server sessions, no websockets, no in-memory cache anyone reads twice - so
- * this does not have to pin anything for correctness. It pins to one instance
- * anyway because max_instances is 1, and the two should agree.
+ * nothing has to be pinned for correctness, and requests are spread over
+ * INSTANCES containers.
+ *
+ * This used to send every request to getContainer(binding, "main"). That is one
+ * Durable Object, so it is one container, and raising max_instances in
+ * wrangler.jsonc on its own would have changed nothing at all - the extra
+ * instances would exist and never be addressed. The instance id is what picks
+ * the container, not the limit.
  */
 
 export interface Env {
@@ -16,7 +22,15 @@ export interface Env {
 
 const CONTAINER_PORT = 3000;
 
-const INSTANCE = "main";
+/**
+ * How many containers to spread requests over. Must be <= max_instances in
+ * wrangler.jsonc; anything above it just queues on containers that will never
+ * be allowed to start.
+ */
+const INSTANCES = 3;
+
+/** Instance ids. Also what the keep-warm cron walks, so none of them is cold. */
+const INSTANCE_IDS = Array.from({ length: INSTANCES }, (_, i) => `web-${i}`);
 
 /** Whatever the installed @cloudflare/containers expects as its ctx argument. */
 type ContainerCtx = ConstructorParameters<typeof Container>[0];
@@ -44,8 +58,9 @@ function nodeEnv(env: Env): Record<string, string> {
 
 export class WebContainer extends Container<Env> {
   defaultPort = CONTAINER_PORT;
-  // The */5 cron keeps it under this, so in practice it never sleeps. The
-  // margin is there so one missed cron does not cost a real user a cold start.
+  // The */5 cron keeps every instance under this, so in practice none of them
+  // sleeps. The margin is there so one missed cron does not cost a real user a
+  // cold start.
   sleepAfter = "20m";
 
   constructor(ctx: ContainerCtx, env: Env) {
@@ -77,7 +92,14 @@ export default {
       return new Response("pong", { status: 200 });
     }
 
-    return getContainer(env.WEB_CONTAINER, INSTANCE).fetch(request);
+    // Random rather than round robin: there is no shared counter to keep at
+    // the edge, and with a handful of instances the difference does not show.
+    // The ids are written out here rather than left to getRandom(), which
+    // names them "instance-N" internally - the keep-warm cron below has to
+    // address the same objects, and that is not a detail to infer from a
+    // library's implementation.
+    const id = INSTANCE_IDS[Math.floor(Math.random() * INSTANCE_IDS.length)];
+    return getContainer(env.WEB_CONTAINER, id).fetch(request);
   },
 
   /** Keep-warm. No jobs - Next has nothing scheduled. */
@@ -86,22 +108,35 @@ export default {
     env: Env,
     ctx: ExecutionContext,
   ): Promise<void> {
-    const container = getContainer(env.WEB_CONTAINER, INSTANCE);
-
+    // Every instance, not just the first. getRandom() will hand a real user
+    // any of them, so warming one would leave the other two to cold start in
+    // front of whoever drew them.
     ctx.waitUntil(
-      (async () => {
-        // "/" rather than a dedicated endpoint: it exercises the real render
-        // path, so a container that booted but cannot serve a page shows up in
-        // the cron logs instead of at the next user.
-        const res = await container.fetch(
-          new Request("https://container/", { headers: { "x-warmup": "1" } }),
-        );
-        // Drain so the connection closes cleanly.
-        await res.text();
-        if (res.status >= 500) {
-          console.error(`warmup got ${res.status}`);
-        }
-      })(),
+      // allSettled, not all: one instance that will not come up must not stop
+      // the other two being warmed, and it must not disappear into a single
+      // rejected promise either.
+      Promise.allSettled(
+        INSTANCE_IDS.map(async (id) => {
+          const container = getContainer(env.WEB_CONTAINER, id);
+          // "/" rather than a dedicated endpoint: it exercises the real render
+          // path, so a container that booted but cannot serve a page shows up
+          // in the cron logs instead of at the next user.
+          const res = await container.fetch(
+            new Request("https://container/", { headers: { "x-warmup": "1" } }),
+          );
+          // Drain so the connection closes cleanly.
+          await res.text();
+          if (res.status >= 500) {
+            console.error(`warmup ${id} got ${res.status}`);
+          }
+        }),
+      ).then((results) => {
+        results.forEach((result, i) => {
+          if (result.status === "rejected") {
+            console.error(`warmup ${INSTANCE_IDS[i]} failed`, result.reason);
+          }
+        });
+      }),
     );
   },
 };

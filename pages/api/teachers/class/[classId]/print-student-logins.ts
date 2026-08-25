@@ -77,8 +77,13 @@ function formatStudentName(firstName: string, lastName: string, maxLength: numbe
   return fullName.length > maxLength ? fullName.substring(0, maxLength) + '...' : fullName;
 }
 
-function formatUsername(username: string, maxLength: number = 15): string {
-  return username.length > maxLength ? username.substring(0, maxLength) + '...' : username;
+// A username is a credential a child has to type, so it is never shortened.
+// This used to cut anything over 12 characters and append an ellipsis, which
+// printed a login that cannot work onto the handout the teacher gives out.
+// Long ones are set smaller instead so they still fit the column.
+function usernameFontSize(username: string, base: number, maxChars: number): number {
+  if (username.length <= maxChars) return base;
+  return Math.max(6, Math.round((base * maxChars) / username.length));
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -191,9 +196,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const username = student.username || student.userName || `user${index + 1}`;
 
       const displayName = formatStudentName(firstName, lastName);
-      const formattedUsername = formatUsername(username, 12);
+
       doc.text(displayName, 25, yPosition);
-      doc.text(formattedUsername, 90, yPosition);
+      doc.setFontSize(usernameFontSize(username, 11, 20));
+      doc.text(username, 90, yPosition);
+      doc.setFontSize(11);
 
       yPosition += 10;
     });
@@ -301,7 +308,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       doc.text('Username', 20, 48);
       doc.setFontSize(14);
       doc.setTextColor(0, 0, 0);
-      doc.text(formatUsername(username, 20), 20, 55);
+      doc.setFontSize(usernameFontSize(username, 14, 26));
+      doc.text(username, 20, 55);
 
       doc.setFontSize(10);
       doc.setTextColor(120, 120, 120);

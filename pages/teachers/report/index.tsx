@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { useAppDispatch } from "store/hooks";
 import { useTranslation } from "react-i18next";
-import { fetchDiagnosticSummary } from "store/teacherStudentSlice";
+import { fetchDiagnosticSummary, fetchLineDiagnosticSummary } from "store/teacherStudentSlice";
 import DiagnosticDetailModal from "@/components/Teachers/report/modal";
 import LineDiagnosticModal from "@/components/Teachers/report/LineDiagnosticModal";
 
@@ -243,9 +243,14 @@ export default function DiagnosticReportPage() {
     null
   );
 
+  // Both tabs are rendered from state that is only ever filled by one of these
+  // two calls. Only the block summary was being fetched, so the Python (Line)
+  // tab read an array that nothing had written to and showed an empty class
+  // however many diagnostics the students had actually completed.
   useEffect(() => {
     if (classId) {
       dispatch(fetchDiagnosticSummary(classId));
+      dispatch(fetchLineDiagnosticSummary(classId));
     }
   }, [classId, dispatch]);
 

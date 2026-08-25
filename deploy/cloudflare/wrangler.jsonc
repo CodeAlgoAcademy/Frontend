@@ -39,11 +39,32 @@
       // 1 GiB memory, 4 GB disk. The standalone image lands well inside that.
       // If `wrangler deploy` ever rejects the image for size, the fix is one
       // word: bump this to "standard-1" for 8 GB.
-      "instance_type": "basic",
+      //
+      // "standard-1" (0.5 vCPU, 4 GiB) x3, to match the API.
+      //
+      // Node SSR was never short of memory - it peaked at 727 MB of the 1 GiB
+      // "basic" gave it - so most of this is buying the CPU that comes bundled
+      // with the tier. Measured at ~201ms of container CPU per rendered
+      // request, and the single 0.25 vCPU container hit 100% on ordinary days,
+      // not just during the incident: 2026-08-21 18:00Z, 20:00Z, 08-22 03:00Z,
+      // 08-23 08:00Z and 20:00Z all pegged with nobody complaining. That is the
+      // headroom that was not there when a class arrived.
+      "instance_type": "standard-1",
       // Next is stateless here - no sessions on the server, no in-memory cache
-      // anyone reads twice - so this could scale out later. One instance keeps
-      // the bill and the behaviour predictable for now.
-      "max_instances": 1
+      // anyone reads twice - so it scales out, and now it does.
+      //
+      // One instance meant every page render for every school queued behind
+      // one container on a quarter of a core. When it was busy the site did
+      // not get slow, it stopped answering, which is the "could not access
+      // parts of the site" half of the incident: nothing reached the API at
+      // all, so the API's own logs show a quiet day.
+      //
+      // Three is a starting point, not a measurement. Note the keep-warm cron
+      // in src/index.ts now pokes all three, so all three stay running and all
+      // three bill - that is the trade for nobody paying a cold start. Drop
+      // this and the INSTANCES constant in src/index.ts together if the cost
+      // is not worth it; they have to agree.
+      "max_instances": 3
     }
   ],
 
