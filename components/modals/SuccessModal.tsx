@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { closeSuccessModal } from "store/modalSlice";
@@ -15,9 +15,11 @@ const SuccessModal = () => {
    const closeModal = () => dispatch(closeSuccessModal());
    const { t } = useTranslation("modals");
    
-   const currentClass = useSelector((state: RootState): CurrentClassState => state.currentClass);
-   
-   const isStudentAdded = successModal?.type === "studentAdded";
+    const currentClass = useSelector((state: RootState): CurrentClassState => state.currentClass);
+    
+    const [isGenerating, setIsGenerating] = useState(false);
+    
+    const isStudentAdded = successModal?.type === "studentAdded";
    const isPDFReady = successModal?.type === "pdf";
 
    // const handleViewPDF = () => {
@@ -35,44 +37,47 @@ const SuccessModal = () => {
    //    }
    // };
 
-   const handleViewPDF = async () => {
-  if (currentClass.id) {
-    const accessToken = getAccessToken();
-    
-    if (!accessToken) {
-      console.error('No access token available');
-      return;
-    }
-    
-    try {
-      const response = await fetch(`/api/teachers/class/${currentClass.id}/print-student-logins`, {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        },
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
-      const blob = await response.blob();
-      const pdfUrl = window.URL.createObjectURL(blob);
-      
-      const newWindow = window.open(pdfUrl, '_blank');
-      if (!newWindow) {
-        alert(t('allowPopupsForPdf'));
-      }
-      
-      // Clean up the URL object after the window is closed
-      setTimeout(() => window.URL.revokeObjectURL(pdfUrl), 1000);
-      closeModal();
-      
-    } catch (error) {
-      console.error('Error generating PDF:', error);
-      alert(t('pdfGenerationFailed'));
-    }
-  }
+    const handleViewPDF = async () => {
+   if (currentClass.id) {
+     const accessToken = getAccessToken();
+     
+     if (!accessToken) {
+       console.error('No access token available');
+       return;
+     }
+     
+     setIsGenerating(true);
+     try {
+       const response = await fetch(`/api/teachers/class/${currentClass.id}/print-student-logins`, {
+         headers: {
+           'Authorization': `Bearer ${accessToken}`,
+           'Content-Type': 'application/json',
+         },
+       });
+       
+       if (!response.ok) {
+         throw new Error(`HTTP error! status: ${response.status}`);
+       }
+       
+       const blob = await response.blob();
+       const pdfUrl = window.URL.createObjectURL(blob);
+       
+       const newWindow = window.open(pdfUrl, '_blank');
+       if (!newWindow) {
+         alert(t('allowPopupsForPdf'));
+       }
+       
+       // Clean up the URL object after the window is closed
+       setTimeout(() => window.URL.revokeObjectURL(pdfUrl), 1000);
+       closeModal();
+       
+     } catch (error) {
+       console.error('Error generating PDF:', error);
+       alert(t('pdfGenerationFailed'));
+     } finally {
+       setIsGenerating(false);
+     }
+   }
 };
 
    if (!successModal.isOpen) {
@@ -100,14 +105,22 @@ const SuccessModal = () => {
                      <div className="m-auto h-[120px] w-[120px] p-3">
                         <Image src={pdf} alt="pdf" />
                      </div>
-                     <div className="flex flex-col gap-4 m-3">
-                         <button 
-                            className={styles.pdfButton}
-                            onClick={handleViewPDF}
-                         >
-                            {t("downloadPdf")}
-                         </button>
-                     </div>
+                      <div className="flex flex-col gap-4 m-3">
+                          <button 
+                             className={styles.pdfButton + " disabled:opacity-60 disabled:cursor-not-allowed"}
+                             onClick={handleViewPDF}
+                             disabled={isGenerating}
+                          >
+                             {isGenerating ? (
+                                <span className="inline-flex items-center gap-2">
+                                   <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                                   Generating…
+                                </span>
+                             ) : (
+                                t("downloadPdf")
+                             )}
+                          </button>
+                      </div>
                      <p className="mt-2 text-xs text-gray-500">
                         <strong>{t("pdfNoteLabel")}:</strong> {t("pdfNoteText")}
                      </p>
