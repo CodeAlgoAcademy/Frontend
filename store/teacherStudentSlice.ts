@@ -453,11 +453,15 @@ export const teacherStudentSlice = createSlice({
 })
 
 .addCase(fetchDiagnosticSummary.fulfilled, (state, action) => {
-   state.diagnosticSummary = action.payload.students;
+   // A summary that came back without a students array blanked the table and
+   // then threw on the next render. Empty is the honest answer.
+   state.diagnosticSummary = action.payload?.students ?? [];
 })
 
 .addCase(fetchLineDiagnosticSummary.fulfilled, (state, action) => {
-   state.lineDiagnosticSummary = action.payload.students;
+   // A summary that came back without a students array blanked the table and
+   // then threw on the next render. Empty is the honest answer.
+   state.lineDiagnosticSummary = action.payload?.students ?? [];
 })
 
 .addCase(fetchStudentLineCodingSkills.fulfilled, (state, action) => {

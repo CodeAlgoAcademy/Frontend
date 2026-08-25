@@ -19,33 +19,39 @@ export function getTimeStamp() {
    }
 }
 
+/**
+ * Kept for callers that want to refresh up front. The automatic path is the
+ * 401 interceptor in axios.config.ts, which refreshes once and retries the
+ * request that failed.
+ *
+ * This used to end in window.location.reload(). It was called from
+ * getAccessToken(), which every component calls, so an expired token produced a
+ * burst of refresh POSTs and a page reload on top of whatever the user was
+ * doing - and it also rewrote localStorage with only the two tokens in it,
+ * dropping the cached user and user_type that the rest of the app reads.
+ */
 export async function refreshToken() {
-   if (typeof window !== "undefined") {
-      if (Date.now() - getTimeStamp()! > REFRESH_TOKEN_EXPIRATION_TIME) {
-         window.localStorage.removeItem(ILocalStorageItems.token);
-         window.localStorage.removeItem("token_timestamp");
-         console.error("Refresh token expired. Redirecting to Login page....");
-         window.location.replace("login");
-      } else {
-         try {
-            const { data } = await http.post("/auth/token/refresh/", {
-               refresh: getRefreshToken(),
-            });
-            const { access } = data;
-            localStorage.setItem(
-               ILocalStorageItems.token,
-               JSON.stringify({
-                  access_token: access,
-                  refresh_token: getRefreshToken(),
-               })
-            );
-            setTimeStamp();
-            window.location.reload();
-            return;
-         } catch (e) {
-            console.error(e);
-         }
-      }
+   if (typeof window === "undefined") return;
+
+   if (Date.now() - getTimeStamp()! > REFRESH_TOKEN_EXPIRATION_TIME) {
+      window.localStorage.removeItem(ILocalStorageItems.token);
+      window.localStorage.removeItem(ILocalStorageItems.token_timestamp);
+      window.location.replace("/login");
+      return;
+   }
+
+   try {
+      const { data } = await http.post("/auth/token/refresh/", {
+         refresh: getRefreshToken(),
+      });
+      const { access } = data;
+      if (!access) return;
+      const stored = JSON.parse(window.localStorage.getItem(ILocalStorageItems.token) || "{}") || {};
+      stored.access_token = access;
+      window.localStorage.setItem(ILocalStorageItems.token, JSON.stringify(stored));
+      setTimeStamp();
+   } catch (e) {
+      console.error(e);
    }
 }
 
@@ -56,18 +62,15 @@ export function getToken() {
    }
 }
 
+/**
+ * A plain read. It used to notice the token had expired, kick off a refresh it
+ * did not wait for, and then return the expired token anyway - so the caller
+ * sent the dead one and got a 401 regardless. Renewal belongs to the response
+ * interceptor in axios.config.ts, which can actually retry the request.
+ */
 export function getAccessToken() {
    if (typeof window !== "undefined") {
-      const localAccessToken = getToken();
-
-      if (getTimeStamp() !== undefined && getTimeStamp() !== 0) {
-         if (Date.now() - getTimeStamp()! > ACCESS_TOKEN_EXPIRATION_TIME) {
-            console.warn("Access token expired. Refreshing...");
-            refreshToken();
-         }
-      }
-
-      return localAccessToken;
+      return getToken();
    }
 }
 
