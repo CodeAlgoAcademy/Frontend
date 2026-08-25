@@ -1,14 +1,45 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
+import zlib from 'zlib';
+
+// prod-api sits behind a proxy that gzip/brotli-encodes responses. axios in
+// Node does not auto-decompress, so without this the body arrives as raw
+// compressed bytes and `response.data` is never valid JSON.
+function decompress(data: any, headers: any): Buffer | string {
+  if (data && typeof data === 'object' && !Buffer.isBuffer(data)) return data;
+  const buf = Buffer.isBuffer(data) ? data : Buffer.from(data);
+  const enc = headers && (headers['content-encoding'] || headers['Content-Encoding']);
+  try {
+    if (enc === 'gzip' || enc === 'x-gzip') return zlib.gunzipSync(buf as unknown as Uint8Array);
+    if (enc === 'deflate') return zlib.inflateSync(buf as unknown as Uint8Array);
+    if (enc === 'br') return zlib.brotliDecompressSync(buf as unknown as Uint8Array);
+  } catch {
+    /* fall through to raw text */
+  }
+  return buf;
+}
 
 const serverHttp = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
+    // Ask for uncompressed bodies so axios (Node) doesn't get gzip/brotli bytes.
+    'Accept-Encoding': 'identity',
   },
+  transformResponse: [
+    (data: any, headers: any) => {
+      const dec = decompress(data, headers);
+      const text = Buffer.isBuffer(dec) ? dec.toString('utf8') : String(dec);
+      try {
+        return JSON.parse(text);
+      } catch {
+        return text;
+      }
+    },
+  ],
 });
-const BASE_URL = process.env.URL_GAME; 
+const BASE_URL = process.env.URL_GAME;
 
 serverHttp.interceptors.response.use(
   (res) => res,
