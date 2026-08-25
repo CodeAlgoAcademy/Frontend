@@ -63,6 +63,11 @@
     // Read server-side by pages/api/teachers/class/[classId]/print-student-logins,
     // which builds the QR login URLs on the student handout. Not a NEXT_PUBLIC_
     // value, so it is genuinely runtime config and belongs here.
-    "URL_GAME": "https://play.codealgoacademy.com"
+    "URL_GAME": "https://play.codealgoacademy.com",
+    // Server-side API route (print-student-logins) reads NEXT_PUBLIC_API_URL from
+    // process.env at RUNTIME. Next only inlines NEXT_PUBLIC_* into the client
+    // bundle at build time; the container's node server gets nothing unless we
+    // pass it here. Without this the route calls its own origin and 404s.
+    "NEXT_PUBLIC_API_URL": "https://prod-api.codealgoacademy.com/"
   }
 }
