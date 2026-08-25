@@ -108,14 +108,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const studentsData = studentsResponse.data;
     const qrTokensData = qrTokensResponse.data;
 
-    // TEMP DIAGNOSTIC (remove after root cause found)
-    const diag = {
-      baseURL: process.env.NEXT_PUBLIC_API_URL,
-      qrStatus: qrTokensResponse.status,
-      qrRaw: String(qrTokensResponse.data).slice(0, 300),
-      accessTokenPrefix: (accessToken || '').slice(0, 12),
-    };
-
     const students = studentsData?.students || [];
     const qrLogins = Array.isArray(qrTokensData)
       ? qrTokensData
@@ -146,7 +138,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(404).json({
         error: 'No students found',
         details: `students=${students.length}, qrLogins=${qrLogins.length}`,
-        diag,
       });
     }
 
@@ -161,8 +152,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     doc.setFontSize(12);
     doc.setTextColor(80, 80, 80);
     const instructions = [
-      "These are your students' unique usernames and passwords to sign in to their Codealgo account",
+      "These are your students' unique usernames to sign in to their Codealgo account",
       'via the app or at https://play.codealgoacademy.com/ on a computer.',
+      'Students can sign in by scanning the QR code on their login card.',
       'These should be kept confidential to prevent any unauthorized access.',
     ];
     instructions.forEach((line, index) => {
@@ -178,11 +170,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     doc.setFillColor(240, 240, 240);
     doc.rect(20, 95, 170, 10, 'F');
-    doc.setTextColor(0, 0, 0);
-    doc.setFontSize(11);
-    doc.text('Student Name', 25, 102);
-    doc.text('Username', 90, 102);
-    doc.text('Password', 140, 102);
+     doc.setTextColor(0, 0, 0);
+     doc.setFontSize(11);
+     doc.text('Student Name', 25, 102);
+     doc.text('Username', 90, 102);
 
     let yPosition = 110;
     mergedStudents.forEach((student: any, index: number) => {
@@ -198,13 +189,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const firstName = student.firstName || student.first_name || 'First';
       const lastName = student.lastName || student.last_name || 'Last';
       const username = student.username || student.userName || `user${index + 1}`;
-      const password = student.password || 'password';
 
       const displayName = formatStudentName(firstName, lastName);
       const formattedUsername = formatUsername(username, 12);
       doc.text(displayName, 25, yPosition);
       doc.text(formattedUsername, 90, yPosition);
-      doc.text(password, 140, yPosition);
 
       yPosition += 10;
     });
@@ -226,7 +215,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const firstName = student.firstName || student.first_name || 'First';
       const lastName = student.lastName || student.last_name || 'Last';
       const username = student.username || student.userName || 'user';
-      const password = student.password || 'password';
 
       if (cardY + cardHeight > 270) {
         doc.addPage();
@@ -249,13 +237,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       doc.setFontSize(10);
       doc.setTextColor(0, 0, 0);
       doc.text(username, cardX + 3, cardY + 23);
-
-      doc.setFontSize(9);
-      doc.setTextColor(80, 80, 80);
-      doc.text('Password:', cardX + 5, cardY + 29);
-      doc.setFontSize(10);
-      doc.setTextColor(0, 0, 0);
-      doc.text(password, cardX + 5, cardY + 33);
 
       try {
         const loginData = student.loginUrl;
@@ -304,7 +285,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const firstName = student.firstName || student.first_name || 'First';
       const lastName = student.lastName || student.last_name || 'Last';
       const username = student.username || student.userName || 'user';
-      const password = student.password || 'password';
 
       doc.setDrawColor(150, 150, 150);
       doc.setLineDashPattern([2, 2], 0);
@@ -322,13 +302,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       doc.setFontSize(14);
       doc.setTextColor(0, 0, 0);
       doc.text(formatUsername(username, 20), 20, 55);
-
-      doc.setFontSize(12);
-      doc.setTextColor(80, 80, 80);
-      doc.text('Password', 20, 65);
-      doc.setFontSize(14);
-      doc.setTextColor(0, 0, 0);
-      doc.text(password, 20, 72);
 
       doc.setFontSize(10);
       doc.setTextColor(120, 120, 120);
