@@ -17,9 +17,14 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "../i18n";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 import i18n, { detectLanguage, loadTranslations, syncLanguageToBackend } from "../i18n";
 
+const GA_ID = "G-BT6M4N6SS1";
+
 function MyApp({ Component, pageProps }: AppProps) {
+   const router = useRouter();
+
    useEffect(() => {
       const detected = detectLanguage();
       if (detected !== i18n.language) {
@@ -38,6 +43,18 @@ function MyApp({ Component, pageProps }: AppProps) {
          i18n.off("languageChanged", handleLanguageChange);
       };
    }, []);
+
+   useEffect(() => {
+      const handleRouteChange = (url: string) => {
+         if (typeof window !== "undefined" && (window as any).gtag) {
+            (window as any).gtag("config", GA_ID, { page_path: url });
+         }
+      };
+      router.events.on("routeChangeComplete", handleRouteChange);
+      return () => {
+         router.events.off("routeChangeComplete", handleRouteChange);
+      };
+   }, [router.events]);
 
    return (
       <Provider store={store}>
