@@ -26,6 +26,15 @@ const CONTAINER_PORT = 3000;
  * How many containers to spread requests over. Must be <= max_instances in
  * wrangler.jsonc; anything above it just queues on containers that will never
  * be allowed to start.
+ *
+ * Three on "basic" is 0.75 vCPU, against 1.5 when these were "standard-1". The
+ * tier drop already halves this Worker's CPU and there is no second lever here
+ * to buy it back, so the count stays where it was rather than compounding it.
+ *
+ * Instance count is also what Durable Object compute duration bills on, so this
+ * is a cost knob as well as a capacity one - raising it costs money even when
+ * the extra container serves nothing, because the keep-warm cron below holds it
+ * up for the whole window.
  */
 const INSTANCES = 3;
 
@@ -58,9 +67,11 @@ function nodeEnv(env: Env): Record<string, string> {
 
 export class WebContainer extends Container<Env> {
   defaultPort = CONTAINER_PORT;
-  // The */5 cron keeps every instance under this, so in practice none of them
-  // sleeps. The margin is there so one missed cron does not cost a real user a
-  // cold start.
+  // The */4 cron keeps every instance under this during the school-hours
+  // window, so inside the window none of them sleeps. The margin is there so
+  // one missed cron does not cost a real user a cold start. Outside the window
+  // this is exactly what is meant to fire: 20 minutes after the last visitor,
+  // the instance stops and stops billing.
   sleepAfter = "20m";
 
   constructor(ctx: ContainerCtx, env: Env) {
@@ -102,7 +113,13 @@ export default {
     return getContainer(env.WEB_CONTAINER, id).fetch(request);
   },
 
-  /** Keep-warm. No jobs - Next has nothing scheduled. */
+  /**
+   * Keep-warm. No jobs - Next has nothing scheduled.
+   *
+   * Only fires inside the school-hours window; see triggers.crons in
+   * wrangler.jsonc. Outside it the container is allowed to sleep, which is the
+   * point.
+   */
   async scheduled(
     _event: ScheduledController,
     env: Env,

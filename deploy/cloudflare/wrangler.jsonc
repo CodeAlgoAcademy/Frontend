@@ -25,10 +25,24 @@
     { "pattern": "www.codealgoacademy.com", "custom_domain": true }
   ],
 
-  // Keep-warm only. A marketing site that takes eight seconds to answer the
-  // first request of the morning is worse than the container cost.
+  // Keep-warm only, and only during school hours. Cloudflare bills container
+  // memory and disk for as long as an instance is awake, and sleepAfter is 20m,
+  // so the old */5 * * * * held every instance up 168 hours a week for a
+  // product used between first bell and last bell. That single line was the
+  // largest item on the bill.
+  //
+  // Same window as the API, for the same reasons. Cron is UTC and Vancouver is
+  // not, so it is widened by an hour at each end to cover PDT and PST without
+  // editing this twice a year:
+  //   13-23 UTC = 06:00-16:59 PDT / 05:00-15:59 PST
+  //   0     UTC = 17:00-17:59 PDT / 16:00-16:59 PST, hence day-of-week 2-6,
+  //               because 00:xx UTC Saturday is Friday afternoon local.
+  //
+  // The trade is one cold start each weekday morning, absorbed by the 13:00
+  // (or 00:00) warm rather than by a visitor. Anyone hitting the site outside
+  // the window waits out a Next boot; that is accepted.
   "triggers": {
-    "crons": ["*/5 * * * *"]
+    "crons": ["*/4 13-23 * * 1-5", "*/4 0 * * 2-6"]
   },
 
   "containers": [
@@ -36,20 +50,24 @@
       "class_name": "WebContainer",
       "image": "./Dockerfile",
       "image_build_context": "../..",
-      // 1 GiB memory, 4 GB disk. The standalone image lands well inside that.
-      // If `wrangler deploy` ever rejects the image for size, the fix is one
-      // word: bump this to "standard-1" for 8 GB.
+      // "basic": 0.25 vCPU, 1 GiB, 4 GB disk. The standalone image lands well
+      // inside the disk; if `wrangler deploy` ever rejects it for size, the fix
+      // is one word: bump this back to "standard-1" for 8 GB.
       //
-      // "standard-1" (0.5 vCPU, 4 GiB) x3, to match the API.
+      // Was "standard-1" (0.5 vCPU, 4 GiB) x3. Node SSR was never short of
+      // memory - it peaked at 727 MB of the 1 GiB "basic" already gave it - so
+      // that tier was buying 4 GiB nothing touched in order to get the CPU
+      // bundled with it, and provisioned memory is what the bill is made of.
+      // standard-1 is also the worst memory-per-vCPU ratio on the menu; N x
+      // basic beats fewer standard-1 on both axes.
       //
-      // Node SSR was never short of memory - it peaked at 727 MB of the 1 GiB
-      // "basic" gave it - so most of this is buying the CPU that comes bundled
-      // with the tier. Measured at ~201ms of container CPU per rendered
-      // request, and the single 0.25 vCPU container hit 100% on ordinary days,
-      // not just during the incident: 2026-08-21 18:00Z, 20:00Z, 08-22 03:00Z,
-      // 08-23 08:00Z and 20:00Z all pegged with nobody complaining. That is the
-      // headroom that was not there when a class arrived.
-      "instance_type": "standard-1",
+      // CPU still matters: ~201ms of container CPU per rendered request, and a
+      // SINGLE 0.25 vCPU container hit 100% on ordinary days, not just during
+      // the incident (2026-08-21 18:00Z, 20:00Z, 08-22 03:00Z, 08-23 08:00Z and
+      // 20:00Z all pegged with nobody complaining). So this drops the tier but
+      // keeps two instances - 0.5 vCPU total, the same core count standard-1
+      // gave, at a quarter of the memory and with no single point of failure.
+      "instance_type": "basic",
       // Next is stateless here - no sessions on the server, no in-memory cache
       // anyone reads twice - so it scales out, and now it does.
       //
@@ -59,11 +77,23 @@
       // parts of the site" half of the incident: nothing reached the API at
       // all, so the API's own logs show a quiet day.
       //
-      // Three is a starting point, not a measurement. Note the keep-warm cron
-      // in src/index.ts now pokes all three, so all three stay running and all
-      // three bill - that is the trade for nobody paying a cold start. Drop
-      // this and the INSTANCES constant in src/index.ts together if the cost
-      // is not worth it; they have to agree.
+      // Still three. The tier dropped, the count did not.
+      //
+      // The keep-warm cron in src/index.ts pokes every instance, so every
+      // instance stays running and every instance bills for the whole window -
+      // instance count is also what Durable Object compute duration scales on,
+      // independent of tier. Two would have been cheaper again.
+      //
+      // It stays at three because dropping to "basic" already halves this
+      // Worker's CPU (3 x 0.5 -> 3 x 0.25 vCPU) and, unlike the API, there is
+      // no second lever here to buy it back - the API paid for its tier drop
+      // with PASSWORD_HASHER_ITERATIONS, and an SSR render has no equivalent.
+      // Changing two things at once and finding out in a classroom is how
+      // 2026-08-24 went. The measured burst work in
+      // codealgo/test/test_login_burst_capacity.py covers the API only; this
+      // Worker has not been load tested at all.
+      //
+      // Must agree with the INSTANCES constant in src/index.ts. Change both.
       "max_instances": 3
     }
   ],
