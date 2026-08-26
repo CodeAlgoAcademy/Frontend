@@ -2,9 +2,14 @@ import React, { FC, ReactElement } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { BiChevronLeft } from "react-icons/bi";
 import Footer from "../home/new-home/footer";
 import LanguageSwitcher from "../UI/LanguageSwitcher";
 import { useTranslation } from "react-i18next";
+
+// /login/teacher and /signup/parent, but not /login, /change-password or the
+// multi-step pages that also use this layout.
+const ROLE_SUBPAGE = /^\/(login|signup)\/[^/]+$/;
 
 type AuthLayoutProps = {
    children: ReactElement;
@@ -14,6 +19,13 @@ const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
    const router = useRouter();
    const { t } = useTranslation("auth");
 
+   const pathname = router?.pathname ?? "";
+   // Picking the wrong card on the account-type screen was a dead end - the
+   // only way back was the browser button or the logo, which drops you on the
+   // marketing site.
+   const showAccountTypeLink = ROLE_SUBPAGE.test(pathname);
+   const accountTypeHref = pathname.startsWith("/signup") ? "/signup" : "/login";
+
    return (
       <>
          <div className="relative flex min-h-[100vh] w-full flex-col justify-between bg-gradient-to-br from-[#78A8FB] to-[#C4D7F8] pt-[2rem] md:bg-authLayout md:bg-cover md:bg-right md:pt-[2rem]">
@@ -22,6 +34,14 @@ const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
                   <Image alt="logo" src="/assets/CodeAlgo_Logo.png" className={"h-9 md:cursor-pointer"} width={110} height={55} />
                </Link>
                <div className="flex flex-wrap items-center gap-2">
+                  {showAccountTypeLink && (
+                     <Link href={accountTypeHref}>
+                        <span className="flex cursor-pointer items-center gap-0.5 rounded-lg border border-gray-200 bg-white py-1 pl-1 pr-2 text-xs font-semibold text-gray-500 transition-colors hover:text-mainRed">
+                           <BiChevronLeft className="text-base" />
+                           {t("changeAccountType")}
+                        </span>
+                     </Link>
+                  )}
                   <LanguageSwitcher variant="compact" />
                   {router?.pathname.includes("/login") ? (
                      <>
