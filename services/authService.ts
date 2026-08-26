@@ -166,12 +166,27 @@ export const loginWithGoogle: any = createAsyncThunk(
     dispatch(openPreloader({ loadingText: "Signing in with Google" }))
 
     try {
-      const { data } = await http.post<ILoginReducerArg>("/auth/google/", {
+      const res = await http.post<ILoginReducerArg>("/auth/google/", {
         access_token,
         action: "signin",
       })
 
       dispatch(closePreloader())
+
+      // RoleAdditionConfirmationRequired is an APIException with status 202, so
+      // axios resolves it. Reading it in the catch block below - which is where
+      // it used to be handled - meant this branch never ran, and the caller got
+      // an object with undefined tokens that still looked like a success.
+      if (res.status === 202) {
+        const details = res.data?.details?.[0] || {}
+        return {
+          role_addition_required: true,
+          confirmation_token: details.confirmation_token,
+          message: details.message,
+        }
+      }
+
+      const data = res.data
 
       return {
         access_token: data.access_token,
@@ -180,14 +195,6 @@ export const loginWithGoogle: any = createAsyncThunk(
       }
     } catch (error: any) {
       dispatch(closePreloader())
-
-      if (error.response?.status === 202) {
-        const details = error.response.data.details?.[0] || {}
-        return {
-          confirmation_token: details.confirmation_token,
-          message: details.message,
-        }
-      }
 
       const errorMessage = errorResolver(error)
       return thunkApi.rejectWithValue(errorMessage)

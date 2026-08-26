@@ -130,7 +130,13 @@ export const userSlice = createSlice({
          };
       });
 
+      // Both social thunks can resolve with a role-confirmation payload instead
+      // of a session - the backend answers that case with 202, which axios
+      // treats as success. Writing it to localStorage would overwrite a real
+      // token with undefined and log the user out.
       builder.addCase(loginWithGoogle.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
+         if (!action.payload?.access_token) return state;
+
          addUserToLocalStorage(action.payload);
 
          return {
@@ -140,6 +146,8 @@ export const userSlice = createSlice({
       });
 
       builder.addCase(signUpWithGoogle.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
+         if (!action.payload?.access_token) return state;
+
          addUserToLocalStorage(action.payload);
          return {
             ...state,

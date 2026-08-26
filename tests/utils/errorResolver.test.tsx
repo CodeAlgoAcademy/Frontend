@@ -71,12 +71,45 @@ describe("errorResolver", () => {
             data: {
                status_code: 400,
                exception: "ValidationError",
-               details: [{ non_field_errors: ["E-mail is not verified."] }],
+               details: [{ email: ["Enter a valid email address."] }],
             },
          },
       });
 
-      expect(result).toEqual(["non_field_errors- E-mail is not verified."]);
+      expect(result).toEqual(["email- Enter a valid email address."]);
+   });
+
+   it("does not show non_field_errors as if it were a field", () => {
+      const result = errorResolver({
+         response: {
+            status: 400,
+            data: { details: [{ non_field_errors: ["E-mail is not verified."] }] },
+         },
+      });
+
+      expect(result[0]).not.toContain("non_field_errors");
+   });
+
+   it("turns the login failure into something the user can act on", () => {
+      const result = errorResolver({
+         response: {
+            status: 400,
+            data: { details: [{ non_field_errors: ["Unable to log in with provided credentials."] }] },
+         },
+      });
+
+      expect(result[0]).toMatch(/forgot password/i);
+   });
+
+   it("points an unverified account at the resend link", () => {
+      const result = errorResolver({
+         response: {
+            status: 400,
+            data: { details: [{ non_field_errors: ["E-mail is not verified."] }] },
+         },
+      });
+
+      expect(result[0]).toMatch(/verify account/i);
    });
 
    it("reads the 500 shape", () => {
