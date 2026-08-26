@@ -3,21 +3,18 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
-import { BiUserCircle } from "react-icons/bi";
 import AddChildModal from "../parents/multiplayer/AddChildModal";
 import BetaButton from "../UI/beta-button";
 import { GoChevronDown } from "react-icons/go";
-import UserDropDown from "../parents/UI/UserDropDown";
+import UserMenu from "../UI/UserMenu";
 import { MdClose, MdMenu } from "react-icons/md";
 import ChildrenList from "../parents/UI/ChildrenList";
 import ParentSidebar from "../parents/UI/Sidebar";
 import { IUser } from "types/interfaces";
 import { getChildProgress, getChildSkills, getChildren } from "store/parentChildSlice";
-import { BsChevronDown } from "react-icons/bs";
 import { getUserFromLocalStorage } from "utils/getTokens";
 import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
 import LanguageSwitcher from "../UI/LanguageSwitcher";
-import useClickOutside from "hooks/useClickOutside";
 
 interface ParentTabs {
    user: boolean;
@@ -27,10 +24,10 @@ interface ParentTabs {
 interface Props {
    children?: ReactNode;
    title: string;
-    showChildrenList?: boolean;
+   showChildrenList?: boolean;
 }
 
-const ParentLayout = ({ children, title, showChildrenList}: Props) => {
+const ParentLayout = ({ children, title, showChildrenList }: Props) => {
    const router = useRouter();
    const [tabs, setTabs] = useState<ParentTabs>({
       user: false,
@@ -41,7 +38,6 @@ const ParentLayout = ({ children, title, showChildrenList}: Props) => {
    const modals = useSelector((state: RootState) => state.modal);
    const currentChild = useSelector((state: RootState) => state.parentChild?.currentChild);
    const dispatch = useDispatch();
-   const userMenuRef = useClickOutside<HTMLDivElement>(() => toggleTab("user", false));
 
    const toggleTab = async (key: keyof ParentTabs, open: boolean) => {
       setTabs({ user: false, children: false, sidebar: false, [key]: open });
@@ -80,31 +76,21 @@ const ParentLayout = ({ children, title, showChildrenList}: Props) => {
             <MdMenu size={26} cursor={"pointer"} onClick={() => toggleTab("sidebar", true)} />
          </nav>
          {/* Main */}
-         <div className="min-h-full w-full flex-1 bg-[#ecedf3] p-[1rem]
-          w820:ml-[300px] md:h-full overflow-y-scroll md:rounded-[30px] md:p-[2rem]">
+         <div
+            className="min-h-full w-full flex-1 overflow-y-scroll bg-[#ecedf3]
+          p-[1rem] md:h-full md:rounded-[30px] md:p-[2rem] w820:ml-[300px]"
+         >
             <header className="mb-8 flex items-center justify-between gap-2">
                <h1 className="text-[1.2rem] font-medium text-mainColor md:text-[1.4rem] lg:text-[1.6rem]">{title}</h1>
                <div className="flex items-center gap-2">
                   <LanguageSwitcher variant="sidebar" />
                   {/* <BetaButton /> */}
-                  <div className="relative" ref={userMenuRef}>
-                     <div className="flex cursor-pointer border items-center gap-1 text-mainColor" onClick={() => toggleTab("user", !tabs.user)}>
-                        <BiUserCircle size={24} />
-                        <p className="hidden text-[1rem] md:block">{user?.username}</p>
-                        <BsChevronDown size={24} />
-                     </div>
-
-                     <UserDropDown isOpen={tabs.user} />
-                  </div>
+                  <UserMenu />
                </div>
             </header>
             {showChildrenList && (
-   <ChildrenList
-      isOpen={tabs.children}
-      open={() => toggleTab("children", true)}
-      close={() => toggleTab("children", false)}
-   />
-)}
+               <ChildrenList isOpen={tabs.children} open={() => toggleTab("children", true)} close={() => toggleTab("children", false)} />
+            )}
             {/* <ChildrenList isOpen={tabs.children} open={() => toggleTab("children", true)} close={() => toggleTab("children", false)} /> */}
 
             {children}

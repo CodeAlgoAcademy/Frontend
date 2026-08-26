@@ -12,6 +12,7 @@ import {
    signUpWithGoogle,
    updateAccountType,
    confirmAddRole,
+   updateName,
 } from "services/authService";
 import { countryList } from "@/components/signup/countries";
 import { addUserToLocalStorage, setTimeStamp, updateUserInLocalStorage } from "utils/getTokens";
@@ -178,6 +179,18 @@ export const userSlice = createSlice({
 
          return { ...state, ...action.payload };
       });
+      builder.addCase(updateName.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
+         if (!action.payload) return state;
+
+         const merged: any = { ...state, ...action.payload };
+         // auth is the sign up form slice - it holds a password and has no
+         // business in localStorage.
+         const { auth, ...cached } = merged;
+         updateUserInLocalStorage(cached);
+
+         return merged;
+      });
+
       builder.addCase(updateAccountType.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
          updateUserInLocalStorage(action.payload);
 
