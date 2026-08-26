@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { clearFields, resetAuthUser, updateUser } from "store/authSlice";
 import http from "../axios.config";
 import { closePreloader, openErrorModal, openPreloader } from "store/fetchSlice";
-import { getAccessToken } from "utils/getTokens";
+import { getAccessToken, getUserFromLocalStorage } from "utils/getTokens";
 import { RootState } from "store/store";
 import { errorResolver } from "utils/errorResolver";
 import { ILoginReducerArg, IUser } from "types/interfaces";
@@ -104,7 +104,7 @@ export const signUpUser: any = createAsyncThunk("authSlice/signUpUser", async (n
 
       localStorage.setItem(ILocalStorageItems.signupAccountType, is_teacher ? "teacher" : is_parent ? "parent" : "student");
       try {
-         const { data } = await http.post("/auth/registration/", { ...options,  source: "web", });
+         const { data } = await http.post("/auth/registration/", { ...options, source: "web" });
          dispatch(clearFields());
          dispatch(closePreloader());
 
@@ -117,90 +117,84 @@ export const signUpUser: any = createAsyncThunk("authSlice/signUpUser", async (n
 });
 
 export const signUpWithGoogle: any = createAsyncThunk(
-  "authSlice/signUpWithGoogle",
-  async (
-    payload: { access_token: string; role: string },
-    thunkApi
-  ) => {
-    const { dispatch } = thunkApi;
-    dispatch(openPreloader({ loadingText: "Registering your Google account" }));
+   "authSlice/signUpWithGoogle",
+   async (payload: { access_token: string; role: string }, thunkApi) => {
+      const { dispatch } = thunkApi;
+      dispatch(openPreloader({ loadingText: "Registering your Google account" }));
 
-    try {
-      const res = await http.post("/auth/google/", {
-        access_token: payload.access_token,
-        role: payload.role,
+      try {
+         const res = await http.post("/auth/google/", {
+            access_token: payload.access_token,
+            role: payload.role,
+         });
+
+         dispatch(closePreloader());
+
+         // ✅ If backend intentionally sends 202 — treat it as success but flag it
+         if (res.status === 202) {
+            const details = res.data?.details?.[0];
+            return {
+               role_addition_required: true,
+               confirmation_token: details?.confirmation_token,
+               message: details?.message,
+            };
+         }
+
+         // ✅ Normal signup success
+         return {
+            access_token: res.data.access_token,
+            refresh_token: res.data.refresh_token,
+            ...res.data.user,
+         };
+      } catch (error: any) {
+         dispatch(closePreloader());
+
+         const errorMessage = errorResolver(error);
+         return thunkApi.rejectWithValue(errorMessage);
+      }
+   }
+);
+
+export const loginWithGoogle: any = createAsyncThunk("authSlice/loginWithGoogle", async (access_token: string, thunkApi) => {
+   const dispatch = thunkApi.dispatch;
+
+   dispatch(openPreloader({ loadingText: "Signing in with Google" }));
+
+   try {
+      const res = await http.post<ILoginReducerArg>("/auth/google/", {
+         access_token,
+         action: "signin",
       });
 
       dispatch(closePreloader());
-
-      // ✅ If backend intentionally sends 202 — treat it as success but flag it
-      if (res.status === 202) {
-        const details = res.data?.details?.[0];
-        return {
-          role_addition_required: true,
-          confirmation_token: details?.confirmation_token,
-          message: details?.message,
-        };
-      }
-
-      // ✅ Normal signup success
-      return {
-        access_token: res.data.access_token,
-        refresh_token: res.data.refresh_token,
-        ...res.data.user,
-      };
-    } catch (error: any) {
-      dispatch(closePreloader());
-
-      const errorMessage = errorResolver(error);
-      return thunkApi.rejectWithValue(errorMessage);
-    }
-  }
-);
-
-export const loginWithGoogle: any = createAsyncThunk(
-  "authSlice/loginWithGoogle",
-  async (access_token: string, thunkApi) => {
-    const dispatch = thunkApi.dispatch
-
-    dispatch(openPreloader({ loadingText: "Signing in with Google" }))
-
-    try {
-      const res = await http.post<ILoginReducerArg>("/auth/google/", {
-        access_token,
-        action: "signin",
-      })
-
-      dispatch(closePreloader())
 
       // RoleAdditionConfirmationRequired is an APIException with status 202, so
       // axios resolves it. Reading it in the catch block below - which is where
       // it used to be handled - meant this branch never ran, and the caller got
       // an object with undefined tokens that still looked like a success.
       if (res.status === 202) {
-        const details = res.data?.details?.[0] || {}
-        return {
-          role_addition_required: true,
-          confirmation_token: details.confirmation_token,
-          message: details.message,
-        }
+         const details = res.data?.details?.[0] || {};
+         return {
+            role_addition_required: true,
+            confirmation_token: details.confirmation_token,
+            message: details.message,
+         };
       }
 
-      const data = res.data
+      const data = res.data;
 
       return {
-        access_token: data.access_token,
-        refresh_token: data.refresh_token,
-        ...data.user,
-      }
-    } catch (error: any) {
-      dispatch(closePreloader())
+         access_token: data.access_token,
+         refresh_token: data.refresh_token,
+         ...data.user,
+      };
+   } catch (error: any) {
+      dispatch(closePreloader());
 
-      const errorMessage = errorResolver(error)
-      return thunkApi.rejectWithValue(errorMessage)
-    }
-  },
-)
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
+   }
+});
 
 export const updateAccountType: any = createAsyncThunk("authSlice/updateAccountType", async (accountType: string, thunkApi) => {
    const is_parent: boolean = accountType === "Parent";
@@ -238,33 +232,30 @@ export const updateAccountType: any = createAsyncThunk("authSlice/updateAccountT
    }
 });
 
-export const confirmAddRole: any = createAsyncThunk(
-  "authSlice/confirmAddRole",
-  async (confirmation_token: string, thunkApi) => {
-    const dispatch = thunkApi.dispatch
+export const confirmAddRole: any = createAsyncThunk("authSlice/confirmAddRole", async (confirmation_token: string, thunkApi) => {
+   const dispatch = thunkApi.dispatch;
 
-    dispatch(openPreloader({ loadingText: "Adding role to your account" }))
+   dispatch(openPreloader({ loadingText: "Adding role to your account" }));
 
-    try {
+   try {
       const { data } = await http.post<ILoginReducerArg>("/auth/social/confirm-add-role/", {
-        confirmation_token,
-      })
+         confirmation_token,
+      });
 
-      dispatch(closePreloader())
+      dispatch(closePreloader());
 
       return {
-        access_token: data.access_token,
-        refresh_token: data.refresh_token,
-        ...data.user,
-      }
-    } catch (error: any) {
-      dispatch(closePreloader())
+         access_token: data.access_token,
+         refresh_token: data.refresh_token,
+         ...data.user,
+      };
+   } catch (error: any) {
+      dispatch(closePreloader());
 
-      const errorMessage = errorResolver(error)
-      return thunkApi.rejectWithValue(errorMessage)
-    }
-  },
-)
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
+   }
+});
 
 export const updateFirstname: any = createAsyncThunk("authSlice/updateFirstname", async (_, thunkApi) => {
    const state = <RootState>thunkApi.getState();
@@ -421,4 +412,49 @@ export const logout: any = createAsyncThunk("/auth/logout", async (_, thunkApi) 
    localStorage.removeItem("token_timestamp");
    thunkApi.dispatch(resetAuthUser());
    window.location.href = "/login";
+});
+
+/**
+ * One call that saves both names. The older updateFirstname/updateLastname
+ * thunks read the value out of state.user.auth, which is the sign up form
+ * slice - it is empty on a normal page load, so saving from the user menu sent
+ * whatever half of the form had been typed and pushed a blank field to the API.
+ * This one takes the values from the caller and merges them over the user we
+ * already have.
+ */
+export const updateName: any = createAsyncThunk("authSlice/updateName", async (payload: { firstname: string; lastname: string }, thunkApi) => {
+   const state = <RootState>thunkApi.getState();
+   const stored = getUserFromLocalStorage() || {};
+   const current: any = { ...stored, ...state.user };
+   const { email, country, schoolCountry, schoolName, is_student, is_teacher, is_parent, is_organizer, grade, username } = current;
+
+   try {
+      const { data } = await http.put(
+         "/auth/user/",
+         {
+            firstname: payload.firstname,
+            lastname: payload.lastname,
+            email,
+            country,
+            schoolCountry,
+            schoolName,
+            is_student,
+            is_teacher,
+            is_parent,
+            is_organizer,
+            grade,
+            username,
+         },
+         {
+            headers: {
+               Authorization: `Bearer ${getAccessToken()}`,
+            },
+         }
+      );
+
+      return data;
+   } catch (error: any) {
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
+   }
 });

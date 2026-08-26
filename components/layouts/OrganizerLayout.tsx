@@ -1,6 +1,5 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { BiUserCircle } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { getUserFromLocalStorage } from "utils/getTokens";
 import { fetchOrganiztions } from "services/organizersService";
@@ -8,13 +7,11 @@ import Image from "next/image";
 import { MdMenu } from "react-icons/md";
 import OrganizerSidebar from "../organizers/UI/Sidebar";
 import BetaButton from "../UI/beta-button";
-import UserDropDown from "../parents/UI/UserDropDown";
+import UserMenu from "../UI/UserMenu";
 import OrganizationsList from "../organizers/UI/OrganizationsList";
-import { BsChevronDown } from "react-icons/bs";
 import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
 import { IUser } from "types/interfaces";
 import LanguageSwitcher from "../UI/LanguageSwitcher";
-import useClickOutside from "hooks/useClickOutside";
 
 interface OrganizerTabs {
    user: boolean;
@@ -37,7 +34,6 @@ const OrganizerLayout = ({ children }: Props) => {
    });
    const [user, setUser] = useState<IUser | null>(null);
    const dispatch = useDispatch();
-   const userMenuRef = useClickOutside<HTMLDivElement>(() => toggleTab("user", false));
 
    const toggleTab = async (key: keyof OrganizerTabs, open: boolean) => {
       setTabs({ user: false, organizations: false, sidebar: false, [key]: open });
@@ -46,7 +42,7 @@ const OrganizerLayout = ({ children }: Props) => {
    useEffect(() => {
       const stringedToken = localStorage.getItem(ILocalStorageItems.token);
       const token = JSON.parse(`${stringedToken}`);
-      if (!stringedToken || !token ) {
+      if (!stringedToken || !token) {
          router?.push("/login");
       } else {
          const user = getUserFromLocalStorage();
@@ -72,15 +68,7 @@ const OrganizerLayout = ({ children }: Props) => {
                <div className="flex items-center gap-2">
                   <LanguageSwitcher variant="sidebar" />
                   <BetaButton />
-                  <div className="relative" ref={userMenuRef}>
-                     <div className="flex cursor-pointer items-center gap-1 text-mainColor" onClick={() => toggleTab("user", !tabs.user)}>
-                        <BiUserCircle size={24} />
-                        <p className="hidden text-[1rem] md:block">{user?.username}</p>
-                        <BsChevronDown size={24} />
-                     </div>
-
-                     <UserDropDown isOpen={tabs.user} />
-                  </div>
+                  <UserMenu />
                </div>
             </header>
             <OrganizationsList

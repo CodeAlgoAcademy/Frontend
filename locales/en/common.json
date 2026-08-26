@@ -173,5 +173,7 @@
   "duration": "Duration",
   "readMore": "Read More",
   "pleaseSelectClassFirst": "Please select a class first",
-  "credentialsEmailSent": "Student's login credentials have been sent to their email"
+  "credentialsEmailSent": "Student's login credentials have been sent to their email",
+  "saved": "Saved",
+  "somethingWentWrong": "Something went wrong"
 }

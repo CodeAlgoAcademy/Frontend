@@ -7,7 +7,7 @@ import { SlOrganization } from "react-icons/sl";
 import Image from "next/image";
 import BetaButton from "../UI/beta-button";
 import TeacherSidebar from "../Teachers/UI/Sidebar";
-import UserInfo from "../Teachers/UI/UserInfo";
+import UserMenu from "../UI/UserMenu";
 import { MdClass, MdMenu } from "react-icons/md";
 import ClassSelector from "../Teachers/UI/ClassSelector";
 import { FaUserGraduate } from "react-icons/fa";
@@ -26,14 +26,10 @@ import { MdOutlineAssignment } from "react-icons/md";
 import LanguageSwitcher from "../UI/LanguageSwitcher";
 import { useTranslation } from "react-i18next";
 
-
-
 interface Props {
    children?: ReactNode;
    className?: string;
 }
-
-
 
 const TeacherLayout = ({ children, className }: Props) => {
    const [sidebarOpened, setSidebarOpened] = useState<boolean>(false);
@@ -116,7 +112,7 @@ const TeacherLayout = ({ children, className }: Props) => {
                      <Image src="/assets/CodeAlgo_Logo.png" alt="logo" loading="lazy" className="md:cursor-pointer" width={90} height={45} />
                   </div>
                   <Link href={`/teachers/addClass`}>
-                      <BiHomeAlt size={24} color="#2073fa" title={tTeacher("backToClasses")} cursor="pointer" />
+                     <BiHomeAlt size={24} color="#2073fa" title={tTeacher("backToClasses")} cursor="pointer" />
                   </Link>
                   <div className="hidden md:block">
                      <ClassSelector />
@@ -126,7 +122,7 @@ const TeacherLayout = ({ children, className }: Props) => {
                <div className="flex items-center gap-2">
                   <LanguageSwitcher variant="sidebar" />
                   <PrintLoginsButton />
-                  <UserInfo />
+                  <UserMenu variant="card" />
                   <MdMenu cursor={"pointer"} size={26} className="md:hidden" onClick={() => setSidebarOpened(true)} />
                </div>
             </nav>
