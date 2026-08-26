@@ -1,6 +1,5 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import LanguageDetector from "i18next-browser-languagedetector";
 import http from "axios.config";
 import { getAccessToken } from "utils/getTokens";
 
@@ -69,7 +68,7 @@ async function fetchTranslations(lang: string, ns: string): Promise<Record<strin
    return {};
 }
 
-i18n.use(LanguageDetector)
+i18n
    .use(initReactI18next)
    .init({
       resources: staticResources,
@@ -81,11 +80,6 @@ i18n.use(LanguageDetector)
       },
       react: {
          useSuspense: false,
-      },
-      detection: {
-         order: ["localStorage", "navigator"],
-         lookupLocalStorage: "i18nextLng",
-         caches: ["localStorage"],
       },
       saveMissing: true,
       missingKeyHandler: (lngs: readonly string[], ns: string, key: string) => {
@@ -121,7 +115,12 @@ export function syncLanguageToBackend(lang: string): void {
 }
 
 export function detectLanguage(): string {
-   return i18n.language?.substring(0, 2) || "en";
+   if (typeof window === "undefined") return "en";
+   const stored = window.localStorage.getItem("i18nextLng");
+   if (stored) return stored.substring(0, 2);
+   const nav = window.navigator?.language;
+   if (nav) return nav.substring(0, 2);
+   return "en";
 }
 
 export default i18n;
