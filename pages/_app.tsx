@@ -20,7 +20,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import i18n, { detectLanguage, loadTranslations, syncLanguageToBackend } from "../i18n";
 
-const GA_ID = "G-BT6M4N6SS1";
+const GA_ID = "G-80CZZG1HG5";
 
 function MyApp({ Component, pageProps }: AppProps) {
    const router = useRouter();

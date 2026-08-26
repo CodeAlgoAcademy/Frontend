@@ -49,7 +49,7 @@ class MyDocument extends Document {
                <NextScript />
             <Script
                       strategy="afterInteractive"
-                      src="https://www.googletagmanager.com/gtag/js?id=G-BT6M4N6SS1"
+                      src="https://www.googletagmanager.com/gtag/js?id=G-80CZZG1HG5"
                     />
                     <Script
                       id="google-analytics"
@@ -59,7 +59,7 @@ class MyDocument extends Document {
                         window.dataLayer = window.dataLayer || [];
                         function gtag(){dataLayer.push(arguments);}
                         gtag('js', new Date());
-                        gtag('config', 'G-BT6M4N6SS1', {
+                        gtag('config', 'G-80CZZG1HG5', {
                           page_path: window.location.pathname,
                         });
                       `}
