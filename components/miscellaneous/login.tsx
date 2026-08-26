@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
+import React, { ChangeEvent, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { useRouter } from "next/router";
@@ -10,9 +10,18 @@ import { openErrorModal } from "store/fetchSlice";
 import { AuthButton } from "../UI/Button";
 import Link from "next/link";
 import ResendVerificationEmailModal from "../modals/ResendVerificationEmailModal";
-import { ILoginReducerArg } from "types/interfaces";
 import { PasswordInput } from "../UI/input";
 import { useTranslation } from "react-i18next";
+import { clearSession } from "utils/clearSession";
+import {
+   AccountRole,
+   destinationFor,
+   isExternalDestination,
+   loginPageFor,
+   resolveLogin,
+   roleFromPath,
+   roleLabelKey,
+} from "utils/loginRouting";
 
 const Login = ({ route }: { route?: any }) => {
    const dispatch = useDispatch();
@@ -22,47 +31,67 @@ const Login = ({ route }: { route?: any }) => {
    const [verificationModalOpened, setVerificationModalOpened] = useState<boolean>(false);
    const { t } = useTranslation("auth");
 
-   const accountType = router.pathname.includes("teacher")
-      ? "teacher"
-      : router.pathname.includes("parent")
-      ? "guardian"
-      : router.pathname.includes("organizer")
-      ? "admin"
-      : "student";
+   const requestedRole: AccountRole = roleFromPath(router.pathname);
+   const label = (role: AccountRole) => t(roleLabelKey(role));
+
+   const goTo = useCallback(
+      (role: AccountRole) => {
+         const destination = destinationFor(role, role === "parent" && Boolean(route));
+         if (isExternalDestination(destination)) {
+            window.location.href = destination;
+         } else {
+            router.push(destination);
+         }
+      },
+      [route, router]
+   );
+
+   /**
+    * Says which account this actually is and where it logs in, instead of the
+    * old blanket "Invalid credentials".
+    */
+   const wrongRoleMessage = (roles: AccountRole[]): string[] => {
+      const actual = roles.map(label).join(" / ");
+
+      return [
+         roles.length === 1
+            ? t("wrongRoleTitleOne", { actual, requested: label(requestedRole) })
+            : t("wrongRoleTitleMany", { actual, requested: label(requestedRole) }),
+         roles.length === 1
+            ? t("wrongRoleAction", { page: loginPageFor(roles[0]) })
+            : t("wrongRoleActionMany", { pages: roles.map(loginPageFor).join(", ") }),
+         t("wrongRolePasswordFine"),
+      ];
+   };
 
    const login = async (event: ChangeEvent<HTMLFormElement>) => {
       event.preventDefault();
       const data = await dispatch(loginUser());
-      if (!data?.error?.message) {
-         // If the account doesn't match the user selected in the select-account-type, display an error
 
-         if (router.pathname.includes("/login/teacher")) {
-            if (data?.payload?.is_teacher) {
-               router?.push("/teachers/addClass");
-            } else {
-               dispatch(openErrorModal({ errorText: [t("invalidCredentials")] }));
-               return;
-            }
-         } else if (router.pathname.includes("/login/parent")) {
-            if (data?.payload?.is_parent) {
-               if (route) {
-                  router.push("/add-student");
-               } else {
-                  router?.push("/parents");
-               }
-            } else {
-               dispatch(openErrorModal({ errorText: [t("invalidCredentials")] }));
-               return;
-            }
-         } else if (router.pathname.includes("/login/organizer")) {
-            if (data?.payload?.is_organizer) {
-               router.push("/organizers");
-            } else {
-               dispatch(openErrorModal({ errorText: [t("invalidCredentials")] }));
-               return;
-            }
-         }
+      // A rejected thunk has already shown the reason via errorResolver.
+      if (loginUser.rejected.match(data) || data?.error?.message) return;
+
+      const user = data?.payload;
+      const resolution = resolveLogin(user, requestedRole);
+
+      if (resolution.status === "ok") {
+         goTo(resolution.role);
+         return;
       }
+
+      // The credentials were right, so the thunk has already stored a token.
+      // They are not going any further from this page, so do not leave a
+      // half-signed-in session behind them.
+      clearSession(dispatch);
+
+      dispatch(
+         openErrorModal({
+            errorText:
+               resolution.status === "wrongRole"
+                  ? wrongRoleMessage(resolution.roles)
+                  : [t("noRoleAccess", { requested: label(requestedRole) })],
+         })
+      );
    };
 
    const onReCaptchaVerify = useCallback(async () => {
@@ -72,15 +101,6 @@ const Login = ({ route }: { route?: any }) => {
    const onReCaptchaExpire = useCallback(async () => {
       setRecaptchaVerified(() => false);
    }, []);
-   const onReCaptchaLoad = () => {
-      // this reaches out to the hCaptcha JS API and runs the
-      // execute function on it. you can use other functions as
-      // documented here:
-      // https://docs.hcaptcha.com/configuration#jsapi
-      // if(captchaRef.current !== null) {
-      //   captchaRef.current.execute();
-      // }
-   };
 
    return (
       <>
@@ -94,7 +114,7 @@ const Login = ({ route }: { route?: any }) => {
          <AuthLayout>
             <>
                <h1 className="text-center text-[25px] font-bold md:text-left md:text-[32px]">
-                  {t("logInToYourAccount")} <span className="capitalize">{`(${accountType})`}</span>
+                  {t("logInToYourAccount")} <span>{`(${label(requestedRole)})`}</span>
                </h1>
                <form onSubmit={login}>
                   <label className="mt-6 block text-xl font-semibold">{t("yourEmailOrUsername")}</label>

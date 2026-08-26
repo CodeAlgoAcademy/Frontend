@@ -40,4 +40,7 @@ export interface ILoginReducerArg {
    access_token: string;
    refresh_token: string;
    user: IUserData;
+   // Present only on the 202 the social endpoints answer when the email
+   // already exists under a different role. See users/adapter.py.
+   details?: Array<{ confirmation_token?: string; message?: string }>;
 }

@@ -22,6 +22,36 @@ const NETWORK_MESSAGE =
    "Could not reach the server. Check your connection and try again in a moment.";
 const UNREADABLE_MESSAGE = "The server returned an unexpected response. Please try again.";
 
+// DRF puts serializer-level errors under a field name nobody should ever read.
+const UNNAMED_FIELDS = ["non_field_errors", "__all__", "detail"];
+
+function label(field: string, message: string): string {
+   return UNNAMED_FIELDS.includes(field) ? message : `${field}- ${message}`;
+}
+
+/**
+ * Backend wording that is accurate but leaves the user with nothing to do.
+ * "Unable to log in with provided credentials." is the single most common
+ * message the login form shows, and it does not say which half was wrong or
+ * what to try next.
+ */
+const FRIENDLIER: Record<string, string> = {
+   "Unable to log in with provided credentials.":
+      "That email/username and password don't match an account. Check for typos, or use Forgot password to reset it.",
+   "E-mail is not verified.":
+      "This account's email hasn't been verified yet. Use Verify Account below to send yourself a new link.",
+   "User is already registered with this e-mail address.":
+      "An account already uses this email. Log in instead, or reset the password.",
+   "Could not verify Google account":
+      "Google didn't confirm that sign-in. Try again, or log in with your email and password.",
+   "Could not connect to Google authentication service":
+      "Couldn't reach Google to check that sign-in. Try again in a moment.",
+};
+
+function friendlier(message: string): string {
+   return FRIENDLIER[message.trim()] ?? message;
+}
+
 function looksLikeHtml(value: string): boolean {
    const head = value.trimStart().slice(0, 200).toLowerCase();
    return head.startsWith("<!doctype") || head.startsWith("<html") || head.includes("<body");
@@ -36,17 +66,17 @@ function fromPayload(data: any, fallback: string): string[] {
          const errors: string[] = [];
          Object.entries(first).forEach(([field, value]) => {
             if (typeof value === "string") {
-               errors.push(`${field}- ${value}`);
+               errors.push(label(field, value));
             } else if (Array.isArray(value)) {
                // DRF's usual shape: { field: ["message"] }. The old code fell
                // into the object branch here and printed "0- message", because
                // Object.entries of an array gives you its indices.
                value.forEach((v) => {
-                  if (typeof v === "string") errors.push(`${field}- ${v}`);
+                  if (typeof v === "string") errors.push(label(field, v));
                });
             } else if (value && typeof value === "object") {
                Object.entries(value as Record<string, unknown>).forEach(([k, v]) => {
-                  errors.push(`${k}- ${v}`);
+                  errors.push(label(k, String(v)));
                });
             }
          });
@@ -68,9 +98,9 @@ function fromPayload(data: any, fallback: string): string[] {
    if (data && typeof data === "object" && !Array.isArray(data)) {
       const errors: string[] = [];
       Object.entries(data).forEach(([field, value]) => {
-         if (typeof value === "string") errors.push(`${field}- ${value}`);
+         if (typeof value === "string") errors.push(label(field, value));
          else if (Array.isArray(value) && typeof value[0] === "string") {
-            errors.push(`${field}- ${value[0]}`);
+            errors.push(label(field, value[0]));
          }
       });
       if (errors.length) return errors;
@@ -107,6 +137,8 @@ export const errorResolver = (error: any): string[] => {
    } catch {
       resolvedErrors = [UNREADABLE_MESSAGE];
    }
+
+   resolvedErrors = resolvedErrors.map(friendlier);
 
    dispatch(closePreloader());
    dispatch(openErrorModal({ errorText: resolvedErrors }));
