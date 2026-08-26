@@ -5,7 +5,6 @@ import { links, NavbarLink } from "./Links";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { cn } from "utils";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { Variant, motion } from "framer-motion";
 import AppDownloadModal from "@/components/modals/AppDownloadModal";
 import { CustomButton } from "@/components/UI/Button";
@@ -28,9 +27,7 @@ const variants: Record<string, Variant> = {
 };
 
 const MobileNavbar: FC<NavbarProps> = ({ close }) => {
-   const router = useRouter();
    const [showAppModal, setShowAppModal] = useState(false);
-   const { push } = useRouter();
    const { t } = useTranslation("common");
    const { t: tHome } = useTranslation("home");
 
@@ -43,16 +40,16 @@ const MobileNavbar: FC<NavbarProps> = ({ close }) => {
          className="fixed top-0 left-0 z-[100] flex h-screen w-screen flex-col bg-mainBlack py-6 px-8 font-thabit md:hidden"
       >
          <header className="flex items-center justify-between gap-4">
-            <div onClick={() => (router.push("/"), close())}>
-               <Image src={"/assets/landing/logo_white.png"} width={100} height={50} />
-            </div>
+            <Link href="/" onClick={close} className="cursor-pointer">
+               <Image src={"/assets/landing/logo_white.png"} width={100} height={50} alt="CodeAlgo Academy" />
+            </Link>
             <MdClose onClick={close} color="white" size={28} />
          </header>
 
          <div className="mt-[80px] w-full flex-1 space-y-2">
             {links.map((link, index) => {
                const ref = useRef<HTMLDivElement>(null);
-               return <SingleMobileLink link={link} ref={ref} key={index} />;
+               return <SingleMobileLink link={link} ref={ref} key={index} close={close} />;
             })}
          </div>
 
@@ -60,7 +57,7 @@ const MobileNavbar: FC<NavbarProps> = ({ close }) => {
          <div className="flex flex-col gap-3 mt-6 pb-4">
             <LanguageSwitcher variant="compact" className="self-start" />
             <CustomButton
-               onClick={() => { push("/login"); close(); }}
+               onClick={() => { window.location.href = "/login"; close(); }}
                variant="filled"
                size="medium"
                className="w-full h-[44px] bg-mainRed font-bold !text-white flex items-center justify-center hover:bg-mainRed/80"
@@ -78,7 +75,7 @@ const MobileNavbar: FC<NavbarProps> = ({ close }) => {
             </CustomButton>
 
             <CustomButton
-               onClick={() => { push("https://play.codealgoacademy.com"); close(); }}
+               onClick={() => { window.location.href = "https://play.codealgoacademy.com"; close(); }}
                variant="filled"
                size="medium"
                className="w-full h-[44px] bg-mainRed font-bold !text-white flex items-center justify-center hover:bg-mainRed/80"
@@ -97,12 +94,12 @@ const MobileNavbar: FC<NavbarProps> = ({ close }) => {
 
 interface Props {
    link: NavbarLink;
+   close: () => void;
 }
 
-const SingleMobileLink = forwardRef<HTMLDivElement, Props>(({ link }, ref) => {
+const SingleMobileLink = forwardRef<HTMLDivElement, Props>(({ link, close }, ref) => {
    const [isOpen, setIsOpen] = useState(false);
    const [height, setHeight] = useState(0);
-   const router = useRouter();
    const { t: tHome } = useTranslation("home");
 
    const innerRef = useRef<HTMLUListElement>(null);
@@ -117,20 +114,23 @@ const SingleMobileLink = forwardRef<HTMLDivElement, Props>(({ link }, ref) => {
 
    return (
       <div className="w-full text-white">
-         <header
-            onClick={() => {
-               if (link.sublinks) {
-                  setIsOpen(!isOpen);
-               } else {
-                  router.push(link.route!);
-                  close();
-               }
-            }}
-            className="flex items-center justify-between p-4 hover:bg-black/10"
-         >
-            <h1 className="text-[1.3rem]">{tHome(link.name)}</h1>
-            {link.sublinks && <span className="text-white">{isOpen ? <BiChevronUp size={25} /> : <BiChevronDown size={25} />}</span>}
-         </header>
+         {link.sublinks ? (
+            <header
+               onClick={() => setIsOpen(!isOpen)}
+               className="flex items-center justify-between p-4 hover:bg-black/10 cursor-pointer"
+            >
+               <h1 className="text-[1.3rem]">{tHome(link.name)}</h1>
+               <span className="text-white">{isOpen ? <BiChevronUp size={25} /> : <BiChevronDown size={25} />}</span>
+            </header>
+         ) : (
+            <Link
+               href={link.route!}
+               onClick={close}
+               className="flex items-center justify-between p-4 hover:bg-black/10 cursor-pointer"
+            >
+               <h1 className="text-[1.3rem]">{tHome(link.name)}</h1>
+            </Link>
+         )}
 
          <div className={cn("overflow-hidden font-sans transition-all  duration-300")} style={{ height: isOpen ? height : 0 }}>
             <div ref={(ref as MutableRefObject<HTMLDivElement>) || innerRef} className="py-3 px-4 text-[.9rem]">

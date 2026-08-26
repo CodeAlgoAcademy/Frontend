@@ -70,7 +70,11 @@ const Navbar = () => {
                       }}
                     >
                       <p className="whitespace-nowrap text-white">
-                        <Link href={link.route || "/"}>{tHome(link.name)}</Link>
+                        {link.route ? (
+                          <Link href={link.route}>{tHome(link.name)}</Link>
+                        ) : (
+                          <span>{tHome(link.name)}</span>
+                        )}
                       </p>
 
                       <div
