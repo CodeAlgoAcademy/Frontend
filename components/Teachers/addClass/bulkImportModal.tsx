@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 
 const BulkImportModal = ({ setBulkImportModalOpen }: { setBulkImportModalOpen: Dispatch<SetStateAction<boolean>> }) => {
    const { t } = useTranslation("teacher");
+   
    const bulkImportData: string[] = [
       t("instruction1"),
       t("instruction2"),
@@ -15,42 +16,53 @@ const BulkImportModal = ({ setBulkImportModalOpen }: { setBulkImportModalOpen: D
       t("instruction6"),
       t("instruction7"),
    ];
+
    return (
-      <section className={`${style.modalOverlay} !z-[40] bg-[rgba(0,0,0,.60)]`}>
-         <main className="z-[10] mx-auto w-[90vw] max-w-[900px] rounded-md bg-white px-8 py-6 shadow-lg">
-            <header className="mb-6 flex items-center justify-between">
-               <h1 className="w-full text-[26px] font-bold">{t("bulkImportInstructions")}</h1>
-               <span
-                  className="cursor-pointer text-[24px] font-bold text-[darkRed]"
-                  onClick={() => {
-                     setBulkImportModalOpen(false);
-                  }}
+    <section className="fixed inset-0 z-[999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+         
+         <main className="relative w-full max-w-[850px] max-h-[90vh] overflow-y-auto rounded-xl bg-white p-6 shadow-2xl">
+            <header className="mb-6 flex items-start justify-between">
+               <h1 className="text-xl md:text-2xl font-bold text-gray-800">
+                  {t("bulkImportInstructions")}
+               </h1>
+               <button
+                  className="text-2xl text-red-700 hover:scale-110 transition-transform"
+                  onClick={() => setBulkImportModalOpen(false)}
                >
                   <FaTimes />
-               </span>
+               </button>
             </header>
-            <div className="z-[10] w-full">
-               <Image src={"/assets/csv file structure.png"} width={"1750px"} height={"250px"} objectFit={"cover"} objectPosition={"center"} alt="" />
+
+            <div className="w-full border rounded-lg overflow-hidden bg-gray-50 mb-6">
+               <div className="relative w-full h-[150px] md:h-[220px]">
+                  <Image 
+                     src="/assets/csv file structure.png" 
+                     layout="fill"
+                     objectFit="contain" 
+                     alt="CSV Structure"
+                     priority
+                  />
+               </div>
             </div>
-            <div className="my-4">
-               {bulkImportData.map((instruction: string, index: number) => {
-                  return (
-                     <article key={index} className="mb-2 flex items-center gap-x-4">
-                        <span className="text-green-600">
-                           <FaCheckDouble />
-                        </span>
-                        {instruction}
-                     </article>
-                  );
-               })}
-               <button
-                  onClick={() => {
-                     setBulkImportModalOpen(false);
-                  }}
-                  className="bg-mainColor mt-4 min-w-[150px] rounded-full p-3 text-white"
-               >
-                   {t("gotIt")}
-                </button>
+
+            <div className="space-y-4">
+               {bulkImportData.map((instruction: string, index: number) => (
+                  <article key={index} className="flex items-start gap-x-3 text-sm md:text-base text-gray-700 leading-relaxed">
+                     <span className="text-green-600 mt-1 flex-shrink-0">
+                        <FaCheckDouble size={14} />
+                     </span>
+                     <p>{instruction}</p>
+                  </article>
+               ))}
+               
+               <div className="pt-4">
+                  <button
+                     onClick={() => setBulkImportModalOpen(false)}
+                     className="bg-[#2563eb] hover:bg-blue-700 transition-colors min-w-[140px] rounded-full py-3 px-6 text-white font-semibold shadow-md"
+                  >
+                      {t("gotIt")}
+                   </button>
+               </div>
             </div>
          </main>
       </section>

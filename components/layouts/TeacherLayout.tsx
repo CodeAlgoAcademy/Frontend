@@ -97,46 +97,51 @@ const TeacherLayout = ({ children, className }: Props) => {
    }, [router.pathname]);
 
    return (
-      <section className="h-screen w-full bg-white md:flex md:px-4">
+      <main className="relative min-h-screen w-full bg-white">
+         {/* Sidebar */}
          <TeacherSidebar links={links} isOpen={sidebarOpened} close={() => setSidebarOpened(false)} />
-         <section
-            className={`
-       flex h-screen max-h-screen w-full flex-col items-center overflow-hidden
-       transition-all duration-500
-       w820:ml-[300px]
-     `}
-         >
-            <nav className="flex w-full items-center justify-between gap-2 py-2 px-4 md:py-6 md:px-0">
-               <div className="flex items-center gap-2">
-                  <div className="md:hidden">
-                     <Image src="/assets/CodeAlgo_Logo.png" alt="logo" loading="lazy" className="md:cursor-pointer" width={90} height={45} />
+
+         {/* Main Content Area.
+             The sidebar is an off-canvas drawer up to 1392px and only docks
+             permanently beyond that — so the content offset must match the
+             same breakpoint, not `md` (768px). That mismatch was the cause
+             of the 768–1392px overlap/clipping. */}
+         <section className="flex flex-col min-h-screen transition-all duration-300 min-[1392px]:pl-[280px]">
+            
+            {/* Top Navigation */}
+            <nav className="sticky top-0 z-[40] bg-white flex w-full items-center justify-between gap-2 py-4 px-4 sm:px-6 border-b min-[1392px]:border-none">
+               <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+                  <div className="min-[1392px]:hidden shrink-0">
+                     <MdMenu size={28} className="cursor-pointer" onClick={() => setSidebarOpened(true)} />
                   </div>
-                  <Link href={`/teachers/addClass`}>
-                     <BiHomeAlt size={24} color="#2073fa" title={tTeacher("backToClasses")} cursor="pointer" />
+                  <Link href={`/teachers/addClass`} className="shrink-0">
+                     <BiHomeAlt size={24} className="text-blue-600 cursor-pointer" />
                   </Link>
-                  <div className="hidden md:block">
+                  <div className="hidden min-[1392px]:block">
                      <ClassSelector />
                   </div>
                </div>
 
-               <div className="flex items-center gap-2">
+               <div className="flex items-center gap-2 sm:gap-3 shrink-0">
                   <LanguageSwitcher variant="sidebar" />
                   <PrintLoginsButton />
                   <UserMenu variant="card" />
-                  <MdMenu cursor={"pointer"} size={26} className="md:hidden" onClick={() => setSidebarOpened(true)} />
                </div>
             </nav>
 
-            <div className={`w-full flex-1 overflow-y-scroll bg-[#ecedf3] p-[1rem] md:h-full md:rounded-[30px] md:p-[2rem] ${className}`}>
-               <div className="flex items-center justify-end md:hidden">
+            {/* Page Content */}
+            <div className={`flex-1 overflow-x-hidden bg-[#ecedf3] p-4 md:p-8 min-[1392px]:m-4 min-[1392px]:rounded-[30px] ${className}`}>
+               <div className="flex items-center justify-end min-[1392px]:hidden mb-4">
                   <ClassSelector />
                </div>
                {children}
             </div>
          </section>
+
+         {/* Modals - stacked above the sidebar (z-[105]) and its overlay (z-[100]) */}
          <GeneratingModal />
          <SuccessModal />
-      </section>
+      </main>
    );
 };
 
