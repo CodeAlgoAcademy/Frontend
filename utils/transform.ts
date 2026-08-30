@@ -6,8 +6,8 @@ export const mapUserResponseToISingleStudent = (
 ): ISingleStudent[] => {
   return students.map((s) => ({
     id: s.id,
-    firstName: s.user.firstname,
-    lastName: s.user.lastname,
+    firstName: s.user.firstName,
+    lastName: s.user.lastName,
     username: s.user.username,
     email: s.user.email,
     dob: "",
