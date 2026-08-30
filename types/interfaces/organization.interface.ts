@@ -82,8 +82,8 @@ export interface IOrganizationSlice {
 
 
 interface User {
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   username: string;
   email: string;
   is_student: boolean;

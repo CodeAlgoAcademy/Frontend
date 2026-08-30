@@ -104,10 +104,16 @@ const organizersSlice = createSlice({
       builder.addCase(getStudentOrganizationUsers.fulfilled, (state: IOrganizationSlice, action: PayloadAction<UserResponseList>) => {
          state.studentUsers = action.payload;
       });
-      builder.addCase(getSingleStudentOrganizationUsers.fulfilled, (state: IOrganizationSlice, action: PayloadAction<UserWrapper>) => {
-         state.isLoadingStudents = false;
-         state.singlStudentUsers = action.payload;
-      });
+       builder.addCase(getSingleStudentOrganizationUsers.pending, (state) => {
+          state.isLoadingStudents = true;
+       })
+       builder.addCase(getSingleStudentOrganizationUsers.rejected, (state) => {
+          state.isLoadingStudents = false;
+       })
+       builder.addCase(getSingleStudentOrganizationUsers.fulfilled, (state: IOrganizationSlice, action: PayloadAction<UserWrapper>) => {
+          state.isLoadingStudents = false;
+          state.singlStudentUsers = action.payload;
+       });
       builder.addCase(getOrganizationAnalytics.fulfilled, (state: IOrganizationSlice, action: PayloadAction<OrganizationStats>) => {
          state.isLoadingAnalytics = false;
          state.organizationStats = action.payload;

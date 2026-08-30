@@ -45,7 +45,7 @@ const OrganizationStudentsPage = () => {
    const filterStudents = (value: string) => {
       setFilteredStudents(() => {
          return studentUsers?.filter((student: UserResponse) =>
-            (student.user.firstname + " " + student.user.lastname)
+             (student.user.firstName + " " + student.user.lastName)
                .toLowerCase()
                .includes(value.toLowerCase())
          );

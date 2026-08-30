@@ -28,11 +28,11 @@ const OrganizationSingleStudentPage = () => {
       }
    }, [dispatch, studentId, organizationId]);
 
-   useEffect(() => {
-      if (singlStudentUsers) {
-         setStudent(singlStudentUsers as unknown as ISingleStudent);
-      }
-   }, [singlStudentUsers]);
+     useEffect(() => {
+        if ((singlStudentUsers as any)?.student) {
+           setStudent((singlStudentUsers as any).student);
+        }
+      }, [singlStudentUsers]);
 
    if (isLoadingStudents) {
       return (
@@ -57,7 +57,7 @@ const OrganizationSingleStudentPage = () => {
    return (
       <OrganizerLayout>
          <div className="p-6">
-            <Link href="/organizer/students">
+            <Link href="/organizers/student">
                <div className="flex items-center mb-4 cursor-pointer text-mainColor hover:underline">
                   <BsArrowLeftCircle className="mr-2" />
                   {t("backToStudents")}
@@ -86,21 +86,18 @@ const OrganizationSingleStudentPage = () => {
                               <p><strong>{t("nameLabel")}</strong> {student.firstName} {student.lastName}</p>
                               <p><strong>{t("emailLabel")}</strong> {student.email}</p>
                               <p><strong>{t("usernameLabel")}</strong> {student.username}</p>
-                              <p><strong>{t("statusLabel")}</strong> 
-                                 <span className={`ml-2 inline-block w-3 h-3 rounded-full ${student.active ? 'bg-green-500' : 'bg-gray-400'}`}></span>
-                                 {student.active ? ` ${t("active")}` : ` ${t("inactive")}`}
-                              </p>
+                              
                            </div>
                         </div>
                         
-                        <div>
+                        {/* <div>
                            <h2 className="text-lg font-semibold mb-2 text-mainColor">{t("organizationInformation")}</h2>
                            <div className="space-y-2">
                               <p><strong>{t("organizationIdLabel")}</strong> {organizationId}</p>
                               <p><strong>{t("studentIdLabel")}</strong> {studentId}</p>
                               <p><strong>{t("organizationLabel")}</strong> {selectedOrganization?.name}</p>
                            </div>
-                        </div>
+                        </div> */}
                      </div>
                   </div>
                </div>
