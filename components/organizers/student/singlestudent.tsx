@@ -293,7 +293,7 @@ const SingleOrganizationStudent = ({
             <div className="flex items-center">
                <div className={styles.cardHeaderName} onClick={() => handleStudents(parseInt(student.id as string))}>
                   <div className="flex w-[128px] flex-col gap-y-2 overflow-hidden text-ellipsis">
-                     <Link href={`${selectedOrganization?.id}/users/students/${student.id}`}>
+                     <Link href={`/organizers/student/${selectedOrganization?.id}/users/students/${student.id}`}>
                         <p className={styles.studentName + " max-w-fit hover:underline"}>{`${student.firstName} ${student.lastName}`}</p>
                      </Link>
                   </div>
@@ -301,10 +301,7 @@ const SingleOrganizationStudent = ({
                      {headings.includes(parseInt(student.id as string)) ? <IoIosArrowUp /> : <IoIosArrowDown />}
                   </span>
                </div>
-               <div className="hidden px-2 text-[12px] md:block">
-                  <span className={(student.active ? "bg-green-500" : "border-2") + styles.active}></span>
-                  {student.active ? t("active") : t("inactive")}
-               </div>
+               
             </div>
             <span
                className="ml-4 flex-1 cursor-pointer underline"
