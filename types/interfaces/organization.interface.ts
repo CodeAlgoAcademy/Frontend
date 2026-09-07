@@ -71,13 +71,14 @@ export interface IOrganizationSlice {
    licenses: ILicense[];
    studentUsers: UserResponseList;
    singlStudentUsers?: UserWrapper;
-   isLoadingStudents?: boolean;
-   errorStudents?: string;
-     loading: boolean;
-  error?: string | null;
-  isLoadingAnalytics: boolean;
-  organizationStats?:OrganizationStats;
-  organizationAudit:AuditLogEvent[]
+    isLoadingStudents?: boolean;
+    errorStudents?: string;
+    studentProgress: any;
+    loading: boolean;
+    error?: string | null;
+    isLoadingAnalytics: boolean;
+    organizationStats?: OrganizationStats;
+    organizationAudit: AuditLogEvent[];
 }
 
 
@@ -98,6 +99,7 @@ interface User {
 export interface UserResponse {
   id: string;
   user: User;
+  dob?: string;
 }
 export type UserResponseList = UserResponse[];
 

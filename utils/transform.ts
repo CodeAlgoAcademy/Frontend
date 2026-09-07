@@ -10,6 +10,6 @@ export const mapUserResponseToISingleStudent = (
     lastName: s.user.lastName,
     username: s.user.username,
     email: s.user.email,
-    dob: "",
+    dob: s.dob || "",
   }));
 };

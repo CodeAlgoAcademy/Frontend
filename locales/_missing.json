@@ -13,5 +13,50 @@
     "lang": "en",
     "ns": "teacher",
     "key": "refresh"
+  },
+  {
+    "lang": "en",
+    "ns": "organizer",
+    "key": "progress"
+  },
+  {
+    "lang": "en",
+    "ns": "press",
+    "key": "pipelineSelectedCodealgo.p9"
+  },
+  {
+    "lang": "en",
+    "ns": "pages",
+    "key": "name"
+  },
+  {
+    "lang": "en",
+    "ns": "parent",
+    "key": "grades.4"
+  },
+  {
+    "lang": "en",
+    "ns": "parent",
+    "key": "grades.0"
+  },
+  {
+    "lang": "en",
+    "ns": "parent",
+    "key": "grades.3"
+  },
+  {
+    "lang": "en",
+    "ns": "parent",
+    "key": "grades.2"
+  },
+  {
+    "lang": "en",
+    "ns": "teacher",
+    "key": "noBlockCodingDiagnosticsFound"
+  },
+  {
+    "lang": "en",
+    "ns": "parent",
+    "key": "grades.1"
   }
 ]
