@@ -227,22 +227,191 @@ export const getStudentOrganizationUsers: any = createAsyncThunk("organizer/get-
    }
 });
 export const getSingleStudentOrganizationUsers: any = createAsyncThunk(
-  "organizer/get-single-student-users",
-  async (student_id: string, thunkApi) => {
-    const { selectedOrganization } = (thunkApi.getState() as RootState).organizer;
-    const { id } = selectedOrganization as IOrganization;
+   "organizer/get-single-student-users",
+   async (student_id: string, thunkApi) => {
+     const { selectedOrganization } = (thunkApi.getState() as RootState).organizer;
+     const { id } = selectedOrganization as IOrganization;
 
-    try {
-      const response = await http.get(
-        `/organization/${id}/users/students/${student_id}`,
-        { headers: { Authorization: `Bearer ${getAccessToken()}` } }
-      );
+     try {
+       const response = await http.get(
+         `/organization/${id}/users/students/${student_id}`,
+         { headers: { Authorization: `Bearer ${getAccessToken()}` } }
+       );
 
-      return response?.data;
-    } catch (error: any) {
-      return thunkApi.rejectWithValue(error.message);
+       return response?.data;
+     } catch (error: any) {
+       return thunkApi.rejectWithValue(error.message);
+     }
+   }
+);
+
+export const getStudentOrganizationProgress: any = createAsyncThunk(
+   "organizer/get-student-progress",
+   async (student_id: string, thunkApi) => {
+     const { selectedOrganization } = (thunkApi.getState() as RootState).organizer;
+     const { id } = selectedOrganization as IOrganization;
+
+     try {
+       const response = await http.get(
+         `/organization/${id}/users/students/${student_id}/block-progress/`,
+         { headers: { Authorization: `Bearer ${getAccessToken()}` } }
+       );
+
+       return response?.data;
+      } catch (error: any) {
+        return thunkApi.rejectWithValue(error.message);
+      }
     }
-  }
+);
+
+export const getStudentOrganizationLineProgress: any = createAsyncThunk(
+   "organizer/get-student-line-progress",
+   async (student_id: string, thunkApi) => {
+     const { selectedOrganization } = (thunkApi.getState() as RootState).organizer;
+     const { id } = selectedOrganization as IOrganization;
+
+     try {
+       const response = await http.get(
+         `/organization/${id}/users/students/${student_id}/line-progress/`,
+         { headers: { Authorization: `Bearer ${getAccessToken()}` } }
+       );
+
+       return response?.data;
+      } catch (error: any) {
+        return thunkApi.rejectWithValue(error.message);
+      }
+    }
+);
+
+export const getStudentOrganizationLineSkills: any = createAsyncThunk(
+   "organizer/get-student-line-skills",
+   async (student_id: string, thunkApi) => {
+     const { selectedOrganization } = (thunkApi.getState() as RootState).organizer;
+     const { id } = selectedOrganization as IOrganization;
+
+     try {
+       const response = await http.get(
+         `/organization/${id}/users/students/${student_id}/line-skills/`,
+         { headers: { Authorization: `Bearer ${getAccessToken()}` } }
+       );
+
+       return response?.data;
+      } catch (error: any) {
+        return thunkApi.rejectWithValue(error.message);
+      }
+    }
+);
+
+
+export const editOrganizationStudent: any = createAsyncThunk(
+   "organizer/edit-student",
+   async (student: any, thunkApi) => {
+      const { selectedOrganization } = (thunkApi.getState() as RootState).organizer;
+      const { id } = selectedOrganization as IOrganization;
+
+      try {
+         const response = await http.put(
+            `/organization/${id}/users/students/${student.id}/`,
+            student,
+            { headers: { Authorization: `Bearer ${getAccessToken()}` } }
+         );
+         return response?.data;
+      } catch (error) {
+         return thunkApi.rejectWithValue(errorResolver(error));
+      }
+   }
+);
+
+export const deleteOrganizationStudent: any = createAsyncThunk(
+   "organizer/delete-student",
+   async (studentId: string, thunkApi) => {
+      const { selectedOrganization } = (thunkApi.getState() as RootState).organizer;
+      const { id } = selectedOrganization as IOrganization;
+
+      try {
+         const response = await http.delete(
+            `/organization/${id}/users/students/${studentId}/`,
+            { headers: { Authorization: `Bearer ${getAccessToken()}` } }
+         );
+         return response?.data;
+      } catch (error) {
+         return thunkApi.rejectWithValue(errorResolver(error));
+      }
+   }
+);
+
+export const getOrganizationStudentComments: any = createAsyncThunk(
+   "organizer/get-student-comments",
+   async (studentId: string, thunkApi) => {
+      const { selectedOrganization } = (thunkApi.getState() as RootState).organizer;
+      const { id } = selectedOrganization as IOrganization;
+
+      try {
+         const response = await http.get(
+            `/organization/${id}/users/students/${studentId}/comments/`,
+            { headers: { Authorization: `Bearer ${getAccessToken()}` } }
+         );
+         return response?.data;
+      } catch (error) {
+         return thunkApi.rejectWithValue(errorResolver(error));
+      }
+   }
+);
+
+export const addOrganizationStudentComment: any = createAsyncThunk(
+   "organizer/add-student-comment",
+   async ({ studentId, text }: { studentId: string; text: string }, thunkApi) => {
+      const { selectedOrganization } = (thunkApi.getState() as RootState).organizer;
+      const { id } = selectedOrganization as IOrganization;
+
+      try {
+         const response = await http.post(
+            `/organization/${id}/users/students/${studentId}/comments/`,
+            { text },
+            { headers: { Authorization: `Bearer ${getAccessToken()}` } }
+         );
+         return response?.data;
+      } catch (error) {
+         return thunkApi.rejectWithValue(errorResolver(error));
+      }
+   }
+);
+
+export const editOrganizationStudentComment: any = createAsyncThunk(
+   "organizer/edit-student-comment",
+   async ({ studentId, commentId, text }: { studentId: string; commentId: string; text: string }, thunkApi) => {
+      const { selectedOrganization } = (thunkApi.getState() as RootState).organizer;
+      const { id } = selectedOrganization as IOrganization;
+
+      try {
+         const response = await http.put(
+            `/organization/${id}/users/students/${studentId}/comments/${commentId}/`,
+            { text },
+            { headers: { Authorization: `Bearer ${getAccessToken()}` } }
+         );
+         return response?.data;
+      } catch (error) {
+         return thunkApi.rejectWithValue(errorResolver(error));
+      }
+   }
+);
+
+export const deleteOrganizationStudentComment: any = createAsyncThunk(
+   "organizer/delete-student-comment",
+   async ({ studentId, commentId }: { studentId: string; commentId: string }, thunkApi) => {
+      const { selectedOrganization } = (thunkApi.getState() as RootState).organizer;
+      const { id } = selectedOrganization as IOrganization;
+
+      try {
+         const response = await http.delete(
+            `/organization/${id}/users/students/${studentId}/comments/${commentId}/`,
+            { headers: { Authorization: `Bearer ${getAccessToken()}` } }
+         );
+         return response?.data;
+      } catch (error) {
+         return thunkApi.rejectWithValue(errorResolver(error));
+      }
+   }
 );
 
 
@@ -264,6 +433,54 @@ export const addUserToOrganization: any = createAsyncThunk(
       } catch (error) {
          error = errorResolver(error);
          return thunkApi.rejectWithValue(error);
+      }
+   }
+);
+
+export const addStudentToOrganizationClass: any = createAsyncThunk(
+   "organizer/add-student-to-class",
+   async (
+      studentData: {
+         classId: number;
+         firstName: string;
+         lastName: string;
+         email?: string;
+         username?: string;
+         password: string;
+         dob?: string;
+      },
+      thunkApi
+   ) => {
+      const { selectedOrganization } = (thunkApi.getState() as RootState).organizer;
+      const { id } = selectedOrganization as IOrganization;
+
+      try {
+         const response = await http.post(
+            `/organization/${id}/users/students/add-to-class/`,
+            studentData,
+            { headers: { Authorization: `Bearer ${getAccessToken()}` } }
+         );
+         return response?.data;
+      } catch (error) {
+         return thunkApi.rejectWithValue(errorResolver(error));
+      }
+   }
+);
+
+export const getOrganizationClasses: any = createAsyncThunk(
+   "organizer/get-classes",
+   async (_, thunkApi) => {
+      const { selectedOrganization } = (thunkApi.getState() as RootState).organizer;
+      const { id } = selectedOrganization as IOrganization;
+
+      try {
+         const response = await http.get(
+            `/organization/${id}/classes`,
+            { headers: { Authorization: `Bearer ${getAccessToken()}` } }
+         );
+         return response?.data;
+      } catch (error) {
+         return thunkApi.rejectWithValue(errorResolver(error));
       }
    }
 );
@@ -330,3 +547,32 @@ export const getOrgIBelongTo: any = createAsyncThunk("get organization i belong 
       return thunkApi.rejectWithValue(error.message);
    }
 });
+
+// ============ STUDENT DOWNLOADS
+export const downloadOrganizationStudentsPDF = async (organizationId: number | string): Promise<Blob> => {
+   const response = await fetch(`/api/organizers/students/${organizationId}/print-student-logins`, {
+      headers: {
+         Authorization: `Bearer ${getAccessToken()}`,
+      },
+   });
+
+   if (!response.ok) {
+      throw new Error(`PDF download failed: ${response.status}`);
+   }
+
+   return response.blob();
+};
+
+export const downloadOrganizationStudentsCSV = async (organizationId: number | string): Promise<Blob> => {
+   const response = await fetch(`/api/organizers/students/${organizationId}/export-csv`, {
+      headers: {
+         Authorization: `Bearer ${getAccessToken()}`,
+      },
+   });
+
+   if (!response.ok) {
+      throw new Error(`CSV download failed: ${response.status}`);
+   }
+
+   return response.blob();
+};

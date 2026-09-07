@@ -1,45 +1,76 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 import OrganizerLayout from "@/components/layouts/OrganizerLayout";
 import { ISingleStudent } from "types/interfaces";
 import Image from "next/image";
 import Link from "next/link";
 import { BsArrowLeftCircle } from "react-icons/bs";
-import { getSingleStudentOrganizationUsers } from "services/organizersService";
+import { getSingleStudentOrganizationUsers, getStudentOrganizationLineProgress, getStudentOrganizationProgress } from "services/organizersService";
 import { useTranslation } from "react-i18next";
+import { IChildTopics } from "types/interfaces/parent.interface";
+import StudentTable from "@/components/Teachers/students/StudentTable";
+import StudentProfileSkeleton from "@/components/organizers/UI/StudentProfileSkeleton";
+import { useAppDispatch } from "store/hooks";
+import Loader from "@/components/UI/loader";
 
 const OrganizationSingleStudentPage = () => {
    const { t } = useTranslation("organizer");
    const router = useRouter();
    const { organizationId, studentId } = router.query;
-   const dispatch = useDispatch();
+   const dispatch = useAppDispatch();
    
-   const { selectedOrganization, singlStudentUsers, isLoadingStudents } = useSelector(
+   const { selectedOrganization, isLoadingStudents } = useSelector(
       (state: RootState) => state.organizer
    );
    
    const [student, setStudent] = useState<ISingleStudent | null>(null);
+   const [studentProgress, setStudentProgress] = useState<IChildTopics | null>(null);
+   const [isProgressLoading, setIsProgressLoading] = useState(false);
 
-   useEffect(() => {
-      if (studentId && organizationId) {
-         dispatch(getSingleStudentOrganizationUsers(studentId as string) as any);
+   const calculateAge = (dob: string): number => {
+      if (!dob) return 0;
+      const birthDate = new Date(dob);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+         age--;
       }
-   }, [dispatch, studentId, organizationId]);
+      return age;
+   };
 
-     useEffect(() => {
-        if ((singlStudentUsers as any)?.student) {
-           setStudent((singlStudentUsers as any).student);
-        }
-      }, [singlStudentUsers]);
+    useEffect(() => {
+       if (studentId && organizationId) {
+          setIsProgressLoading(true);
+          dispatch(getSingleStudentOrganizationUsers(studentId as string) as any)
+             .then((result: any) => {
+                if (result?.payload?.student) {
+                   const studentData = result.payload.student;
+                   setStudent(studentData as ISingleStudent);
+                   const age = calculateAge(studentData?.dob || "");
+                   const thunk = age < 14 ? getStudentOrganizationProgress : getStudentOrganizationLineProgress;
+                   return dispatch(thunk(studentId as string) as any);
+                }
+             })
+             .then((result: any) => {
+                if (result?.payload) {
+                   const rawData = result.payload;
+                   setStudentProgress({
+                      current: { title: "", level: 0, progress: 0 },
+                      topic: Array.isArray(rawData) ? rawData : rawData?.topic || [],
+                   });
+                }
+             })
+             .finally(() => setIsProgressLoading(false));
+       }
+    }, [studentId, organizationId]);
 
    if (isLoadingStudents) {
       return (
          <OrganizerLayout>
-            <div className="flex justify-center items-center h-64">
-               <p>{t("loadingStudentDetails")}</p>
-            </div>
+            <StudentProfileSkeleton />
          </OrganizerLayout>
       );
    }
@@ -102,18 +133,29 @@ const OrganizationSingleStudentPage = () => {
                   </div>
                </div>
                
-               {student.assignments && student.assignments.length > 0 && (
-                  <div className="mt-8">
-                     <h2 className="text-xl font-semibold mb-4 text-mainColor">{t("assignmentsProgress")}</h2>
-                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {student.assignments.map((assignment, index) => (
-                           <div key={index} className="border border-gray-200 p-4 rounded-md bg-gray-50">
-                              <p className="font-medium">{assignment.title}</p>
-                           </div>
-                        ))}
-                     </div>
-                  </div>
-               )}
+                {student.assignments && student.assignments.length > 0 && (
+                   <div className="mt-8">
+                      <h2 className="text-xl font-semibold mb-4 text-mainColor">{t("assignmentsProgress")}</h2>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                         {student.assignments.map((assignment, index) => (
+                            <div key={index} className="border border-gray-200 p-4 rounded-md bg-gray-50">
+                               <p className="font-medium">{assignment.title}</p>
+                            </div>
+                         ))}
+                      </div>
+                   </div>
+                )}
+                {studentProgress && !isProgressLoading && (
+                   <div className="mt-8">
+                      <h2 className="text-xl font-semibold mb-4 text-mainColor">{t("progress")}</h2>
+                      <StudentTable student={student as ISingleStudent} details={student.assignments || []} progress={studentProgress} />
+                   </div>
+                )}
+                {isProgressLoading && (
+                   <div className="mt-8 flex items-center justify-center bg-white py-10">
+                      <Loader size={28} />
+                   </div>
+                )}
             </div>
          </div>
       </OrganizerLayout>

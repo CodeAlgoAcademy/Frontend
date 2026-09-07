@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import StudentTable from "./StudentTable";
 import { AssignmentDetails, ISingleStudent } from "types/interfaces";
 import { useAppDispatch } from "store/hooks";
-import { fetchStudentBlockGameProgress } from "store/teacherStudentSlice";
+import { fetchStudentBlockGameProgress, fetchStudentLineProgressNew } from "store/teacherStudentSlice";
 import EditStudentModal from "./singleStudentComponents/EditStudentModal";
 import StudentHeader from "./singleStudentComponents/StudentHeader";
 import CommentsTab from "./singleStudentComponents/CommentsTab";
@@ -45,25 +45,39 @@ const SingleStudent = ({
       topic: [],
    });
 
+   const calculateAge = (dob: string): number => {
+      if (!dob) return 0;
+      const birthDate = new Date(dob);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+         age--;
+      }
+      return age;
+   };
+
    const getStudentProgress = async () => {
       if (!student?.student_id || !classId) return;
 
       try {
-         const data = await dispatch(
-            fetchStudentBlockGameProgress({
-               classId,
-               studentId: student.student_id,
-            })
-         ).unwrap();
+         const age = calculateAge(student?.dob || "");
+         const isPythonStudent = age >= 14;
+
+         const action = isPythonStudent
+            ? fetchStudentLineProgressNew({ classId: String(classId), studentId: String(student.student_id) })
+            : fetchStudentBlockGameProgress({ classId, studentId: student.student_id });
+
+         const data = await dispatch(action).unwrap();
 
          if (data) {
             setStudentProgress({
                current: { title: "", level: 0, progress: 0 },
-               topic: data,
+               topic: Array.isArray(data) ? data : data?.topic || [],
             });
          }
       } catch (error) {
-         console.error("Failed to fetch blockgame progress:", error);
+         console.error("Failed to fetch student progress:", error);
       }
    };
 

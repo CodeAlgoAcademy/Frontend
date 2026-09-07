@@ -1,25 +1,25 @@
-import React, { useEffect, useState, ChangeEvent, SetStateAction, Dispatch } from "react";
+import React, { useState, ChangeEvent, SetStateAction, Dispatch, FormEvent, useEffect } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoChatbubblesOutline } from "react-icons/io5";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { BiEdit } from "react-icons/bi";
 import {
-   getStudents,
-   addStudentComment as addComment,
-   updateStudentComment as editComment,
-   deleteStudentComment as deleteComment,
-   getStudentComment as getComment,
-   editStudent,
-} from "store/studentSlice";
+   editOrganizationStudent,
+   deleteOrganizationStudent,
+   addOrganizationStudentComment as addComment,
+   editOrganizationStudentComment as editComment,
+   deleteOrganizationStudentComment as deleteComment,
+   getOrganizationStudentComments as getComment,
+} from "services/organizersService";
 import { FaEdit, FaSave, FaTimes, FaTrash } from "react-icons/fa";
 import Link from "next/link";
-import { AssignmentDetails, IChildProgress, IChildTopics, ISingleStudent } from "types/interfaces";
+import { AssignmentDetails, IChildTopics, ISingleStudent } from "types/interfaces";
 import { RootState } from "store/store";
-import studentService from "services/studentService";
-import { deleteStudent, fetchStudentBlockGameProgress } from "store/teacherStudentSlice";
+import { getStudentOrganizationLineProgress, getStudentOrganizationProgress, getStudentOrganizationUsers } from "services/organizersService";
 import { useAppDispatch } from "store/hooks";
 import StudentTable from "@/components/Teachers/students/StudentTable";
+import Loader from "@/components/UI/loader";
 import useClickOutside from "hooks/useClickOutside";
 import { useTranslation } from "react-i18next";
 
@@ -33,9 +33,7 @@ const SingleOrganizationStudent = ({
    setStudentCommentsTabOpen,
    editStudentModalOpened,
    setEditStudentModalOpened,
-   index,
-}:
-{
+}: {
    student: ISingleStudent;
    studentCommentOpen: string;
    setStudentCommentOpen: Dispatch<SetStateAction<string>>;
@@ -51,365 +49,276 @@ const SingleOrganizationStudent = ({
    const dispatch = useAppDispatch();
    const { selectedOrganization } = useSelector((state: RootState) => state.organizer);
 
-   const [headings, setHeadings] = useState<number[]>([]);
-   const { students, studentComments } = useSelector((state: any) => state.students);
+   const [headings, setHeadings] = useState<string[]>([]);
+   const [comments, setComments] = useState<any[]>([]);
    const [editingComment, setEditingComment] = useState<string>("");
    const [isEditingComment, setIsEditingComment] = useState<string>("");
    const [isActionMenuOpen, setIsActionMenuOpen] = useState(false);
-   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
    const actionMenuRef = useClickOutside<HTMLDivElement>(() => setIsActionMenuOpen(false));
 
    const [editingStudentDetails, setEditingStudentDetails] = useState({
-      firstName: student?.firstName,
-      lastName: student?.lastName,
-      email: student?.email,
-      username: student?.username,
+      firstName: student?.firstName || "",
+      lastName: student?.lastName || "",
+      email: student?.email || "",
+      username: student?.username || "",
    });
+
+   useEffect(() => {
+      setEditingStudentDetails({
+         firstName: student?.firstName || "",
+         lastName: student?.lastName || "",
+         email: student?.email || "",
+         username: student?.username || "",
+      });
+   }, [student?.firstName, student?.lastName, student?.email, student?.username]);
+
    const [studentProgress, setStudentProgress] = useState<IChildTopics>({ current: { title: "", level: 0, progress: 0 }, topic: [] });
+   const [isProgressLoading, setIsProgressLoading] = useState(false);
 
-   const updateComment = (text: string): void => {
-      if (comment.length < 100) {
-         setComment(text);
+   const calculateAge = (dob: string): number => {
+      if (!dob) return 0;
+      const birthDate = new Date(dob);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+         age--;
       }
-   };
-   const updateEditingComment = (text: string) => {
-      if (comment.length < 100) {
-         setEditingComment(text);
-      }
-   };
-   const getStudentComment = (id: string) => {
-      dispatch(getComment({ id }));
+      return age;
    };
 
-   const handleStudents = (id: number) => {
-      const index = headings.indexOf(id);
+    const fetchStudentProgress = async (studentId: string) => {
+       setIsProgressLoading(true);
+       try {
+          const age = calculateAge(student?.dob || "");
+          const thunk = age < 14 ? getStudentOrganizationProgress : getStudentOrganizationLineProgress;
+          const result = await dispatch(thunk(studentId) as any);
+          if (result?.payload) {
+             setStudentProgress({
+                current: { title: "", level: 0, progress: 0 },
+                topic: Array.isArray(result.payload) ? result.payload : result.payload?.topic || [],
+             });
+          }
+       } catch (err) {
+          console.error(err);
+       } finally {
+          setIsProgressLoading(false);
+       }
+    };
 
-      if (index !== -1) {
-         setHeadings((headings) => [...headings.slice(0, index), ...headings.slice(index + 1)]);
+   const handleToggleDropdown = (id: string, e: React.MouseEvent) => {
+      e.stopPropagation();
+      const isOpening = !headings.includes(id);
+      if (isOpening) {
+         setHeadings((prev) => [...prev, id]);
+         if (studentProgress.topic.length === 0) fetchStudentProgress(id);
       } else {
-         setHeadings((headings) => [...headings, id]);
+         setHeadings((prev) => prev.filter((h) => h !== id));
       }
    };
-   const addStudentComment = async (event: ChangeEvent<HTMLFormElement>, id: string) => {
+
+   // Actions
+   const addStudentComment = async (event: FormEvent<HTMLFormElement>, id: string) => {
       event.preventDefault();
       if (comment) {
-         await dispatch(addComment({ id, comment }));
+         await dispatch(addComment({ studentId: id, text: comment }));
          setStudentCommentOpen("");
          setComment("");
       }
    };
-   const updateStudentComment = async (id: string, comment: string, studentId: string) => {
-      setIsEditingComment("");
-      await dispatch(
-         editComment({
-            id,
-            comment,
-         })
-      );
-      getStudentComment(studentId);
-   };
 
-   const deleteStudentComment = async (id: string, studentId: string) => {
-      await dispatch(deleteComment({ id }));
-      getStudentComment(studentId);
-   };
-
-   const updateEditingDetails = async (e: ChangeEvent<HTMLInputElement>) => {
-      setEditingStudentDetails((prev) => {
-         return { ...prev, [e.target.name as keyof typeof prev]: e.target.value };
-      });
-   };
-
-   const handleSubmittionOfEditDetails = async (e: ChangeEvent<HTMLFormElement>) => {
+   const handleEditSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
-      const payload = { id: student.id, ...editingStudentDetails };
-      console.log("Submitting:", payload);
-      await dispatch(editStudent(payload));
-      await dispatch(getStudents());
+      await dispatch(editOrganizationStudent({ id: student.id, ...editingStudentDetails }));
+      // Refresh organization users list
+      if (selectedOrganization?.id) {
+         await dispatch(getStudentOrganizationUsers(selectedOrganization.id));
+      }
       setEditStudentModalOpened("");
    };
 
-   return (
-      <div className="bg-[#fff] shadow-lg" data-testid={`single-student`}>
-         {editStudentModalOpened === student.id && (
-            <section className="fixed top-0 left-0 z-20 flex h-screen w-full items-center justify-center bg-[rgba(0,0,0,0.4)]">
-               <div className="mx-auto w-[90vw] max-w-[350px] rounded-md bg-white p-6 shadow-md">
-                  <header className="mb-3 flex items-center justify-between">
-                     <h1 className="font-bold text-mainColor">{t("editStudentDetails")}</h1>
-                     <span
-                        className="text-[18px] font-bold text-[darkRed]"
-                        onClick={() => {
-                           setEditStudentModalOpened("");
-                        }}
-                     >
-                        <FaTimes />
-                     </span>
-                  </header>
-                  <form className="flex flex-col gap-y-2" onSubmit={handleSubmittionOfEditDetails}>
-                     <input
-                        value={editingStudentDetails.firstName}
-                        type="text"
-                        className={styles.input}
-                        name="firstName"
-                        required
-                        placeholder={t("enterFirstname")}
-                        onChange={updateEditingDetails}
-                     />
-                     <input
-                        value={editingStudentDetails.lastName}
-                        type="text"
-                        className={styles.input}
-                        name="lastName"
-                        required
-                        placeholder={t("enterLastname")}
-                        onChange={updateEditingDetails}
-                     />
-                     <input
-                        value={editingStudentDetails.username}
-                        type="text"
-                        className={styles.input}
-                        name="username"
-                        required
-                        placeholder={t("enterUsername")}
-                        onChange={updateEditingDetails}
-                     />
-                     <input
-                        value={editingStudentDetails.email}
-                        type="text"
-                        className={styles.input}
-                        name="email"
-                        required
-                        placeholder={t("enterEmailPlaceholder")}
-                        onChange={updateEditingDetails}
-                     />
+   const handleDeleteStudent = async () => {
+      await dispatch(deleteOrganizationStudent(student.id as string));
+      setIsDeleteModalOpen(false);
+      setIsActionMenuOpen(false);
+      if (selectedOrganization?.id) {
+         await dispatch(getStudentOrganizationUsers(selectedOrganization.id));
+      }
+   };
 
-                     <button type="submit" className="mt-3 w-full rounded-md bg-mainColor p-3 text-white active:scale-[0.98]">
-                        {t("editStudentDetailsBtn")}
-                     </button>
+   const getStudentComment = async (id: string) => {
+      const result = await dispatch(getComment(id));
+      if (result?.payload) {
+         setComments(result.payload);
+      }
+   };
+
+   const updateStudentComment = async (commentId: string, text: string) => {
+      setIsEditingComment("");
+      await dispatch(editComment({ studentId: student.id as string, commentId, text }));
+      getStudentComment(student.id as string);
+   };
+
+   const deleteStudentComment = async (commentId: string) => {
+      await dispatch(deleteComment({ studentId: student.id as string, commentId }));
+      getStudentComment(student.id as string);
+   };
+
+   return (
+      <div className="bg-[#fff] shadow-lg mb-4 rounded-md" data-testid={`single-student`}>
+         {/* EDIT MODAL */}
+         {editStudentModalOpened === student.id && (
+            <section className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+               <div className="w-[90vw] max-w-[400px] rounded-lg bg-white p-6 shadow-xl">
+                  <header className="mb-4 flex items-center justify-between border-b pb-2">
+                     <h1 className="font-bold text-mainColor">{t("editStudentDetails")}</h1>
+                     <FaTimes className="cursor-pointer text-gray-500 hover:text-red-600" onClick={() => setEditStudentModalOpened("")} />
+                  </header>
+                  <form className="flex flex-col gap-y-3" onSubmit={handleEditSubmit}>
+                     <input className={styles.input} placeholder="First Name" value={editingStudentDetails.firstName} onChange={(e) => setEditingStudentDetails({...editingStudentDetails, firstName: e.target.value})} required />
+                     <input className={styles.input} placeholder="Last Name" value={editingStudentDetails.lastName} onChange={(e) => setEditingStudentDetails({...editingStudentDetails, lastName: e.target.value})} required />
+                     <input className={styles.input} placeholder="Username" value={editingStudentDetails.username} onChange={(e) => setEditingStudentDetails({...editingStudentDetails, username: e.target.value})} required />
+                     <input className={styles.input} placeholder="Email" value={editingStudentDetails.email} onChange={(e) => setEditingStudentDetails({...editingStudentDetails, email: e.target.value})} required />
+                     <button type="submit" className="mt-2 w-full rounded-md bg-mainColor py-3 text-white font-bold hover:opacity-90">{t("editStudentDetailsBtn")}</button>
                   </form>
                </div>
             </section>
          )}
-         <div className={styles.cardHeader}>
-            {!studentCommentsTabOpen && studentCommentOpen === student.firstName + student.email && (
-               <form
-                  onSubmit={(event: ChangeEvent<HTMLFormElement>) => {
-                     addStudentComment(event, student.id as string);
-                  }}
-                  className="z-2 scale-up absolute right-[100px] bottom-[20%] flex w-[90vw] max-w-[250px] cursor-pointer rounded-md bg-white shadow-md"
-               >
-                  <input
-                     type="text"
-                     className="flex-[0.8] rounded-l-md border-2 border-mainColor px-2 py-2 text-black outline-none"
-                     placeholder={t("max100Characters")}
-                     value={comment}
-                     onChange={(e: ChangeEvent<HTMLInputElement>) => updateComment(e.target.value)}
-                  />
-                  <button type="submit" className="flex flex-[0.2] items-center justify-center rounded-r-md bg-mainColor text-[20px] text-white">
-                     <BiEdit />
-                  </button>
-               </form>
-            )}
-            {!studentCommentOpen && studentCommentsTabOpen === student.firstName + student.email && (
-               <section className="fixed top-0 left-0 z-20 flex min-h-screen w-full items-center justify-center bg-[rgba(0,0,0,0.5)]">
-                  <form className="scale-up comment-tab w-[90vw] max-w-[400px] rounded-md bg-white py-2 px-3 shadow-md">
-                     <h2 className="text-[20px] font-bold">
-                        {t("commentsOnPerformance", { name: `${student.firstName} ${student.lastName}` })}
-                     </h2>
-                     <div
-                        className={`mt-3 flex h-[90vh] max-h-[230px] flex-col gap-y-2 overflow-y-scroll ${
-                           studentComments?.length === 0 && "items-center justify-center"
-                        }`}
-                     >
-                        {studentComments?.length === 0 && <h1 className="text-[17px] font-bold">{t("noCommentAdded")}</h1>}
-                        {studentComments?.map((comment: any, index: number) => {
-                           return (
-                              <article key={index} className="flex items-center justify-between gap-x-2">
-                                 {isEditingComment === comment.text + comment.date ? (
-                                    <input
-                                       onSubmit={(e) => e.preventDefault()}
-                                       value={editingComment}
-                                       onChange={(e: ChangeEvent<HTMLInputElement>) => updateEditingComment(e.target.value)}
-                                       type="text"
-                                       placeholder={t("max100Characters")}
-                                       className="flex-1 rounded-md border-2 border-mainColor px-4 py-2 outline-none"
-                                    />
-                                 ) : (
-                                    <h1 className="px-4 py-2">{comment.text.length > 28 ? `${comment.text.slice(0, 28)}...` : comment.text}</h1>
-                                 )}
-                                 <div className="flex items-center gap-x-2">
-                                    {isEditingComment === comment.text + comment.date ? (
-                                       <span
-                                          className={`${styles.commentIcons} bg-green-600`}
-                                          onClick={() => {
-                                             if (editingComment === comment.text && editingComment === "") {
-                                                setIsEditingComment("");
-                                             } else {
-                                                updateStudentComment(comment.id as string, editingComment, student.id as string);
-                                             }
-                                          }}
-                                       >
-                                          <FaSave />
-                                       </span>
-                                    ) : (
-                                       <span
-                                          className={`${styles.commentIcons} bg-green-600`}
-                                          onClick={() => {
-                                             setEditingComment(comment.text);
-                                             setIsEditingComment(comment.text + comment.date);
-                                          }}
-                                       >
-                                          <FaEdit />
-                                       </span>
-                                    )}
-                                    <span
-                                       className={`${styles.commentIcons} bg-red-600`}
-                                       onClick={() => {
-                                          deleteStudentComment(comment.id as string, student.id as string);
-                                       }}
-                                    >
-                                       <FaTrash />
-                                    </span>
-                                 </div>
-                              </article>
-                           );
-                        })}
-                     </div>
 
-                     <div className="my-4 flex justify-end">
-                        <button
-                           className="w-[150px] rounded-full bg-mainColor py-3 text-white"
-                           onClick={() => {
-                              setStudentCommentsTabOpen("");
-                           }}
-                        >
-                           {t("close")}
-                        </button>
-                     </div>
-                  </form>
-               </section>
+         {/* DELETE CONFIRMATION MODAL */}
+         {isDeleteModalOpen && (
+            <section className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+               <div className="w-[90vw] max-w-[400px] rounded-lg bg-white p-6 shadow-xl">
+                  <header className="mb-4 flex items-center justify-between border-b pb-2">
+                     <h1 className="font-bold text-mainColor">{t("deleteStudent")}</h1>
+                     <FaTimes className="cursor-pointer text-gray-500 hover:text-red-600" onClick={() => setIsDeleteModalOpen(false)} />
+                  </header>
+                  <p className="mb-6 text-sm text-gray-600">
+                     {t("confirmDeleteStudent")} {student.firstName} {student.lastName}?
+                  </p>
+                  <div className="flex justify-end gap-3">
+                     <button className="rounded-md border border-gray-300 px-4 py-2 text-sm hover:bg-gray-100" onClick={() => setIsDeleteModalOpen(false)}>{t("cancel")}</button>
+                     <button className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:opacity-90" onClick={handleDeleteStudent}>{t("delete")}</button>
+                  </div>
+               </div>
+            </section>
+         )}
+
+         {/* VIEW COMMENTS MODAL */}
+         {studentCommentsTabOpen === student.firstName + student.email && (
+            <section className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+               <div className="w-[90vw] max-w-[450px] rounded-lg bg-white p-6 shadow-xl">
+                  <div className="flex justify-between items-center mb-4">
+                     <h2 className="text-xl font-bold">{t("commentsOnPerformance", { name: `${student.firstName} ${student.lastName}` })}</h2>
+                     <FaTimes className="cursor-pointer" onClick={() => setStudentCommentsTabOpen("")} />
+                  </div>
+                  <div className="max-h-[300px] overflow-y-auto space-y-3">
+                     {comments?.length === 0 ? <p className="text-center py-4">{t("noCommentAdded")}</p> : 
+                        comments.map((c: any, i: number) => (
+                           <div key={i} className="bg-gray-50 p-3 rounded">
+                              {isEditingComment === c.id ? (
+                                 <form
+                                    className="flex items-center gap-2"
+                                    onSubmit={(e) => {
+                                       e.preventDefault();
+                                       if (editingComment) updateStudentComment(c.id, editingComment);
+                                    }}
+                                 >
+                                    <input
+                                       type="text"
+                                       className="flex-1 border p-2 rounded text-sm outline-none"
+                                       value={editingComment}
+                                       onChange={(e) => setEditingComment(e.target.value)}
+                                    />
+                                    <button type="submit" className="bg-mainColor text-white p-2 rounded text-sm"><FaSave /></button>
+                                    <FaTimes className="cursor-pointer text-gray-500" onClick={() => { setIsEditingComment(""); setEditingComment(""); }} />
+                                 </form>
+                              ) : (
+                                 <div className="flex justify-between items-center gap-2">
+                                    <p className="text-sm flex-1">{c.text}</p>
+                                    <div className="flex gap-2">
+                                       <FaEdit className="text-blue-500 cursor-pointer" onClick={() => { setEditingComment(c.text); setIsEditingComment(c.id); }} />
+                                       <FaTrash className="text-red-500 cursor-pointer" onClick={() => deleteStudentComment(c.id)} />
+                                    </div>
+                                 </div>
+                              )}
+                           </div>
+                        ))
+                     }
+                  </div>
+                  <button className="w-full mt-6 bg-mainColor text-white py-2 rounded" onClick={() => setStudentCommentsTabOpen("")}>{t("close")}</button>
+               </div>
+            </section>
+         )}
+
+         <div className={styles.cardHeader}>
+            {/* COMMENT INPUT FORM (Triggered by Icon) */}
+            {studentCommentOpen === student.firstName + student.email && (
+               <form onSubmit={(e) => addStudentComment(e, student.id as string)} className="absolute right-[100px] top-4 z-10 flex shadow-lg border rounded-md overflow-hidden bg-white">
+                  <input type="text" className="px-3 py-2 outline-none w-48 text-sm" placeholder={t("max100Characters")} value={comment} onChange={(e) => setComment(e.target.value)} />
+                  <button type="submit" className="bg-mainColor px-3 text-white"><BiEdit /></button>
+               </form>
             )}
 
             <div className="flex items-center">
-               <div className={styles.cardHeaderName} onClick={() => handleStudents(parseInt(student.id as string))}>
-                  <div className="flex w-[128px] flex-col gap-y-2 overflow-hidden text-ellipsis">
+               <div className={styles.cardHeaderName}>
+                  <div className="flex w-[140px] border-r pr-2">
                      <Link href={`/organizers/student/${selectedOrganization?.id}/users/students/${student.id}`}>
-                        <p className={styles.studentName + " max-w-fit hover:underline"}>{`${student.firstName} ${student.lastName}`}</p>
+                        <p className="text-sm font-medium truncate hover:underline cursor-pointer">{student.firstName} {student.lastName.charAt(0)}.</p>
                      </Link>
                   </div>
-                  <span className="text-[17px]" data-testid="chevron">
-                     {headings.includes(parseInt(student.id as string)) ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                  <span className="text-[17px] cursor-pointer ml-3 p-1 hover:bg-gray-100 rounded" onClick={(e) => handleToggleDropdown(student.id as string, e)}>
+                     {headings.includes(student.id as string) ? <IoIosArrowUp /> : <IoIosArrowDown />}
                   </span>
                </div>
-               
             </div>
-            <span
-               className="ml-4 flex-1 cursor-pointer underline"
-               onClick={() => {
-                  setEditStudentModalOpened(student.id as string);
-               }}
-            >
-               <span className="hidden md:block">{t("editStudentsDetailsLink")}</span>
-               <span className="block md:hidden">{t("editStudentDetailsBtn")}</span>
+
+            <span className="ml-4 flex-1 cursor-pointer underline text-sm text-blue-600 hover:text-blue-800" onClick={() => setEditStudentModalOpened(student.id as string)}>
+               {t("editStudentsDetailsLink")}
             </span>
+
             <div className={styles.actions}>
-               <span
-                  onClick={() => {
-                     setStudentCommentsTabOpen("");
-                     studentCommentOpen === student.firstName + student.email
-                        ? setStudentCommentOpen("")
-                        : setStudentCommentOpen(student.firstName + student.email);
-                     setComment("");
-                  }}
-               >
-                  <IoChatbubblesOutline className={styles.pointer} />
+               <span onClick={() => studentCommentOpen === student.firstName + student.email ? setStudentCommentOpen("") : setStudentCommentOpen(student.firstName + student.email)}>
+                  <IoChatbubblesOutline className="cursor-pointer hover:text-mainColor" />
                </span>
-
                <div className="relative" ref={actionMenuRef}>
-                  <span onClick={() => setIsActionMenuOpen((prev) => !prev)}>
-                     <HiOutlineDotsHorizontal className={styles.pointer} />
-                  </span>
-
+                  <HiOutlineDotsHorizontal className="cursor-pointer hover:text-mainColor" onClick={() => setIsActionMenuOpen(!isActionMenuOpen)} />
                   {isActionMenuOpen && (
-                     <div className="absolute top-full right-0 z-50 w-40 rounded-md border bg-white shadow-lg">
-                        <button
-                           className="block w-full px-4 py-2 text-left text-sm hover:bg-gray-100"
-                           onClick={() => {
-                              setIsActionMenuOpen(false);
-                              setConfirmDeleteOpen(true);
-                           }}
-                        >
-                           {t("deleteStudent")}
-                        </button>
-
-                        <button
-                           className="block w-full px-4 py-2 text-left text-sm hover:bg-gray-100"
-                           onClick={() => {
-                              setIsActionMenuOpen(false);
-                              setStudentCommentOpen("");
-                              if (studentCommentsTabOpen === student.firstName + student.email) {
-                                 setStudentCommentsTabOpen("");
-                              } else {
-                                 setStudentCommentsTabOpen(student.firstName + student.email);
-                                 getStudentComment(student.id as string);
-                              }
-                           }}
-                        >
-                           {t("viewComments")}
-                        </button>
-                     </div>
-                  )}
-
-                  {confirmDeleteOpen && (
-                     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                        <div className="rounded-lg bg-white p-6 shadow-lg">
-                           <p className="mb-4 text-sm">
-                              {t("confirmDeleteStudent")}{" "}
-                              <span className="font-semibold">
-                                 {student.firstName} {student.lastName}
-                              </span>
-                              ?
-                           </p>
-                           <div className="flex justify-end space-x-2">
-                              <button className="rounded bg-gray-300 px-4 py-2" onClick={() => setConfirmDeleteOpen(false)}>
-                                 {t("cancel")}
-                              </button>
-                              <button
-                                 className="rounded bg-red-600 px-4 py-2 text-white"
-                              >
-                                 {t("delete")}
-                              </button>
-                           </div>
-                        </div>
+                     <div className="absolute top-full right-0 z-50 w-40 rounded-md border bg-white shadow-lg py-2">
+                        <button className="block w-full px-4 py-2 text-left text-sm hover:bg-gray-100" onClick={() => { setIsActionMenuOpen(false); setIsDeleteModalOpen(true); }}>{t("deleteStudent")}</button>
+                        <button className="block w-full px-4 py-2 text-left text-sm hover:bg-gray-100" onClick={() => { setIsActionMenuOpen(false); setStudentCommentsTabOpen(student.firstName + student.email); getStudentComment(student.id as string); }}>{t("viewComments")}</button>
                      </div>
                   )}
                </div>
             </div>
          </div>
-         {students?.assignments?.length === 0 ? (
-            <p className="grid h-full w-full place-content-center">
-               <span>{t("noLessonAvailable")}</span>
-            </p>
-         ) : (
-            <>
-               {headings.includes(parseInt(student?.id as string)) && (
-                  <StudentTable student={student} details={student?.assignments as AssignmentDetails[]} progress={studentProgress} />
+
+         {/* EXPANDED CONTENT: Summary + Table */}
+         {headings.includes(student.id as string) && (
+            <div className="p-4 border-t bg-gray-50 bg-opacity-30">
+               {isProgressLoading ? (
+                  <div className="flex justify-center py-10"><Loader size={28} /></div>
+               ) : (
+                  <>
+                     <div className="mb-4 flex gap-x-8 px-4 py-2 text-sm text-gray-700 font-medium">
+                        <p>Email: <span className="font-normal">{student.email}</span></p>
+                        <p>Username: <span className="font-normal">{student.username}</span></p>
+                     </div>
+                     <StudentTable student={student} details={student?.assignments as AssignmentDetails[]} progress={studentProgress} />
+                  </>
                )}
-            </>
+            </div>
          )}
       </div>
    );
 };
 
 const styles = {
-   cardHeader: "flex justify-between py-6 px-2 sm:px-6 border-b items-center relative overflow-x-scroll",
-   cardHeaderName: "cursor-pointer min-w-28 sm:min-w-40 justify-between px-2 border-r flex space-x-3 items-center",
-   studentName: "text-sm font-medium truncate w-full",
-   active: " rounded-[50%] inline-block w-[8px] h-[8px] mr-2",
-   actions: "flex text-[20px] text-slate-500 space-x-5",
-   pointer: "cursor-pointer",
-   commentIcons: "w-[28px] h-[28px] rounded-md text-white flex justify-center items-center text-[15px] cursor-pointer",
-   input: "w-full border focus:border-mainColor p-3 rounded-md outline-none",
+   cardHeader: "flex justify-between py-6 px-4 border-b items-center relative",
+   cardHeaderName: "flex items-center min-w-[200px]",
+   actions: "flex text-[22px] text-slate-500 space-x-6 items-center",
+   input: "w-full border p-3 rounded-md outline-none focus:border-mainColor transition-all",
 };
 
 export default SingleOrganizationStudent;
