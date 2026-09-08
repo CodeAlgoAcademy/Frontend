@@ -11,6 +11,7 @@ import {
    getOrgIBelongTo,
    getSingleStudentOrganizationUsers,
    getStudentOrganizationUsers,
+   getStudentOrganizationProgress,
 } from "services/organizersService";
 import {
    AuditLogEvent,
@@ -34,10 +35,11 @@ const initialState: IOrganizationSlice = {
    invitations: [],
    userInvitation: [],
    userOrganizations: [],
-   studentUsers: [],
-   singlStudentUsers: undefined,
-   isLoadingStudents: false,
-   errorStudents: undefined,
+    studentUsers: [],
+    singlStudentUsers: undefined,
+    isLoadingStudents: false,
+    errorStudents: undefined,
+    studentProgress: null,
    loading: false,
    error: null,
    isLoadingAnalytics: false,
@@ -101,23 +103,42 @@ const organizersSlice = createSlice({
          state.userOrganizations = action.payload;
       });
 
+      builder.addCase(getStudentOrganizationUsers.pending, (state) => {
+         state.isLoadingStudents = true;
+         state.errorStudents = undefined;
+      });
+      builder.addCase(getStudentOrganizationUsers.rejected, (state, action) => {
+         state.isLoadingStudents = false;
+         state.errorStudents = action.payload as string;
+      });
       builder.addCase(getStudentOrganizationUsers.fulfilled, (state: IOrganizationSlice, action: PayloadAction<UserResponseList>) => {
+         state.isLoadingStudents = false;
          state.studentUsers = action.payload;
       });
-       builder.addCase(getSingleStudentOrganizationUsers.pending, (state) => {
-          state.isLoadingStudents = true;
-       })
-       builder.addCase(getSingleStudentOrganizationUsers.rejected, (state) => {
-          state.isLoadingStudents = false;
-       })
-       builder.addCase(getSingleStudentOrganizationUsers.fulfilled, (state: IOrganizationSlice, action: PayloadAction<UserWrapper>) => {
-          state.isLoadingStudents = false;
-          state.singlStudentUsers = action.payload;
-       });
-      builder.addCase(getOrganizationAnalytics.fulfilled, (state: IOrganizationSlice, action: PayloadAction<OrganizationStats>) => {
-         state.isLoadingAnalytics = false;
-         state.organizationStats = action.payload;
-      });
+        builder.addCase(getSingleStudentOrganizationUsers.pending, (state) => {
+           state.isLoadingStudents = true;
+        })
+        builder.addCase(getSingleStudentOrganizationUsers.rejected, (state) => {
+           state.isLoadingStudents = false;
+        })
+        builder.addCase(getSingleStudentOrganizationUsers.fulfilled, (state: IOrganizationSlice, action: PayloadAction<UserWrapper>) => {
+           state.isLoadingStudents = false;
+           state.singlStudentUsers = action.payload;
+        });
+      //   builder.addCase(getStudentOrganizationProgress.pending, (state) => {
+      //      state.isLoadingStudents = true;
+      //   })
+      //   builder.addCase(getStudentOrganizationProgress.rejected, (state) => {
+      //      state.isLoadingStudents = false;
+      //   })
+        builder.addCase(getStudentOrganizationProgress.fulfilled, (state: IOrganizationSlice, action: PayloadAction<any>) => {
+         //   state.isLoadingStudents = false;
+           state.studentProgress = action.payload;
+        });
+        builder.addCase(getOrganizationAnalytics.fulfilled, (state: IOrganizationSlice, action: PayloadAction<OrganizationStats>) => {
+           state.isLoadingAnalytics = false;
+           state.organizationStats = action.payload;
+        });
       builder.addCase(getOrganizationAudit.fulfilled, (state: IOrganizationSlice, action: PayloadAction<AuditLogEvent[]>) => {
          state.isLoadingAnalytics = false;
          state.organizationAudit = action.payload;
